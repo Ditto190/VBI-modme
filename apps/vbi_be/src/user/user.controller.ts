@@ -1,14 +1,18 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
-  Body,
-  Put,
-  Delete,
   NotFoundException,
+  Put,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiDataResponse,
+  ApiErrorResponse,
+} from '../common/swagger/api-response.decorator';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,12 +25,17 @@ export class UserController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get user by ID' })
-  @ApiResponse({
+  @ApiParam({ name: 'id', description: 'User ID', example: '1' })
+  @ApiDataResponse({
+    description: 'User returned',
     status: 200,
-    description: 'Return the user.',
     type: UserEntity,
   })
-  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiErrorResponse({
+    description: 'User not found',
+    message: 'User not found',
+    status: 404,
+  })
   async getUser(@Param('id') id: string): Promise<UserEntity> {
     const user = await this.userService.user({ id: Number(id) });
     if (!user) {
@@ -37,10 +46,11 @@ export class UserController {
 
   @Get()
   @ApiOperation({ summary: 'Get all users' })
-  @ApiResponse({
+  @ApiDataResponse({
+    description: 'Users returned',
+    isArray: true,
     status: 200,
-    description: 'Return all users.',
-    type: [UserEntity],
+    type: UserEntity,
   })
   async getUsers(): Promise<UserEntity[]> {
     return this.userService.users();
@@ -48,10 +58,16 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({
+  @ApiBody({ type: CreateUserDto })
+  @ApiDataResponse({
+    description: 'User created',
     status: 201,
-    description: 'The user has been successfully created.',
     type: UserEntity,
+  })
+  @ApiErrorResponse({
+    description: 'Invalid request body',
+    message: 'Validation failed',
+    status: 400,
   })
   async signupUser(@Body() userData: CreateUserDto): Promise<UserEntity> {
     return this.userService.createUser(userData);
@@ -59,10 +75,17 @@ export class UserController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a user' })
-  @ApiResponse({
+  @ApiParam({ name: 'id', description: 'User ID', example: '1' })
+  @ApiBody({ type: UpdateUserDto })
+  @ApiDataResponse({
+    description: 'User updated',
     status: 200,
-    description: 'The user has been successfully updated.',
     type: UserEntity,
+  })
+  @ApiErrorResponse({
+    description: 'Invalid request body',
+    message: 'Validation failed',
+    status: 400,
   })
   async updateUser(
     @Param('id') id: string,
@@ -76,9 +99,10 @@ export class UserController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a user' })
-  @ApiResponse({
+  @ApiParam({ name: 'id', description: 'User ID', example: '1' })
+  @ApiDataResponse({
+    description: 'User deleted',
     status: 200,
-    description: 'The user has been successfully deleted.',
     type: UserEntity,
   })
   async deleteUser(@Param('id') id: string): Promise<UserEntity> {

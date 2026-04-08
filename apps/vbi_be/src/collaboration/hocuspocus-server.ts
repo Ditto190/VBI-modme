@@ -2,7 +2,22 @@ import { Server } from '@hocuspocus/server';
 import { Logger } from '@hocuspocus/extension-logger';
 import * as Y from 'yjs';
 import { PrismaService } from '../app/prisma.service';
-import { VBI } from '@visactor/vbi';
+import {
+  createChartDoc,
+  createInsightDoc,
+  createReportDoc,
+  encodeDoc,
+  loadDoc,
+  toPrismaBytes,
+} from '../resource/resource-doc';
+import {
+  appendResourceUpdate,
+  clearResourceUpdates,
+  findResource,
+  listResourceUpdates,
+} from '../resource/resource-storage';
+import { parseRoomName } from '../resource/resource-room';
+import type { ResourceKind } from '../resource/resource.types';
 
 export class HocuspocusServer {
   private server: Server;
@@ -25,84 +40,36 @@ export class HocuspocusServer {
         return { user: { id: 'anonymous' } };
       },
       onLoadDocument: async (data) => {
-        // Load document from database
-        const doc = await this.prisma.document.findUnique({
-          where: { id: data.documentName },
-        });
-
-        const isEmptyDoc = !doc || (doc.data && doc.data.length === 0);
-        if (isEmptyDoc) {
-          // Create empty document with default structure
-          const newDoc = new Y.Doc();
-          const connectorId = 'demo';
-          const empty = VBI.generateEmptyChartDSL(connectorId);
-          const dsl = newDoc.getMap('dsl');
-
-          newDoc.transact(() => {
-            if (empty.connectorId) dsl.set('connectorId', empty.connectorId);
-            if (empty.chartType) dsl.set('chartType', empty.chartType);
-            if (empty.theme) dsl.set('theme', empty.theme);
-            if (empty.locale) dsl.set('locale', empty.locale);
-            if (empty.version) dsl.set('version', empty.version);
-
-            if (!dsl.get('measures')) {
-              dsl.set('measures', new Y.Array());
-            }
-            if (!dsl.get('dimensions')) {
-              dsl.set('dimensions', new Y.Array());
-            }
-          });
-
-          return newDoc;
-        }
-
-        const yDoc = new Y.Doc();
-
-        // Load snapshot
-        if (doc.data && doc.data.length > 0) {
-          Y.applyUpdate(yDoc, doc.data);
-        }
-
-        // Load incremental updates
-        const updates = await this.prisma.documentUpdate.findMany({
-          where: { documentId: data.documentName },
-          orderBy: { id: 'asc' },
-        });
-
-        if (updates.length > 0) {
-          Y.transact(yDoc, () => {
-            for (const update of updates) {
-              Y.applyUpdate(yDoc, new Uint8Array(update.data));
-            }
-          });
-        }
-
-        return yDoc;
+        const room = parseRoomName(data.documentName);
+        await this.ensureResource(room.type, room.id);
+        const record = await findResource(this.prisma, room.type, room.id);
+        const updates = await listResourceUpdates(
+          this.prisma,
+          room.type,
+          room.id,
+        );
+        return loadDoc(
+          record ? new Uint8Array(record.data) : undefined,
+          updates,
+        );
       },
       onStoreDocument: async (data) => {
-        // Store document snapshot
-        await this.prisma.document.upsert({
-          where: { id: data.documentName },
-          update: { data: Buffer.from(Y.encodeStateAsUpdate(data.document)) },
-          create: {
-            id: data.documentName,
-            data: Buffer.from(Y.encodeStateAsUpdate(data.document)),
-          },
-        });
-
-        // Clear incremental updates
-        await this.prisma.documentUpdate.deleteMany({
-          where: { documentId: data.documentName },
-        });
+        const room = parseRoomName(data.documentName);
+        await this.upsertResource(
+          room.type,
+          room.id,
+          toPrismaBytes(Y.encodeStateAsUpdate(data.document)),
+        );
+        await clearResourceUpdates(this.prisma, room.type, room.id);
       },
       onChange: async (data) => {
-        // Store incremental updates
-        await this.prisma.documentUpdate.create({
-          data: {
-            documentId: data.documentName,
-            data: Buffer.from(data.update),
-          },
-        });
+        const room = parseRoomName(data.documentName);
+        await appendResourceUpdate(
+          this.prisma,
+          room.type,
+          room.id,
+          data.update,
+        );
       },
     });
   }
@@ -113,5 +80,52 @@ export class HocuspocusServer {
 
   async stop() {
     await this.server.destroy();
+  }
+
+  private async ensureResource(type: ResourceKind, id: string) {
+    const record = await findResource(this.prisma, type, id);
+    if (record) {
+      return;
+    }
+    const data = this.createDefaultSnapshot(type, id);
+    await this.upsertResource(type, id, data);
+  }
+
+  private async upsertResource(
+    type: ResourceKind,
+    id: string,
+    data: Uint8Array,
+  ) {
+    if (type === 'report') {
+      await this.prisma.report.upsert({
+        where: { id },
+        update: { data: toPrismaBytes(data) },
+        create: { id, name: 'Untitled Report', data: toPrismaBytes(data) },
+      });
+      return;
+    }
+    if (type === 'chart') {
+      await this.prisma.chart.upsert({
+        where: { id },
+        update: { data: toPrismaBytes(data) },
+        create: { id, name: 'Untitled Chart', data: toPrismaBytes(data) },
+      });
+      return;
+    }
+    await this.prisma.insight.upsert({
+      where: { id },
+      update: { data: toPrismaBytes(data) },
+      create: { id, name: 'Untitled Insight', data: toPrismaBytes(data) },
+    });
+  }
+
+  private createDefaultSnapshot(type: ResourceKind, id: string) {
+    if (type === 'report') {
+      return encodeDoc(createReportDoc(id));
+    }
+    if (type === 'chart') {
+      return encodeDoc(createChartDoc(id));
+    }
+    return encodeDoc(createInsightDoc(id));
   }
 }

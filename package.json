@@ -22,7 +22,7 @@
     "test:coverage": "pnpm -r test:coverage",
     "publish:ci": "turbo run build --filter=@visactor/vseed --filter=@visactor/vquery --filter=@visactor/vbi && pnpm changeset publish --filter=@visactor/vseed,@visactor/vquery,@visactor/vbi --access=public",
     "vbi:dev": "docker compose -f ./docker/docker-compose.dev.yml up -d",
-    "vbi:dev:build": "docker compose -f ./docker/docker-compose.dev.yml up --build -d",
+    "vbi:dev:build": "docker compose -f ./docker/docker-compose.dev.yml up --build",
     "vbi:dev:down": "docker compose -f ./docker/docker-compose.dev.yml down",
     "vbi:dev:rebuild": "docker compose -f ./docker/docker-compose.dev.yml down && docker compose -f ./docker/docker-compose.dev.yml build --no-cache && docker compose -f ./docker/docker-compose.dev.yml up --force-recreate",
     "prepare": "husky",

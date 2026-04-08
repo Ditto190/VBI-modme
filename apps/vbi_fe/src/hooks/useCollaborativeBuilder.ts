@@ -1,8 +1,12 @@
 import { useState, useEffect, useEffectEvent } from 'react';
 import * as Y from 'yjs';
 import { HocuspocusProvider } from '@hocuspocus/provider';
-import { VBIChartBuilder } from '@visactor/vbi';
-import { isValidDoc } from 'src/utils';
+import {
+  VBIChartBuilder,
+  VBIInsightBuilder,
+  VBIReportBuilder,
+} from '@visactor/vbi';
+import { buildRoomName, type ResourceKind } from '../utils/resourceRoom';
 
 const getRandomColor = () => {
   const colors = [
@@ -17,16 +21,33 @@ const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-export const useCollaborativeBuilder = (roomName: string, userName: string) => {
-  const [builder, setBuilder] = useState<VBIChartBuilder | null>(null);
+type BuilderMap = {
+  chart: VBIChartBuilder;
+  insight: VBIInsightBuilder;
+  report: VBIReportBuilder;
+};
+
+export const useCollaborativeBuilder = <TType extends ResourceKind>(
+  type: TType,
+  resourceId: string,
+  userName: string,
+  revision = 0,
+) => {
+  const [builder, setBuilder] = useState<BuilderMap[TType] | null>(null);
   const [provider, setProvider] = useState<HocuspocusProvider | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const roomName = resourceId ? buildRoomName(type, resourceId) : '';
 
   const createBuilder = useEffectEvent((doc: Y.Doc) => {
-    if (!isValidDoc(doc)) {
+    if (type === 'chart') {
+      setBuilder(() => new VBIChartBuilder(doc) as BuilderMap[TType]);
       return;
     }
-    setBuilder(() => new VBIChartBuilder(doc));
+    if (type === 'insight') {
+      setBuilder(() => new VBIInsightBuilder(doc) as BuilderMap[TType]);
+      return;
+    }
+    setBuilder(() => new VBIReportBuilder(doc) as BuilderMap[TType]);
   });
 
   const destroyBuilder = useEffectEvent(() => {
@@ -65,13 +86,11 @@ export const useCollaborativeBuilder = (roomName: string, userName: string) => {
     });
 
     return () => {
-      doc.destroy();
       destroyBuilder();
-      if (provider) {
-        provider.destroy();
-      }
+      provider.destroy();
+      doc.destroy();
     };
-  }, [roomName, userName]);
+  }, [revision, roomName, userName, type]);
 
   return { builder, provider, isConnected };
 };

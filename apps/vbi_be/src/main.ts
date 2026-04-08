@@ -44,8 +44,9 @@ const bootstrap = async () => {
   // 5. Generate Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('VBI API')
-    .setDescription('The VBI API description')
+    .setDescription('VBI backend REST API')
     .setVersion('1.0')
+    .addServer('/api/v1', 'Default API base path')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

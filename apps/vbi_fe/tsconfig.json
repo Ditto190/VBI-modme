@@ -38,6 +38,9 @@
     },
     {
       "path": "../../practices/standard"
+    },
+    {
+      "path": "../../practices/standard-report"
     }
   ],
   "include": ["src"]
