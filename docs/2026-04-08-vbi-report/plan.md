@@ -11,7 +11,7 @@
 - `report` 只保存 page 结构和资源引用
 - `packages/vbi` 内提供纯 DSL 层 `snapshot()`，可导出 report 的完整 chart / insight 闭包
 - 前后端协同 room 统一为 `{type}:{id}`
-- `vbi_fe` 支持 chart / report 双入口
+- `vbi_fe` 提供 `/reports` 与 `/manage` 两类入口
 - `standard-report` 变成资源编排壳层
 
 ## 范围
@@ -78,7 +78,7 @@
 原因：
 
 - `04` 和 `05` 依赖 `01` 的资源模型
-- `03` 依赖 `02` 的资源主表和资源类型语义
+- `03` 依赖 `02` 的三表模型和资源类型语义
 - `05` 依赖 `04` 提供的前端资源入口与 `resourceGateway`
 
 ## 执行清单
@@ -104,7 +104,7 @@
 
 - 无
 
-### Step 2: 完成 `apps/vbi_be` 资源主表和引用关系
+### Step 2: 完成 `apps/vbi_be` 三表资源模型与 report 结构编排
 
 输入：
 
@@ -113,11 +113,14 @@
 
 完成定义：
 
-- 后端存在统一 `Resource` 语义
+- 后端存在 `report / chart / insight` 三张业务主表
+- `page` 不单独建表，但可通过 report 接口稳定编排
+- report、chart、insight 都支持独立 CRUD
 - 可表达 report page -> chart / insight 引用
 - 删除 page 仅删除引用，不删除底层资源
 - 删除资源前存在引用校验
-- 资源生命周期与引用关系已有服务层测试覆盖
+- report 结构变更先走后端接口，再同步前端 DSL 投影
+- 资源生命周期与 page 编排已有服务层测试覆盖
 
 阻塞项：
 
@@ -134,7 +137,8 @@
 
 - room 命名统一为 `{type}:{id}`
 - `chart` / `report` / `insight` 初始化逻辑各自独立
-- snapshot / update 与资源类型、资源 id 对齐
+- snapshot / update 明确归属于 `chart` / `report` / `insight`
+- `page` 不存在独立 room
 - 跨类型 room 不串写
 - 断连恢复与跨类型隔离测试先失败后通过
 
@@ -151,10 +155,13 @@
 
 完成定义：
 
-- 列表页支持 chart / report 双入口
-- 路由拆分为 `/chart/:id` 和 `/report/:id`
+- 页面存在 `/reports` 与 `/manage` 两类顶层入口
+- `/reports` 支持 report 列表 CRUD，并能进入 `/reports/:id`
+- `/manage/charts` 支持 chart 独立 CRUD
+- `/manage/insights` 支持 insight 独立 CRUD
 - 前端协同 hook 可按资源类型创建 builder
 - report 页可通过 `resourceGateway` 打开子资源
+- report 页新增、删除、排序、绑定 page 结构都先走后端接口
 - 页面与 hook 行为已有自动化测试或可重复执行的组件级测试
 
 阻塞项：
@@ -171,9 +178,11 @@
 完成定义：
 
 - `standard-report` 入口变为 `reportBuilder + resourceGateway`
+- 点击 report 后进入 standard-report 风格的类似 PPT 页面
 - page 预览与编辑基于 `chartId` / `insightId`
 - 新增 page 支持“新建资源 / 绑定已有资源”
 - 删除 page 仅移除引用
+- page 生命周期动作先走后端编排接口，再更新本地结构投影
 - active page 按需懒加载子资源
 - page 生命周期与共享引用行为已有回归测试
 
@@ -185,18 +194,21 @@
 
 必须验证以下场景：
 
-1. 创建 chart 后进入 `/chart/:id` 可正常协同编辑
-2. 创建 report 后自动具备首个可用 page 引用
-3. report 首次打开可基于 `chartId` / `insightId` 正确渲染
-4. report 中新增 page 可新建资源或绑定已有资源
-5. 删除 page 仅移除引用，不删除底层资源
-6. 两个 report 引用同一 chart / insight 时，编辑结果实时共享
-7. report 切换 active page 时，仅当前 page 子资源保持活跃连接
-8. `reportBuilder.snapshot()` 不依赖业务接口即可返回完整闭包内容
+1. `/manage/charts` 下可独立增删改查 chart
+2. `/manage/insights` 下可独立增删改查 insight
+3. `/reports` 下可独立增删改查 report
+4. 点击 report 后进入类似 PPT 的 standard-report 页面
+5. 创建 report 后自动具备首个可用 page 引用
+6. report 首次打开可基于 `chartId` / `insightId` 正确渲染
+7. report 中新增 page 可新建资源或绑定已有资源
+8. 删除 page 仅移除引用，不删除底层资源
+9. 两个 report 引用同一 chart / insight 时，编辑结果实时共享
+10. report 切换 active page 时，仅当前 page 子资源保持活跃连接
+11. `reportBuilder.snapshot()` 不依赖业务接口即可返回完整闭包内容
 
 完成定义：
 
-- 上述 8 个场景全部通过
+- 上述 11 个场景全部通过
 - 无跨类型 room 串写
 - 无 page 删除导致资源误删
 - 所有新增行为均有自动化回归测试
@@ -206,12 +218,12 @@
 允许并行：
 
 - `02-vbi-be-resource-store` 与 `01-vbi-resource-model` 后半段联动设计
-- `04-vbi-fe-resource-entry` 的页面壳子准备，可在 `03` 完成前先做静态路由骨架
+- `04-vbi-fe-resource-entry` 的页面壳子准备，可在 `03` 完成前先做静态路由骨架与接口占位
 
 不要并行：
 
 - 在 `01` 未稳定前推进 `05`
-- 在 `02` 未稳定前落定 `03` 的持久化实现
+- 在 `02` 未稳定前落定 `03` 的持久化实现与 `04/05` 的 page 编排写路径
 
 ## 验证命令
 
@@ -236,8 +248,9 @@ pnpm --filter=standard-report run test
 
 1. report 已从内嵌内容模型切到引用模型
 2. `packages/vbi` 已支持 `snapshot()` 与实例级 `ResourceRegistry`
-3. 后端已支持资源主表、引用关系和删除校验
+3. 后端已支持 `report / chart / insight` 三表模型、page 编排和删除校验
 4. 协同层已统一 `{type}:{id}` 协议
-5. 前端已具备 chart / report 双入口
-6. `standard-report` 已完成资源编排壳层化
-7. 关键联调场景全部通过
+5. 前端已具备 `/reports` 与 `/manage` 两类入口，且 chart / insight / report 都可独立管理
+6. 点击 report 后可进入 standard-report 风格的类似 PPT 页面，且 report 结构变更由后端接口主导
+7. `standard-report` 已完成资源编排壳层化，并不再把本地 builder 当 page 结构事实源
+8. 关键联调场景全部通过

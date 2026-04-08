@@ -20,6 +20,7 @@
 1. 先补入口协议与 page 引用结构的失败测试
 2. 入口从内嵌 report builder 模式改为 `reportBuilder + resourceGateway`
 3. 明确 page 只依赖 `chartId` / `insightId`
+4. 接入 report 结构编排接口
 
 ## Phase 2: 改造 page 视图与编辑装配
 
@@ -33,9 +34,10 @@
 
 任务：
 
-1. 新增 page 时支持新建资源或绑定已有资源
-2. 删除 page 时仅移除引用
-3. 切换 active page 时懒加载当前 page 子资源
+1. 新增 page 时先调后端创建 page，再支持新建资源或绑定已有资源
+2. 删除 page 时先调后端删除 page，再同步本地结构投影
+3. 更新 page 标题、排序、绑定关系时先走后端接口
+4. 切换 active page 时懒加载当前 page 子资源
 
 ## Phase 4: 验证
 
@@ -44,9 +46,11 @@
 1. 验证同一 chart 被多个 report 引用时的共享效果
 2. 验证 page 删除不会删除底层资源
 3. 验证 active page 切换时子资源连接稳定
+4. 验证 page 结构变更不会绕过后端事实源
 
 验收标准：
 
 1. `standard-report` 只负责结构与编排，不持有子资源内容
 2. report 视图与编辑体验可基于资源引用形成闭环
-3. page 生命周期与共享资源行为均有自动化回归测试
+3. page 生命周期先走后端接口，再更新本地投影
+4. page 生命周期与共享资源行为均有自动化回归测试

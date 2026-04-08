@@ -2,7 +2,7 @@
 
 ## Summary
 
-`practices/standard-report` 不再直接编辑内嵌在 report 内的 chart/text DSL，而是只负责 report page 容器和子资源编排。
+`practices/standard-report` 不再直接编辑内嵌在 report 内的 chart / insight 内容，而是只负责 report page 容器和子资源编排。
 
 ## Decision
 
@@ -21,6 +21,14 @@
 - `createInsight()`
 - `resolveReference(ids)`
 
+同时还需要接入 report 结构编排能力，用于：
+
+- `createPage(...)`
+- `removePage(...)`
+- `updatePage(...)`
+- `reorderPages(...)`
+- `bindPageResource(...)`
+
 ### 2. page 只保存资源引用
 
 page 内图表区和洞察区都通过引用资源渲染和编辑：
@@ -30,9 +38,11 @@ page 内图表区和洞察区都通过引用资源渲染和编辑：
 
 ### 3. page 生命周期只改 report 结构
 
-- 新增 page: 先决定新建资源还是绑定已有资源，再写引用
-- 删除 page: 只删 page 结构与引用
+- 新增 page: 先调用后端创建 page，再决定新建资源还是绑定已有资源
+- 删除 page: 先调用后端删除 page，再同步本地 report 结构投影
 - 切换 page: 按需加载当前活跃 page 的子资源
+
+`standard-report` 不再把本地 report builder 当作 page 结构事实源，它只消费后端成功返回后的最新结构。
 
 ## Consequences
 
@@ -41,7 +51,9 @@ page 内图表区和洞察区都通过引用资源渲染和编辑：
 - `standard-report` 职责边界清晰
 - 子资源复用能力成立
 - chart 体验继续以 standard 为唯一来源
+- report 结构与数据库事实源保持一致
 
 代价：
 
 - 需要改造现有 preview / editor 绑定方式
+- page 生命周期动作需要显式接后端编排接口

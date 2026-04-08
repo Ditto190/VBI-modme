@@ -21,6 +21,7 @@
 2. 约定 room 格式为 `{type}:{id}`
 3. 修改前端 room 生成逻辑
 4. 修改后端 room 解析逻辑
+5. 明确 `page` 不生成独立 room
 
 ## Phase 2: 按类型初始化文档
 
@@ -28,18 +29,21 @@
 
 1. 调整 `onLoadDocument`
 2. 为 chart / report / insight 分配默认空 DSL
-3. 校验默认文档与 builder 类型一致
+3. 保证 report 默认文档只包含 page 引用结构
+4. 校验默认文档与 builder 类型一致
 
 ## Phase 3: 调整持久化链路
 
 任务：
 
-1. 让 snapshot / update 读写绑定 `resource_id`
+1. 让 snapshot / update 明确归属于 `report/chart/insight` 三类资源之一
 2. 保证 room 解析后能落到正确资源记录
-3. 补断连恢复与跨类型隔离测试
+3. 保证 report 内容不会回退成内嵌 chart-only 语义
+4. 补断连恢复与跨类型隔离测试
 
 验收标准：
 
 1. `chart:id`、`report:id`、`insight:id` 不串写
 2. 同类资源可正确恢复历史快照和增量更新
-3. room 解析、初始化、恢复链路均有自动化测试
+3. `page` 没有独立 room，且只归属 report 结构文档
+4. room 解析、初始化、恢复链路均有自动化测试
