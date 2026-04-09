@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import { DebugBridgeInstaller } from './components/DebugBridgeInstaller';
+import { NavigationBinder } from './components/NavigationBinder';
 import { registerDemoConnector } from './utils/demoConnector';
 import { ManageChartsPage } from './pages/ManageChartsPage';
 import { ManageInsightsPage } from './pages/ManageInsightsPage';
@@ -22,6 +24,8 @@ const App = memo(() => {
       }}
     >
       <BrowserRouter>
+        <NavigationBinder />
+        <DebugBridgeInstaller />
         <Routes>
           <Route path="/" element={<Navigate to="/reports" replace />} />
           <Route path="/reports" element={<ReportsPage />} />

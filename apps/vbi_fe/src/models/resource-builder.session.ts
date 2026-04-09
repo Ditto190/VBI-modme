@@ -14,6 +14,8 @@ export const createBuilderSession = <TKind extends ResourceKind>(
   opening: null,
   provider: null,
   refs: 0,
+  stopSync: null,
+  version: 0,
 });
 
 export const setSessionRefs = <TBuilder>(
@@ -30,11 +32,14 @@ export const setConnectedSession = <TBuilder>(
   session: BuilderSession<TBuilder>,
   builder: TBuilder,
   provider: HocuspocusProvider | null,
+  stopSync: (() => void) | null,
 ): BuilderSession<TBuilder> => ({
   ...session,
   builder,
   opening: null,
   provider,
+  stopSync,
+  version: 0,
 });
 
 export const resetSessionConnection = <TBuilder>(
@@ -44,4 +49,13 @@ export const resetSessionConnection = <TBuilder>(
   builder: null,
   opening: null,
   provider: null,
+  stopSync: null,
+  version: 0,
+});
+
+export const bumpSessionVersion = <TBuilder>(
+  session: BuilderSession<TBuilder>,
+): BuilderSession<TBuilder> => ({
+  ...session,
+  version: session.version + 1,
 });

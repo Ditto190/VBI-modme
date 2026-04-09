@@ -22,6 +22,8 @@ export type BuilderSession<TBuilder> = {
   opening: Promise<void> | null;
   provider: HocuspocusProvider | null;
   refs: number;
+  stopSync: (() => void) | null;
+  version: number;
 };
 
 export type BuilderStoreState<TBuilder> = {

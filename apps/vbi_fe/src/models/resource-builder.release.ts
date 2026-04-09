@@ -42,6 +42,7 @@ export const createReleaseController = <TBuilder>(
         timers.delete(resourceId);
         const session = getState().sessions[resourceId];
         if (!session || session.refs > 0) return;
+        session.stopSync?.();
         setState((state) => ({
           sessions: removeSession(state.sessions, resourceId),
         }));

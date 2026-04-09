@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Button,
   Input,
@@ -9,74 +9,35 @@ import {
   Typography,
   message,
 } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import {
-  createResource,
-  listResources,
-  removeResource,
-  renameResource,
-} from '../services/resourceApi';
+import { useNavigationStore } from '../stores/navigation.store';
+import { useReportsStore } from '../stores/reports.store';
 import type { ResourceItem } from '../types';
 
 const { Title } = Typography;
 
 export const ReportsPage = () => {
-  const navigate = useNavigate();
-  const [items, setItems] = useState<ResourceItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [createName, setCreateName] = useState('');
-  const [editing, setEditing] = useState<ResourceItem | null>(null);
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [renameValue, setRenameValue] = useState('');
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      setItems(await listResources('report'));
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const createName = useReportsStore((state) => state.createName);
+  const editing = useReportsStore((state) => state.editing);
+  const isCreateOpen = useReportsStore((state) => state.isCreateOpen);
+  const items = useReportsStore((state) => state.items);
+  const loading = useReportsStore((state) => state.loading);
+  const renameValue = useReportsStore((state) => state.renameValue);
+  const closeCreate = useReportsStore((state) => state.closeCreate);
+  const confirmRename = useReportsStore((state) => state.confirmRename);
+  const create = useReportsStore((state) => state.create);
+  const load = useReportsStore((state) => state.load);
+  const openCreate = useReportsStore((state) => state.openCreate);
+  const openReport = useReportsStore((state) => state.openReport);
+  const remove = useReportsStore((state) => state.remove);
+  const setCreateName = useReportsStore((state) => state.setCreateName);
+  const setRenameValue = useReportsStore((state) => state.setRenameValue);
+  const startRename = useReportsStore((state) => state.startRename);
+  const stopRename = useReportsStore((state) => state.stopRename);
+  const go = useNavigationStore((state) => state.go);
 
   useEffect(() => {
     void load();
   }, [load]);
-
-  const handleCreate = async () => {
-    if (!createName.trim()) {
-      message.warning('请输入报告名称');
-      return;
-    }
-    try {
-      const report = await createResource('report', createName.trim());
-      setIsCreateOpen(false);
-      setCreateName('');
-      await load();
-      navigate(`/reports/${report.id}`);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const handleRename = async () => {
-    if (!editing) return;
-    try {
-      await renameResource(
-        'report',
-        editing.id,
-        renameValue.trim() || editing.name || 'Untitled Report',
-      );
-      setEditing(null);
-      setRenameValue('');
-      await load();
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
 
   const columns = [
     {
@@ -96,30 +57,19 @@ export const ReportsPage = () => {
       key: 'actions',
       render: (_: unknown, record: ResourceItem) => (
         <Space>
-          <Button
-            type="primary"
-            onClick={() => navigate(`/reports/${record.id}`)}
-          >
+          <Button type="primary" onClick={() => openReport(record.id)}>
             打开
           </Button>
           <Button
             onClick={() => {
-              setEditing(record);
-              setRenameValue(record.name || '');
+              startRename(record);
             }}
           >
             重命名
           </Button>
           <Popconfirm
             title="删除报告"
-            onConfirm={async () => {
-              try {
-                await removeResource('report', record.id);
-                await load();
-              } catch (error) {
-                console.error(error);
-              }
-            }}
+            onConfirm={async () => remove(record.id)}
           >
             <Button danger>删除</Button>
           </Popconfirm>
@@ -141,8 +91,8 @@ export const ReportsPage = () => {
           Reports
         </Title>
         <Space>
-          <Button onClick={() => navigate('/manage/charts')}>管理资源</Button>
-          <Button type="primary" onClick={() => setIsCreateOpen(true)}>
+          <Button onClick={() => go('/manage/charts')}>管理资源</Button>
+          <Button type="primary" onClick={openCreate}>
             新建报告
           </Button>
         </Space>
@@ -156,8 +106,14 @@ export const ReportsPage = () => {
       <Modal
         open={isCreateOpen}
         title="新建报告"
-        onOk={handleCreate}
-        onCancel={() => setIsCreateOpen(false)}
+        onOk={async () => {
+          if (!createName.trim()) {
+            message.warning('请输入报告名称');
+            return;
+          }
+          await create();
+        }}
+        onCancel={closeCreate}
       >
         <Input
           value={createName}
@@ -167,8 +123,8 @@ export const ReportsPage = () => {
       <Modal
         open={!!editing}
         title="重命名报告"
-        onOk={handleRename}
-        onCancel={() => setEditing(null)}
+        onOk={confirmRename}
+        onCancel={stopRename}
       >
         <Input
           value={renameValue}

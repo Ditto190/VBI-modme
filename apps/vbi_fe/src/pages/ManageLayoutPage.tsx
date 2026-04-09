@@ -4,20 +4,21 @@ import {
   FileTextOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { useNavigationStore } from '../stores/navigation.store';
 
 const { Sider, Content } = Layout;
 
 export const ManageLayoutPage = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = useNavigationStore((state) => state.pathname);
+  const go = useNavigationStore((state) => state.go);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider width={240} theme="light">
         <Menu
           mode="inline"
-          selectedKeys={[location.pathname]}
+          selectedKeys={[pathname]}
           items={[
             { key: '/reports', icon: <FileTextOutlined />, label: 'Reports' },
             {
@@ -31,7 +32,7 @@ export const ManageLayoutPage = () => {
               label: 'Insights',
             },
           ]}
-          onClick={({ key }) => navigate(key)}
+          onClick={({ key }) => go(key)}
         />
       </Sider>
       <Content style={{ background: '#fff' }}>

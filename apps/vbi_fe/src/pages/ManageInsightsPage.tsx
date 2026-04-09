@@ -1,73 +1,68 @@
-import { Button, Drawer, Form, Input, Modal, Popconfirm, Space } from 'antd';
-import type { Key } from 'react';
-import { useCallback, useState } from 'react';
-import { useBuilderSnapshot } from '../hooks/useBuilderSnapshot';
-import { useResourceBuilder } from '../hooks/useResourceBuilder';
-import {
-  createInsight,
-  deleteInsight,
-  fetchInsight,
-  fetchInsights,
-  updateInsight,
-} from '../services/insightApi';
-import type { InsightRecord, ResourceItem } from '../types';
-import { getSessionUserName } from '../utils/collaboration';
+import { Button, Drawer, Input, Modal, Popconfirm, Space, message } from 'antd';
+import { useEffect } from 'react';
+import { useInsightBuilderModel } from '../models';
+import { useManageInsightsStore } from '../stores/manage-insights.store';
 import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import {
-  confirmBatchDelete,
-  deleteResources,
-  useResourceList,
-} from './manage-resource/state';
+import { matchesResourceSearch } from './manage-resource/state';
+import type { ResourceItem } from '../types';
+import { getSessionUserName } from '../utils/collaboration';
 
 const userName = getSessionUserName();
 
 export const ManageInsightsPage = () => {
-  const [selected, setSelected] = useState<InsightRecord | null>(null);
-  const [createOpen, setCreateOpen] = useState(false);
-  const [editingName, setEditingName] = useState('');
-  const [createForm] = Form.useForm<{ name?: string; content?: string }>();
-  const { builder: insightBuilder } = useResourceBuilder(
-    'insight',
-    selected?.id || '',
-    userName,
+  const createContent = useManageInsightsStore((state) => state.createContent);
+  const createName = useManageInsightsStore((state) => state.createName);
+  const createOpen = useManageInsightsStore((state) => state.createOpen);
+  const editorName = useManageInsightsStore((state) => state.editorName);
+  const items = useManageInsightsStore((state) => state.items);
+  const searchText = useManageInsightsStore((state) => state.searchText);
+  const selectedId = useManageInsightsStore((state) => state.selectedId);
+  const selectedRowKeys = useManageInsightsStore(
+    (state) => state.selectedRowKeys,
   );
-  const insightContent = useBuilderSnapshot(
-    insightBuilder,
-    (builder) => builder.build().content ?? '',
-    selected?.content ?? '',
+  const bootstrap = useManageInsightsStore((state) => state.bootstrap);
+  const clearSelection = useManageInsightsStore(
+    (state) => state.clearSelection,
   );
-  const {
-    filteredItems,
-    reload,
-    searchText,
-    selectedRowKeys,
-    setSearchText,
-    setSelectedRowKeys,
-  } = useResourceList(fetchInsights);
+  const closeCreate = useManageInsightsStore((state) => state.closeCreate);
+  const closeDetail = useManageInsightsStore((state) => state.closeDetail);
+  const create = useManageInsightsStore((state) => state.create);
+  const deleteOne = useManageInsightsStore((state) => state.deleteOne);
+  const deleteSelected = useManageInsightsStore(
+    (state) => state.deleteSelected,
+  );
+  const dispose = useManageInsightsStore((state) => state.dispose);
+  const openCreate = useManageInsightsStore((state) => state.openCreate);
+  const openDetail = useManageInsightsStore((state) => state.openDetail);
+  const renameSelected = useManageInsightsStore(
+    (state) => state.renameSelected,
+  );
+  const selectAllFiltered = useManageInsightsStore(
+    (state) => state.selectAllFiltered,
+  );
+  const setCreateContent = useManageInsightsStore(
+    (state) => state.setCreateContent,
+  );
+  const setCreateName = useManageInsightsStore((state) => state.setCreateName);
+  const setEditorName = useManageInsightsStore((state) => state.setEditorName);
+  const setSearchText = useManageInsightsStore((state) => state.setSearchText);
+  const setSelectedRowKeys = useManageInsightsStore(
+    (state) => state.setSelectedRowKeys,
+  );
+  const insightSession = useInsightBuilderModel(
+    (state) => state.sessions[selectedId],
+  );
+  const insightContent = insightSession?.builder?.build().content ?? '';
+  const filteredItems = items.filter((item) =>
+    matchesResourceSearch(item, searchText),
+  );
 
-  const openInsight = async (id: string) => {
-    try {
-      const detail = await fetchInsight(id);
-      setSelected(detail);
-      setEditingName(detail.name ?? '');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const saveSelectedName = useCallback(async () => {
-    if (!selected) return;
-    const nextName = editingName.trim() || selected.name || 'Untitled Insight';
-    try {
-      await updateInsight(selected.id, {
-        name: nextName,
-      });
-      await reload();
-      setSelected({ ...selected, name: nextName });
-    } catch (error) {
-      console.error(error);
-    }
-  }, [editingName, reload, selected]);
+  useEffect(() => {
+    void bootstrap(userName);
+    return () => {
+      void dispose();
+    };
+  }, [bootstrap, dispose]);
 
   const columns = [
     {
@@ -87,26 +82,10 @@ export const ManageInsightsPage = () => {
       key: 'actions',
       render: (_: unknown, record: ResourceItem) => (
         <Space>
-          <Button onClick={() => void openInsight(record.id)}>编辑</Button>
+          <Button onClick={() => void openDetail(record.id)}>编辑</Button>
           <Popconfirm
             title="删除 insight"
-            onConfirm={async () => {
-              try {
-                await deleteResources({
-                  deleteOne: deleteInsight,
-                  ids: [record.id],
-                  onSuccess: () => {
-                    if (selected?.id === record.id) {
-                      setSelected(null);
-                    }
-                  },
-                  reload,
-                  resourceLabel: 'insight',
-                });
-              } catch (error) {
-                console.error(error);
-              }
-            }}
+            onConfirm={async () => deleteOne(record.id)}
           >
             <Button danger>删除</Button>
           </Popconfirm>
@@ -120,32 +99,17 @@ export const ManageInsightsPage = () => {
       columns={columns}
       createLabel="新建 Insight"
       dataSource={filteredItems}
-      onBatchDelete={() =>
-        confirmBatchDelete({
-          deleteOne: deleteInsight,
-          ids: selectedRowKeys.map(String),
-          onSuccess: (deletedIds) => {
-            setSelectedRowKeys((keys) =>
-              keys.filter((key) => !deletedIds.includes(String(key))),
-            );
-            if (selected && deletedIds.includes(selected.id)) {
-              setSelected(null);
-            }
-          },
-          reload,
-          resourceLabel: 'insight',
-          title: '批量删除 insight',
-        })
-      }
-      onClearSelection={() => setSelectedRowKeys([])}
-      onCreate={() => setCreateOpen(true)}
+      onBatchDelete={async () => {
+        if (!selectedRowKeys.length) return;
+        await deleteSelected();
+      }}
+      onClearSelection={clearSelection}
+      onCreate={openCreate}
       onSearchTextChange={setSearchText}
-      onSelectAllFiltered={() =>
-        setSelectedRowKeys(filteredItems.map((item) => item.id))
-      }
+      onSelectAllFiltered={selectAllFiltered}
       rowSelection={{
         selectedRowKeys,
-        onChange: (keys: Key[]) => setSelectedRowKeys(keys),
+        onChange: (keys) => setSelectedRowKeys(keys.map(String)),
       }}
       searchText={searchText}
       selectedRowKeys={selectedRowKeys}
@@ -155,52 +119,49 @@ export const ManageInsightsPage = () => {
         open={createOpen}
         title="新建 Insight"
         onOk={async () => {
-          try {
-            const values = await createForm.validateFields();
-            await createInsight({
-              name: values.name || 'Untitled Insight',
-              content: values.content,
-            });
-            createForm.resetFields();
-            setCreateOpen(false);
-            await reload();
-          } catch (error) {
-            console.error(error);
-            throw error;
+          if (!createName.trim()) {
+            message.warning('请输入 Insight 标题');
+            return;
           }
+          await create();
         }}
-        onCancel={() => setCreateOpen(false)}
+        onCancel={closeCreate}
       >
-        <Form form={createForm} layout="vertical">
-          <Form.Item name="name" label="标题">
-            <Input />
-          </Form.Item>
-          <Form.Item name="content" label="正文">
-            <Input.TextArea rows={6} />
-          </Form.Item>
-        </Form>
+        <Space direction="vertical" style={{ width: '100%' }} size={12}>
+          <Input
+            value={createName}
+            placeholder="标题"
+            onChange={(event) => setCreateName(event.target.value)}
+          />
+          <Input.TextArea
+            rows={6}
+            value={createContent}
+            placeholder="正文"
+            onChange={(event) => setCreateContent(event.target.value)}
+          />
+        </Space>
       </Modal>
       <Drawer
         size={560}
-        open={!!selected}
-        title={selected?.name || 'Insight Editor'}
-        onClose={() => setSelected(null)}
-        extra={<Button onClick={() => setSelected(null)}>关闭</Button>}
+        open={!!selectedId}
+        title={editorName || 'Insight Editor'}
+        onClose={() => void closeDetail()}
+        extra={<Button onClick={() => void closeDetail()}>关闭</Button>}
       >
-        <Space orientation="vertical" style={{ width: '100%' }} size={12}>
+        <Space direction="vertical" style={{ width: '100%' }} size={12}>
           <Input
-            value={editingName}
+            value={editorName}
             placeholder="标题"
-            onChange={(event) => setEditingName(event.target.value)}
-            onBlur={() => void saveSelectedName()}
-            onPressEnter={() => void saveSelectedName()}
+            onChange={(event) => setEditorName(event.target.value)}
+            onBlur={() => void renameSelected()}
+            onPressEnter={() => void renameSelected()}
           />
           <Input.TextArea
             autoSize={{ minRows: 10, maxRows: 20 }}
             value={insightContent}
             placeholder="输入正文，内容会实时同步"
             onChange={(event) => {
-              insightBuilder?.setContent(event.target.value);
+              insightSession?.builder?.setContent(event.target.value);
             }}
           />
         </Space>

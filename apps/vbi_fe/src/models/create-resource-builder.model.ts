@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { ResourceKind } from '../types';
 import { createReleaseController } from './resource-builder.release';
 import {
+  bumpSessionVersion,
   createBuilderSession,
   resetSessionConnection,
   setConnectedSession,
@@ -20,6 +21,9 @@ export const createResourceBuilderModel = <TKind extends ResourceKind>(
 ) =>
   create<BuilderStoreState<BuilderByKind[TKind]>>((set, get) => {
     const release = createReleaseController(get, set);
+    const stopSessionSync = (resourceId: string) => {
+      get().sessions[resourceId]?.stopSync?.();
+    };
 
     return {
       sessions: {},
@@ -68,17 +72,39 @@ export const createResourceBuilderModel = <TKind extends ResourceKind>(
         const opening = (async () => {
           const builder = (await current.handle.open()) as BuilderByKind[TKind];
           const provider = await current.handle.getCollaborationProvider();
+          const onUpdate = () => {
+            set((state) => {
+              const session = state.sessions[resourceId];
+              if (!session || session.handle !== current.handle) return state;
+              return {
+                sessions: {
+                  ...state.sessions,
+                  [resourceId]: bumpSessionVersion(session),
+                },
+              };
+            });
+          };
+          builder.doc.on('update', onUpdate);
+          const stopSync = () => {
+            builder.doc.off('update', onUpdate);
+          };
           set((state) => {
             const session = state.sessions[resourceId];
             if (!session || session.handle !== current.handle) return state;
             return {
               sessions: {
                 ...state.sessions,
-                [resourceId]: setConnectedSession(session, builder, provider),
+                [resourceId]: setConnectedSession(
+                  session,
+                  builder,
+                  provider,
+                  stopSync,
+                ),
               },
             };
           });
         })().catch((error) => {
+          stopSessionSync(resourceId);
           set((state) => {
             const session = state.sessions[resourceId];
             if (!session || session.handle !== current.handle) return state;

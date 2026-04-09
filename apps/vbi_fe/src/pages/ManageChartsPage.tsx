@@ -4,60 +4,69 @@ import {
   Drawer,
   Input,
   Modal,
+  message,
   Popconfirm,
   Space,
   Typography,
 } from 'antd';
+import { useEffect } from 'react';
 import type { Key } from 'react';
-import { useCallback, useState } from 'react';
-import { useResourceBuilder } from '../hooks/useResourceBuilder';
+import { useChartBuilderModel } from '../models';
 import type { ResourceItem } from '../types';
 import { getSessionUserName } from '../utils/collaboration';
 import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import {
-  createResource,
-  listResources,
-  removeResource,
-  renameResource,
-} from '../services/resourceApi';
-import {
-  confirmBatchDelete,
-  deleteResources,
-  useResourceList,
-} from './manage-resource/state';
+import { useManageChartsStore } from '../stores/manage-charts.store';
+import { matchesResourceSearch } from './manage-resource/state';
 
 const userName = getSessionUserName();
 
 export const ManageChartsPage = () => {
-  const [selected, setSelected] = useState<ResourceItem | null>(null);
-  const [createName, setCreateName] = useState('');
-  const [editingName, setEditingName] = useState('');
-  const [createOpen, setCreateOpen] = useState(false);
-  const { builder } = useResourceBuilder('chart', selected?.id || '', userName);
-  const {
-    filteredItems,
-    reload,
-    searchText,
-    selectedRowKeys,
-    setSearchText,
-    setSelectedRowKeys,
-  } = useResourceList(() => listResources('chart'));
+  const createName = useManageChartsStore((state) => state.createName);
+  const createOpen = useManageChartsStore((state) => state.createOpen);
+  const editorName = useManageChartsStore((state) => state.editorName);
+  const items = useManageChartsStore((state) => state.items);
+  const searchText = useManageChartsStore((state) => state.searchText);
+  const selectedId = useManageChartsStore((state) => state.selectedId);
+  const selectedRowKeys = useManageChartsStore(
+    (state) => state.selectedRowKeys,
+  );
+  const bootstrap = useManageChartsStore((state) => state.bootstrap);
+  const clearSelection = useManageChartsStore((state) => state.clearSelection);
+  const closeCreate = useManageChartsStore((state) => state.closeCreate);
+  const closeDetail = useManageChartsStore((state) => state.closeDetail);
+  const create = useManageChartsStore((state) => state.create);
+  const deleteOne = useManageChartsStore((state) => state.deleteOne);
+  const deleteSelected = useManageChartsStore((state) => state.deleteSelected);
+  const dispose = useManageChartsStore((state) => state.dispose);
+  const openCreate = useManageChartsStore((state) => state.openCreate);
+  const openDetail = useManageChartsStore((state) => state.openDetail);
+  const renameSelected = useManageChartsStore((state) => state.renameSelected);
+  const selectAllFiltered = useManageChartsStore(
+    (state) => state.selectAllFiltered,
+  );
+  const setCreateName = useManageChartsStore((state) => state.setCreateName);
+  const setEditorName = useManageChartsStore((state) => state.setEditorName);
+  const setSearchText = useManageChartsStore((state) => state.setSearchText);
+  const setSelectedRowKeys = useManageChartsStore(
+    (state) => state.setSelectedRowKeys,
+  );
+  const builder = useChartBuilderModel(
+    (state) => state.sessions[selectedId]?.builder ?? null,
+  );
+  const filteredItems = items.filter((item) =>
+    matchesResourceSearch(item, searchText),
+  );
 
-  const saveSelectedName = useCallback(async () => {
-    if (!selected) return;
-    const nextName = editingName.trim() || selected.name || 'Untitled Chart';
-    try {
-      await renameResource('chart', selected.id, nextName);
-      await reload();
-      setSelected({ ...selected, name: nextName });
-    } catch (error) {
-      console.error(error);
-    }
-  }, [editingName, reload, selected]);
+  useEffect(() => {
+    void bootstrap(userName);
+    return () => {
+      void dispose();
+    };
+  }, [bootstrap, dispose]);
 
   const rowSelection = {
     selectedRowKeys,
-    onChange: (keys: Key[]) => setSelectedRowKeys(keys),
+    onChange: (keys: Key[]) => setSelectedRowKeys(keys.map(String)),
   };
 
   const columns = [
@@ -78,33 +87,10 @@ export const ManageChartsPage = () => {
       key: 'actions',
       render: (_: unknown, record: ResourceItem) => (
         <Space>
-          <Button
-            onClick={() => {
-              setSelected(record);
-              setEditingName(record.name || '');
-            }}
-          >
-            编辑
-          </Button>
+          <Button onClick={() => void openDetail(record.id)}>编辑</Button>
           <Popconfirm
             title="删除 chart"
-            onConfirm={async () => {
-              try {
-                await deleteResources({
-                  deleteOne: (id) => removeResource('chart', id),
-                  ids: [record.id],
-                  onSuccess: () => {
-                    if (selected?.id === record.id) {
-                      setSelected(null);
-                    }
-                  },
-                  reload,
-                  resourceLabel: 'chart',
-                });
-              } catch (error) {
-                console.error(error);
-              }
-            }}
+            onConfirm={async () => deleteOne(record.id)}
           >
             <Button danger>删除</Button>
           </Popconfirm>
@@ -118,29 +104,14 @@ export const ManageChartsPage = () => {
       columns={columns}
       createLabel="新建 Chart"
       dataSource={filteredItems}
-      onBatchDelete={() =>
-        confirmBatchDelete({
-          deleteOne: (id) => removeResource('chart', id),
-          ids: selectedRowKeys.map(String),
-          onSuccess: (deletedIds) => {
-            setSelectedRowKeys((keys) =>
-              keys.filter((key) => !deletedIds.includes(String(key))),
-            );
-            if (selected && deletedIds.includes(selected.id)) {
-              setSelected(null);
-            }
-          },
-          reload,
-          resourceLabel: 'chart',
-          title: '批量删除 chart',
-        })
-      }
-      onClearSelection={() => setSelectedRowKeys([])}
-      onCreate={() => setCreateOpen(true)}
+      onBatchDelete={async () => {
+        if (!selectedRowKeys.length) return;
+        await deleteSelected();
+      }}
+      onClearSelection={clearSelection}
+      onCreate={openCreate}
       onSearchTextChange={setSearchText}
-      onSelectAllFiltered={() =>
-        setSelectedRowKeys(filteredItems.map((item) => item.id))
-      }
+      onSelectAllFiltered={selectAllFiltered}
       rowSelection={rowSelection}
       searchText={searchText}
       selectedRowKeys={selectedRowKeys}
@@ -150,17 +121,13 @@ export const ManageChartsPage = () => {
         open={createOpen}
         title="新建 Chart"
         onOk={async () => {
-          try {
-            await createResource('chart', createName || 'Untitled Chart');
-            setCreateName('');
-            setCreateOpen(false);
-            await reload();
-          } catch (error) {
-            console.error(error);
-            throw error;
+          if (!createName.trim()) {
+            message.warning('请输入图表名称');
+            return;
           }
+          await create();
         }}
-        onCancel={() => setCreateOpen(false)}
+        onCancel={closeCreate}
       >
         <Input
           value={createName}
@@ -169,17 +136,17 @@ export const ManageChartsPage = () => {
       </Modal>
       <Drawer
         style={{ width: '88vw' }}
-        open={!!selected}
-        title={selected?.name || 'Chart Editor'}
-        onClose={() => setSelected(null)}
+        open={!!selectedId}
+        title={editorName || 'Chart Editor'}
+        onClose={() => void closeDetail()}
       >
         <Input
           style={{ marginBottom: 16 }}
-          value={editingName}
-          onChange={(event) => setEditingName(event.target.value)}
+          value={editorName}
+          onChange={(event) => setEditorName(event.target.value)}
           placeholder="Chart Name"
-          onBlur={() => void saveSelectedName()}
-          onPressEnter={() => void saveSelectedName()}
+          onBlur={() => void renameSelected()}
+          onPressEnter={() => void renameSelected()}
         />
         {builder ? (
           <StandardAPP builder={builder} mode="edit" />
