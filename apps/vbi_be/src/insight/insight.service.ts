@@ -4,7 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import type { Insight } from '@prisma/client';
 import { PrismaService } from '../app/prisma.service';
 import {
   buildInsightDSL,
@@ -22,15 +21,38 @@ export class InsightService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.insight.findMany({ orderBy: { updatedAt: 'desc' } });
+    return this.prisma.insight.findMany({
+      orderBy: { updatedAt: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async findOne(id: string) {
-    const insight = await this.prisma.insight.findUnique({ where: { id } });
+    const insight = await this.prisma.insight.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        data: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
     if (!insight) {
       throw new NotFoundException(`Insight ${id} not found`);
     }
-    return this.toDetail(insight);
+    return {
+      id: insight.id,
+      name: insight.name,
+      createdAt: insight.createdAt,
+      updatedAt: insight.updatedAt,
+      content: buildInsightDSL(new Uint8Array(insight.data)).content,
+    };
   }
 
   async create(dto: CreateInsightDto) {
@@ -73,13 +95,14 @@ export class InsightService {
       );
     }
     await clearResourceUpdates(this.prisma, 'insight', id);
-    return this.prisma.insight.delete({ where: { id } });
-  }
-
-  private toDetail(insight: Insight) {
-    return {
-      ...insight,
-      content: buildInsightDSL(new Uint8Array(insight.data)).content,
-    };
+    return this.prisma.insight.delete({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 }

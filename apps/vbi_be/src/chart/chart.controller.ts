@@ -12,6 +12,7 @@ import {
   ApiDataResponse,
   ApiErrorResponse,
 } from '../common/swagger/api-response.decorator';
+import { ChartDetailEntity } from './entities/chart-detail.entity';
 import { ChartEntity } from './entities/chart.entity';
 import { ChartService } from './chart.service';
 import { CreateChartDto } from './dto/create-chart.dto';
@@ -57,7 +58,7 @@ export class ChartController {
   @ApiDataResponse({
     description: 'Chart returned',
     status: 200,
-    type: ChartEntity,
+    type: ChartDetailEntity,
   })
   @ApiErrorResponse({
     description: 'Chart not found',

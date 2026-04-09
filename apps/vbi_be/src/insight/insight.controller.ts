@@ -12,6 +12,7 @@ import {
   ApiDataResponse,
   ApiErrorResponse,
 } from '../common/swagger/api-response.decorator';
+import { ResourceEntity } from '../resource/resource.entity';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { UpdateInsightDto } from './dto/update-insight.dto';
 import { InsightEntity } from './entities/insight.entity';
@@ -45,7 +46,7 @@ export class InsightController {
     description: 'Insights returned',
     isArray: true,
     status: 200,
-    type: InsightEntity,
+    type: ResourceEntity,
   })
   findAll() {
     return this.insightService.findAll();
@@ -97,7 +98,7 @@ export class InsightController {
   @ApiDataResponse({
     description: 'Insight deleted',
     status: 200,
-    type: InsightEntity,
+    type: ResourceEntity,
   })
   @ApiErrorResponse({
     description: 'Insight not found',

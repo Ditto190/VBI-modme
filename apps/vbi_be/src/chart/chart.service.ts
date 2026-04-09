@@ -6,6 +6,7 @@ import {
 import { randomUUID } from 'crypto';
 import { PrismaService } from '../app/prisma.service';
 import {
+  buildChartDSL,
   createChartDoc,
   encodeDoc,
   toPrismaBytes,
@@ -20,15 +21,38 @@ export class ChartService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.chart.findMany({ orderBy: { updatedAt: 'desc' } });
+    return this.prisma.chart.findMany({
+      orderBy: { updatedAt: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async findOne(id: string) {
-    const chart = await this.prisma.chart.findUnique({ where: { id } });
+    const chart = await this.prisma.chart.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        data: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
     if (!chart) {
       throw new NotFoundException(`Chart ${id} not found`);
     }
-    return chart;
+    return {
+      id: chart.id,
+      name: chart.name,
+      createdAt: chart.createdAt,
+      updatedAt: chart.updatedAt,
+      dsl: buildChartDSL(new Uint8Array(chart.data)),
+    };
   }
 
   async create(dto: CreateChartDto) {
@@ -39,6 +63,12 @@ export class ChartService {
         name: dto.name?.trim() || 'Untitled Chart',
         data: toPrismaBytes(encodeDoc(createChartDoc(id))),
       },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
   }
 
@@ -47,6 +77,12 @@ export class ChartService {
     return this.prisma.chart.update({
       where: { id },
       data: { name: dto.name?.trim() || 'Untitled Chart' },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
   }
 
@@ -59,6 +95,14 @@ export class ChartService {
       );
     }
     await clearResourceUpdates(this.prisma, 'chart', id);
-    return this.prisma.chart.delete({ where: { id } });
+    return this.prisma.chart.delete({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 }

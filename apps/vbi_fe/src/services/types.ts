@@ -1,8 +1,14 @@
+import type { VBIChartDSL } from '@visactor/vbi';
+
 export interface ResourceItem {
   id: string;
   name: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ChartDetail extends ResourceItem {
+  dsl: VBIChartDSL;
 }
 
 export interface ReportPage {

@@ -5,7 +5,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import type { Report } from '@prisma/client';
 import { PrismaService } from '../app/prisma.service';
 import {
   buildReportDSL,
@@ -31,15 +30,39 @@ export class ReportService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.report.findMany({ orderBy: { updatedAt: 'desc' } });
+    return this.prisma.report.findMany({
+      orderBy: { updatedAt: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async findOne(id: string) {
-    const report = await this.prisma.report.findUnique({ where: { id } });
+    const report = await this.prisma.report.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        data: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
     if (!report) {
       throw new NotFoundException(`Report ${id} not found`);
     }
-    return this.toDetail(report);
+    const dsl = buildReportDSL(new Uint8Array(report.data));
+    return {
+      id: report.id,
+      name: report.name,
+      createdAt: report.createdAt,
+      updatedAt: report.updatedAt,
+      pages: dsl.pages,
+    };
   }
 
   async create(dto: CreateReportDto) {
@@ -87,7 +110,15 @@ export class ReportService {
   async remove(id: string) {
     await this.ensureReport(id);
     await clearResourceUpdates(this.prisma, 'report', id);
-    return this.prisma.report.delete({ where: { id } });
+    return this.prisma.report.delete({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async createPage(reportId: string, dto: CreateReportPageDto) {
@@ -184,12 +215,23 @@ export class ReportService {
   }
 
   private ensureReport(id: string) {
-    return this.prisma.report.findUnique({ where: { id } }).then((report) => {
-      if (!report) {
-        throw new NotFoundException(`Report ${id} not found`);
-      }
-      return report;
-    });
+    return this.prisma.report
+      .findUnique({
+        where: { id },
+        select: {
+          id: true,
+          name: true,
+          data: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      })
+      .then((report) => {
+        if (!report) {
+          throw new NotFoundException(`Report ${id} not found`);
+        }
+        return report;
+      });
   }
 
   private async persistReport(id: string, dsl: VBIReportDSL) {
@@ -200,10 +242,5 @@ export class ReportService {
       },
     });
     await clearResourceUpdates(this.prisma, 'report', id);
-  }
-
-  private toDetail(report: Report) {
-    const dsl = buildReportDSL(new Uint8Array(report.data));
-    return { ...report, pages: dsl.pages };
   }
 }
