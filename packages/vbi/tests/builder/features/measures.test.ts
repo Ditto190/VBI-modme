@@ -6,7 +6,7 @@ import { registerDemoConnector } from '../../demoConnector'
 describe('MeasuresBuilder', () => {
   test('addMeasure', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.measures.add('sales', (node) => {
       node.setAlias('Max(sales)').setAggregate({ func: 'max' })
     })
@@ -32,7 +32,7 @@ describe('MeasuresBuilder', () => {
 
   test('addMeasure callback', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.measures
       .add('sales', (node) => {
         node.setAlias('sum(sales)')
@@ -76,7 +76,7 @@ describe('MeasuresBuilder', () => {
         { field: 'orders', alias: '订单数', aggregate: { func: 'count' } },
       ],
     } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.remove('id-1')
 
@@ -87,7 +87,7 @@ describe('MeasuresBuilder', () => {
 
   test('removeMeasure not found', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.remove('notExist')
 
@@ -96,7 +96,7 @@ describe('MeasuresBuilder', () => {
 
   test('updateMeasure', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额', aggregate: { func: 'sum' } }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.update('id-1', (node) => {
       node.setAlias('新销售额').setAggregate({ func: 'avg' })
@@ -109,7 +109,7 @@ describe('MeasuresBuilder', () => {
 
   test('updateMeasure throws error if not found', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     expect(() => {
       builder.measures.update('notExist', (node) => {
@@ -125,7 +125,7 @@ describe('MeasuresBuilder', () => {
         { field: 'orders', alias: '订单数' },
       ],
     } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
 
@@ -135,7 +135,7 @@ describe('MeasuresBuilder', () => {
 
   test('findMeasure returns undefined if not found', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'notExist')
 
@@ -149,7 +149,7 @@ describe('MeasuresBuilder', () => {
         { field: 'orders', alias: '订单数' },
       ],
     } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const nodes = builder.measures.findAll()
 
@@ -160,7 +160,7 @@ describe('MeasuresBuilder', () => {
 
   test('findAllMeasures returns empty array when no measures', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const nodes = builder.measures.findAll()
 
@@ -174,7 +174,7 @@ describe('MeasuresBuilder', () => {
         { field: 'orders', alias: '订单数' },
       ],
     } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const json = builder.measures.toJSON()
 
@@ -186,7 +186,7 @@ describe('MeasuresBuilder', () => {
 
   test('toJSON returns empty array when no measures', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const json = builder.measures.toJSON()
 
@@ -195,7 +195,7 @@ describe('MeasuresBuilder', () => {
 
   test('observe and unobserve', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     let callCount = 0
     const callback = () => {
@@ -220,7 +220,7 @@ describe('MeasuresBuilder', () => {
 
   test('observe reacts to nested measure updates', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     let callCount = 0
     const unobserve = builder.measures.observe(() => {
@@ -260,7 +260,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder getField', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
 
@@ -269,7 +269,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder getId', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
 
@@ -278,7 +278,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setAlias', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
     node?.setAlias('新销售额')
@@ -288,7 +288,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder getEncoding', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额', encoding: 'primaryYAxis' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((item) => item.getId() === 'id-1')
 
@@ -297,7 +297,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setEncoding', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
     node?.setEncoding('xAxis')
@@ -306,7 +306,7 @@ describe('MeasuresBuilder', () => {
   })
 
   test('addMeasure uses chart type recommendations', () => {
-    const builder = VBI.createChart({ chartType: 'dualAxis' } as VBIChartDSL)
+    const builder = VBI.chart.create({ chartType: 'dualAxis' } as VBIChartDSL)
 
     builder.measures.add('sales', () => {})
     builder.measures.add('profit', () => {})
@@ -321,7 +321,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setAggregate', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
     node?.setAggregate({ func: 'avg' })
@@ -331,7 +331,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setAggregate supports extended funcs', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((item) => item.getId() === 'id-1')
     node?.setAggregate({ func: 'countDistinct' })
@@ -341,7 +341,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setAggregate supports quantile', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((item) => item.getId() === 'id-1')
     node?.setAggregate({ func: 'quantile', quantile: 0.75 })
@@ -351,7 +351,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder toJSON', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((node) => node.getId() === 'id-1')
     const json = node?.toJSON()
@@ -361,7 +361,7 @@ describe('MeasuresBuilder', () => {
 
   test('chained add operations', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures
       .add('sales', (node) => node.setAlias('销售额'))
@@ -385,7 +385,7 @@ describe('MeasuresBuilder', () => {
         { field: 'discount', alias: '利润分位数', aggregate: { func: 'quantile', quantile: 0.9 } },
       ],
     } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     expect(builder.buildVQuery().select).toEqual([
       { field: 'customer_id', alias: 'id-1', aggr: { func: 'count_distinct' } },
@@ -397,7 +397,7 @@ describe('MeasuresBuilder', () => {
 
   test('buildVSeed preserves measure encoding', async () => {
     registerDemoConnector()
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'product_type', alias: 'product_type', encoding: 'column' }],
@@ -418,7 +418,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setFormat with autoFormat', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.update('id-1', (node) => {
       node.setFormat({ autoFormat: true })
@@ -430,7 +430,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setFormat with custom format', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const customFormat = {
       type: 'number' as const,
@@ -450,7 +450,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder getFormat returns format', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.update('id-1', (node) => {
       node.setFormat({ autoFormat: true })
@@ -462,7 +462,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder getFormat returns undefined when not set', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     const node = builder.measures.find((n) => n.getId() === 'id-1')
     expect(node?.getFormat()).toBeUndefined()
@@ -470,7 +470,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder clearFormat removes format', () => {
     const dsl = { measures: [{ field: 'sales', alias: '销售额' }] } as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.update('id-1', (node) => {
       node.setFormat({ autoFormat: true })
@@ -486,7 +486,7 @@ describe('MeasuresBuilder', () => {
 
   test('MeasureNodeBuilder setFormat chaining', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
 
     builder.measures.add('sales', (node) => {
       node.setAlias('销售额').setFormat({ autoFormat: true }).setAggregate({ func: 'sum' })
@@ -500,7 +500,7 @@ describe('MeasuresBuilder', () => {
 
   test('buildVSeed maps autoFormat format correctly', async () => {
     registerDemoConnector()
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'product_type', alias: 'product_type' }],
@@ -525,7 +525,7 @@ describe('MeasuresBuilder', () => {
       prefix: '¥',
       fractionDigits: 2,
     }
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'product_type', alias: 'product_type' }],
@@ -557,7 +557,7 @@ describe('MeasuresBuilder', () => {
 
   test('buildVSeed omits format fields when format not set', async () => {
     registerDemoConnector()
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'product_type', alias: 'product_type' }],

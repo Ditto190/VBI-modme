@@ -6,7 +6,7 @@
 
 本任务只解决 `packages/vbi` 内的 report 建模与 builder 设计：
 
-1. 新增 `VBI.createReport(...)`，让 report 成为和 chart 平级的一等入口。
+1. 新增 `VBI.report.create(...)`，让 report 成为和 chart 平级的一等入口。
 2. 一个 `report` 包含多个 `page`，一个 `page` 固定包含一个 `chart` 和一个 `text`。
 3. `VBIReportDSL`、zod schema、空 DSL helper 的风格与 `VBIChartDSL` 保持一致。
 4. `reportBuilder` 的使用、实现、协同编辑方式尽量复用 `chartBuilder`。
@@ -24,8 +24,8 @@
 新增并文档化以下入口：
 
 ```ts
-VBI.createReport(vbiReport, options)
-createVBI(...).createReport(vbiReport, options)
+VBI.report.create(vbiReport, options)
+createVBI(...).report.create(vbiReport, options)
 ```
 
 对外命名统一为 `VBIReportDSL` / `VBIReportDSLInput` / `zVBIReportDSL` / `generateEmptyReportDSL` / `generateEmptyReportPageDSL` / `VBIReportBuilder` / `VBIReportBuilderInterface` / `VBIReportBuilderOptions`。`chart` 和 `report` 是 `VBI` 下的两个平级能力。
@@ -98,7 +98,7 @@ class ReportPageBuilder {
 
 1. report 的每个 `page.chart` 在 Yjs 中保存为独立 `Y.Map`。
 2. `ReportPageBuilder.chart` 直接复用 `VBIChartBuilder`，但绑定到 `page.chart` 子树，而不是根 `doc.getMap('dsl')`。
-3. `VBI.createChart(...)` 只是“chart builder 绑定根 DSL map”的特例；report page 内则绑定子 map。
+3. `VBI.chart.create(...)` 只是“chart builder 绑定根 DSL map”的特例；report page 内则绑定子 map。
 4. `VBIReportBuilderOptions` 只负责把 chart 相关 adapters/options 透传给每个 `page.chart` builder。
 
 ## Reference

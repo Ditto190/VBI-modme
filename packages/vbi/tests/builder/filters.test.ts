@@ -4,7 +4,7 @@ import type { VBIChartDSL, VBIWhereFilter } from 'src/types/chartDSL'
 describe('WhereFilterBuilder', () => {
   test('add', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -31,7 +31,7 @@ describe('WhereFilterBuilder', () => {
 
   test('add with all fields', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('region', (node) => {
       node.setOperator('eq').setValue('Beijing')
     })
@@ -46,7 +46,7 @@ describe('WhereFilterBuilder', () => {
 
   test('update', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -86,7 +86,7 @@ describe('WhereFilterBuilder', () => {
 
   test('remove', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -127,7 +127,7 @@ describe('WhereFilterBuilder', () => {
 
   test('clear', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -148,7 +148,7 @@ describe('WhereFilterBuilder', () => {
 
   test('all', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -167,7 +167,7 @@ describe('WhereFilterBuilder', () => {
 
   test('multiple filters with chaining', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter
       .add('sales', (node) => node.setOperator('gt').setValue(1000))
       .add('region', (node) => node.setOperator('eq').setValue('Beijing'))
@@ -192,7 +192,7 @@ describe('WhereFilterBuilder', () => {
 
   test('filter with optional op', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setValue(1000)
     })
@@ -218,7 +218,7 @@ describe('WhereFilterBuilder', () => {
 
   test('find', () => {
     const dsl = {} as VBIChartDSL
-    const builder = VBI.createChart(dsl)
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })

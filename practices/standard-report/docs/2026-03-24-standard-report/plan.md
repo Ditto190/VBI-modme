@@ -23,7 +23,7 @@
 任务：
 
 1. 新增 `standard-report` 专用 store 或在现有 store 上拆出 report 版本
-2. 根状态改为 `VBI.createReport(...)`
+2. 根状态改为 `VBI.report.create(...)`
 3. 实现默认 1 个 page 的初始化逻辑
 4. 增加 `activePageId`、`editorOpen` 等视图状态
 5. 封装 `addPage`、`removePage`、`setActivePage`、`ensureAtLeastOnePage` 等动作

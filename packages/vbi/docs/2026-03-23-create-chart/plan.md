@@ -14,10 +14,10 @@
 **改动文件**: `packages/vbi/tests/builder/builder.test.ts`
 测试内容:
 
-1. `VBI.createChart(vbiChart)` 的行为与当前 `VBI.from(vbi)` 一致
-2. `createVBI(...).createChart(...)` 正确继承和覆盖默认 `builderOptions`
-3. `VBI.from(...)` / `VBI.create(...)` 仍可用，但只是 `createChart(...)` 的 alias
-4. `VBI.generateEmptyChartDSL(...)` 与旧的 `generateEmptyDSL(...)` 产物一致
+1. `VBI.chart.create(vbiChart)` 的行为与当前 `VBI.from(vbi)` 一致
+2. `createVBI(...).chart.create(...)` 正确继承和覆盖默认 `builderOptions`
+3. `VBI.from(...)` / `VBI.create(...)` 仍可用，但只是 `VBI.chart.create(...)` 的 alias
+4. `VBI.chart.generateEmptyDSL(...)` 与旧的 `generateEmptyDSL(...)` 产物一致
 
 ### 1.2 补 root schema 测试
 
@@ -75,9 +75,9 @@
 - `packages/vbi/src/index.ts`
   改动内容:
 
-1. `createVBI()` 返回的实例接口新增 `createChart(...)`
-2. `from(...)` / `create(...)` 统一委托到 `createChart(...)`
-3. `generateEmptyDSL` 对外改为 `generateEmptyChartDSL`，旧名保留 alias
+1. `createVBI()` 返回的实例接口新增 `chart.create(...)`
+2. `from(...)` / `create(...)` 统一委托到 `chart.create(...)`
+3. `generateEmptyDSL` 对外改为 `chart.generateEmptyDSL(...)`，旧名保留 alias
 4. `src/index.ts` 对外导出顺序改为“新名字在前，旧 alias 在后”
 
 ## Phase 5: 包内消费方迁移
@@ -90,7 +90,7 @@
 - `packages/vbi/src/**/*.ts`
   改动内容:
 
-1. 包内源码默认改用 `VBIChartDSL`、`VBIChartBuilder`、`createChart(...)`
+1. 包内源码默认改用 `VBIChartDSL`、`VBIChartBuilder`、`VBI.chart.create(...)`
 2. 单测默认改用新 API，只保留少量兼容用例覆盖旧 alias
 3. examples 里的 `VBIBuilder` 代码片段统一改为 `VBIChartBuilder`
 4. 检查是否有遗漏的 `VBIDSL` / `VBI.from` / `generateEmptyDSL` 直接引用
@@ -110,7 +110,7 @@ pnpm run typecheck
 
 验收标准:
 
-1. 新文档、测试、examples 默认只展示 `createChart` / `VBIChartBuilder` / `VBIChartDSL`
+1. 新文档、测试、examples 默认只展示 `VBI.chart.create` / `VBIChartBuilder` / `VBIChartDSL`
 2. 旧 alias 仍能通过编译和关键兼容测试
 3. 生成物 diff 只反映命名收敛，不引入额外运行时行为变化
 
@@ -118,11 +118,11 @@ pnpm run typecheck
 
 | 步骤 | 动作                                     | 文件                                             |
 | ---- | ---------------------------------------- | ------------------------------------------------ |
-| 1    | 写 `createChart` / alias 测试            | `tests/builder/builder.test.ts`                  |
+| 1    | 写 `chart.create` / alias 测试           | `tests/builder/builder.test.ts`                  |
 | 2    | 写 `zVBIChartDSL` / alias 测试           | `tests/types/runtimeSchemas.test.ts`             |
 | 3    | 实现根 DSL 新名字 + alias                | `src/types/dsl/vbi/vbi.ts` 等                    |
 | 4    | 实现 `VBIChartBuilder` 系列类型          | `src/builder/builder.ts` + `src/types/builder/*` |
-| 5    | 实现 `createChart` 根入口                | `src/vbi/create-vbi.ts` + `src/index.ts`         |
+| 5    | 实现 `chart.create` 根入口               | `src/vbi/create-vbi.ts` + `src/index.ts`         |
 | 6    | 包内源码与测试切换到新名字               | `src/**` + `tests/**`                            |
 | 7    | 运行 `pnpm --filter=@visactor/vbi run g` | 更新 examples / API / 快照                       |
 | 8    | 全量验证                                 | `test + lint + typecheck`                        |

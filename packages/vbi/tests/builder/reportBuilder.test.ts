@@ -3,8 +3,8 @@ import { createVBI, VBI } from '@visactor/vbi'
 describe('VBIReportBuilder', () => {
   test('page.add builds report from chart and insight builders', () => {
     const LocalVBI = createVBI()
-    const chartBuilder = LocalVBI.createChart(LocalVBI.generateEmptyChartDSL('demo'))
-    const insightBuilder = LocalVBI.createInsight(LocalVBI.generateEmptyInsightDSL())
+    const chartBuilder = LocalVBI.chart.create(LocalVBI.chart.generateEmptyDSL('demo'))
+    const insightBuilder = LocalVBI.insight.create(LocalVBI.insight.generateEmptyDSL())
 
     chartBuilder.measures.add('sales', (node) => {
       node.setAlias('Sales').setAggregate({ func: 'sum' }).setEncoding('yAxis')
@@ -13,7 +13,7 @@ describe('VBIReportBuilder', () => {
     const chartUUID = chartBuilder.getUUID()
     const insightUUID = insightBuilder.getUUID()
 
-    const reportBuilder = LocalVBI.createReport(LocalVBI.generateEmptyReportDSL())
+    const reportBuilder = LocalVBI.report.create(LocalVBI.report.generateEmptyDSL())
     const report = reportBuilder.page
       .add('Story One', (page) => page.setChartId(chartBuilder).setInsightId(insightBuilder))
       .build()
@@ -66,7 +66,7 @@ describe('VBIReportBuilder', () => {
   })
 
   test('page.update and page.remove work on existing pages', () => {
-    const reportBuilder = VBI.createReport(VBI.generateEmptyReportDSL())
+    const reportBuilder = VBI.report.create(VBI.report.generateEmptyDSL())
     const pageId = reportBuilder.page.add('Story One').build().pages[0].id
 
     reportBuilder.page.update(pageId, (page) => {
@@ -95,9 +95,9 @@ describe('VBIReportBuilder', () => {
       },
     })
 
-    const chartBuilder = CustomVBI.createChart(CustomVBI.generateEmptyChartDSL('demo'))
-    const insightBuilder = CustomVBI.createInsight(CustomVBI.generateEmptyInsightDSL())
-    const reportBuilder = CustomVBI.createReport(CustomVBI.generateEmptyReportDSL())
+    const chartBuilder = CustomVBI.chart.create(CustomVBI.chart.generateEmptyDSL('demo'))
+    const insightBuilder = CustomVBI.insight.create(CustomVBI.insight.generateEmptyDSL())
+    const reportBuilder = CustomVBI.report.create(CustomVBI.report.generateEmptyDSL())
     const chartUUID = chartBuilder.getUUID()
     const insightUUID = insightBuilder.getUUID()
 
@@ -126,15 +126,15 @@ describe('VBIReportBuilder', () => {
   })
 
   test('snapshot throws when a referenced resource is missing from registry', () => {
-    const reportBuilder = VBI.createReport(VBI.generateEmptyReportDSL())
+    const reportBuilder = VBI.report.create(VBI.report.generateEmptyDSL())
     reportBuilder.page.add('Story One', (page) => page.setChartId('chart-404').setInsightId('insight-404'))
 
     expect(() => reportBuilder.snapshot()).toThrow('Missing chart resource "chart-404"')
   })
 
   test('report builders sync through YJS updates', () => {
-    const b1 = VBI.createReport(VBI.generateEmptyReportDSL())
-    const b2 = VBI.createReport(VBI.generateEmptyReportDSL())
+    const b1 = VBI.report.create(VBI.report.generateEmptyDSL())
+    const b2 = VBI.report.create(VBI.report.generateEmptyDSL())
 
     b2.applyUpdate(b1.encodeStateAsUpdate())
     b1.applyUpdate(b2.encodeStateAsUpdate())
@@ -146,7 +146,7 @@ describe('VBIReportBuilder', () => {
   })
 
   test('report builder generates stable UUID on creation', () => {
-    const builder = VBI.createReport(VBI.generateEmptyReportDSL())
+    const builder = VBI.report.create(VBI.report.generateEmptyDSL())
 
     expect(builder.getUUID()).toBe(builder.getUUID())
     expect(typeof builder.getUUID()).toBe('string')

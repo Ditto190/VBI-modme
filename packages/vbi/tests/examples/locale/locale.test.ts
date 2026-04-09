@@ -16,7 +16,7 @@ describe('chart / Locale', () => {
   })
 
   it('en-US-locale', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -195,7 +195,7 @@ describe('chart / Locale', () => {
   })
 
   it('zh-CN-locale', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [

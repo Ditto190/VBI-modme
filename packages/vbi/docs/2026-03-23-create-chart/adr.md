@@ -4,7 +4,7 @@
 
 当前 `@visactor/vbi` 对外只有单图表能力，但命名仍是泛化的：`VBI.from(...)`、`VBI.create(...)`、`VBIBuilder`、`VBIDSL`、`zVBIDSL`、`generateEmptyDSL`。
 
-这在“只有 chart”阶段还能工作，但在准备引入 `VBI.createReport(...)` 后会立刻产生冲突：
+这在“只有 chart”阶段还能工作，但在准备引入 `VBI.report.create(...)` 后会立刻产生冲突：
 
 1. `from` 暴露了“从 DSL 进入 builder”的实现细节，没有表达“创建 chart”这个意图。
 2. `VBIBuilder` / `VBIDSL` 看起来像整个 VBI 的顶层概念，实际却只描述单个 chart。
@@ -19,11 +19,11 @@
 新增并文档化唯一主入口：
 
 ```ts
-VBI.createChart(vbiChart, options)
-createVBI(...).createChart(vbiChart, options)
+VBI.chart.create(vbiChart, options)
+createVBI(...).chart.create(vbiChart, options)
 ```
 
-`from` 和 `create` 保留一个迁移窗口，但只作为 `createChart` 的 deprecated alias，不再出现在示例、文档和新增测试里。
+`from` 和 `create` 保留一个迁移窗口，但只作为 `VBI.chart.create` 的 deprecated alias，不再出现在示例、文档和新增测试里。
 
 ### 2. 泛化 builder 统一归入 `chartBuilder` 语义
 
@@ -57,7 +57,7 @@ isEmptyVBIDSL -> isEmptyVBIChartDSL
 
 首期保留旧名别名并加 `@deprecated`：
 
-1. `VBI.from` / `VBI.create` 委托到 `VBI.createChart`
+1. `VBI.from` / `VBI.create` 委托到 `VBI.chart.create`
 2. `VBIBuilder` 委托到 `VBIChartBuilder`
 3. `VBIDSL` / `VBIDSLInput` / `zVBIDSL` 作为类型或 schema 别名保留
 4. 文档、示例、测试、导出顺序全部切到新名字
@@ -69,7 +69,7 @@ isEmptyVBIDSL -> isEmptyVBIChartDSL
 当前通用 `builder` / `types/builder` / `vbi/from` 下的 chart 实现，应按 chart 语义重组。原则如下：
 
 1. chart 专属实现放进 chart builder 命名空间，不再占用泛化顶层名字
-2. `VBI` 保持为产品级入口容器，负责组织 `createChart`、后续的 `createReport`
+2. `VBI` 保持为产品级入口容器，负责组织 `chart.create`、后续的 `report.create`
 3. 真正跨 chart/report 复用的能力，才保留泛化命名
 
 这保证未来 report 能和 chart 形成平级能力，而不是继续挤在旧的 `VBIBuilder` / `VBIDSL` 语义里。

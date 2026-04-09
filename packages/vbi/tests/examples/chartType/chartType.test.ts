@@ -16,7 +16,7 @@ describe('chart / ChartType', () => {
   })
 
   it('area-by-order-date', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'area',
       dimensions: [
@@ -194,7 +194,7 @@ describe('chart / ChartType', () => {
   })
 
   it('bar-by-product-type', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -344,7 +344,7 @@ describe('chart / ChartType', () => {
   })
 
   it('chart-type-switching', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'line',
       dimensions: [
@@ -522,7 +522,7 @@ describe('chart / ChartType', () => {
   })
 
   it('column-by-area', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -684,7 +684,7 @@ describe('chart / ChartType', () => {
   })
 
   it('donut-by-customer-type', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'donut',
       dimensions: [
@@ -834,7 +834,7 @@ describe('chart / ChartType', () => {
   })
 
   it('line-by-province', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'line',
       dimensions: [
@@ -1012,7 +1012,7 @@ describe('chart / ChartType', () => {
   })
 
   it('line-chart', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'line',
       dimensions: [
@@ -1190,7 +1190,7 @@ describe('chart / ChartType', () => {
   })
 
   it('pie-by-area', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'pie',
       dimensions: [
@@ -1352,7 +1352,7 @@ describe('chart / ChartType', () => {
   })
 
   it('pie-chart-measure-encoding', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'pie',
       dimensions: [
@@ -1502,7 +1502,7 @@ describe('chart / ChartType', () => {
   })
 
   it('rose-by-city', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'rose',
       dimensions: [
@@ -1680,7 +1680,7 @@ describe('chart / ChartType', () => {
   })
 
   it('scatter-chart-measure-encoding', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'scatter',
       dimensions: [],
@@ -1841,7 +1841,7 @@ describe('chart / ChartType', () => {
   })
 
   it('scatter-sales-profit', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'scatter',
       dimensions: [],

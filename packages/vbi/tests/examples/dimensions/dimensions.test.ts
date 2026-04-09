@@ -16,7 +16,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('add-date-dimension-year', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -179,7 +179,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('add-dimension', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -297,7 +297,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('add-multiple-dimensions', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -494,7 +494,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('mixed-date-and-normal-dimensions', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -755,7 +755,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('remove-dimension', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [
@@ -929,7 +929,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('update-date-dimension-month', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [
@@ -1160,7 +1160,7 @@ describe('chart / Dimensions', () => {
   })
 
   it('update-dimension', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [

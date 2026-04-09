@@ -93,7 +93,14 @@ export function formatBuilderLabel(kind) {
 }
 
 function normalizeExampleCode(code = '', kind = 'chart') {
-  return code.replace(/\bVBIBuilder\b/g, BUILDER_TYPES[kind] || BUILDER_TYPES.chart)
+  return code
+    .replace(/\bVBIBuilder\b/g, BUILDER_TYPES[kind] || BUILDER_TYPES.chart)
+    .replace(/\bVBI\.createChart\(/g, 'VBI.chart.create(')
+    .replace(/\bVBI\.createInsight\(/g, 'VBI.insight.create(')
+    .replace(/\bVBI\.createReport\(/g, 'VBI.report.create(')
+    .replace(/\bLocalVBI\.createChart\(/g, 'LocalVBI.chart.create(')
+    .replace(/\bLocalVBI\.createInsight\(/g, 'LocalVBI.insight.create(')
+    .replace(/\bLocalVBI\.createReport\(/g, 'LocalVBI.report.create(')
 }
 
 function buildDSL(kind, dsl = {}) {
@@ -129,11 +136,11 @@ function renderReportResources(json, indent = 4) {
   const resources = getReportResources(json)
   const chartLines = resources.charts.map((item, index) => {
     const name = item.name || `chart${index + 1}`
-    return `${prefix}    ${name}: LocalVBI.createChart(${toCode(buildDSL('chart', item.dsl || {}), indent + 6)}),`
+    return `${prefix}    ${name}: LocalVBI.chart.create(${toCode(buildDSL('chart', item.dsl || {}), indent + 6)}),`
   })
   const insightLines = resources.insights.map((item, index) => {
     const name = item.name || `insight${index + 1}`
-    return `${prefix}    ${name}: LocalVBI.createInsight(${toCode(buildDSL('insight', item.dsl || {}), indent + 6)}),`
+    return `${prefix}    ${name}: LocalVBI.insight.create(${toCode(buildDSL('insight', item.dsl || {}), indent + 6)}),`
   })
 
   return [
@@ -155,7 +162,7 @@ function renderTestBody(json) {
   const applyBuilderCode = hasCode ? normalizeExampleCode(json.code, kind) : 'const applyBuilder = () => {}'
 
   if (kind === 'insight') {
-    return `    const builder = VBI.createInsight(${dslCode})
+    return `    const builder = VBI.insight.create(${dslCode})
 
     ${applyBuilderCode}
     applyBuilder(builder)
@@ -173,7 +180,7 @@ function renderTestBody(json) {
       : ''
     return `    const LocalVBI = createVBI()
 ${renderReportResources(json)}
-    const builder = LocalVBI.createReport(${dslCode})
+    const builder = LocalVBI.report.create(${dslCode})
 
     ${applyBuilderCode}
     applyBuilder(builder, resources)
@@ -182,7 +189,7 @@ ${renderReportResources(json)}
     expect(reportDSL).toMatchInlineSnapshot()${snapshotAssertion}`
   }
 
-  return `    const builder = VBI.createChart(${dslCode})
+  return `    const builder = VBI.chart.create(${dslCode})
 
     ${applyBuilderCode}
     applyBuilder(builder)
@@ -232,7 +239,7 @@ export default () => {
 
   useEffect(() => {
     try {
-      const builder = VBI.createInsight(${toCode(dsl, 8)})
+      const builder = VBI.insight.create(${toCode(dsl, 8)})
       ${code}
       applyBuilder(builder)
       setResult(builder.build())
@@ -263,7 +270,7 @@ export default () => {
     try {
       const LocalVBI = createVBI()
 ${renderReportResources(json, 6)}
-      const builder = LocalVBI.createReport(${toCode(dsl, 8)})
+      const builder = LocalVBI.report.create(${toCode(dsl, 8)})
       ${code}
       applyBuilder(builder, resources)
       setResult(${resultExpr})
@@ -289,7 +296,7 @@ export default () => {
 
   useEffect(() => {
     const run = async () => {
-      const builder = VBI.createChart({
+      const builder = VBI.chart.create({
         ...${toCode(dsl, 8)},
         connectorId: DEMO_CONNECTOR_ID,
       })

@@ -26,7 +26,7 @@
 
 测试内容:
 
-1. `VBI.createReport(report)` 与 `createVBI(...).createReport(report)` 可正常创建 builder。
+1. `VBI.report.create(report)` 与 `createVBI(...).report.create(report)` 可正常创建 builder。
 2. `reportBuilder.page.add('Story One', page => page.setChart(chartBuilder).setText('hello world'))` 输出正确 DSL。
 3. `reportBuilder.page.remove(id)` / `update(id, callback)` 行为正确。
 4. `setChart(chartBuilder)` 复制 `chartBuilder.build()` 结果，而不是共享 builder 实例。
@@ -90,8 +90,8 @@
 
 改动内容:
 
-1. `createVBI()` 返回实例新增 `createReport(...)`。
-2. `VBI` 对外导出 `createReport`、`generateEmptyReportDSL`、`generateEmptyReportPageDSL`。
+1. `createVBI()` 返回实例新增 `report.create(...)`。
+2. `VBI` 对外导出 `report.create`、`report.generateEmptyDSL`、`report.generateEmptyPageDSL`。
 3. 包内源码和测试默认切到 `types/chartDSL` / `types/reportDSL` 与 report 新 API。
 
 ## Phase 6: 生成物与验证
