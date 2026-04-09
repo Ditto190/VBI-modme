@@ -1,5 +1,5 @@
 import type { PrismaService } from '../app/prisma.service';
-import { buildReportDSL } from '../resource/resource-doc';
+import { buildReportDSL } from '../common/vbi-doc';
 
 type ResourceUsage = { reportId: string; pageId: string };
 

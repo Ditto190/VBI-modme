@@ -1,5 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ResourceEntity } from '../../resource/resource.entity';
+
+export class ReportEntity {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty({ nullable: true, required: false })
+  name: string | null;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+}
 
 export class ReportPageEntity {
   @ApiProperty()
@@ -15,7 +28,7 @@ export class ReportPageEntity {
   insightId: string;
 }
 
-export class ReportDetailEntity extends ResourceEntity {
+export class ReportDetailEntity extends ReportEntity {
   @ApiProperty({ type: [ReportPageEntity] })
   pages: ReportPageEntity[];
 }

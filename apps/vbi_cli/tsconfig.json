@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "lib": ["ES2022"],
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "paths": {
+      "@visactor/vbi-provider": ["../packages/vbi-provider/src/index.ts"],
+      "@visactor/vbi-provider/*": ["../packages/vbi-provider/src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "../packages/vbi-provider"
+    }
+  ],
+  "include": ["src", "tests"]
+}

@@ -1,10 +1,11 @@
+import { APP as StandardAPP } from 'standard';
 import type { VBIChartBuilder } from '@visactor/vbi';
-import { Typography } from 'antd';
-import type { ReportPage } from '../../services/types';
+import { Spin, Typography } from 'antd';
+import type { ReportPage } from '../../types';
 import { InsightEditorDrawer } from './InsightEditorDrawer';
 import { PageSidebar } from './PageSidebar';
 import { ReportEditorDrawer } from './ReportEditorDrawer';
-import { ReportStage } from './ReportStage';
+import { EditableSurface } from './EditableSurface';
 
 type Props = {
   activePageId: string;
@@ -12,7 +13,6 @@ type Props = {
   chartBuilder: VBIChartBuilder | null;
   chartEditorOpen: boolean;
   insightContent: string;
-  insightDraft: string;
   insightEditorOpen: boolean;
   page?: ReportPage;
   pages: ReportPage[];
@@ -24,7 +24,6 @@ type Props = {
   onInsightDraftChange: (value: string) => void;
   onOpenChartEditor: () => void;
   onOpenInsightEditor: () => void;
-  onSaveInsight: () => void;
 };
 
 export const ReportWorkspace = ({
@@ -33,7 +32,6 @@ export const ReportWorkspace = ({
   chartBuilder,
   chartEditorOpen,
   insightContent,
-  insightDraft,
   insightEditorOpen,
   page,
   pages,
@@ -45,7 +43,6 @@ export const ReportWorkspace = ({
   onInsightDraftChange,
   onOpenChartEditor,
   onOpenInsightEditor,
-  onSaveInsight,
 }: Props) => (
   <div className="report-detail-shell">
     {page ? (
@@ -58,12 +55,30 @@ export const ReportWorkspace = ({
           onChangePage={onChangePage}
           onDeletePage={onDeletePage}
         />
-        <ReportStage
-          chartBuilder={chartBuilder}
-          insightContent={insightContent}
-          onOpenChartEditor={onOpenChartEditor}
-          onOpenInsightEditor={onOpenInsightEditor}
-        />
+        <section className="report-detail-stage">
+          <div className="report-detail-slide">
+            <div className="report-detail-slide-chart">
+              <EditableSurface onEdit={onOpenChartEditor}>
+                {chartBuilder ? (
+                  <StandardAPP builder={chartBuilder} mode="view" />
+                ) : (
+                  <div className="report-detail-placeholder">
+                    <Spin tip="连接图表中..." />
+                  </div>
+                )}
+              </EditableSurface>
+            </div>
+            <div className="report-detail-slide-note">
+              <EditableSurface onEdit={onOpenInsightEditor}>
+                <div className="report-detail-insight-panel">
+                  <Typography.Paragraph className="report-detail-insight">
+                    {insightContent || '暂无洞察'}
+                  </Typography.Paragraph>
+                </div>
+              </EditableSurface>
+            </div>
+          </div>
+        </section>
         <ReportEditorDrawer
           builder={chartBuilder}
           open={chartEditorOpen}
@@ -71,12 +86,10 @@ export const ReportWorkspace = ({
           onClose={onCloseChartEditor}
         />
         <InsightEditorDrawer
-          content={insightDraft}
-          loading={busy}
+          content={insightContent}
           open={insightEditorOpen}
           onChange={onInsightDraftChange}
           onClose={onCloseInsightEditor}
-          onSave={onSaveInsight}
         />
       </>
     ) : (

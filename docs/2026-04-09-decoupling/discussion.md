@@ -347,10 +347,10 @@ Provider 就是同时消费这两面能力的客户端抽象。
 
 ## 推荐的平台对象模型
 
-可以考虑增加一个更上层的 `VBIPlatformClient`：
+可以考虑增加一个更上层的 `VBIProviderClient`：
 
 ```ts
-const client = await createVBIPlatformClient(config)
+const client = await createVBIProviderClient(config)
 
 const reportProvider = client.report(reportId)
 const chartProvider = client.chart(chartId)

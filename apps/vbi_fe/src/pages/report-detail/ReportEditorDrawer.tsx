@@ -17,7 +17,7 @@ export const ReportEditorDrawer = ({
     destroyOnHidden
     open={open}
     title={title}
-    width="92vw"
+    style={{ width: '92vw' }}
     onClose={onClose}
   >
     <div className="report-detail-editor">

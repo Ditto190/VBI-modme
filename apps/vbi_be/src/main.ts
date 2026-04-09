@@ -8,10 +8,11 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { VersioningType, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app/app.module';
+import { HocuspocusServer } from './app/hocuspocus-server';
+import { PrismaService } from './app/prisma.service';
+import { getCollaborationPort } from './common/collaboration';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { HocuspocusServer } from './collaboration/hocuspocus-server';
-import { PrismaService } from './app/prisma.service';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
@@ -64,7 +65,7 @@ bootstrap()
   .then(() => {
     console.log('🟢 Application is running:');
     console.log(`🟢 Nest       Server on: 0.0.0.0:3030`);
-    console.log(`🟢 Hocuspocus server on: 0.0.0.0:1234`);
+    console.log(`🟢 Hocuspocus server on: 0.0.0.0:${getCollaborationPort()}`);
   })
   .catch((err) => {
     console.error('Application failed to start', err);

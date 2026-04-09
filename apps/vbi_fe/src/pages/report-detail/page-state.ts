@@ -1,4 +1,4 @@
-import type { ReportPage } from '../../services/types';
+import type { ReportPage } from '../../types';
 
 export const normalizePageTitle = (draft: string, fallback: string) =>
   draft.trim() || fallback;

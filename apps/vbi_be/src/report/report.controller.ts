@@ -12,13 +12,14 @@ import {
   ApiDataResponse,
   ApiErrorResponse,
 } from '../common/swagger/api-response.decorator';
-import { ResourceEntity } from '../resource/resource.entity';
 import { CreateReportDto } from './dto/create-report.dto';
 import { CreateReportPageDto } from './dto/create-report-page.dto';
 import { ReorderReportPagesDto } from './dto/reorder-report-pages.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
 import { UpdateReportPageDto } from './dto/update-report-page.dto';
-import { ReportDetailEntity } from './entities/report.entity';
+import { ReportCollaborationSessionEntity } from './entities/report-collaboration-session.entity';
+import { ReportDetailEntity, ReportEntity } from './entities/report.entity';
+import { ReportSnapshotEntity } from './entities/report-snapshot.entity';
 import { ReportService } from './report.service';
 
 @ApiTags('reports')
@@ -49,7 +50,7 @@ export class ReportController {
     description: 'Reports returned',
     isArray: true,
     status: 200,
-    type: ResourceEntity,
+    type: ReportEntity,
   })
   findAll() {
     return this.reportService.findAll();
@@ -70,6 +71,35 @@ export class ReportController {
   })
   findOne(@Param('id') id: string) {
     return this.reportService.findOne(id);
+  }
+
+  @Get(':id/collaboration')
+  @ApiOperation({ summary: 'Get report collaboration session metadata' })
+  @ApiParam({ name: 'id', description: 'Report ID' })
+  @ApiDataResponse({
+    description: 'Report collaboration session metadata returned',
+    status: 200,
+    type: ReportCollaborationSessionEntity,
+  })
+  getCollaborationSession(@Param('id') id: string) {
+    return this.reportService.getCollaborationSession(id);
+  }
+
+  @Get(':id/snapshot')
+  @ApiOperation({ summary: 'Get report snapshot export' })
+  @ApiParam({ name: 'id', description: 'Report ID' })
+  @ApiDataResponse({
+    description: 'Report snapshot returned',
+    status: 200,
+    type: ReportSnapshotEntity,
+  })
+  @ApiErrorResponse({
+    description: 'Report or referenced resource not found',
+    message: 'Resource not found',
+    status: 404,
+  })
+  snapshot(@Param('id') id: string) {
+    return this.reportService.snapshot(id);
   }
 
   @Patch(':id')
@@ -101,7 +131,7 @@ export class ReportController {
   @ApiDataResponse({
     description: 'Report deleted',
     status: 200,
-    type: ResourceEntity,
+    type: ReportEntity,
   })
   @ApiErrorResponse({
     description: 'Report not found',

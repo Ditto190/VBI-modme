@@ -1,16 +1,8 @@
-import {
-  Button,
-  Drawer,
-  Form,
-  Input,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-  Typography,
-  message,
-} from 'antd';
-import { useCallback, useEffect, useState } from 'react';
+import { Button, Drawer, Form, Input, Modal, Popconfirm, Space } from 'antd';
+import type { Key } from 'react';
+import { useCallback, useState } from 'react';
+import { useBuilderSnapshot } from '../hooks/useBuilderSnapshot';
+import { useResourceBuilder } from '../hooks/useResourceBuilder';
 import {
   createInsight,
   deleteInsight,
@@ -18,39 +10,64 @@ import {
   fetchInsights,
   updateInsight,
 } from '../services/insightApi';
-import type { InsightDetail, ResourceItem } from '../services/types';
+import type { InsightRecord, ResourceItem } from '../types';
+import { getSessionUserName } from '../utils/collaboration';
+import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
+import {
+  confirmBatchDelete,
+  deleteResources,
+  useResourceList,
+} from './manage-resource/state';
+
+const userName = getSessionUserName();
 
 export const ManageInsightsPage = () => {
-  const [items, setItems] = useState<ResourceItem[]>([]);
-  const [selected, setSelected] = useState<InsightDetail | null>(null);
+  const [selected, setSelected] = useState<InsightRecord | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
+  const [editingName, setEditingName] = useState('');
   const [createForm] = Form.useForm<{ name?: string; content?: string }>();
-  const [editForm] = Form.useForm<{ name?: string; content?: string }>();
-
-  const load = useCallback(async () => {
-    try {
-      setItems(await fetchInsights());
-    } catch (error) {
-      console.error(error);
-      message.error('加载 insight 列表失败');
-    }
-  }, []);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      void load();
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, [load]);
+  const { builder: insightBuilder } = useResourceBuilder(
+    'insight',
+    selected?.id || '',
+    userName,
+  );
+  const insightContent = useBuilderSnapshot(
+    insightBuilder,
+    (builder) => builder.build().content ?? '',
+    selected?.content ?? '',
+  );
+  const {
+    filteredItems,
+    reload,
+    searchText,
+    selectedRowKeys,
+    setSearchText,
+    setSelectedRowKeys,
+  } = useResourceList(fetchInsights);
 
   const openInsight = async (id: string) => {
-    const detail = await fetchInsight(id);
-    setSelected(detail);
-    editForm.setFieldsValue({
-      name: detail.name ?? undefined,
-      content: detail.content,
-    });
+    try {
+      const detail = await fetchInsight(id);
+      setSelected(detail);
+      setEditingName(detail.name ?? '');
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const saveSelectedName = useCallback(async () => {
+    if (!selected) return;
+    const nextName = editingName.trim() || selected.name || 'Untitled Insight';
+    try {
+      await updateInsight(selected.id, {
+        name: nextName,
+      });
+      await reload();
+      setSelected({ ...selected, name: nextName });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [editingName, reload, selected]);
 
   const columns = [
     {
@@ -73,7 +90,23 @@ export const ManageInsightsPage = () => {
           <Button onClick={() => void openInsight(record.id)}>编辑</Button>
           <Popconfirm
             title="删除 insight"
-            onConfirm={() => deleteInsight(record.id).then(load)}
+            onConfirm={async () => {
+              try {
+                await deleteResources({
+                  deleteOne: deleteInsight,
+                  ids: [record.id],
+                  onSuccess: () => {
+                    if (selected?.id === record.id) {
+                      setSelected(null);
+                    }
+                  },
+                  reload,
+                  resourceLabel: 'insight',
+                });
+              } catch (error) {
+                console.error(error);
+              }
+            }}
           >
             <Button danger>删除</Button>
           </Popconfirm>
@@ -83,34 +116,58 @@ export const ManageInsightsPage = () => {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
-      <Space
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: 16,
-        }}
-      >
-        <Typography.Title level={2} style={{ margin: 0 }}>
-          Insights
-        </Typography.Title>
-        <Button type="primary" onClick={() => setCreateOpen(true)}>
-          新建 Insight
-        </Button>
-      </Space>
-      <Table rowKey="id" dataSource={items} columns={columns} />
+    <ManageResourcePageShell
+      columns={columns}
+      createLabel="新建 Insight"
+      dataSource={filteredItems}
+      onBatchDelete={() =>
+        confirmBatchDelete({
+          deleteOne: deleteInsight,
+          ids: selectedRowKeys.map(String),
+          onSuccess: (deletedIds) => {
+            setSelectedRowKeys((keys) =>
+              keys.filter((key) => !deletedIds.includes(String(key))),
+            );
+            if (selected && deletedIds.includes(selected.id)) {
+              setSelected(null);
+            }
+          },
+          reload,
+          resourceLabel: 'insight',
+          title: '批量删除 insight',
+        })
+      }
+      onClearSelection={() => setSelectedRowKeys([])}
+      onCreate={() => setCreateOpen(true)}
+      onSearchTextChange={setSearchText}
+      onSelectAllFiltered={() =>
+        setSelectedRowKeys(filteredItems.map((item) => item.id))
+      }
+      rowSelection={{
+        selectedRowKeys,
+        onChange: (keys: Key[]) => setSelectedRowKeys(keys),
+      }}
+      searchText={searchText}
+      selectedRowKeys={selectedRowKeys}
+      title="Insights"
+    >
       <Modal
         open={createOpen}
         title="新建 Insight"
         onOk={async () => {
-          const values = await createForm.validateFields();
-          await createInsight({
-            name: values.name || 'Untitled Insight',
-            content: values.content,
-          });
-          createForm.resetFields();
-          setCreateOpen(false);
-          await load();
+          try {
+            const values = await createForm.validateFields();
+            await createInsight({
+              name: values.name || 'Untitled Insight',
+              content: values.content,
+            });
+            createForm.resetFields();
+            setCreateOpen(false);
+            await reload();
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
         }}
         onCancel={() => setCreateOpen(false)}
       >
@@ -124,36 +181,30 @@ export const ManageInsightsPage = () => {
         </Form>
       </Modal>
       <Drawer
-        width={560}
+        size={560}
         open={!!selected}
         title={selected?.name || 'Insight Editor'}
         onClose={() => setSelected(null)}
-        extra={
-          <Button
-            type="primary"
-            onClick={async () => {
-              if (!selected) return;
-              const values = await editForm.validateFields();
-              await updateInsight(selected.id, {
-                name: values.name,
-                content: values.content,
-              });
-              await load();
-            }}
-          >
-            保存
-          </Button>
-        }
+        extra={<Button onClick={() => setSelected(null)}>关闭</Button>}
       >
-        <Form form={editForm} layout="vertical">
-          <Form.Item name="name" label="标题">
-            <Input />
-          </Form.Item>
-          <Form.Item name="content" label="正文">
-            <Input.TextArea rows={10} />
-          </Form.Item>
-        </Form>
+        <Space orientation="vertical" style={{ width: '100%' }} size={12}>
+          <Input
+            value={editingName}
+            placeholder="标题"
+            onChange={(event) => setEditingName(event.target.value)}
+            onBlur={() => void saveSelectedName()}
+            onPressEnter={() => void saveSelectedName()}
+          />
+          <Input.TextArea
+            autoSize={{ minRows: 10, maxRows: 20 }}
+            value={insightContent}
+            placeholder="输入正文，内容会实时同步"
+            onChange={(event) => {
+              insightBuilder?.setContent(event.target.value);
+            }}
+          />
+        </Space>
       </Drawer>
-    </div>
+    </ManageResourcePageShell>
   );
 };

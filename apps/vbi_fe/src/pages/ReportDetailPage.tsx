@@ -1,130 +1,81 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Button, Layout, Spin, message } from 'antd';
+import { Button, Layout, Spin } from 'antd';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Collaborators } from '../components/Collaborators';
-import { useCollaborativeBuilder } from '../hooks/useCollaborativeBuilder';
-import { fetchInsight, updateInsight } from '../services/insightApi';
 import {
-  createReportPage,
-  deleteReportPage,
-  fetchReport,
-} from '../services/reportApi';
-import type { InsightDetail, ReportDetail } from '../services/types';
+  useBuilderSnapshot,
+  useBuilderVersion,
+} from '../hooks/useBuilderSnapshot';
+import { useResourceBuilder } from '../hooks/useResourceBuilder';
+import { createInsight } from '../services/insightApi';
+import { createResource } from '../services/resourceApi';
+import type { ReportPage } from '../types';
 import { getSessionUserName } from '../utils/collaboration';
 import { resolveActivePageId } from './report-detail/page-state';
 import { ReportWorkspace } from './report-detail/ReportWorkspace';
 import './report-detail/report-detail.css';
+
 const { Header, Content } = Layout;
 const userName = getSessionUserName();
+const EMPTY_PAGES: ReportPage[] = [];
+
+const getNextPageTitle = (pages: ReportPage[]) => `Page ${pages.length + 1}`;
+
 export const ReportDetailPage = memo(() => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const [activePageId, setActivePageId] = useState('');
   const [busy, setBusy] = useState(false);
   const [chartEditorOpen, setChartEditorOpen] = useState(false);
-  const [detail, setDetail] = useState<ReportDetail | null>(null);
-  const [insightDraft, setInsightDraft] = useState('');
   const [insightEditorOpen, setInsightEditorOpen] = useState(false);
-  const [insightDetail, setInsightDetail] = useState<InsightDetail | null>(
-    null,
-  );
-  const [loading, setLoading] = useState(true);
-  const [revision, setRevision] = useState(0);
-  const { provider } = useCollaborativeBuilder(
+  const { provider, builder: reportBuilder } = useResourceBuilder(
     'report',
     id,
     userName,
-    revision,
   );
-  const activePage = detail?.pages.find((page) => page.id === activePageId);
-  const { builder: chartBuilder } = useCollaborativeBuilder(
+  useBuilderVersion(reportBuilder);
+  const pages = reportBuilder?.build().pages ?? EMPTY_PAGES;
+  const activePage = pages.find((page) => page.id === activePageId);
+  const { builder: chartBuilder } = useResourceBuilder(
     'chart',
     activePage?.chartId || '',
     userName,
   );
-  const { builder: insightBuilder } = useCollaborativeBuilder(
+  const { builder: insightBuilder } = useResourceBuilder(
     'insight',
     activePage?.insightId || '',
     userName,
   );
-  const insightContent =
-    insightDetail?.content ?? insightBuilder?.build().content?.trim() ?? '';
-  const reload = useCallback(async () => {
-    if (!id) return;
-    setLoading(true);
-    try {
-      setDetail(await fetchReport(id));
-      setRevision((value) => value + 1);
-    } catch (error) {
-      console.error(error);
-      message.error('加载报告失败');
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
-  const runAction = useCallback(
-    async (action: () => Promise<void>, text: string) => {
-      setBusy(true);
-      try {
-        await action();
-        await reload();
-      } catch (error) {
-        console.error(error);
-        message.error(text);
-      } finally {
-        setBusy(false);
-      }
-    },
-    [reload],
+  const insightContent = useBuilderSnapshot(
+    insightBuilder,
+    (builder) => builder.build().content?.trim() ?? '',
+    '',
   );
 
-  const loadInsight = useCallback(async (insightId: string) => {
+  const runAction = useCallback(async (action: () => Promise<void>) => {
+    setBusy(true);
     try {
-      const nextInsight = await fetchInsight(insightId);
-      setInsightDetail(nextInsight);
-      setInsightDraft(nextInsight.content);
+      await action();
     } catch (error) {
       console.error(error);
-      setInsightDetail(null);
-      setInsightDraft('');
-      message.error('加载洞察失败');
+    } finally {
+      setBusy(false);
     }
   }, []);
 
   useEffect(() => {
-    void reload();
-  }, [reload]);
-  useEffect(() => {
-    if (detail)
-      setActivePageId((value) => resolveActivePageId(detail.pages, value));
-  }, [detail]);
+    setActivePageId((value) => resolveActivePageId(pages, value));
+  }, [pages]);
+
   useEffect(() => {
     setChartEditorOpen(false);
     setInsightEditorOpen(false);
-    if (activePage?.insightId) {
-      void loadInsight(activePage.insightId);
-      return;
-    }
-    setInsightDetail(null);
-    setInsightDraft('');
-  }, [activePage?.id, activePage?.insightId, activePage?.title, loadInsight]);
-
-  const saveInsight = useCallback(() => {
-    if (!activePage) return;
-    void runAction(async () => {
-      const nextInsight = await updateInsight(activePage.insightId, {
-        content: insightDraft,
-      });
-      setInsightDetail(nextInsight);
-      setInsightDraft(nextInsight.content);
-      setInsightEditorOpen(false);
-    }, '保存洞察失败');
-  }, [activePage, insightDraft, runAction]);
+  }, [activePage?.id]);
 
   if (!id) return <div>Invalid report id</div>;
-  if (loading && !detail) return <Spin fullscreen size="large" />;
-  if (!detail) return <div>Report not found</div>;
+  if (!reportBuilder) return <Spin fullscreen size="large" />;
+
   return (
     <Layout className="report-detail-layout">
       <Header className="report-detail-app-header">
@@ -142,31 +93,50 @@ export const ReportDetailPage = memo(() => {
       <Content className="report-detail-content">
         <ReportWorkspace
           activePageId={activePageId}
-          busy={busy || loading}
+          busy={busy}
           chartBuilder={chartBuilder}
           chartEditorOpen={chartEditorOpen}
           insightContent={insightContent}
-          insightDraft={insightDraft}
           insightEditorOpen={insightEditorOpen}
           page={activePage}
-          pages={detail.pages}
+          pages={pages}
           onAddPage={() =>
             void runAction(async () => {
-              await createReportPage(id);
-            }, '创建页面失败')
+              const pageTitle = getNextPageTitle(pages);
+              const chart = await createResource('chart', `${pageTitle} Chart`);
+              const insight = await createInsight({
+                name: `${pageTitle} Insight`,
+                content: '',
+              });
+
+              reportBuilder.page.add(
+                pageTitle,
+                (page: {
+                  getId(): string;
+                  setChartId(chartId: string): void;
+                  setInsightId(insightId: string): void;
+                }) => {
+                  page.setChartId(chart.id);
+                  page.setInsightId(insight.id);
+                  setActivePageId(page.getId());
+                },
+              );
+            })
           }
           onChangePage={setActivePageId}
           onCloseChartEditor={() => setChartEditorOpen(false)}
           onCloseInsightEditor={() => setInsightEditorOpen(false)}
           onDeletePage={(pageId) =>
             void runAction(async () => {
-              await deleteReportPage(id, pageId);
-            }, '删除页面失败')
+              reportBuilder.page.remove(pageId);
+            })
           }
-          onInsightDraftChange={setInsightDraft}
+          onInsightDraftChange={(value) => {
+            if (!insightBuilder) return;
+            insightBuilder.setContent(value);
+          }}
           onOpenChartEditor={() => setChartEditorOpen(true)}
           onOpenInsightEditor={() => setInsightEditorOpen(true)}
-          onSaveInsight={saveInsight}
         />
       </Content>
     </Layout>

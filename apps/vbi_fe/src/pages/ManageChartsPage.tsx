@@ -6,50 +6,59 @@ import {
   Modal,
   Popconfirm,
   Space,
-  Table,
   Typography,
-  message,
 } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
-import {
-  createChart,
-  deleteChart,
-  fetchCharts,
-  updateChart,
-} from '../services/chartApi';
-import type { ResourceItem } from '../services/types';
+import type { Key } from 'react';
+import { useCallback, useState } from 'react';
+import { useResourceBuilder } from '../hooks/useResourceBuilder';
+import type { ResourceItem } from '../types';
 import { getSessionUserName } from '../utils/collaboration';
-import { useCollaborativeBuilder } from '../hooks/useCollaborativeBuilder';
+import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
+import {
+  createResource,
+  listResources,
+  removeResource,
+  renameResource,
+} from '../services/resourceApi';
+import {
+  confirmBatchDelete,
+  deleteResources,
+  useResourceList,
+} from './manage-resource/state';
 
 const userName = getSessionUserName();
 
 export const ManageChartsPage = () => {
-  const [items, setItems] = useState<ResourceItem[]>([]);
   const [selected, setSelected] = useState<ResourceItem | null>(null);
   const [createName, setCreateName] = useState('');
   const [editingName, setEditingName] = useState('');
   const [createOpen, setCreateOpen] = useState(false);
-  const { builder } = useCollaborativeBuilder(
-    'chart',
-    selected?.id || '',
-    userName,
-  );
+  const { builder } = useResourceBuilder('chart', selected?.id || '', userName);
+  const {
+    filteredItems,
+    reload,
+    searchText,
+    selectedRowKeys,
+    setSearchText,
+    setSelectedRowKeys,
+  } = useResourceList(() => listResources('chart'));
 
-  const load = useCallback(async () => {
+  const saveSelectedName = useCallback(async () => {
+    if (!selected) return;
+    const nextName = editingName.trim() || selected.name || 'Untitled Chart';
     try {
-      setItems(await fetchCharts());
+      await renameResource('chart', selected.id, nextName);
+      await reload();
+      setSelected({ ...selected, name: nextName });
     } catch (error) {
       console.error(error);
-      message.error('加载 chart 列表失败');
     }
-  }, []);
+  }, [editingName, reload, selected]);
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      void load();
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, [load]);
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (keys: Key[]) => setSelectedRowKeys(keys),
+  };
 
   const columns = [
     {
@@ -79,7 +88,23 @@ export const ManageChartsPage = () => {
           </Button>
           <Popconfirm
             title="删除 chart"
-            onConfirm={() => deleteChart(record.id).then(load)}
+            onConfirm={async () => {
+              try {
+                await deleteResources({
+                  deleteOne: (id) => removeResource('chart', id),
+                  ids: [record.id],
+                  onSuccess: () => {
+                    if (selected?.id === record.id) {
+                      setSelected(null);
+                    }
+                  },
+                  reload,
+                  resourceLabel: 'chart',
+                });
+              } catch (error) {
+                console.error(error);
+              }
+            }}
           >
             <Button danger>删除</Button>
           </Popconfirm>
@@ -89,30 +114,51 @@ export const ManageChartsPage = () => {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
-      <Space
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: 16,
-        }}
-      >
-        <Typography.Title level={2} style={{ margin: 0 }}>
-          Charts
-        </Typography.Title>
-        <Button type="primary" onClick={() => setCreateOpen(true)}>
-          新建 Chart
-        </Button>
-      </Space>
-      <Table rowKey="id" dataSource={items} columns={columns} />
+    <ManageResourcePageShell
+      columns={columns}
+      createLabel="新建 Chart"
+      dataSource={filteredItems}
+      onBatchDelete={() =>
+        confirmBatchDelete({
+          deleteOne: (id) => removeResource('chart', id),
+          ids: selectedRowKeys.map(String),
+          onSuccess: (deletedIds) => {
+            setSelectedRowKeys((keys) =>
+              keys.filter((key) => !deletedIds.includes(String(key))),
+            );
+            if (selected && deletedIds.includes(selected.id)) {
+              setSelected(null);
+            }
+          },
+          reload,
+          resourceLabel: 'chart',
+          title: '批量删除 chart',
+        })
+      }
+      onClearSelection={() => setSelectedRowKeys([])}
+      onCreate={() => setCreateOpen(true)}
+      onSearchTextChange={setSearchText}
+      onSelectAllFiltered={() =>
+        setSelectedRowKeys(filteredItems.map((item) => item.id))
+      }
+      rowSelection={rowSelection}
+      searchText={searchText}
+      selectedRowKeys={selectedRowKeys}
+      title="Charts"
+    >
       <Modal
         open={createOpen}
         title="新建 Chart"
         onOk={async () => {
-          await createChart(createName || 'Untitled Chart');
-          setCreateName('');
-          setCreateOpen(false);
-          await load();
+          try {
+            await createResource('chart', createName || 'Untitled Chart');
+            setCreateName('');
+            setCreateOpen(false);
+            await reload();
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
         }}
         onCancel={() => setCreateOpen(false)}
       >
@@ -122,32 +168,18 @@ export const ManageChartsPage = () => {
         />
       </Modal>
       <Drawer
-        width="88vw"
+        style={{ width: '88vw' }}
         open={!!selected}
         title={selected?.name || 'Chart Editor'}
         onClose={() => setSelected(null)}
-        extra={
-          <Button
-            type="primary"
-            onClick={async () => {
-              if (!selected) return;
-              await updateChart(
-                selected.id,
-                editingName || selected.name || 'Untitled Chart',
-              );
-              await load();
-              setSelected({ ...selected, name: editingName || selected.name });
-            }}
-          >
-            保存名称
-          </Button>
-        }
       >
         <Input
           style={{ marginBottom: 16 }}
           value={editingName}
           onChange={(event) => setEditingName(event.target.value)}
           placeholder="Chart Name"
+          onBlur={() => void saveSelectedName()}
+          onPressEnter={() => void saveSelectedName()}
         />
         {builder ? (
           <StandardAPP builder={builder} mode="edit" />
@@ -155,6 +187,6 @@ export const ManageChartsPage = () => {
           <Typography.Text>连接图表中...</Typography.Text>
         )}
       </Drawer>
-    </div>
+    </ManageResourcePageShell>
   );
 };

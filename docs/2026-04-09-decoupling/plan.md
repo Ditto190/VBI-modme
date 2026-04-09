@@ -1,15 +1,15 @@
-# Plan: 基于 `@visactor/vbi-app-sdk` 的平台级 Headless BI 执行计划
+# Plan: 基于 `@visactor/vbi-provider` 的平台级 Headless BI 执行计划
 
 > 基于 [`./adr.md`](./adr.md)
 > 本文件用于指导落地顺序，目标是把当前 `vbi_fe / vbi_be` 雏形演进为真正的平台级 Headless BI
 
 ## 目标
 
-围绕 `@visactor/vbi-app-sdk` 建立统一的平台接入层，使页面、CLI、任意 JS 运行时都通过同一套 Provider 操作 `chart / insight / report` 资源。
+围绕 `@visactor/vbi-provider` 建立统一的平台接入层，使页面、CLI、任意 JS 运行时都通过同一套 Provider 操作 `chart / insight / report` 资源。
 
 完成后应具备：
 
-- `apps/packages/vbi-app-sdk` 作为平台级应用 SDK
+- `apps/packages/vbi-provider` 作为平台级应用 SDK
 - `ChartProvider / InsightProvider / ReportProvider` 三种一等入口
 - Provider 可直接返回对应 Builder
 - 后端明确分成管理面与数据面
@@ -20,7 +20,7 @@
 
 包含：
 
-- `apps/packages/vbi-app-sdk`
+- `apps/packages/vbi-provider`
 - `packages/vbi`
 - `apps/vbi_be`
 - `apps/vbi_fe`
@@ -39,7 +39,7 @@
 
 任何新增资源能力，都优先思考：
 
-1. 这个能力是否应该先进入 `@visactor/vbi-app-sdk` 的 Provider 接口
+1. 这个能力是否应该先进入 `@visactor/vbi-provider` 的 Provider 接口
 2. 页面和 CLI 是否只是它的消费者
 3. 它是否建立在协同文档和 Builder 之上
 
@@ -68,7 +68,7 @@
 
 必须按以下顺序推进：
 
-1. `vbi-app-sdk` 包稳定
+1. `vbi-provider` 包稳定
 2. 后端管理面 / 数据面收敛
 3. SDK 远程 Provider 运行时实现
 4. `vbi_fe` 接入 SDK
@@ -83,23 +83,23 @@
 
 ## 执行清单
 
-### Step 1: 稳定 `apps/packages/vbi-app-sdk` 包结构与接口边界
+### Step 1: 稳定 `apps/packages/vbi-provider` 包结构与接口边界
 
 目标：
 
-- 把 `@visactor/vbi-app-sdk` 从脚手架升级为正式契约包
+- 把 `@visactor/vbi-provider` 从脚手架升级为正式契约包
 
 包含：
 
 - 包目录结构、构建配置、lint / typecheck 对齐 monorepo
-- `VBIPlatformClient`
+- `VBIProviderClient`
 - `ChartProvider / InsightProvider / ReportProvider`
 - 共享资源语义：`create / remove / rename / open / close / getBuilder / getSummary / getDetail / snapshot`
 - Provider 返回 Builder 的类型契约
 
 完成定义：
 
-- `apps/packages/vbi-app-sdk` 可独立 `build / lint / typecheck`
+- `apps/packages/vbi-provider` 可独立 `build / lint / typecheck`
 - 对外导出稳定
 - README 与 docs 说明该包定位
 - 不依赖 React / DOM
@@ -137,7 +137,7 @@
 
 - 依赖 Step 1 的 SDK 接口边界初步稳定
 
-### Step 3: 在 `vbi-app-sdk` 中实现远程 Provider 运行时
+### Step 3: 在 `vbi-provider` 中实现远程 Provider 运行时
 
 目标：
 
@@ -145,7 +145,7 @@
 
 包含：
 
-- `createVBIPlatformClient(config)` 的真正实现
+- `createVBIProviderClient(config)` 的真正实现
 - transport 抽象：
   - 管理面请求
   - 数据面协同连接
@@ -169,7 +169,7 @@
 
 目标：
 
-- 页面不再直接拼 REST 调用和协同 hook，而是统一消费 `@visactor/vbi-app-sdk`
+- 页面不再直接拼 REST 调用和协同 hook，而是统一消费 `@visactor/vbi-provider`
 
 包含：
 
@@ -203,7 +203,7 @@
   - `report create/get/remove`
   - `report page add/remove/reorder`
   - `report snapshot`
-- CLI 内部统一通过 `@visactor/vbi-app-sdk` 调用 Provider
+- CLI 内部统一通过 `@visactor/vbi-provider` 调用 Provider
 
 完成定义：
 
@@ -257,9 +257,9 @@
 阶段性验证优先执行最小命令：
 
 ```bash
-pnpm --filter=@visactor/vbi-app-sdk run build
-pnpm --filter=@visactor/vbi-app-sdk run lint
-pnpm --filter=@visactor/vbi-app-sdk run typecheck
+pnpm --filter=@visactor/vbi-provider run build
+pnpm --filter=@visactor/vbi-provider run lint
+pnpm --filter=@visactor/vbi-provider run typecheck
 pnpm --filter=vbi_be run lint
 pnpm --filter=vbi_be run typecheck
 pnpm --filter=vbi_fe run lint
@@ -277,7 +277,7 @@ pnpm run typecheck
 
 以下条件全部满足，才算本主题完成：
 
-1. `@visactor/vbi-app-sdk` 已成为稳定的一等平台入口
+1. `@visactor/vbi-provider` 已成为稳定的一等平台入口
 2. 三种 Provider 的边界清晰且可直接返回 Builder
 3. 后端已完成管理面 / 数据面分层
 4. `vbi_fe` 已以 SDK 为主路径

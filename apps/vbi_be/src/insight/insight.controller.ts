@@ -12,10 +12,11 @@ import {
   ApiDataResponse,
   ApiErrorResponse,
 } from '../common/swagger/api-response.decorator';
-import { ResourceEntity } from '../resource/resource.entity';
+import { ReportReferenceEntity } from '../report/entities/report-reference.entity';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { UpdateInsightDto } from './dto/update-insight.dto';
-import { InsightEntity } from './entities/insight.entity';
+import { InsightCollaborationSessionEntity } from './entities/insight-collaboration-session.entity';
+import { InsightDetailEntity, InsightEntity } from './entities/insight.entity';
 import { InsightService } from './insight.service';
 
 @ApiTags('insights')
@@ -29,7 +30,7 @@ export class InsightController {
   @ApiDataResponse({
     description: 'Insight created',
     status: 201,
-    type: InsightEntity,
+    type: InsightDetailEntity,
   })
   @ApiErrorResponse({
     description: 'Invalid request body',
@@ -46,7 +47,7 @@ export class InsightController {
     description: 'Insights returned',
     isArray: true,
     status: 200,
-    type: ResourceEntity,
+    type: InsightEntity,
   })
   findAll() {
     return this.insightService.findAll();
@@ -58,7 +59,7 @@ export class InsightController {
   @ApiDataResponse({
     description: 'Insight returned',
     status: 200,
-    type: InsightEntity,
+    type: InsightDetailEntity,
   })
   @ApiErrorResponse({
     description: 'Insight not found',
@@ -69,6 +70,36 @@ export class InsightController {
     return this.insightService.findOne(id);
   }
 
+  @Get(':id/references')
+  @ApiOperation({ summary: 'Get insight report references' })
+  @ApiParam({ name: 'id', description: 'Insight ID' })
+  @ApiDataResponse({
+    description: 'Insight references returned',
+    isArray: true,
+    status: 200,
+    type: ReportReferenceEntity,
+  })
+  @ApiErrorResponse({
+    description: 'Insight not found',
+    message: 'Insight not found',
+    status: 404,
+  })
+  findReferences(@Param('id') id: string) {
+    return this.insightService.findReferences(id);
+  }
+
+  @Get(':id/collaboration')
+  @ApiOperation({ summary: 'Get insight collaboration session metadata' })
+  @ApiParam({ name: 'id', description: 'Insight ID' })
+  @ApiDataResponse({
+    description: 'Insight collaboration session metadata returned',
+    status: 200,
+    type: InsightCollaborationSessionEntity,
+  })
+  getCollaborationSession(@Param('id') id: string) {
+    return this.insightService.getCollaborationSession(id);
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Update insight' })
   @ApiParam({ name: 'id', description: 'Insight ID' })
@@ -76,7 +107,7 @@ export class InsightController {
   @ApiDataResponse({
     description: 'Insight updated',
     status: 200,
-    type: InsightEntity,
+    type: InsightDetailEntity,
   })
   @ApiErrorResponse({
     description: 'Insight not found',
@@ -98,7 +129,7 @@ export class InsightController {
   @ApiDataResponse({
     description: 'Insight deleted',
     status: 200,
-    type: ResourceEntity,
+    type: InsightEntity,
   })
   @ApiErrorResponse({
     description: 'Insight not found',

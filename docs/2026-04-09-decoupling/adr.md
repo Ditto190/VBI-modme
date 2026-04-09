@@ -4,10 +4,10 @@
 
 VBI 的下一阶段目标，不再只是提供 `packages/` 下的原子能力，也不只是完成 `vbi_fe` 和 `vbi_be` 这套验证型应用，而是要演进为一个真正的平台级 Headless BI 系统。
 
-为达到这个目标，系统必须从“页面驱动资源”升级为“由 `@visactor/vbi-app-sdk` 承载的 Provider 驱动资源”：
+为达到这个目标，系统必须从“页面驱动资源”升级为“由 `@visactor/vbi-provider` 承载的 Provider 驱动资源”：
 
 - `chart`、`insight`、`report` 是三个独立资源
-- `@visactor/vbi-app-sdk` 是平台级应用 SDK
+- `@visactor/vbi-provider` 是平台级应用 SDK
 - `ChartProvider`、`InsightProvider`、`ReportProvider` 是 SDK 中的三个一等入口
 - 页面、CLI、任意 JS 运行时都通过 Provider 获取资源能力
 - Provider 可以直接返回对应 Builder
@@ -15,7 +15,7 @@ VBI 的下一阶段目标，不再只是提供 `packages/` 下的原子能力，
 
 这份 ADR 的核心决策是：
 
-- 平台对外统一通过 `@visactor/vbi-app-sdk` 暴露 Provider 语义，而不是 UI 语义
+- 平台对外统一通过 `@visactor/vbi-provider` 暴露 Provider 语义，而不是 UI 语义
 - Builder 的创建权属于 Provider
 - REST 是管理面，协同协议是数据面
 - `Bytes` 留在持久化和协同链路内部，业务层统一暴露 JSON 与 Builder
@@ -54,13 +54,13 @@ VBI 的下一阶段目标，不再只是提供 `packages/` 下的原子能力，
 
 如果一个能力只能被页面调用，而不能被 CLI 或任意 JS 运行时调用，那么它仍然只是应用能力，不是平台能力。
 
-因此，必须把资源能力收敛到统一的 SDK 抽象上，而这个 SDK 就是 `@visactor/vbi-app-sdk`。
+因此，必须把资源能力收敛到统一的 SDK 抽象上，而这个 SDK 就是 `@visactor/vbi-provider`。
 
 ## Decision
 
-### 1. 平台采用由 `@visactor/vbi-app-sdk` 承载的 Provider First 架构
+### 1. 平台采用由 `@visactor/vbi-provider` 承载的 Provider First 架构
 
-VBI 平台对外通过 `@visactor/vbi-app-sdk` 暴露一等 Provider，而不是以页面组件、页面服务或特定应用 API 为入口。
+VBI 平台对外通过 `@visactor/vbi-provider` 暴露一等 Provider，而不是以页面组件、页面服务或特定应用 API 为入口。
 
 Provider 是资源运行时入口，直接承担：
 
@@ -170,10 +170,10 @@ REST 业务接口不应直接暴露原始 `Bytes`。
 
 ### A. 平台对象模型
 
-`@visactor/vbi-app-sdk` 提供顶层平台客户端：
+`@visactor/vbi-provider` 提供顶层平台客户端：
 
 ```ts
-const client = await createVBIPlatformClient(config)
+const client = await createVBIProviderClient(config)
 
 const chartProvider = client.chart(chartId)
 const insightProvider = client.insight(insightId)
@@ -350,9 +350,9 @@ Provider 是一等入口，但不能演变成新的“万能对象”。三种 P
 
 ## Package Placement
 
-`@visactor/vbi-app-sdk` 作为新的子包，放置在：
+`@visactor/vbi-provider` 作为新的子包，放置在：
 
-- `apps/packages/vbi-app-sdk`
+- `apps/packages/vbi-provider`
 
 原因：
 
@@ -370,7 +370,7 @@ Provider 是一等入口，但不能演变成新的“万能对象”。三种 P
 
 本次 ADR 包含：
 
-- `@visactor/vbi-app-sdk` 的定位
+- `@visactor/vbi-provider` 的定位
 - Provider First 平台方向
 - 三种一等 Provider 的边界
 - 平台客户端对象模型
@@ -391,8 +391,8 @@ Provider 是一等入口，但不能演变成新的“万能对象”。三种 P
 
 1. `plan.md`
    - 明确 Provider First 的执行顺序
-2. `@visactor/vbi-app-sdk` 接口设计稿
-   - 明确 `VBIPlatformClient` 与三个 Provider 的接口细化
+2. `@visactor/vbi-provider` 接口设计稿
+   - 明确 `VBIProviderClient` 与三个 Provider 的接口细化
 3. `vbi_cli` 目标命令集
    - 明确 CLI 如何映射 Provider
 4. 前后端迁移计划
@@ -402,7 +402,7 @@ Provider 是一等入口，但不能演变成新的“万能对象”。三种 P
 
 VBI 平台后续演进的核心方向，确定为：
 
-- 用 `@visactor/vbi-app-sdk`，而不是页面服务，作为平台一等能力入口
+- 用 `@visactor/vbi-provider`，而不是页面服务，作为平台一等能力入口
 - 用三个 Provider，而不是一个模糊泛型抽象，承载资源语义
 - 用协同文档，而不是 REST detail，作为资源编辑本体
 - 用 Builder，作为资源操作面

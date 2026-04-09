@@ -11,12 +11,12 @@ import {
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
-  createReport,
-  deleteReport,
-  fetchReports,
-  updateReport,
-} from '../services/reportApi';
-import type { ResourceItem } from '../services/types';
+  createResource,
+  listResources,
+  removeResource,
+  renameResource,
+} from '../services/resourceApi';
+import type { ResourceItem } from '../types';
 
 const { Title } = Typography;
 
@@ -32,10 +32,9 @@ export const ReportsPage = () => {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      setItems(await fetchReports());
+      setItems(await listResources('report'));
     } catch (error) {
       console.error(error);
-      message.error('加载报告列表失败');
     } finally {
       setLoading(false);
     }
@@ -50,22 +49,33 @@ export const ReportsPage = () => {
       message.warning('请输入报告名称');
       return;
     }
-    const report = await createReport(createName.trim());
-    setIsCreateOpen(false);
-    setCreateName('');
-    await load();
-    navigate(`/reports/${report.id}`);
+    try {
+      const report = await createResource('report', createName.trim());
+      setIsCreateOpen(false);
+      setCreateName('');
+      await load();
+      navigate(`/reports/${report.id}`);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const handleRename = async () => {
     if (!editing) return;
-    await updateReport(
-      editing.id,
-      renameValue.trim() || editing.name || 'Untitled Report',
-    );
-    setEditing(null);
-    setRenameValue('');
-    await load();
+    try {
+      await renameResource(
+        'report',
+        editing.id,
+        renameValue.trim() || editing.name || 'Untitled Report',
+      );
+      setEditing(null);
+      setRenameValue('');
+      await load();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const columns = [
@@ -102,7 +112,14 @@ export const ReportsPage = () => {
           </Button>
           <Popconfirm
             title="删除报告"
-            onConfirm={() => deleteReport(record.id).then(load)}
+            onConfirm={async () => {
+              try {
+                await removeResource('report', record.id);
+                await load();
+              } catch (error) {
+                console.error(error);
+              }
+            }}
           >
             <Button danger>删除</Button>
           </Popconfirm>
@@ -139,7 +156,7 @@ export const ReportsPage = () => {
       <Modal
         open={isCreateOpen}
         title="新建报告"
-        onOk={() => void handleCreate()}
+        onOk={handleCreate}
         onCancel={() => setIsCreateOpen(false)}
       >
         <Input
@@ -150,7 +167,7 @@ export const ReportsPage = () => {
       <Modal
         open={!!editing}
         title="重命名报告"
-        onOk={() => void handleRename()}
+        onOk={handleRename}
         onCancel={() => setEditing(null)}
       >
         <Input

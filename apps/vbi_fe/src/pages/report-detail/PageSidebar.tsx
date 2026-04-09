@@ -1,6 +1,6 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
-import type { ReportPage } from '../../services/types';
+import type { ReportPage } from '../../types';
 
 export const PageSidebar = ({
   activePageId,

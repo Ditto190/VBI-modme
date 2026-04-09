@@ -1,33 +1,22 @@
-import { Button, Drawer, Input, Space } from 'antd';
+import { Button, Drawer, Input } from 'antd';
 
 export const InsightEditorDrawer = ({
   content,
-  loading,
   onChange,
   onClose,
-  onSave,
   open,
 }: {
   content: string;
-  loading: boolean;
   onChange: (value: string) => void;
   onClose: () => void;
-  onSave: () => void;
   open: boolean;
 }) => (
   <Drawer
     destroyOnHidden
-    extra={
-      <Space>
-        <Button onClick={onClose}>取消</Button>
-        <Button loading={loading} type="primary" onClick={onSave}>
-          保存洞察
-        </Button>
-      </Space>
-    }
+    extra={<Button onClick={onClose}>关闭</Button>}
     open={open}
     title="编辑 Insight"
-    width={480}
+    size={480}
     onClose={onClose}
   >
     <Input.TextArea

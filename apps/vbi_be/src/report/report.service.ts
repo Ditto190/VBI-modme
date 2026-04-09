@@ -13,48 +13,49 @@ import {
   createReportDoc,
   encodeDoc,
   toPrismaBytes,
-} from '../resource/resource-doc';
-import { clearResourceUpdates } from '../resource/resource-storage';
+} from '../common/vbi-doc';
 import type { VBIReportDSL } from '@visactor/vbi';
+import { buildChartDSL, buildInsightDSL } from '../common/vbi-doc';
+import { getCollaborationWebSocketUrl } from '../common/collaboration';
 import { CreateReportDto } from './dto/create-report.dto';
 import { CreateReportPageDto } from './dto/create-report-page.dto';
 import { ReorderReportPagesDto } from './dto/reorder-report-pages.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
 import { UpdateReportPageDto } from './dto/update-report-page.dto';
+import {
+  buildReportRoomName,
+  clearReportUpdates,
+} from './report-collaboration';
+import { buildReportSnapshot } from './report-snapshot';
 
 const getNextPageTitle = (pages: VBIReportDSL['pages']) =>
   `Page ${pages.length + 1}`;
 
+const summarySelect = {
+  id: true,
+  name: true,
+  createdAt: true,
+  updatedAt: true,
+} as const;
+
+const snapshotSelect = {
+  ...summarySelect,
+  data: true,
+} as const;
+
 @Injectable()
 export class ReportService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
     return this.prisma.report.findMany({
       orderBy: { updatedAt: 'desc' },
-      select: {
-        id: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: summarySelect,
     });
   }
 
   async findOne(id: string) {
-    const report = await this.prisma.report.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        data: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-    if (!report) {
-      throw new NotFoundException(`Report ${id} not found`);
-    }
+    const report = await this.requireSnapshot(id);
     const dsl = buildReportDSL(new Uint8Array(report.data));
     return {
       id: report.id,
@@ -99,7 +100,7 @@ export class ReportService {
   }
 
   async update(id: string, dto: UpdateReportDto) {
-    await this.ensureReport(id);
+    await this.requireSummary(id);
     await this.prisma.report.update({
       where: { id },
       data: { name: dto.name?.trim() || 'Untitled Report' },
@@ -107,22 +108,47 @@ export class ReportService {
     return this.findOne(id);
   }
 
+  async snapshot(id: string) {
+    const reportRecord = await this.requireSnapshot(id);
+    const report = buildReportDSL(new Uint8Array(reportRecord.data));
+    const chartRecords = await Promise.all(
+      report.pages.map((page) => this.requireChartSnapshot(page.chartId)),
+    );
+    const insightRecords = await Promise.all(
+      report.pages.map((page) => this.requireInsightSnapshot(page.insightId)),
+    );
+
+    return buildReportSnapshot(
+      report,
+      chartRecords.map((record) => ({
+        id: record.id,
+        dsl: buildChartDSL(new Uint8Array(record.data)),
+      })),
+      insightRecords.map((record) => ({
+        id: record.id,
+        dsl: buildInsightDSL(new Uint8Array(record.data)),
+      })),
+    );
+  }
+
+  async getCollaborationSession(id: string) {
+    return {
+      resourceId: id,
+      protocol: 'hocuspocus' as const,
+      roomName: buildReportRoomName(id),
+      websocketUrl: getCollaborationWebSocketUrl(),
+      resource: await this.requireSummary(id),
+    };
+  }
+
   async remove(id: string) {
-    await this.ensureReport(id);
-    await clearResourceUpdates(this.prisma, 'report', id);
-    return this.prisma.report.delete({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
+    await this.requireSummary(id);
+    await clearReportUpdates(this.prisma, id);
+    return this.prisma.report.delete({ where: { id }, select: summarySelect });
   }
 
   async createPage(reportId: string, dto: CreateReportPageDto) {
-    const report = await this.ensureReport(reportId);
+    const report = await this.requireSnapshot(reportId);
     const chartId = randomUUID();
     const insightId = randomUUID();
     const dsl = buildReportDSL(new Uint8Array(report.data));
@@ -149,7 +175,7 @@ export class ReportService {
   }
 
   async updatePage(reportId: string, pageId: string, dto: UpdateReportPageDto) {
-    const report = await this.ensureReport(reportId);
+    const report = await this.requireSnapshot(reportId);
     const dsl = buildReportDSL(new Uint8Array(report.data));
     const page = dsl.pages.find((item) => item.id === pageId);
 
@@ -159,14 +185,14 @@ export class ReportService {
     if (
       dto.chartId !== undefined &&
       dto.chartId &&
-      !(await this.prisma.chart.findUnique({ where: { id: dto.chartId } }))
+      !(await this.hasChart(dto.chartId))
     ) {
       throw new NotFoundException(`Chart ${dto.chartId} not found`);
     }
     if (
       dto.insightId !== undefined &&
       dto.insightId &&
-      !(await this.prisma.insight.findUnique({ where: { id: dto.insightId } }))
+      !(await this.hasInsight(dto.insightId))
     ) {
       throw new NotFoundException(`Insight ${dto.insightId} not found`);
     }
@@ -180,21 +206,21 @@ export class ReportService {
   }
 
   async removePage(reportId: string, pageId: string) {
-    const report = await this.ensureReport(reportId);
+    const report = await this.requireSnapshot(reportId);
     const dsl = buildReportDSL(new Uint8Array(report.data));
     if (dsl.pages.length <= 1) {
       throw new ConflictException('Report must keep at least one page');
     }
     const pages = dsl.pages.filter((item) => item.id !== pageId);
     if (pages.length === dsl.pages.length) {
-      throw new NotFoundException(`Page ${pageId} not found`);
+      throw new BadRequestException(`Page ${pageId} not found`);
     }
     await this.persistReport(reportId, { ...dsl, pages });
     return this.findOne(reportId);
   }
 
   async reorderPages(reportId: string, dto: ReorderReportPagesDto) {
-    const report = await this.ensureReport(reportId);
+    const report = await this.requireSnapshot(reportId);
     const dsl = buildReportDSL(new Uint8Array(report.data));
     if (dto.pageIds.length !== dsl.pages.length) {
       throw new BadRequestException(
@@ -214,26 +240,6 @@ export class ReportService {
     return this.findOne(reportId);
   }
 
-  private ensureReport(id: string) {
-    return this.prisma.report
-      .findUnique({
-        where: { id },
-        select: {
-          id: true,
-          name: true,
-          data: true,
-          createdAt: true,
-          updatedAt: true,
-        },
-      })
-      .then((report) => {
-        if (!report) {
-          throw new NotFoundException(`Report ${id} not found`);
-        }
-        return report;
-      });
-  }
-
   private async persistReport(id: string, dsl: VBIReportDSL) {
     await this.prisma.report.update({
       where: { id },
@@ -241,6 +247,68 @@ export class ReportService {
         data: toPrismaBytes(encodeDoc(createReportDoc(id, dsl.pages))),
       },
     });
-    await clearResourceUpdates(this.prisma, 'report', id);
+    await clearReportUpdates(this.prisma, id);
+  }
+
+  private async requireSummary(id: string) {
+    const report = await this.prisma.report.findUnique({
+      where: { id },
+      select: summarySelect,
+    });
+    if (!report) {
+      throw new NotFoundException(`Report ${id} not found`);
+    }
+    return report;
+  }
+
+  private async requireSnapshot(id: string) {
+    const report = await this.prisma.report.findUnique({
+      where: { id },
+      select: snapshotSelect,
+    });
+    if (!report) {
+      throw new NotFoundException(`Report ${id} not found`);
+    }
+    return report;
+  }
+
+  private async requireChartSnapshot(id: string) {
+    const chart = await this.prisma.chart.findUnique({
+      where: { id },
+      select: snapshotSelect,
+    });
+    if (!chart) {
+      throw new NotFoundException(`Chart ${id} not found`);
+    }
+    return chart;
+  }
+
+  private async requireInsightSnapshot(id: string) {
+    const insight = await this.prisma.insight.findUnique({
+      where: { id },
+      select: snapshotSelect,
+    });
+    if (!insight) {
+      throw new NotFoundException(`Insight ${id} not found`);
+    }
+    return insight;
+  }
+
+  private async hasChart(id: string) {
+    return Boolean(
+      await this.prisma.chart.findUnique({
+        where: { id },
+        select: { id: true },
+      }),
+    );
+  }
+
+  private async hasInsight(id: string) {
+    return Boolean(
+      await this.prisma.insight.findUnique({
+        where: { id },
+        select: { id: true },
+      }),
+    );
   }
 }

@@ -10,42 +10,41 @@ import {
   createInsightDoc,
   encodeDoc,
   toPrismaBytes,
-} from '../resource/resource-doc';
-import { clearResourceUpdates } from '../resource/resource-storage';
+} from '../common/vbi-doc';
+import { getCollaborationWebSocketUrl } from '../common/collaboration';
 import { findReportUsages } from '../report/report-reference';
+import {
+  buildInsightRoomName,
+  clearInsightUpdates,
+} from './insight-collaboration';
 import { CreateInsightDto } from './dto/create-insight.dto';
 import { UpdateInsightDto } from './dto/update-insight.dto';
 
+const summarySelect = {
+  id: true,
+  name: true,
+  createdAt: true,
+  updatedAt: true,
+} as const;
+
+const snapshotSelect = {
+  ...summarySelect,
+  data: true,
+} as const;
+
 @Injectable()
 export class InsightService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll() {
     return this.prisma.insight.findMany({
       orderBy: { updatedAt: 'desc' },
-      select: {
-        id: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: summarySelect,
     });
   }
 
   async findOne(id: string) {
-    const insight = await this.prisma.insight.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        data: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-    if (!insight) {
-      throw new NotFoundException(`Insight ${id} not found`);
-    }
+    const insight = await this.requireSnapshot(id);
     return {
       id: insight.id,
       name: insight.name,
@@ -68,7 +67,7 @@ export class InsightService {
   }
 
   async update(id: string, dto: UpdateInsightDto) {
-    const insight = await this.findOne(id);
+    const insight = await this.requireSummary(id);
     await this.prisma.insight.update({
       where: { id },
       data: {
@@ -81,28 +80,57 @@ export class InsightService {
       },
     });
     if (dto.content !== undefined) {
-      await clearResourceUpdates(this.prisma, 'insight', id);
+      await clearInsightUpdates(this.prisma, id);
     }
     return this.findOne(id);
   }
 
+  async findReferences(id: string) {
+    await this.requireSummary(id);
+    return findReportUsages(this.prisma, { insightId: id });
+  }
+
+  async getCollaborationSession(id: string) {
+    return {
+      resourceId: id,
+      protocol: 'hocuspocus' as const,
+      roomName: buildInsightRoomName(id),
+      websocketUrl: getCollaborationWebSocketUrl(),
+      resource: await this.requireSummary(id),
+    };
+  }
+
   async remove(id: string) {
-    await this.findOne(id);
+    await this.requireSummary(id);
     const usages = await findReportUsages(this.prisma, { insightId: id });
     if (usages.length > 0) {
       throw new ConflictException(
         `Insight ${id} is still referenced by report pages`,
       );
     }
-    await clearResourceUpdates(this.prisma, 'insight', id);
-    return this.prisma.insight.delete({
+    await clearInsightUpdates(this.prisma, id);
+    return this.prisma.insight.delete({ where: { id }, select: summarySelect });
+  }
+
+  private async requireSummary(id: string) {
+    const insight = await this.prisma.insight.findUnique({
       where: { id },
-      select: {
-        id: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: summarySelect,
     });
+    if (!insight) {
+      throw new NotFoundException(`Insight ${id} not found`);
+    }
+    return insight;
+  }
+
+  private async requireSnapshot(id: string) {
+    const insight = await this.prisma.insight.findUnique({
+      where: { id },
+      select: snapshotSelect,
+    });
+    if (!insight) {
+      throw new NotFoundException(`Insight ${id} not found`);
+    }
+    return insight;
   }
 }
