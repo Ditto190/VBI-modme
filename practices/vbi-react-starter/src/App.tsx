@@ -1,27 +1,18 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { VBI } from '@visactor/vbi'
 import { useVBI } from '@visactor/vbi-react'
-import { BuilderLayout, ChartRenderer, FieldPanel } from '@visactor/vbi-react/components'
+import { BuilderLayout, FieldPanel } from '@visactor/vbi-react/components'
 import type { DatasetColumn } from '@visactor/vquery'
-import type { VSeed } from '@visactor/vseed'
 
 import './App.css'
-import { StarterEmptyState } from './components/StarterEmptyState'
 import { StarterFooter } from './components/StarterFooter'
-import { StarterLoadingSkeleton } from './components/StarterLoadingSkeleton'
-import { VSeedRender } from './components/Render'
-import { StarterRenderError } from './components/StarterRenderError'
+import { StarterMainPanel } from './components/StarterMainPanel'
 import { StarterTopBar } from './components/StarterTopBar'
-import {
-  chartCanvasStyle,
-  chartRendererStyle,
-  fieldPanelStyle,
-  layoutStyle,
-  mainPlaceholderStyle,
-} from './styles/styleObjects'
+import { fieldPanelStyle, layoutStyle } from './styles/styleObjects'
 import './styles/tokens.css'
 import { createLocalConnector, setLocalDataWithSchema, type LocalRow } from './utils/localConnector'
 import { clearBuilderSelections, inferSchema, rowsToDataset } from './utils/dataset'
+import { readDebugState } from './utils/debugState'
 import { getLeftPanelWidth, isCompactViewport } from './utils/layout'
 import { parseCsv } from './utils/parseCsv'
 import { supermarketSchema } from './utils/supermarketSchema'
@@ -43,6 +34,7 @@ function ensureConnector() {
 export function APP() {
   ensureConnector()
 
+  const debugState = typeof window === 'undefined' ? 'none' : readDebugState(window.location.search)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [builder] = useState(() => VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID)))
   const { dsl } = useVBI(builder)
@@ -200,49 +192,20 @@ export function APP() {
         }
         leftPanelWidth={leftPanelWidth}
         main={
-          hasConfiguredFields ? (
-            <ChartRenderer
-              builder={builder}
-              debounce={150}
-              loadingFallback={<StarterLoadingSkeleton />}
-              renderError={(error: Error, refetch: () => Promise<unknown> | void) => (
-                <StarterRenderError
-                  errorMessage={error.message}
-                  onRetry={() => {
-                    void refetch()
-                  }}
-                />
-              )}
-              renderVSeed={(vseed: unknown) => <VSeedRender style={chartCanvasStyle} vseed={vseed as VSeed} />}
-              style={chartRendererStyle}
-            />
-          ) : hasAvailableFields ? (
-            <div className="starter-card starter-main-placeholder" style={mainPlaceholderStyle}>
-              <StarterEmptyState
-                actionLabel={isCompactLayout && !isFieldPanelVisible ? 'Show fields panel' : undefined}
-                description="数据已经准备好。先在左侧添加维度和指标，再让 starter components 自动出图。"
-                onAction={
-                  isCompactLayout && !isFieldPanelVisible
-                    ? () => {
-                        setIsFieldPanelVisible(true)
-                      }
-                    : undefined
-                }
-                title="Choose fields to start"
-              />
-            </div>
-          ) : (
-            <div className="starter-card starter-main-placeholder" style={mainPlaceholderStyle}>
-              <StarterEmptyState
-                actionLabel="Load demo data"
-                description="点击上方的 Load demo data，或上传一个 CSV 文件，左侧字段面板就会立即可用。"
-                onAction={() => {
-                  void handleLoadDemoData()
-                }}
-                title="No data loaded yet"
-              />
-            </div>
-          )
+          <StarterMainPanel
+            builder={builder}
+            debugState={debugState}
+            hasAvailableFields={hasAvailableFields}
+            hasConfiguredFields={hasConfiguredFields}
+            isCompactLayout={isCompactLayout}
+            isFieldPanelVisible={isFieldPanelVisible}
+            onLoadDemoData={() => {
+              void handleLoadDemoData()
+            }}
+            onShowFieldPanel={() => {
+              setIsFieldPanelVisible(true)
+            }}
+          />
         }
         style={layoutStyle}
         topBar={

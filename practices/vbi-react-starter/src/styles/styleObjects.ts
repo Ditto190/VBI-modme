@@ -26,15 +26,9 @@ export const chartRendererStyle: CSSProperties = {
   padding: 12,
 }
 
-export const mainPlaceholderStyle: CSSProperties = {
-  ...baseCardStyle,
-  background: 'var(--starter-panel)',
-  height: '100%',
-}
-
 export const chartCanvasStyle: CSSProperties = {
   background: 'var(--starter-canvas)',
-  borderRadius: 8,
+  borderRadius: 'var(--starter-radius-sm)',
   minHeight: 0,
   overflow: 'hidden',
   padding: 8,

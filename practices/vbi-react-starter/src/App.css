@@ -216,7 +216,7 @@
   margin-top: 4px;
 }
 
-.starter-main-placeholder {
+.starter-main-surface {
   height: 100%;
   min-height: 0;
   background: var(--starter-panel);
@@ -232,13 +232,13 @@
 
 .starter-error-message {
   margin-top: 6px;
-  color: #a53a3a;
+  color: var(--starter-danger-strong);
   font-size: 12px;
   white-space: pre-wrap;
 }
 
 .starter-error-hint {
-  color: #a53a3a;
+  color: var(--starter-danger-strong);
   font-size: 12px;
 }
 
@@ -265,8 +265,8 @@
 .starter-skeleton {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  background: #dfe8f6;
+  border-radius: var(--starter-radius-sm);
+  background: var(--starter-skeleton);
 }
 
 .starter-skeleton::after {
@@ -301,7 +301,7 @@
   width: 100%;
   height: 220px;
   margin-top: 4px;
-  border-radius: 12px;
+  border-radius: var(--starter-radius-md);
 }
 
 @keyframes starter-skeleton-shimmer {
@@ -337,5 +337,15 @@
   .starter-button {
     height: 34px;
     padding: 0 12px;
+  }
+}
+
+@media (max-width: 540px) {
+  .starter-top-actions {
+    gap: 8px;
+  }
+
+  .starter-top-actions > * {
+    width: 100%;
   }
 }
