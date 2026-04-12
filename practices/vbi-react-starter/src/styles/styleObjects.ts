@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 const baseCardStyle: CSSProperties = {
   background: 'var(--starter-surface)',
   border: '1px solid var(--starter-border)',
-  borderRadius: 12,
+  borderRadius: 'var(--starter-radius-md)',
   boxSizing: 'border-box',
 }
 

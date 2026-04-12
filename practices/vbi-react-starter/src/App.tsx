@@ -5,7 +5,7 @@ import { BuilderLayout, FieldPanel } from '@visactor/vbi-react/components'
 import type { DatasetColumn } from '@visactor/vquery'
 
 import './App.css'
-import { StarterFooter } from './components/StarterFooter'
+import { StarterFooter, type StarterFooterProps } from './components/StarterFooter'
 import { StarterMainPanel } from './components/StarterMainPanel'
 import { StarterTopBar } from './components/StarterTopBar'
 import { fieldPanelStyle, layoutStyle } from './styles/styleObjects'
@@ -17,23 +17,63 @@ import { getLeftPanelWidth, isCompactViewport } from './utils/layout'
 import { parseCsv } from './utils/parseCsv'
 import { supermarketSchema } from './utils/supermarketSchema'
 
-type DemoStatusTone = 'error' | 'idle' | 'success'
-type SchemaField = { name: string; type: string }
+type DemoStatusTone = StarterFooterProps['statusTone']
 
 const CONNECTOR_ID = 'vbiReactStarterLocalDataConnector'
 
 let connectorInitialized = false
 
-function ensureConnector() {
-  if (!connectorInitialized) {
-    createLocalConnector(CONNECTOR_ID)
-    connectorInitialized = true
+function ensureConnectorInitialized() {
+  if (connectorInitialized) {
+    return
   }
+
+  createLocalConnector(CONNECTOR_ID)
+  connectorInitialized = true
+}
+
+ensureConnectorInitialized()
+
+function parseCsvRows(csvText: string) {
+  const [headerRow = [], ...dataRows] = parseCsv(csvText)
+  const headers = headerRow.map((header) => header.trim())
+
+  if (headers.length === 0) {
+    throw new Error('CSV is empty')
+  }
+
+  return { dataRows, headers }
+}
+
+function inferDimensionAndMeasureOptions(schema: DatasetColumn[]) {
+  const dimensions: string[] = []
+  const measures: string[] = []
+
+  for (const field of schema) {
+    if (field.type === 'number') {
+      measures.push(field.name)
+      continue
+    }
+
+    dimensions.push(field.name)
+  }
+
+  return { dimensions, measures }
+}
+
+function extractDatasetFromCsv(csvText: string, schema: DatasetColumn[]) {
+  const { dataRows, headers } = parseCsvRows(csvText)
+  return rowsToDataset(headers, dataRows, schema)
+}
+
+function extractDatasetFromUploadedCsv(csvText: string) {
+  const { dataRows, headers } = parseCsvRows(csvText)
+  const schema = inferSchema(headers, dataRows)
+  const data = rowsToDataset(headers, dataRows, schema)
+  return { data, schema }
 }
 
 export function APP() {
-  ensureConnector()
-
   const debugState = typeof window === 'undefined' ? 'none' : readDebugState(window.location.search)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [builder] = useState(() => VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID)))
@@ -66,9 +106,11 @@ export function APP() {
   const hasConfiguredFields = (dsl.dimensions?.length ?? 0) > 0 || (dsl.measures?.length ?? 0) > 0
 
   const refreshAvailableFields = async () => {
-    const schema = (await builder.getSchema()) as SchemaField[]
-    setAvailableDimensions(schema.filter((field) => field.type !== 'number').map((field) => field.name))
-    setAvailableMeasures(schema.filter((field) => field.type === 'number').map((field) => field.name))
+    const schema = (await builder.getSchema()) as DatasetColumn[]
+    const { dimensions, measures } = inferDimensionAndMeasureOptions(schema)
+
+    setAvailableDimensions(dimensions)
+    setAvailableMeasures(measures)
   }
 
   const applyDataset = async (data: LocalRow[], schema: DatasetColumn[], sourceLabel: string) => {
@@ -90,14 +132,7 @@ export function APP() {
       }
 
       const csv = await response.text()
-      const [headerRow = [], ...dataRows] = parseCsv(csv)
-      const headers = headerRow.map((header) => header.trim())
-
-      if (headers.length === 0) {
-        throw new Error('Demo CSV is empty')
-      }
-
-      const data = rowsToDataset(headers, dataRows, supermarketSchema)
+      const data = extractDatasetFromCsv(csv, supermarketSchema)
       await applyDataset(data, supermarketSchema, 'supermarket.csv')
     } catch (error) {
       console.error('Failed to load starter demo data:', error)
@@ -119,15 +154,7 @@ export function APP() {
 
     try {
       const text = await file.text()
-      const [headerRow = [], ...dataRows] = parseCsv(text)
-      const headers = headerRow.map((header) => header.trim())
-
-      if (headers.length === 0) {
-        throw new Error('CSV is empty')
-      }
-
-      const schema = inferSchema(headers, dataRows)
-      const data = rowsToDataset(headers, dataRows, schema)
+      const { data, schema } = extractDatasetFromUploadedCsv(text)
       await applyDataset(data, schema, file.name)
     } catch (error) {
       console.error('Failed to load uploaded CSV:', error)
