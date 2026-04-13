@@ -566,10 +566,10 @@ clear(true, false) // 只清空 undo 栈
 
 ### useFilterRootOperator（切换 and/or 根操作符）
 
-位置：`practices/standard/src/components/Shelfs/hooks/useFilterRootOperator.ts`（未从 `src/hooks` 导出，需单独导入）
+位置：`practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts`（未从 `src/hooks` 导出，需单独导入）
 
 ```tsx
-import { useFilterRootOperator } from 'src/components/Shelfs/hooks'
+import { useFilterRootOperator } from 'src/components/Shelves/hooks'
 
 const { operator, setOperator } = useFilterRootOperator({
   builder,
