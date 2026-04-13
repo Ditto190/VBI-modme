@@ -1,9 +1,9 @@
 import { zVBIInsightDSL } from 'src/types/insightDSL/insight'
-import { generateEmptyInsightDSL } from 'src/vbi/generate-empty-insight-dsl'
+import { createEmptyInsight } from 'src/vbi/index'
 
 describe('insight DSL schemas', () => {
   test('parse minimal insight DSL', () => {
-    expect(zVBIInsightDSL.parse(generateEmptyInsightDSL())).toEqual({
+    expect(zVBIInsightDSL.parse(createEmptyInsight())).toEqual({
       uuid: 'uuid-1',
       content: '',
       version: 0,
@@ -11,7 +11,7 @@ describe('insight DSL schemas', () => {
   })
 
   test('empty insight helper stays stable', () => {
-    expect(generateEmptyInsightDSL()).toEqual({
+    expect(createEmptyInsight()).toEqual({
       uuid: 'uuid-1',
       content: '',
       version: 0,
@@ -19,7 +19,7 @@ describe('insight DSL schemas', () => {
   })
 
   test('insight helper accepts custom uuid', () => {
-    expect(generateEmptyInsightDSL('insight-uuid')).toEqual({
+    expect(createEmptyInsight('insight-uuid')).toEqual({
       uuid: 'insight-uuid',
       content: '',
       version: 0,

@@ -1,25 +1,25 @@
+import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIReportDSL, VBIReportSnapshotDSL } from 'src/types'
-import type { VBIResourceRegistry } from 'src/vbi/resource-registry'
-import { buildChartResource, buildInsightResource } from 'src/vbi/resource-registry'
+import type { VBIResourceRegistry } from 'src/vbi/resources'
 
-export const buildVBIReportSnapshotDSL = (
+export const buildVBIReportSnapshotDSL = <TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>(
   report: VBIReportDSL,
-  resourceRegistry: VBIResourceRegistry,
+  resourceRegistry: VBIResourceRegistry<TQueryDSL, TSeedDSL>,
 ): VBIReportSnapshotDSL => {
   const charts: VBIReportSnapshotDSL['charts'] = {}
   const insights: VBIReportSnapshotDSL['insights'] = {}
 
   for (const page of report.pages) {
-    const chart = resourceRegistry.charts.get(page.chartId)
+    const chart = resourceRegistry.charts.build(page.chartId)
     if (!chart) {
       throw new Error(`Missing chart resource "${page.chartId}"`)
     }
-    const insight = resourceRegistry.insights.get(page.insightId)
+    const insight = resourceRegistry.insights.build(page.insightId)
     if (!insight) {
       throw new Error(`Missing insight resource "${page.insightId}"`)
     }
-    charts[page.chartId] = buildChartResource(chart)
-    insights[page.insightId] = buildInsightResource(insight)
+    charts[page.chartId] = chart
+    insights[page.insightId] = insight
   }
 
   return { report, charts, insights }

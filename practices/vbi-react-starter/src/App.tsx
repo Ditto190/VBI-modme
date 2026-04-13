@@ -44,7 +44,7 @@ export function APP() {
   ensureConnector()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [builder] = useState(() => VBI.chart.create(VBI.chart.generateEmptyDSL(CONNECTOR_ID)))
+  const [builder] = useState(() => VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID)))
   const { dsl } = useVBI(builder)
   const [availableDimensions, setAvailableDimensions] = useState<string[]>([])
   const [availableMeasures, setAvailableMeasures] = useState<string[]>([])

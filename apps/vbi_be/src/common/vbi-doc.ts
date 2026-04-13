@@ -26,10 +26,10 @@ export const loadDoc = (snapshot?: Uint8Array, updates: Uint8Array[] = []) =>
   createDoc(snapshot, updates);
 
 export const createChartDoc = (id: string) =>
-  VBI.chart.create(VBI.chart.generateEmptyDSL('demo', id)).doc;
+  VBI.chart.create(VBI.chart.createEmpty('demo', id)).doc;
 
 export const createInsightDoc = (id: string, content = '') => {
-  const builder = VBI.insight.create(VBI.insight.generateEmptyDSL(id));
+  const builder = VBI.insight.create(VBI.insight.createEmpty(id));
   builder.setContent(content);
   return builder.doc;
 };

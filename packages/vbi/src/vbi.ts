@@ -1,3 +1,3 @@
-import { createVBI } from './vbi/create-vbi'
+import { createVBI } from './vbi/index'
 
 export const VBI = createVBI()
