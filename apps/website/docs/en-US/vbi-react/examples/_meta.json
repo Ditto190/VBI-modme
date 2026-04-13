@@ -16,6 +16,11 @@
   },
   {
     "type": "file",
+    "name": "vbi-react-starter",
+    "label": "Starter Demo"
+  },
+  {
+    "type": "file",
     "name": "filterMutations",
     "label": "Filter Mutations"
   }
