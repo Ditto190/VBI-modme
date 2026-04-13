@@ -66,7 +66,9 @@ export function StarterMainPanel(props: StarterMainPanelProps) {
       <StarterRenderError
         errorMessage="Debug state forced by query: ?debugState=error"
         onRetry={() => {
-          window.location.search = ''
+          const url = new URL(window.location.href)
+          url.searchParams.delete('debugState')
+          window.location.assign(`${url.pathname}${url.search}${url.hash}`)
         }}
       />
     )

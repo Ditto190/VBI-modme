@@ -335,7 +335,9 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                         max={1}
                         min={0}
                         onChange={(event) => {
-                          const quantile = clampQuantile(Number(event.target.value))
+                          const { value } = event.target
+                          const quantile =
+                            value === '' ? measure.aggregate.quantile ?? 0.5 : clampQuantile(Number(value))
                           updateMeasure(measure.id, { aggregate: { func: 'quantile', quantile } })
                         }}
                         step={0.05}
