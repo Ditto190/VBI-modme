@@ -40,22 +40,26 @@ describe('collection hooks', () => {
     const { result } = renderHook(() => useDimensions(builder))
 
     act(() => {
-      result.current.addDimension('province', { alias: 'Province' })
+      result.current.addDimension('province', { aggregate: { func: 'toMonth' }, alias: 'Province', encoding: 'color' })
     })
 
     expect(result.current.dimensions).toHaveLength(1)
     expect(result.current.dimensions[0]).toMatchObject({
+      aggregate: { func: 'toMonth' },
       alias: 'Province',
+      encoding: 'color',
       field: 'province',
     })
 
     const dimensionId = result.current.dimensions[0].id
 
     act(() => {
-      result.current.updateDimension(dimensionId, { alias: 'Region' })
+      result.current.updateDimension(dimensionId, { aggregate: null, alias: 'Region', encoding: 'xAxis' })
     })
 
     expect(result.current.dimensions[0].alias).toBe('Region')
+    expect(result.current.dimensions[0].aggregate).toBeUndefined()
+    expect(result.current.dimensions[0].encoding).toBe('xAxis')
 
     act(() => {
       result.current.removeDimension(dimensionId)

@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { VBI } from '@visactor/vbi'
 import { useVBI } from '@visactor/vbi-react'
-import { BuilderLayout, FieldPanel } from '@visactor/vbi-react/components'
+import { BuilderLayout } from '@visactor/vbi-react/components'
 import type { DatasetColumn } from '@visactor/vquery'
 
 import './App.css'
+import { CompactFieldPanel } from './components/CompactFieldPanel'
 import { StarterFooter, type StarterFooterProps } from './components/StarterFooter'
 import { StarterMainPanel } from './components/StarterMainPanel'
 import { StarterTopBar } from './components/StarterTopBar'
@@ -31,8 +32,6 @@ function ensureConnectorInitialized() {
   createLocalConnector(CONNECTOR_ID)
   connectorInitialized = true
 }
-
-ensureConnectorInitialized()
 
 function parseCsvRows(csvText: string) {
   const [headerRow = [], ...dataRows] = parseCsv(csvText)
@@ -76,7 +75,10 @@ function extractDatasetFromUploadedCsv(csvText: string) {
 export function APP() {
   const debugState = typeof window === 'undefined' ? 'none' : readDebugState(window.location.search)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [builder] = useState(() => VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID)))
+  const [builder] = useState(() => {
+    ensureConnectorInitialized()
+    return VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID))
+  })
   const { dsl } = useVBI(builder)
   const [availableDimensions, setAvailableDimensions] = useState<string[]>([])
   const [availableMeasures, setAvailableMeasures] = useState<string[]>([])
@@ -208,7 +210,7 @@ export function APP() {
         }
         leftPanel={
           !isCompactLayout || isFieldPanelVisible ? (
-            <FieldPanel
+            <CompactFieldPanel
               builder={builder}
               dimensionOptions={dimensionOptions}
               measureOptions={measureOptions}

@@ -193,8 +193,17 @@ function createMeasuresFeature(state: TestBuilderState, notify: () => void) {
 
 function createDimensionNode(dimension: VBIDimension) {
   return {
+    clearAggregate: () => {
+      delete dimension.aggregate
+    },
     setAlias: (alias: string) => {
       dimension.alias = alias
+    },
+    setAggregate: (aggregate: NonNullable<VBIDimension['aggregate']>) => {
+      dimension.aggregate = aggregate
+    },
+    setEncoding: (encoding: NonNullable<VBIDimension['encoding']>) => {
+      dimension.encoding = encoding
     },
   }
 }

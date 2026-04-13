@@ -22,6 +22,12 @@ describe('FieldPanel', () => {
     expect(view.getByLabelText('Alias for dimension region')).toBeTruthy()
     expect(view.getByLabelText('Alias for measure sales')).toBeTruthy()
 
+    fireEvent.change(view.getByLabelText('Aggregate for dimension region'), {
+      target: { value: 'toMonth' },
+    })
+    fireEvent.change(view.getByLabelText('Encoding for dimension region'), {
+      target: { value: 'color' },
+    })
     fireEvent.change(view.getByLabelText('Aggregate for measure sales'), {
       target: { value: 'avg' },
     })
@@ -29,9 +35,17 @@ describe('FieldPanel', () => {
       target: { value: 'color' },
     })
 
+    expect(builder.dimensions.toJSON()[0].aggregate).toEqual({ func: 'toMonth' })
+    expect(builder.dimensions.toJSON()[0].encoding).toBe('color')
     expect(builder.dimensions.toJSON()[0].field).toBe('region')
     expect(builder.measures.toJSON()[0].aggregate).toEqual({ func: 'avg' })
     expect(builder.measures.toJSON()[0].encoding).toBe('color')
+
+    fireEvent.change(view.getByLabelText('Aggregate for dimension region'), {
+      target: { value: '' },
+    })
+
+    expect(builder.dimensions.toJSON()[0].aggregate).toBeUndefined()
 
     fireEvent.click(view.getByRole('button', { name: 'Remove measure sales' }))
 
