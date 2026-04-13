@@ -48,7 +48,10 @@ describe('utils and exports', () => {
     const reportDSL = new Y.Doc().getMap('report')
     const emptyPages = getOrCreateReportPages(reportDSL)
     expect(emptyPages.length).toBe(0)
-    emptyPages.push([createReportPageYMap({ id: 'p1', title: 'A' }), createReportPageYMap({ title: 'Story' })])
+    emptyPages.push([
+      createReportPageYMap({ id: 'p1', title: 'A' }),
+      createReportPageYMap({ id: 'p2', title: 'Story' }),
+    ])
     expect(emptyPages.get(1).toJSON().chartId).toBe('')
     expect(locateReportPageIndexById(emptyPages, 'p1')).toBe(0)
   })
