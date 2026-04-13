@@ -6,6 +6,8 @@ import * as path from 'node:path'
 
 import i18nJson from './i18n.json'
 
+const vbiReactStarterSourceEntry = path.resolve(__dirname, '../../practices/vbi-react-starter/src/index.tsx')
+
 export default defineConfig({
   root: './docs',
   base: '/VBI/',
@@ -74,6 +76,9 @@ export default defineConfig({
     tools: {
       rspack: {
         resolve: {
+          alias: {
+            'vbi-react-starter$': vbiReactStarterSourceEntry,
+          },
           conditionNames: ['source', '...'],
         },
       },
