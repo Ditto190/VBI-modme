@@ -62,6 +62,6 @@ export const registerDemoConnector = () => {
 };
 
 registerDemoConnector();
-export const defaultBuilder: VBIChartBuilder = VBI.createChart(
-  VBI.generateEmptyChartDSL(connectorId),
+export const defaultBuilder: VBIChartBuilder = VBI.chart.create(
+  VBI.chart.generateEmptyDSL(connectorId),
 );

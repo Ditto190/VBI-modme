@@ -22,7 +22,9 @@
     "noUnusedParameters": true,
 
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "@visactor/vbi-provider": ["../packages/vbi-provider/src/index.ts"],
+      "@visactor/vbi-provider/*": ["../packages/vbi-provider/src/*"]
     }
   },
   "composite": true,
@@ -38,6 +40,9 @@
     },
     {
       "path": "../../practices/standard"
+    },
+    {
+      "path": "../../practices/standard-report"
     }
   ],
   "include": ["src"]

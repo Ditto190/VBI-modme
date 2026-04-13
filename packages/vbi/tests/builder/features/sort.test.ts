@@ -3,7 +3,7 @@ import type { VBIChartDSL } from 'src/types/chartDSL'
 
 describe('sort builders', () => {
   test('DimensionNodeBuilder set/get/clearSort works', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       dimensions: [{ id: 'd-1', field: 'area', alias: '区域' }],
     } as VBIChartDSL)
 
@@ -24,7 +24,7 @@ describe('sort builders', () => {
   })
 
   test('DimensionNodeBuilder setSort supports chaining', () => {
-    const builder = VBI.createChart({} as VBIChartDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
     builder.dimensions.add('area', (node) => {
       node.setAlias('区域').setSort({ order: 'desc' })
@@ -37,7 +37,7 @@ describe('sort builders', () => {
   })
 
   test('MeasureNodeBuilder set/get/clearSort works', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       measures: [{ id: 'm-1', field: 'sales', alias: '销售额', encoding: 'column', aggregate: { func: 'sum' } }],
     } as VBIChartDSL)
 
@@ -58,7 +58,7 @@ describe('sort builders', () => {
   })
 
   test('MeasureNodeBuilder setSort supports chaining', () => {
-    const builder = VBI.createChart({} as VBIChartDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
     builder.measures.add('sales', (node) => {
       node.setAlias('销售额').setSort({ order: 'asc' }).setAggregate({ func: 'sum' })

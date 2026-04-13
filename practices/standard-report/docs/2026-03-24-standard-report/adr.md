@@ -36,14 +36,14 @@ Proposed
 原因：
 
 1. 单图表 practice 和报表 practice 是两个不同交互模型，不应该在同一个 demo 里混合演进。
-2. 独立 practice 更适合验证 `VBI.createReport(...)` 的完整闭环。
+2. 独立 practice 更适合验证 `VBI.report.create(...)` 的完整闭环。
 3. `standard` 已经是稳定编辑器基线，复制再裁剪的风险低于在原工程中条件分支扩展。
 
 ### 2. `VBIReportBuilder` 是唯一状态源，UI 只保存 `activePageId` 和编辑态
 
 状态规则：
 
-1. 根状态使用 `VBI.createReport(...)` 创建的 `VBIReportBuilder`。
+1. 根状态使用 `VBI.report.create(...)` 创建的 `VBIReportBuilder`。
 2. UI 层只额外维护 `activePageId`、`editorOpen` 等视图状态。
 3. page 列表、page 标题、page 图表内容全部从 `reportBuilder.build().pages` 或 `reportBuilder.page.get(...)` 派生。
 4. page 切换以 `page.id` 为主键，不以数组 index 作为长期状态主键。

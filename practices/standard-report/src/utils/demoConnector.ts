@@ -67,7 +67,7 @@ export const registerDemoConnector = () => {
 registerDemoConnector();
 
 export const createDefaultReportBuilder = (): VBIReportBuilder => {
-  const reportBuilder = VBI.createReport(VBI.generateEmptyReportDSL());
+  const reportBuilder = VBI.report.create(VBI.report.generateEmptyDSL());
   ensureReportHasPage(reportBuilder, connectorId);
   return reportBuilder;
 };

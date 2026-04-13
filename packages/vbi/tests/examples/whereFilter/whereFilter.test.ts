@@ -16,7 +16,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('between-sales-range-analysis', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -191,7 +191,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('clear-and-rebuild-filters', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -445,7 +445,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('date-filter-period-and-range-combo', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -693,7 +693,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('date-filter-relative-with-nested-conditions', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -943,7 +943,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('deeply-nested-or-and-groups', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -1274,7 +1274,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('high-discount-tech-profit-analysis', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -1439,7 +1439,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('in-operator-multi-area-delivery', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -1618,7 +1618,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('nested-group-region-product-filter', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -1850,7 +1850,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('not-between-sales-range', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -2030,7 +2030,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('not-between-with-explicit-operators', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -2212,7 +2212,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('office-supplies-sales-by-province', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -2447,7 +2447,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('or-group-product-category-comparison', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -2650,7 +2650,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('remove-condition-from-group', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -2876,7 +2876,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('remove-filter-by-index', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -3122,7 +3122,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('update-filter-switch-province', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -3381,7 +3381,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('update-group-or-to-and', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -3576,7 +3576,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('where-filter-array-value-converts-to-in', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -3745,7 +3745,7 @@ describe('chart / WhereFilter', () => {
   })
 
   it('where-filter-array-value-converts-to-not-in', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [

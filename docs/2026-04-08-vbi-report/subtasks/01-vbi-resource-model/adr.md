@@ -1,85 +1,127 @@
-# ADR: packages/vbi 的 report 改为引用型资源模型
+# ADR: packages/vbi report 资源引用模型
 
 ## Summary
 
-`packages/vbi` 不再把 report 当作内嵌 chart/text 内容的组合文档，而改为“结构文档”：
+基于当前实现，`packages/vbi` 中的 report 已经落成“结构资源”而不是“内容容器”：
 
-- `report` 只保存 page 顺序、标题和资源引用
-- `chart` 继续作为独立内容资源
-- `insight` 新增为独立内容资源
-- `createVBI()` 维护当前实例级 `ResourceRegistry`
-- `reportBuilder.snapshot()` 返回完整聚合快照，而 `build()` 继续返回结构 DSL
+- `report` 只保存 page 结构与资源引用
+- `chart` 与 `insight` 作为独立资源创建和维护
+- `createVBI()` 维护实例级 `ResourceRegistry`
+- `reportBuilder.build()` 返回结构 DSL
+- `reportBuilder.snapshot()` 在本地聚合完整闭包
 
-这样可以让前后端围绕统一资源模型工作，避免 report 同时承担结构和内容两种职责。
+这让 `packages/vbi` 的 DSL 边界与后续前后端资源模型保持一致。
 
 ## Decision
 
-### 1. Report page 改为引用结构
+### 1. Report page 只保存引用
 
-`VBIReportPageDSL` 从：
+当前实现中的 `VBIReportPageDSL` 为：
 
-- `{ chart: VBIChartDSL, text: { content } }`
+```ts
+type VBIReportPageDSL = {
+  id: string
+  title: string
+  chartId?: string
+  insightId?: string
+}
+```
 
-调整为：
+规范化后默认值为空字符串，`report` 本身不再内嵌 chart 或 text 内容。
 
-- `{ chartId: string, insightId: string }`
+对应实现：
 
-`VBIReportDSL` 只负责 page 集合、顺序、标题、版本等结构信息。
+- `packages/vbi/src/types/reportDSL/page.ts`
+- `packages/vbi/src/vbi/generate-empty-report-page-dsl.ts`
 
-同时新增：
+### 2. Insight 成为一等资源
 
-- `VBIReportSnapshotDSL = { report, charts, insights }`
+当前实现已新增独立的 `VBIInsightDSL`、empty helper 与 builder 入口：
 
-它只用于 `snapshot()` 导出完整闭包内容，不作为新的运行时事实源。
+- `generateEmptyInsightDSL()`
+- `createInsight(...)`
+- `VBIInsightBuilder`
 
-### 2. 新增独立 insight 资源
+对应实现：
 
-新增 `VBIInsightDSL` 与对应 schema、empty helper、builder 入口。
+- `packages/vbi/src/types/insightDSL/insight.ts`
+- `packages/vbi/src/vbi/generate-empty-insight-dsl.ts`
+- `packages/vbi/src/insight-builder/builder.ts`
 
-对外 API 统一为：
+### 3. createVBI 维护实例级资源注册表
 
-- `VBI.createChart(...)`
-- `VBI.createReport(...)`
-- `VBI.createInsight(...)`
+当前 `createVBI()` 为每个实例创建独立 `ResourceRegistry`，并在资源创建时注册：
 
-`createVBI()` 内部集成 `ResourceRegistry`，用于维护当前实例已装载资源：
+- `createChart(...)` 注册 chart builder
+- `createInsight(...)` 注册 insight builder
+- `createReport(...)` 共享该 registry，但不把 report 本身注册进去
 
-- `charts: Map<chartId, chart builder | chart DSL>`
-- `insights: Map<insightId, insight builder | insight DSL>`
-- `reports: Map<reportId, report builder | report DSL>`
+当前 registry 只覆盖 report 快照和页面引用真正需要的资源：
 
-### 3. ReportBuilder 提供结构构建与纯 DSL 快照
+```ts
+type VBIResourceRegistry = {
+  charts: Map<string, VBIChartBuilder | VBIChartDSL>
+  insights: Map<string, VBIInsightBuilder | VBIInsightDSL>
+}
+```
 
-`reportBuilder.build()` 返回 `VBIReportDSL`，只包含结构和引用。
+对应实现：
 
-`reportBuilder.snapshot()` 返回 `VBIReportSnapshotDSL`：
+- `packages/vbi/src/vbi/create-vbi.ts`
+- `packages/vbi/src/vbi/resource-registry.ts`
 
-- 遍历 report page 上的 `chartId` / `insightId`
-- 从当前实例的 `ResourceRegistry` 中收集对应资源
-- 只做本地聚合，不触发任何业务层 IO
+### 4. ReportBuilder 分离结构构建与聚合快照
 
-### 4. ReportBuilder 不负责资源创建
+当前实现把 report 的两个出口明确拆开：
 
-`reportBuilder.page.*` 只读写 page 结构和资源引用：
+- `build()` 只返回 `VBIReportDSL`
+- `snapshot()` 返回 `VBIReportSnapshotDSL = { report, charts, insights }`
 
-- add
-- update
-- remove
-- get
+`snapshot()` 的行为约束：
 
-子资源的创建、复用、删除校验由应用服务层负责，不放进 builder。
+- 只遍历 report page 上出现的 `chartId` / `insightId`
+- 只从当前实例的 registry 聚合资源
+- 不触发业务层 IO
+- 缺失引用时直接抛错，避免产出不完整快照
+
+对应实现：
+
+- `packages/vbi/src/report-builder/builder.ts`
+- `packages/vbi/src/report-builder/modules/build-snapshot.ts`
+
+### 5. Report page builder 只操作引用，并支持懒解析
+
+当前 page builder 只暴露结构与引用相关能力：
+
+- `setTitle(...)`
+- `setChartId(...)`
+- `setInsightId(...)`
+
+其中 `setChartId` / `setInsightId` 既可接收字符串，也可接收具备 `getUUID()` 的 builder。
+
+同时，page builder 提供：
+
+- `page.chart`
+- `page.insight`
+
+它们会通过 registry 懒解析 builder；若 registry 中暂存的是原始 DSL，会在访问时补建 builder 并回填 registry。
+
+对应实现：
+
+- `packages/vbi/src/report-builder/features/page/page-builder.ts`
+- `packages/vbi/src/vbi/resource-registry.ts`
 
 ## Consequences
 
-优点：
+收益：
 
-- report / chart / insight 边界清晰
-- chart 与 insight 可被多个 report 复用
-- builder 与后端资源模型天然对齐
-- `snapshot()` 能在纯 DSL 层导出完整 report 闭包
+- report / chart / insight 的职责边界清晰
+- report DSL 可以稳定作为结构事实源
+- 同一 chart / insight 可以被多个 report page 引用
+- `snapshot()` 可作为纯 DSL 层导出闭包的统一出口
 
-代价：
+约束：
 
-- 旧的 `page.setChart(...)`、`page.setText(...)` API 需要迁移
-- 需要在 `createVBI()` 内维护实例级 registry 生命周期
-- `standard-report` 必须改成依赖 `resourceGateway` 的组合式入口
+- `snapshot()` 依赖同一个 `createVBI()` 实例内的 registry
+- 跨实例只传 `report DSL` 时，无法自动补齐未注册的资源
+- 缺失引用会在 `snapshot()` 时失败，而不是静默跳过

@@ -13,7 +13,7 @@ if [ -z "${DATABASE_URL:-}" ]; then
 fi
 
 echo "🛠  Running migrations..."
-(cd "$PROJECT_DIR" && pnpm exec prisma migrate dev)
+(cd "$PROJECT_DIR" && pnpm exec prisma migrate deploy)
 
 echo "📦 Generating Prisma Client..."
 (cd "$PROJECT_DIR" && pnpm exec prisma generate)

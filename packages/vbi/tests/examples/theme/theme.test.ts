@@ -16,7 +16,7 @@ describe('chart / Theme', () => {
   })
 
   it('dark-theme', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [
@@ -195,7 +195,7 @@ describe('chart / Theme', () => {
   })
 
   it('light-theme', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [

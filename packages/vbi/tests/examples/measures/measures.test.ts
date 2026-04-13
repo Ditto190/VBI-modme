@@ -16,7 +16,7 @@ describe('chart / Measures', () => {
   })
 
   it('add-measure', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -126,7 +126,7 @@ describe('chart / Measures', () => {
   })
 
   it('add-measure-encoding', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -232,7 +232,7 @@ describe('chart / Measures', () => {
   })
 
   it('measure-with-custom-and-auto-format', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [
@@ -465,7 +465,7 @@ describe('chart / Measures', () => {
   })
 
   it('remove-measure', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],
@@ -588,7 +588,7 @@ describe('chart / Measures', () => {
   })
 
   it('update-measure', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'table',
       dimensions: [],

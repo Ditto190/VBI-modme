@@ -325,7 +325,6 @@ function ChartTypeSelector() {
 
 ```tsx
 import { ChartRenderer } from '@visactor/vbi-react'
-
 ;<ChartRenderer
   builder={builder}
   debounce={300}
@@ -346,7 +345,6 @@ import { ChartRenderer } from '@visactor/vbi-react'
 
 ```tsx
 import { ChartTypeSelector } from '@visactor/vbi-react'
-
 ;<ChartTypeSelector
   builder={builder}
   label="图表类型"
@@ -371,7 +369,6 @@ import { ChartTypeSelector } from '@visactor/vbi-react'
 
 ```tsx
 import { FieldPanel } from '@visactor/vbi-react'
-
 ;<FieldPanel
   builder={builder}
   dimensionOptions={[
@@ -405,7 +402,6 @@ import { FieldPanel } from '@visactor/vbi-react'
 
 ```tsx
 import { BuilderLayout } from '@visactor/vbi-react'
-
 ;<BuilderLayout
   topBar={<TopBar />}
   leftPanel={<FieldsPanel />}

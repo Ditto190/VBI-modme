@@ -3,7 +3,7 @@ import type { VBIChartDSL } from 'src/types/chartDSL'
 
 describe('orderBy', () => {
   test('defaults to the first dimension when no explicit sort exists', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       dimensions: [
         { id: 'd-1', field: 'area', alias: '区域' },
         { id: 'd-2', field: 'province', alias: '省份' },
@@ -15,7 +15,7 @@ describe('orderBy', () => {
   })
 
   test('omits orderBy when no dimensions and no explicit sort exist', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       measures: [{ id: 'm-1', field: 'sales', alias: '销售额', encoding: 'column', aggregate: { func: 'sum' } }],
     } as VBIChartDSL)
 
@@ -23,7 +23,7 @@ describe('orderBy', () => {
   })
 
   test('explicit dimension sort overrides default sorting', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       dimensions: [
         { id: 'd-1', field: 'area', alias: '区域' },
         { id: 'd-2', field: 'province', alias: '省份', sort: { order: 'desc' } },
@@ -35,7 +35,7 @@ describe('orderBy', () => {
   })
 
   test('explicit measure sort overrides default sorting', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       dimensions: [{ id: 'd-1', field: 'area', alias: '区域' }],
       measures: [
         {
@@ -53,7 +53,7 @@ describe('orderBy', () => {
   })
 
   test('keeps dimension order before measure order', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       dimensions: [
         { id: 'd-1', field: 'area', alias: '区域', sort: { order: 'asc' } },
         { id: 'd-2', field: 'province', alias: '省份', sort: { order: 'desc' } },
@@ -87,7 +87,7 @@ describe('orderBy', () => {
   })
 
   test('uses node ids for aggregated dimensions and measures', () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       dimensions: [
         { id: 'd-1', field: 'order_date', alias: '年份', aggregate: { func: 'toYear' }, sort: { order: 'asc' } },
       ],

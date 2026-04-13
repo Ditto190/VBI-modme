@@ -166,12 +166,6 @@ const API_SECTIONS = [
             file: 'features/page/page-builder.ts',
             displayName: 'ReportPageBuilder',
           },
-          {
-            name: 'reportText',
-            label: 'reportText',
-            file: 'features/page/text-builder.ts',
-            displayName: 'ReportTextBuilder',
-          },
         ],
       },
     ],

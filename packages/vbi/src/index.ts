@@ -1,6 +1,7 @@
 export { VBI } from './vbi'
 export { createVBI } from './vbi/create-vbi'
 export type { VBIInstance } from './vbi/create-vbi'
+export type { VBIChartNamespace, VBIInsightNamespace, VBIReportNamespace } from './vbi/types'
 export { VBIInsightBuilder } from './insight-builder'
 export {
   VBIChartBuilder,

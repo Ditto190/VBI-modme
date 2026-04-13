@@ -16,7 +16,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('add-having-filter', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -197,7 +197,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('add-multiple-having-filter', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -424,7 +424,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('clear-having-filter', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -638,7 +638,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-array-value-with-in-operator', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -806,7 +806,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-array-value-with-not-in-operator', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -997,7 +997,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-clear-and-rebuild', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -1323,7 +1323,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-deeply-nested-groups', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -1732,7 +1732,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-empty-dsl-compose-target', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'line',
       dimensions: [],
@@ -1965,7 +1965,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-field-not-in-measures-and-dimensions', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'line',
       dimensions: [],
@@ -2131,7 +2131,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-find-and-update', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -2362,7 +2362,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-group-add-to-existing', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -2679,7 +2679,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-group-remove-condition', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -2920,7 +2920,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-mix-filters-and-groups', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -3223,7 +3223,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-multi-dimension-aggregate', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -3520,7 +3520,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-nested-groups', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -3829,7 +3829,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-or-group', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -4073,7 +4073,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-scatter-profit-analysis', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'scatter',
       dimensions: [
@@ -4399,7 +4399,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-update-group-operator', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [
@@ -4667,7 +4667,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('having-with-where-combined', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'column',
       dimensions: [
@@ -4954,7 +4954,7 @@ describe('chart / HavingFilter', () => {
   })
 
   it('remove-having-filter', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [

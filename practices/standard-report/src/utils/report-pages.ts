@@ -1,12 +1,6 @@
 import { VBI, type VBIReportBuilder, type VBIReportDSL } from '@visactor/vbi';
 
-export type ReportResourceFactory = Pick<
-  typeof VBI,
-  | 'createChart'
-  | 'createInsight'
-  | 'generateEmptyChartDSL'
-  | 'generateEmptyInsightDSL'
->;
+export type ReportResourceFactory = Pick<typeof VBI, 'chart' | 'insight'>;
 
 const findPageIndex = (pages: VBIReportDSL['pages'], pageId: string) => {
   return pages.findIndex((page) => page.id === pageId);
@@ -24,8 +18,8 @@ export const addReportPage = (
   const { vbi = VBI } = options;
   const title =
     options.title ?? getNextPageTitle(reportBuilder.build().pages.length);
-  const chart = vbi.createChart(vbi.generateEmptyChartDSL(connectorId));
-  const insight = vbi.createInsight(vbi.generateEmptyInsightDSL());
+  const chart = vbi.chart.create(vbi.chart.generateEmptyDSL(connectorId));
+  const insight = vbi.insight.create(vbi.insight.generateEmptyDSL());
 
   reportBuilder.page.add(title, (page) => {
     page.setChartId(chart).setInsightId(insight);

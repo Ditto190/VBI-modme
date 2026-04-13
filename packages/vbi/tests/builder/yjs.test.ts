@@ -3,8 +3,8 @@ import { VBIChartDSL } from 'src/types/chartDSL'
 
 describe('VBI YJS Integration', () => {
   test('sync between two builders', () => {
-    const b1 = VBI.createChart({} as VBIChartDSL)
-    const b2 = VBI.createChart({} as VBIChartDSL)
+    const b1 = VBI.chart.create({} as VBIChartDSL)
+    const b2 = VBI.chart.create({} as VBIChartDSL)
 
     b2.applyUpdate(b1.encodeStateAsUpdate())
     b1.applyUpdate(b2.encodeStateAsUpdate())
@@ -37,8 +37,8 @@ describe('VBI YJS Integration', () => {
 })
 
 test('encodeStateAsUpdate', () => {
-  const b1 = VBI.createChart({} as VBIChartDSL)
-  const b2 = VBI.createChart({} as VBIChartDSL)
+  const b1 = VBI.chart.create({} as VBIChartDSL)
+  const b2 = VBI.chart.create({} as VBIChartDSL)
 
   b1.applyUpdate(b2.encodeStateAsUpdate())
   b2.applyUpdate(b1.encodeStateAsUpdate())

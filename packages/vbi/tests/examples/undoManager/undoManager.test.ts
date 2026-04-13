@@ -16,7 +16,7 @@ describe('chart / UndoManager', () => {
   })
 
   it('undo-redo', async () => {
-    const builder = VBI.createChart({
+    const builder = VBI.chart.create({
       connectorId: 'demoSupermarket',
       chartType: 'bar',
       dimensions: [],

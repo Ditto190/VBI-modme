@@ -1,8 +1,5 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
-import type { VBIChartBuilder } from 'src/chart-builder/builder'
-import type { VBIInsightBuilder } from 'src/insight-builder/builder'
-import type { VBIReportBuilder } from 'src/report-builder/builder'
 import type {
   VBIChartBuilderOptions,
   VBIChartDSLInput,
@@ -19,25 +16,9 @@ import { generateEmptyReportDSL } from './generate-empty-report-dsl'
 import { generateEmptyReportPageDSL } from './generate-empty-report-page-dsl'
 import { mergeBuilderOptions, mergeReportBuilderOptions } from './merge-builder-options'
 import { createVBIResourceRegistry } from './resource-registry'
+import type { VBIInstance } from './types'
 
-export interface VBIInstance<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
-  connectorMap: typeof connectorMap
-  registerConnector: typeof registerConnector
-  getConnector: typeof getConnector
-  generateEmptyChartDSL: typeof generateEmptyChartDSL
-  generateEmptyInsightDSL: typeof generateEmptyInsightDSL
-  generateEmptyReportDSL: typeof generateEmptyReportDSL
-  generateEmptyReportPageDSL: typeof generateEmptyReportPageDSL
-  createChart: (
-    vbi: VBIChartDSLInput,
-    builderOptions?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>,
-  ) => VBIChartBuilder<TQueryDSL, TSeedDSL>
-  createInsight: (insight: VBIInsightDSLInput) => VBIInsightBuilder
-  createReport: (
-    report: VBIReportDSLInput,
-    builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>,
-  ) => VBIReportBuilder<TQueryDSL, TSeedDSL>
-}
+export type { VBIInstance } from './types'
 
 export function createVBI(): VBIInstance<DefaultVBIQueryDSL, DefaultVBISeedDSL>
 export function createVBI<TQueryDSL, TSeedDSL>(
@@ -68,12 +49,18 @@ export function createVBI<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBIS
     connectorMap,
     registerConnector,
     getConnector,
-    generateEmptyChartDSL,
-    generateEmptyInsightDSL,
-    generateEmptyReportDSL,
-    generateEmptyReportPageDSL,
-    createChart,
-    createInsight,
-    createReport,
-  }
+    chart: {
+      create: createChart,
+      generateEmptyDSL: generateEmptyChartDSL,
+    },
+    insight: {
+      create: createInsight,
+      generateEmptyDSL: generateEmptyInsightDSL,
+    },
+    report: {
+      create: createReport,
+      generateEmptyDSL: generateEmptyReportDSL,
+      generateEmptyPageDSL: generateEmptyReportPageDSL,
+    },
+  } satisfies VBIInstance<TQueryDSL, TSeedDSL>
 }

@@ -19,7 +19,7 @@ describe('Report', () => {
     const LocalVBI = createVBI()
     const resources = {
       charts: {
-        salesChart: LocalVBI.createChart({
+        salesChart: LocalVBI.chart.create({
           connectorId: 'demoSupermarket',
           chartType: 'bar',
           dimensions: [
@@ -54,13 +54,13 @@ describe('Report', () => {
         }),
       },
       insights: {
-        salesInsight: LocalVBI.createInsight({
+        salesInsight: LocalVBI.insight.create({
           content: '销售额集中在华东区域，上海与浙江贡献最高。',
           version: 0,
         }),
       },
     }
-    const builder = LocalVBI.createReport({
+    const builder = LocalVBI.report.create({
       pages: [],
       version: 0,
     })

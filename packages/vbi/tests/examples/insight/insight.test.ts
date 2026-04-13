@@ -16,7 +16,7 @@ describe('Insight', () => {
   })
 
   it('basic-content', async () => {
-    const builder = VBI.createInsight({
+    const builder = VBI.insight.create({
       content: '',
       version: 0,
     })

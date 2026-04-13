@@ -28,28 +28,68 @@ model Post {
   authorId  Int
 }
 
-model Document {
+model Report {
   id        String   @id @default(uuid())
   name      String?
   data      Bytes
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  updates DocumentUpdate[]
+  @@index([updatedAt])
+}
+
+model Chart {
+  id        String   @id @default(uuid())
+  name      String?
+  data      Bytes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([updatedAt])
 }
 
-model DocumentUpdate {
-  id         BigInt   @id @default(autoincrement())
-  documentId String
-  data       Bytes
-  merged     Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Insight {
+  id        String   @id @default(uuid())
+  name      String?
+  data      Bytes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  @@index([updatedAt])
+}
 
-  @@index([documentId, id])
-  @@index([documentId, merged])
+model ReportCollaborationUpdate {
+  id        BigInt   @id @default(autoincrement())
+  reportId  String
+  data      Bytes
+  merged    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([reportId, id])
+  @@index([reportId, merged])
+}
+
+model ChartCollaborationUpdate {
+  id        BigInt   @id @default(autoincrement())
+  chartId   String
+  data      Bytes
+  merged    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([chartId, id])
+  @@index([chartId, merged])
+}
+
+model InsightCollaborationUpdate {
+  id        BigInt   @id @default(autoincrement())
+  insightId String
+  data      Bytes
+  merged    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([insightId, id])
+  @@index([insightId, merged])
 }
