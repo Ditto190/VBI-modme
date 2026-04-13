@@ -10,22 +10,22 @@ import type {
   VBIReportDSLInput,
 } from 'src/types'
 import type { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
-import type { generateEmptyChartDSL } from './generate-empty-dsl'
-import type { generateEmptyInsightDSL } from './generate-empty-insight-dsl'
-import type { generateEmptyReportDSL } from './generate-empty-report-dsl'
-import type { generateEmptyReportPageDSL } from './generate-empty-report-page-dsl'
+import type { createEmptyChart } from './create-empty-chart'
+import type { createEmptyInsight } from './create-empty-insight'
+import type { createEmptyReport } from './create-empty-report'
+import type { createEmptyReportPage } from './create-empty-report-page'
 
 export interface VBIChartNamespace<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
   create: (
     vbi: VBIChartDSLInput,
     builderOptions?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>,
   ) => VBIChartBuilder<TQueryDSL, TSeedDSL>
-  generateEmptyDSL: typeof generateEmptyChartDSL
+  createEmpty: typeof createEmptyChart
 }
 
 export interface VBIInsightNamespace {
   create: (insight: VBIInsightDSLInput) => VBIInsightBuilder
-  generateEmptyDSL: typeof generateEmptyInsightDSL
+  createEmpty: typeof createEmptyInsight
 }
 
 export interface VBIReportNamespace<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
@@ -33,8 +33,8 @@ export interface VBIReportNamespace<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = D
     report: VBIReportDSLInput,
     builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>,
   ) => VBIReportBuilder<TQueryDSL, TSeedDSL>
-  generateEmptyDSL: typeof generateEmptyReportDSL
-  generateEmptyPageDSL: typeof generateEmptyReportPageDSL
+  createEmpty: typeof createEmptyReport
+  createEmptyPage: typeof createEmptyReportPage
 }
 
 export type VBIChartBuilderFactory<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> = (

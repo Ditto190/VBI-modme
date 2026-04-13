@@ -32,7 +32,7 @@ interface BearState {
 }
 
 const defaultBuilder: VBIChartBuilder = VBI.chart.create(
-  VBI.chart.generateEmptyDSL(CONNECTOR_ID),
+  VBI.chart.createEmpty(CONNECTOR_ID),
 );
 
 export const useVBIStore = create<BearState>((set, get) => ({

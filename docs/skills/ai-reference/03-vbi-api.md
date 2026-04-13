@@ -2,15 +2,15 @@
 
 ## 3.1 入口说明
 
-`VBIChartBuilder` 不在 `@visactor/vbi` 主入口导出。通过 standard practice 使用：
+`VBIChartBuilder` 已从 `@visactor/vbi` 主入口导出。常见使用方式如下：
 
 ```ts
 // 方式 1：使用 standard 封装好的 builder
 import { defaultBuilder } from 'practices/standard/src/utils/demoConnector'
 
 // 方式 2：自行创建
-import { VBI } from '@visactor/vbi' // ⚠️ 不在主入口
-const builder = VBI.createChart(VBI.generateEmptyChartDSL('connector-id'))
+import { VBI } from '@visactor/vbi'
+const builder = VBI.chart.create(VBI.chart.createEmpty('connector-id'))
 ```
 
 ---

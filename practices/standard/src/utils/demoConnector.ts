@@ -63,9 +63,9 @@ export const registerDemoConnector = () => {
 
 registerDemoConnector();
 export const createDefaultBuilder = (): VBIChartBuilder => {
-  return VBI.chart.create(VBI.chart.generateEmptyDSL(connectorId));
+  return VBI.chart.create(VBI.chart.createEmpty(connectorId));
 };
 
 export const defaultBuilder: VBIChartBuilder = VBI.chart.create(
-  VBI.chart.generateEmptyDSL(connectorId),
+  VBI.chart.createEmpty(connectorId),
 );

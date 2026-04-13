@@ -10,20 +10,20 @@
 
 ## 10.2 @visactor/vbi 导出情况
 
-`@visactor/vbi` 主入口（`src/index.ts`）当前只导出了 3 个模块。以下功能**存在但未从主入口导出**，需通过 `practices/standard/src/utils/demoConnector.ts` 间接访问：
+`@visactor/vbi` 主入口（`src/index.ts`）已经导出主要运行时 API。以下功能可直接从包入口使用：
 
-| 功能                                                 | 实际位置                         | 状态                    |
-| ---------------------------------------------------- | -------------------------------- | ----------------------- |
-| `VBI` 命名空间 / `createVBI()`                       | `src/vbi/create-vbi.ts`          | ⚠️ 有替代方案           |
-| `VBIChartBuilder`                                    | `src/chart-builder/builder.ts`   | ⚠️ 有替代方案           |
-| `registerConnector` / `getConnector`                 | `src/chart-builder/connector.ts` | ⚠️ 有替代方案           |
-| `generateEmptyChartDSL`                              | `src/vbi/generate-empty-dsl.ts`  | ⚠️ 有替代方案           |
-| `VBIChartDSL` 及所有 DSL 类型                        | `src/types/chartDSL/`            | ⚠️ 有替代方案（仅类型） |
-| 所有 Builder 类型                                    | `src/types/builder/`             | ⚠️ 有替代方案（仅类型） |
-| `builder.dsl.get(path)` / `.set()`                   | `builder.dsl`（Y.Map 原生方法）  | ⚠️ 有替代方案           |
-| `builder.doc.transact(fn)`                           | `builder.doc`（Y.Doc 原生方法）  | ⚠️ 有替代方案           |
-| `builder.chartType.getSupportedMeasureEncodings()`   | `chart-type-builder.ts`          | ⚠️ 有替代方案           |
-| `builder.chartType.getSupportedDimensionEncodings()` | `chart-type-builder.ts`          | ⚠️ 有替代方案           |
+| 功能                                                 | 实际位置                         | 状态    |
+| ---------------------------------------------------- | -------------------------------- | ------- |
+| `VBI` 命名空间 / `createVBI()`                       | `src/vbi/create-vbi.ts`          | ✅ 可用 |
+| `VBIChartBuilder`                                    | `src/chart-builder/builder.ts`   | ✅ 可用 |
+| `registerConnector` / `getConnector`                 | `src/chart-builder/connector.ts` | ✅ 可用 |
+| `createEmptyChart` / `VBI.chart.createEmpty()`       | `src/vbi/create-empty-chart.ts`  | ✅ 可用 |
+| `VBIChartDSL` 及所有 DSL 类型                        | `src/types/chartDSL/`            | ✅ 可用 |
+| 所有 Builder 类型                                    | `src/types/builder/`             | ✅ 可用 |
+| `builder.dsl.get(path)` / `.set()`                   | `builder.dsl`（Y.Map 原生方法）  | ✅ 可用 |
+| `builder.doc.transact(fn)`                           | `builder.doc`（Y.Doc 原生方法）  | ✅ 可用 |
+| `builder.chartType.getSupportedMeasureEncodings()`   | `chart-type-builder.ts`          | ✅ 可用 |
+| `builder.chartType.getSupportedDimensionEncodings()` | `chart-type-builder.ts`          | ✅ 可用 |
 
 以下功能**存在于主入口**：
 
@@ -31,7 +31,7 @@
 | ----------------------------------------------------- | ------------------ |
 | `isVBIFilter`, `isVBIWhereGroup`, `isVBIHavingFilter` | `filter-guards.ts` |
 
-**替代方案**：直接使用**目标 practice** 自己的 `demoConnector.ts` 中的封装。每个 practice 都是独立项目，参考该 practice 内部的导入和使用方式。
+**建议**：即便主入口可直接访问，仍优先参考**目标 practice** 自己的 `demoConnector.ts` 和默认 builder 封装，因为那里面通常包含 connector 注册、默认数据源和页面级初始化逻辑。
 
 ---
 

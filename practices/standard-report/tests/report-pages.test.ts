@@ -9,9 +9,7 @@ import {
 
 test('ensureReportHasPage creates a first page with the provided VBI instance', () => {
   const LocalVBI = createVBI();
-  const reportBuilder = LocalVBI.report.create(
-    LocalVBI.report.generateEmptyDSL(),
-  );
+  const reportBuilder = LocalVBI.report.create(LocalVBI.report.createEmpty());
   const pageId = ensureReportHasPage(reportBuilder, 'demo', LocalVBI);
   const page = reportBuilder.build().pages.find((item) => item.id === pageId);
   const pageBuilder = reportBuilder.page.get(pageId);
@@ -22,7 +20,7 @@ test('ensureReportHasPage creates a first page with the provided VBI instance', 
 });
 
 test('addReportPage appends sequential page titles', () => {
-  const reportBuilder = VBI.report.create(VBI.report.generateEmptyDSL());
+  const reportBuilder = VBI.report.create(VBI.report.createEmpty());
   ensureReportHasPage(reportBuilder, 'demo');
   addReportPage(reportBuilder, 'demo');
 

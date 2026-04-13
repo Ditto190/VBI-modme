@@ -11,8 +11,8 @@ import {
   encodeDocStateAsUpdate,
   isEmptyVBIReportDSL,
 } from './modules'
-import { getOrCreateReportPages } from 'src/vbi/from/report-page-y-map'
-import { type VBIResourceRegistry, resolveChartBuilder, resolveInsightBuilder } from 'src/vbi/resource-registry'
+import { getOrCreateReportPages } from 'src/vbi/from'
+import type { VBIResourceRegistry } from 'src/vbi/resources'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 
 export class VBIReportBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>
@@ -26,7 +26,7 @@ export class VBIReportBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = Default
   constructor(
     doc: Y.Doc,
     private options?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>,
-    private resourceRegistry?: VBIResourceRegistry,
+    private resourceRegistry?: VBIResourceRegistry<TQueryDSL, TSeedDSL>,
   ) {
     this.doc = doc
     this.dsl = doc.getMap('dsl') as Y.Map<any>
@@ -57,14 +57,14 @@ export class VBIReportBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = Default
     if (!this.resourceRegistry || !chartId) {
       return undefined
     }
-    return resolveChartBuilder(this.resourceRegistry, chartId, this.options?.chart)
+    return this.resourceRegistry.charts.resolveBuilder(chartId, this.options?.chart)
   }
 
   public getInsightBuilder = (insightId: string): VBIInsightBuilder | undefined => {
     if (!this.resourceRegistry || !insightId) {
       return undefined
     }
-    return resolveInsightBuilder(this.resourceRegistry, insightId)
+    return this.resourceRegistry.insights.resolveBuilder(insightId)
   }
 
   public build = (): VBIReportDSL => buildVBIReportDSL(this.dsl)

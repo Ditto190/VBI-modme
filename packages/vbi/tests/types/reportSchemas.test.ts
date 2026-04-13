@@ -1,10 +1,9 @@
 import { zVBIReportDSL } from 'src/types/reportDSL/report'
-import { generateEmptyReportDSL } from 'src/vbi/generate-empty-report-dsl'
-import { generateEmptyReportPageDSL } from 'src/vbi/generate-empty-report-page-dsl'
+import { createEmptyReport, createEmptyReportPage } from 'src/vbi/index'
 
 describe('report DSL schemas', () => {
   test('parse minimal report DSL', () => {
-    expect(zVBIReportDSL.parse(generateEmptyReportDSL())).toEqual({
+    expect(zVBIReportDSL.parse(createEmptyReport())).toEqual({
       uuid: 'uuid-1',
       pages: [],
       version: 0,
@@ -12,7 +11,7 @@ describe('report DSL schemas', () => {
   })
 
   test('page requires title and normalizes references', () => {
-    const page = generateEmptyReportPageDSL()
+    const page = createEmptyReportPage()
     const withoutTitle: Partial<typeof page> = { ...page }
     const withoutChartId: Partial<typeof page> = { ...page }
     const withoutInsightId: Partial<typeof page> = { ...page }
@@ -27,14 +26,14 @@ describe('report DSL schemas', () => {
   })
 
   test('page reference fields use string validation', () => {
-    const page = generateEmptyReportPageDSL()
+    const page = createEmptyReportPage()
 
     expect(() => zVBIReportDSL.parse({ pages: [{ ...page, chartId: 1 }], version: 0 })).toThrow()
     expect(() => zVBIReportDSL.parse({ pages: [{ ...page, insightId: 1 }], version: 0 })).toThrow()
   })
 
   test('empty report helpers stay stable', () => {
-    expect(generateEmptyReportPageDSL()).toEqual({
+    expect(createEmptyReportPage()).toEqual({
       id: 'id-1',
       title: '',
       chartId: '',
@@ -43,7 +42,7 @@ describe('report DSL schemas', () => {
   })
 
   test('report helper accepts custom uuid', () => {
-    expect(generateEmptyReportDSL('report-uuid')).toEqual({
+    expect(createEmptyReport('report-uuid')).toEqual({
       uuid: 'report-uuid',
       pages: [],
       version: 0,
@@ -51,7 +50,7 @@ describe('report DSL schemas', () => {
   })
 
   test('report page helper accepts custom id', () => {
-    expect(generateEmptyReportPageDSL('page-id')).toEqual({
+    expect(createEmptyReportPage('page-id')).toEqual({
       id: 'page-id',
       title: '',
       chartId: '',

@@ -64,7 +64,7 @@ describe('VBI', () => {
   })
 
   test('empty chart helper accepts custom uuid', () => {
-    expect(VBI.chart.generateEmptyDSL('demo', 'chart-uuid')).toMatchObject({
+    expect(VBI.chart.createEmpty('demo', 'chart-uuid')).toMatchObject({
       uuid: 'chart-uuid',
       connectorId: 'demo',
     })
@@ -96,7 +96,7 @@ describe('VBI', () => {
       },
     })
 
-    const builder = CustomVBI.chart.create(VBI.chart.generateEmptyDSL('custom'), {
+    const builder = CustomVBI.chart.create(VBI.chart.createEmpty('custom'), {
       adapters: {
         buildVQuery: ({ vbiDSL }) => ({
           source: 'instance',
@@ -165,7 +165,7 @@ describe('VBI', () => {
     })
 
     // Call createChart WITHOUT second parameter - should use defaultBuilderOptions
-    const builder = CustomVBI.chart.create(VBI.chart.generateEmptyDSL('custom'))
+    const builder = CustomVBI.chart.create(VBI.chart.createEmpty('custom'))
 
     expect(builder.buildVQuery()).toEqual({
       source: 'factory',

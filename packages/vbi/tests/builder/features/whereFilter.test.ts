@@ -422,7 +422,7 @@ describe('WhereFilterBuilder', () => {
 
   test('buildVQuery handles not between with only min boundary', () => {
     const builder = VBI.chart.create({
-      ...VBI.chart.generateEmptyDSL('demo'),
+      ...VBI.chart.createEmpty('demo'),
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
       measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
@@ -449,7 +449,7 @@ describe('WhereFilterBuilder', () => {
 
   test('buildVQuery handles not between with only max boundary', () => {
     const builder = VBI.chart.create({
-      ...VBI.chart.generateEmptyDSL('demo'),
+      ...VBI.chart.createEmpty('demo'),
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
       measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
@@ -476,7 +476,7 @@ describe('WhereFilterBuilder', () => {
 
   test('buildVQuery handles between with array value', () => {
     const builder = VBI.chart.create({
-      ...VBI.chart.generateEmptyDSL('demo'),
+      ...VBI.chart.createEmpty('demo'),
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
       measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
@@ -508,7 +508,7 @@ describe('WhereFilterBuilder', () => {
 
   test('buildVQuery handles where filter with non-object value', () => {
     const builder = VBI.chart.create({
-      ...VBI.chart.generateEmptyDSL('demo'),
+      ...VBI.chart.createEmpty('demo'),
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
       measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
@@ -1024,7 +1024,7 @@ describe('WhereFilterNodeBuilder date support', () => {
 
 describe('buildVQuery date filter lowering', () => {
   const baseDSL = {
-    ...VBI.chart.generateEmptyDSL('demo'),
+    ...VBI.chart.createEmpty('demo'),
     chartType: 'column',
     dimensions: [{ id: 'id-d1', field: 'category', alias: 'category' }],
     measures: [{ id: 'id-m1', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],

@@ -1,8 +1,8 @@
-import type { VBIConnectorId } from 'src/types/connector/connector'
 import type { VBIChartDSL } from 'src/types'
+import type { VBIConnectorId } from 'src/types/connector/connector'
 import { id } from 'src/utils'
 
-export const generateEmptyChartDSL = (connectorId: VBIConnectorId, uuid: string = id.resourceUUID()): VBIChartDSL => {
+export const createEmptyChart = (connectorId: VBIConnectorId, uuid: string = id.resourceUUID()): VBIChartDSL => {
   return {
     uuid,
     connectorId,

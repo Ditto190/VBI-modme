@@ -18,8 +18,8 @@ export const addReportPage = (
   const { vbi = VBI } = options;
   const title =
     options.title ?? getNextPageTitle(reportBuilder.build().pages.length);
-  const chart = vbi.chart.create(vbi.chart.generateEmptyDSL(connectorId));
-  const insight = vbi.insight.create(vbi.insight.generateEmptyDSL());
+  const chart = vbi.chart.create(vbi.chart.createEmpty(connectorId));
+  const insight = vbi.insight.create(vbi.insight.createEmpty());
 
   reportBuilder.page.add(title, (page) => {
     page.setChartId(chart).setInsightId(insight);

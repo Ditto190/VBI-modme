@@ -26,9 +26,9 @@
 
 对外接口要明确调整：
 
-- VBI.createReport(...) 产出的 builder 默认面向“结构文档”
-- VBI.createChart(...) 继续面向 chart 资源
-- 新增 VBI.createInsight(...) 或等价 builder 入口
+- `VBI.report.create(...)` 产出的 builder 默认面向“结构文档”
+- `VBI.chart.create(...)` 继续面向 chart 资源
+- `VBI.insight.create(...)` 作为 insight builder 入口
 - `reportBuilder.build(): VBIReportDSL`
 - `reportBuilder.snapshot(): VBIReportSnapshotDSL`
 - `snapshot()` 只汇总当前 `ResourceRegistry` 中已装载资源，不触发任何业务层 IO

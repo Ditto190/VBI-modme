@@ -58,8 +58,14 @@
 
 ```ts
 // VBI 类型（@visactor/vbi）
-// ⚠️ 注意：VBIChartBuilder 不在主入口导出，需通过各 practice 自己的 demoConnector.ts 间接使用
-import type { VBIChartDSL, VBIDimension, VBIMeasure, VBIWhereGroup, VBIHavingGroup } from '@visactor/vbi'
+import type {
+  VBIChartBuilder,
+  VBIChartDSL,
+  VBIDimension,
+  VBIMeasure,
+  VBIWhereGroup,
+  VBIHavingGroup,
+} from '@visactor/vbi'
 
 // standard/minimalist/streamlined/professional 使用的 hooks（来自各 practice 自己的 hooks 目录）
 import {
@@ -88,7 +94,7 @@ import {
 import { ChartRenderer, ChartTypeSelector, FieldPanel, BuilderLayout } from '@visactor/vbi-react'
 ```
 
-> **关于 @visactor/vbi 主入口导出问题**：当前 `@visactor/vbi` 包的主入口（`src/index.ts`）未导出 `VBI`、`VBIChartBuilder`、`registerConnector`、`generateEmptyChartDSL` 等核心 API。每个 practice 都是**独立实现**自己的 `demoConnector.ts`，封装这些 API。AI 在操作具体某个 practice 时，应参考**该 practice 自身**的 `demoConnector.ts`。详见 [10-feature-status.md](./10-feature-status.md)。
+> **关于 @visactor/vbi 主入口**：当前 `@visactor/vbi` 包的主入口已经导出 `VBI`、`VBIChartBuilder`、`registerConnector`、`createEmptyChart` 等核心 API。即便如此，每个 practice 仍会**独立实现**自己的 `demoConnector.ts` 来封装 connector 注册和默认 builder 初始化。AI 在操作具体某个 practice 时，仍应优先参考**该 practice 自身**的 `demoConnector.ts`。详见 [10-feature-status.md](./10-feature-status.md)。
 
 > **关于 vbi-react 包**：只有 `vbi-react-starter` 使用 `@visactor/vbi-react` 包提供的 hooks 和组件。其他 practice（minimalist/streamlined/professional/standard/standard-report）都是**独立实现**自己的 hooks 和 model，不依赖 `@visactor/vbi-react` 包。
 

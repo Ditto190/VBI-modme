@@ -482,7 +482,7 @@ describe('HavingGroupBuilder', () => {
 
   test('buildVQuery handles having filter with array value and eq operator', () => {
     const builder = VBI.chart.create({
-      ...VBI.chart.generateEmptyDSL('demo'),
+      ...VBI.chart.createEmpty('demo'),
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
       measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
@@ -510,7 +510,7 @@ describe('HavingGroupBuilder', () => {
 
   test('buildVQuery handles having filter with array value and neq operator', () => {
     const builder = VBI.chart.create({
-      ...VBI.chart.generateEmptyDSL('demo'),
+      ...VBI.chart.createEmpty('demo'),
       chartType: 'column',
       dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
       measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
