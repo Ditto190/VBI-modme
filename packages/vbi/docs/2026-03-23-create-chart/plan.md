@@ -17,7 +17,7 @@
 1. `VBI.chart.create(vbiChart)` 的行为与当前 `VBI.from(vbi)` 一致
 2. `createVBI(...).chart.create(...)` 正确继承和覆盖默认 `builderOptions`
 3. `VBI.from(...)` / `VBI.create(...)` 仍可用，但只是 `VBI.chart.create(...)` 的 alias
-4. `VBI.chart.generateEmptyDSL(...)` 与旧的 `generateEmptyDSL(...)` 产物一致
+4. `VBI.chart.createEmpty(...)` 与 `createEmptyChart(...)` 产物一致
 
 ### 1.2 补 root schema 测试
 
@@ -35,7 +35,7 @@
 - `packages/vbi/src/types/dsl/vbi/vbi.ts`
 - `packages/vbi/src/types/dsl/index.ts`
 - `packages/vbi/src/types/index.ts`
-- `packages/vbi/src/vbi/generate-empty-dsl.ts`
+- `packages/vbi/src/vbi/create-empty-chart.ts`
 - `packages/vbi/src/builder/modules/build.ts`
 - `packages/vbi/src/builder/modules/is-empty.ts`
 - `packages/vbi/src/builder/modules/index.ts`
@@ -43,7 +43,7 @@
 
 1. 导出 `VBIChartDSL`、`VBIChartDSLInput`、`zVBIChartDSL`
 2. 保留 `VBIDSL`、`VBIDSLInput`、`zVBIDSL` 作为 deprecated alias
-3. 新增 `generateEmptyChartDSL`、`buildVBIChartDSL`、`isEmptyVBIChartDSL`
+3. 新增 `createEmptyChart`、`buildVBIChartDSL`、`isEmptyVBIChartDSL`
 4. 内部实现优先切到新名字，旧名字只保留在兼容层
 
 ## Phase 3: Builder 与 adapter 类型收敛
@@ -77,7 +77,7 @@
 
 1. `createVBI()` 返回的实例接口新增 `chart.create(...)`
 2. `from(...)` / `create(...)` 统一委托到 `chart.create(...)`
-3. `generateEmptyDSL` 对外改为 `chart.generateEmptyDSL(...)`，旧名保留 alias
+3. `createEmptyChart` 对外收敛为 `chart.createEmpty(...)`
 4. `src/index.ts` 对外导出顺序改为“新名字在前，旧 alias 在后”
 
 ## Phase 5: 包内消费方迁移
@@ -93,7 +93,7 @@
 1. 包内源码默认改用 `VBIChartDSL`、`VBIChartBuilder`、`VBI.chart.create(...)`
 2. 单测默认改用新 API，只保留少量兼容用例覆盖旧 alias
 3. examples 里的 `VBIBuilder` 代码片段统一改为 `VBIChartBuilder`
-4. 检查是否有遗漏的 `VBIDSL` / `VBI.from` / `generateEmptyDSL` 直接引用
+4. 检查是否有遗漏的 `VBIDSL` / `VBI.from` / `createEmptyChart` 直接引用
    说明:
    首期不做 `builder/`、`types/builder/`、`vbi/from/` 的物理目录大搬迁；先完成 symbol 收敛和兼容层，等 `reportBuilder` 落地时再评估目录重组，避免无意义 churn。
 

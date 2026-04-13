@@ -2,7 +2,7 @@
 
 ## Context
 
-当前 `@visactor/vbi` 对外只有单图表能力，但命名仍是泛化的：`VBI.from(...)`、`VBI.create(...)`、`VBIBuilder`、`VBIDSL`、`zVBIDSL`、`generateEmptyDSL`。
+当前 `@visactor/vbi` 对外只有单图表能力，但命名仍是泛化的：`VBI.from(...)`、`VBI.create(...)`、`VBIBuilder`、`VBIDSL`、`zVBIDSL`、`createEmptyChart`。
 
 这在“只有 chart”阶段还能工作，但在准备引入 `VBI.report.create(...)` 后会立刻产生冲突：
 
@@ -46,7 +46,7 @@ VBIBuilderAdapters -> VBIChartBuilderAdapters
 VBIDSL -> VBIChartDSL
 VBIDSLInput -> VBIChartDSLInput
 zVBIDSL -> zVBIChartDSL
-generateEmptyDSL -> generateEmptyChartDSL
+legacy empty helper -> createEmptyChart
 buildVBIDSL -> buildVBIChartDSL
 isEmptyVBIDSL -> isEmptyVBIChartDSL
 ```
@@ -85,7 +85,7 @@ isEmptyVBIDSL -> isEmptyVBIChartDSL
 
 - `packages/vbi/src/vbi/create-vbi.ts`
 - `packages/vbi/src/vbi/from/from-vbi-dsl-input.ts`
-- `packages/vbi/src/vbi/generate-empty-dsl.ts`
+- `packages/vbi/src/vbi/create-empty-chart.ts`
 - `packages/vbi/src/builder/builder.ts`
 - `packages/vbi/src/builder/modules/build.ts`
 - `packages/vbi/src/builder/modules/is-empty.ts`

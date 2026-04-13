@@ -28,7 +28,7 @@ VBI.report.create(vbiReport, options)
 createVBI(...).report.create(vbiReport, options)
 ```
 
-对外命名统一为 `VBIReportDSL` / `VBIReportDSLInput` / `zVBIReportDSL` / `generateEmptyReportDSL` / `generateEmptyReportPageDSL` / `VBIReportBuilder` / `VBIReportBuilderInterface` / `VBIReportBuilderOptions`。`chart` 和 `report` 是 `VBI` 下的两个平级能力。
+对外命名统一为 `VBIReportDSL` / `VBIReportDSLInput` / `zVBIReportDSL` / `createEmptyReport` / `createEmptyReportPage` / `VBIReportBuilder` / `VBIReportBuilderInterface` / `VBIReportBuilderOptions`。`chart` 和 `report` 是 `VBI` 下的两个平级能力。
 
 ### 2. `types/dsl` 改名为 `types/chartDSL`，并与 `types/reportDSL` 平级
 
@@ -61,8 +61,8 @@ type VBIReportDSL = { pages: VBIReportPageDSL[]; version: number }
 首期 helper 约定如下：
 
 ```ts
-generateEmptyReportDSL() => { pages: [], version: 0 }
-generateEmptyReportPageDSL(connectorId) => ({ id, title: '', chart: generateEmptyChartDSL(connectorId), text: { content: '' } })
+createEmptyReport() => { pages: [], version: 0 }
+createEmptyReportPage(connectorId) => ({ id, title: '', chart: createEmptyChart(connectorId), text: { content: '' } })
 ```
 
 `zVBIReportDSL` 与 `zVBIReportPageDSL` 也应使用同风格默认值，让 `build()` 产物保持稳定、最小、可预测。
@@ -103,7 +103,7 @@ class ReportPageBuilder {
 
 ## Reference
 
-`packages/vbi/docs/2026-03-23-create-chart/adr.md`, `packages/vbi/src/vbi/create-vbi.ts`, `packages/vbi/src/vbi/generate-empty-dsl.ts`, `packages/vbi/src/builder/builder.ts`
+`packages/vbi/docs/2026-03-23-create-chart/adr.md`, `packages/vbi/src/vbi/create-vbi.ts`, `packages/vbi/src/vbi/create-empty-chart.ts`, `packages/vbi/src/builder/builder.ts`
 `packages/vbi/src/types/builder/VBIInterface.ts`, `packages/vbi/src/types/dsl/vbi/vbi.ts`, `packages/vbi/docs/todo3-create-report/goal.md`
 
 ## 淘汰内容概述

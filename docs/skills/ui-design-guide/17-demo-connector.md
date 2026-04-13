@@ -59,23 +59,23 @@ import { VBI } from '@visactor/vbi'
 
 // 创建 builder 实例（使用 connectorId 关联 Connector）
 export const createDefaultBuilder = () => {
-  return VBI.createChart(VBI.generateEmptyChartDSL(connectorId))
+  return VBI.chart.create(VBI.chart.createEmpty(connectorId))
 }
 
 // 预创建的默认 builder（单例，模块加载时创建）
-export const defaultBuilder = VBI.createChart(VBI.generateEmptyChartDSL(connectorId))
+export const defaultBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
 ```
 
 ## VBI.createChart — 创建 Builder
 
 ```ts
-const builder = VBI.createChart(dsl: VBIChartDSL): VBIChartBuilder
+const builder = VBI.chart.create(dsl: VBIChartDSL): VBIChartBuilder
 ```
 
-参数是 VBIChartDSL 快照。`VBI.generateEmptyChartDSL(connectorId)` 生成空配置的 DSL：
+参数是 VBIChartDSL 快照。`VBI.chart.createEmpty(connectorId)` 生成空配置的 DSL：
 
 ```ts
-const dsl = VBI.generateEmptyChartDSL(connectorId)
+const dsl = VBI.chart.createEmpty(connectorId)
 // dsl: { chartType: 'table', dimensions: [], measures: [], whereFilter: ..., connectorId: 'demo' }
 ```
 

@@ -18,7 +18,7 @@
 1. `zVBIReportDSL` 正确 parse 最小 report DSL。
 2. `page.title` / `page.chart` / `page.text` 缺失时被 reject。
 3. `page.chart` 继续复用 `zVBIChartDSL` 的校验结果。
-4. `generateEmptyReportDSL()` 与 `generateEmptyReportPageDSL(connectorId)` 的默认值稳定。
+4. `createEmptyReport()` 与 `createEmptyReportPage(connectorId)` 的默认值稳定。
 
 ### 1.2 Builder API 测试
 
@@ -50,15 +50,15 @@
 
 **改动文件**:
 
-- `packages/vbi/src/vbi/generate-empty-report-dsl.ts`（新增）
-- `packages/vbi/src/vbi/generate-empty-report-page-dsl.ts`（新增）
+- `packages/vbi/src/vbi/create-empty-report.ts`（新增）
+- `packages/vbi/src/vbi/create-empty-report-page.ts`（新增）
 - `packages/vbi/src/builder/builder.ts`
 - `packages/vbi/src/builder/modules/**`
 - `packages/vbi/src/types/builder/**`
 
 改动内容:
 
-1. 新增 `generateEmptyReportDSL()` 与 `generateEmptyReportPageDSL(connectorId)`。
+1. 新增 `createEmptyReport()` 与 `createEmptyReportPage(connectorId)`。
 2. 将 `VBIChartBuilder` 的内部实现抽成“可绑定任意 DSL map”的模式，支持 page.chart 复用。
 3. 保持根 `createChart(...)` 行为不变，只把“绑定根 map”变成特例。
 
@@ -91,7 +91,7 @@
 改动内容:
 
 1. `createVBI()` 返回实例新增 `report.create(...)`。
-2. `VBI` 对外导出 `report.create`、`report.generateEmptyDSL`、`report.generateEmptyPageDSL`。
+2. `VBI` 对外导出 `report.create`、`report.createEmpty`、`report.createEmptyPage`。
 3. 包内源码和测试默认切到 `types/chartDSL` / `types/reportDSL` 与 report 新 API。
 
 ## Phase 6: 生成物与验证

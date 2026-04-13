@@ -2,16 +2,11 @@
 
 > 每个 practice 都有自己独立的 `demoConnector.ts`，封装相同的 VBI API。本节以 standard 为例说明模式，其他 practice 结构相同，只是 UI 风格不同。
 
-## 2.1 说明：VBI 核心 API 不在主入口
+## 2.1 说明：VBI 核心 API 已在主入口导出
 
-`@visactor/vbi` 包的主入口（`src/index.ts`）目前只导出了 `tree`、`id`、`filter-guards`。以下核心 API 存在但未从主入口导出：
+`@visactor/vbi` 现在已经从主入口导出 `VBI`、`createVBI`、`VBIChartBuilder`、`VBI.registerConnector()`、`VBI.chart.create()`、`VBI.chart.createEmpty()` 等核心 API。
 
-- `VBI` 命名空间
-- `VBIChartBuilder`
-- `VBI.registerConnector()`
-- `VBI.generateEmptyChartDSL()`
-
-**实际使用方式**：参考 `practices/standard/src/utils/demoConnector.ts`，standard 通过 `workspace:*` 引用源码，跳过了主入口限制。AI 应参照这个模式。
+**实际使用方式**：即便主入口可直接使用，仍建议优先参考目标 practice 自己的 `demoConnector.ts`，因为 connector 注册、默认 builder 和本地数据接线通常都封装在那里。
 
 ---
 
@@ -61,10 +56,9 @@ VBI.registerConnector(connectorId, async () => {
 ## 2.3 步骤 2：创建 Builder
 
 ```ts
-// ⚠️ 这些 API 不在 @visactor/vbi 主入口，需通过 standard 的封装使用
 import { VBI } from '@visactor/vbi'
 
-const builder = VBI.createChart(VBI.generateEmptyChartDSL(connectorId))
+const builder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
 ```
 
 **更推荐的方式**：直接使用 standard 封装好的 builder：
@@ -102,7 +96,7 @@ builder.chartType.changeChartType('column')
 
 ```tsx
 // 入口文件
-import { VBIChartBuilder } from '@visactor/vbi' // ⚠️ 不在主入口，需通过 standard 间接使用
+import { VBIChartBuilder } from '@visactor/vbi'
 import { VBIStoreProvider, useVBIStore } from 'src/model'
 import { APP } from 'src/App/App'
 import { defaultBuilder } from 'src/utils/demoConnector'

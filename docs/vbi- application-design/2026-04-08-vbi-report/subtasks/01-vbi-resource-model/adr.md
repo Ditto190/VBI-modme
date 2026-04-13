@@ -32,20 +32,20 @@ type VBIReportPageDSL = {
 对应实现：
 
 - `packages/vbi/src/types/reportDSL/page.ts`
-- `packages/vbi/src/vbi/generate-empty-report-page-dsl.ts`
+- `packages/vbi/src/vbi/create-empty-report-page.ts`
 
 ### 2. Insight 成为一等资源
 
 当前实现已新增独立的 `VBIInsightDSL`、empty helper 与 builder 入口：
 
-- `generateEmptyInsightDSL()`
+- `createEmptyInsight()`
 - `createInsight(...)`
 - `VBIInsightBuilder`
 
 对应实现：
 
 - `packages/vbi/src/types/insightDSL/insight.ts`
-- `packages/vbi/src/vbi/generate-empty-insight-dsl.ts`
+- `packages/vbi/src/vbi/create-empty-insight.ts`
 - `packages/vbi/src/insight-builder/builder.ts`
 
 ### 3. createVBI 维护实例级资源注册表
@@ -68,7 +68,7 @@ type VBIResourceRegistry = {
 对应实现：
 
 - `packages/vbi/src/vbi/create-vbi.ts`
-- `packages/vbi/src/vbi/resource-registry.ts`
+- `packages/vbi/src/vbi/resources/resource-registry.ts`
 
 ### 4. ReportBuilder 分离结构构建与聚合快照
 
@@ -109,7 +109,7 @@ type VBIResourceRegistry = {
 对应实现：
 
 - `packages/vbi/src/report-builder/features/page/page-builder.ts`
-- `packages/vbi/src/vbi/resource-registry.ts`
+- `packages/vbi/src/vbi/resources/resource-registry.ts`
 
 ## Consequences
 

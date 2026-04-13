@@ -43,9 +43,9 @@
 
 对外 API 统一为：
 
-- `VBI.createChart(...)`
-- `VBI.createReport(...)`
-- `VBI.createInsight(...)`
+- `VBI.chart.create(...)`
+- `VBI.report.create(...)`
+- `VBI.insight.create(...)`
 
 `createVBI()` 内部集成 `ResourceRegistry`，用于维护当前实例已装载资源：
 
