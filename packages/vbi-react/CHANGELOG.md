@@ -1,5 +1,12 @@
 # @visactor/vbi-react
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [d2f4f33]
+  - @visactor/vbi@0.4.24
+
 ## 0.1.4
 
 ### Patch Changes
