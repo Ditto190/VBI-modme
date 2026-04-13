@@ -13,7 +13,7 @@ export const fieldPanelStyle: CSSProperties = {
   height: '100%',
   minHeight: 0,
   overflow: 'hidden',
-  padding: 16,
+  padding: 10,
 }
 
 export const chartRendererStyle: CSSProperties = {
