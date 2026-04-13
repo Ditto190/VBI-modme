@@ -32,7 +32,11 @@ function renderNoDataState(onLoadDemoData: () => void) {
   )
 }
 
-function renderFieldSelectionState(isCompactLayout: boolean, isFieldPanelVisible: boolean, onShowFieldPanel: () => void) {
+function renderFieldSelectionState(
+  isCompactLayout: boolean,
+  isFieldPanelVisible: boolean,
+  onShowFieldPanel: () => void,
+) {
   return (
     <div className="starter-card starter-main-surface">
       <StarterEmptyState
@@ -60,7 +64,7 @@ export function StarterMainPanel(props: StarterMainPanelProps) {
   if (debugState === 'error') {
     return (
       <StarterRenderError
-        errorMessage='Debug state forced by query: ?debugState=error'
+        errorMessage="Debug state forced by query: ?debugState=error"
         onRetry={() => {
           window.location.search = ''
         }}
