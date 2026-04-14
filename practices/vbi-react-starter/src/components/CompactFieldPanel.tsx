@@ -336,13 +336,14 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                         min={0}
                         onChange={(event) => {
                           const { value } = event.target
-                          const quantile =
-                            value === '' ? measure.aggregate.quantile ?? 0.5 : clampQuantile(Number(value))
+                          const currentQuantile =
+                            measure.aggregate?.func === 'quantile' ? (measure.aggregate.quantile ?? 0.5) : 0.5
+                          const quantile = value === '' ? currentQuantile : clampQuantile(Number(value))
                           updateMeasure(measure.id, { aggregate: { func: 'quantile', quantile } })
                         }}
                         step={0.05}
                         type="number"
-                        value={measure.aggregate.quantile ?? 0.5}
+                        value={measure.aggregate?.func === 'quantile' ? (measure.aggregate.quantile ?? 0.5) : 0.5}
                       />
                     ) : null}
                   </div>
