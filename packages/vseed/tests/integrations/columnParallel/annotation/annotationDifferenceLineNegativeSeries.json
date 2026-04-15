@@ -1,0 +1,28 @@
+{
+  "name": "annotationDifferenceLineNegativeSeries",
+  "description": "A columnParallel chart with a difference line bound to one negative grouped series.",
+  "vseed": {
+    "chartType": "columnParallel",
+    "dataset": [
+      { "date": "2019", "sales": -200000, "profit": -10000 },
+      { "date": "2020", "sales": -180000, "profit": -8000 },
+      { "date": "2021", "sales": -160000, "profit": -6000 },
+      { "date": "2022", "sales": -130000, "profit": -4000 },
+      { "date": "2023", "sales": -100000, "profit": -2000 }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": { "date": "2019", "sales": -200000 }
+      },
+      "end": {
+        "selector": { "date": "2023", "sales": -100000 }
+      },
+      "differenceType": "percent"
+    },
+    "dimensions": [{ "id": "date", "alias": "日期", "encoding": "xAxis" }],
+    "measures": [
+      { "id": "sales", "alias": "销售额", "encoding": "yAxis" },
+      { "id": "profit", "alias": "利润", "encoding": "yAxis" }
+    ]
+  }
+}

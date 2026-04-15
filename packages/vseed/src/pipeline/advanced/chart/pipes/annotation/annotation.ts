@@ -8,6 +8,7 @@ export const annotation: AdvancedPipe = (advancedVSeed, context) => {
     'annotationHorizontalLine',
     'annotationVerticalLine',
     'annotationArea',
+    'annotationDifferenceLine',
   ]) as AdvancedVSeed['annotation']
 
   return { ...advancedVSeed, annotation }

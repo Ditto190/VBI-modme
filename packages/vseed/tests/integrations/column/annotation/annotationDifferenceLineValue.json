@@ -1,0 +1,29 @@
+{
+  "name": "annotationDifferenceLineValue",
+  "description": "A column chart with a difference line between two single-measure columns.",
+  "vseed": {
+    "chartType": "column",
+    "dataset": [
+      { "year": "1930", "autocracies": 129 },
+      { "year": "1940", "autocracies": 133 },
+      { "year": "1950", "autocracies": 130 },
+      { "year": "1960", "autocracies": 126 },
+      { "year": "2000", "autocracies": 89 }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": { "year": "1930", "autocracies": 129 }
+      },
+      "end": {
+        "selector": { "year": "2000", "autocracies": 89 }
+      },
+      "differenceType": "percent",
+      "textFontSize": 14,
+      "textColor": "#ffffff",
+      "textBackgroundColor": "#212121",
+      "lineColor": "#212121"
+    },
+    "dimensions": [{ "id": "year", "alias": "年份", "encoding": "xAxis" }],
+    "measures": [{ "id": "autocracies", "alias": "Autocracies", "encoding": "yAxis" }]
+  }
+}

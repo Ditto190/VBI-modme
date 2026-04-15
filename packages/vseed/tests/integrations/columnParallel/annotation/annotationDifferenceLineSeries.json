@@ -1,0 +1,32 @@
+{
+  "name": "annotationDifferenceLineSeries",
+  "description": "A columnParallel chart with a difference line bound to one grouped series.",
+  "vseed": {
+    "chartType": "columnParallel",
+    "dataset": [
+      { "date": "2019", "sales": 200000, "profit": 10000 },
+      { "date": "2020", "sales": 400000, "profit": 20000 },
+      { "date": "2021", "sales": 600000, "profit": 30000 },
+      { "date": "2022", "sales": 800000, "profit": 40000 },
+      { "date": "2023", "sales": 1000000, "profit": 50000 }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": { "date": "2019", "sales": 200000 }
+      },
+      "end": {
+        "selector": { "date": "2023", "sales": 1000000 }
+      },
+      "differenceType": "percent",
+      "textFontSize": 14,
+      "textColor": "#ffffff",
+      "textBackgroundColor": "#212121",
+      "lineColor": "#212121"
+    },
+    "dimensions": [{ "id": "date", "alias": "日期", "encoding": "xAxis" }],
+    "measures": [
+      { "id": "sales", "alias": "销售额", "encoding": "yAxis" },
+      { "id": "profit", "alias": "利润", "encoding": "yAxis" }
+    ]
+  }
+}

@@ -23,6 +23,7 @@ import {
   annotationPoint,
   annotationVerticalLine,
   annotationHorizontalLine,
+  annotationDifferenceLine,
   annotationAreaBand,
   verticalCrosshairRect,
   stackCornerRadius,
@@ -62,6 +63,7 @@ const column: VChartSpecPipeline = [
   annotationPoint,
   annotationVerticalLine,
   annotationHorizontalLine,
+  annotationDifferenceLine,
   annotationAreaBand,
   columnPolynomialRegressionLine,
 ]
@@ -91,6 +93,7 @@ const pivotColumn: PivotChartSpecPipeline = [
     annotationPoint,
     annotationVerticalLine,
     annotationHorizontalLine,
+    annotationDifferenceLine,
     annotationAreaBand,
     columnPolynomialRegressionLine,
   ]),

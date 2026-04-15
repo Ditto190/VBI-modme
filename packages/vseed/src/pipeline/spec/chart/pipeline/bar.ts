@@ -22,6 +22,7 @@ import {
   annotationPoint,
   annotationVerticalLine,
   annotationHorizontalLine,
+  annotationDifferenceLine,
   annotationAreaBand,
   horizontalCrosshairRect,
   stackCornerRadius,
@@ -60,6 +61,7 @@ const bar: VChartSpecPipeline = [
   annotationPoint,
   annotationVerticalLine,
   annotationHorizontalLine,
+  annotationDifferenceLine,
   annotationAreaBand,
 ]
 
@@ -87,6 +89,7 @@ const pivotBar: PivotChartSpecPipeline = [
     annotationPoint,
     annotationVerticalLine,
     annotationHorizontalLine,
+    annotationDifferenceLine,
     annotationAreaBand,
   ]),
   pivotRowDimensions,
