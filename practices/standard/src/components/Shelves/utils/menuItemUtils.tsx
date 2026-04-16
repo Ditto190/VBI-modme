@@ -1,6 +1,6 @@
 import { Flex, Typography } from 'antd';
 
-export const SHELF_MENU_SUBMENU_OFFSET: [number, number] = [-10, -4];
+export const SHELF_MENU_SUBMENU_OFFSET: [number, number] = [0, -6];
 
 export const buildShelfMenuLabel = (label: string, extra?: string) => {
   if (!extra) {

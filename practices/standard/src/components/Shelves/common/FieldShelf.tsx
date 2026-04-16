@@ -13,6 +13,7 @@ import {
   useShelfItemDropTargets,
 } from '../dnd';
 import { ShelfTrack, type ShelfTone } from './ShelfTrack';
+import './FieldShelf.css';
 
 const REMOVE_ICON_DEFAULT_COLOR = '#8c8c8c';
 const REMOVE_ICON_HOVER_COLOR = '#ff4d4f';
@@ -206,6 +207,7 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
           trigger={['click']}
           placement="bottom"
           menu={{
+            rootClassName: 'fieldshelf-dropdown',
             items: buildMenuItems(item),
             selectable: true,
             selectedKeys: getMenuSelectedKeys?.(item),
