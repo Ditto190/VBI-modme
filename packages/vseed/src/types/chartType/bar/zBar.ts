@@ -1,6 +1,7 @@
 import { zLocale } from '../../i18n'
 import {
   zAnnotationArea,
+  zAnnotationDifferenceLine,
   zAnnotationHorizontalLine,
   zAnnotationPoint,
   zAnnotationVerticalLine,
@@ -52,6 +53,7 @@ export const zBar = z.object({
   annotationVerticalLine: z.array(zAnnotationVerticalLine).or(zAnnotationVerticalLine).nullish(),
   annotationHorizontalLine: z.array(zAnnotationHorizontalLine).or(zAnnotationHorizontalLine).nullish(),
   annotationArea: z.array(zAnnotationArea).or(zAnnotationArea).nullish(),
+  annotationDifferenceLine: z.array(zAnnotationDifferenceLine).or(zAnnotationDifferenceLine).nullish(),
   dimensionLinkage: zDimensionLinkage.nullish(),
   locale: zLocale.nullish(),
 })

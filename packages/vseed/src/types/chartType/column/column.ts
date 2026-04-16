@@ -1,6 +1,7 @@
 import type { Locale } from '../../i18n'
 import type {
   AnnotationArea,
+  AnnotationDifferenceLine,
   AnnotationHorizontalLine,
   AnnotationPoint,
   AnnotationVerticalLine,
@@ -201,6 +202,11 @@ export interface Column {
    * @description 标注区域配置, 根据选择的数据, 定义图表的标注区域, 包括标注区域的位置, 样式等.
    */
   annotationArea?: AnnotationArea | AnnotationArea[]
+
+  /**
+   * @description 差异标注线配置，用于绑定两个数据锚点并展示绝对差值或百分比差值。
+   */
+  annotationDifferenceLine?: AnnotationDifferenceLine | AnnotationDifferenceLine[]
   /**
    * 多项式回归线
    * @description 多项式回归线配置, 包括多项式的阶数、回归线的样式等.

@@ -1,0 +1,24 @@
+{
+  "name": "annotationDifferenceLineNegativeValue",
+  "description": "A column chart with a difference line between two negative single-measure columns.",
+  "vseed": {
+    "chartType": "column",
+    "dataset": [
+      { "year": "1930", "autocracies": -120 },
+      { "year": "1940", "autocracies": -90 },
+      { "year": "1950", "autocracies": -75 },
+      { "year": "2000", "autocracies": -60 }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": { "year": "1930", "autocracies": -120 }
+      },
+      "end": {
+        "selector": { "year": "2000", "autocracies": -60 }
+      },
+      "differenceType": "percent"
+    },
+    "dimensions": [{ "id": "year", "alias": "年份", "encoding": "xAxis" }],
+    "measures": [{ "id": "autocracies", "alias": "Autocracies", "encoding": "yAxis" }]
+  }
+}

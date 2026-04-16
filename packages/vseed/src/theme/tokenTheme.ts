@@ -232,6 +232,9 @@ const getAnnotationPatch = (tokens: TokenThemeDefinition) => ({
   annotationVerticalLine: {
     textFontSize: tokens.labelFontSize,
   },
+  annotationDifferenceLine: {
+    textFontSize: tokens.labelFontSize,
+  },
   annotationArea: {
     textFontSize: tokens.labelFontSize,
   },

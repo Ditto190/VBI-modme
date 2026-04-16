@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { zAnnotationPoint } from '../../annotation/zAnnotationPoint'
+import { zAnnotationDifferenceLine } from '../../annotation/zAnnotationDifferenceLine'
 import { zAnnotationHorizontalLine } from '../../annotation/zAnnotationHorizontalLine'
 import { zAnnotationArea } from '../../annotation/zAnnotationArea'
 
@@ -62,9 +63,19 @@ export const zAnnotationAreaConfig = zAnnotationArea
   })
   .partial()
 
+export const zAnnotationDifferenceLineConfig = zAnnotationDifferenceLine
+  .pick({
+    lineColor: true,
+    textColor: true,
+    textFontSize: true,
+    textBackgroundColor: true,
+  })
+  .partial()
+
 export const zAnnotationConfig = z.object({
   annotationPoint: zAnnotationPointConfig.nullish(),
   annotationHorizontalLine: zAnnotationHorizontalLineConfig.nullish(),
   annotationVerticalLine: zAnnotationVerticalLineConfig.nullish(),
   annotationArea: zAnnotationAreaConfig.nullish(),
+  annotationDifferenceLine: zAnnotationDifferenceLineConfig.nullish(),
 })

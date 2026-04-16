@@ -1,4 +1,5 @@
 import type { AnnotationArea } from '../../annotation/annotationArea'
+import type { AnnotationDifferenceLine } from '../../annotation/annotationDifferenceLine'
 import type { AnnotationHorizontalLine } from '../../annotation/annotationHorizontalLine'
 import type { AnnotationPoint } from '../../annotation/annotationPoint'
 
@@ -125,4 +126,9 @@ export type AnnotationAreaConfig = Pick<
   | 'textColor'
   | 'textFontSize'
   | 'textFontWeight'
+>
+
+export type AnnotationDifferenceLineConfig = Pick<
+  AnnotationDifferenceLine,
+  'lineColor' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
 >

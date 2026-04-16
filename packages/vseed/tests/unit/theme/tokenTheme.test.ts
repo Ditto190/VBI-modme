@@ -177,6 +177,7 @@ describe('tokenTheme', () => {
     expect(lineConfig?.legend?.labelColor).toBe('#4A5568')
     expect(lineConfig?.xAxis?.label?.labelColor).toBe('#4A5568')
     expect(columnConfig?.annotation?.annotationPoint?.textFontSize).toBe(labelFontSize)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textFontSize).toBe(labelFontSize)
     expect(columnConfig?.regressionLine?.linearRegressionLine?.textFontSize).toBe(labelFontSize)
   })
 

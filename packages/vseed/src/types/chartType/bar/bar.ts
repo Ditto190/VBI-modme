@@ -3,6 +3,7 @@ import type { BarDimension, BarMaxWidth, BarMeasure, DimensionLinkage, Sort, Sor
 
 import {
   type AnnotationArea,
+  type AnnotationDifferenceLine,
   type AnnotationHorizontalLine,
   type AnnotationPoint,
   type AnnotationVerticalLine,
@@ -197,6 +198,11 @@ export interface Bar {
    * @description 标注区域配置, 根据选择的数据, 定义图表的标注区域, 包括标注区域的位置, 样式等.
    */
   annotationArea?: AnnotationArea | AnnotationArea[]
+
+  /**
+   * @description 差异标注线配置，用于绑定两个数据锚点并展示绝对差值或百分比差值。
+   */
+  annotationDifferenceLine?: AnnotationDifferenceLine | AnnotationDifferenceLine[]
   /**
    * @description 当图表开启透视功能或者指标组合的是否，是否开启维度联动功能
    * 当hover 到某个维度值时，联动高亮其他图表中相同维度值的数据

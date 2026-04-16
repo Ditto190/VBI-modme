@@ -1,5 +1,6 @@
 import type {
   AnnotationAreaConfig,
+  AnnotationDifferenceLineConfig,
   AnnotationHorizontalLineConfig,
   AnnotationPointConfig,
 } from 'src/types/properties/config/annotation/annotation'
@@ -49,6 +50,17 @@ export const getLightAnnotationHorizontalLine = (): AnnotationHorizontalLineConf
 
 export const getLightAnnotationVerticalLine = () => getLightAnnotationHorizontalLine()
 
+export const getDefaultAnnotationDifferenceLine = (): AnnotationDifferenceLineConfig => ({
+  textFontSize: 12,
+})
+
+export const getLightAnnotationDifferenceLine = (): AnnotationDifferenceLineConfig => ({
+  ...getDefaultAnnotationDifferenceLine(),
+  lineColor: '#BCC1CB',
+  textColor: '#ffffff',
+  textBackgroundColor: '#BCC1CB',
+})
+
 export const getDefaultAnnotationArea = (): AnnotationAreaConfig => ({
   textFontSize: 12,
   textFontWeight: 400,
@@ -79,6 +91,7 @@ export const getLightAnnotation = () => ({
   annotationPoint: getLightAnnotationPoint(),
   annotationHorizontalLine: getLightAnnotationHorizontalLine(),
   annotationVerticalLine: getLightAnnotationVerticalLine(),
+  annotationDifferenceLine: getLightAnnotationDifferenceLine(),
   annotationArea: getLightAnnotationArea(),
 })
 
@@ -102,6 +115,13 @@ export const getDarkAnnotationHorizontalLine = (): AnnotationHorizontalLineConfi
 
 export const getDarkAnnotationVerticalLine = () => getDarkAnnotationHorizontalLine()
 
+export const getDarkAnnotationDifferenceLine = (): AnnotationDifferenceLineConfig => ({
+  ...getDefaultAnnotationDifferenceLine(),
+  lineColor: '#55595F',
+  textColor: '#E2E3E6',
+  textBackgroundColor: '#55595F',
+})
+
 export const getDarkAnnotationArea = (): AnnotationAreaConfig => ({
   ...getDefaultAnnotationArea(),
   textColor: '#E2E3E6',
@@ -118,6 +138,7 @@ export const getDarkAnnotation = () => ({
   annotationPoint: getDarkAnnotationPoint(),
   annotationHorizontalLine: getDarkAnnotationHorizontalLine(),
   annotationVerticalLine: getDarkAnnotationVerticalLine(),
+  annotationDifferenceLine: getDarkAnnotationDifferenceLine(),
   annotationArea: getDarkAnnotationArea(),
 })
 

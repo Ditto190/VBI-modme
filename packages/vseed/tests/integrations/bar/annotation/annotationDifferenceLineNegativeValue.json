@@ -1,0 +1,24 @@
+{
+  "name": "annotationDifferenceLineNegativeValue",
+  "description": "A bar chart with a difference line between two negative single-measure bars.",
+  "vseed": {
+    "chartType": "bar",
+    "dataset": [
+      { "year": "1930", "autocracies": -120 },
+      { "year": "1940", "autocracies": -90 },
+      { "year": "1950", "autocracies": -75 },
+      { "year": "2000", "autocracies": -60 }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": { "year": "1930", "autocracies": -120 }
+      },
+      "end": {
+        "selector": { "year": "2000", "autocracies": -60 }
+      },
+      "differenceType": "percent"
+    },
+    "dimensions": [{ "id": "year", "alias": "年份", "encoding": "yAxis" }],
+    "measures": [{ "id": "autocracies", "alias": "Autocracies", "encoding": "xAxis" }]
+  }
+}
