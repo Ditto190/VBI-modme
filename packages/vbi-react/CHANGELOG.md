@@ -1,5 +1,11 @@
 # @visactor/vbi-react
 
+## 0.1.6
+
+### Patch Changes
+
+- @visactor/vbi@0.4.25
+
 ## 0.1.5
 
 ### Patch Changes
