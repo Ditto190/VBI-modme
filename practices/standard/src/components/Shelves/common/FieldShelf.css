@@ -1,0 +1,9 @@
+.fieldshelf-dropdown .ant-dropdown-menu {
+  padding: 6px 0;
+  overflow: auto;
+}
+
+.fieldshelf-dropdown
+  .ant-dropdown-menu-submenu-title.ant-dropdown-menu-submenu-title {
+  border-radius: 0;
+}
