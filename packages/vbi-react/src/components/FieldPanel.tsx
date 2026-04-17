@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import type { VBIChartBuilder, VBIMeasure } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIDimension, VBIMeasure } from '@visactor/vbi'
 
 import { useDimensions, useMeasures } from '../hooks'
 import type { BaseComponentProps, SelectOption } from './types'
 import { joinClassNames } from './utils'
 
 type MeasureAggregateFunction = NonNullable<NonNullable<VBIMeasure['aggregate']>['func']>
+type DimensionAggregateFunction = NonNullable<NonNullable<VBIDimension['aggregate']>['func']>
 
 const defaultMeasureAggregateOptions: Array<SelectOption<MeasureAggregateFunction>> = [
   { label: 'Sum', value: 'sum' },
@@ -22,6 +23,31 @@ const defaultMeasureEncodingOptions: Array<SelectOption<NonNullable<VBIMeasure['
   { label: 'Label', value: 'label' },
   { label: 'Tooltip', value: 'tooltip' },
   { label: 'Size', value: 'size' },
+]
+
+const defaultDimensionAggregateOptions: Array<SelectOption<DimensionAggregateFunction>> = [
+  { label: 'Year', value: 'toYear' },
+  { label: 'Quarter', value: 'toQuarter' },
+  { label: 'Month', value: 'toMonth' },
+  { label: 'Week', value: 'toWeek' },
+  { label: 'Day', value: 'toDay' },
+  { label: 'Hour', value: 'toHour' },
+  { label: 'Minute', value: 'toMinute' },
+  { label: 'Second', value: 'toSecond' },
+]
+
+const defaultDimensionEncodingOptions: Array<SelectOption<NonNullable<VBIDimension['encoding']>>> = [
+  { label: 'X Axis', value: 'xAxis' },
+  { label: 'Y Axis', value: 'yAxis' },
+  { label: 'Angle', value: 'angle' },
+  { label: 'Color', value: 'color' },
+  { label: 'Detail', value: 'detail' },
+  { label: 'Tooltip', value: 'tooltip' },
+  { label: 'Label', value: 'label' },
+  { label: 'Row', value: 'row' },
+  { label: 'Column', value: 'column' },
+  { label: 'Player', value: 'player' },
+  { label: 'Hierarchy', value: 'hierarchy' },
 ]
 
 const sectionTitleStyle = {
@@ -57,6 +83,8 @@ const fieldCardStyle = {
 
 export interface FieldPanelProps extends BaseComponentProps {
   builder: VBIChartBuilder
+  dimensionAggregateOptions?: Array<SelectOption<DimensionAggregateFunction>>
+  dimensionEncodingOptions?: Array<SelectOption<NonNullable<VBIDimension['encoding']>>>
   dimensionOptions?: Array<SelectOption<string>>
   dimensionsTitle?: string
   measureAggregateOptions?: Array<SelectOption<MeasureAggregateFunction>>
@@ -70,6 +98,8 @@ export function FieldPanel(props: FieldPanelProps) {
   const {
     builder,
     className,
+    dimensionAggregateOptions = defaultDimensionAggregateOptions,
+    dimensionEncodingOptions = defaultDimensionEncodingOptions,
     dimensionOptions = [],
     dimensionsTitle = 'Dimensions',
     measureAggregateOptions = defaultMeasureAggregateOptions,
@@ -193,6 +223,46 @@ export function FieldPanel(props: FieldPanelProps) {
                       style={controlStyle}
                       value={dimension.alias ?? ''}
                     />
+                  </label>
+                  <label style={{ ...sectionTitleStyle, display: 'grid', gap: 4 }}>
+                    <span>Aggregate</span>
+                    <select
+                      aria-label={`Aggregate for dimension ${dimension.field}`}
+                      onChange={(event) => {
+                        const aggregateFunc = event.target.value as DimensionAggregateFunction | ''
+                        updateDimension(dimension.id, {
+                          aggregate: aggregateFunc ? { func: aggregateFunc } : null,
+                        })
+                      }}
+                      style={controlStyle}
+                      value={dimension.aggregate?.func ?? ''}
+                    >
+                      <option value="">None</option>
+                      {dimensionAggregateOptions.map((aggregateOption) => (
+                        <option key={aggregateOption.value} value={aggregateOption.value}>
+                          {aggregateOption.label ?? aggregateOption.value}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label style={{ ...sectionTitleStyle, display: 'grid', gap: 4 }}>
+                    <span>Encoding</span>
+                    <select
+                      aria-label={`Encoding for dimension ${dimension.field}`}
+                      onChange={(event) => {
+                        updateDimension(dimension.id, {
+                          encoding: event.target.value as NonNullable<VBIDimension['encoding']>,
+                        })
+                      }}
+                      style={controlStyle}
+                      value={dimension.encoding ?? 'xAxis'}
+                    >
+                      {dimensionEncodingOptions.map((encodingOption) => (
+                        <option key={encodingOption.value} value={encodingOption.value}>
+                          {encodingOption.label ?? encodingOption.value}
+                        </option>
+                      ))}
+                    </select>
                   </label>
                   <button
                     onClick={() => {

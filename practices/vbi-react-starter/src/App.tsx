@@ -1,50 +1,84 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { VBI } from '@visactor/vbi'
 import { useVBI } from '@visactor/vbi-react'
-import { BuilderLayout, ChartRenderer, FieldPanel } from '@visactor/vbi-react/components'
+import { BuilderLayout } from '@visactor/vbi-react/components'
 import type { DatasetColumn } from '@visactor/vquery'
-import type { VSeed } from '@visactor/vseed'
 
 import './App.css'
-import { StarterEmptyState } from './components/StarterEmptyState'
-import { StarterFooter } from './components/StarterFooter'
-import { StarterLoadingSkeleton } from './components/StarterLoadingSkeleton'
-import { VSeedRender } from './components/Render'
-import { StarterRenderError } from './components/StarterRenderError'
+import { CompactFieldPanel } from './components/CompactFieldPanel'
+import { StarterFooter, type StarterFooterProps } from './components/StarterFooter'
+import { StarterMainPanel } from './components/StarterMainPanel'
 import { StarterTopBar } from './components/StarterTopBar'
-import {
-  chartCanvasStyle,
-  chartRendererStyle,
-  fieldPanelStyle,
-  layoutStyle,
-  mainPlaceholderStyle,
-} from './styles/styleObjects'
+import { fieldPanelStyle, layoutStyle } from './styles/styleObjects'
 import './styles/tokens.css'
 import { createLocalConnector, setLocalDataWithSchema, type LocalRow } from './utils/localConnector'
 import { clearBuilderSelections, inferSchema, rowsToDataset } from './utils/dataset'
+import { readDebugState } from './utils/debugState'
 import { getLeftPanelWidth, isCompactViewport } from './utils/layout'
 import { parseCsv } from './utils/parseCsv'
 import { supermarketSchema } from './utils/supermarketSchema'
 
-type DemoStatusTone = 'error' | 'idle' | 'success'
-type SchemaField = { name: string; type: string }
+type DemoStatusTone = StarterFooterProps['statusTone']
 
 const CONNECTOR_ID = 'vbiReactStarterLocalDataConnector'
 
 let connectorInitialized = false
 
-function ensureConnector() {
-  if (!connectorInitialized) {
-    createLocalConnector(CONNECTOR_ID)
-    connectorInitialized = true
+function ensureConnectorInitialized() {
+  if (connectorInitialized) {
+    return
   }
+
+  createLocalConnector(CONNECTOR_ID)
+  connectorInitialized = true
+}
+
+function parseCsvRows(csvText: string) {
+  const [headerRow = [], ...dataRows] = parseCsv(csvText)
+  const headers = headerRow.map((header) => header.trim())
+
+  if (headers.length === 0) {
+    throw new Error('CSV is empty')
+  }
+
+  return { dataRows, headers }
+}
+
+function inferDimensionAndMeasureOptions(schema: DatasetColumn[]) {
+  const dimensions: string[] = []
+  const measures: string[] = []
+
+  for (const field of schema) {
+    if (field.type === 'number') {
+      measures.push(field.name)
+      continue
+    }
+
+    dimensions.push(field.name)
+  }
+
+  return { dimensions, measures }
+}
+
+function extractDatasetFromCsv(csvText: string, schema: DatasetColumn[]) {
+  const { dataRows, headers } = parseCsvRows(csvText)
+  return rowsToDataset(headers, dataRows, schema)
+}
+
+function extractDatasetFromUploadedCsv(csvText: string) {
+  const { dataRows, headers } = parseCsvRows(csvText)
+  const schema = inferSchema(headers, dataRows)
+  const data = rowsToDataset(headers, dataRows, schema)
+  return { data, schema }
 }
 
 export function APP() {
-  ensureConnector()
-
+  const debugState = typeof window === 'undefined' ? 'none' : readDebugState(window.location.search)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [builder] = useState(() => VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID)))
+  const [builder] = useState(() => {
+    ensureConnectorInitialized()
+    return VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID))
+  })
   const { dsl } = useVBI(builder)
   const [availableDimensions, setAvailableDimensions] = useState<string[]>([])
   const [availableMeasures, setAvailableMeasures] = useState<string[]>([])
@@ -74,9 +108,11 @@ export function APP() {
   const hasConfiguredFields = (dsl.dimensions?.length ?? 0) > 0 || (dsl.measures?.length ?? 0) > 0
 
   const refreshAvailableFields = async () => {
-    const schema = (await builder.getSchema()) as SchemaField[]
-    setAvailableDimensions(schema.filter((field) => field.type !== 'number').map((field) => field.name))
-    setAvailableMeasures(schema.filter((field) => field.type === 'number').map((field) => field.name))
+    const schema = (await builder.getSchema()) as DatasetColumn[]
+    const { dimensions, measures } = inferDimensionAndMeasureOptions(schema)
+
+    setAvailableDimensions(dimensions)
+    setAvailableMeasures(measures)
   }
 
   const applyDataset = async (data: LocalRow[], schema: DatasetColumn[], sourceLabel: string) => {
@@ -98,14 +134,7 @@ export function APP() {
       }
 
       const csv = await response.text()
-      const [headerRow = [], ...dataRows] = parseCsv(csv)
-      const headers = headerRow.map((header) => header.trim())
-
-      if (headers.length === 0) {
-        throw new Error('Demo CSV is empty')
-      }
-
-      const data = rowsToDataset(headers, dataRows, supermarketSchema)
+      const data = extractDatasetFromCsv(csv, supermarketSchema)
       await applyDataset(data, supermarketSchema, 'supermarket.csv')
     } catch (error) {
       console.error('Failed to load starter demo data:', error)
@@ -127,15 +156,7 @@ export function APP() {
 
     try {
       const text = await file.text()
-      const [headerRow = [], ...dataRows] = parseCsv(text)
-      const headers = headerRow.map((header) => header.trim())
-
-      if (headers.length === 0) {
-        throw new Error('CSV is empty')
-      }
-
-      const schema = inferSchema(headers, dataRows)
-      const data = rowsToDataset(headers, dataRows, schema)
+      const { data, schema } = extractDatasetFromUploadedCsv(text)
       await applyDataset(data, schema, file.name)
     } catch (error) {
       console.error('Failed to load uploaded CSV:', error)
@@ -189,7 +210,7 @@ export function APP() {
         }
         leftPanel={
           !isCompactLayout || isFieldPanelVisible ? (
-            <FieldPanel
+            <CompactFieldPanel
               builder={builder}
               dimensionOptions={dimensionOptions}
               measureOptions={measureOptions}
@@ -200,49 +221,20 @@ export function APP() {
         }
         leftPanelWidth={leftPanelWidth}
         main={
-          hasConfiguredFields ? (
-            <ChartRenderer
-              builder={builder}
-              debounce={150}
-              loadingFallback={<StarterLoadingSkeleton />}
-              renderError={(error: Error, refetch: () => Promise<unknown> | void) => (
-                <StarterRenderError
-                  errorMessage={error.message}
-                  onRetry={() => {
-                    void refetch()
-                  }}
-                />
-              )}
-              renderVSeed={(vseed: unknown) => <VSeedRender style={chartCanvasStyle} vseed={vseed as VSeed} />}
-              style={chartRendererStyle}
-            />
-          ) : hasAvailableFields ? (
-            <div className="starter-card starter-main-placeholder" style={mainPlaceholderStyle}>
-              <StarterEmptyState
-                actionLabel={isCompactLayout && !isFieldPanelVisible ? 'Show fields panel' : undefined}
-                description="数据已经准备好。先在左侧添加维度和指标，再让 starter components 自动出图。"
-                onAction={
-                  isCompactLayout && !isFieldPanelVisible
-                    ? () => {
-                        setIsFieldPanelVisible(true)
-                      }
-                    : undefined
-                }
-                title="Choose fields to start"
-              />
-            </div>
-          ) : (
-            <div className="starter-card starter-main-placeholder" style={mainPlaceholderStyle}>
-              <StarterEmptyState
-                actionLabel="Load demo data"
-                description="点击上方的 Load demo data，或上传一个 CSV 文件，左侧字段面板就会立即可用。"
-                onAction={() => {
-                  void handleLoadDemoData()
-                }}
-                title="No data loaded yet"
-              />
-            </div>
-          )
+          <StarterMainPanel
+            builder={builder}
+            debugState={debugState}
+            hasAvailableFields={hasAvailableFields}
+            hasConfiguredFields={hasConfiguredFields}
+            isCompactLayout={isCompactLayout}
+            isFieldPanelVisible={isFieldPanelVisible}
+            onLoadDemoData={() => {
+              void handleLoadDemoData()
+            }}
+            onShowFieldPanel={() => {
+              setIsFieldPanelVisible(true)
+            }}
+          />
         }
         style={layoutStyle}
         topBar={

@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 const baseCardStyle: CSSProperties = {
   background: 'var(--starter-surface)',
   border: '1px solid var(--starter-border)',
-  borderRadius: 12,
+  borderRadius: 'var(--starter-radius-md)',
   boxSizing: 'border-box',
 }
 
@@ -13,7 +13,7 @@ export const fieldPanelStyle: CSSProperties = {
   height: '100%',
   minHeight: 0,
   overflow: 'hidden',
-  padding: 16,
+  padding: 10,
 }
 
 export const chartRendererStyle: CSSProperties = {
@@ -26,15 +26,9 @@ export const chartRendererStyle: CSSProperties = {
   padding: 12,
 }
 
-export const mainPlaceholderStyle: CSSProperties = {
-  ...baseCardStyle,
-  background: 'var(--starter-panel)',
-  height: '100%',
-}
-
 export const chartCanvasStyle: CSSProperties = {
   background: 'var(--starter-canvas)',
-  borderRadius: 8,
+  borderRadius: 'var(--starter-radius-sm)',
   minHeight: 0,
   overflow: 'hidden',
   padding: 8,

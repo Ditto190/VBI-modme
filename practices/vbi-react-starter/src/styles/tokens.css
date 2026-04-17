@@ -19,8 +19,10 @@
   --starter-success: #1f8f56;
   --starter-success-soft: #e8f7ee;
   --starter-danger: #c94a4a;
+  --starter-danger-strong: #a53a3a;
   --starter-danger-soft: #fdeaea;
   --starter-idle-soft: #eef3fa;
+  --starter-skeleton: #dfe8f6;
 
   --starter-radius-sm: 8px;
   --starter-radius-md: 12px;

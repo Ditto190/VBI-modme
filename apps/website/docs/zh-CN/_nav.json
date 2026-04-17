@@ -12,12 +12,12 @@
   {
     "text": "VBI",
     "link": "/vbi/",
-    "activeMatch": "/vbi/"
+    "activeMatch": "^/vbi(?:/|$)"
   },
   {
     "text": "VBI React",
     "link": "/vbi-react/",
-    "activeMatch": "/vbi-react/"
+    "activeMatch": "^/vbi-react(?:/|$)"
   },
   {
     "text": "Playground",

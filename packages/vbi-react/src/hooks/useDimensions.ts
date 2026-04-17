@@ -3,7 +3,11 @@ import type { VBIDimension, VBIChartBuilder } from '@visactor/vbi'
 
 import { useBuilderObserver } from '../internal'
 
-export type UseDimensionsConfig = Partial<Pick<VBIDimension, 'alias'>>
+export type UseDimensionsConfig = {
+  aggregate?: NonNullable<VBIDimension['aggregate']> | null
+  alias?: VBIDimension['alias']
+  encoding?: NonNullable<VBIDimension['encoding']>
+}
 
 export interface UseDimensionsReturn {
   addDimension: (field: string, config?: UseDimensionsConfig) => void
@@ -25,6 +29,12 @@ export function useDimensions(builder: VBIChartBuilder): UseDimensionsReturn {
         if (config.alias !== undefined) {
           node.setAlias(config.alias)
         }
+        if (config.encoding !== undefined) {
+          node.setEncoding(config.encoding)
+        }
+        if (config.aggregate !== undefined && config.aggregate !== null) {
+          node.setAggregate(config.aggregate)
+        }
       })
     },
     dimensions,
@@ -35,6 +45,14 @@ export function useDimensions(builder: VBIChartBuilder): UseDimensionsReturn {
       builder.dimensions.update(id, (node) => {
         if (config.alias !== undefined) {
           node.setAlias(config.alias)
+        }
+        if (config.encoding !== undefined) {
+          node.setEncoding(config.encoding)
+        }
+        if (config.aggregate === null) {
+          node.clearAggregate()
+        } else if (config.aggregate !== undefined) {
+          node.setAggregate(config.aggregate)
         }
       })
     },
