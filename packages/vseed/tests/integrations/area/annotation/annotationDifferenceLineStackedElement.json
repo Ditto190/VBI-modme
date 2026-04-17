@@ -1,0 +1,60 @@
+{
+  "name": "annotationDifferenceLineStackedElement",
+  "description": "A stacked area chart with a difference annotation bound to one stacked area element.",
+  "vseed": {
+    "chartType": "area",
+    "dataset": [
+      {
+        "year": "1930",
+        "autocracies": 129,
+        "democracies": 23
+      },
+      {
+        "year": "1940",
+        "autocracies": 133,
+        "democracies": 14
+      },
+      {
+        "year": "1950",
+        "autocracies": 130,
+        "democracies": 26
+      },
+      {
+        "year": "2000",
+        "autocracies": 89,
+        "democracies": 87
+      }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": {
+          "year": "1930",
+          "autocracies": 129
+        }
+      },
+      "end": {
+        "selector": {
+          "year": "2000",
+          "autocracies": 89
+        }
+      },
+      "differenceType": "absolute"
+    },
+    "dimensions": [
+      {
+        "id": "year",
+        "alias": "年份"
+      }
+    ],
+    "measures": [
+      {
+        "id": "autocracies",
+        "alias": "Autocracies"
+      },
+      {
+        "id": "democracies",
+        "alias": "Democracies"
+      }
+    ]
+  }
+}

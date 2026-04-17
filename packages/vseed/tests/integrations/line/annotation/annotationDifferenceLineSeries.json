@@ -1,0 +1,65 @@
+{
+  "name": "annotationDifferenceLineSeries",
+  "description": "A line chart with a difference annotation bound to a specific series.",
+  "vseed": {
+    "chartType": "line",
+    "dataset": [
+      {
+        "year": "1930",
+        "autocracies": 129,
+        "democracies": 151
+      },
+      {
+        "year": "1940",
+        "autocracies": 133,
+        "democracies": 147
+      },
+      {
+        "year": "1950",
+        "autocracies": 130,
+        "democracies": 155
+      },
+      {
+        "year": "2000",
+        "autocracies": 89,
+        "democracies": 175
+      },
+      {
+        "year": "2018",
+        "autocracies": 80,
+        "democracies": 177
+      }
+    ],
+    "annotationDifferenceLine": {
+      "start": {
+        "selector": {
+          "year": "1930",
+          "autocracies": 129
+        }
+      },
+      "end": {
+        "selector": {
+          "year": "2018",
+          "autocracies": 80
+        }
+      },
+      "differenceType": "percent"
+    },
+    "dimensions": [
+      {
+        "id": "year",
+        "alias": "年份"
+      }
+    ],
+    "measures": [
+      {
+        "id": "autocracies",
+        "alias": "Autocracies"
+      },
+      {
+        "id": "democracies",
+        "alias": "Democracies"
+      }
+    ]
+  }
+}

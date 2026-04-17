@@ -7,6 +7,7 @@ import config_3 from './annotation/annotationPointCondition.json'
 import config_4 from './annotation/annotationPointOp.json'
 import config_5 from './annotation/annotationVerticalLineValue.json'
 import config_6 from './annotation/annotationVerticalLineXValue.json'
+import config_37 from './annotation/annotationDifferenceLineStackedElement.json'
 import config_7 from './annotationPoint/condition.json'
 import config_8 from './axes/areaXAxis.json'
 import config_9 from './axes/areaXAxisEnable.json'
@@ -46,6 +47,7 @@ const cases = [
   { name: 'annotation/annotationPointOp', vseed: config_4 },
   { name: 'annotation/annotationVerticalLineValue', vseed: config_5 },
   { name: 'annotation/annotationVerticalLineXValue', vseed: config_6 },
+  { name: 'annotation/annotationDifferenceLineStackedElement', vseed: config_37 },
   { name: 'annotationPoint/condition', vseed: config_7 },
   { name: 'axes/areaXAxis', vseed: config_8 },
   { name: 'axes/areaXAxisEnable', vseed: config_9 },

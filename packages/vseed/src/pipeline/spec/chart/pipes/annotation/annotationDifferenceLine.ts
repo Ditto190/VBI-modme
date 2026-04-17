@@ -1,11 +1,14 @@
-import type { IBarChartSpec, ICartesianSeries, IMarkLineSpec } from '@visactor/vchart'
+import type { IAreaChartSpec, IBarChartSpec, ICartesianSeries, ILineChartSpec, IMarkLineSpec } from '@visactor/vchart'
 import type { AnnotationDifferenceLine, VChartSpecPipe } from 'src/types'
 import { ANNOTATION_Z_INDEX } from '../../../../utils/constant'
 import {
   buildDifferenceCoordinateDatum,
   buildDifferenceText,
+  getRuntimeDifferenceValue,
+  inferDifferenceBracketDirection,
   inferDifferenceConnectDirection,
-  isDifferenceLineStacked,
+  usesDifferenceLineElementStackEnd,
+  usesDifferenceLineStackTotal,
   resolveDifferenceAnchor,
 } from './annotationDifferenceLineCommon'
 
@@ -19,6 +22,8 @@ const DEFAULT_CORNER_RADIUS = 4
 const DEFAULT_LABEL_PADDING = 4
 const DEFAULT_END_SYMBOL_SIZE = 12
 const DEFAULT_END_SYMBOL_REF_X = -4
+const DEFAULT_BRACKET_EXPAND_DISTANCE = 80
+const DEFAULT_BRACKET_LINE_DASH: [number, number] = [2, 2]
 
 const getDifferenceLinePath = (index: number, total: number) =>
   total === 1 ? 'annotationDifferenceLine' : `annotationDifferenceLine[${index}]`
@@ -61,105 +66,190 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
     ? annotationDifferenceLine
     : [annotationDifferenceLine]
   const dataset = advancedVSeed.dataset.flat()
-  const barSpec = spec as IBarChartSpec
-  const isStacked = isDifferenceLineStacked(vseed, advancedVSeed)
+  const chartSpec = spec as IBarChartSpec | ILineChartSpec | IAreaChartSpec
+  const useStackTotal = usesDifferenceLineStackTotal(vseed, advancedVSeed)
+  const useElementStackEnd = usesDifferenceLineElementStackEnd(vseed, advancedVSeed)
+  const isBracketChart = vseed.chartType === 'line' || vseed.chartType === 'area'
 
   const markLine = annotationDifferenceLineList.flatMap((annotationDifferenceLine, index) => {
-    assertDifferenceLineConfig(
-      annotationDifferenceLine,
-      getDifferenceLinePath(index, annotationDifferenceLineList.length),
-    )
+    try {
+      assertDifferenceLineConfig(
+        annotationDifferenceLine,
+        getDifferenceLinePath(index, annotationDifferenceLineList.length),
+      )
 
-    const start = resolveDifferenceAnchor({
-      dataset,
-      selectorLabel: 'start',
-      selectorValue: annotationDifferenceLine.start.selector,
-      spec: barSpec,
-      isStacked,
-    })
-    const end = resolveDifferenceAnchor({
-      dataset,
-      selectorLabel: 'end',
-      selectorValue: annotationDifferenceLine.end.selector,
-      spec: barSpec,
-      isStacked,
-    })
+      const start = resolveDifferenceAnchor({
+        dataset,
+        selectorLabel: 'start',
+        selectorValue: annotationDifferenceLine.start.selector,
+        spec: chartSpec,
+        useStackTotal,
+        allowSelectorFallback: !useElementStackEnd,
+      })
+      const end = resolveDifferenceAnchor({
+        dataset,
+        selectorLabel: 'end',
+        selectorValue: annotationDifferenceLine.end.selector,
+        spec: chartSpec,
+        useStackTotal,
+        allowSelectorFallback: !useElementStackEnd,
+      })
 
-    if (!start || !end) {
-      return []
-    }
+      if (!start || !end) {
+        return []
+      }
 
-    const lineColor = annotationDifferenceLine.lineColor ?? theme?.lineColor ?? DEFAULT_LINE_COLOR
-    const textColor = annotationDifferenceLine.textColor ?? theme?.textColor ?? DEFAULT_TEXT_COLOR
-    const textBackgroundColor =
-      annotationDifferenceLine.textBackgroundColor ?? theme?.textBackgroundColor ?? DEFAULT_TEXT_BACKGROUND_COLOR
-    const textFontSize = annotationDifferenceLine.textFontSize ?? theme?.textFontSize ?? DEFAULT_TEXT_FONT_SIZE
+      const lineColor = annotationDifferenceLine.lineColor ?? theme?.lineColor ?? DEFAULT_LINE_COLOR
+      const textColor = annotationDifferenceLine.textColor ?? theme?.textColor ?? DEFAULT_TEXT_COLOR
+      const textBackgroundColor =
+        annotationDifferenceLine.textBackgroundColor ?? theme?.textBackgroundColor ?? DEFAULT_TEXT_BACKGROUND_COLOR
+      const textFontSize = annotationDifferenceLine.textFontSize ?? theme?.textFontSize ?? DEFAULT_TEXT_FONT_SIZE
+      const differenceType = annotationDifferenceLine.differenceType ?? 'absolute'
 
-    return [
-      {
-        type: 'type-step',
-        autoRange: true,
-        zIndex: ANNOTATION_Z_INDEX,
-        connectDirection: inferDifferenceConnectDirection(vseed, [start.value, end.value]),
-        expandDistance: DEFAULT_EXPAND_DISTANCE,
-        coordinates: (seriesData: any[], relativeSeries: ICartesianSeries) => [
-          buildDifferenceCoordinateDatum({
-            anchor: start,
-            seriesData,
-            relativeSeries,
-          }),
-          buildDifferenceCoordinateDatum({
-            anchor: end,
-            seriesData,
-            relativeSeries,
-          }),
-        ],
-        line: {
-          style: {
+      const label = useElementStackEnd
+        ? {
+            confine: true,
             visible: true,
-            stroke: lineColor,
-            lineWidth: DEFAULT_LINE_WIDTH,
-            lineDash: [0],
-            cornerRadius: DEFAULT_CORNER_RADIUS,
-          },
-        },
-        label: {
-          confine: true,
-          visible: true,
-          position: 'middle',
-          text: buildDifferenceText(start.value, end.value, annotationDifferenceLine.differenceType ?? 'absolute'),
-          style: {
-            fill: textColor,
-            fontSize: textFontSize,
-          },
-          labelBackground: {
-            visible: true,
-            padding: DEFAULT_LABEL_PADDING,
+            position: 'middle',
+            formatMethod: (_markData: any[], seriesData: any[]) => {
+              try {
+                return buildDifferenceText(
+                  getRuntimeDifferenceValue({
+                    anchor: start,
+                    seriesData,
+                    useElementStackEnd: true,
+                  }),
+                  getRuntimeDifferenceValue({
+                    anchor: end,
+                    seriesData,
+                    useElementStackEnd: true,
+                  }),
+                  differenceType,
+                )
+              } catch {
+                return ''
+              }
+            },
             style: {
-              fill: textBackgroundColor,
-              fillOpacity: 1,
-              stroke: lineColor,
-              lineWidth: 1,
-              cornerRadius: DEFAULT_CORNER_RADIUS,
+              fill: textColor,
+              fontSize: textFontSize,
+            },
+            labelBackground: {
+              visible: true,
+              padding: DEFAULT_LABEL_PADDING,
+              style: {
+                fill: textBackgroundColor,
+                fillOpacity: 1,
+                stroke: lineColor,
+                lineWidth: 1,
+                cornerRadius: DEFAULT_CORNER_RADIUS,
+              },
+            },
+          }
+        : {
+            confine: true,
+            visible: true,
+            position: 'middle',
+            text: buildDifferenceText(start.value, end.value, differenceType),
+            style: {
+              fill: textColor,
+              fontSize: textFontSize,
+            },
+            labelBackground: {
+              visible: true,
+              padding: DEFAULT_LABEL_PADDING,
+              style: {
+                fill: textBackgroundColor,
+                fillOpacity: 1,
+                stroke: lineColor,
+                lineWidth: 1,
+                cornerRadius: DEFAULT_CORNER_RADIUS,
+              },
+            },
+          }
+
+      return [
+        {
+          type: 'type-step',
+          autoRange: true,
+          zIndex: ANNOTATION_Z_INDEX,
+          connectDirection: isBracketChart
+            ? inferDifferenceBracketDirection(start, end)
+            : inferDifferenceConnectDirection(vseed, [start.value, end.value]),
+          expandDistance: isBracketChart ? DEFAULT_BRACKET_EXPAND_DISTANCE : DEFAULT_EXPAND_DISTANCE,
+          coordinates: (seriesData: any[], relativeSeries: ICartesianSeries) => {
+            try {
+              return [
+                buildDifferenceCoordinateDatum({
+                  anchor: start,
+                  seriesData,
+                  relativeSeries,
+                  useElementStackEnd,
+                }),
+                buildDifferenceCoordinateDatum({
+                  anchor: end,
+                  seriesData,
+                  relativeSeries,
+                  useElementStackEnd,
+                }),
+              ]
+            } catch {
+              return []
+            }
+          },
+          line: isBracketChart
+            ? {
+                multiSegment: true,
+                mainSegmentIndex: 1,
+                style: [
+                  {
+                    visible: true,
+                    stroke: lineColor,
+                    lineWidth: DEFAULT_LINE_WIDTH,
+                    lineDash: DEFAULT_BRACKET_LINE_DASH,
+                  },
+                  {
+                    visible: true,
+                    stroke: lineColor,
+                    lineWidth: DEFAULT_LINE_WIDTH,
+                  },
+                  {
+                    visible: true,
+                    stroke: lineColor,
+                    lineWidth: DEFAULT_LINE_WIDTH,
+                    lineDash: DEFAULT_BRACKET_LINE_DASH,
+                  },
+                ],
+              }
+            : {
+                style: {
+                  visible: true,
+                  stroke: lineColor,
+                  lineWidth: DEFAULT_LINE_WIDTH,
+                  lineDash: [0],
+                  cornerRadius: DEFAULT_CORNER_RADIUS,
+                },
+              },
+          label,
+          startSymbol: {
+            visible: false,
+          },
+          endSymbol: {
+            visible: true,
+            size: DEFAULT_END_SYMBOL_SIZE,
+            refX: DEFAULT_END_SYMBOL_REF_X,
+            style: {
+              fill: lineColor,
             },
           },
-        },
-        startSymbol: {
-          visible: false,
-        },
-        endSymbol: {
-          visible: true,
-          size: DEFAULT_END_SYMBOL_SIZE,
-          refX: DEFAULT_END_SYMBOL_REF_X,
-          style: {
-            fill: lineColor,
-          },
-        },
-      } as IMarkLineSpec,
-    ]
+        } as IMarkLineSpec,
+      ]
+    } catch {
+      return []
+    }
   })
 
-  const specMarkLine = (barSpec.markLine as IMarkLineSpec[]) || []
+  const specMarkLine = (chartSpec.markLine as IMarkLineSpec[]) || []
 
   return {
     ...spec,
