@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.4.25
+
+### Patch Changes
+
+- 04cb09c: Add annotation difference line support for bar-like charts
+
 ## 0.4.24
 
 ## 0.4.23
