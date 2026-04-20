@@ -1,0 +1,122 @@
+{
+  "name": "annotationDifferenceLineMeasureFormat",
+  "description": "A line chart difference annotation uses measure and axis number formats for absolute differences.",
+  "vseed": {
+    "chartType": "line",
+    "dataset": [
+      {
+        "month": "2025-07",
+        "net_profit_million": 62.61
+      },
+      {
+        "month": "2025-08",
+        "net_profit_million": 81.91
+      },
+      {
+        "month": "2025-09",
+        "net_profit_million": 83.69
+      },
+      {
+        "month": "2025-10",
+        "net_profit_million": 82.54
+      },
+      {
+        "month": "2025-11",
+        "net_profit_million": 83.99
+      },
+      {
+        "month": "2025-12",
+        "net_profit_million": 83.71
+      }
+    ],
+    "dimensions": [
+      {
+        "id": "month",
+        "encoding": "xAxis"
+      }
+    ],
+    "measures": [
+      {
+        "id": "net_profit_million",
+        "encoding": "yAxis",
+        "autoFormat": false,
+        "numFormat": {
+          "type": "number",
+          "fractionDigits": 0,
+          "suffix": " 百万元"
+        }
+      }
+    ],
+    "label": {
+      "enable": false
+    },
+    "annotationPoint": [
+      {
+        "selector": [
+          {
+            "field": "month",
+            "operator": "=",
+            "value": "2025-11"
+          },
+          {
+            "field": "net_profit_million",
+            "operator": "=",
+            "value": "net_profit_million"
+          }
+        ],
+        "text": "阶段高点"
+      },
+      {
+        "selector": [
+          {
+            "field": "month",
+            "operator": "=",
+            "value": "2025-12"
+          },
+          {
+            "field": "net_profit_million",
+            "operator": "=",
+            "value": "net_profit_million"
+          }
+        ],
+        "text": "最新点"
+      }
+    ],
+    "annotationDifferenceLine": [
+      {
+        "start": {
+          "selector": [
+            {
+              "field": "month",
+              "operator": "in",
+              "value": ["2025-07"]
+            },
+            {
+              "field": "net_profit_million",
+              "operator": "=",
+              "value": 62.61
+            }
+          ]
+        },
+        "end": {
+          "selector": [
+            {
+              "field": "month",
+              "operator": "in",
+              "value": ["2025-12"]
+            }
+          ]
+        },
+        "differenceType": "absolute"
+      }
+    ],
+    "yAxis": {
+      "autoFormat": false,
+      "numFormat": {
+        "type": "number",
+        "fractionDigits": 2,
+        "suffix": " 百万元"
+      }
+    }
+  }
+}
