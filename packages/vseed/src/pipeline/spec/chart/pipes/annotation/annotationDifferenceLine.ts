@@ -4,11 +4,11 @@ import { ANNOTATION_Z_INDEX } from '../../../../utils/constant'
 import {
   buildDifferenceCoordinateDatum,
   buildDifferenceText,
+  getDifferenceLineStackResolveMode,
   getRuntimeDifferenceValue,
   inferDifferenceBracketDirection,
   inferDifferenceConnectDirection,
   usesDifferenceLineElementStackEnd,
-  usesDifferenceLineStackTotal,
   resolveDifferenceAnchor,
 } from './annotationDifferenceLineCommon'
 
@@ -67,7 +67,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
     : [annotationDifferenceLine]
   const dataset = advancedVSeed.dataset.flat()
   const chartSpec = spec as IBarChartSpec | ILineChartSpec | IAreaChartSpec
-  const useStackTotal = usesDifferenceLineStackTotal(vseed, advancedVSeed)
+  const stackResolveMode = getDifferenceLineStackResolveMode(vseed, advancedVSeed)
   const useElementStackEnd = usesDifferenceLineElementStackEnd(vseed, advancedVSeed)
   const isBracketChart = vseed.chartType === 'line' || vseed.chartType === 'area'
 
@@ -83,7 +83,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
         selectorLabel: 'start',
         selectorValue: annotationDifferenceLine.start.selector,
         spec: chartSpec,
-        useStackTotal,
+        stackResolveMode,
         allowSelectorFallback: !useElementStackEnd,
       })
       const end = resolveDifferenceAnchor({
@@ -91,13 +91,35 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
         selectorLabel: 'end',
         selectorValue: annotationDifferenceLine.end.selector,
         spec: chartSpec,
-        useStackTotal,
+        stackResolveMode,
         allowSelectorFallback: !useElementStackEnd,
       })
 
       if (!start || !end) {
         return []
       }
+
+      if (start.mode !== end.mode) {
+        return []
+      }
+
+      const usesRuntimeStackEnd =
+        useElementStackEnd ||
+        ((vseed.chartType === 'column' || vseed.chartType === 'bar') &&
+          start.mode === 'element' &&
+          stackResolveMode === 'auto')
+      const useBracketStyle =
+        isBracketChart ||
+        ((vseed.chartType === 'column' || vseed.chartType === 'bar') &&
+          start.mode === 'element' &&
+          stackResolveMode === 'auto')
+      const isStackedBarElementBracket =
+        vseed.chartType === 'bar' && start.mode === 'element' && stackResolveMode === 'auto'
+      const connectDirection = useBracketStyle
+        ? isStackedBarElementBracket
+          ? 'top'
+          : inferDifferenceBracketDirection(start, end)
+        : inferDifferenceConnectDirection(vseed, [start.value, end.value])
 
       const lineColor = annotationDifferenceLine.lineColor ?? theme?.lineColor ?? DEFAULT_LINE_COLOR
       const textColor = annotationDifferenceLine.textColor ?? theme?.textColor ?? DEFAULT_TEXT_COLOR
@@ -106,7 +128,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
       const textFontSize = annotationDifferenceLine.textFontSize ?? theme?.textFontSize ?? DEFAULT_TEXT_FONT_SIZE
       const differenceType = annotationDifferenceLine.differenceType ?? 'absolute'
 
-      const label = useElementStackEnd
+      const label = usesRuntimeStackEnd
         ? {
             confine: true,
             visible: true,
@@ -117,12 +139,12 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
                   getRuntimeDifferenceValue({
                     anchor: start,
                     seriesData,
-                    useElementStackEnd: true,
+                    useElementStackEnd: usesRuntimeStackEnd,
                   }),
                   getRuntimeDifferenceValue({
                     anchor: end,
                     seriesData,
-                    useElementStackEnd: true,
+                    useElementStackEnd: usesRuntimeStackEnd,
                   }),
                   differenceType,
                 )
@@ -173,10 +195,8 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
           type: 'type-step',
           autoRange: true,
           zIndex: ANNOTATION_Z_INDEX,
-          connectDirection: isBracketChart
-            ? inferDifferenceBracketDirection(start, end)
-            : inferDifferenceConnectDirection(vseed, [start.value, end.value]),
-          expandDistance: isBracketChart ? DEFAULT_BRACKET_EXPAND_DISTANCE : DEFAULT_EXPAND_DISTANCE,
+          connectDirection,
+          expandDistance: useBracketStyle ? DEFAULT_BRACKET_EXPAND_DISTANCE : DEFAULT_EXPAND_DISTANCE,
           coordinates: (seriesData: any[], relativeSeries: ICartesianSeries) => {
             try {
               return [
@@ -184,20 +204,20 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
                   anchor: start,
                   seriesData,
                   relativeSeries,
-                  useElementStackEnd,
+                  useElementStackEnd: usesRuntimeStackEnd,
                 }),
                 buildDifferenceCoordinateDatum({
                   anchor: end,
                   seriesData,
                   relativeSeries,
-                  useElementStackEnd,
+                  useElementStackEnd: usesRuntimeStackEnd,
                 }),
               ]
             } catch {
               return []
             }
           },
-          line: isBracketChart
+          line: useBracketStyle
             ? {
                 multiSegment: true,
                 mainSegmentIndex: 1,

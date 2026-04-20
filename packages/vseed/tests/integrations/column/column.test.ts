@@ -7,6 +7,7 @@ import config_3 from './annotation/annotationDifferenceLineValue.json'
 import config_4 from './annotation/annotationDifferenceLineStackTotal.json'
 import config_5 from './annotation/annotationDifferenceLineNegativeValue.json'
 import config_6 from './annotation/annotationDifferenceLineNegativeStackTotal.json'
+import config_54 from './annotation/annotationDifferenceLineStackedElement.json'
 import config_7 from './annotationPoint/stack-columns.json'
 import config_8 from './annotationPoint/value.json'
 import config_9 from './axes/columnXAxis.json'
@@ -63,6 +64,7 @@ const cases = [
   { name: 'annotation/annotationDifferenceLineStackTotal', vseed: config_4 },
   { name: 'annotation/annotationDifferenceLineNegativeValue', vseed: config_5 },
   { name: 'annotation/annotationDifferenceLineNegativeStackTotal', vseed: config_6 },
+  { name: 'annotation/annotationDifferenceLineStackedElement', vseed: config_54 },
   { name: 'annotationPoint/stack-columns', vseed: config_7 },
   { name: 'annotationPoint/value', vseed: config_8 },
   { name: 'axes/columnXAxis', vseed: config_9 },

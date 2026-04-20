@@ -5,6 +5,7 @@ import config_1 from './annotation/annotationAreaBar.json'
 import config_2 from './annotation/annotationAreaSelectorHorizontal.json'
 import config_3 from './annotation/annotationDifferenceLineValue.json'
 import config_4 from './annotation/annotationDifferenceLineNegativeValue.json'
+import config_27 from './annotation/annotationDifferenceLineStackedElement.json'
 import config_5 from './axes/barXAxis.json'
 import config_6 from './axes/barXAxisEnable.json'
 import config_7 from './axes/barYAxis.json'
@@ -34,6 +35,7 @@ const cases = [
   { name: 'annotation/annotationAreaSelectorHorizontal', vseed: config_2 },
   { name: 'annotation/annotationDifferenceLineValue', vseed: config_3 },
   { name: 'annotation/annotationDifferenceLineNegativeValue', vseed: config_4 },
+  { name: 'annotation/annotationDifferenceLineStackedElement', vseed: config_27 },
   { name: 'axes/barXAxis', vseed: config_5 },
   { name: 'axes/barXAxisEnable', vseed: config_6 },
   { name: 'axes/barYAxis', vseed: config_7 },
