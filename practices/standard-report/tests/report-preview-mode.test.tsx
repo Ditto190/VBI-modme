@@ -2,7 +2,7 @@ import { expect, test } from '@rstest/core';
 import { createRef } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { PagePreviewCanvas } from '../src/App/components/page/PagePreviewCanvas';
-import { createDefaultBuilder } from '../../standard/src/utils/demoConnector';
+import { createDefaultBuilder } from '../../standard/src/utils/localConnector';
 
 test('page preview canvas reuses standard view mode without editor controls', async () => {
   render(

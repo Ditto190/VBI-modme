@@ -1,7 +1,7 @@
 import { expect, test } from '@rstest/core';
 import { render, screen, waitFor } from '@testing-library/react';
-import { APP } from '../src/App';
-import { createDefaultBuilder } from '../src/utils/demoConnector';
+import { APP } from 'src/App';
+import { createDefaultBuilder } from 'src/utils/localConnector';
 
 test('APP keeps edit workbench as the default mode', async () => {
   const view = render(<APP builder={createDefaultBuilder()} />);
