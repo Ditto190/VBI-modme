@@ -38,11 +38,13 @@ import {
   dimensionLinkage,
   brush,
   fontFamilyTheme,
+  regionPadding,
 } from '../pipes'
 
 const bar: VChartSpecPipeline = [
   fontFamilyTheme,
   initBar,
+  regionPadding,
   stackCornerRadius,
   barMaxWidth,
   colorAdapter(color, linearColor),
@@ -73,6 +75,7 @@ const pivotBar: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initBar,
+    regionPadding,
     stackCornerRadius,
     barMaxWidth,
     colorAdapter(color, linearColor),

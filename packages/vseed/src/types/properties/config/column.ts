@@ -12,6 +12,7 @@ import { zPivotChartGridConfig } from './pivotGrid'
 import { zBarGapInGroup, zBarMaxWidth } from './barWidth'
 import { zRegressionLine } from '../regressionLine'
 import { zDimensionLinkage } from './dimensionLinkage/dimensionLinkage'
+import { zRegionPadding } from '../regionPadding'
 
 import { zBrushConfig } from '../brush/zBrush'
 
@@ -21,6 +22,7 @@ export const zColumnParallelConfig = z.object({
   color: zColor.nullish(),
   tooltip: zTooltip.nullish(),
   legend: zLegend.nullish(),
+  regionPadding: zRegionPadding.nullish(),
 
   xAxis: zXBandAxis.nullish(),
   yAxis: zYLinearAxis.nullish(),

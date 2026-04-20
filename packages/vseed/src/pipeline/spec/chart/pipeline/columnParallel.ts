@@ -39,11 +39,13 @@ import {
   dimensionLinkage,
   brush,
   fontFamilyTheme,
+  regionPadding,
 } from '../pipes'
 
 const columnParallel: VChartSpecPipeline = [
   fontFamilyTheme,
   initColumnParallel,
+  regionPadding,
   stackCornerRadius,
   barMaxWidth,
   barGapInGroup,
@@ -74,6 +76,7 @@ const pivotColumnParallel: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initColumnParallel,
+    regionPadding,
     stackCornerRadius,
     barMaxWidth,
     colorAdapter(color, linearColor),
