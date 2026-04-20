@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.4.26
+
+### Patch Changes
+
+- 8b330c5: Add regionPadding config for Cartesian chart regions
+
 ## 0.4.25
 
 ### Patch Changes
