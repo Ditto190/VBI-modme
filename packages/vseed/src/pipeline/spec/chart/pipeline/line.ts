@@ -19,6 +19,7 @@ import {
   pivotColumnDimensions,
   pivotRowDimensions,
   annotationPoint,
+  annotationDifferenceLine,
   annotationVerticalLine,
   annotationHorizontalLine,
   annotationArea,
@@ -39,11 +40,13 @@ import {
   dimensionLinkage,
   brush,
   fontFamilyTheme,
+  regionPadding,
 } from '../pipes'
 
 const line: VChartSpecPipeline = [
   fontFamilyTheme,
   initLine,
+  regionPadding,
   colorAdapter(color, linearColor),
   backgroundColor,
   datasetXY,
@@ -59,6 +62,7 @@ const line: VChartSpecPipeline = [
   label,
   tooltip({ titleEncoding: 'x' }),
   annotationPoint,
+  annotationDifferenceLine,
   annotationVerticalLine,
   annotationHorizontalLine,
   annotationArea,
@@ -73,6 +77,7 @@ const pivotLine: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initLine,
+    regionPadding,
     colorAdapter(color, linearColor),
     backgroundColor,
     datasetXY,
@@ -87,6 +92,7 @@ const pivotLine: PivotChartSpecPipeline = [
     label,
     tooltip({ titleEncoding: 'x' }),
     annotationPoint,
+    annotationDifferenceLine,
     annotationVerticalLine,
     annotationHorizontalLine,
     annotationArea,

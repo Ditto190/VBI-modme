@@ -42,11 +42,13 @@ import {
   dimensionLinkage,
   brush,
   fontFamilyTheme,
+  regionPadding,
 } from '../pipes'
 
 const areaPercent: VChartSpecPipeline = [
   fontFamilyTheme,
   initArea,
+  regionPadding,
   stackInverse,
   colorAdapter(color, linearColor),
   backgroundColor,
@@ -79,6 +81,7 @@ const pivotAreaPercent: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initArea,
+    regionPadding,
     stackInverse,
     colorAdapter(color, linearColor),
     backgroundColor,

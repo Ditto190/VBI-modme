@@ -1,4 +1,4 @@
-import type { IBarChartSpec, ICartesianSeries } from '@visactor/vchart'
+import type { IAreaChartSpec, IBarChartSpec, ICartesianSeries, ILineChartSpec } from '@visactor/vchart'
 import {
   isDimensionSelector,
   isFieldSelector,
@@ -12,14 +12,22 @@ import type { AdvancedVSeed, Datum, Selector, Selectors, VSeed } from 'src/types
 import { isSubset } from './utils'
 
 type DifferenceSelectorLabel = 'start' | 'end'
+type DifferenceChartSpec = IBarChartSpec | ILineChartSpec | IAreaChartSpec
+export type DifferenceStackResolveMode = 'none' | 'stackTotal' | 'auto'
+export type DifferenceAnchorMode = 'element' | 'stackTotal'
 
 export type ResolvedDifferenceAnchor = {
+  mode: DifferenceAnchorMode
   selectorLabel: DifferenceSelectorLabel
   coordinateDatum: Datum
   matchedDatum?: Datum
   stackGroupDatum?: Datum
+  bandDatum: Datum
+  bandIndex?: number
   value: number
 }
+
+const STACK_END_FIELD = '__VCHART_STACK_END'
 
 const toArray = <T>(value: T | T[] | undefined | null): T[] => {
   if (Array.isArray(value)) {
@@ -29,11 +37,11 @@ const toArray = <T>(value: T | T[] | undefined | null): T[] => {
   return value === undefined || value === null ? [] : [value]
 }
 
-const getDifferenceBandFields = (spec: IBarChartSpec): string[] => {
+const getDifferenceBandFields = (spec: DifferenceChartSpec): string[] => {
   return toArray((spec.direction === 'horizontal' ? spec.yField : spec.xField) as string | string[] | undefined)
 }
 
-const getDifferenceValueField = (spec: IBarChartSpec): string => {
+const getDifferenceValueField = (spec: DifferenceChartSpec): string => {
   const valueField = toArray(
     (spec.direction === 'horizontal' ? spec.xField : spec.yField) as string | string[] | undefined,
   )[0]
@@ -59,6 +67,12 @@ const normalizeDifferenceValue = (value: unknown, selectorLabel: DifferenceSelec
 
 const buildStackGroupDatum = (datum: Datum, bandFields: string[]) => {
   return Object.fromEntries(bandFields.map((field) => [field, datum[field]])) as Datum
+}
+
+const resolveBandIndex = (dataset: Datum[], bandDatum: Datum) => {
+  const bandIndex = dataset.findIndex((datum) => isSubset(bandDatum, datum))
+
+  return bandIndex >= 0 ? bandIndex : undefined
 }
 
 const buildFallbackSelectorDatum = (selectorValue: Selector | Selectors): Datum | undefined => {
@@ -126,12 +140,13 @@ const inferFallbackValue = (fallbackDatum: Datum, valueField: string, bandFields
 }
 
 const resolveFallbackAnchor = (options: {
+  dataset: Datum[]
   selectorLabel: DifferenceSelectorLabel
   selectorValue: Selector | Selectors
   valueField: string
   bandFields: string[]
 }): ResolvedDifferenceAnchor | undefined => {
-  const { selectorLabel, selectorValue, valueField, bandFields } = options
+  const { dataset, selectorLabel, selectorValue, valueField, bandFields } = options
   const fallbackDatum = buildFallbackSelectorDatum(selectorValue)
 
   if (!fallbackDatum) {
@@ -148,12 +163,16 @@ const resolveFallbackAnchor = (options: {
     ...fallbackDatum,
     [valueField]: inferredValue,
   }
+  const bandDatum = buildStackGroupDatum(coordinateDatum, bandFields)
 
   try {
     return {
+      mode: 'element',
       selectorLabel,
       coordinateDatum,
       matchedDatum: fallbackDatum,
+      bandDatum,
+      bandIndex: resolveBandIndex(dataset, bandDatum),
       value: normalizeDifferenceValue(inferredValue, selectorLabel, valueField),
     }
   } catch {
@@ -167,40 +186,66 @@ const hasMixedSigns = (values: number[]) => {
   return nonZeroValues.some((value) => value > 0) && nonZeroValues.some((value) => value < 0)
 }
 
-export const isDifferenceLineStacked = (vseed: VSeed, advancedVSeed: AdvancedVSeed) => {
-  return (
-    (vseed.chartType === 'column' || vseed.chartType === 'bar') &&
-    hasMultipleMeasureInSingleView(advancedVSeed.reshapeMeasures ?? [])
-  )
+export const getDifferenceLineStackResolveMode = (
+  vseed: VSeed,
+  advancedVSeed: AdvancedVSeed,
+): DifferenceStackResolveMode => {
+  const hasMultipleMeasure = hasMultipleMeasureInSingleView(advancedVSeed.reshapeMeasures ?? [])
+
+  if (!hasMultipleMeasure) {
+    return 'none'
+  }
+
+  if (vseed.chartType === 'column') {
+    return 'auto'
+  }
+
+  if (vseed.chartType === 'bar') {
+    return 'auto'
+  }
+
+  return 'none'
+}
+
+export const usesDifferenceLineElementStackEnd = (vseed: VSeed, advancedVSeed: AdvancedVSeed) => {
+  return vseed.chartType === 'area' && hasMultipleMeasureInSingleView(advancedVSeed.reshapeMeasures ?? [])
 }
 
 export const resolveDifferenceAnchor = (options: {
   dataset: Datum[]
   selectorLabel: DifferenceSelectorLabel
   selectorValue: Selector | Selectors
-  spec: IBarChartSpec
-  isStacked: boolean
+  spec: DifferenceChartSpec
+  stackResolveMode: DifferenceStackResolveMode
+  allowSelectorFallback?: boolean
 }): ResolvedDifferenceAnchor | undefined => {
-  const { dataset, selectorLabel, selectorValue, spec, isStacked } = options
+  const { dataset, selectorLabel, selectorValue, spec, stackResolveMode, allowSelectorFallback = true } = options
   const matches = dataset.filter((datum) => selector(datum, selectorValue))
   const valueField = getDifferenceValueField(spec)
   const bandFields = getDifferenceBandFields(spec)
 
   if (matches.length === 0) {
-    return isStacked ? undefined : resolveFallbackAnchor({ selectorLabel, selectorValue, valueField, bandFields })
+    return stackResolveMode === 'none' && allowSelectorFallback
+      ? resolveFallbackAnchor({ dataset, selectorLabel, selectorValue, valueField, bandFields })
+      : undefined
   }
 
-  if (!isStacked) {
+  if (stackResolveMode === 'none' || (stackResolveMode === 'auto' && matches.length === 1)) {
     if (matches.length !== 1) {
       throw new Error(
         `annotationDifferenceLine ${selectorLabel} selector must resolve to exactly one datum, got ${matches.length}`,
       )
     }
 
+    const bandDatum = buildStackGroupDatum(matches[0], bandFields)
+
     return {
+      mode: 'element',
       selectorLabel,
       coordinateDatum: matches[0],
       matchedDatum: matches[0],
+      bandDatum,
+      bandIndex: resolveBandIndex(dataset, bandDatum),
       value: normalizeDifferenceValue(matches[0][valueField], selectorLabel, valueField),
     }
   }
@@ -219,6 +264,12 @@ export const resolveDifferenceAnchor = (options: {
 
   const stackGroupDatum = Array.from(stackGroups.values())[0]
   const groupRows = dataset.filter((datum) => isSubset(stackGroupDatum, datum))
+
+  if (stackResolveMode === 'auto' && groupRows.length !== matches.length) {
+    throw new Error(
+      `annotationDifferenceLine ${selectorLabel} selector must resolve to exactly one stack element or one full stack group`,
+    )
+  }
   const groupValues = groupRows.map((datum) => normalizeDifferenceValue(datum[valueField], selectorLabel, valueField))
 
   if (hasMixedSigns(groupValues)) {
@@ -226,16 +277,19 @@ export const resolveDifferenceAnchor = (options: {
   }
 
   return {
+    mode: 'stackTotal',
     selectorLabel,
     coordinateDatum: stackGroupDatum,
     matchedDatum: matches[0],
     stackGroupDatum,
+    bandDatum: stackGroupDatum,
+    bandIndex: resolveBandIndex(dataset, stackGroupDatum),
     value: groupValues.reduce((sum, value) => sum + value, 0),
   }
 }
 
 export const getStackRuntimeTotal = (runtimeMatches: Datum[]) => {
-  const stackEndValues = runtimeMatches.map((datum) => Number(datum.__VCHART_STACK_END))
+  const stackEndValues = runtimeMatches.map((datum) => Number(datum[STACK_END_FIELD]))
 
   if (stackEndValues.some((value) => Number.isNaN(value))) {
     return undefined
@@ -252,15 +306,26 @@ export const buildDifferenceCoordinateDatum = (options: {
   anchor: ResolvedDifferenceAnchor
   seriesData: Datum[]
   relativeSeries: ICartesianSeries
+  useElementStackEnd?: boolean
 }) => {
-  const { anchor, seriesData, relativeSeries } = options
+  const { anchor, seriesData, relativeSeries, useElementStackEnd = false } = options
 
   if (!anchor.stackGroupDatum) {
     const runtimeMatches = anchor.matchedDatum
       ? seriesData.filter((datum) => isSubset(anchor.matchedDatum as Datum, datum))
       : []
 
-    return runtimeMatches[0] ?? anchor.coordinateDatum
+    if (!useElementStackEnd) {
+      return runtimeMatches[0] ?? anchor.coordinateDatum
+    }
+
+    const runtimeMatch = runtimeMatches[0]
+    const runtimeStackEnd = Number(runtimeMatch?.[STACK_END_FIELD])
+
+    return {
+      ...(runtimeMatch ?? anchor.coordinateDatum),
+      [relativeSeries.getStackValueField()]: Number.isNaN(runtimeStackEnd) ? anchor.value : runtimeStackEnd,
+    }
   }
 
   const runtimeMatches = seriesData.filter((datum) => isSubset(anchor.stackGroupDatum as Datum, datum))
@@ -270,6 +335,28 @@ export const buildDifferenceCoordinateDatum = (options: {
     ...(runtimeMatches[0] ?? anchor.coordinateDatum),
     [relativeSeries.getStackValueField()]: runtimeStackTotal ?? anchor.value,
   }
+}
+
+export const getRuntimeDifferenceValue = (options: {
+  anchor: ResolvedDifferenceAnchor
+  seriesData: Datum[]
+  useElementStackEnd?: boolean
+}) => {
+  const { anchor, seriesData, useElementStackEnd = false } = options
+
+  if (anchor.stackGroupDatum) {
+    const runtimeMatches = seriesData.filter((datum) => isSubset(anchor.stackGroupDatum as Datum, datum))
+    return getStackRuntimeTotal(runtimeMatches) ?? anchor.value
+  }
+
+  if (!useElementStackEnd || !anchor.matchedDatum) {
+    return anchor.value
+  }
+
+  const runtimeMatch = seriesData.find((datum) => isSubset(anchor.matchedDatum as Datum, datum))
+  const runtimeStackEnd = Number(runtimeMatch?.[STACK_END_FIELD])
+
+  return Number.isNaN(runtimeStackEnd) ? anchor.value : runtimeStackEnd
 }
 
 export const buildDifferenceText = (
@@ -296,4 +383,15 @@ export const inferDifferenceConnectDirection = (vseed: VSeed, values: [number, n
   }
 
   return isNegativeSide ? 'bottom' : 'top'
+}
+
+export const inferDifferenceBracketDirection = (
+  start: ResolvedDifferenceAnchor,
+  end: ResolvedDifferenceAnchor,
+): 'left' | 'right' => {
+  if (start.bandIndex === undefined || end.bandIndex === undefined) {
+    return 'right'
+  }
+
+  return start.bandIndex <= end.bandIndex ? 'right' : 'left'
 }

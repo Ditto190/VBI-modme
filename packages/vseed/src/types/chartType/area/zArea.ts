@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { zLocale } from '../../i18n'
 import {
   zAnnotationArea,
+  zAnnotationDifferenceLine,
   zAnnotationHorizontalLine,
   zAnnotationPoint,
   zAnnotationVerticalLine,
@@ -18,6 +19,7 @@ import {
   zLineStyle,
   zMeasures,
   zPointStyle,
+  zRegionPadding,
   zTheme,
   zTooltip,
   zBrush,
@@ -38,6 +40,7 @@ export const zArea = z.object({
   color: zColor.nullish(),
   label: zLabel.nullish(),
   legend: zLegend.nullish(),
+  regionPadding: zRegionPadding.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
   xAxis: zXBandAxis.nullish(),
@@ -51,6 +54,7 @@ export const zArea = z.object({
   annotationVerticalLine: z.array(zAnnotationVerticalLine).or(zAnnotationVerticalLine).nullish(),
   annotationHorizontalLine: z.array(zAnnotationHorizontalLine).or(zAnnotationHorizontalLine).nullish(),
   annotationArea: z.array(zAnnotationArea).or(zAnnotationArea).nullish(),
+  annotationDifferenceLine: z.array(zAnnotationDifferenceLine).or(zAnnotationDifferenceLine).nullish(),
   dimensionLinkage: zDimensionLinkage.nullish(),
   locale: zLocale.nullish(),
 })

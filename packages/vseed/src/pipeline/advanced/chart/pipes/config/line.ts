@@ -14,6 +14,7 @@ export const lineConfig: AdvancedPipe = (advancedVSeed, context) => {
     'color',
     'label',
     'legend',
+    'regionPadding',
     'tooltip',
     'xAxis',
     'yAxis',

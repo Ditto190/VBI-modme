@@ -2,6 +2,7 @@ import type { Locale } from '../../i18n'
 
 import type {
   AnnotationArea,
+  AnnotationDifferenceLine,
   AnnotationHorizontalLine,
   AnnotationPoint,
   AnnotationVerticalLine,
@@ -25,6 +26,7 @@ import type {
   ColumnDimension,
   ColumnMeasure,
   Page,
+  RegionPadding,
 } from '../../properties'
 
 /**
@@ -119,6 +121,12 @@ export interface Area {
    * @description 图例配置, 用于定义图表的图例, 包括图例的位置, 格式, 样式等.
    */
   legend?: Legend
+
+  /**
+   * 绘图区内边距
+   * @description 映射到 VChart 的 region[0].padding，用于为标注、标签等绘图区外扩元素预留空间。
+   */
+  regionPadding?: RegionPadding
 
   /**
    * 提示信息
@@ -232,6 +240,12 @@ export interface Area {
    * @description 标注区域配置, 根据选择的数据, 定义图表的标注区域, 包括标注区域的位置, 样式等.
    */
   annotationArea?: AnnotationArea | AnnotationArea[]
+
+  /**
+   * 差异标注线
+   * @description 根据两个选中的数据点，绘制差异标注线并自动计算差异文本。
+   */
+  annotationDifferenceLine?: AnnotationDifferenceLine | AnnotationDifferenceLine[]
   /**
    * @description 当图表开启透视功能或者指标组合的是否，是否开启维度联动功能
    * 当hover 到某个维度值时，联动高亮其他图表中相同维度值的数据

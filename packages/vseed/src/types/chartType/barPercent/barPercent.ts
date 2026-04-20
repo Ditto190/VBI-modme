@@ -25,6 +25,7 @@ import type {
   BarDimension,
   BarMeasure,
   Page,
+  RegionPadding,
 } from '../../properties'
 
 /**
@@ -105,6 +106,12 @@ export interface BarPercent {
    * @description 图例配置, 用于定义图表的图例, 包括图例的位置, 格式, 样式等.
    */
   legend?: Legend
+
+  /**
+   * 绘图区内边距
+   * @description 映射到 VChart 的 region[0].padding，用于为标注、标签等绘图区外扩元素预留空间。
+   */
+  regionPadding?: RegionPadding
 
   /**
    * @description 提示信息配置, 用于定义图表的提示信息, 包括提示信息的位置, 格式, 样式等.
