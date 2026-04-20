@@ -263,6 +263,7 @@ describe('annotationDifferenceLine', () => {
       },
       label: expect.objectContaining({
         position: 'middle',
+        refY: 0,
         style: expect.objectContaining({
           fill: '#ffffff',
           fontSize: 12,
@@ -279,6 +280,7 @@ describe('annotationDifferenceLine', () => {
         },
       }),
     })
+    expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.label).not.toHaveProperty('confine')
   })
 
   test('area compiles annotationDifferenceLine into a bracket step markLine', () => {
@@ -314,7 +316,12 @@ describe('annotationDifferenceLine', () => {
           },
         ],
       },
+      label: expect.objectContaining({
+        position: 'middle',
+        refY: 0,
+      }),
     })
+    expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.label).not.toHaveProperty('confine')
   })
 
   test('columnParallel compiles annotationDifferenceLine into a top step markLine', () => {
@@ -388,9 +395,12 @@ describe('annotationDifferenceLine', () => {
         mainSegmentIndex: 1,
       }),
       label: expect.objectContaining({
+        position: 'middle',
+        refY: 0,
         formatMethod: expect.any(Function),
       }),
     })
+    expect(markLine?.label).not.toHaveProperty('confine')
 
     const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
     const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
@@ -479,9 +489,12 @@ describe('annotationDifferenceLine', () => {
         mainSegmentIndex: 1,
       }),
       label: expect.objectContaining({
+        position: 'middle',
+        refY: 0,
         formatMethod: expect.any(Function),
       }),
     })
+    expect(markLine?.label).not.toHaveProperty('confine')
 
     const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
     const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
@@ -593,9 +606,12 @@ describe('annotationDifferenceLine', () => {
         mainSegmentIndex: 1,
       }),
       label: expect.objectContaining({
+        position: 'middle',
+        refY: 0,
         formatMethod: expect.any(Function),
       }),
     })
+    expect(markLine?.label).not.toHaveProperty('confine')
 
     const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
     const runtimeSeriesData = advanced.dataset.flat().map((datum) => {

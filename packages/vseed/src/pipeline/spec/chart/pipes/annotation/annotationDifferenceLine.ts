@@ -130,9 +130,9 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
 
       const label = usesRuntimeStackEnd
         ? {
-            confine: true,
             visible: true,
             position: 'middle',
+            refY: 0,
             formatMethod: (_markData: any[], seriesData: any[]) => {
               try {
                 return buildDifferenceText(
@@ -169,9 +169,9 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
             },
           }
         : {
-            confine: true,
             visible: true,
             position: 'middle',
+            refY: 0,
             text: buildDifferenceText(start.value, end.value, differenceType),
             style: {
               fill: textColor,
