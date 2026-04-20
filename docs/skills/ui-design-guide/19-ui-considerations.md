@@ -65,7 +65,7 @@ useEffect(() => {
 
 ### 原因
 
-CSS 变量 `--text-primary`、`--text-secondary`、`--text-muted` 只在 `:root` 或 `.dashboard-root-dark`/`.dashboard-root-light` 下定义，但组件内部使用了硬编码白色。
+CSS 变量 `--text-primary`、`--text-secondary`、`--text-muted` 只在 `:root` 或主题根类（例如 `.demo-app-root--dark` / `.demo-app-root--light`）下定义，但组件内部使用了硬编码白色。
 
 ### 解决方案
 
@@ -73,7 +73,7 @@ CSS 变量 `--text-primary`、`--text-secondary`、`--text-muted` 只在 `:root`
 
 ```css
 /* dark 和 light 主题都需要定义这些变量 */
-.dashboard-root-dark {
+.demo-app-root--dark {
   --text-primary: rgba(255, 255, 255, 0.92);
   --text-secondary: rgba(255, 255, 255, 0.55);
   --text-muted: rgba(255, 255, 255, 0.3);
@@ -81,7 +81,7 @@ CSS 变量 `--text-primary`、`--text-secondary`、`--text-muted` 只在 `:root`
   --panel-input-border: rgba(255, 255, 255, 0.1);
 }
 
-.dashboard-root-light {
+.demo-app-root--light {
   --text-primary: rgba(15, 23, 42, 0.92);
   --text-secondary: rgba(15, 23, 42, 0.55);
   --text-muted: rgba(15, 23, 42, 0.35);

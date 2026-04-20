@@ -117,7 +117,7 @@ VBI.registerConnector('my-api', async () => {
 
 ## 注意事项
 
-- **每个 practice 独立实现**自己的 demoConnector.ts，不跨 practice 引用
+- **每个 practice 独立实现**自己的 connector/bootstrap 模块（如 `demoConnector.ts` 或 `localConnector.ts`），不跨 practice 引用
 - 模块加载时自动调用 `registerXxxConnector()` 注册 Connector
 - `VBI.registerConnector` 在模块级别调用安全，内部有幂等保护
 - `connectorId` 需与 DSL 中的 `connectorId` 一致

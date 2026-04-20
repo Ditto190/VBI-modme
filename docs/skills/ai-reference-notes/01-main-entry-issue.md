@@ -2,7 +2,7 @@
 
 ## 重要说明
 
-**每个 practice 都是独立项目**，有自己的 `demoConnector.ts`。下面的说明是通用的解决方法，适用于所有 practice。
+**每个 practice 都是独立项目**，有自己的 connector/bootstrap 模块（如 `demoConnector.ts` 或 `localConnector.ts`）。下面的说明是通用方法，适用于所有 practice。
 
 ## 当前状态
 
@@ -31,34 +31,24 @@
 }
 ```
 
-每个 practice 仍然会实现自己的 `demoConnector.ts`、默认 builder 和页面初始化逻辑。即使主入口已可直接导入，AI 在修改具体 practice 时仍应优先参考该 practice 内部封装，而不是假设所有应用共享同一套接线方式。
+每个 practice 仍然会实现自己的 connector/bootstrap 模块、默认 builder 和页面初始化逻辑。即使主入口已可直接导入，AI 在修改具体 practice 时仍应优先参考该 practice 内部封装，而不是假设所有应用共享同一套接线方式。
 
-## @visactor/vseed 同样有问题
+## @visactor/vseed 主入口现状
 
-`@visactor/vseed` 的主入口（`src/index.ts`）也未导出渲染相关 API：
+`@visactor/vseed` 的主入口（`src/index.ts`）已经导出 `Builder`，并通过 `pipeline/types` 暴露 `isVChart` / `isPivotChart` / `isTable` / `isPivotTable` 与 `VSeed` 相关类型。
 
 ```ts
-// 主入口只导出了这些：
-export * from './chartType'
-export * from './dataset'
-// ... 共 19 个子模块
-
-// 以下存在但未在主入口：
-export { Builder }                      // 位于 src/builder/builder/
-export function isVChart()              // 位于 src/pipeline/utils/chatType.ts
-export function isPivotChart()          // 同上
-export function isTable()               // 同上
-export function isPivotTable()          // 同上
-export type VSeed                      // 位于 src/types/vseed.ts
+import { Builder, isVChart, isPivotChart, isTable, isPivotTable, type VSeed } from '@visactor/vseed'
 ```
 
 ## 正确参考方式
 
-直接使用**目标 practice** 自己的 `demoConnector.ts`：
+直接使用**目标 practice** 自己的 connector/bootstrap 模块：
 
 ```ts
-// 推荐：优先参考目标 practice 自己的 demoConnector.ts
-import { defaultBuilder } from 'src/utils/demoConnector'
+// 推荐：优先参考目标 practice 自己的 bootstrap 模块
+import { createDefaultBuilder } from 'src/utils/localConnector'
+const builder = createDefaultBuilder()
 
 // 也可直接使用主入口 API
 import { VBI } from '@visactor/vbi'

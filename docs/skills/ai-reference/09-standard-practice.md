@@ -46,7 +46,7 @@ practices/standard/src/
 │   ├── useVBIStore.ts        # store hook
 │   └── useVBIChartType.ts    # 图表类型
 └── utils/
-    ├── demoConnector.ts       # Demo 数据源 Connector
+    ├── localConnector.ts      # Demo 数据源 Connector + builder 工厂
     └── fieldRole.ts          # 字段角色映射
 ```
 
