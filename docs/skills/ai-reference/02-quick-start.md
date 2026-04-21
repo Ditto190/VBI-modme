@@ -1,18 +1,18 @@
 # 2. 快速上手
 
-> 每个 practice 都有自己独立的 `demoConnector.ts`，封装相同的 VBI API。本节以 standard 为例说明模式，其他 practice 结构相同，只是 UI 风格不同。
+> 每个 practice 都有自己独立的 connector/bootstrap 模块（文件名可能不同，如 `demoConnector.ts` 或 `localConnector.ts`）。本节以 standard 为例说明模式，其他 practice 结构相同，只是 UI 风格不同。
 
 ## 2.1 说明：VBI 核心 API 已在主入口导出
 
 `@visactor/vbi` 现在已经从主入口导出 `VBI`、`createVBI`、`VBIChartBuilder`、`VBI.registerConnector()`、`VBI.chart.create()`、`VBI.chart.createEmpty()` 等核心 API。
 
-**实际使用方式**：即便主入口可直接使用，仍建议优先参考目标 practice 自己的 `demoConnector.ts`，因为 connector 注册、默认 builder 和本地数据接线通常都封装在那里。
+**实际使用方式**：即便主入口可直接使用，仍建议优先参考目标 practice 自己的 connector/bootstrap 模块，因为 connector 注册、默认 builder 和本地数据接线通常都封装在那里。
 
 ---
 
 ## 2.2 步骤 1：注册数据源 Connector
 
-参考 `practices/standard/src/utils/demoConnector.ts`：
+参考 `practices/standard/src/utils/localConnector.ts`：
 
 ```ts
 import { VBI } from '@visactor/vbi'
@@ -64,8 +64,8 @@ const builder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
 **更推荐的方式**：直接使用 standard 封装好的 builder：
 
 ```ts
-import { defaultBuilder } from 'practices/standard/src/utils/demoConnector'
-// builder 已创建并注册完毕，可直接使用
+import { createDefaultBuilder } from 'practices/standard/src/utils/localConnector'
+const builder = createDefaultBuilder()
 ```
 
 ---
@@ -99,12 +99,14 @@ builder.chartType.changeChartType('column')
 import { VBIChartBuilder } from '@visactor/vbi'
 import { VBIStoreProvider, useVBIStore } from 'src/model'
 import { APP } from 'src/App/App'
-import { defaultBuilder } from 'src/utils/demoConnector'
+import { createDefaultBuilder } from 'src/utils/localConnector'
+
+const builder = createDefaultBuilder()
 
 // 渲染应用
 render(
-  <VBIStoreProvider builder={defaultBuilder}>
-    <APP builder={defaultBuilder} mode="edit" />
+  <VBIStoreProvider builder={builder}>
+    <APP builder={builder} mode="edit" />
   </VBIStoreProvider>,
   dom,
 )

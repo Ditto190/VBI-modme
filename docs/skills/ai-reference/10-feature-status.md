@@ -31,7 +31,7 @@
 | ----------------------------------------------------- | ------------------ |
 | `isVBIFilter`, `isVBIWhereGroup`, `isVBIHavingFilter` | `filter-guards.ts` |
 
-**建议**：即便主入口可直接访问，仍优先参考**目标 practice** 自己的 `demoConnector.ts` 和默认 builder 封装，因为那里面通常包含 connector 注册、默认数据源和页面级初始化逻辑。
+**建议**：即便主入口可直接访问，仍优先参考**目标 practice** 自己的 connector/bootstrap 模块（例如 `demoConnector.ts` 或 `localConnector.ts`）及默认 builder 封装，因为那里面通常包含 connector 注册、默认数据源和页面级初始化逻辑。
 
 ---
 

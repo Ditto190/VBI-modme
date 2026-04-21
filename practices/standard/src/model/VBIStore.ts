@@ -1,7 +1,11 @@
-import { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi';
+import { VBI, VBIChartBuilder, VBIChartDSL } from '@visactor/vbi';
+import { type DatasetColumn } from '@visactor/vquery';
 import { VSeed } from '@visactor/vseed';
+import {
+  createDefaultBuilder,
+  setLocalDataWithSchema,
+} from 'src/utils/localConnector';
 import { createStore, type StoreApi } from 'zustand/vanilla';
-import { createDefaultBuilder } from 'src/utils/demoConnector';
 
 type DestroyCallback = () => void;
 
@@ -20,6 +24,11 @@ export interface VBIStoreState {
   setDsl: (dsl: VBIChartDSL) => void;
   setLoading: (loading: boolean) => void;
   setVSeed: (vseed: VSeed | null) => void;
+  switchSource: (
+    connectorId: string,
+    data?: any[],
+    schema?: DatasetColumn[],
+  ) => Promise<void>;
 }
 
 export type VBIStoreApi = StoreApi<VBIStoreState>;
@@ -169,6 +178,27 @@ export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
       return () => {
         builder.doc.off('update', updateAll);
       };
+    },
+
+    switchSource: async (connectorId, data, schema) => {
+      if (data && schema) {
+        setLocalDataWithSchema(data, schema);
+      }
+
+      const builder = get().builder;
+      const theme = builder.theme.getTheme();
+      const locale = builder.locale.getLocale();
+      const limit = builder.limit.getLimit();
+
+      const nextBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId));
+
+      nextBuilder.theme.setTheme(theme);
+      nextBuilder.locale.setLocale(locale);
+      if (limit) {
+        nextBuilder.limit.setLimit(limit);
+      }
+
+      get().initialize(nextBuilder);
     },
   }));
 };

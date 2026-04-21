@@ -1,17 +1,18 @@
-import { Card, ConfigProvider, Flex, Spin, theme as antdTheme } from 'antd';
+import { VBIChartBuilder } from '@visactor/vbi';
+import { theme as antdTheme, Card, ConfigProvider, Flex, Spin } from 'antd';
 import enUS from 'antd/locale/en_US';
 import zhCN from 'antd/locale/zh_CN';
-import { VBIChartBuilder } from '@visactor/vbi';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ShelfDndProvider } from 'src/components/Shelves/dnd';
 import { Toolbar } from 'src/components/Toolbar';
-import { useVBIBuilder } from 'src/hooks';
 import type { DemoTheme } from 'src/constants/builder';
+import { useVBIBuilder } from 'src/hooks';
 import { useTranslation } from 'src/i18n';
 import { useVBIStore, VBIStoreProvider } from 'src/model';
+import { initVBIConnector } from 'src/utils/localConnector';
 import { useShallow } from 'zustand/shallow';
-import { ChartPanel, FieldsPanel, ShelfPanel, ViewPanel } from './components';
 import './app.css';
+import { ChartPanel, FieldsPanel, ShelfPanel, ViewPanel } from './components';
 
 type AppMode = 'view' | 'edit';
 
@@ -237,7 +238,19 @@ const AppShell = ({
   const { theme } = useVBIBuilder(storeBuilder);
 
   useEffect(() => {
-    return initialize(builder);
+    let isActive = true;
+    let cleanup: ReturnType<typeof initialize> | undefined;
+
+    void (async () => {
+      await initVBIConnector();
+      if (!isActive) return;
+      cleanup = initialize(builder);
+    })();
+
+    return () => {
+      isActive = false;
+      cleanup?.();
+    };
   }, [builder, initialize]);
 
   return <AppContent initialized={initialized} mode={mode} themeMode={theme} />;

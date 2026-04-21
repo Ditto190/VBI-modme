@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   FullscreenExitOutlined,
   FullscreenOutlined,
@@ -7,13 +6,17 @@ import {
   RedoOutlined,
   SunOutlined,
   UndoOutlined,
+  CloudUploadOutlined,
 } from '@ant-design/icons';
 import { Button, InputNumber, Segmented, Space, Tooltip, theme } from 'antd';
+import React, { useState } from 'react';
 import { ChartTypeSelector } from 'src/components/ChartType';
+import { CSVModal } from 'src/components/CSVModal';
 import type { DemoLocale, DemoTheme } from 'src/constants/builder';
 import { useVBIBuilder, useVBIUndoManager } from 'src/hooks';
 import { useTranslation } from 'src/i18n';
 import { useVBIStore } from 'src/model';
+import { CONNECTOR_ID } from 'src/utils/localConnector';
 import { formatDefaultLimit } from './config';
 
 const normalizeLimitValue = (value: number) => {
@@ -39,7 +42,9 @@ export const Toolbar: React.FC<{
   isFullscreen: boolean;
   onToggleFullscreen: () => void | Promise<void>;
 }> = ({ isFullscreen, onToggleFullscreen }) => {
+  const [isCSVModalOpen, setIsCSVModalOpen] = useState(false);
   const builder = useVBIStore((state) => state.builder);
+  const switchSource = useVBIStore((state) => state.switchSource);
   const { token } = theme.useToken();
   const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder);
   const { t, locale, setLocale } = useTranslation();
@@ -98,6 +103,14 @@ export const Toolbar: React.FC<{
           }}
         >
           <ChartTypeSelector compact />
+
+          <Tooltip title={t('toolbarImportCSV')}>
+            <Button
+              icon={<CloudUploadOutlined style={{ fontSize: 12 }} />}
+              onClick={() => setIsCSVModalOpen(true)}
+              size="small"
+            />
+          </Tooltip>
 
           <ToolbarDivider />
 
@@ -223,6 +236,14 @@ export const Toolbar: React.FC<{
           </Tooltip>
         </div>
       </div>
+      <CSVModal
+        open={isCSVModalOpen}
+        onCancel={() => setIsCSVModalOpen(false)}
+        onConfirm={async (data, schema) => {
+          await switchSource(CONNECTOR_ID, data, schema);
+          setIsCSVModalOpen(false);
+        }}
+      />
     </div>
   );
 };

@@ -6,11 +6,12 @@
 
 ```ts
 // 方式 1：使用 standard 封装好的 builder
-import { defaultBuilder } from 'practices/standard/src/utils/demoConnector'
+import { createDefaultBuilder } from 'practices/standard/src/utils/localConnector'
+const builder = createDefaultBuilder()
 
 // 方式 2：自行创建
 import { VBI } from '@visactor/vbi'
-const builder = VBI.chart.create(VBI.chart.createEmpty('connector-id'))
+const manualBuilder = VBI.chart.create(VBI.chart.createEmpty('connector-id'))
 ```
 
 ---

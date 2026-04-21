@@ -44,7 +44,7 @@ practices/{name}/src/
 │   ├── VBIStore.ts          # Zustand store（builder 状态 + VSeed 缓存）
 │   └── VBIStoreProvider.tsx  # React Context provider + useVBIStore
 ├── utils/
-│   ├── demoConnector.ts     # 数据源 Connector + defaultBuilder
+│   ├── {connector-bootstrap}.ts  # 数据源 Connector + builder 工厂（如 demoConnector/localConnector）
 │   └── fieldRole.ts        # 字段角色映射（getFieldRoleBySchemaType）
 ├── constants/
 │   └── builder.ts           # 常量配置（limit 默认值、主题、语言默认值）
@@ -57,13 +57,13 @@ practices/{name}/src/
 
 ## 1.2 关键约束
 
-| 约束                   | 说明                                                 |
-| ---------------------- | ---------------------------------------------------- |
-| 不能跨 practice 引用   | `src/` 路径只在当前 practice 内有效                  |
-| VSeedRender 独立实现   | 每个 practice 必须自己实现，不能引用其他 practice 的 |
-| hooks 独立封装         | 每个 practice 有自己的 hooks 集                      |
-| model 独立管理         | 每个 practice 有自己的 Zustand store                 |
-| demoConnector 独立实现 | 每个 practice 封装自己的 VBI 初始化代码              |
+| 约束                         | 说明                                                    |
+| ---------------------------- | ------------------------------------------------------- |
+| 不能跨 practice 引用         | `src/` 路径只在当前 practice 内有效                     |
+| VSeedRender 独立实现         | 每个 practice 必须自己实现，不能引用其他 practice 的    |
+| hooks 独立封装               | 每个 practice 有自己的 hooks 集                         |
+| model 独立管理               | 每个 practice 有自己的 Zustand store                    |
+| connector/bootstrap 独立实现 | 每个 practice 封装自己的 VBI 初始化代码（文件名可不同） |
 
 ---
 
@@ -71,7 +71,7 @@ practices/{name}/src/
 
 ### 初始化
 
-- [ ] `demoConnector.ts` 已实现，包含 `registerConnector`、`createDefaultBuilder`、`defaultBuilder`
+- [ ] connector/bootstrap 模块已实现（如 `demoConnector.ts`/`localConnector.ts`），包含 connector 注册与 builder 工厂
 - [ ] `VBIStore` 已实现，包含 `initialize`、`bindEvent` 方法
 - [ ] `VBIStoreProvider` 已实现，`useVBIStore` hook 可用
 - [ ] `App.tsx` 通过 `VBIStoreProvider` 包裹应用

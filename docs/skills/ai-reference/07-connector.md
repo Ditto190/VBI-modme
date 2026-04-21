@@ -4,10 +4,10 @@
 
 ## 7.1 注册 Connector
 
-> ⚠️ `VBI.registerConnector()` 不在 `@visactor/vbi` 主入口导出。参考 `practices/standard/src/utils/demoConnector.ts` 的实际使用方式。
+> `VBI.registerConnector()` 已在 `@visactor/vbi` 主入口可用。实际项目中仍建议优先参考目标 practice 的 connector/bootstrap 模块（例如 standard 的 `practices/standard/src/utils/localConnector.ts`）。
 
 ```ts
-// ⚠️ 需要通过 standard practice 间接使用
+// ✅ 可以直接从主入口使用
 import { VBI } from '@visactor/vbi';
 
 VBI.registerConnector('my-connector-id', async () => {
@@ -41,7 +41,7 @@ interface VBIConnector {
 
 ## 7.3 标准 Connector 示例
 
-参考 `practices/standard/src/utils/demoConnector.ts`：
+参考 `practices/standard/src/utils/localConnector.ts`：
 
 ```ts
 import { VBI } from '@visactor/vbi'

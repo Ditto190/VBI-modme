@@ -1,7 +1,7 @@
 import { expect, rs, test } from '@rstest/core';
 import { waitFor } from '@testing-library/react';
-import { createVBIStore } from '../src/model';
-import { createDefaultBuilder } from '../src/utils/demoConnector';
+import { createVBIStore } from 'src/model';
+import { createDefaultBuilder } from 'src/utils/localConnector';
 
 test('createVBIStore creates isolated instances', () => {
   const storeA = createVBIStore();

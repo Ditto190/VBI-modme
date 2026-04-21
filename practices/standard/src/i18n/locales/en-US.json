@@ -101,6 +101,7 @@
   "toolbarHistoryRedo": "Redo",
   "toolbarFullscreenEnter": "Enter fullscreen",
   "toolbarFullscreenExit": "Exit fullscreen",
+  "toolbarImportCSV": "Import CSV",
   "panelsFieldsTitle": "Field List",
   "panelsFieldsSearchPlaceholder": "Search",
   "panelsFieldsFilterDimension": "Dimension",
@@ -366,5 +367,22 @@
   "filtersDateDisplayRelativeNext": "Next {{amount}} {{unit}}",
   "filtersDateDisplayCurrent": "Current {{unit}}",
   "filtersDateDisplayCurrentOffset": "Current {{unit}} offset {{offset}}",
-  "filtersDateDisplayPeriod": "{{period}}"
+  "filtersDateDisplayPeriod": "{{period}}",
+
+  "csvModalTitleUpload": "Upload CSV",
+  "csvModalTitleSchema": "Customize Schema",
+  "csvModalBtnBack": "Back",
+  "csvModalBtnConfirm": "Confirm",
+  "csvModalDraggerText": "Click or drag CSV file to this area to upload",
+  "csvModalDraggerHint": "Support for a single CSV file upload.",
+  "csvModalColOriginal": "Original Header",
+  "csvModalColCustom": "Custom Name",
+  "csvModalColType": "Data Type",
+  "csvModalErrorEmpty": "CSV file is empty",
+  "csvModalErrorParse": "Failed to parse CSV file",
+  "csvModalTypeString": "String",
+  "csvModalTypeNumber": "Number",
+  "csvModalTypeDate": "Date",
+  "csvModalTypeDateTime": "DateTime",
+  "csvModalTypeTimestamp": "Timestamp"
 }

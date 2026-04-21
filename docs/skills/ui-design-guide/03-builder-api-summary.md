@@ -1,6 +1,6 @@
 # 3. Builder API 速查
 
-以下 API 来自 `VBIChartBuilder` 实例（`builder`），通过 `demoConnector.ts` 获取。
+以下 API 来自 `VBIChartBuilder` 实例（`builder`），通常通过目标 practice 的 connector/bootstrap 模块获取（如 `demoConnector.ts` 或 `localConnector.ts`）。
 
 ---
 
