@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, test } from 'vitest'
 import { Builder } from 'src/builder'
 import { registerAll } from 'src/builder/register/all'
+import { autoFormatter } from 'src/pipeline/utils'
 import type { Datum, VSeed } from 'src/types'
 
 type DifferenceCoordinateCallback = (
@@ -177,7 +178,7 @@ describe('annotationDifferenceLine', () => {
         },
       },
       label: expect.objectContaining({
-        text: '-31%',
+        text: '-31.01%',
         position: 'middle',
         style: expect.objectContaining({
           fill: '#ffffff',
@@ -366,6 +367,86 @@ describe('annotationDifferenceLine', () => {
       }),
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
+  })
+
+  test('absolute difference uses the selected measure numFormat when both anchors resolve to the same measure', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        {
+          id: 'autocracies',
+          encoding: 'yAxis',
+          autoFormat: false,
+          numFormat: {
+            prefix: '$',
+            fractionDigits: 1,
+          },
+        },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      label: expect.objectContaining({
+        text: '$-40.0',
+      }),
+    })
+  })
+
+  test('absolute difference falls back to the value axis formatter when measure formatting does not apply', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+      yAxis: {
+        autoFormat: false,
+        numFormat: {
+          suffix: ' units',
+          fractionDigits: 1,
+        },
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      label: expect.objectContaining({
+        text: '-40.0 units',
+      }),
+    })
+  })
+
+  test('absolute difference falls back to autoFormatter when no explicit formatter is configured', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: [
+        { year: '1930', autocracies: 1500000 },
+        { year: '2000', autocracies: 500000 },
+      ],
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      label: expect.objectContaining({
+        text: autoFormatter(-1000000),
+      }),
+    })
   })
 
   test('stacked column supports element-level bracket annotations using runtime stack-end values', () => {
@@ -654,6 +735,102 @@ describe('annotationDifferenceLine', () => {
     expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('24')
   })
 
+  test('stacked area runtime formatter uses the selected measure numFormat for absolute differences', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'area',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        {
+          id: 'autocracies',
+          encoding: 'yAxis',
+          autoFormat: false,
+          numFormat: {
+            prefix: '$',
+            fractionDigits: 1,
+          },
+        },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: 129 } },
+        end: { selector: { year: '2000', autocracies: 89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === 129) {
+        return { ...datum, __VCHART_STACK_END: 152 }
+      }
+
+      if (datum.year === '1930' && datum.democracies === 23) {
+        return { ...datum, __VCHART_STACK_END: 23 }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === 89) {
+        return { ...datum, __VCHART_STACK_END: 176 }
+      }
+
+      if (datum.year === '2000' && datum.democracies === 87) {
+        return { ...datum, __VCHART_STACK_END: 87 }
+      }
+
+      return datum
+    })
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('$24.0')
+  })
+
+  test('stacked area runtime formatter keeps percent differences at two fraction digits', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'area',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: 129 } },
+        end: { selector: { year: '2000', autocracies: 89 } },
+        differenceType: 'percent',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === 129) {
+        return { ...datum, __VCHART_STACK_END: 152 }
+      }
+
+      if (datum.year === '1930' && datum.democracies === 23) {
+        return { ...datum, __VCHART_STACK_END: 23 }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === 89) {
+        return { ...datum, __VCHART_STACK_END: 176 }
+      }
+
+      if (datum.year === '2000' && datum.democracies === 87) {
+        return { ...datum, __VCHART_STACK_END: 87 }
+      }
+
+      return datum
+    })
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('15.79%')
+  })
+
   test('stacked area label formatter falls back to empty text when runtime percent calculation is invalid', () => {
     const { advanced, spec } = buildSpec({
       chartType: 'area',
@@ -693,6 +870,54 @@ describe('annotationDifferenceLine', () => {
     expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('')
   })
 
+  test('stacked area coordinate and label callbacks ignore non-finite runtime stack-end values', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'area',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: 129 } },
+        end: { selector: { year: '2000', autocracies: 89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === 129) {
+        return { ...datum, __VCHART_STACK_END: Infinity }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === 89) {
+        return { ...datum, __VCHART_STACK_END: 176 }
+      }
+
+      return datum
+    })
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(coordinateData).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          year: '1930',
+          __STACK_VALUE__: 129,
+        }),
+        expect.objectContaining({
+          year: '2000',
+          __STACK_VALUE__: 176,
+        }),
+      ]),
+    )
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('47')
+  })
+
   test('stacked column coordinate callback does not require __VCHART_STACK_END on seriesData', () => {
     const { advanced, spec } = buildSpec({
       chartType: 'column',
@@ -729,6 +954,40 @@ describe('annotationDifferenceLine', () => {
     )
   })
 
+  test('stacked column coordinate callback falls back to resolved totals when runtime series data is empty', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const coordinates = (spec as { markLine?: Array<{ coordinates?: DifferenceCoordinateCallback }> }).markLine?.[0]
+      ?.coordinates
+    const coordinateData = coordinates?.([], {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(coordinateData).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          __STACK_VALUE__: 152,
+        }),
+        expect.objectContaining({
+          __STACK_VALUE__: 176,
+        }),
+      ]),
+    )
+  })
+
   test('column keeps percent difference calculation stable for negative values', () => {
     const { spec } = buildSpec({
       chartType: 'column',
@@ -746,7 +1005,7 @@ describe('annotationDifferenceLine', () => {
       type: 'type-step',
       connectDirection: 'bottom',
       label: expect.objectContaining({
-        text: '-50%',
+        text: '-50.00%',
       }),
     })
   })
@@ -768,7 +1027,7 @@ describe('annotationDifferenceLine', () => {
       type: 'type-step',
       connectDirection: 'left',
       label: expect.objectContaining({
-        text: '-50%',
+        text: '-50.00%',
       }),
     })
   })

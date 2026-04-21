@@ -289,9 +289,13 @@ export const resolveDifferenceAnchor = (options: {
 }
 
 export const getStackRuntimeTotal = (runtimeMatches: Datum[]) => {
+  if (runtimeMatches.length === 0) {
+    return undefined
+  }
+
   const stackEndValues = runtimeMatches.map((datum) => Number(datum[STACK_END_FIELD]))
 
-  if (stackEndValues.some((value) => Number.isNaN(value))) {
+  if (stackEndValues.some((value) => !Number.isFinite(value))) {
     return undefined
   }
 
@@ -324,7 +328,7 @@ export const buildDifferenceCoordinateDatum = (options: {
 
     return {
       ...(runtimeMatch ?? anchor.coordinateDatum),
-      [relativeSeries.getStackValueField()]: Number.isNaN(runtimeStackEnd) ? anchor.value : runtimeStackEnd,
+      [relativeSeries.getStackValueField()]: Number.isFinite(runtimeStackEnd) ? runtimeStackEnd : anchor.value,
     }
   }
 
@@ -356,10 +360,10 @@ export const getRuntimeDifferenceValue = (options: {
   const runtimeMatch = seriesData.find((datum) => isSubset(anchor.matchedDatum as Datum, datum))
   const runtimeStackEnd = Number(runtimeMatch?.[STACK_END_FIELD])
 
-  return Number.isNaN(runtimeStackEnd) ? anchor.value : runtimeStackEnd
+  return Number.isFinite(runtimeStackEnd) ? runtimeStackEnd : anchor.value
 }
 
-export const buildDifferenceText = (
+export const getDifferenceValue = (
   startValue: number,
   endValue: number,
   differenceType: 'absolute' | 'percent' = 'absolute',
@@ -369,10 +373,29 @@ export const buildDifferenceText = (
       throw new Error('annotationDifferenceLine percent difference cannot be computed because start value is 0')
     }
 
-    return `${(((endValue - startValue) / startValue) * 100).toFixed(0)}%`
+    return (endValue - startValue) / startValue
   }
 
-  return `${endValue - startValue}`
+  return endValue - startValue
+}
+
+export const buildDifferenceText = (
+  startValue: number,
+  endValue: number,
+  differenceType: 'absolute' | 'percent' = 'absolute',
+  formatter?: (value: number) => string,
+) => {
+  const differenceValue = getDifferenceValue(startValue, endValue, differenceType)
+
+  if (formatter) {
+    return formatter(differenceValue)
+  }
+
+  if (differenceType === 'percent') {
+    return `${(differenceValue * 100).toFixed(2)}%`
+  }
+
+  return `${differenceValue}`
 }
 
 export const inferDifferenceConnectDirection = (vseed: VSeed, values: [number, number]) => {

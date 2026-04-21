@@ -18,6 +18,7 @@ import config_14 from './annotation/annotationPointPartialDatum.json'
 import config_15 from './annotation/annotationPointPartialValue.json'
 import config_16 from './annotation/annotationVerticalLineSelector.json'
 import config_60 from './annotation/annotationDifferenceLineSeries.json'
+import config_61 from './annotation/annotationDifferenceLineMeasureFormat.json'
 import config_17 from './annotationHorizontalLine/selector.json'
 import config_18 from './annotationHorizontalLine/selector_sync.json'
 import config_19 from './annotationPoint/line-multi-measure.json'
@@ -81,6 +82,7 @@ const cases = [
   { name: 'annotation/annotationPointPartialValue', vseed: config_15 },
   { name: 'annotation/annotationVerticalLineSelector', vseed: config_16 },
   { name: 'annotation/annotationDifferenceLineSeries', vseed: config_60 },
+  { name: 'annotation/annotationDifferenceLineMeasureFormat', vseed: config_61 },
   { name: 'annotationHorizontalLine/selector', vseed: config_17 },
   { name: 'annotationHorizontalLine/selector_sync', vseed: config_18 },
   { name: 'annotationPoint/line-multi-measure', vseed: config_19 },
