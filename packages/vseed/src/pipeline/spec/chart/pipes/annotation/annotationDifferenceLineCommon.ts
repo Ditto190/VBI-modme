@@ -289,9 +289,13 @@ export const resolveDifferenceAnchor = (options: {
 }
 
 export const getStackRuntimeTotal = (runtimeMatches: Datum[]) => {
+  if (runtimeMatches.length === 0) {
+    return undefined
+  }
+
   const stackEndValues = runtimeMatches.map((datum) => Number(datum[STACK_END_FIELD]))
 
-  if (stackEndValues.some((value) => Number.isNaN(value))) {
+  if (stackEndValues.some((value) => !Number.isFinite(value))) {
     return undefined
   }
 
@@ -324,7 +328,7 @@ export const buildDifferenceCoordinateDatum = (options: {
 
     return {
       ...(runtimeMatch ?? anchor.coordinateDatum),
-      [relativeSeries.getStackValueField()]: Number.isNaN(runtimeStackEnd) ? anchor.value : runtimeStackEnd,
+      [relativeSeries.getStackValueField()]: Number.isFinite(runtimeStackEnd) ? runtimeStackEnd : anchor.value,
     }
   }
 
@@ -356,7 +360,7 @@ export const getRuntimeDifferenceValue = (options: {
   const runtimeMatch = seriesData.find((datum) => isSubset(anchor.matchedDatum as Datum, datum))
   const runtimeStackEnd = Number(runtimeMatch?.[STACK_END_FIELD])
 
-  return Number.isNaN(runtimeStackEnd) ? anchor.value : runtimeStackEnd
+  return Number.isFinite(runtimeStackEnd) ? runtimeStackEnd : anchor.value
 }
 
 export const getDifferenceValue = (

@@ -870,6 +870,54 @@ describe('annotationDifferenceLine', () => {
     expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('')
   })
 
+  test('stacked area coordinate and label callbacks ignore non-finite runtime stack-end values', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'area',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: 129 } },
+        end: { selector: { year: '2000', autocracies: 89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === 129) {
+        return { ...datum, __VCHART_STACK_END: Infinity }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === 89) {
+        return { ...datum, __VCHART_STACK_END: 176 }
+      }
+
+      return datum
+    })
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(coordinateData).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          year: '1930',
+          __STACK_VALUE__: 129,
+        }),
+        expect.objectContaining({
+          year: '2000',
+          __STACK_VALUE__: 176,
+        }),
+      ]),
+    )
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('47')
+  })
+
   test('stacked column coordinate callback does not require __VCHART_STACK_END on seriesData', () => {
     const { advanced, spec } = buildSpec({
       chartType: 'column',
@@ -900,6 +948,40 @@ describe('annotationDifferenceLine', () => {
         }),
         expect.objectContaining({
           year: '2000',
+          __STACK_VALUE__: 176,
+        }),
+      ]),
+    )
+  })
+
+  test('stacked column coordinate callback falls back to resolved totals when runtime series data is empty', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const coordinates = (spec as { markLine?: Array<{ coordinates?: DifferenceCoordinateCallback }> }).markLine?.[0]
+      ?.coordinates
+    const coordinateData = coordinates?.([], {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(coordinateData).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          __STACK_VALUE__: 152,
+        }),
+        expect.objectContaining({
           __STACK_VALUE__: 176,
         }),
       ]),
