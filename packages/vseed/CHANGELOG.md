@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.4.27
+
+### Patch Changes
+
+- 6e299be: Improve annotationDifferenceLine value formatting fallback and add coverage for formatted line annotations
+
 ## 0.4.26
 
 ### Patch Changes
