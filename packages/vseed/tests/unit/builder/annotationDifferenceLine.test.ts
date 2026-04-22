@@ -241,7 +241,7 @@ describe('annotationDifferenceLine', () => {
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
       connectDirection: 'right',
-      expandDistance: 80,
+      expandDistance: 32,
       line: {
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -296,7 +296,7 @@ describe('annotationDifferenceLine', () => {
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
       connectDirection: 'right',
-      expandDistance: 80,
+      expandDistance: 32,
       line: {
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -470,7 +470,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine).toMatchObject({
       type: 'type-step',
       connectDirection: 'right',
-      expandDistance: 80,
+      expandDistance: 32,
       line: expect.objectContaining({
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -564,7 +564,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine).toMatchObject({
       type: 'type-step',
       connectDirection: 'top',
-      expandDistance: 80,
+      expandDistance: 32,
       line: expect.objectContaining({
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -639,7 +639,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine).toMatchObject({
       type: 'type-step',
       connectDirection: 'top',
-      expandDistance: 80,
+      expandDistance: 32,
     })
   })
 

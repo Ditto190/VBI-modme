@@ -31,7 +31,9 @@ const DEFAULT_CORNER_RADIUS = 4
 const DEFAULT_LABEL_PADDING = 4
 const DEFAULT_END_SYMBOL_SIZE = 12
 const DEFAULT_END_SYMBOL_REF_X = -4
-const DEFAULT_BRACKET_EXPAND_DISTANCE = 80
+// Keep region padding disabled for difference brackets until VChart supports callback-based
+// expandDistance. The current static offset can only shift the bracket; it cannot pin it to a gutter.
+const DEFAULT_BRACKET_EXPAND_DISTANCE = 32
 const DEFAULT_BRACKET_LINE_DASH: [number, number] = [2, 2]
 const DEFAULT_PERCENT_DIFFERENCE_FORMAT = {
   type: 'percent' as const,
