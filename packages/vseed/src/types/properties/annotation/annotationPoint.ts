@@ -10,6 +10,11 @@ export type AnnotationPoint = {
   selector?: Selector | Selectors
 
   /**
+   * @description 指定标注点所属的指标 id。在多 measure 场景下，可与 selector 组合以唯一定位目标指标对应的标注点。
+   */
+  measureId?: string
+
+  /**
    * 动态筛选器（AI生成代码执行）
    * @description
    * 通过 AI 生成的 JavaScript 代码实现复杂数据筛选逻辑

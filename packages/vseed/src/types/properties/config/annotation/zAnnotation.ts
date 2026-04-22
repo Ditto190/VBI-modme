@@ -4,7 +4,7 @@ import { zAnnotationDifferenceLine } from '../../annotation/zAnnotationDifferenc
 import { zAnnotationHorizontalLine } from '../../annotation/zAnnotationHorizontalLine'
 import { zAnnotationArea } from '../../annotation/zAnnotationArea'
 
-export const zAnnotationPointConfig = zAnnotationPoint.omit({ selector: true, text: true }).partial()
+export const zAnnotationPointConfig = zAnnotationPoint.omit({ selector: true, measureId: true, text: true }).partial()
 
 // Use pick to explicitly list fields we want to expose in config variants.
 export const zAnnotationHorizontalLineConfig = zAnnotationHorizontalLine
