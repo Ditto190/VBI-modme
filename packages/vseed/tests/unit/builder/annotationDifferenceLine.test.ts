@@ -156,7 +156,7 @@ describe('annotationDifferenceLine', () => {
     })
   })
 
-  test('column compiles annotationDifferenceLine into a top step markLine', () => {
+  test('column compiles annotationDifferenceLine into a right-gutter step markLine', () => {
     const { spec } = buildSpec({
       chartType: 'column',
       dataset: baseDataset,
@@ -167,8 +167,8 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'top',
-      expandDistance: 24,
+      connectDirection: 'right',
+      expandDistance: expect.any(Function),
       line: {
         style: {
           lineDash: [0],
@@ -203,9 +203,10 @@ describe('annotationDifferenceLine', () => {
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
     expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.endSymbol).not.toHaveProperty('symbolType')
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
   })
 
-  test('bar compiles annotationDifferenceLine into a right step markLine', () => {
+  test('bar compiles annotationDifferenceLine into a top-gutter step markLine', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: baseDataset,
@@ -216,8 +217,8 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'right',
-      expandDistance: 24,
+      connectDirection: 'top',
+      expandDistance: expect.any(Function),
       line: {
         style: {
           lineDash: [0],
@@ -227,6 +228,7 @@ describe('annotationDifferenceLine', () => {
       },
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ top: 36 })
   })
 
   test('line compiles annotationDifferenceLine into a bracket step markLine', () => {
@@ -241,7 +243,7 @@ describe('annotationDifferenceLine', () => {
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
       connectDirection: 'right',
-      expandDistance: 32,
+      expandDistance: expect.any(Function),
       line: {
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -282,6 +284,7 @@ describe('annotationDifferenceLine', () => {
       }),
     })
     expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.label).not.toHaveProperty('confine')
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
   })
 
   test('area compiles annotationDifferenceLine into a bracket step markLine', () => {
@@ -296,7 +299,7 @@ describe('annotationDifferenceLine', () => {
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
       connectDirection: 'right',
-      expandDistance: 32,
+      expandDistance: expect.any(Function),
       line: {
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -323,9 +326,10 @@ describe('annotationDifferenceLine', () => {
       }),
     })
     expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.label).not.toHaveProperty('confine')
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
   })
 
-  test('columnParallel compiles annotationDifferenceLine into a top step markLine', () => {
+  test('columnParallel compiles annotationDifferenceLine into a right-gutter step markLine', () => {
     const { spec } = buildSpec({
       chartType: 'columnParallel',
       dataset: baseDataset,
@@ -339,9 +343,162 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'top',
+      connectDirection: 'right',
+      expandDistance: expect.any(Function),
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
+  })
+
+  test('line fixes bracket main segment to the region right edge via expandDistance callback', () => {
+    const { spec } = buildSpec({
+      chartType: 'line',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: annotationDifferenceLineWithDefaults,
+    })
+
+    const expandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+
+    expect(
+      expandDistance?.(undefined, {
+        region: {
+          getLayoutStartPoint: () => ({ x: 12, y: 8 }),
+          getLayoutRect: () => ({ width: 200, height: 120 }),
+        },
+        startRegion: undefined,
+        endRegion: undefined,
+        coordinatePoints: [
+          { x: 48, y: 36 },
+          { x: 168, y: 84 },
+        ],
+      }),
+    ).toBe(64)
+  })
+
+  test('bar fixes bracket main segment to the region top edge via expandDistance callback', () => {
+    const { spec } = buildSpec({
+      chartType: 'bar',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'xAxis' }],
+      annotationDifferenceLine: annotationDifferenceLineWithDefaults,
+    })
+
+    const expandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+
+    expect(
+      expandDistance?.(undefined, {
+        region: {
+          getLayoutStartPoint: () => ({ x: 10, y: 12 }),
+          getLayoutRect: () => ({ width: 220, height: 140 }),
+        },
+        startRegion: undefined,
+        endRegion: undefined,
+        coordinatePoints: [
+          { x: 52, y: 60 },
+          { x: 160, y: 96 },
+        ],
+      }),
+    ).toBe(68)
+  })
+
+  test('bar keeps multiple gutter annotations pinned to the same top edge', () => {
+    const { spec } = buildSpec({
+      chartType: 'bar',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'xAxis' }],
+      annotationDifferenceLine: [
+        annotationDifferenceLineWithDefaults,
+        {
+          start: { selector: { year: '2000', autocracies: 89 } },
+          end: { selector: { year: '1930', autocracies: 129 } },
+          differenceType: 'absolute',
+        },
+      ],
+    })
+
+    const firstExpandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+    const secondExpandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[1]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+
+    const callbackContext = {
+      region: {
+        getLayoutStartPoint: () => ({ x: 10, y: 12 }),
+        getLayoutRect: () => ({ width: 220, height: 140 }),
+      },
+      startRegion: undefined,
+      endRegion: undefined,
+      coordinatePoints: [
+        { x: 52, y: 60 },
+        { x: 160, y: 96 },
+      ],
+    }
+
+    expect(firstExpandDistance?.(undefined, callbackContext)).toBe(68)
+    expect(secondExpandDistance?.(undefined, callbackContext)).toBe(68)
+  })
+
+  test('line keeps multiple gutter annotations pinned to the same right edge', () => {
+    const { spec } = buildSpec({
+      chartType: 'line',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: [
+        annotationDifferenceLineWithDefaults,
+        {
+          start: { selector: { year: '2000', autocracies: 89 } },
+          end: { selector: { year: '1930', autocracies: 129 } },
+          differenceType: 'absolute',
+        },
+      ],
+    })
+
+    const firstExpandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+    const secondExpandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[1]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+
+    const callbackContext = {
+      region: {
+        getLayoutStartPoint: () => ({ x: 12, y: 8 }),
+        getLayoutRect: () => ({ width: 200, height: 120 }),
+      },
+      startRegion: undefined,
+      endRegion: undefined,
+      coordinatePoints: [
+        { x: 48, y: 36 },
+        { x: 168, y: 84 },
+      ],
+    }
+
+    expect(firstExpandDistance?.(undefined, callbackContext)).toBe(64)
+    expect(secondExpandDistance?.(undefined, callbackContext)).toBe(64)
+  })
+
+  test('difference line region padding keeps the larger user-provided side value', () => {
+    const { spec } = buildSpec({
+      chartType: 'line',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: annotationDifferenceLineWithDefaults,
+      regionPadding: {
+        top: 12,
+        right: 96,
+      },
+    })
+
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({
+      top: 12,
+      right: 96,
+    })
   })
 
   test('stacked column lifts anchors to stack totals for label calculation', () => {
@@ -470,7 +627,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine).toMatchObject({
       type: 'type-step',
       connectDirection: 'right',
-      expandDistance: 32,
+      expandDistance: expect.any(Function),
       line: expect.objectContaining({
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -564,7 +721,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine).toMatchObject({
       type: 'type-step',
       connectDirection: 'top',
-      expandDistance: 32,
+      expandDistance: expect.any(Function),
       line: expect.objectContaining({
         multiSegment: true,
         mainSegmentIndex: 1,
@@ -639,7 +796,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine).toMatchObject({
       type: 'type-step',
       connectDirection: 'top',
-      expandDistance: 32,
+      expandDistance: expect.any(Function),
     })
   })
 
@@ -1003,14 +1160,14 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'bottom',
+      connectDirection: 'right',
       label: expect.objectContaining({
         text: '-50.00%',
       }),
     })
   })
 
-  test('bar uses a left step markLine for negative values', () => {
+  test('bar keeps negative values in the top gutter', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: negativeValueDataset,
@@ -1025,7 +1182,7 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'left',
+      connectDirection: 'top',
       label: expect.objectContaining({
         text: '-50.00%',
       }),
@@ -1050,7 +1207,7 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'bottom',
+      connectDirection: 'right',
       label: expect.objectContaining({
         text: '56',
       }),

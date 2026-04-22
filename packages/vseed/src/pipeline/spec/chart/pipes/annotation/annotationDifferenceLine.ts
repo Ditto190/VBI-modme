@@ -1,5 +1,5 @@
 import type { IAreaChartSpec, IBarChartSpec, ICartesianSeries, ILineChartSpec, IMarkLineSpec } from '@visactor/vchart'
-import type { AnnotationDifferenceLine, Measure, VChartSpecPipe } from 'src/types'
+import type { AnnotationDifferenceLine, Measure, RegionPadding, VChartSpecPipe } from 'src/types'
 import { createFormatter, findAllMeasures, autoFormatter } from '../../../../utils'
 import {
   isDimensionSelector,
@@ -14,8 +14,6 @@ import {
   buildDifferenceText,
   getDifferenceLineStackResolveMode,
   getRuntimeDifferenceValue,
-  inferDifferenceBracketDirection,
-  inferDifferenceConnectDirection,
   type ResolvedDifferenceAnchor,
   usesDifferenceLineElementStackEnd,
   resolveDifferenceAnchor,
@@ -25,20 +23,21 @@ const DEFAULT_LINE_COLOR = '#BCC1CB'
 const DEFAULT_TEXT_COLOR = '#ffffff'
 const DEFAULT_TEXT_BACKGROUND_COLOR = '#BCC1CB'
 const DEFAULT_TEXT_FONT_SIZE = 12
-const DEFAULT_EXPAND_DISTANCE = 24
 const DEFAULT_LINE_WIDTH = 2
 const DEFAULT_CORNER_RADIUS = 4
 const DEFAULT_LABEL_PADDING = 4
 const DEFAULT_END_SYMBOL_SIZE = 12
 const DEFAULT_END_SYMBOL_REF_X = -4
-// Keep region padding disabled for difference brackets until VChart supports callback-based
-// expandDistance. The current static offset can only shift the bracket; it cannot pin it to a gutter.
-const DEFAULT_BRACKET_EXPAND_DISTANCE = 32
+const DEFAULT_GUTTER_BASE_OFFSET = 20
+const DEFAULT_GUTTER_RIGHT_PADDING = 44
+const DEFAULT_GUTTER_TOP_PADDING = 36
 const DEFAULT_BRACKET_LINE_DASH: [number, number] = [2, 2]
 const DEFAULT_PERCENT_DIFFERENCE_FORMAT = {
   type: 'percent' as const,
   fractionDigits: 2,
 }
+
+type RegionPaddingObject = Required<Exclude<RegionPadding, number>>
 
 const getDifferenceLinePath = (index: number, total: number) =>
   total === 1 ? 'annotationDifferenceLine' : `annotationDifferenceLine[${index}]`
@@ -49,6 +48,90 @@ const toArray = <T>(value: T | T[] | undefined | null): T[] => {
   }
 
   return value === undefined || value === null ? [] : [value]
+}
+
+const normalizeRegionPadding = (padding?: RegionPadding): RegionPaddingObject => {
+  if (typeof padding === 'number') {
+    return {
+      top: padding,
+      right: padding,
+      bottom: padding,
+      left: padding,
+    }
+  }
+
+  return {
+    top: padding?.top ?? 0,
+    right: padding?.right ?? 0,
+    bottom: padding?.bottom ?? 0,
+    left: padding?.left ?? 0,
+  }
+}
+
+const mergeDifferenceLineRegionPadding = (
+  spec: IBarChartSpec | ILineChartSpec | IAreaChartSpec,
+  paddingPatch: Partial<RegionPaddingObject>,
+) => {
+  const region = (spec as { region?: Array<Record<string, unknown>> }).region
+
+  if (!Array.isArray(region) || region.length === 0) {
+    return spec
+  }
+
+  const mergedPadding = normalizeRegionPadding(region[0].padding as RegionPadding | undefined)
+
+  if (paddingPatch.top !== undefined) {
+    mergedPadding.top = Math.max(mergedPadding.top, paddingPatch.top)
+  }
+
+  if (paddingPatch.right !== undefined) {
+    mergedPadding.right = Math.max(mergedPadding.right, paddingPatch.right)
+  }
+
+  if (paddingPatch.bottom !== undefined) {
+    mergedPadding.bottom = Math.max(mergedPadding.bottom, paddingPatch.bottom)
+  }
+
+  if (paddingPatch.left !== undefined) {
+    mergedPadding.left = Math.max(mergedPadding.left, paddingPatch.left)
+  }
+
+  return {
+    ...spec,
+    region: [
+      {
+        ...region[0],
+        padding: mergedPadding,
+      },
+      ...region.slice(1),
+    ],
+  }
+}
+
+const buildFixedGutterExpandDistance = (isHorizontalChart: boolean) => {
+  return (_markerData: unknown, context: any) => {
+    const region = context?.region
+    const coordinatePoints = Array.isArray(context?.coordinatePoints) ? context.coordinatePoints : []
+
+    if (!region || coordinatePoints.length === 0) {
+      return 0
+    }
+
+    const { x: regionStartX, y: regionStartY } = region.getLayoutStartPoint()
+    const { width } = region.getLayoutRect()
+
+    if (isHorizontalChart) {
+      const targetY = regionStartY - DEFAULT_GUTTER_BASE_OFFSET
+      const minY = Math.min(...coordinatePoints.map((point: { y: number }) => point.y))
+
+      return Math.max(0, minY - targetY)
+    }
+
+    const targetX = regionStartX + width + DEFAULT_GUTTER_BASE_OFFSET
+    const maxX = Math.max(...coordinatePoints.map((point: { x: number }) => point.x))
+
+    return Math.max(0, targetX - maxX)
+  }
 }
 
 const getAxisFormatter = (spec: IBarChartSpec | ILineChartSpec | IAreaChartSpec) => {
@@ -183,6 +266,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
   const measureIds = measures.map((measure) => measure.id)
   const axisFormatter = getAxisFormatter(chartSpec)
   const percentFormatter = createFormatter(DEFAULT_PERCENT_DIFFERENCE_FORMAT)
+  const isHorizontalChart = chartSpec.direction === 'horizontal'
 
   const markLine = annotationDifferenceLineList.flatMap((annotationDifferenceLine, index) => {
     try {
@@ -226,13 +310,8 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
         ((vseed.chartType === 'column' || vseed.chartType === 'bar') &&
           start.mode === 'element' &&
           stackResolveMode === 'auto')
-      const isStackedBarElementBracket =
-        vseed.chartType === 'bar' && start.mode === 'element' && stackResolveMode === 'auto'
-      const connectDirection = useBracketStyle
-        ? isStackedBarElementBracket
-          ? 'top'
-          : inferDifferenceBracketDirection(start, end)
-        : inferDifferenceConnectDirection(vseed, [start.value, end.value])
+      const connectDirection = isHorizontalChart ? 'top' : 'right'
+      const expandDistance = buildFixedGutterExpandDistance(isHorizontalChart)
 
       const lineColor = annotationDifferenceLine.lineColor ?? theme?.lineColor ?? DEFAULT_LINE_COLOR
       const textColor = annotationDifferenceLine.textColor ?? theme?.textColor ?? DEFAULT_TEXT_COLOR
@@ -322,7 +401,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
           autoRange: true,
           zIndex: ANNOTATION_Z_INDEX,
           connectDirection,
-          expandDistance: useBracketStyle ? DEFAULT_BRACKET_EXPAND_DISTANCE : DEFAULT_EXPAND_DISTANCE,
+          expandDistance,
           coordinates: (seriesData: any[], relativeSeries: ICartesianSeries) => {
             try {
               return [
@@ -396,9 +475,17 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
   })
 
   const specMarkLine = (chartSpec.markLine as IMarkLineSpec[]) || []
-
-  return {
+  const nextSpec = {
     ...spec,
     markLine: [...specMarkLine, ...markLine],
   }
+
+  if (markLine.length === 0) {
+    return nextSpec
+  }
+
+  return mergeDifferenceLineRegionPadding(
+    nextSpec as IBarChartSpec | ILineChartSpec | IAreaChartSpec,
+    isHorizontalChart ? { top: DEFAULT_GUTTER_TOP_PADDING } : { right: DEFAULT_GUTTER_RIGHT_PADDING },
+  )
 }
