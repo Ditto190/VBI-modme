@@ -9,6 +9,7 @@ import config_5 from './annotation/annotationVerticalLineValue.json'
 import config_6 from './annotation/annotationVerticalLineXValue.json'
 import config_37 from './annotation/annotationDifferenceLineStackedElement.json'
 import config_7 from './annotationPoint/condition.json'
+import config_38 from './annotationPoint/measure-id.json'
 import config_8 from './axes/areaXAxis.json'
 import config_9 from './axes/areaXAxisEnable.json'
 import config_10 from './axes/areaYAxis.json'
@@ -49,6 +50,7 @@ const cases = [
   { name: 'annotation/annotationVerticalLineXValue', vseed: config_6 },
   { name: 'annotation/annotationDifferenceLineStackedElement', vseed: config_37 },
   { name: 'annotationPoint/condition', vseed: config_7 },
+  { name: 'annotationPoint/measure-id', vseed: config_38 },
   { name: 'axes/areaXAxis', vseed: config_8 },
   { name: 'axes/areaXAxisEnable', vseed: config_9 },
   { name: 'axes/areaYAxis', vseed: config_10 },

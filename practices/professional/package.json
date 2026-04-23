@@ -26,7 +26,7 @@
     "@ant-design/icons": "6.1.0",
     "@visactor/vbi": "workspace:*",
     "@visactor/vbi-react": "workspace:*",
-    "@visactor/vchart": "2.0.15",
+    "@visactor/vchart": "2.0.23-alpha.6",
     "@visactor/vquery": "workspace:*",
     "@visactor/vseed": "workspace:*",
     "@visactor/vtable": "1.23.1",

@@ -1,5 +1,6 @@
 import type { ISpec, IMarkPointSpec } from '@visactor/vchart'
 import { selector, selectorWithDynamicFilter } from '../../../../../dataSelector'
+import { MeasureId } from 'src/dataReshape/constant'
 import type {
   ChartDynamicFilter,
   Datum,
@@ -16,6 +17,7 @@ export const generateAnnotationPointPipe = (options: {
   findSelectedDatas?: (options: {
     dataset: Datum[]
     selector: Selector | Selectors | undefined | null
+    measureId?: string | null
     dynamicFilter?: ChartDynamicFilter
     spec: ISpec
     context: SpecPipelineContext
@@ -25,9 +27,10 @@ export const generateAnnotationPointPipe = (options: {
   const findSelectedDatas =
     options.findSelectedDatas ??
     ((opts) => {
-      const { dataset, selector: s, dynamicFilter } = opts
+      const { dataset, selector: s, measureId, dynamicFilter } = opts
       return dataset.filter((datum) => {
-        return dynamicFilter ? selectorWithDynamicFilter(datum, dynamicFilter, s) : selector(datum, s)
+        const isSelected = dynamicFilter ? selectorWithDynamicFilter(datum, dynamicFilter, s) : selector(datum, s)
+        return isSelected && (!measureId || datum[MeasureId] === measureId)
       })
     })
   const generateMarkPoint =
@@ -76,6 +79,7 @@ export const generateAnnotationPointPipe = (options: {
     const markPoint = annotationPointList.flatMap((annotationPoint) => {
       const {
         selector: selectorPoint,
+        measureId,
         dynamicFilter,
         text = '',
         textColor = theme?.textColor ?? '#ffffff',
@@ -99,6 +103,7 @@ export const generateAnnotationPointPipe = (options: {
           ? findSelectedDatas({
               dataset,
               selector: selectorPoint,
+              measureId,
               dynamicFilter,
               spec,
               context,

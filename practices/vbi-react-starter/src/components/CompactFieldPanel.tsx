@@ -193,7 +193,11 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                     >
                       {editingDimensionId === dimension.id ? 'Done' : 'Edit'}
                     </button>
-                    <button aria-label={`Remove dimension ${dimension.field}`} onClick={() => removeDimension(dimension.id)} type="button">
+                    <button
+                      aria-label={`Remove dimension ${dimension.field}`}
+                      onClick={() => removeDimension(dimension.id)}
+                      type="button"
+                    >
                       Remove
                     </button>
                   </div>
@@ -247,7 +251,11 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
           <div className="compact-field-toolbar">
             <strong>{measuresTitle}</strong>
             <div className="compact-field-add-row">
-              <select aria-label="Available measures" onChange={(event) => setSelectedMeasure(event.target.value)} value={selectedMeasure}>
+              <select
+                aria-label="Available measures"
+                onChange={(event) => setSelectedMeasure(event.target.value)}
+                value={selectedMeasure}
+              >
                 {availableMeasures.length === 0 ? (
                   <option value="">No measures available</option>
                 ) : (
@@ -258,7 +266,12 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                   ))
                 )}
               </select>
-              <button aria-label="Add selected measure" disabled={!selectedMeasure} onClick={() => addMeasure(selectedMeasure)} type="button">
+              <button
+                aria-label="Add selected measure"
+                disabled={!selectedMeasure}
+                onClick={() => addMeasure(selectedMeasure)}
+                type="button"
+              >
                 Add
               </button>
             </div>
@@ -285,7 +298,11 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                     >
                       {editingMeasureId === measure.id ? 'Done' : 'Edit'}
                     </button>
-                    <button aria-label={`Remove measure ${measure.field}`} onClick={() => removeMeasure(measure.id)} type="button">
+                    <button
+                      aria-label={`Remove measure ${measure.field}`}
+                      onClick={() => removeMeasure(measure.id)}
+                      type="button"
+                    >
                       Remove
                     </button>
                   </div>

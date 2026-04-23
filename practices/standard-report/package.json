@@ -26,6 +26,7 @@
     "@visactor/vbi": "workspace:*",
     "@visactor/vquery": "workspace:*",
     "@visactor/vseed": "workspace:*",
+    "@visactor/vchart": "2.0.23-alpha.6",
     "antd": "6.1.3",
     "motion": "12.38.0",
     "react": "19.2.3",

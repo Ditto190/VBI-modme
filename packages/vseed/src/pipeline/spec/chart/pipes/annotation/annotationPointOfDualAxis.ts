@@ -1,15 +1,15 @@
 import type { IMarkPointSpec, ISpec } from '@visactor/vchart'
 import { selector, selectorWithDynamicFilter } from '../../../../../dataSelector'
+import { MeasureId } from 'src/dataReshape/constant'
 import type { Datum, SpecPipelineContext, VChartSpecPipe } from 'src/types'
 import { isSubset } from './utils'
 import { flatReshapeMeasures } from 'src/pipeline/utils'
-import { MeasureId } from 'src/dataReshape/constant'
 import { pickWithout } from '@visactor/vutils'
 import { generateAnnotationPointPipe } from './annotationPointCommon'
 
 export const annotationPointOfDualAxis: VChartSpecPipe = generateAnnotationPointPipe({
   findSelectedDatas: (options) => {
-    const { dataset, selector: s, dynamicFilter, context } = options
+    const { dataset, selector: s, measureId, dynamicFilter, context } = options
     return dataset.reduce((res: Datum[], d: Datum) => {
       const { advancedVSeed } = context
       const allMeasureIds = flatReshapeMeasures(advancedVSeed.reshapeMeasures ?? []).map((m) => m.id)
@@ -22,7 +22,7 @@ export const annotationPointOfDualAxis: VChartSpecPipe = generateAnnotationPoint
         ? selectorWithDynamicFilter(pickedDatum, dynamicFilter, s)
         : selector(pickedDatum, s)
 
-      if (shouldSelect) {
+      if (shouldSelect && (!measureId || pickedDatum[MeasureId] === measureId)) {
         res.push(pickedDatum)
       }
 

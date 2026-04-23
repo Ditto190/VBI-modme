@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 export const zAnnotationPoint = z.object({
   selector: z.union([zSelector, zSelectors]).nullish(),
+  measureId: z.string().nullish(),
   dynamicFilter: zChartDynamicFilter.optional(),
   text: z.string().or(z.array(z.string())).nullish(),
   textColor: z.string().default('#ffffff').nullish(),
