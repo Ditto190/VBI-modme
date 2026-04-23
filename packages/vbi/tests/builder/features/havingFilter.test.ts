@@ -1,13 +1,13 @@
 import * as Y from 'yjs'
 import { VBI } from '@visactor/vbi'
-import { VBIDSL } from 'src/types/dsl'
-import { HavingFilterNodeBuilder } from 'src/builder/features/havingFilter/having-node-builder'
-import { HavingGroupBuilder } from 'src/builder/features/havingFilter/having-group-builder'
-import { HavingFilterBuilder } from 'src/builder/features/havingFilter/having-builder'
+import { VBIChartDSL } from 'src/types/chartDSL'
+import { HavingFilterNodeBuilder } from 'src/chart-builder/features/havingFilter/having-node-builder'
+import { HavingGroupBuilder } from 'src/chart-builder/features/havingFilter/having-group-builder'
+import { HavingFilterBuilder } from 'src/chart-builder/features/havingFilter/having-builder'
 
 describe('HavingFilterBuilder', () => {
   test('add having filter', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -23,7 +23,7 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('add having filter auto-generates uuid', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => {
       node.setValue(500)
     })
@@ -34,7 +34,7 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('getConditions and toJSON expose the root state', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
     builder.havingFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
@@ -44,12 +44,12 @@ describe('HavingFilterBuilder', () => {
     expect(builder.havingFilter.toJSON()).toEqual({
       id: 'root',
       op: 'and',
-      conditions: [{ id: expect.any(String), field: 'sales', op: 'gt', value: 1000 }],
+      conditions: [{ id: expect.any(String), field: 'sales', aggregate: { func: 'sum' }, op: 'gt', value: 1000 }],
     })
   })
 
   test('remove by id', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter
       .add('sales', (node) => node.setOperator('gt').setValue(1000))
       .add('profit', (node) => node.setOperator('gt').setValue(500))
@@ -64,7 +64,7 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('remove by index', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter
       .add('sales', (node) => node.setOperator('gt').setValue(1000))
       .add('profit', (node) => node.setOperator('gt').setValue(500))
@@ -76,7 +76,7 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('remove non-existent id is no-op', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => node.setValue(1000))
 
     builder.havingFilter.remove('non-existent-id')
@@ -85,16 +85,18 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('remove out-of-range index is no-op', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => node.setValue(1000))
 
     builder.havingFilter.remove(99)
 
-    expect(builder.havingFilter.toJSON().conditions).toEqual([{ id: expect.any(String), field: 'sales', value: 1000 }])
+    expect(builder.havingFilter.toJSON().conditions).toEqual([
+      { id: expect.any(String), field: 'sales', aggregate: { func: 'sum' }, value: 1000 },
+    ])
   })
 
   test('update by id', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -113,7 +115,7 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('update throws error if not found', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
     expect(() => {
       builder.havingFilter.update('non-existent', (node) => {
@@ -123,26 +125,26 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('find by id returns node builder', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
 
     const filterId = builder.havingFilter.toJSON().conditions[0].id!
-    const found = builder.havingFilter.find(filterId)
+    const found = builder.havingFilter.find((entry) => entry.getId() === filterId)
 
     expect(found).toBeInstanceOf(HavingFilterNodeBuilder)
     expect((found as HavingFilterNodeBuilder).getField()).toBe('sales')
   })
 
   test('find returns undefined if not found', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
-    expect(builder.havingFilter.find('non-existent')).toBeUndefined()
+    expect(builder.havingFilter.find((entry) => entry.getId() === 'non-existent')).toBeUndefined()
   })
 
   test('clear removes all filters', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => node.setValue(1000)).add('profit', (node) => node.setValue(500))
 
     builder.havingFilter.clear()
@@ -151,12 +153,12 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('toJson returns empty array when no filters', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     expect(builder.havingFilter.toJSON().conditions).toEqual([])
   })
 
   test('chained add operations', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter
       .add('sales', (node) => node.setOperator('gt').setValue(1000))
       .add('profit', (node) => node.setOperator('gte').setValue(500))
@@ -170,7 +172,7 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('observe and unobserve', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
     let callCount = 0
     const unobserve = builder.havingFilter.observe(() => {
@@ -191,21 +193,21 @@ describe('HavingFilterBuilder', () => {
   })
 
   test('HavingFilterNodeBuilder getId', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => node.setOperator('gt').setValue(1000))
 
     const filterId = builder.havingFilter.toJSON().conditions[0].id!
-    const node = builder.havingFilter.find(filterId) as HavingFilterNodeBuilder
+    const node = builder.havingFilter.find((entry) => entry.getId() === filterId) as HavingFilterNodeBuilder
 
     expect(node.getId()).toBe(filterId)
   })
 
   test('HavingFilterNodeBuilder getOperator', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => node.setOperator('gt').setValue(1000))
 
     const filterId = builder.havingFilter.toJSON().conditions[0].id!
-    const node = builder.havingFilter.find(filterId) as HavingFilterNodeBuilder
+    const node = builder.havingFilter.find((entry) => entry.getId() === filterId) as HavingFilterNodeBuilder
 
     expect(node.getOperator()).toBe('gt')
   })
@@ -220,8 +222,8 @@ describe('HavingFilterBuilder', () => {
           { field: 'profit', op: 'gt', value: 500 },
         ],
       },
-    } as VBIDSL
-    const builder = VBI.from(dsl)
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     const json = builder.havingFilter.toJSON().conditions
     expect(json.length).toBe(2)
@@ -234,7 +236,7 @@ describe('HavingFilterBuilder', () => {
 
 describe('HavingGroupBuilder', () => {
   test('addGroup creates a group', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
       group.add('profit', (node) => node.setOperator('gt').setValue(500))
@@ -253,7 +255,7 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('addGroup with OR operator', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('or', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
       group.add('profit', (node) => node.setOperator('gt').setValue(500))
@@ -264,19 +266,19 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('find group by id returns HavingGroupBuilder', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
     })
 
     const groupId = builder.havingFilter.toJSON().conditions[0].id!
-    const found = builder.havingFilter.find(groupId)
+    const found = builder.havingFilter.find((entry) => entry.getId() === groupId)
 
     expect(found).toBeInstanceOf(HavingGroupBuilder)
   })
 
   test('updateGroup changes group operator', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
     })
@@ -291,7 +293,7 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('updateGroup throws if id not found', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
 
     expect(() => {
       builder.havingFilter.updateGroup('non-existent', (group) => {
@@ -301,7 +303,7 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('updateGroup throws if item is not a group', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('sales', (node) => node.setOperator('gt').setValue(1000))
 
     const filterId = builder.havingFilter.toJSON().conditions[0].id!
@@ -314,7 +316,7 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('nested groups', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (outerGroup) => {
       outerGroup.add('sales', (node) => node.setOperator('gt').setValue(1000))
       outerGroup.addGroup('or', (innerGroup) => {
@@ -337,14 +339,14 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('group remove condition by id', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
       group.add('profit', (node) => node.setOperator('gt').setValue(500))
     })
 
     const groupId = builder.havingFilter.toJSON().conditions[0].id!
-    const groupFound = builder.havingFilter.find(groupId) as HavingGroupBuilder
+    const groupFound = builder.havingFilter.find((entry) => entry.getId() === groupId) as HavingGroupBuilder
     const conditions = groupFound.toJSON().conditions
     const salesId = conditions[0].id!
 
@@ -356,14 +358,14 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('group remove condition by index', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
       group.add('profit', (node) => node.setOperator('gt').setValue(500))
     })
 
     const groupId = builder.havingFilter.toJSON().conditions[0].id!
-    const groupFound = builder.havingFilter.find(groupId) as HavingGroupBuilder
+    const groupFound = builder.havingFilter.find((entry) => entry.getId() === groupId) as HavingGroupBuilder
 
     groupFound.remove(0)
 
@@ -373,30 +375,30 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('group remove missing id is no-op', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
     })
 
     const groupId = builder.havingFilter.toJSON().conditions[0].id!
-    const groupFound = builder.havingFilter.find(groupId) as HavingGroupBuilder
+    const groupFound = builder.havingFilter.find((entry) => entry.getId() === groupId) as HavingGroupBuilder
 
     groupFound.remove('missing-id')
 
     expect((builder.havingFilter.toJSON().conditions[0] as any).conditions).toEqual([
-      { id: 'id-2', field: 'sales', op: 'gt', value: 1000 },
+      { id: 'id-2', field: 'sales', aggregate: { func: 'sum' }, op: 'gt', value: 1000 },
     ])
   })
 
   test('group clear conditions', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
       group.add('profit', (node) => node.setOperator('gt').setValue(500))
     })
 
     const groupId = builder.havingFilter.toJSON().conditions[0].id!
-    const groupFound = builder.havingFilter.find(groupId) as HavingGroupBuilder
+    const groupFound = builder.havingFilter.find((entry) => entry.getId() === groupId) as HavingGroupBuilder
 
     groupFound.clear()
 
@@ -404,13 +406,13 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('group getId and getOperator', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('or', (group) => {
       group.add('sales', (node) => node.setOperator('gt').setValue(1000))
     })
 
     const groupId = builder.havingFilter.toJSON().conditions[0].id!
-    const groupFound = builder.havingFilter.find(groupId) as HavingGroupBuilder
+    const groupFound = builder.havingFilter.find((entry) => entry.getId() === groupId) as HavingGroupBuilder
 
     expect(groupFound.getId()).toBe(groupId)
     expect(groupFound.getOperator()).toBe('or')
@@ -418,7 +420,7 @@ describe('HavingGroupBuilder', () => {
   })
 
   test('mix filters and groups at top level', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter
       .add('sales', (node) => node.setOperator('gt').setValue(1000))
       .addGroup('or', (group) => {
@@ -466,8 +468,8 @@ describe('HavingGroupBuilder', () => {
           },
         ],
       },
-    } as VBIDSL
-    const builder = VBI.from(dsl)
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     const json = builder.havingFilter.toJSON().conditions
     expect(json[0].id).toBeDefined()
@@ -476,5 +478,61 @@ describe('HavingGroupBuilder', () => {
     expect(group.conditions.length).toBe(2)
     expect(group.conditions[0].id).toBeDefined()
     expect(group.conditions[1].id).toBeDefined()
+  })
+
+  test('buildVQuery handles having filter with array value and eq operator', () => {
+    const builder = VBI.chart.create({
+      ...VBI.chart.createEmpty('demo'),
+      chartType: 'column',
+      dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
+      measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
+      whereFilter: { id: 'root', op: 'and', conditions: [] },
+      havingFilter: { id: 'root', op: 'and', conditions: [] },
+      version: 1,
+    } as VBIChartDSL)
+
+    builder.havingFilter.add('sales', (node) => {
+      node.setOperator('=').setValue([1000, 2000, 3000])
+    })
+
+    expect(builder.buildVQuery().having).toEqual({
+      op: 'and',
+      conditions: [
+        {
+          field: 'sales',
+          aggr: { func: 'sum' },
+          op: 'in',
+          value: [1000, 2000, 3000],
+        },
+      ],
+    })
+  })
+
+  test('buildVQuery handles having filter with array value and neq operator', () => {
+    const builder = VBI.chart.create({
+      ...VBI.chart.createEmpty('demo'),
+      chartType: 'column',
+      dimensions: [{ id: 'id-1', field: 'category', alias: 'category' }],
+      measures: [{ id: 'id-2', field: 'sales', alias: 'sales', encoding: 'yAxis', aggregate: { func: 'sum' } }],
+      whereFilter: { id: 'root', op: 'and', conditions: [] },
+      havingFilter: { id: 'root', op: 'and', conditions: [] },
+      version: 1,
+    } as VBIChartDSL)
+
+    builder.havingFilter.add('sales', (node) => {
+      node.setOperator('!=').setValue([1000, 2000])
+    })
+
+    expect(builder.buildVQuery().having).toEqual({
+      op: 'and',
+      conditions: [
+        {
+          field: 'sales',
+          aggr: { func: 'sum' },
+          op: 'not in',
+          value: [1000, 2000],
+        },
+      ],
+    })
   })
 })

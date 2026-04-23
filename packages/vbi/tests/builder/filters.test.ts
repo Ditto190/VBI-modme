@@ -1,15 +1,16 @@
 import { VBI } from '@visactor/vbi'
-import type { VBIDSL, VBIFilter } from 'src/types/dsl'
+import type { VBIChartDSL, VBIWhereFilter } from 'src/types/chartDSL'
 
 describe('WhereFilterBuilder', () => {
   test('add', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [],
       whereFilter: {
         id: 'root',
@@ -29,14 +30,14 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('add with all fields', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('region', (node) => {
       node.setOperator('eq').setValue('Beijing')
     })
 
     const result = builder.build()
-    const filter = result.whereFilter.conditions[0] as VBIFilter
+    const filter = result.whereFilter.conditions[0] as VBIWhereFilter
     expect(filter.id).toBe('id-1')
     expect(filter.field).toBe('region')
     expect(filter.op).toBe('eq')
@@ -44,8 +45,8 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('update', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -58,6 +59,7 @@ describe('WhereFilterBuilder', () => {
     })
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [],
       whereFilter: {
         id: 'root',
@@ -83,8 +85,8 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('remove', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -98,6 +100,7 @@ describe('WhereFilterBuilder', () => {
     builder.whereFilter.remove('id-2')
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [],
       whereFilter: {
         id: 'root',
@@ -123,8 +126,8 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('clear', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -135,6 +138,7 @@ describe('WhereFilterBuilder', () => {
     builder.whereFilter.clear()
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [],
       whereFilter: { id: 'root', op: 'and', conditions: [] },
       havingFilter: { id: 'root', op: 'and', conditions: [] },
@@ -143,8 +147,8 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('all', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -155,21 +159,22 @@ describe('WhereFilterBuilder', () => {
     const whereFilter = builder.whereFilter.toJSON().conditions
     expect(whereFilter).toHaveLength(2)
 
-    const node1 = builder.whereFilter.find('id-1')
-    const node2 = builder.whereFilter.find('id-2')
+    const node1 = builder.whereFilter.find((entry) => entry.getId() === 'id-1')
+    const node2 = builder.whereFilter.find((entry) => entry.getId() === 'id-2')
     expect((node1 as any).toJSON().field).toBe('sales')
     expect((node2 as any).toJSON().field).toBe('region')
   })
 
   test('multiple filters with chaining', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter
       .add('sales', (node) => node.setOperator('gt').setValue(1000))
       .add('region', (node) => node.setOperator('eq').setValue('Beijing'))
       .add('category', (node) => node.setOperator('in').setValue(['Electronics', 'Furniture']))
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [],
       whereFilter: {
         id: 'root',
@@ -186,13 +191,14 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('filter with optional op', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setValue(1000)
     })
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [],
       whereFilter: {
         id: 'root',
@@ -211,8 +217,8 @@ describe('WhereFilterBuilder', () => {
   })
 
   test('find', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.whereFilter.add('sales', (node) => {
       node.setOperator('gt').setValue(1000)
     })
@@ -220,7 +226,7 @@ describe('WhereFilterBuilder', () => {
       node.setOperator('eq').setValue('Beijing')
     })
 
-    const found = builder.whereFilter.find('id-2')
+    const found = builder.whereFilter.find((entry) => entry.getId() === 'id-2')
     expect((found as any).toJSON()).toEqual({
       id: 'id-2',
       field: 'region',
@@ -228,7 +234,7 @@ describe('WhereFilterBuilder', () => {
       value: 'Beijing',
     })
 
-    const notFound = builder.whereFilter.find('nonexistent')
+    const notFound = builder.whereFilter.find((entry) => entry.getId() === 'nonexistent')
     expect(notFound).toBeUndefined()
   })
 })

@@ -14,10 +14,17 @@
     "composite": true,
     "outDir": "dist",
     "rootDir": "./src",
-    "baseUrl": ".",
     "paths": {
       "src/*": ["./src/*"]
     }
   },
+  "references": [
+    {
+      "path": "../vseed"
+    },
+    {
+      "path": "../vquery"
+    }
+  ],
   "include": ["src", "src/**/*.json"]
 }

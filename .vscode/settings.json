@@ -24,6 +24,7 @@
   },
   "cSpell.words": [
     "catmull",
+    "dsls",
     "duckdb",
     "indexeddb",
     "Introspector",
@@ -32,7 +33,9 @@
     "preorder",
     "rsdoctor",
     "syncpack",
-    "VBIDSL",
+    "TDSL",
+    "uuidv",
+    "VBIChartDSL",
     "vquery",
     "vseed"
   ]

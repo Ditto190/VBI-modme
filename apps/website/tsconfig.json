@@ -7,6 +7,7 @@
     "noEmit": true,
     "strict": true,
     "skipLibCheck": true,
+    "types": ["node"],
     "isolatedModules": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
@@ -29,7 +30,10 @@
       "path": "../../packages/vbi"
     },
     {
-      "path": "../../practices/demo"
+      "path": "../../practices/standard"
+    },
+    {
+      "path": "../../practices/standard-report"
     },
     {
       "path": "../../practices/minimalist"
@@ -39,6 +43,9 @@
     },
     {
       "path": "../../practices/professional"
+    },
+    {
+      "path": "../../practices/vbi-react-starter"
     }
   ],
   "include": ["docs", "components", "theme", "rspress.config.ts"],

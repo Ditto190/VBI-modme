@@ -1,20 +1,23 @@
 import { VBI } from '@visactor/vbi'
-import { VBIDSL } from 'src/types/dsl'
-import { DimensionsBuilder } from 'src/builder/features/dimensions/dim-builder'
+import { VBIChartDSL } from 'src/types/chartDSL'
+import { DimensionsBuilder } from 'src/chart-builder/features/dimensions/dim-builder'
 
 describe('DimensionsBuilder', () => {
   test('addDimension', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.dimensions.add('category', (node) => {
       node.setAlias('类别')
     })
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [
         {
+          id: 'id-1',
           alias: '类别',
           field: 'category',
+          encoding: 'column',
         },
       ],
       whereFilter: { id: 'root', op: 'and', conditions: [] },
@@ -24,8 +27,8 @@ describe('DimensionsBuilder', () => {
   })
 
   test('addDimension callback', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
     builder.dimensions
       .add('region', (node) => {
         node.setAlias('地区')
@@ -35,14 +38,19 @@ describe('DimensionsBuilder', () => {
       })
 
     expect(builder.build()).toEqual({
+      uuid: builder.getUUID(),
       dimensions: [
         {
+          id: 'id-1',
           alias: '地区',
           field: 'region',
+          encoding: 'column',
         },
         {
+          id: 'id-2',
           alias: '城市',
           field: 'city',
+          encoding: 'column',
         },
       ],
       whereFilter: { id: 'root', op: 'and', conditions: [] },
@@ -57,43 +65,61 @@ describe('DimensionsBuilder', () => {
         { field: 'category', alias: '类别' },
         { field: 'region', alias: '地区' },
       ],
-    } as VBIDSL
-    const builder = VBI.from(dsl)
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    builder.dimensions.remove('category')
+    builder.dimensions.remove('id-1')
 
-    expect(builder.build().dimensions).toEqual([{ field: 'region', alias: '地区' }])
+    expect(builder.build().dimensions).toEqual([{ id: 'id-2', field: 'region', alias: '地区' }])
   })
 
   test('removeDimension not found', () => {
-    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     builder.dimensions.remove('notExist')
 
-    expect(builder.build().dimensions).toEqual([{ field: 'category', alias: '类别' }])
+    expect(builder.build().dimensions).toEqual([{ id: 'id-1', field: 'category', alias: '类别' }])
   })
 
   test('updateDimension', () => {
-    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    builder.dimensions.update('category', (node) => {
+    builder.dimensions.update('id-1', (node) => {
       node.setAlias('新类别')
     })
 
-    expect(builder.build().dimensions).toEqual([{ field: 'category', alias: '新类别' }])
+    expect(builder.build().dimensions).toEqual([{ id: 'id-1', field: 'category', alias: '新类别' }])
+  })
+
+  test('updateDimension aggregate', () => {
+    const dsl = { dimensions: [{ field: 'order_date', alias: '订单日期' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    builder.dimensions.update('id-1', (node) => {
+      node.setAlias('月份').setAggregate({ func: 'toMonth' })
+    })
+
+    expect(builder.build().dimensions).toEqual([
+      {
+        id: 'id-1',
+        field: 'order_date',
+        alias: '月份',
+        aggregate: { func: 'toMonth' },
+      },
+    ])
   })
 
   test('updateDimension throws error if not found', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     expect(() => {
       builder.dimensions.update('notExist', (node) => {
         node.setAlias('新类别')
       })
-    }).toThrow('Dimension with field "notExist" not found')
+    }).toThrow('Dimension with id "notExist" not found')
   })
 
   test('findDimension', () => {
@@ -102,20 +128,20 @@ describe('DimensionsBuilder', () => {
         { field: 'category', alias: '类别' },
         { field: 'region', alias: '地区' },
       ],
-    } as VBIDSL
-    const builder = VBI.from(dsl)
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    const node = builder.dimensions.find('category')
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
 
     expect(node?.getField()).toBe('category')
-    expect(node?.toJSON()).toEqual({ field: 'category', alias: '类别' })
+    expect(node?.toJSON()).toEqual({ id: 'id-1', field: 'category', alias: '类别' })
   })
 
   test('findDimension returns undefined if not found', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    const node = builder.dimensions.find('notExist')
+    const node = builder.dimensions.find((node) => node.getId() === 'notExist')
 
     expect(node).toBeUndefined()
   })
@@ -126,8 +152,8 @@ describe('DimensionsBuilder', () => {
         { field: 'category', alias: '类别' },
         { field: 'region', alias: '地区' },
       ],
-    } as VBIDSL
-    const builder = VBI.from(dsl)
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     const nodes = builder.dimensions.findAll()
 
@@ -137,8 +163,8 @@ describe('DimensionsBuilder', () => {
   })
 
   test('findAllDimensions returns empty array when no dimensions', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     const nodes = builder.dimensions.findAll()
 
@@ -151,20 +177,20 @@ describe('DimensionsBuilder', () => {
         { field: 'category', alias: '类别' },
         { field: 'region', alias: '地区' },
       ],
-    } as VBIDSL
-    const builder = VBI.from(dsl)
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     const json = builder.dimensions.toJSON()
 
     expect(json).toEqual([
-      { field: 'category', alias: '类别' },
-      { field: 'region', alias: '地区' },
+      { id: 'id-1', field: 'category', alias: '类别' },
+      { id: 'id-2', field: 'region', alias: '地区' },
     ])
   })
 
   test('toJSON returns empty array when no dimensions', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     const json = builder.dimensions.toJSON()
 
@@ -172,8 +198,8 @@ describe('DimensionsBuilder', () => {
   })
 
   test('observe and unobserve', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     let callCount = 0
     const callback = () => {
@@ -196,8 +222,32 @@ describe('DimensionsBuilder', () => {
     expect(callCount).toBe(1)
   })
 
+  test('observe reacts to nested dimension updates', () => {
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    let callCount = 0
+    const unobserve = builder.dimensions.observe(() => {
+      callCount++
+    })
+
+    builder.dimensions.add('category', (node) => {
+      node.setAlias('类别')
+    })
+
+    const dimensionId = builder.dimensions.toJSON()[0]?.id
+
+    builder.dimensions.update(dimensionId, (node) => {
+      node.setAlias('产品类别')
+    })
+
+    expect(callCount).toBe(2)
+
+    unobserve()
+  })
+
   test('isDimensionNode', () => {
-    const node = { field: 'category', alias: '类别' }
+    const node = { id: 'id-1', field: 'category', alias: '类别' }
     const group = { field: 'group1', children: [] }
 
     expect(DimensionsBuilder.isDimensionNode(node)).toBe(true)
@@ -205,7 +255,7 @@ describe('DimensionsBuilder', () => {
   })
 
   test('isDimensionGroup', () => {
-    const node = { field: 'category', alias: '类别' }
+    const node = { id: 'id-1', field: 'category', alias: '类别' }
     const group = { field: 'group1', children: [] }
 
     expect(DimensionsBuilder.isDimensionGroup(node)).toBe(false)
@@ -213,37 +263,89 @@ describe('DimensionsBuilder', () => {
   })
 
   test('DimensionNodeBuilder getField', () => {
-    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    const node = builder.dimensions.find('category')
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
 
     expect(node?.getField()).toBe('category')
   })
 
-  test('DimensionNodeBuilder setAlias', () => {
-    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIDSL
-    const builder = VBI.from(dsl)
+  test('DimensionNodeBuilder getId', () => {
+    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    const node = builder.dimensions.find('category')
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
+
+    expect(node?.getId()).toBe('id-1')
+  })
+
+  test('DimensionNodeBuilder getEncoding', () => {
+    const dsl = { dimensions: [{ field: 'category', alias: '类别', encoding: 'row' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    const node = builder.dimensions.find((item) => item.getId() === 'id-1')
+
+    expect(node?.getEncoding()).toBe('row')
+  })
+
+  test('DimensionNodeBuilder setAlias', () => {
+    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
     node?.setAlias('新类别')
 
     expect(builder.dimensions.toJSON()[0].alias).toBe('新类别')
   })
 
-  test('DimensionNodeBuilder toJSON', () => {
-    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIDSL
-    const builder = VBI.from(dsl)
+  test('DimensionNodeBuilder setAggregate', () => {
+    const dsl = { dimensions: [{ field: 'order_date', alias: '订单日期' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
-    const node = builder.dimensions.find('category')
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
+    node?.setAggregate({ func: 'toYear' })
+
+    expect(builder.dimensions.toJSON()[0].aggregate).toEqual({ func: 'toYear' })
+  })
+
+  test('DimensionNodeBuilder setEncoding', () => {
+    const dsl = { dimensions: [{ field: 'category', alias: '类别' }] } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    const node = builder.dimensions.find((item) => item.getId() === 'id-1')
+    node?.setEncoding('color')
+
+    expect(builder.dimensions.toJSON()[0].encoding).toBe('color')
+  })
+
+  test('DimensionNodeBuilder clearAggregate', () => {
+    const dsl = {
+      dimensions: [{ field: 'order_date', alias: '订单日期', aggregate: { func: 'toMonth' } }],
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
+    node?.clearAggregate()
+
+    expect(builder.dimensions.toJSON()[0].aggregate).toBeUndefined()
+  })
+
+  test('DimensionNodeBuilder toJSON', () => {
+    const dsl = {
+      dimensions: [{ field: 'order_date', alias: '订单日期', aggregate: { func: 'toMonth' } }],
+    } as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
+
+    const node = builder.dimensions.find((node) => node.getId() === 'id-1')
     const json = node?.toJSON()
 
-    expect(json).toEqual({ field: 'category', alias: '类别' })
+    expect(json).toEqual({ id: 'id-1', field: 'order_date', alias: '订单日期', aggregate: { func: 'toMonth' } })
   })
 
   test('chained add operations', () => {
-    const dsl = {} as VBIDSL
-    const builder = VBI.from(dsl)
+    const dsl = {} as VBIChartDSL
+    const builder = VBI.chart.create(dsl)
 
     builder.dimensions
       .add('category', (node) => node.setAlias('类别'))
@@ -256,5 +358,18 @@ describe('DimensionsBuilder', () => {
     expect(json[0].field).toBe('category')
     expect(json[1].field).toBe('region')
     expect(json[2].field).toBe('city')
+  })
+
+  test('addDimension uses chart type recommendations', () => {
+    const builder = VBI.chart.create({ chartType: 'line' } as VBIChartDSL)
+
+    builder.dimensions
+      .add('order_date', (node) => node.setAlias('日期'))
+      .add('province', (node) => node.setAlias('省份'))
+
+    expect(builder.dimensions.toJSON()).toEqual([
+      { id: 'id-1', field: 'order_date', alias: '日期', encoding: 'xAxis' },
+      { id: 'id-2', field: 'province', alias: '省份', encoding: 'color' },
+    ])
   })
 })

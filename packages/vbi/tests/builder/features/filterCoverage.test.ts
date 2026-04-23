@@ -1,18 +1,18 @@
 import * as Y from 'yjs'
 import { VBI } from '@visactor/vbi'
-import { HavingFilterBuilder } from 'src/builder/features/havingFilter/having-builder'
+import { HavingFilterBuilder } from 'src/chart-builder/features/havingFilter/having-builder'
 import {
   createHavingGroup,
   findEntry as findHavingEntry,
   isHavingGroup,
-} from 'src/builder/features/havingFilter/having-utils'
-import { WhereFilterBuilder } from 'src/builder/features/whereFilter/where-builder'
+} from 'src/chart-builder/features/havingFilter/having-utils'
+import { WhereFilterBuilder } from 'src/chart-builder/features/whereFilter/where-builder'
 import {
   createWhereGroup,
   findEntry as findWhereEntry,
   isWhereGroup,
-} from 'src/builder/features/whereFilter/where-utils'
-import type { VBIDSL } from 'src/types/dsl'
+} from 'src/chart-builder/features/whereFilter/where-utils'
+import type { VBIChartDSL } from 'src/types/chartDSL'
 
 describe('Where filter internals', () => {
   test('constructor initializes a missing whereFilter root on plain Y DSL', () => {
@@ -37,7 +37,7 @@ describe('Where filter internals', () => {
   })
 
   test('update throws when the target id belongs to a group', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.whereFilter.addGroup('or', () => {})
 
     expect(() => {
@@ -48,13 +48,13 @@ describe('Where filter internals', () => {
   })
 
   test('group remove supports id deletion, out-of-range indexes and JSON export', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.whereFilter.addGroup('and', (group) => {
       group.add('province', (node) => node.setOperator('eq').setValue('浙江'))
       group.add('city', (node) => node.setOperator('eq').setValue('杭州'))
     })
 
-    const group = builder.whereFilter.find('id-1') as any
+    const group = builder.whereFilter.find((entry) => entry.getId() === 'id-1') as any
     group.remove('id-2')
     group.remove(99)
 
@@ -66,7 +66,7 @@ describe('Where filter internals', () => {
   })
 
   test('node setField updates the serialized where filter', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.whereFilter.add('province', (node) => {
       node.setField('city').setOperator('eq').setValue('杭州')
     })
@@ -115,7 +115,7 @@ describe('Having filter internals', () => {
   })
 
   test('update throws when the target id belongs to a group', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('or', () => {})
 
     expect(() => {
@@ -126,31 +126,31 @@ describe('Having filter internals', () => {
   })
 
   test('group remove supports id deletion, out-of-range indexes and JSON export', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.addGroup('and', (group) => {
       group.add('销售额', (node) => node.setOperator('gt').setValue(1000))
       group.add('利润', (node) => node.setOperator('gt').setValue(200))
     })
 
-    const group = builder.havingFilter.find('id-1') as any
+    const group = builder.havingFilter.find((entry) => entry.getId() === 'id-1') as any
     group.remove('id-2')
     group.remove(99)
 
     expect(group.toJSON()).toEqual({
       id: 'id-1',
       op: 'and',
-      conditions: [{ id: 'id-3', field: '利润', op: 'gt', value: 200 }],
+      conditions: [{ id: 'id-3', field: '利润', aggregate: { func: 'sum' }, op: 'gt', value: 200 }],
     })
   })
 
   test('node JSON export covers the final serialized having filter', () => {
-    const builder = VBI.from({} as VBIDSL)
+    const builder = VBI.chart.create({} as VBIChartDSL)
     builder.havingFilter.add('销售额', (node) => {
       node.setOperator('gte').setValue(1000)
     })
 
-    const node = builder.havingFilter.find('id-1') as any
-    expect(node.toJSON()).toEqual({ id: 'id-1', field: '销售额', op: 'gte', value: 1000 })
+    const node = builder.havingFilter.find((entry) => entry.getId() === 'id-1') as any
+    expect(node.toJSON()).toEqual({ id: 'id-1', field: '销售额', aggregate: { func: 'sum' }, op: 'gte', value: 1000 })
   })
 
   test('having utils create groups and return undefined for missing nested ids', () => {

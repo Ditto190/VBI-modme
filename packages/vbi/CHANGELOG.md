@@ -1,5 +1,83 @@
 # @visactor/vbi
 
+## 0.4.27
+
+### Patch Changes
+
+- Updated dependencies [6e299be]
+  - @visactor/vseed@0.4.27
+
+## 0.4.26
+
+### Patch Changes
+
+- Updated dependencies [8b330c5]
+  - @visactor/vseed@0.4.26
+
+## 0.4.25
+
+### Patch Changes
+
+- Updated dependencies [04cb09c]
+  - @visactor/vseed@0.4.25
+
+## 0.4.24
+
+### Patch Changes
+
+- d2f4f33: Refactor the VBI runtime API around explicit `chart` / `insight` / `report` namespaces and align report resource handling with dedicated resource stores.
+
+  Breaking changes:
+  - Rename empty DSL helpers on the namespace API:
+    - `chart.generateEmptyDSL(...)` -> `chart.createEmpty(...)`
+    - `insight.generateEmptyDSL(...)` -> `insight.createEmpty(...)`
+    - `report.generateEmptyDSL(...)` -> `report.createEmpty(...)`
+    - `report.generateEmptyPageDSL(...)` -> `report.createEmptyPage(...)`
+  - Remove the old `generate-empty-*` source files and helper names from `@visactor/vbi`.
+  - Split the internal resource registry into explicit chart and insight stores and move the implementation under `src/vbi/resources/`.
+
+  This change also updates the in-repo downstream usages in practices and apps to the new API.
+  - @visactor/vseed@0.4.24
+
+## 0.4.23
+
+### Patch Changes
+
+- f5a9ad0: Refactor the VBI runtime API around `chart`/`insight`/`report` namespaces and align report APIs with the resource model.
+
+  Breaking changes:
+  - `createVBI()` no longer returns flat helpers such as `createChart`, `createInsight`, or `createReport`, and the old empty helper names were removed. Use `chart.create`, `insight.create`, `report.create`, `chart.createEmpty`, `insight.createEmpty`, `report.createEmpty`, and `report.createEmptyPage` instead.
+  - Legacy report text DSL exports were removed. `VBIReportTextDSL`, `VBIReportTextDSLInput`, `zVBIReportTextDSL`, and the old `ReportTextBuilder` are no longer available.
+  - @visactor/vseed@0.4.23
+
+## 0.4.22
+
+### Patch Changes
+
+- Updated dependencies [238fd91]
+  - @visactor/vseed@0.4.22
+
+## 0.4.21
+
+### Patch Changes
+
+- Updated dependencies
+  - @visactor/vseed@0.4.21
+
+## 0.4.20
+
+### Patch Changes
+
+- Updated dependencies [dbaada2]
+  - @visactor/vseed@0.4.20
+
+## 0.4.19
+
+### Patch Changes
+
+- 76dbf5c: feat: add adapters options for vbi create method, for custom buildQuery and buildChart
+  - @visactor/vseed@0.4.19
+
 ## 0.4.18
 
 ### Patch Changes

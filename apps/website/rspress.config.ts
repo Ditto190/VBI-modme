@@ -1,7 +1,8 @@
-import * as path from 'node:path'
+import { defineConfig } from '@rspress/core'
+import { pluginLlms } from '@rspress/plugin-llms'
 import { pluginPlayground } from '@rspress/plugin-playground'
 import { pluginPreview } from '@rspress/plugin-preview'
-import { defineConfig } from '@rspress/core'
+import * as path from 'node:path'
 
 import i18nJson from './i18n.json'
 
@@ -10,6 +11,7 @@ export default defineConfig({
   base: '/VBI/',
   globalStyles: path.join(__dirname, 'components/styles/index.css'),
   plugins: [
+    pluginLlms(),
     pluginPreview(),
     pluginPlayground({
       include: [
@@ -32,6 +34,12 @@ export default defineConfig({
       title: 'VisActor VBI',
       description: 'VisActor VBI',
     },
+    {
+      lang: 'en-US',
+      label: 'English',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
   ],
   themeConfig: {
     socialLinks: [
@@ -45,6 +53,10 @@ export default defineConfig({
       {
         lang: 'zh-CN',
         label: '简体中文',
+      },
+      {
+        lang: 'en-US',
+        label: 'English',
       },
     ],
   },

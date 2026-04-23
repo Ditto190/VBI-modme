@@ -1,6 +1,6 @@
-import type { VQueryDSL } from '@visactor/vquery'
-import type { VBIDSL } from '../dsl'
-import type { VSeedDSL } from '@visactor/vseed'
+import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
+import type { VBIChartDSL } from '../chartDSL'
+import type { BuildVSeedOptions } from './build-vseed'
 import type {
   MeasuresBuilder,
   DimensionsBuilder,
@@ -11,10 +11,10 @@ import type {
   LocaleBuilder,
   LimitBuilder,
   UndoManager,
-} from 'src/builder/features'
+} from 'src/chart-builder/features'
 import type { Map, Doc } from 'yjs'
 
-export interface VBIBuilderInterface {
+export interface VBIChartBuilderInterface<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
   doc: Doc
   dsl: Map<any>
   undoManager: UndoManager
@@ -31,7 +31,9 @@ export interface VBIBuilderInterface {
   applyUpdate: (update: Uint8Array, origin?: any) => void
   encodeStateAsUpdate: (targetStateVector?: Uint8Array) => Uint8Array
 
-  buildVSeed: () => Promise<VSeedDSL>
-  buildVQuery: () => VQueryDSL
-  build: () => VBIDSL
+  getUUID: () => string
+  buildVSeed: (options?: BuildVSeedOptions) => Promise<TSeedDSL>
+  buildVQuery: () => TQueryDSL
+  build: () => VBIChartDSL
+  isEmpty: () => boolean
 }

@@ -57,20 +57,26 @@
           "conditions": [
             {
               "id": "cond-1",
-              "field": "销售额",
+              "field": "sales",
               "op": "gt",
-              "value": 100000
+              "value": 100000,
+              "aggregate": {
+                "func": "sum"
+              }
             },
             {
               "id": "cond-2",
-              "field": "利润",
+              "field": "profit",
               "op": "gt",
-              "value": 10000
+              "value": 10000,
+              "aggregate": {
+                "func": "sum"
+              }
             }
           ]
         }
       ]
     }
   },
-  "code": "const applyBuilder = (builder: VBIBuilder) => { builder.havingFilter.updateGroup('group-1', group => { group.remove('cond-1'); }); }"
+  "code": "const applyBuilder = (builder: VBIChartBuilder) => { builder.havingFilter.updateGroup('group-1', group => { group.remove('cond-1'); }); }"
 }

@@ -1,5 +1,47 @@
 # @visactor/vseed
 
+## 0.4.27
+
+### Patch Changes
+
+- 6e299be: Improve annotationDifferenceLine value formatting fallback and add coverage for formatted line annotations
+
+## 0.4.26
+
+### Patch Changes
+
+- 8b330c5: Add regionPadding config for Cartesian chart regions
+
+## 0.4.25
+
+### Patch Changes
+
+- 04cb09c: Add annotation difference line support for bar-like charts
+
+## 0.4.24
+
+## 0.4.23
+
+## 0.4.22
+
+### Patch Changes
+
+- 238fd91: Add token theme feature
+
+## 0.4.21
+
+### Patch Changes
+
+- fix: optimize the pivot table text align in column header
+
+## 0.4.20
+
+### Patch Changes
+
+- dbaada2: fix: textAlign in table and pivotTable
+
+## 0.4.19
+
 ## 0.4.18
 
 ### Patch Changes

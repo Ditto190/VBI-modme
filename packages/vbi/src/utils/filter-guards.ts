@@ -1,13 +1,13 @@
 import type {
-  VBIFilter,
+  VBIWhereFilter,
   VBIWhereClause,
   VBIWhereGroup,
   VBIHavingClause,
   VBIHavingFilter,
   VBIHavingGroup,
-} from 'src/types/dsl'
+} from 'src/types/chartDSL'
 
-export function isVBIFilter(clause: VBIWhereClause): clause is VBIFilter {
+export function isVBIFilter(clause: VBIWhereClause): clause is VBIWhereFilter {
   return 'field' in clause
 }
 

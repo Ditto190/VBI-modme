@@ -7,17 +7,22 @@
   {
     "text": "VQuery",
     "link": "/vquery",
-    "activeMatch": "/vquery"
+    "activeMatch": "/vquery/"
   },
   {
     "text": "VBI",
     "link": "/vbi/",
-    "activeMatch": "/vbi"
+    "activeMatch": "^/vbi(?:/|$)"
+  },
+  {
+    "text": "VBI React",
+    "link": "/vbi-react/",
+    "activeMatch": "^/vbi-react(?:/|$)"
   },
   {
     "text": "Playground",
     "link": "/playground/vseed",
-    "activeMatch": "/VBI/playground"
+    "activeMatch": "/playground/"
   },
   {
     "text": "了解VChart",

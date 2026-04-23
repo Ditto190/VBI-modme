@@ -1,14 +1,18 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
-  Body,
-  Put,
-  Delete,
   NotFoundException,
+  Put,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiDataResponse,
+  ApiErrorResponse,
+} from '../common/swagger/api-response.decorator';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -21,12 +25,17 @@ export class PostController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get post by ID' })
-  @ApiResponse({
+  @ApiParam({ name: 'id', description: 'Post ID', example: '1' })
+  @ApiDataResponse({
+    description: 'Post returned',
     status: 200,
-    description: 'Return the post.',
     type: PostEntity,
   })
-  @ApiResponse({ status: 404, description: 'Post not found.' })
+  @ApiErrorResponse({
+    description: 'Post not found',
+    message: 'Post not found',
+    status: 404,
+  })
   async getPost(@Param('id') id: string): Promise<PostEntity> {
     const post = await this.postService.post({ id: Number(id) });
     if (!post) {
@@ -37,10 +46,11 @@ export class PostController {
 
   @Get()
   @ApiOperation({ summary: 'Get all posts' })
-  @ApiResponse({
+  @ApiDataResponse({
+    description: 'Posts returned',
+    isArray: true,
     status: 200,
-    description: 'Return all posts.',
-    type: [PostEntity],
+    type: PostEntity,
   })
   async getPosts(): Promise<PostEntity[]> {
     return this.postService.posts();
@@ -48,10 +58,16 @@ export class PostController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new post' })
-  @ApiResponse({
+  @ApiBody({ type: CreatePostDto })
+  @ApiDataResponse({
+    description: 'Post created',
     status: 201,
-    description: 'The post has been successfully created.',
     type: PostEntity,
+  })
+  @ApiErrorResponse({
+    description: 'Invalid request body',
+    message: 'Validation failed',
+    status: 400,
   })
   async createPost(@Body() postData: CreatePostDto): Promise<PostEntity> {
     const { title, content, authorEmail, published } = postData;
@@ -67,10 +83,17 @@ export class PostController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a post' })
-  @ApiResponse({
+  @ApiParam({ name: 'id', description: 'Post ID', example: '1' })
+  @ApiBody({ type: UpdatePostDto })
+  @ApiDataResponse({
+    description: 'Post updated',
     status: 200,
-    description: 'The post has been successfully updated.',
     type: PostEntity,
+  })
+  @ApiErrorResponse({
+    description: 'Invalid request body',
+    message: 'Validation failed',
+    status: 400,
   })
   async updatePost(
     @Param('id') id: string,
@@ -84,9 +107,10 @@ export class PostController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a post' })
-  @ApiResponse({
+  @ApiParam({ name: 'id', description: 'Post ID', example: '1' })
+  @ApiDataResponse({
+    description: 'Post deleted',
     status: 200,
-    description: 'The post has been successfully deleted.',
     type: PostEntity,
   })
   async deletePost(@Param('id') id: string): Promise<PostEntity> {
