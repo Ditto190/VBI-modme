@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.4.28
+
+### Patch Changes
+
+- f271ae9: Improve annotation difference line gutter placement with callback-based expandDistance support.
+
 ## 0.4.27
 
 ### Patch Changes
