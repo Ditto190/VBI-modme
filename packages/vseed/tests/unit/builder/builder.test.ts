@@ -115,6 +115,61 @@ describe('Builder - Core Methods', () => {
     expect(colorItems).toBeDefined()
   })
 
+  test('should return color value map for discrete color charts', () => {
+    const vseed: VSeed = {
+      chartType: 'line',
+      dataset: [
+        { year: '2020', type: 'A', value: 10 },
+        { year: '2020', type: 'B', value: 20 },
+      ],
+      dimensions: [
+        { id: 'year', encoding: 'xAxis' },
+        { id: 'type', encoding: 'color' },
+      ],
+      measures: [{ id: 'value', encoding: 'yAxis' }],
+      color: {
+        colorScheme: ['#111111', '#222222'],
+        colorMapping: {
+          B: '#ff0000',
+        },
+      },
+    }
+    const builder = Builder.from(vseed)
+    const advanced = builder.buildAdvanced()
+
+    expect(advanced).toBeDefined()
+
+    const spec = builder.buildSpec(advanced!)
+    expect(spec).toBeDefined()
+    expect(builder.getColorValueMap()).toEqual({
+      A: '#111111',
+      B: '#ff0000',
+    })
+  })
+
+  test('should return undefined color value map for linear color charts', () => {
+    const vseed: VSeed = {
+      chartType: 'heatmap',
+      dataset: [
+        { date: '2019', type: 'A', sales: 20 },
+        { date: '2020', type: 'A', sales: 40 },
+      ],
+      dimensions: [
+        { id: 'type', encoding: 'detail' },
+        { id: 'date', encoding: 'detail' },
+      ],
+      measures: [{ id: 'sales', encoding: 'color' }],
+    }
+    const builder = Builder.from(vseed)
+    const advanced = builder.buildAdvanced()
+
+    expect(advanced).toBeDefined()
+
+    const spec = builder.buildSpec(advanced!)
+    expect(spec).toBeDefined()
+    expect(builder.getColorValueMap()).toBeUndefined()
+  })
+
   test('should get advanced pipeline for chart type', () => {
     const pipeline = Builder.getAdvancedPipeline('bar')
     expect(pipeline).toBeDefined()

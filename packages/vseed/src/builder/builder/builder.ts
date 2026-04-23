@@ -16,7 +16,7 @@ import { buildSpec } from './buildSpec'
 import { build } from './build'
 import { prepare } from './prepare'
 import { intl } from 'src/i18n'
-import { getColorIdMap, getColorItems } from './advanced'
+import { getColorIdMap, getColorItems, getColorValueMap } from './advanced'
 
 export class Builder<S extends Spec = Spec> implements VSeedBuilder {
   private _vseed: VSeed
@@ -72,6 +72,11 @@ export class Builder<S extends Spec = Spec> implements VSeedBuilder {
    * @description 获取颜色字段的详细映射表。Key 为颜色 ID，Value 为详细信息
    */
   getColorIdMap = () => getColorIdMap(this)
+
+  /**
+   * @description 获取离散颜色图中 colorId 到最终颜色值的映射
+   */
+  getColorValueMap = () => getColorValueMap(this)
 
   /**
    * @description 获取当前的 VSeed 输入数据
