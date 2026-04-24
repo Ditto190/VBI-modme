@@ -1,44 +1,17 @@
-import OpenAI from 'openai'
-import { readDeepSeekStream } from './deepseek-stream.js'
-import type { DeepSeekMessage } from './deepseek-stream.js'
+import { createDeepSeek } from '@ai-sdk/deepseek'
+import { jsonSchema, streamText } from 'ai'
+import type { ModelMessage, TextStreamPart, ToolSet } from 'ai'
 import type {
   AgentAssistantMessage,
   AgentHistoryEntry,
   AgentModelConfig,
-  AgentToolCall,
   AgentToolDefinition,
   ModelProvider,
   ModelTurnResult,
+  PendingToolCall,
 } from '../types.js'
 
-const toToolCall = (call: AgentToolCall): OpenAI.Chat.Completions.ChatCompletionMessageToolCall => ({
-  function: { arguments: call.arguments, name: call.name },
-  id: call.id,
-  type: 'function',
-})
-
-const toAssistant = (entry: AgentAssistantMessage) => ({
-  content: entry.content,
-  role: 'assistant' as const,
-  ...(entry.reasoningContent ? { reasoning_content: entry.reasoningContent } : {}),
-  ...(entry.toolCalls ? { tool_calls: entry.toolCalls.map(toToolCall) } : {}),
-})
-
-const toOpenAiMessages = (history: AgentHistoryEntry[]): OpenAI.Chat.ChatCompletionMessageParam[] =>
-  history.map((entry) => {
-    if (entry.role === 'assistant') return toAssistant(entry)
-    if (entry.role === 'tool') return { content: entry.content, role: 'tool', tool_call_id: entry.toolCallId }
-    if (entry.role === 'system') return { content: entry.content, role: 'system' }
-    return { content: entry.content, role: 'user' }
-  })
-
-const toOpenAiTools = (tools: AgentToolDefinition[]): OpenAI.Chat.Completions.ChatCompletionTool[] =>
-  tools.map((tool) => ({
-    function: { description: tool.description, name: tool.name, parameters: tool.inputSchema, strict: true },
-    type: 'function',
-  }))
-
-const createClient = (config: AgentModelConfig) => new OpenAI({ apiKey: config.apiKey, baseURL: config.baseUrl })
+type AgentToolSet = ToolSet
 
 const parseArguments = (value: string) => {
   try {
@@ -48,50 +21,108 @@ const parseArguments = (value: string) => {
   }
 }
 
-const readReasoningContent = (completion: DeepSeekMessage) =>
-  completion.reasoning_content ? { reasoningContent: completion.reasoning_content } : {}
+const toRawArguments = (input: unknown) => (typeof input === 'string' ? input : JSON.stringify(input ?? {}))
 
-const readToolResult = (completion: DeepSeekMessage): ModelTurnResult => {
-  const toolCalls = completion.tool_calls?.filter((call) => call.type === 'function') ?? []
+const toAssistantContent = (entry: AgentAssistantMessage): ModelMessage => ({
+  content: [
+    ...(entry.reasoningContent ? [{ text: entry.reasoningContent, type: 'reasoning' as const }] : []),
+    ...(entry.content ? [{ text: entry.content, type: 'text' as const }] : []),
+    ...(entry.toolCalls ?? []).map((call) => ({
+      input: parseArguments(call.arguments),
+      toolCallId: call.id,
+      toolName: call.name,
+      type: 'tool-call' as const,
+    })),
+  ],
+  role: 'assistant',
+})
+
+const toModelMessages = (history: AgentHistoryEntry[]): ModelMessage[] =>
+  history.map((entry) => {
+    if (entry.role === 'assistant') return toAssistantContent(entry)
+    if (entry.role === 'tool')
+      return {
+        content: [
+          {
+            output: { type: 'text', value: entry.content },
+            toolCallId: entry.toolCallId,
+            toolName: entry.name,
+            type: 'tool-result',
+          },
+        ],
+        role: 'tool',
+      }
+    return { content: entry.content, role: entry.role }
+  })
+
+const toAiTools = (tools: AgentToolDefinition[]): AgentToolSet =>
+  Object.fromEntries(
+    tools.map((tool) => [
+      tool.name,
+      {
+        description: tool.description,
+        inputSchema: jsonSchema(tool.inputSchema),
+        strict: true,
+      },
+    ]),
+  ) as AgentToolSet
+
+const readToolResult = (content: string, reasoningContent: string, toolCalls: PendingToolCall[]): ModelTurnResult => {
   if (toolCalls.length === 0)
     return {
-      assistant: { content: completion.content ?? '', ...readReasoningContent(completion), role: 'assistant' },
-      outcome: { content: completion.content ?? '', type: 'final' },
+      assistant: { content, ...(reasoningContent ? { reasoningContent } : {}), role: 'assistant' },
+      outcome: { content, type: 'final' },
     }
   return {
     assistant: {
-      content: completion.content ?? '',
-      ...readReasoningContent(completion),
+      content,
+      ...(reasoningContent ? { reasoningContent } : {}),
       role: 'assistant',
-      toolCalls: toolCalls.map((toolCall) => ({
-        arguments: toolCall.function.arguments,
-        id: toolCall.id,
-        name: toolCall.function.name,
-      })),
+      toolCalls: toolCalls.map((call) => ({ arguments: call.rawArguments, id: call.id, name: call.name })),
     },
-    outcome: {
-      calls: toolCalls.map((toolCall) => ({
-        arguments: parseArguments(toolCall.function.arguments),
-        id: toolCall.id,
-        name: toolCall.function.name,
-        rawArguments: toolCall.function.arguments,
-      })),
-      type: 'tool',
-    },
+    outcome: { calls: toolCalls, type: 'tool' },
   }
 }
+
+const readAiStream = async (
+  stream: AsyncIterable<TextStreamPart<AgentToolSet>>,
+  onTextDelta?: (chunk: string) => void,
+) => {
+  let content = ''
+  let reasoningContent = ''
+  const toolCalls: PendingToolCall[] = []
+  for await (const part of stream) {
+    if (part.type === 'reasoning-delta') reasoningContent += part.text
+    if (part.type === 'text-delta') {
+      content += part.text
+      onTextDelta?.(part.text)
+    }
+    if (part.type === 'tool-call') {
+      const rawArguments = toRawArguments(part.input)
+      toolCalls.push({
+        arguments: parseArguments(rawArguments),
+        id: part.toolCallId,
+        name: part.toolName,
+        rawArguments,
+      })
+    }
+    if (part.type === 'error') throw part.error
+  }
+  return readToolResult(content, reasoningContent, toolCalls)
+}
+
+const createModel = (config: AgentModelConfig) =>
+  createDeepSeek({ apiKey: config.apiKey, baseURL: config.baseUrl })(config.model ?? '')
 
 export const createDeepSeekModelProvider = (config: AgentModelConfig): ModelProvider => ({
   streamTurn: async ({ handlers, history, tools }) => {
     if (!config.apiKey) throw new Error('AGENT_API_KEY is required for agent mode')
     if (!config.model) throw new Error('AGENT_MODEL is required for agent mode')
-    const stream = await createClient(config).chat.completions.create({
-      messages: toOpenAiMessages(history),
-      model: config.model,
-      stream: true,
-      tools: toOpenAiTools(tools),
+    const result = streamText({
+      messages: toModelMessages(history),
+      model: createModel(config),
+      tools: toAiTools(tools),
     })
-    const message = await readDeepSeekStream(stream, handlers?.onTextDelta)
-    return readToolResult(message)
+    return readAiStream(result.fullStream, handlers?.onTextDelta)
   },
 })

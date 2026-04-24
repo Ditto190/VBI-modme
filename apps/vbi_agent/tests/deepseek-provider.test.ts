@@ -6,25 +6,32 @@ const createStream = (...chunks: unknown[]) => ({
     yield* chunks
   },
 })
-const create = vi.fn()
-const openAiConstructor = vi.fn(() => ({ chat: { completions: { create } } }))
 
-vi.mock('openai', () => ({ default: openAiConstructor }))
+const deepseekModel = { modelId: 'mock-model' }
+const deepseekProvider = vi.fn(() => deepseekModel)
+const createDeepSeek = vi.fn(() => deepseekProvider)
+const jsonSchema = vi.fn((schema: unknown) => ({ jsonSchema: schema }))
+const streamText = vi.fn()
+
+vi.mock('@ai-sdk/deepseek', () => ({ createDeepSeek }))
+vi.mock('ai', () => ({ jsonSchema, streamText }))
 
 describe('createDeepSeekModelProvider', () => {
   beforeEach(() => {
-    openAiConstructor.mockClear()
-    create.mockReset()
+    createDeepSeek.mockClear()
+    deepseekProvider.mockClear()
+    jsonSchema.mockClear()
+    streamText.mockReset()
   })
 
-  test('streams final assistant text through the OpenAI-compatible client', async () => {
-    create.mockReturnValue(
-      createStream(
-        { choices: [{ delta: { reasoning_content: 'reasoning' } }] },
-        { choices: [{ delta: { content: 'final ' } }] },
-        { choices: [{ delta: { content: 'answer' } }] },
+  test('streams final assistant text through the AI SDK DeepSeek provider', async () => {
+    streamText.mockReturnValue({
+      fullStream: createStream(
+        { text: 'reasoning', type: 'reasoning-delta' },
+        { text: 'final ', type: 'text-delta' },
+        { text: 'answer', type: 'text-delta' },
       ),
-    )
+    })
     const { createDeepSeekModelProvider } = await import('../src/agent/model/deepseek-provider.js')
     const provider = createDeepSeekModelProvider({
       apiKey: 'test-key',
@@ -37,15 +44,22 @@ describe('createDeepSeekModelProvider', () => {
       history: [{ content: 'hello', role: 'user' }],
       tools: [],
     })) as ModelTurnResult
-    expect(openAiConstructor).toHaveBeenCalledWith({ apiKey: 'test-key', baseURL: 'https://api.deepseek.com' })
-    expect(create).toHaveBeenCalledWith(expect.objectContaining({ model: 'deepseek-chat' }))
+    expect(createDeepSeek).toHaveBeenCalledWith({ apiKey: 'test-key', baseURL: 'https://api.deepseek.com' })
+    expect(deepseekProvider).toHaveBeenCalledWith('deepseek-chat')
+    expect(streamText).toHaveBeenCalledWith(
+      expect.objectContaining({
+        messages: [{ content: 'hello', role: 'user' }],
+        model: deepseekModel,
+        tools: {},
+      }),
+    )
     expect(chunks).toEqual(['final ', 'answer'])
     expect(result.assistant.reasoningContent).toBe('reasoning')
     expect(result.outcome).toEqual({ content: 'final answer', type: 'final' })
   })
 
   test('passes stored reasoning content back to thinking-mode APIs', async () => {
-    create.mockReturnValue(createStream({ choices: [{ delta: { content: 'done' } }] }))
+    streamText.mockReturnValue({ fullStream: createStream({ text: 'done', type: 'text-delta' }) })
     const { createDeepSeekModelProvider } = await import('../src/agent/model/deepseek-provider.js')
     const provider = createDeepSeekModelProvider({
       apiKey: 'test-key',
@@ -53,24 +67,75 @@ describe('createDeepSeekModelProvider', () => {
       model: 'deepseek-reasoner',
     })
     await provider.streamTurn({
-      history: [{ content: 'use tool', reasoningContent: 'kept reasoning', role: 'assistant' }],
+      history: [
+        { content: 'use tool', role: 'user' },
+        {
+          content: 'using tool',
+          reasoningContent: 'kept reasoning',
+          role: 'assistant',
+          toolCalls: [{ arguments: '{"command":"pwd"}', id: 'call-1', name: 'bash' }],
+        },
+        { content: 'ok', name: 'bash', role: 'tool', toolCallId: 'call-1' },
+      ],
       tools: [],
     })
-    expect(create).toHaveBeenCalledWith(
+    expect(streamText).toHaveBeenCalledWith(
       expect.objectContaining({
-        messages: [expect.objectContaining({ reasoning_content: 'kept reasoning' })],
+        messages: [
+          { content: 'use tool', role: 'user' },
+          {
+            content: [
+              { text: 'kept reasoning', type: 'reasoning' },
+              { text: 'using tool', type: 'text' },
+              { input: { command: 'pwd' }, toolCallId: 'call-1', toolName: 'bash', type: 'tool-call' },
+            ],
+            role: 'assistant',
+          },
+          {
+            content: [
+              { output: { type: 'text', value: 'ok' }, toolCallId: 'call-1', toolName: 'bash', type: 'tool-result' },
+            ],
+            role: 'tool',
+          },
+        ],
+      }),
+    )
+  })
+
+  test('exposes agent tools as AI SDK tools', async () => {
+    streamText.mockReturnValue({ fullStream: createStream({ text: 'done', type: 'text-delta' }) })
+    const { createDeepSeekModelProvider } = await import('../src/agent/model/deepseek-provider.js')
+    const provider = createDeepSeekModelProvider({
+      apiKey: 'test-key',
+      baseUrl: 'https://api.deepseek.com/v1',
+      model: 'deepseek-chat',
+    })
+    const inputSchema = { properties: { command: { type: 'string' } }, required: ['command'], type: 'object' }
+    await provider.streamTurn({
+      history: [{ content: 'where am i', role: 'user' }],
+      tools: [{ description: 'Run a shell command', inputSchema, name: 'bash' }],
+    })
+    expect(jsonSchema).toHaveBeenCalledWith(inputSchema)
+    expect(streamText).toHaveBeenCalledWith(
+      expect.objectContaining({
+        tools: {
+          bash: {
+            description: 'Run a shell command',
+            inputSchema: { jsonSchema: inputSchema },
+            strict: true,
+          },
+        },
       }),
     )
   })
 
   test('parses a single function tool call', async () => {
-    create.mockReturnValue(
-      createStream(
-        { choices: [{ delta: { content: 'use tool' } }] },
-        { choices: [{ delta: { tool_calls: [{ function: { name: 'bash' }, id: 'call-1', index: 0 }] } }] },
-        { choices: [{ delta: { tool_calls: [{ function: { arguments: '{"command":"pwd"}' }, index: 0 }] } }] },
+    streamText.mockReturnValue({
+      fullStream: createStream(
+        { text: 'use tool', type: 'text-delta' },
+        { input: { command: 'pwd' }, toolCallId: 'call-1', toolName: 'bash', type: 'tool-call' },
       ),
-    )
+    })
     const { createDeepSeekModelProvider } = await import('../src/agent/model/deepseek-provider.js')
     const provider = createDeepSeekModelProvider({
       apiKey: 'test-key',
@@ -85,34 +150,12 @@ describe('createDeepSeekModelProvider', () => {
   })
 
   test('parses multiple function tool calls', async () => {
-    create.mockReturnValue(
-      createStream(
-        {
-          choices: [
-            {
-              delta: {
-                tool_calls: [
-                  { function: { name: 'bash' }, id: 'call-1', index: 0 },
-                  { function: { name: 'bash' }, id: 'call-2', index: 1 },
-                ],
-              },
-            },
-          ],
-        },
-        {
-          choices: [
-            {
-              delta: {
-                tool_calls: [
-                  { function: { arguments: '{"command":"pwd"}' }, index: 0 },
-                  { function: { arguments: '{"command":"ls"}' }, index: 1 },
-                ],
-              },
-            },
-          ],
-        },
+    streamText.mockReturnValue({
+      fullStream: createStream(
+        { input: { command: 'pwd' }, toolCallId: 'call-1', toolName: 'bash', type: 'tool-call' },
+        { input: { command: 'ls' }, toolCallId: 'call-2', toolName: 'bash', type: 'tool-call' },
       ),
-    )
+    })
     const { createDeepSeekModelProvider } = await import('../src/agent/model/deepseek-provider.js')
     const provider = createDeepSeekModelProvider({
       apiKey: 'test-key',
