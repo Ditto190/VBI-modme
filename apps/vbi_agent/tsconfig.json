@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "jsx": "react-jsx",
     "lib": ["ES2022"],
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "noEmit": false,
+    "noEmit": true,
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"],
-    "outDir": "dist",
-    "rootDir": "src"
+    "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["rslib.config.ts", "src", "tests"]
 }

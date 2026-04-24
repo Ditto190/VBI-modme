@@ -19,6 +19,7 @@ import { useManageChartsStore } from '../stores/manage-charts.store';
 import { matchesResourceSearch } from './manage-resource/state';
 
 const userName = getSessionUserName();
+const chartEditorDrawerWidth = 'min(1440px, 92vw)';
 
 export const ManageChartsPage = () => {
   const createName = useManageChartsStore((state) => state.createName);
@@ -135,7 +136,7 @@ export const ManageChartsPage = () => {
         />
       </Modal>
       <Drawer
-        style={{ width: '88vw' }}
+        width={chartEditorDrawerWidth}
         open={!!selectedId}
         title={editorName || 'Chart Editor'}
         onClose={() => void closeDetail()}

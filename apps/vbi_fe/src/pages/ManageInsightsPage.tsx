@@ -8,6 +8,7 @@ import type { ResourceItem } from '../types';
 import { getSessionUserName } from '../utils/collaboration';
 
 const userName = getSessionUserName();
+const insightEditorDrawerWidth = 'min(720px, 92vw)';
 
 export const ManageInsightsPage = () => {
   const createContent = useManageInsightsStore((state) => state.createContent);
@@ -142,7 +143,7 @@ export const ManageInsightsPage = () => {
         </Space>
       </Modal>
       <Drawer
-        size={560}
+        width={insightEditorDrawerWidth}
         open={!!selectedId}
         title={editorName || 'Insight Editor'}
         onClose={() => void closeDetail()}

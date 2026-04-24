@@ -23,12 +23,15 @@
 
     "paths": {
       "src/*": ["./src/*"],
-      "@visactor/vbi-provider": ["../packages/vbi-provider/src/index.ts"],
-      "@visactor/vbi-provider/*": ["../packages/vbi-provider/src/*"]
+      "@visactor/vbi-provider": ["../vbi_provider/src/index.ts"],
+      "@visactor/vbi-provider/*": ["../vbi_provider/src/*"]
     }
   },
   "composite": true,
   "references": [
+    {
+      "path": "../vbi_provider"
+    },
     {
       "path": "../../packages/vseed"
     },
