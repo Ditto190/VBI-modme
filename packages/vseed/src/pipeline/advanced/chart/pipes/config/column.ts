@@ -25,6 +25,7 @@ export const columnConfig: AdvancedPipe = (advancedVSeed, context) => {
     'brush',
     'dimensionLinkage',
     'player',
+    'animation',
   ]) as Config['column']
 
   const config = replaceNullToUndefined(pickedConfig)

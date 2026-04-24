@@ -26,6 +26,7 @@ import {
   zXLinearAxis,
   zYLinearAxis,
   zPage,
+  zScatterAnimation,
 } from '../../properties'
 
 export const zScatter = z.object({
@@ -44,6 +45,7 @@ export const zScatter = z.object({
   legend: zLegend.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zScatterAnimation.nullish(),
   xAxis: zXLinearAxis.nullish(),
   yAxis: zYLinearAxis.nullish(),
   crosshairLine: zCrosshairLine.nullish(),

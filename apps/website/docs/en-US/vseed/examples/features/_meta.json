@@ -1,6 +1,31 @@
 [
   {
     "type": "file",
+    "name": "animationBar",
+    "label": "AnimationBar"
+  },
+  {
+    "type": "file",
+    "name": "animationLine",
+    "label": "AnimationLine"
+  },
+  {
+    "type": "file",
+    "name": "animationPie",
+    "label": "AnimationPie"
+  },
+  {
+    "type": "file",
+    "name": "animationRadar",
+    "label": "AnimationRadar"
+  },
+  {
+    "type": "file",
+    "name": "animationScatter",
+    "label": "AnimationScatter"
+  },
+  {
+    "type": "file",
     "name": "annotationArea",
     "label": "AnnotationArea"
   },

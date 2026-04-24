@@ -14,6 +14,7 @@ import {
   zTooltip,
   zBrush,
   zPage,
+  zRadarAnimation,
 } from '../../properties'
 
 export const zRadar = z.object({
@@ -30,6 +31,7 @@ export const zRadar = z.object({
   legend: zLegend.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zRadarAnimation.nullish(),
   theme: zTheme.nullish(),
   locale: zLocale.nullish(),
 })

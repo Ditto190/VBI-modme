@@ -11,6 +11,7 @@ import type {
   Theme,
   Tooltip,
   Page,
+  PieLikeAnimation,
 } from '../../properties'
 import type { Brush } from '../../properties'
 
@@ -109,6 +110,11 @@ export interface Pie {
    * @description 框选配置，用于开启/关闭 brush 框选能力
    */
   brush?: Brush
+  /**
+   * 动画配置
+   * @description 图表动画配置，按图表类型约束可选效果
+   */
+  animation?: PieLikeAnimation
 
   /**
    * 图表的主题, 主题是优先级较低的功能配置, 包含所有图表类型共用的通用配置, 与单类图表类型共用的图表配置

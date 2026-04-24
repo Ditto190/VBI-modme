@@ -24,6 +24,7 @@ import {
   horizontalCrosshairLine,
   pointStateHover,
   initScatter,
+  animation,
   progressive,
   datasetScatter,
   linearColor,
@@ -47,6 +48,7 @@ import {
 const scatter: VChartSpecPipeline = [
   fontFamilyTheme,
   initScatter,
+  animation,
   colorAdapter(color, linearColor),
   backgroundColor,
   datasetScatter,
@@ -80,6 +82,7 @@ const pivotScatter: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initScatter,
+    animation,
     colorAdapter(color, linearColor),
     backgroundColor,
     datasetScatter,

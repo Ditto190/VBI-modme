@@ -6,6 +6,7 @@ import { zLegend } from './legend/legend'
 import { zTooltip } from './tooltip/tooltip'
 import { zPivotChartGridConfig } from './pivotGrid'
 import { zBrushConfig } from '../brush/zBrush'
+import { zPieLikeAnimation, zRadarAnimation } from './animation'
 
 export const zPieConfig = z.object({
   backgroundColor: zBackgroundColor.nullish(),
@@ -17,9 +18,12 @@ export const zPieConfig = z.object({
   pivotGrid: zPivotChartGridConfig.nullish(),
   cornerRadius: z.number().nullish(),
   brush: zBrushConfig.nullish(),
+  animation: zPieLikeAnimation.nullish(),
 })
 export const zDonutConfig = zPieConfig
-export const zRadarConfig = zPieConfig
+export const zRadarConfig = zPieConfig.extend({
+  animation: zRadarAnimation.nullish(),
+})
 
 export type PieConfig = z.infer<typeof zPieConfig>
 export type DonutConfig = z.infer<typeof zDonutConfig>

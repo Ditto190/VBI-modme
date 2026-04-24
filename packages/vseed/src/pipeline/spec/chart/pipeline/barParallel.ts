@@ -4,6 +4,7 @@ import {
   xLinear,
   yBand,
   initBarParallel,
+  animation,
   backgroundColor,
   label,
   tooltip,
@@ -45,6 +46,7 @@ import {
 const barParallel: VChartSpecPipeline = [
   fontFamilyTheme,
   initBarParallel,
+  animation,
   regionPadding,
   stackCornerRadius,
   barMaxWidth,
@@ -76,6 +78,7 @@ const pivotBarParallel: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initBarParallel,
+    animation,
     regionPadding,
     stackCornerRadius,
     barMaxWidth,

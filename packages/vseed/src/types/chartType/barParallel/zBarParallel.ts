@@ -27,6 +27,7 @@ import {
   zXLinearAxis,
   zYBandAxis,
   zPage,
+  zBarLikeAnimation,
 } from '../../properties'
 
 export const zBarParallel = z.object({
@@ -42,6 +43,7 @@ export const zBarParallel = z.object({
   regionPadding: zRegionPadding.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zBarLikeAnimation.nullish(),
   xAxis: zXLinearAxis.nullish(),
   yAxis: zYBandAxis.nullish(),
   crosshairRect: zCrosshairRect.nullish(),

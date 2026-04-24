@@ -589,6 +589,12 @@ importers:
       '@visactor/vutils':
         specifier: ~1.0.21
         version: 1.0.21
+      chroma-js:
+        specifier: 2.4.2
+        version: 2.4.2
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.23
       remeda:
         specifier: 2.28.0
         version: 2.28.0
@@ -5104,6 +5110,9 @@ packages:
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
+
+  chroma-js@2.4.2:
+    resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
 
   chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
@@ -14379,6 +14388,8 @@ snapshots:
   chokidar@4.0.3:
     dependencies:
       readdirp: 4.1.2
+
+  chroma-js@2.4.2: {}
 
   chrome-trace-event@1.0.4: {}
 

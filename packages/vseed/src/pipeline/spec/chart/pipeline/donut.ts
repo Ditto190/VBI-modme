@@ -5,6 +5,7 @@ import {
   datasetXY,
   datasetPivot,
   initDonut,
+  animation,
   initPivot,
   discreteLegend,
   pivotAdapter,
@@ -38,6 +39,7 @@ import {
 const donut: VChartSpecPipeline = [
   fontFamilyTheme,
   initDonut,
+  animation,
   colorAdapter(color, linearColor),
   backgroundColor,
   datasetXY,
@@ -62,6 +64,7 @@ const pivotDonut: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initDonut,
+    animation,
     addRegionPadding,
     colorAdapter(color, linearColor),
     backgroundColor,
