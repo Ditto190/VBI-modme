@@ -15,7 +15,7 @@ export default defineConfig({
     },
   ],
   output: {
-    externals: ['dotenv', 'ink', 'openai', 'react', 'react/jsx-runtime'],
+    externals: ['@ai-sdk/deepseek', 'ai', 'dotenv', 'ink', 'react', 'react/jsx-runtime'],
     target: 'node',
   },
   source: {

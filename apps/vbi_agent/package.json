@@ -14,10 +14,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "2.0.29",
     "@visactor/vbi-provider": "workspace:*",
+    "ai": "6.0.168",
     "dotenv": "17.2.1",
     "ink": "7.0.1",
-    "openai": "5.12.2",
     "react": "19.2.5"
   },
   "devDependencies": {
