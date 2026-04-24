@@ -22,9 +22,3 @@ Tool rules:
 `.trim()
 
 export const createHistory = (): AgentHistoryEntry[] => [{ content: systemPrompt, role: 'system' }]
-
-export const clearReasoningContent = (history: AgentHistoryEntry[]) => {
-  for (const entry of history) {
-    if (entry.role === 'assistant') entry.reasoningContent = undefined
-  }
-}

@@ -225,7 +225,7 @@ describe('createAgentRuntime', () => {
     ).toEqual(['first turn', 'second turn'])
   })
 
-  test('clears old reasoning content before a new user turn', async () => {
+  test('preserves reasoning content across follow-up user turns', async () => {
     const previousReasoning: Array<string | undefined> = []
     const runtime = createAgentRuntime({
       model: {
@@ -245,6 +245,6 @@ describe('createAgentRuntime', () => {
     })
     await runtime.start('first turn')
     await runtime.start('second turn')
-    expect(previousReasoning).toEqual([undefined, undefined])
+    expect(previousReasoning).toEqual([undefined, 'private turn reasoning'])
   })
 })

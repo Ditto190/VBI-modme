@@ -1,5 +1,5 @@
 import { createActivityLog } from './activity-log.js'
-import { clearReasoningContent, createHistory } from './history.js'
+import { createHistory } from './history.js'
 import type { AgentRuntimeController, AgentToolKit, ModelProvider } from './types.js'
 
 type RuntimeInput = { model: ModelProvider; tool: AgentToolKit }
@@ -40,7 +40,6 @@ export const createAgentRuntime = ({ model, tool }: RuntimeInput): AgentRuntimeC
       if (!prompt) return running ?? Promise.resolve()
       if (running) return running
       activityLog.clearError()
-      clearReasoningContent(history)
       history.push({ content: prompt, role: 'user' })
       activityLog.add('user', prompt)
       running = loop()

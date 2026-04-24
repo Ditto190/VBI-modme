@@ -16,6 +16,7 @@ COPY .env.example .env ./
 # Copy source code
 COPY packages/ packages/
 COPY practices/ practices/
+COPY apps/vbi_provider/ apps/vbi_provider/
 COPY apps/vbi_fe/ apps/vbi_fe/
 
 # Install dependencies and build
