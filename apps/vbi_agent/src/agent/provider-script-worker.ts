@@ -1,6 +1,15 @@
 import { parentPort, workerData } from 'node:worker_threads'
+import { createVBIProviderClient } from '@visactor/vbi-provider'
 import { executeProviderScript } from './provider-script-runtime.js'
-import { createCliClient } from '../client.js'
+
+const getApiBaseUrl = () => process.env.VBI_API_BASE_URL?.trim() || 'http://localhost:3030/api/v1'
+const getWebSocketPolyfill = () => (typeof WebSocket === 'function' ? WebSocket : undefined)
+
+const createCliClient = () =>
+  createVBIProviderClient({
+    baseUrl: getApiBaseUrl(),
+    ...(getWebSocketPolyfill() ? { webSocketPolyfill: getWebSocketPolyfill() } : {}),
+  })
 
 const post = (message: unknown) => parentPort?.postMessage(message)
 

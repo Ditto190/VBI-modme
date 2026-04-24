@@ -1,21 +1,24 @@
-import { parseArgs } from './flags.js'
-import type { AgentCommand } from './types.js'
-
-const getFlag = (flags: Record<string, string>, ...names: string[]) => names.map((name) => flags[name]).find(Boolean)
-
-const readTask = (flags: Record<string, string>, positionals: string[]) => {
-  const explicitTask = getFlag(flags, '--task', '-t')
-  if (explicitTask) return explicitTask
-  const taskTokens = positionals[0] === 'agent' ? positionals.slice(1) : positionals
-  return taskTokens.length ? taskTokens.join(' ') : undefined
+export interface AgentCommand {
+  cwd?: string
+  model?: string
+  task?: string
 }
 
 export const parseAgentCommand = (argv: string[]): AgentCommand => {
-  const { flags, positionals } = parseArgs(argv)
+  const flags: Record<string, string> = {}
+  const positionals: string[] = []
+  for (let i = 0; i < argv.length; i += 1) {
+    const token = argv[i]
+    if (token.startsWith('--')) {
+      flags[token.slice(2)] = argv[i + 1]
+      i += 1
+    } else {
+      positionals.push(token)
+    }
+  }
   return {
-    cwd: getFlag(flags, '--cwd', '-C'),
-    kind: 'agent',
-    model: getFlag(flags, '--model', '-m'),
-    task: readTask(flags, positionals),
+    cwd: flags.cwd,
+    model: flags.model,
+    task: flags.task ?? (positionals.length ? positionals.join(' ') : undefined),
   }
 }

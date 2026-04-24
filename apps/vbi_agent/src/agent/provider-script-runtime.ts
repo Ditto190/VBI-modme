@@ -1,5 +1,4 @@
 import type { VBIProviderClient } from '@visactor/vbi-provider'
-import { createVbiHelpers } from './vbi-helper/index.js'
 
 interface ProviderRuntimeInput {
   client: VBIProviderClient
@@ -68,7 +67,6 @@ export const executeProviderScript = async ({
 }: ProviderRuntimeInput): Promise<ProviderRuntimeResult> => {
   const logs: string[] = []
   const tracked = createTrackedClient(client)
-  const vbi = createVbiHelpers(tracked.client)
   const runtimeConsole = {
     error: (...args: unknown[]) => void logs.push(`error: ${args.map(formatConsoleValue).join(' ')}`),
     log: (...args: unknown[]) => void logs.push(args.map(formatConsoleValue).join(' ')),
@@ -76,16 +74,8 @@ export const executeProviderScript = async ({
   }
 
   try {
-    const run = new AsyncFunction('client', 'vbi', 'resource', 'resourceId', 'json', 'assert', 'console', code)
-    const result = await run(
-      tracked.client,
-      vbi,
-      resource,
-      resourceId,
-      (value: unknown) => value,
-      assert,
-      runtimeConsole,
-    )
+    const run = new AsyncFunction('client', 'resource', 'resourceId', 'json', 'assert', 'console', code)
+    const result = await run(tracked.client, resource, resourceId, (value: unknown) => value, assert, runtimeConsole)
     return { logs, result }
   } finally {
     await tracked.closeAll()

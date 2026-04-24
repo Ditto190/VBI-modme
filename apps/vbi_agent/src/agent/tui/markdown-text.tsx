@@ -47,11 +47,5 @@ export const MarkdownText = ({ children, color }: { children: string; color?: st
   })
   flushCode()
 
-  return (
-    <Box flexDirection="column">
-      {nodes.map((node, index) => (
-        <React.Fragment key={index}>{node}</React.Fragment>
-      ))}
-    </Box>
-  )
+  return <Box flexDirection="column">{nodes}</Box>
 }

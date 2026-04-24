@@ -213,45 +213,7 @@ describe('executeProviderScript', () => {
     expect(close).toHaveBeenCalledTimes(1)
   })
 
-  test('supports the injected vbi helper API', async () => {
-    let chartType = 'columnParallel'
-    const close = vi.fn(async () => {})
-    const client = {
-      chart: vi.fn(() => ({
-        close,
-        open: vi.fn(async () => ({
-          build: () => ({ chartType }),
-          chartType: {
-            changeChartType: (value: string) => {
-              chartType = value
-            },
-            getChartType: () => chartType,
-          },
-        })),
-      })),
-      insight: vi.fn(),
-      listCharts: vi.fn(),
-      listInsights: vi.fn(),
-      listReports: vi.fn(),
-      report: vi.fn(),
-    } as never
-
-    const result = await executeProviderScript({
-      client,
-      code: `
-        const { builder } = await vbi.openChart(resourceId);
-        vbi.changeChartType(builder, 'line');
-        return json({ chartType: builder.chartType.getChartType() });
-      `,
-      resource: 'chart',
-      resourceId: 'chart-3',
-    })
-
-    expect(result.result).toEqual({ chartType: 'line' })
-    expect(close).toHaveBeenCalledTimes(1)
-  })
-
-  test('supports higher-level builder helpers for dimensions, measures, filters, and settings', async () => {
+  test('exercises builder APIs for dimensions, measures, filters, and settings', async () => {
     const close = vi.fn(async () => {})
     const builder = createChartBuilder()
     const client = {
@@ -269,38 +231,35 @@ describe('executeProviderScript', () => {
     const result = await executeProviderScript({
       client,
       code: `
-        const { builder } = await vbi.openChart(resourceId);
-        vbi.addDimension(builder, { field: 'category', alias: 'Category', encoding: 'color' });
-        vbi.updateDimension(builder, { field: 'area', alias: 'Area', encoding: 'xAxis' });
-        vbi.addMeasure(builder, { field: 'profit', alias: 'Profit', encoding: 'yAxis', aggregate: { func: 'sum' } });
-        vbi.updateMeasure(builder, { field: 'sales', alias: 'Sales', format: { precision: 2 } });
-        vbi.addWhere(builder, { field: 'area', operator: '=', value: 'East' });
-        vbi.addHaving(builder, { field: 'profit', operator: '>', value: 100, aggregate: { func: 'sum' } });
-        vbi.setTheme(builder, 'dark');
-        vbi.setLocale(builder, 'en-US');
-        vbi.setLimit(builder, 10);
+        const provider = client.chart(resourceId);
+        const builder = await provider.open();
+        builder.dimensions.add('category', n => { n.setAlias('Category'); n.setEncoding('color'); });
+        const areaDim = builder.dimensions.findAll().find(d => d.getField() === 'area');
+        builder.dimensions.update(areaDim.getId(), n => { n.setAlias('Area'); n.setEncoding('xAxis'); });
+        builder.measures.add('profit', n => { n.setAlias('Profit'); n.setEncoding('yAxis'); n.setAggregate({ func: 'sum' }); });
+        const salesMea = builder.measures.findAll().find(m => m.getField() === 'sales');
+        builder.measures.update(salesMea.getId(), n => { n.setAlias('Sales'); n.setFormat({ precision: 2 }); });
+        builder.whereFilter.add('area', n => { n.setOperator('='); n.setValue('East'); });
+        builder.havingFilter.add('profit', n => { n.setOperator('>'); n.setValue(100); n.setAggregate({ func: 'sum' }); });
+        builder.theme.setTheme('dark');
+        builder.locale.setLocale('en-US');
+        builder.limit.setLimit(10);
         return json({
-          chart: vbi.getChartState(builder),
-          having: vbi.getHaving(builder),
-          limit: vbi.getLimit(builder),
-          locale: vbi.getLocale(builder),
-          measures: vbi.getMeasures(builder),
-          theme: vbi.getTheme(builder),
-          where: vbi.getWhere(builder)
+          dimensions: builder.dimensions.toJSON(),
+          measures: builder.measures.toJSON(),
+          where: builder.whereFilter.toJSON(),
+          having: builder.havingFilter.toJSON(),
+          theme: builder.theme.getTheme(),
+          locale: builder.locale.getLocale(),
+          limit: builder.limit.getLimit(),
         });
       `,
       resource: 'chart',
-      resourceId: 'chart-4',
+      resourceId: 'chart-3',
     })
 
     expect(result.result).toMatchObject({
-      chart: {
-        chartType: 'columnParallel',
-        dimensions: expect.arrayContaining([expect.objectContaining({ alias: 'Area', field: 'area' })]),
-        measures: expect.arrayContaining([
-          expect.objectContaining({ alias: 'Sales', field: 'sales', format: { precision: 2 } }),
-        ]),
-      },
+      dimensions: expect.arrayContaining([expect.objectContaining({ alias: 'Area', field: 'area' })]),
       having: {
         conditions: [expect.objectContaining({ field: 'profit', op: '>', value: 100 })],
         id: 'root',
@@ -308,6 +267,9 @@ describe('executeProviderScript', () => {
       },
       limit: 10,
       locale: 'en-US',
+      measures: expect.arrayContaining([
+        expect.objectContaining({ alias: 'Sales', field: 'sales', format: { precision: 2 } }),
+      ]),
       theme: 'dark',
       where: {
         conditions: [expect.objectContaining({ field: 'area', op: '=', value: 'East' })],

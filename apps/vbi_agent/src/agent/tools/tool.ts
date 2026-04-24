@@ -1,17 +1,12 @@
 import process from 'node:process'
 import { createBashTool } from './bash-tool.js'
-import { createVbiCodeTool } from './vbi-code-tool.js'
+import { createHowToUseVbiBuilderTool } from './how-to-use-vbi-builder-tool.js'
+import { createVbiBuilderTool } from './vbi-builder-tool.js'
 import type { AgentTool, AgentToolKit, PendingToolCall, ToolExecutionResult } from '../types.js'
 
 interface CreateToolInput {
   cwd?: string
   timeoutMs?: number
-  tools?: AgentTool[]
-}
-
-export interface RuntimeTool extends AgentToolKit {
-  bash(input: Record<string, unknown>): Promise<ToolExecutionResult>
-  vbiCode(input: Record<string, unknown>): Promise<ToolExecutionResult>
 }
 
 const toErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error))
@@ -25,33 +20,25 @@ const toToolError = (name: string, error: unknown): ToolExecutionResult => {
   }
 }
 
-const createDefaultTools = (input: CreateToolInput) => [
-  createBashTool(input.cwd ?? process.cwd(), input.timeoutMs),
-  createVbiCodeTool(input.timeoutMs),
-]
-
-export const createTool = (input: CreateToolInput = {}): RuntimeTool => {
-  const tools = input.tools ?? createDefaultTools(input)
+export const createToolKit = (tools: AgentTool[]): AgentToolKit => {
   const toolMap = new Map(tools.map((tool) => [tool.definition.name, tool]))
-
-  const getTool = (name: string) => {
-    const tool = toolMap.get(name)
-    if (!tool) throw new Error(`unknown tool: ${name}`)
-    return tool
-  }
-
-  const executeByName = async (name: string, args: Record<string, unknown>) => {
-    try {
-      return await getTool(name).execute(args)
-    } catch (error) {
-      return toToolError(name, error)
-    }
-  }
-
   return {
-    bash: (args) => executeByName('bash', args),
     definitions: () => tools.map((tool) => tool.definition),
-    execute: (call: PendingToolCall) => executeByName(call.name, call.arguments),
-    vbiCode: (args) => executeByName('vbi_code', args),
+    execute: async (call: PendingToolCall) => {
+      const tool = toolMap.get(call.name)
+      if (!tool) return toToolError(call.name, new Error(`unknown tool: ${call.name}`))
+      try {
+        return await tool.execute(call.arguments)
+      } catch (error) {
+        return toToolError(call.name, error)
+      }
+    },
   }
 }
+
+export const createTool = (input: CreateToolInput = {}): AgentToolKit =>
+  createToolKit([
+    createBashTool(input.cwd ?? process.cwd(), input.timeoutMs),
+    createVbiBuilderTool(input.timeoutMs),
+    createHowToUseVbiBuilderTool(),
+  ])

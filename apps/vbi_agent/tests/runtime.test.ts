@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { createAgentRuntime } from '../src/agent/runtime.js'
-import { createTool } from '../src/agent/tools/tool.js'
+import { createToolKit } from '../src/agent/tools/tool.js'
 import type { AgentTool, ModelProvider, ModelTurnResult } from '../src/agent/types.js'
 
 const createModel = (...turns: ModelTurnResult[]): ModelProvider => {
@@ -24,14 +24,19 @@ const createFakeTool = () => {
       return { content: JSON.stringify({ ok: true }), summary: 'bash succeeded' }
     },
   }
-  const tool = createTool({ tools: [agentTool] })
+  const tool = createToolKit([agentTool])
   return { calls, tool }
 }
 
 describe('createAgentRuntime', () => {
-  test('exposes direct named tool execution', async () => {
+  test('dispatches tool calls by name', async () => {
     const { calls, tool } = createFakeTool()
-    const result = await tool.bash({ command: 'pwd' })
+    const result = await tool.execute({
+      arguments: { command: 'pwd' },
+      id: '1',
+      name: 'bash',
+      rawArguments: '{"command":"pwd"}',
+    })
     expect(calls).toEqual([{ command: 'pwd' }])
     expect(result.summary).toBe('bash succeeded')
   })
@@ -152,7 +157,7 @@ describe('createAgentRuntime', () => {
           }
         },
       },
-      tool: createTool({ tools: [agentTool] }),
+      tool: createToolKit([agentTool]),
     })
     await runtime.start('run bad command')
     expect(historyRoles).toEqual([
@@ -207,7 +212,7 @@ describe('createAgentRuntime', () => {
           }
         },
       },
-      tool: createTool({ tools: [] }),
+      tool: createToolKit([]),
     })
     await runtime.start('first turn')
     await runtime.start('second turn')
@@ -236,7 +241,7 @@ describe('createAgentRuntime', () => {
           }
         },
       },
-      tool: createTool({ tools: [] }),
+      tool: createToolKit([]),
     })
     await runtime.start('first turn')
     await runtime.start('second turn')

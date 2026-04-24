@@ -1,7 +1,7 @@
 export interface AgentModelConfig {
-  apiKey: string
-  baseUrl: string
-  model: string
+  apiKey?: string
+  baseUrl?: string
+  model?: string
 }
 
 export type AgentRole = 'assistant' | 'system' | 'tool' | 'user'
