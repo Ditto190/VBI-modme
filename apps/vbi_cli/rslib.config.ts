@@ -15,12 +15,25 @@ export default defineConfig({
     },
   ],
   output: {
-    externals: ['@ai-sdk/deepseek', 'ai', 'dotenv', 'ink', 'react', 'react/jsx-runtime'],
+    externals: ['dotenv', 'ink', 'react', 'react/jsx-runtime'],
     target: 'node',
   },
   source: {
     entry: {
       cli: './src/cli.ts',
+    },
+  },
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            test: /\.md$/,
+            type: 'asset/source',
+          },
+        ],
+      },
     },
   },
 })

@@ -8,4 +8,17 @@ export default defineConfig({
       syntax: ['node 18'],
     },
   ],
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            test: /\.md$/,
+            type: 'asset/source',
+          },
+        ],
+      },
+    },
+  },
 })

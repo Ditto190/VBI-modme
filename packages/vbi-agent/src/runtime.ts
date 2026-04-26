@@ -1,5 +1,6 @@
 import { createActivityLog } from './activity-log.js'
 import { createHistory } from './history.js'
+import { extractText } from './model/stream.js'
 import type { AgentRuntimeController, AgentToolKit, ModelProvider } from './types.js'
 
 type RuntimeInput = { model: ModelProvider; tool: AgentToolKit }
@@ -17,17 +18,27 @@ export const createAgentRuntime = ({ model, tool }: RuntimeInput): AgentRuntimeC
       })
       if (turn.outcome.type === 'final') {
         history.push(turn.assistant)
-        activityLog.add('assistant', turn.outcome.content || turn.assistant.content || '<empty response>')
+        activityLog.add('assistant', turn.outcome.content || extractText(turn.assistant) || '<empty response>')
         return
       }
       activityLog.add(
         'assistant',
-        turn.assistant.content || `proposed ${turn.outcome.calls.map((call) => call.name).join(', ')}`,
+        extractText(turn.assistant) || `proposed ${turn.outcome.calls.map((call) => call.name).join(', ')}`,
       )
       history.push(turn.assistant)
       for (const call of turn.outcome.calls) {
         const result = await tool.execute(call)
-        history.push({ content: result.content, name: call.name, role: 'tool', toolCallId: call.id })
+        history.push({
+          content: [
+            {
+              type: 'tool-result' as const,
+              toolCallId: call.id,
+              toolName: call.name,
+              output: { type: 'text' as const, value: result.content },
+            },
+          ],
+          role: 'tool',
+        })
         activityLog.add('tool', result.summary, result.display ?? result.content)
       }
     }

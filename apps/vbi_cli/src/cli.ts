@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import { config } from 'dotenv'
-import { createAgentRuntime, createBuilderTools, createToolKit } from '@visactor/vbi-agent'
+import { createAgentRuntime, createBuilderTools, createDeepSeekModelProvider, createToolKit } from '@visactor/vbi-agent'
 import { parseAgentCommand } from './parse.js'
 import { createAgentConfig } from './agent/config.js'
-import { createDeepSeekModelProvider } from './agent/model/deepseek-provider.js'
 import { createCliProviderClient } from './agent/provider-client.js'
 import { createProviderWorkspace } from './agent/provider-workspace.js'
 import { createBashTool } from './agent/tools/bash-tool.js'

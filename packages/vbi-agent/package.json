@@ -24,7 +24,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@visactor/vbi": "workspace:*"
+    "@ai-sdk/deepseek": "2.0.29",
+    "@ai-sdk/openai": "3.0.53",
+    "ai": "6.0.168",
+    "@visactor/vbi": "workspace:*",
+    "zod": "4.1.8"
   },
   "devDependencies": {
     "@eslint/js": "9.39.0",

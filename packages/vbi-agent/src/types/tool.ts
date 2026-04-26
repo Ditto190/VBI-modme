@@ -1,10 +1,5 @@
+import type { ToolSet } from 'ai'
 import type { PendingToolCall } from './model.js'
-
-export interface AgentToolDefinition {
-  description: string
-  inputSchema: Record<string, unknown>
-  name: string
-}
 
 export interface ToolExecutionResult {
   content: string
@@ -13,13 +8,14 @@ export interface ToolExecutionResult {
 }
 
 export interface VBITool {
-  definition: AgentToolDefinition
+  name: string
+  descriptor: ToolSet[string]
   execute(input: Record<string, unknown>): Promise<ToolExecutionResult>
 }
 
 export type AgentTool = VBITool
 
 export interface AgentToolKit {
-  definitions(): AgentToolDefinition[]
+  definitions(): ToolSet
   execute(call: PendingToolCall): Promise<ToolExecutionResult>
 }

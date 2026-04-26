@@ -1,3 +1,4 @@
+import type { ToolSet } from 'ai'
 import type { AgentTool, AgentToolKit, PendingToolCall, ToolExecutionResult } from '../types.js'
 
 const toErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error))
@@ -12,9 +13,9 @@ const toToolError = (name: string, error: unknown): ToolExecutionResult => {
 }
 
 export const createToolKit = (tools: AgentTool[]): AgentToolKit => {
-  const toolMap = new Map(tools.map((tool) => [tool.definition.name, tool]))
+  const toolMap = new Map(tools.map((tool) => [tool.name, tool]))
   return {
-    definitions: () => tools.map((tool) => tool.definition),
+    definitions: () => Object.fromEntries(tools.map((tool) => [tool.name, tool.descriptor])) as ToolSet,
     execute: async (call: PendingToolCall) => {
       const tool = toolMap.get(call.name)
       if (!tool) return toToolError(call.name, new Error(`unknown tool: ${call.name}`))

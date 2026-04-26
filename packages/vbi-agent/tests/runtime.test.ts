@@ -18,7 +18,12 @@ const createModel = (...turns: ModelTurnResult[]): ModelProvider => {
 const createFakeTool = () => {
   const calls: Record<string, unknown>[] = []
   const agentTool: AgentTool = {
-    definition: { description: 'demo', inputSchema: { type: 'object' }, name: 'bash' },
+    name: 'bash',
+    descriptor: {
+      description: 'demo',
+      inputSchema: { jsonSchema: { type: 'object' } },
+      strict: true,
+    } as AgentTool['descriptor'],
     execute: async (input) => {
       calls.push(input)
       return { content: JSON.stringify({ ok: true }), summary: 'bash succeeded' }
@@ -35,7 +40,6 @@ describe('createAgentRuntime', () => {
       arguments: { command: 'pwd' },
       id: '1',
       name: 'bash',
-      rawArguments: '{"command":"pwd"}',
     })
     expect(calls).toEqual([{ command: 'pwd' }])
     expect(result.summary).toBe('bash succeeded')
@@ -47,12 +51,14 @@ describe('createAgentRuntime', () => {
       model: createModel(
         {
           assistant: {
-            content: 'run ls',
+            content: [
+              { type: 'text', text: 'run ls' },
+              { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'ls' } },
+            ],
             role: 'assistant',
-            toolCalls: [{ arguments: '{"command":"ls"}', id: '1', name: 'bash' }],
           },
           outcome: {
-            calls: [{ arguments: { command: 'ls' }, id: '1', name: 'bash', rawArguments: '{"command":"ls"}' }],
+            calls: [{ arguments: { command: 'ls' }, id: '1', name: 'bash' }],
             type: 'tool',
           },
         },
@@ -71,14 +77,14 @@ describe('createAgentRuntime', () => {
       model: createModel(
         {
           assistant: {
-            content: 'dangerous',
+            content: [
+              { type: 'text', text: 'dangerous' },
+              { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'rm -rf tmp' } },
+            ],
             role: 'assistant',
-            toolCalls: [{ arguments: '{"command":"rm -rf tmp"}', id: '1', name: 'bash' }],
           },
           outcome: {
-            calls: [
-              { arguments: { command: 'rm -rf tmp' }, id: '1', name: 'bash', rawArguments: '{"command":"rm -rf tmp"}' },
-            ],
+            calls: [{ arguments: { command: 'rm -rf tmp' }, id: '1', name: 'bash' }],
             type: 'tool',
           },
         },
@@ -97,17 +103,17 @@ describe('createAgentRuntime', () => {
       model: createModel(
         {
           assistant: {
-            content: 'inspect project',
-            role: 'assistant',
-            toolCalls: [
-              { arguments: '{"command":"pwd"}', id: '1', name: 'bash' },
-              { arguments: '{"command":"ls"}', id: '2', name: 'bash' },
+            content: [
+              { type: 'text', text: 'inspect project' },
+              { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'pwd' } },
+              { type: 'tool-call', toolCallId: '2', toolName: 'bash', input: { command: 'ls' } },
             ],
+            role: 'assistant',
           },
           outcome: {
             calls: [
-              { arguments: { command: 'pwd' }, id: '1', name: 'bash', rawArguments: '{"command":"pwd"}' },
-              { arguments: { command: 'ls' }, id: '2', name: 'bash', rawArguments: '{"command":"ls"}' },
+              { arguments: { command: 'pwd' }, id: '1', name: 'bash' },
+              { arguments: { command: 'ls' }, id: '2', name: 'bash' },
             ],
             type: 'tool',
           },
@@ -124,7 +130,12 @@ describe('createAgentRuntime', () => {
   test('returns tool error messages to the model when execution fails', async () => {
     const historyRoles: string[][] = []
     const agentTool: AgentTool = {
-      definition: { description: 'demo', inputSchema: { type: 'object' }, name: 'bash' },
+      name: 'bash',
+      descriptor: {
+        description: 'demo',
+        inputSchema: { jsonSchema: { type: 'object' } },
+        strict: true,
+      } as AgentTool['descriptor'],
       execute: async () => {
         throw new Error('command failed')
       },
@@ -136,21 +147,23 @@ describe('createAgentRuntime', () => {
           if (historyRoles.length === 1) {
             return {
               assistant: {
-                content: 'run command',
+                content: [
+                  { type: 'text', text: 'run command' },
+                  { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'bad' } },
+                ],
                 role: 'assistant',
-                toolCalls: [{ arguments: '{"command":"bad"}', id: '1', name: 'bash' }],
               },
               outcome: {
-                calls: [{ arguments: { command: 'bad' }, id: '1', name: 'bash', rawArguments: '{"command":"bad"}' }],
+                calls: [{ arguments: { command: 'bad' }, id: '1', name: 'bash' }],
                 type: 'tool',
               },
             }
           }
-          expect(history.at(-1)).toMatchObject({
-            content: JSON.stringify({ error: 'command failed', ok: false, tool: 'bash' }),
-            role: 'tool',
-            toolCallId: '1',
-          })
+          const last = history.at(-1)!
+          expect(last.role).toBe('tool')
+          const contentPart = (last.content as Array<Record<string, unknown>>)[0]
+          expect(contentPart.type).toBe('tool-result')
+          expect(contentPart.toolCallId).toBe('1')
           return {
             assistant: { content: 'handled failure', role: 'assistant' },
             outcome: { content: 'handled failure', type: 'final' },
@@ -176,21 +189,23 @@ describe('createAgentRuntime', () => {
           if (history.length === 2) {
             return {
               assistant: {
-                content: '',
-                reasoningContent: 'need to inspect files',
+                content: [
+                  { type: 'reasoning', text: 'need to inspect files' },
+                  { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'ls' } },
+                ],
                 role: 'assistant',
-                toolCalls: [{ arguments: '{"command":"ls"}', id: '1', name: 'bash' }],
               },
               outcome: {
-                calls: [{ arguments: { command: 'ls' }, id: '1', name: 'bash', rawArguments: '{"command":"ls"}' }],
+                calls: [{ arguments: { command: 'ls' }, id: '1', name: 'bash' }],
                 type: 'tool',
               },
             }
           }
-          expect(history.at(-2)).toMatchObject({
-            reasoningContent: 'need to inspect files',
-            role: 'assistant',
-          })
+          const prevAssistant = history.at(-2)!
+          const reasoning = (prevAssistant.content as Array<{ type: string; text: string }>).find(
+            (p) => p.type === 'reasoning',
+          )
+          expect(reasoning?.text).toBe('need to inspect files')
           return { assistant: { content: 'done', role: 'assistant' }, outcome: { content: 'done', type: 'final' } }
         },
       },
@@ -230,11 +245,17 @@ describe('createAgentRuntime', () => {
     const runtime = createAgentRuntime({
       model: {
         streamTurn: async ({ history }) => {
-          previousReasoning.push(history.find((entry) => entry.role === 'assistant')?.reasoningContent)
+          const prev = history.find((entry) => entry.role === 'assistant')
+          const reasoning = prev
+            ? (prev.content as Array<{ type: string; text: string }>).find((p) => p.type === 'reasoning')?.text
+            : undefined
+          previousReasoning.push(reasoning)
           return {
             assistant: {
-              content: `turn ${previousReasoning.length}`,
-              reasoningContent: 'private turn reasoning',
+              content: [
+                { type: 'reasoning', text: 'private turn reasoning' },
+                { type: 'text', text: `turn ${previousReasoning.length}` },
+              ],
               role: 'assistant',
             },
             outcome: { content: `turn ${previousReasoning.length}`, type: 'final' },

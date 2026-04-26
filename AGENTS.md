@@ -33,7 +33,6 @@ VBI/
 │   └── superpowers/                # 其他专题文档
 ├── tools/                          # 开发辅助脚本与工具
 ├── docker/                         # 本地运行与部署相关容器配置
-├── skills/                         # 仓库内置的开发辅助技能
 ├── README.md                       # 项目总览与使用说明
 ├── AGENTS.md                       # Coding Agent 协作说明
 └── CLAUDE.md                       # Claude Code 协作说明

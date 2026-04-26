@@ -2,9 +2,8 @@
 
 CLI shell for VBI Agent workflows.
 
-The reusable runtime and Builder tools live in `packages/vbi-agent`. This app wires them to:
+The reusable runtime, OpenAI-compatible model provider, and Builder tools live in `packages/vbi-agent`. This app wires them to:
 
-- DeepSeek model provider
 - Ink TUI
 - local bash tool
 - `@visactor/headless-bi-provider`
@@ -40,5 +39,6 @@ Tools:
 
 - `bash`: CLI-only shell command runner
 - `vbi_builder`: runs JavaScript against the injected Builder workspace
-- `how_to_use_vbi_builder`: returns the Builder scripting guide
+- `vbi_skill`: lists or reads builtin VBI Agent skills and references
+- `how_to_use_vbi_builder`: compatibility alias for the `vbi-builder` skill
 - `vbi_resource`: CLI-only resource CRUD and report page operations

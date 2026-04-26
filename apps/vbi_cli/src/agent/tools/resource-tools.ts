@@ -1,26 +1,7 @@
-import type { AgentTool } from '@visactor/vbi-agent'
+import { jsonSchema, type AgentTool } from '@visactor/vbi-agent'
 import type { VBIProviderClient } from '@visactor/headless-bi-provider'
 import { executeInsightUpdate, executeReportPageAction, executeResourceAction } from './resource-actions.js'
 import { readString, stringifyJson } from './resource-readers.js'
-
-const inputSchema = {
-  additionalProperties: true,
-  properties: {
-    action: { type: 'string' },
-    chartId: { type: 'string' },
-    content: { type: 'string' },
-    id: { type: 'string' },
-    insightId: { type: 'string' },
-    name: { type: 'string' },
-    pageAction: { type: 'string' },
-    pageId: { type: 'string' },
-    pageIds: { items: { type: 'string' }, type: 'array' },
-    resource: { enum: ['chart', 'insight', 'report'], type: 'string' },
-    title: { type: 'string' },
-  },
-  required: ['action', 'resource'],
-  type: 'object',
-}
 
 const executeCliResourceAction = async (client: VBIProviderClient, input: Record<string, unknown>) => {
   const action = readString(input, 'action')
@@ -31,11 +12,29 @@ const executeCliResourceAction = async (client: VBIProviderClient, input: Record
 
 export const createResourceTools = (client: VBIProviderClient): AgentTool[] => [
   {
-    definition: {
+    name: 'vbi_resource',
+    descriptor: {
       description:
         'Manage VBI platform resources. Supports resource actions list/create/get/rename/remove/snapshot/references for chart, insight, and report. Also supports insight update and report page operations.',
-      inputSchema,
-      name: 'vbi_resource',
+      inputSchema: jsonSchema({
+        additionalProperties: true,
+        properties: {
+          action: { type: 'string' },
+          chartId: { type: 'string' },
+          content: { type: 'string' },
+          id: { type: 'string' },
+          insightId: { type: 'string' },
+          name: { type: 'string' },
+          pageAction: { type: 'string' },
+          pageId: { type: 'string' },
+          pageIds: { items: { type: 'string' }, type: 'array' },
+          resource: { enum: ['chart', 'insight', 'report'], type: 'string' },
+          title: { type: 'string' },
+        },
+        required: ['action', 'resource'],
+        type: 'object',
+      }),
+      strict: false,
     },
     execute: async (input) => {
       const result = await executeCliResourceAction(client, input)

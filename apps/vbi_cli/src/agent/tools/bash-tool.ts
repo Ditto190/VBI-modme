@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { runBashCommand } from './bash-run.js'
-import type { AgentTool } from '@visactor/vbi-agent'
+import { jsonSchema, type AgentTool } from '@visactor/vbi-agent'
 
 const stringifyJson = (value: unknown) => JSON.stringify(value, null, 2)
 
@@ -22,9 +22,10 @@ const readTimeout = (input: Record<string, unknown>, defaultTimeout: number) =>
   typeof input.timeoutMs === 'number' && input.timeoutMs > 0 ? input.timeoutMs : defaultTimeout
 
 export const createBashTool = (baseCwd: string, timeoutMs = 30000): AgentTool => ({
-  definition: {
+  name: 'bash',
+  descriptor: {
     description: 'Run one shell command in a fresh process and return stdout/stderr.',
-    inputSchema: {
+    inputSchema: jsonSchema({
       additionalProperties: false,
       properties: {
         command: { type: 'string' },
@@ -33,8 +34,8 @@ export const createBashTool = (baseCwd: string, timeoutMs = 30000): AgentTool =>
       },
       required: ['command'],
       type: 'object',
-    },
-    name: 'bash',
+    }),
+    strict: true,
   },
   execute: async (input) => {
     const command = readCommand(input)
