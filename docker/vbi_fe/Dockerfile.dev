@@ -24,4 +24,4 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "vbi_fe", "dev:docker"]
+CMD ["pnpm", "--filter", "@visactor/headless-bi-fe", "dev:docker"]

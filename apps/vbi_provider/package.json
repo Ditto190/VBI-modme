@@ -1,5 +1,5 @@
 {
-  "name": "@visactor/vbi-provider",
+  "name": "@visactor/headless-bi-provider",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",

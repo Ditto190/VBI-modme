@@ -13,7 +13,7 @@ export default defineConfig({
     include: ['tests/**/*.test.ts'],
     exclude: ['node_modules/**', 'dist/**', '**/*.d.ts'],
     alias: {
-      '@visactor/vbi-provider': new URL('./src/index.ts', import.meta.url).pathname,
+      '@visactor/headless-bi-provider': new URL('./src/index.ts', import.meta.url).pathname,
     },
     coverage: {
       provider: 'v8',

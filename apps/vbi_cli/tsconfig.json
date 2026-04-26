@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "jsx": "react-jsx",
+    "lib": ["ES2022"],
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@visactor/vbi-agent": ["../../packages/vbi-agent/src/index.ts"]
+    },
+    "types": ["node"]
+  },
+  "include": ["rslib.config.ts", "src", "tests", "vite.config.ts"]
+}

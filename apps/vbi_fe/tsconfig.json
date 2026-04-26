@@ -23,8 +23,8 @@
 
     "paths": {
       "src/*": ["./src/*"],
-      "@visactor/vbi-provider": ["../vbi_provider/src/index.ts"],
-      "@visactor/vbi-provider/*": ["../vbi_provider/src/*"]
+      "@visactor/headless-bi-provider": ["../vbi_provider/src/index.ts"],
+      "@visactor/headless-bi-provider/*": ["../vbi_provider/src/*"]
     }
   },
   "composite": true,

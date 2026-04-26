@@ -7,13 +7,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```
 VBI/
 ├── apps/                           # 应用层：文档站点、前端、后端
-│   ├── vbi_agent/                  # VBI Agent 应用
 │   ├── vbi_be/                     # VBI 后端应用
+│   ├── vbi_cli/                    # VBI CLI 应用壳
 │   ├── vbi_fe/                     # VBI 前端应用
 │   ├── vbi_provider/               # VBI Provider 应用
 │   └── website/                    # 官网文档、示例与 playground
 ├── packages/                       # 包级实现
 │   ├── vbi/                        # 配置层，负责 VBIChartDSL、Builder、协同编辑
+│   ├── vbi-agent/                  # Builder Agent runtime 与工具协议
 │   ├── vquery/                     # 查询层，负责 QueryDSL → SQL 与数据查询
 │   ├── vseed/                      # 渲染层，负责 VSeedDSL → VChart/VTable Spec
 │   └── vbi-react/                  # React 适配与集成层
