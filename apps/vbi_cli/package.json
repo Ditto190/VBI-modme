@@ -7,7 +7,8 @@
     "vbi": "./dist/cli.js"
   },
   "scripts": {
-    "build": "pnpm --filter=@visactor/vbi-agent run build && pnpm --filter=@visactor/headless-bi-provider run build && rslib build",
+    "tui": "pnpm run build && node dist/cli.js",
+    "build": "rslib build",
     "format": "prettier --write .",
     "lint": "eslint .",
     "test": "rstest",

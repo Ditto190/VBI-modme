@@ -7,6 +7,7 @@ describe('parseAgentCommand', () => {
       apiBaseUrl: undefined,
       chartId: undefined,
       cwd: 'apps/vbi_cli',
+      mode: 'prompt',
       model: 'deepseek-reasoner',
       reportId: undefined,
       task: 'fix cli',
@@ -18,6 +19,7 @@ describe('parseAgentCommand', () => {
       apiBaseUrl: undefined,
       chartId: undefined,
       cwd: undefined,
+      mode: 'prompt',
       model: undefined,
       reportId: undefined,
       task: 'inspect the workspace',
@@ -38,9 +40,46 @@ describe('parseAgentCommand', () => {
       apiBaseUrl: 'http://localhost:3030/api/v1',
       chartId: 'chart-1',
       cwd: undefined,
+      mode: 'tui',
       model: undefined,
       reportId: 'report-1',
       task: undefined,
+    })
+  })
+
+  test('parses -p as prompt mode', () => {
+    expect(parseAgentCommand(['-p', '查询Chart1的图表类型'])).toEqual({
+      apiBaseUrl: undefined,
+      chartId: undefined,
+      cwd: undefined,
+      mode: 'prompt',
+      model: undefined,
+      reportId: undefined,
+      task: '查询Chart1的图表类型',
+    })
+  })
+
+  test('parses tui as explicit TUI mode', () => {
+    expect(parseAgentCommand(['tui'])).toEqual({
+      apiBaseUrl: undefined,
+      chartId: undefined,
+      cwd: undefined,
+      mode: 'tui',
+      model: undefined,
+      reportId: undefined,
+      task: undefined,
+    })
+  })
+
+  test('lets -p override a tui positional', () => {
+    expect(parseAgentCommand(['tui', '-p', '查询Chart1的图表类型'])).toEqual({
+      apiBaseUrl: undefined,
+      chartId: undefined,
+      cwd: undefined,
+      mode: 'prompt',
+      model: undefined,
+      reportId: undefined,
+      task: '查询Chart1的图表类型',
     })
   })
 })
