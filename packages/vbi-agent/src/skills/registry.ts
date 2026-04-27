@@ -8,30 +8,8 @@ import vbiBuilder from './vbi-builder/SKILL.md?raw'
 import chartBuilder from './vbi-builder/references/chart-builder.md?raw'
 import insightBuilder from './vbi-builder/references/insight-builder.md?raw'
 import reportBuilder from './vbi-builder/references/report-builder.md?raw'
-import { parseSkillAsset, type SkillAssetMeta } from './frontmatter.js'
-
-export interface BuiltinSkillAsset {
-  capabilities: string[]
-  content: string
-  description: string
-  name: string
-  tags: string[]
-  tools: string[]
-  version: string
-}
-
-export type BuiltinSkillReference = BuiltinSkillAsset
-
-export interface BuiltinSkill {
-  capabilities: string[]
-  content: string
-  description: string
-  name: string
-  references: BuiltinSkillReference[]
-  tags: string[]
-  tools: string[]
-  version: string
-}
+import type { BuiltinSkill, BuiltinSkillAsset, BuiltinSkillReference, SkillAssetMeta } from '../types/index.js'
+import { parseSkillAsset } from './frontmatter.js'
 
 const assetFromMeta = (meta: SkillAssetMeta, content: string): BuiltinSkillAsset => ({ ...meta, content })
 

@@ -1,22 +1,6 @@
-import {
-  findBuiltinSkill,
-  findBuiltinSkillReferences,
-  listBuiltinSkills,
-  type BuiltinSkill,
-  type BuiltinSkillAsset,
-} from './registry.js'
+import { findBuiltinSkill, findBuiltinSkillReferences, listBuiltinSkills } from './registry.js'
 import { listMarkdownSections, pickExistingMarkdownSections } from './sections.js'
-
-export interface SkillReadInput {
-  references?: string[]
-  sections?: string[]
-}
-
-export interface SkillSearchInput {
-  name?: string
-  query: string
-  references?: string[]
-}
+import type { BuiltinSkill, BuiltinSkillAsset, SkillReadInput, SkillSearchInput } from '../types/index.js'
 
 const metadata = (asset: BuiltinSkillAsset) => ({
   capabilities: asset.capabilities,

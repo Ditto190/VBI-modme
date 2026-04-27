@@ -1,12 +1,4 @@
-export interface AgentScriptRuntimeInput {
-  code: string
-  globals?: Record<string, unknown>
-}
-
-export interface AgentScriptRuntimeResult {
-  logs: string[]
-  result: unknown
-}
+import type { AgentScriptRuntimeInput, AgentScriptRuntimeResult } from '../types/index.js'
 
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor as new (
   ...args: string[]

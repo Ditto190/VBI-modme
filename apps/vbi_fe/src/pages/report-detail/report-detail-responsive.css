@@ -1,0 +1,154 @@
+@media (max-width: 1100px) {
+  .report-detail-page-list {
+    padding: 8px;
+  }
+
+  .report-detail-page-card {
+    gap: 8px;
+    min-height: 56px;
+    padding: 8px 30px 8px 10px;
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .report-detail-page-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .report-detail-stage {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .report-detail-filmstrip {
+    min-height: 0;
+    flex-direction: row;
+  }
+
+  .report-detail-page-list {
+    padding: 8px;
+    flex-direction: row;
+  }
+
+  .report-detail-page-card {
+    flex: 0 0 clamp(132px, 26vw, 180px);
+    box-shadow: inset 0 0 0 transparent;
+  }
+
+  .report-detail-page-copy {
+    width: 100%;
+  }
+
+  .report-detail-filmstrip-actions {
+    width: 168px;
+    border-top: 0;
+    border-left: 1px solid var(--vbi-border);
+    align-content: center;
+    flex: 0 0 auto;
+  }
+
+  .report-detail-filmstrip-mode {
+    grid-template-columns: 1fr;
+  }
+
+  .report-detail-page-create.ant-btn {
+    height: auto;
+    min-height: 34px;
+    white-space: normal;
+  }
+
+  .report-detail-vertical-page {
+    scroll-margin-top: 96px;
+  }
+
+  .report-detail-horizontal-track {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-detail-app-header {
+    height: 52px;
+    padding: 0 12px;
+  }
+
+  .report-detail-app-meta {
+    margin-left: auto;
+  }
+
+  .report-detail-kicker {
+    display: none;
+  }
+
+  .report-detail-subtitle {
+    display: none;
+  }
+
+  .report-detail-vertical-slide .report-detail-slide-chart {
+    height: clamp(300px, 48vh, 480px);
+  }
+
+  .report-detail-horizontal-slide {
+    grid-template-rows: auto minmax(320px, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .report-detail-filmstrip {
+    flex-direction: column;
+  }
+
+  .report-detail-page-list {
+    flex: 0 0 auto;
+    padding: 8px 8px 0;
+  }
+
+  .report-detail-page-card {
+    flex-basis: 124px;
+    min-height: 54px;
+    padding: 8px 28px 8px 10px;
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .report-detail-page-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
+
+  .report-detail-page-menu.ant-btn {
+    top: 4px;
+    right: 4px;
+  }
+
+  .report-detail-filmstrip-actions {
+    width: auto;
+    padding: 8px;
+    border-top: 1px solid var(--vbi-border);
+    border-left: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .report-detail-filmstrip-mode {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .report-detail-page-create.ant-btn {
+    width: 116px;
+  }
+
+  .report-detail-vertical-slide,
+  .report-detail-horizontal-slide {
+    gap: 10px;
+  }
+
+  .report-detail-vertical-slide .report-detail-slide-chart {
+    height: clamp(280px, 48vh, 460px);
+  }
+
+  .report-detail-horizontal-slide {
+    grid-template-rows: auto minmax(300px, 1fr);
+  }
+}

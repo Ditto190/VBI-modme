@@ -1,9 +1,7 @@
 import { executeCommonResourceAction } from './resource-common.js'
 import { readString, requireString } from './resource-input.js'
 import type { InsightUpdateInput, ReportPageInput, VBIProviderClient } from '@visactor/headless-bi-provider'
-import type { ResourceInput } from './resource-input.js'
-
-type Resource = 'chart' | 'insight' | 'report'
+import type { Resource, ResourceInput } from '../../types/index.js'
 
 const readResource = (input: ResourceInput): Resource => {
   const value = input.resource

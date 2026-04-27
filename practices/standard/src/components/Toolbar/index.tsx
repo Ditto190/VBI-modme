@@ -15,7 +15,7 @@ import { CSVModal } from 'src/components/CSVModal';
 import type { DemoLocale, DemoTheme } from 'src/constants/builder';
 import { useVBIBuilder, useVBIUndoManager } from 'src/hooks';
 import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
+import { useVBIStore, useVBIStoreConfig } from 'src/model';
 import { CONNECTOR_ID } from 'src/utils/localConnector';
 import { formatDefaultLimit } from './config';
 
@@ -46,6 +46,7 @@ export const Toolbar: React.FC<{
   const builder = useVBIStore((state) => state.builder);
   const switchSource = useVBIStore((state) => state.switchSource);
   const { token } = theme.useToken();
+  const { hideLocale, hideTheme } = useVBIStoreConfig();
   const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder);
   const { t, locale, setLocale } = useTranslation();
   const {
@@ -175,45 +176,53 @@ export const Toolbar: React.FC<{
             />
           </Tooltip>
 
-          <ToolbarDivider />
+          {!hideLocale ? (
+            <>
+              <ToolbarDivider />
 
-          <Tooltip
-            title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}
-          >
-            <Segmented
-              size="small"
-              value={locale}
-              options={[
-                { label: t('toolbarLocaleSwitchZh'), value: 'zh-CN' },
-                { label: t('toolbarLocaleSwitchEn'), value: 'en-US' },
-              ]}
-              onChange={(value) => setLocale(value as DemoLocale)}
-            />
-          </Tooltip>
+              <Tooltip
+                title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}
+              >
+                <Segmented
+                  size="small"
+                  value={locale}
+                  options={[
+                    { label: t('toolbarLocaleSwitchZh'), value: 'zh-CN' },
+                    { label: t('toolbarLocaleSwitchEn'), value: 'en-US' },
+                  ]}
+                  onChange={(value) => setLocale(value as DemoLocale)}
+                />
+              </Tooltip>
+            </>
+          ) : null}
 
-          <ToolbarDivider />
+          {!hideTheme ? (
+            <>
+              <ToolbarDivider />
 
-          <Tooltip
-            title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}
-          >
-            <Segmented
-              size="small"
-              value={themeMode}
-              options={[
-                {
-                  label: <SunOutlined style={{ fontSize: 12 }} />,
-                  value: 'light',
-                },
-                {
-                  label: <MoonOutlined style={{ fontSize: 12 }} />,
-                  value: 'dark',
-                },
-              ]}
-              onChange={(value) => setTheme(value as DemoTheme)}
-            />
-          </Tooltip>
+              <Tooltip
+                title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}
+              >
+                <Segmented
+                  size="small"
+                  value={themeMode}
+                  options={[
+                    {
+                      label: <SunOutlined style={{ fontSize: 12 }} />,
+                      value: 'light',
+                    },
+                    {
+                      label: <MoonOutlined style={{ fontSize: 12 }} />,
+                      value: 'dark',
+                    },
+                  ]}
+                  onChange={(value) => setTheme(value as DemoTheme)}
+                />
+              </Tooltip>
 
-          <ToolbarDivider />
+              <ToolbarDivider />
+            </>
+          ) : null}
 
           <Tooltip
             title={t(

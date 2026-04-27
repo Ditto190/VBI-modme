@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@rstest/core'
 import { createBuilderTools } from '../src/tools/builder-tools.js'
-import type { VBIAgentWorkspace } from '../src/types.js'
+import type { VBIAgentWorkspace } from '../src/types/index.js'
 
 type ChartBuilder = Awaited<ReturnType<NonNullable<VBIAgentWorkspace['chart']>['open']>>
 

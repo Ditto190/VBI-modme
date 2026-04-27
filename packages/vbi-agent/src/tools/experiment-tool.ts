@@ -1,5 +1,5 @@
 import { jsonSchema } from 'ai'
-import type { AgentTool, VBIAgentWorkspace } from '../types.js'
+import type { AgentTool, VBIAgentWorkspace } from '../types/index.js'
 import { clipJson, runWorkspaceScript } from './workspace-script.js'
 
 const createDisplay = (results: Record<string, unknown>[]) =>

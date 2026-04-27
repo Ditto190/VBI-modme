@@ -11,7 +11,8 @@ import {
   getReportDetailSnapshot,
   useReportDetailStore,
 } from '../stores/report-detail.store';
-import { getReportsSnapshot, useReportsStore } from '../stores/reports.store';
+import { useReportsStore } from '../stores/reports.store';
+import { getReportsSnapshot } from '../stores/reports.snapshot';
 import { getResourceSessionSummary } from '../stores/resource-session.store';
 
 export const createDebugBridge = () => ({

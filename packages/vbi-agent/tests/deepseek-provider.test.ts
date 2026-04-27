@@ -38,7 +38,12 @@ describe('createDeepSeekModelProvider', () => {
     expect(createDeepSeek).toHaveBeenCalledWith({ apiKey: 'test-key', baseURL: 'https://api.deepseek.com' })
     expect(chatMethod).toHaveBeenCalledWith('deepseek-reasoner')
     expect(streamText).toHaveBeenCalledWith(
-      expect.objectContaining({ messages: [{ content: 'hello', role: 'user' }], model: deepseekModel, tools: {} }),
+      expect.objectContaining({
+        messages: [{ content: 'hello', role: 'user' }],
+        model: deepseekModel,
+        providerOptions: { deepseek: { thinking: { type: 'disabled' } } },
+        tools: {},
+      }),
     )
     expect(chunks).toEqual(['final ', 'answer'])
     const reasoningPart = (result.assistant.content as Array<{ type: string; text: string }>).find(
@@ -84,6 +89,7 @@ describe('createDeepSeekModelProvider', () => {
             role: 'assistant',
           }),
         ]),
+        providerOptions: { deepseek: { thinking: { type: 'disabled' } } },
       }),
     )
   })

@@ -1,8 +1,13 @@
-import { Button, Drawer, Input } from 'antd';
+import { Button, Drawer, Input, Spin } from 'antd';
+import { useTranslation } from '../../i18n';
 import { useInsightBuilderModel } from '../../models';
 import { useReportDetailStore } from '../../stores/report-detail.store';
 
+const insightEditorDrawerSize = 720;
+const insightEditorDrawerStyles = { wrapper: { maxWidth: '92vw' } };
+
 export const InsightEditorDrawer = () => {
+  const { t } = useTranslation();
   const closeInsightEditor = useReportDetailStore(
     (state) => state.closeInsightEditor,
   );
@@ -11,26 +16,34 @@ export const InsightEditorDrawer = () => {
   const setInsightContent = useReportDetailStore(
     (state) => state.setInsightContent,
   );
-  const insightBuilder = useInsightBuilderModel(
-    (state) => state.sessions[insightId]?.builder ?? null,
+  const insightSession = useInsightBuilderModel(
+    (state) => state.sessions[insightId],
   );
-  const content = insightBuilder?.build().content?.trim() ?? '';
+  const insightBuilder = insightSession?.builder ?? null;
+  const content = insightBuilder?.build().content ?? '';
 
   return (
     <Drawer
       destroyOnHidden
-      extra={<Button onClick={closeInsightEditor}>关闭</Button>}
+      extra={<Button onClick={closeInsightEditor}>{t('common.close')}</Button>}
       open={open}
-      title="编辑 Insight"
-      size={480}
+      size={insightEditorDrawerSize}
+      styles={insightEditorDrawerStyles}
+      title={t('reportDetail.editInsight')}
       onClose={closeInsightEditor}
     >
-      <Input.TextArea
-        autoSize={{ minRows: 12, maxRows: 20 }}
-        value={content}
-        placeholder="输入这页的叙事、结论或备注"
-        onChange={(event) => setInsightContent(event.target.value)}
-      />
+      {insightBuilder ? (
+        <Input.TextArea
+          autoSize={{ minRows: 12, maxRows: 20 }}
+          value={content}
+          placeholder={t('reportDetail.insightPlaceholder')}
+          onChange={(event) => setInsightContent(event.target.value)}
+        />
+      ) : (
+        <div className="report-detail-placeholder">
+          <Spin tip={t('reportDetail.connectingInsightEditor')} />
+        </div>
+      )}
     </Drawer>
   );
 };

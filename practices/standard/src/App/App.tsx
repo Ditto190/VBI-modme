@@ -5,7 +5,12 @@ import zhCN from 'antd/locale/zh_CN';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ShelfDndProvider } from 'src/components/Shelves/dnd';
 import { Toolbar } from 'src/components/Toolbar';
-import type { DemoTheme } from 'src/constants/builder';
+import {
+  DEMO_DEFAULT_LOCALE,
+  DEMO_DEFAULT_THEME,
+  type DemoLocale,
+  type DemoTheme,
+} from 'src/constants/builder';
 import { useVBIBuilder } from 'src/hooks';
 import { useTranslation } from 'src/i18n';
 import { useVBIStore, VBIStoreProvider } from 'src/model';
@@ -18,7 +23,11 @@ type AppMode = 'view' | 'edit';
 
 interface APPProps {
   builder?: VBIChartBuilder;
+  hideLocale?: boolean;
+  hideTheme?: boolean;
+  locale?: DemoLocale;
   mode?: AppMode;
+  theme?: DemoTheme;
 }
 
 const DEMO_ANTD_LOCALES = {
@@ -256,9 +265,22 @@ const AppShell = ({
   return <AppContent initialized={initialized} mode={mode} themeMode={theme} />;
 };
 
-export const APP = ({ builder, mode = 'edit' }: APPProps) => {
+export const APP = ({
+  builder,
+  hideLocale = false,
+  hideTheme = false,
+  locale = DEMO_DEFAULT_LOCALE,
+  mode = 'edit',
+  theme = DEMO_DEFAULT_THEME,
+}: APPProps) => {
   return (
-    <VBIStoreProvider builder={builder}>
+    <VBIStoreProvider
+      builder={builder}
+      hideLocale={hideLocale}
+      hideTheme={hideTheme}
+      locale={locale}
+      theme={theme}
+    >
       <AppShell builder={builder} mode={mode} />
     </VBIStoreProvider>
   );

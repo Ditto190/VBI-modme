@@ -1,4 +1,5 @@
 import { withApiErrorToast } from './apiClient';
+import { tRuntime } from '../i18n';
 import {
   getResourceHandle,
   listResources,
@@ -26,14 +27,14 @@ const fetchInsightDetail = (id: string) =>
 export const fetchInsights = () => listResources('insight');
 
 export const fetchInsight = (id: string) =>
-  withApiErrorToast(fetchInsightDetail(id), '加载洞察失败');
+  withApiErrorToast(fetchInsightDetail(id), tRuntime('api.loadInsightFailed'));
 
 export const createInsight = (input: { name: string; content?: string }) =>
   withApiErrorToast(
     getResourceHandle('insight')
       .create(input)
       .then((resource) => fetchInsightDetail(resource.id)),
-    '创建洞察失败',
+    tRuntime('api.createInsightFailed'),
   );
 
 export const updateInsight = (
@@ -42,7 +43,7 @@ export const updateInsight = (
 ) =>
   withApiErrorToast(
     getResourceHandle('insight', id).update(input).then(mapInsightDetail),
-    '保存洞察失败',
+    tRuntime('api.saveInsightFailed'),
   );
 
 export const deleteInsight = (id: string) => removeResource('insight', id);

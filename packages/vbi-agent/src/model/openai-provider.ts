@@ -1,5 +1,5 @@
 import { createOpenAI } from '@ai-sdk/openai'
-import type { AgentModelConfig, ModelProvider } from '../types.js'
+import type { AgentModelConfig, ModelProvider } from '../types/index.js'
 import { createAiSdkModelProvider } from './provider.js'
 
 export const createOpenAIModelProvider = (input: AgentModelConfig): ModelProvider =>

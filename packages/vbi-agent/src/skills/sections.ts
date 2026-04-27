@@ -1,7 +1,4 @@
-export interface MarkdownSection {
-  content: string
-  title: string
-}
+import type { MarkdownSection } from '../types/index.js'
 
 const headingPattern = /^(#{1,6})\s+(.+?)\s*$/gm
 

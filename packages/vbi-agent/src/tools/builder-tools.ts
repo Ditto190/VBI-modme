@@ -1,5 +1,5 @@
 import { jsonSchema } from 'ai'
-import type { AgentTool, VBIAgentWorkspace } from '../types.js'
+import type { AgentTool, VBIAgentWorkspace } from '../types/index.js'
 import { createExperimentTool } from './experiment-tool.js'
 import { createBuiltinSkillTools } from './skill-tools.js'
 import { clipJson, clipOutput, describeScriptResult, pluralize, runWorkspaceScript } from './workspace-script.js'

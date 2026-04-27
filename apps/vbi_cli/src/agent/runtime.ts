@@ -3,8 +3,8 @@ import { createDeepSeekModelProvider, createVBIBuilderAgent } from '@visactor/vb
 import { createAgentConfig } from './config.js'
 import { createBashTool } from './tools/bash-tool.js'
 import { createResourceTools } from './tools/resource-tools.js'
-import type { AgentCommand } from '../parse.js'
 import type { AgentRuntimeController, ModelProvider } from '@visactor/vbi-agent'
+import type { AgentCommand } from '../types/index.js'
 
 const getWebSocketPolyfill = () => (typeof WebSocket === 'function' ? WebSocket : undefined)
 

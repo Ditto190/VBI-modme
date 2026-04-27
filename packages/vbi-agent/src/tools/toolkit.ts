@@ -1,6 +1,6 @@
 import type { ToolSet } from 'ai'
 import { clipText, stringifyJson } from '../text-format.js'
-import type { AgentTool, AgentToolKit, PendingToolCall, ToolExecutionResult } from '../types.js'
+import type { AgentTool, AgentToolKit, PendingToolCall, ToolExecutionResult } from '../types/index.js'
 
 const toErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error))
 

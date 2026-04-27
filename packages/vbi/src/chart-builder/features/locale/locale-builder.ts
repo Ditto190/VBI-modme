@@ -36,6 +36,10 @@ export class LocaleBuilder {
    * @param locale - 语言名称
    */
   setLocale(locale: string) {
+    if (this.getLocale() === locale) {
+      return
+    }
+
     this.dsl.set('locale', locale)
   }
 

@@ -7,6 +7,7 @@ import {
   type DemoLocale,
   type DemoTheme,
 } from 'src/constants/builder';
+import { useVBIStoreConfig } from 'src/model';
 
 export interface VBIBuilderState {
   locale: DemoLocale;
@@ -19,11 +20,31 @@ const normalizeLimit = (limit: number) => {
   return Math.max(1, Math.round(limit));
 };
 
-/**
- * VBI Builder Hook
- * 提供 VBI Builder 的全局配置管理，包括 locale、theme、limit
- */
+const readBuilderState = (builder: VBIChartBuilder): VBIBuilderState => {
+  const dsl = builder.dsl.toJSON() as VBIChartDSL;
+
+  return {
+    locale: (dsl.locale ?? DEMO_DEFAULT_LOCALE) as DemoLocale,
+    theme: (dsl.theme ?? DEMO_DEFAULT_THEME) as DemoTheme,
+    limit: normalizeLimit(dsl.limit ?? DEMO_DEFAULT_LIMIT),
+    connectorId: dsl.connectorId ?? '',
+  };
+};
+
+const isSameBuilderState = (
+  current: VBIBuilderState,
+  next: VBIBuilderState,
+) => {
+  return (
+    current.locale === next.locale &&
+    current.theme === next.theme &&
+    current.limit === next.limit &&
+    current.connectorId === next.connectorId
+  );
+};
+
 export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
+  const appConfig = useVBIStoreConfig();
   const [state, setState] = useState<VBIBuilderState>({
     locale: DEMO_DEFAULT_LOCALE,
     theme: DEMO_DEFAULT_THEME,
@@ -31,38 +52,25 @@ export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
     connectorId: '',
   });
 
-  // 初始化状态
   useEffect(() => {
     if (!builder) {
       return;
     }
 
-    const dsl = builder.dsl.toJSON() as VBIChartDSL;
-    setState({
-      locale: (dsl.locale ?? DEMO_DEFAULT_LOCALE) as DemoLocale,
-      theme: (dsl.theme ?? DEMO_DEFAULT_THEME) as DemoTheme,
-      limit: normalizeLimit(dsl.limit ?? DEMO_DEFAULT_LIMIT),
-      connectorId: dsl.connectorId ?? '',
-    });
-
-    // 监听 DSL 变化
-    const updateHandler = () => {
-      const newDsl = builder.dsl.toJSON() as VBIChartDSL;
-      setState({
-        locale: (newDsl.locale ?? DEMO_DEFAULT_LOCALE) as DemoLocale,
-        theme: (newDsl.theme ?? DEMO_DEFAULT_THEME) as DemoTheme,
-        limit: normalizeLimit(newDsl.limit ?? DEMO_DEFAULT_LIMIT),
-        connectorId: newDsl.connectorId ?? '',
-      });
+    const syncState = () => {
+      const nextState = readBuilderState(builder);
+      setState((current) =>
+        isSameBuilderState(current, nextState) ? current : nextState,
+      );
     };
 
-    builder.doc.on('update', updateHandler);
+    syncState();
+    builder.doc.on('update', syncState);
     return () => {
-      builder.doc.off('update', updateHandler);
+      builder.doc.off('update', syncState);
     };
   }, [builder]);
 
-  // 设置语言
   const setLocale = useCallback(
     (locale: DemoLocale) => {
       if (builder) {
@@ -72,7 +80,6 @@ export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
     [builder],
   );
 
-  // 设置主题
   const setTheme = useCallback(
     (theme: DemoTheme) => {
       if (builder) {
@@ -82,7 +89,6 @@ export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
     [builder],
   );
 
-  // 设置数据限制
   const setLimit = useCallback(
     (limit: number) => {
       if (builder) {
@@ -94,6 +100,8 @@ export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
 
   return {
     ...state,
+    locale: appConfig.locale ?? state.locale,
+    theme: appConfig.theme ?? state.theme,
     setLocale,
     setTheme,
     setLimit,

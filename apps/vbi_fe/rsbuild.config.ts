@@ -22,6 +22,15 @@ export default defineConfig({
   },
   tools: {
     rspack: {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            test: /\.csv$/,
+            type: 'asset/source',
+          },
+        ],
+      },
       resolve: {
         conditionNames: ['source', '...'],
       },
