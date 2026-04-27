@@ -1,8 +1,7 @@
 .manage-layout {
   min-height: 100vh;
   background:
-    linear-gradient(180deg, #f8fbff 0%, #f3f6fb 44%, #eef3f8 100%),
-    #f5f7fb;
+    linear-gradient(180deg, #f8fbff 0%, #f3f6fb 44%, #eef3f8 100%), #f5f7fb;
 }
 
 .manage-sider {
@@ -82,8 +81,7 @@
 
 [data-theme='dark'] .manage-layout {
   background:
-    linear-gradient(180deg, #111827 0%, #0f172a 52%, #0b1220 100%),
-    #0f172a;
+    linear-gradient(180deg, #111827 0%, #0f172a 52%, #0b1220 100%), #0f172a;
 }
 
 [data-theme='dark'] .manage-sider {
