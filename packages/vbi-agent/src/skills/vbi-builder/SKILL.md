@@ -7,11 +7,10 @@ tags:
   - dsl
 tools:
   - vbi_builder
-  - vbi_resource
 capabilities:
   - write Builder workspace scripts
   - inspect and mutate VBI Chart, Report, and Insight DSL
-  - validate VBIChartDSL, VBIQueryDSL, and VBISeedDSL outputs
+  - inspect VBIChartDSL, VBIQueryDSL, and VBISeedDSL outputs
 references:
   - chart-builder
   - report-builder
@@ -36,28 +35,28 @@ Call `vbi_builder` with JavaScript. The script runs as an async function.
 Globals:
 
 - `workspace`: injected Builder workspace.
-- `chart`: chart workspace slot with `open(id?)`, optional `describe(id?)`, optional `snapshot(id?)`, optional `close(id?)`.
-- `report`: report workspace slot with `open(id?)`, optional `describe(id?)`, optional `snapshot(id?)`, optional `close(id?)`.
+- `chart`: optional chart workspace slot with `open(id?)`.
+- `report`: optional report workspace slot with `open(id?)`.
 - `json(value)`: return `value` as the tool result.
 - `assert(condition, message)`: throw a clear tool error when a precondition fails.
 - `console.log/warn/error`: captured into tool logs.
 
 Opening resources:
 
-- use `vbi_resource` to list resources, then pass the id to `open(id)`.
+- If no startup id was provided, use available resource tools to find the chart or report id, then pass it to `open(id)`.
 
 Result rules:
 
 - Return `json({ ... })` with only the information needed by the next step.
 - Use `build()` for editable DSL, `buildVQuery()` for query DSL, `buildVSeed()` for render DSL.
-- Use `snapshot()` on reports only when referenced chart or insight DSLs are needed.
+- Use `reportBuilder.snapshot()` only when referenced chart or insight DSLs are needed.
 - Throw with `assert` instead of returning ambiguous partial state.
 
 ## Workflow
 
 1. Discover the target resource id when the CLI did not start with one.
 2. Open the builder with `chart.open(id?)` or `report.open(id?)`.
-3. After opening a resource, automatically save while editing. Validate the result by inspecting the DSL with `build()`, `buildVQuery()`, or `buildVSeed()` as needed.
+3. Check the result by inspecting the DSL with `build()`, `buildVQuery()`, or `buildVSeed()` as needed.
 4. Inspect the current DSL with `build()` before destructive updates.
 5. Mutate only through public Builder APIs.
 6. Use `assert(condition, message)` for missing fields, ids, pages, or builders.

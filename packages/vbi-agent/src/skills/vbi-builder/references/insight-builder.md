@@ -8,10 +8,9 @@ tags:
   - dsl
 tools:
   - vbi_builder
-  - vbi_resource
 capabilities:
   - edit narrative insight content through report registries
-  - describe when direct resource updates are required
+  - inspect insight DSL resolved from report registries
 references: []
 ---
 
@@ -38,8 +37,8 @@ Runtime access:
 
 - `vbi_builder` currently exposes `chart` and `report` workspace slots.
 - There is no top-level `insight.open()` slot in the current CLI runtime.
-- Direct platform updates should use `vbi_resource` with `resource: 'insight'` and `action: 'update'`.
 - Script edits should open a report and resolve with `r.getInsightBuilder(insightId)` or `page.insight`.
+- If the insight is not reachable through a report registry, leave the builder script and use platform resource tools outside this skill.
 
 Guidelines:
 

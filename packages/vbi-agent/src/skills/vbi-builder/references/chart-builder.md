@@ -20,7 +20,7 @@ Use `VBIChartBuilder` for chart DSL changes. Open with `const c = await chart.op
 
 Core methods:
 
-- `build()` returns validated `VBIChartDSL`; `buildVQuery()` returns query DSL.
+- `build()` returns the current chart DSL; `buildVQuery()` returns query DSL.
 - `await buildVSeed(options?)` returns render DSL from current DSL, query DSL, and adapter.
 - `getSchema()` reads schema from connector context; in CLI flows register the connector first through `workspace.connectors`; `isEmpty()` checks chart content.
 - `getUUID()` returns resource uuid.
@@ -63,9 +63,8 @@ Other builders and values:
 
 - Theme defaults to `light`; locale defaults to `zh-CN`; limit is optional.
 - `undoManager` supports `undo`, `redo`, `canUndo`, `canRedo`, `clear`.
-- Dimension encodings include `xAxis`, `yAxis`, `color`, `detail`, `tooltip`, `label`, `row`, `column`, `hierarchy`, `angle`, `player`.
-- Measure encodings include `primaryYAxis`, `secondaryYAxis`, `xAxis`, `yAxis`, `angle`, `radius`, `size`, `color`, `detail`, `column`, `label`, `tooltip`, `value`, `q1`, `q3`, `min`, `max`, `median`, `outliers`, `x0`, `x1`.
-- DSL requires `connectorId`, `chartType`, `dimensions`, `measures`, `theme`, `locale`, and `version`; filters default to empty root groups.
+- Pick encodings from `c.chartType.getSupportedDimensionEncodings()` and `c.chartType.getSupportedMeasureEncodings()` for the current chart type.
+- Chart creation and builder construction ensure uuid and filter groups; `build()` exports the current Yjs DSL.
 - Always get ids from `find`, `findAll`, `toJSON`, or `build()` before `update` or `remove`.
 
 ## Examples
