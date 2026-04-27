@@ -18,6 +18,7 @@ import {
   verticalCrosshairRect,
   stackCornerRadius,
   initRose,
+  animation,
   radiusAxis,
   progressive,
   linearColor,
@@ -37,6 +38,7 @@ import {
 const rose: VChartSpecPipeline = [
   fontFamilyTheme,
   initRose,
+  animation,
   stackCornerRadius,
   stackInverse,
   colorAdapter(color, linearColor),
@@ -60,6 +62,7 @@ const pivotRose: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initRose,
+    animation,
     addRegionPadding,
     stackCornerRadius,
     stackInverse,

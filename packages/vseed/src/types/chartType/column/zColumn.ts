@@ -30,6 +30,7 @@ import {
   zYLinearAxis,
   zPage,
   zPlayer,
+  zBarLikeAnimation,
 } from '../../properties'
 
 export const zColumn = z.object({
@@ -48,6 +49,7 @@ export const zColumn = z.object({
   regionPadding: zRegionPadding.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zBarLikeAnimation.nullish(),
   xAxis: zXBandAxis.nullish(),
   yAxis: zYLinearAxis.nullish(),
   sort: zSort.nullish(),

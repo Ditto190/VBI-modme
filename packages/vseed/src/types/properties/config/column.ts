@@ -13,6 +13,7 @@ import { zBarGapInGroup, zBarMaxWidth } from './barWidth'
 import { zRegressionLine } from '../regressionLine'
 import { zDimensionLinkage } from './dimensionLinkage/dimensionLinkage'
 import { zRegionPadding } from '../regionPadding'
+import { zBarLikeAnimation } from './animation'
 
 import { zBrushConfig } from '../brush/zBrush'
 
@@ -36,6 +37,7 @@ export const zColumnParallelConfig = z.object({
   dimensionLinkage: zDimensionLinkage.nullish(),
 
   brush: zBrushConfig.nullish(),
+  animation: zBarLikeAnimation.nullish(),
 })
 export const zColumnConfig = zColumnParallelConfig.extend({
   regressionLine: zRegressionLine.nullish(),

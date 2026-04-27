@@ -1,0 +1,27 @@
+{
+  "name": "barLikeAnimation",
+  "description": "Bar-like charts support appear, update, and loop animation.",
+  "vseed": {
+    "chartType": "column",
+    "animation": {
+      "enable": true,
+      "params": {
+        "appear": { "enable": true, "effects": ["growth"], "duration": 0.8, "ease": "cubicOut" },
+        "update": { "enable": true, "effects": ["moveIn"], "duration": 0.6, "ease": "quadOut" },
+        "loop": {
+          "enable": true,
+          "interval": 1.2,
+          "loop": { "enable": true, "effects": ["highLight"], "duration": 1 },
+          "atmosphere": { "effect": "ripple", "color": "#4e79a7", "ease": "linear" }
+        }
+      }
+    },
+    "dataset": [
+      { "date": "2019", "sales": 20 },
+      { "date": "2020", "sales": 60 },
+      { "date": "2021", "sales": 45 }
+    ],
+    "dimensions": [{ "id": "date", "alias": "Date" }],
+    "measures": [{ "id": "sales", "alias": "Sales" }]
+  }
+}

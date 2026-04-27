@@ -13,6 +13,7 @@ import {
   zTooltip,
   zBrush,
   zPage,
+  zPieLikeAnimation,
 } from '../../properties'
 
 export const zRoseParallel = z.object({
@@ -29,6 +30,7 @@ export const zRoseParallel = z.object({
   legend: zLegend.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zPieLikeAnimation.nullish(),
   theme: zTheme.nullish(),
   locale: zLocale.nullish(),
 })

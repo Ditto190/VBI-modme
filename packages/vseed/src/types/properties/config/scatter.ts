@@ -10,6 +10,7 @@ import { zAnnotationConfig } from './annotation/zAnnotation'
 import { zPivotChartGridConfig } from './pivotGrid'
 import { zRegressionLine } from '../regressionLine/zRegressionLine'
 import { zDimensionLinkage } from './dimensionLinkage/dimensionLinkage'
+import { zScatterAnimation } from './animation'
 
 import { zBrushConfig } from '../brush/zBrush'
 
@@ -32,6 +33,7 @@ export const zScatterConfig = z.object({
   dimensionLinkage: zDimensionLinkage.nullish(),
 
   brush: zBrushConfig.nullish(),
+  animation: zScatterAnimation.nullish(),
 })
 
 export type ScatterConfig = z.infer<typeof zScatterConfig>

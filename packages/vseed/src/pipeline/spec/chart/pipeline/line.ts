@@ -4,6 +4,7 @@ import {
   xBand,
   yLinear,
   initLine,
+  animation,
   backgroundColor,
   label,
   tooltip,
@@ -46,6 +47,7 @@ import {
 const line: VChartSpecPipeline = [
   fontFamilyTheme,
   initLine,
+  animation,
   regionPadding,
   colorAdapter(color, linearColor),
   backgroundColor,
@@ -77,6 +79,7 @@ const pivotLine: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initLine,
+    animation,
     regionPadding,
     colorAdapter(color, linearColor),
     backgroundColor,

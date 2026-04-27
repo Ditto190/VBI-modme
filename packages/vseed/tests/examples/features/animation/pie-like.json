@@ -1,0 +1,27 @@
+{
+  "name": "pieLikeAnimation",
+  "description": "Pie-like charts support radial appear, update, and loop animation.",
+  "vseed": {
+    "chartType": "pie",
+    "animation": {
+      "enable": true,
+      "params": {
+        "appear": { "enable": true, "effects": ["radial"], "duration": 0.8 },
+        "update": { "enable": true, "effects": ["radial"], "duration": 0.6 },
+        "loop": {
+          "enable": true,
+          "interval": 1.5,
+          "loop": { "enable": true, "effects": ["enlarge"], "duration": 1 },
+          "atmosphere": { "color": "#59a14f", "ease": "linear" }
+        }
+      }
+    },
+    "dataset": [
+      { "type": "A", "value": 30 },
+      { "type": "B", "value": 45 },
+      { "type": "C", "value": 25 }
+    ],
+    "dimensions": [{ "id": "type", "alias": "Type" }],
+    "measures": [{ "id": "value", "alias": "Value" }]
+  }
+}

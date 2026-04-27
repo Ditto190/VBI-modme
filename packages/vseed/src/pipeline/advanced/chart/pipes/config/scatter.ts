@@ -23,6 +23,7 @@ export const scatterConfig: AdvancedPipe = (advancedVSeed, context) => {
     'player',
     'brush',
     'dimensionLinkage',
+    'animation',
   ]) as Config['line']
 
   const config = replaceNullToUndefined(pickedConfig)

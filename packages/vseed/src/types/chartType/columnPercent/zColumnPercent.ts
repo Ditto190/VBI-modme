@@ -24,6 +24,7 @@ import {
   zXBandAxis,
   zYLinearAxis,
   zPage,
+  zBarLikeAnimation,
 } from '../../properties'
 
 import { z } from 'zod'
@@ -43,6 +44,7 @@ export const zColumnPercent = z.object({
   regionPadding: zRegionPadding.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zBarLikeAnimation.nullish(),
   xAxis: zXBandAxis.nullish(),
   yAxis: zYLinearAxis.nullish(),
   crosshairRect: zCrosshairRect.nullish(),

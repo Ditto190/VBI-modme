@@ -27,6 +27,7 @@ import type {
   ColumnDimension,
   Page,
   RegionPadding,
+  BarLikeAnimation,
 } from '../../properties'
 
 /**
@@ -121,6 +122,11 @@ export interface ColumnParallel {
    * @description 框选配置，用于开启/关闭 brush 框选能力
    */
   brush?: Brush
+  /**
+   * 动画配置
+   * @description 图表动画配置，按图表类型约束可选效果
+   */
+  animation?: BarLikeAnimation
 
   /**
    * @description x轴, 类目轴, x轴配置, 用于定义图表的x轴, 包括x轴的位置, 格式, 样式等.

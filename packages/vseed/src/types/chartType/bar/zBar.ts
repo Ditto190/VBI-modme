@@ -25,6 +25,7 @@ import {
   zXLinearAxis,
   zYBandAxis,
   zPage,
+  zBarLikeAnimation,
 } from '../../properties'
 
 import { z } from 'zod'
@@ -44,6 +45,7 @@ export const zBar = z.object({
   regionPadding: zRegionPadding.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zBarLikeAnimation.nullish(),
   xAxis: zXLinearAxis.nullish(),
   yAxis: zYBandAxis.nullish(),
   crosshairRect: zCrosshairRect.nullish(),

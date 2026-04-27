@@ -17,6 +17,7 @@ export const pieConfig: AdvancedPipe = (advancedVSeed, context) => {
     'tooltip',
     'player',
     'brush',
+    'animation',
   ]) as Config['pie']
 
   const config = replaceNullToUndefined(pickedConfig)

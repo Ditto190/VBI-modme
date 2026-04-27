@@ -20,6 +20,7 @@ import {
   verticalCrosshairLine,
   pointStateDimensionHover,
   initRadar,
+  animation,
   areaStyle,
   radarAngleAxis,
   radarRadiusAxis,
@@ -40,6 +41,7 @@ import {
 const radar: VChartSpecPipeline = [
   fontFamilyTheme,
   initRadar,
+  animation,
   colorAdapter(color, linearColor),
   backgroundColor,
   datasetXY,
@@ -69,6 +71,7 @@ const pivotRadar: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initRadar,
+    animation,
     addRegionPadding,
     colorAdapter(color, linearColor),
     backgroundColor,
