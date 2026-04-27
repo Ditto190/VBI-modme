@@ -10,6 +10,7 @@ import { useAppPreferencesStore } from '../stores/app-preferences.store';
 import { useNavigationStore } from '../stores/navigation.store';
 import './manage-resource/manage-layout.css';
 import './manage-resource/manage-resource.css';
+import './manage-resource/manage-resource-table.css';
 import './manage-resource/manage-responsive.css';
 import { ManagePreferences } from './manage-resource/ManagePreferences';
 

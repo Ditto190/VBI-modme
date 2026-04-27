@@ -10,56 +10,53 @@ import {
   releaseResourceSession,
   connectResourceSession,
 } from './resource-session.store';
-import type { ResourceItem } from '../types';
-import { getFilteredResourceIds } from '../utils/resource-list';
+import {
+  createResourceListActions,
+  createResourceListState,
+  loadResourceItems,
+  type ResourceListActions,
+  type ResourceListState,
+} from './resource-list.model';
 
-type ManageChartsState = {
-  createName: string;
-  createOpen: boolean;
-  editorName: string;
-  items: ResourceItem[];
-  loading: boolean;
-  searchText: string;
-  selectedId: string;
-  selectedRowKeys: string[];
-  userName: string;
-  bootstrap(userName: string): Promise<void>;
-  clearSelection(): void;
-  closeCreate(): void;
-  closeDetail(): Promise<void>;
-  create(): Promise<void>;
-  deleteOne(id: string): Promise<void>;
-  deleteSelected(): Promise<void>;
-  dispose(): Promise<void>;
-  load(): Promise<void>;
-  openCreate(): void;
-  openDetail(id: string): Promise<void>;
-  renameSelected(): Promise<void>;
-  selectAllFiltered(): void;
-  setCreateName(createName: string): void;
-  setEditorName(editorName: string): void;
-  setSearchText(searchText: string): void;
-  setSelectedRowKeys(selectedRowKeys: string[]): void;
-};
+type ManageChartsState = ResourceListState &
+  ResourceListActions & {
+    createName: string;
+    createOpen: boolean;
+    editorName: string;
+    loading: boolean;
+    selectedId: string;
+    userName: string;
+    bootstrap(userName: string): Promise<void>;
+    closeCreate(): void;
+    closeDetail(): Promise<void>;
+    create(): Promise<void>;
+    deleteOne(id: string): Promise<void>;
+    deleteSelected(): Promise<void>;
+    dispose(): Promise<void>;
+    load(): Promise<void>;
+    openCreate(): void;
+    openDetail(id: string): Promise<void>;
+    renameSelected(): Promise<void>;
+    setCreateName(createName: string): void;
+    setEditorName(editorName: string): void;
+  };
 
 const getNextChartName = (name: string) =>
   name.trim() || tRuntime('charts.untitled');
 
 export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
+  ...createResourceListState(),
   createName: '',
   createOpen: false,
   editorName: '',
-  items: [],
   loading: false,
-  searchText: '',
   selectedId: '',
-  selectedRowKeys: [],
   userName: '',
+  ...createResourceListActions(set),
   bootstrap: async (userName) => {
     set({ userName });
     await get().load();
   },
-  clearSelection: () => set({ selectedRowKeys: [] }),
   closeCreate: () => set({ createOpen: false }),
   closeDetail: async () => {
     const { selectedId } = get();
@@ -103,12 +100,7 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
     });
   },
   load: async () => {
-    set({ loading: true });
-    try {
-      set({ items: await listResources('chart') });
-    } finally {
-      set({ loading: false });
-    }
+    await loadResourceItems(set, () => listResources('chart'));
   },
   openCreate: () => set({ createOpen: true }),
   openDetail: async (id) => {
@@ -136,15 +128,36 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
     );
     await get().load();
   },
-  selectAllFiltered: () =>
-    set((state) => ({
-      selectedRowKeys: getFilteredResourceIds(state.items, state.searchText),
-    })),
   setCreateName: (createName) => set({ createName }),
   setEditorName: (editorName) => set({ editorName }),
-  setSearchText: (searchText) => set({ searchText }),
-  setSelectedRowKeys: (selectedRowKeys) => set({ selectedRowKeys }),
 }));
+
+export const selectManageChartsPageState = (state: ManageChartsState) => ({
+  bootstrap: state.bootstrap,
+  clearSelection: state.clearSelection,
+  closeCreate: state.closeCreate,
+  closeDetail: state.closeDetail,
+  create: state.create,
+  createName: state.createName,
+  createOpen: state.createOpen,
+  deleteOne: state.deleteOne,
+  deleteSelected: state.deleteSelected,
+  dispose: state.dispose,
+  editorName: state.editorName,
+  filteredItems: state.filteredItems,
+  loading: state.loading,
+  openCreate: state.openCreate,
+  openDetail: state.openDetail,
+  renameSelected: state.renameSelected,
+  searchText: state.searchText,
+  selectAllFiltered: state.selectAllFiltered,
+  selectedId: state.selectedId,
+  selectedRowKeys: state.selectedRowKeys,
+  setCreateName: state.setCreateName,
+  setEditorName: state.setEditorName,
+  setSearchText: state.setSearchText,
+  setSelectedRowKeys: state.setSelectedRowKeys,
+});
 
 export const getManageChartsSnapshot = () => {
   const state = useManageChartsStore.getState();
@@ -152,6 +165,7 @@ export const getManageChartsSnapshot = () => {
     createName: state.createName,
     createOpen: state.createOpen,
     editorName: state.editorName,
+    filteredItems: state.filteredItems,
     items: state.items,
     loading: state.loading,
     searchText: state.searchText,

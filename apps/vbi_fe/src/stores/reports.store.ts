@@ -3,45 +3,47 @@ import { tRuntime } from '../i18n';
 import * as resourceApi from '../services/resourceApi';
 import { useNavigationStore } from './navigation.store';
 import type { ResourceItem } from '../types';
-import { getFilteredResourceIds } from '../utils/resource-list';
+import {
+  createResourceListActions,
+  createResourceListState,
+  loadResourceItems,
+  type ResourceListActions,
+  type ResourceListState,
+} from './resource-list.model';
 
-type ReportsState = {
-  createName: string;
-  editing: ResourceItem | null;
-  isCreateOpen: boolean;
-  items: ResourceItem[];
-  loading: boolean;
-  renameValue: string;
-  searchText: string;
-  selectedRowKeys: string[];
-  clearSelection(): void;
-  closeCreate(): void;
-  confirmRename(): Promise<void>;
-  create(): Promise<void>;
-  deleteSelected(): Promise<void>;
-  load(): Promise<void>;
-  openCreate(): void;
-  openReport(id: string): void;
-  remove(id: string): Promise<void>;
-  selectAllFiltered(): void;
-  setCreateName(createName: string): void;
-  setRenameValue(renameValue: string): void;
-  setSearchText(searchText: string): void;
-  setSelectedRowKeys(selectedRowKeys: string[]): void;
-  startRename(item: ResourceItem): void;
-  stopRename(): void;
-};
+type ReportsState = ResourceListState &
+  ResourceListActions & {
+    createName: string;
+    editing: ResourceItem | null;
+    isCreateOpen: boolean;
+    loading: boolean;
+    renameValue: string;
+    bootstrap(): Promise<void>;
+    closeCreate(): void;
+    confirmRename(): Promise<void>;
+    create(): Promise<void>;
+    deleteSelected(): Promise<void>;
+    load(): Promise<void>;
+    openCreate(): void;
+    openReport(id: string): void;
+    remove(id: string): Promise<void>;
+    setCreateName(createName: string): void;
+    setRenameValue(renameValue: string): void;
+    startRename(item: ResourceItem): void;
+    stopRename(): void;
+  };
 
 export const useReportsStore = create<ReportsState>((set, get) => ({
+  ...createResourceListState(),
   createName: '',
   editing: null,
   isCreateOpen: false,
-  items: [],
   loading: false,
   renameValue: '',
-  searchText: '',
-  selectedRowKeys: [],
-  clearSelection: () => set({ selectedRowKeys: [] }),
+  ...createResourceListActions(set),
+  bootstrap: async () => {
+    await get().load();
+  },
   closeCreate: () => set({ isCreateOpen: false }),
   confirmRename: async () => {
     const { editing, renameValue } = get();
@@ -71,12 +73,7 @@ export const useReportsStore = create<ReportsState>((set, get) => ({
     await get().load();
   },
   load: async () => {
-    set({ loading: true });
-    try {
-      set({ items: await resourceApi.listResources('report') });
-    } finally {
-      set({ loading: false });
-    }
+    await loadResourceItems(set, () => resourceApi.listResources('report'));
   },
   openCreate: () => set({ isCreateOpen: true }),
   openReport: (id) => useNavigationStore.getState().openReport(id),
@@ -87,14 +84,35 @@ export const useReportsStore = create<ReportsState>((set, get) => ({
     }));
     await get().load();
   },
-  selectAllFiltered: () =>
-    set((state) => ({
-      selectedRowKeys: getFilteredResourceIds(state.items, state.searchText),
-    })),
   setCreateName: (createName) => set({ createName }),
   setRenameValue: (renameValue) => set({ renameValue }),
-  setSearchText: (searchText) => set({ searchText }),
-  setSelectedRowKeys: (selectedRowKeys) => set({ selectedRowKeys }),
   startRename: (editing) => set({ editing, renameValue: editing.name || '' }),
   stopRename: () => set({ editing: null, renameValue: '' }),
 }));
+
+export const selectReportsPageState = (state: ReportsState) => ({
+  bootstrap: state.bootstrap,
+  clearSelection: state.clearSelection,
+  closeCreate: state.closeCreate,
+  confirmRename: state.confirmRename,
+  create: state.create,
+  createName: state.createName,
+  deleteSelected: state.deleteSelected,
+  editing: state.editing,
+  filteredItems: state.filteredItems,
+  isCreateOpen: state.isCreateOpen,
+  loading: state.loading,
+  openCreate: state.openCreate,
+  openReport: state.openReport,
+  remove: state.remove,
+  renameValue: state.renameValue,
+  searchText: state.searchText,
+  selectAllFiltered: state.selectAllFiltered,
+  selectedRowKeys: state.selectedRowKeys,
+  setCreateName: state.setCreateName,
+  setRenameValue: state.setRenameValue,
+  setSearchText: state.setSearchText,
+  setSelectedRowKeys: state.setSelectedRowKeys,
+  startRename: state.startRename,
+  stopRename: state.stopRename,
+});

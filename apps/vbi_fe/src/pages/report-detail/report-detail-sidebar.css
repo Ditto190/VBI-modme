@@ -2,19 +2,19 @@
   display: flex;
   min-height: 0;
   overflow: hidden;
-  border: 1px solid var(--report-line);
+  border: 1px solid var(--vbi-border);
   border-radius: 8px;
-  background: var(--report-card);
-  box-shadow: var(--report-shadow);
+  background: var(--vbi-surface-solid);
+  box-shadow: var(--vbi-shadow);
   flex-direction: column;
 }
 
 .report-detail-page-list {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   overflow: auto;
   min-height: 0;
-  padding: 14px;
+  padding: 10px;
   flex: 1;
   flex-direction: column;
 }
@@ -22,14 +22,14 @@
 .report-detail-page-card {
   position: relative;
   display: grid;
-  gap: 12px;
-  min-height: 74px;
-  padding: 12px 40px 12px 14px;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px 36px 10px 12px;
   border: 1px solid transparent;
   border-radius: 8px;
   background: transparent;
   cursor: pointer;
-  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
   transition:
     border-color 0.18s ease,
@@ -40,25 +40,25 @@
 .report-detail-page-card:hover,
 .report-detail-page-card.is-active,
 .report-detail-page-card:focus-visible {
-  border-color: #d8e3ff;
-  background: #f7faff;
-  box-shadow: inset 3px 0 0 var(--report-accent);
+  border-color: var(--vbi-active-text);
+  background: var(--vbi-hover-bg);
+  box-shadow: inset 3px 0 0 var(--vbi-active-text);
   outline: none;
 }
 
 .report-detail-page-icon {
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
-  color: #526071;
+  color: var(--vbi-text-soft);
   font-size: 18px;
   place-items: center;
 }
 
 .report-detail-page-card.is-active .report-detail-page-icon {
-  color: var(--report-accent);
-  background: var(--report-accent-soft);
+  color: var(--vbi-active-text);
+  background: var(--vbi-active-bg);
 }
 
 .report-detail-page-copy {
@@ -69,7 +69,7 @@
 }
 
 .report-detail-page-index {
-  color: var(--report-accent);
+  color: var(--vbi-active-text);
   font-size: 13px;
   font-weight: 700;
 }

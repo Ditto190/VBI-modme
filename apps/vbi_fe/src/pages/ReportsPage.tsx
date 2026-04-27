@@ -1,48 +1,48 @@
-import { useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
 import { useTranslation } from '../i18n';
-import { useReportsStore } from '../stores/reports.store';
+import {
+  selectReportsPageState,
+  useReportsStore,
+} from '../stores/reports.store';
+import { useStoreLifecycle } from '../hooks/useStoreLifecycle';
 import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import { createResourceColumns } from './manage-resource/resource-columns';
-import { matchesResourceSearch } from '../utils/resource-list';
+import { useResourceColumns } from './manage-resource/resource-columns';
 import { ReportResourceModals } from './reports/ReportResourceModals';
 
 export const ReportsPage = () => {
   const { locale, t } = useTranslation();
-  const createName = useReportsStore((state) => state.createName);
-  const editing = useReportsStore((state) => state.editing);
-  const isCreateOpen = useReportsStore((state) => state.isCreateOpen);
-  const items = useReportsStore((state) => state.items);
-  const loading = useReportsStore((state) => state.loading);
-  const renameValue = useReportsStore((state) => state.renameValue);
-  const searchText = useReportsStore((state) => state.searchText);
-  const selectedRowKeys = useReportsStore((state) => state.selectedRowKeys);
-  const clearSelection = useReportsStore((state) => state.clearSelection);
-  const closeCreate = useReportsStore((state) => state.closeCreate);
-  const confirmRename = useReportsStore((state) => state.confirmRename);
-  const create = useReportsStore((state) => state.create);
-  const deleteSelected = useReportsStore((state) => state.deleteSelected);
-  const load = useReportsStore((state) => state.load);
-  const openCreate = useReportsStore((state) => state.openCreate);
-  const openReport = useReportsStore((state) => state.openReport);
-  const remove = useReportsStore((state) => state.remove);
-  const selectAllFiltered = useReportsStore((state) => state.selectAllFiltered);
-  const setCreateName = useReportsStore((state) => state.setCreateName);
-  const setRenameValue = useReportsStore((state) => state.setRenameValue);
-  const setSearchText = useReportsStore((state) => state.setSearchText);
-  const setSelectedRowKeys = useReportsStore(
-    (state) => state.setSelectedRowKeys,
-  );
-  const startRename = useReportsStore((state) => state.startRename);
-  const stopRename = useReportsStore((state) => state.stopRename);
-  const filteredItems = items.filter((item) =>
-    matchesResourceSearch(item, searchText),
-  );
+  const state = useReportsStore(useShallow(selectReportsPageState));
 
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const {
+    bootstrap,
+    clearSelection,
+    closeCreate,
+    confirmRename,
+    create,
+    createName,
+    deleteSelected,
+    editing,
+    filteredItems,
+    isCreateOpen,
+    loading,
+    openCreate,
+    openReport,
+    remove,
+    renameValue,
+    searchText,
+    selectAllFiltered,
+    selectedRowKeys,
+    setCreateName,
+    setRenameValue,
+    setSearchText,
+    setSelectedRowKeys,
+    startRename,
+    stopRename,
+  } = state;
 
-  const columns = createResourceColumns({
+  useStoreLifecycle(bootstrap);
+
+  const columns = useResourceColumns({
     deleteTitle: t('reports.deleteTitle'),
     fallbackName: t('reports.untitled'),
     locale,
@@ -58,20 +58,14 @@ export const ReportsPage = () => {
       createLabel={t('reports.create')}
       dataSource={filteredItems}
       loading={loading}
-      onBatchDelete={async () => {
-        if (!selectedRowKeys.length) return;
-        await deleteSelected();
-      }}
       onClearSelection={clearSelection}
       onCreate={openCreate}
+      onDeleteSelected={deleteSelected}
       onSearchTextChange={setSearchText}
       onSelectAllFiltered={selectAllFiltered}
-      rowSelection={{
-        selectedRowKeys,
-        onChange: (keys) => setSelectedRowKeys(keys.map(String)),
-      }}
       searchText={searchText}
       selectedRowKeys={selectedRowKeys}
+      setSelectedRowKeys={setSelectedRowKeys}
       title={t('reports.title')}
     >
       <ReportResourceModals

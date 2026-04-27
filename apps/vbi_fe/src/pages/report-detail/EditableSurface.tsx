@@ -26,7 +26,7 @@ const renderAction = (action: EditableSurfaceAction) => {
         disabled={action.disabled}
         icon={action.icon}
         shape="circle"
-        size="large"
+        size="small"
         type="text"
         onClick={action.confirm ? undefined : action.onClick}
       />

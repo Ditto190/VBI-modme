@@ -5,7 +5,11 @@ import { useTranslation } from '../../i18n';
 import { useChartBuilderModel, useReportBuilderModel } from '../../models';
 import { useReportDetailStore } from '../../stores/report-detail.store';
 
-const chartEditorDrawerWidth = 'min(1440px, 92vw)';
+const chartEditorDrawerSize = 1440;
+const chartEditorDrawerStyles = {
+  body: { overflow: 'hidden', padding: 0 },
+  wrapper: { maxWidth: '92vw' },
+};
 
 export const ReportEditorDrawer = () => {
   const standardAppProps = useStandardAppProps();
@@ -34,9 +38,9 @@ export const ReportEditorDrawer = () => {
       className="report-detail-chart-drawer"
       destroyOnHidden
       open={open}
-      styles={{ body: { overflow: 'hidden', padding: 0 } }}
+      size={chartEditorDrawerSize}
+      styles={chartEditorDrawerStyles}
       title={title}
-      width={chartEditorDrawerWidth}
       onClose={closeChartEditor}
     >
       <div className="report-detail-editor">

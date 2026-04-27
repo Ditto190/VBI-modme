@@ -1,22 +1,48 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import { useShallow } from 'zustand/shallow';
 import { useTranslation } from '../../i18n';
 import { useReportBuilderModel } from '../../models';
 import { useReportDetailStore } from '../../stores/report-detail.store';
 import { PageSidebarItem } from './PageSidebarItem';
 
+const viewModeOptions = [
+  { key: 'vertical', label: 'reportDetail.viewVertical' },
+  { key: 'horizontal', label: 'reportDetail.viewHorizontal' },
+] as const;
+
 export const PageSidebar = () => {
   const { t } = useTranslation();
-  const activePageId = useReportDetailStore((state) => state.activePageId);
-  const busy = useReportDetailStore((state) => state.pageActionBusy);
-  const addPage = useReportDetailStore((state) => state.addPage);
-  const addChart = useReportDetailStore((state) => state.addChart);
-  const addInsight = useReportDetailStore((state) => state.addInsight);
-  const removeChart = useReportDetailStore((state) => state.removeChart);
-  const removeInsight = useReportDetailStore((state) => state.removeInsight);
-  const removePage = useReportDetailStore((state) => state.removePage);
-  const reportId = useReportDetailStore((state) => state.reportId);
-  const selectPage = useReportDetailStore((state) => state.selectPage);
+  const {
+    activePageId,
+    addChart,
+    addInsight,
+    addPage,
+    busy,
+    removeChart,
+    removeInsight,
+    removePage,
+    reportId,
+    selectPage,
+    setViewMode,
+    viewMode,
+  } = useReportDetailStore(
+    useShallow((state) => ({
+      activePageId: state.activePageId,
+      addChart: state.addChart,
+      addInsight: state.addInsight,
+      addPage: state.addPage,
+      busy: state.pageActionBusy,
+      removeChart: state.removeChart,
+      removeInsight: state.removeInsight,
+      removePage: state.removePage,
+      reportId: state.reportId,
+      selectPage: state.selectPage,
+      setViewMode: state.setViewMode,
+      viewMode: state.viewMode,
+    })),
+  );
+
   const reportSession = useReportBuilderModel(
     (state) => state.sessions[reportId],
   );
@@ -42,6 +68,19 @@ export const PageSidebar = () => {
         ))}
       </div>
       <div className="report-detail-filmstrip-actions">
+        <div className="report-detail-filmstrip-mode">
+          {viewModeOptions.map(({ key, label }) => (
+            <Button
+              key={key}
+              className="report-detail-mode-btn"
+              size="small"
+              type={viewMode === key ? 'primary' : 'default'}
+              onClick={() => setViewMode(key)}
+            >
+              {t(label)}
+            </Button>
+          ))}
+        </div>
         <Button
           className="report-detail-page-create"
           icon={<PlusOutlined />}

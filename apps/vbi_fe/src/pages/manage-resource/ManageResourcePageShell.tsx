@@ -1,5 +1,6 @@
 import { Table } from 'antd';
 import type { TableProps } from 'antd';
+import { useCallback, useMemo } from 'react';
 import type { Key, ReactNode } from 'react';
 import { useTranslation } from '../../i18n';
 import type { ResourceItem } from '../../types';
@@ -11,14 +12,14 @@ type Props = {
   createLabel: string;
   dataSource: ResourceItem[];
   loading?: boolean;
-  onBatchDelete: () => void;
   onClearSelection: () => void;
   onCreate: () => void;
+  onDeleteSelected: () => Promise<void>;
   onSearchTextChange: (value: string) => void;
   onSelectAllFiltered: () => void;
-  rowSelection: TableProps<ResourceItem>['rowSelection'];
   searchText: string;
   selectedRowKeys: Key[];
+  setSelectedRowKeys(selectedRowKeys: string[]): void;
   title: string;
 };
 
@@ -28,17 +29,28 @@ export const ManageResourcePageShell = ({
   createLabel,
   dataSource,
   loading = false,
-  onBatchDelete,
   onClearSelection,
   onCreate,
+  onDeleteSelected,
   onSearchTextChange,
   onSelectAllFiltered,
-  rowSelection,
   searchText,
   selectedRowKeys,
+  setSelectedRowKeys,
   title,
 }: Props) => {
   const { t } = useTranslation();
+  const rowSelection = useMemo<TableProps<ResourceItem>['rowSelection']>(
+    () => ({
+      selectedRowKeys,
+      onChange: (keys) => setSelectedRowKeys(keys.map(String)),
+    }),
+    [selectedRowKeys, setSelectedRowKeys],
+  );
+  const deleteSelected = useCallback(async () => {
+    if (!selectedRowKeys.length) return;
+    await onDeleteSelected();
+  }, [onDeleteSelected, selectedRowKeys.length]);
 
   return (
     <section className="manage-page">
@@ -57,7 +69,7 @@ export const ManageResourcePageShell = ({
       </header>
       <ManageResourceToolbar
         createLabel={createLabel}
-        onBatchDelete={onBatchDelete}
+        onBatchDelete={deleteSelected}
         onClearSelection={onClearSelection}
         onCreate={onCreate}
         onSearchTextChange={onSearchTextChange}

@@ -33,11 +33,7 @@
     max-width: none !important;
     min-width: 0 !important;
     border-right: 0;
-    border-bottom: 1px solid #e6eaf2;
-  }
-
-  [data-theme='dark'] .manage-sider.ant-layout-sider {
-    border-bottom-color: #1f2937;
+    border-bottom: 1px solid var(--vbi-border);
   }
 
   .manage-brand {
@@ -52,8 +48,7 @@
   }
 
   .manage-preferences {
-    width: fit-content;
-    max-width: calc(100% - 24px);
+    width: min(320px, calc(100% - 24px));
     margin: 0 12px 12px;
   }
 

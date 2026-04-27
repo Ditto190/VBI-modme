@@ -72,6 +72,8 @@
   "reportDetail.addInsight": "Add insight",
   "reportDetail.removeInsight": "Remove insight",
   "reportDetail.deletePage": "Delete current page",
+  "reportDetail.viewHorizontal": "Horizontal",
+  "reportDetail.viewVertical": "Vertical",
   "reportDetail.emptyReport": "This report has no available pages",
   "reportDetail.emptyStage": "This page has no chart or insight",
   "reportDetail.editChart": "Edit chart",
@@ -79,7 +81,6 @@
   "reportDetail.chartEditorReady": "Edit mode will open after the collaborative chart connection is ready.",
   "reportDetail.connectingInsightEditor": "Connecting insight editor...",
   "reportDetail.editInsight": "Edit insight",
-  "reportDetail.insightSummary": "Page Insight Summary",
   "reportDetail.emptyInsight": "This page has no insight",
   "reportDetail.insightPlaceholder": "Type this page's narrative, conclusion, or notes"
 }

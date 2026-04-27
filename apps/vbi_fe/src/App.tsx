@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ConfigProvider, theme as antdTheme } from 'antd';
-import antdEnUS from 'antd/locale/en_US';
-import antdZhCN from 'antd/locale/zh_CN';
+import { ConfigProvider } from 'antd';
+import antdEnUS from 'antd/es/locale/en_US';
+import antdZhCN from 'antd/es/locale/zh_CN';
 import { registerDemoConnector } from '@visactor/headless-bi-provider';
 import { DebugBridgeInstaller } from './components/DebugBridgeInstaller';
 import { NavigationBinder } from './components/NavigationBinder';
@@ -12,6 +12,7 @@ import { ManageLayoutPage } from './pages/ManageLayoutPage';
 import { ReportDetailPage } from './pages/ReportDetailPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { useAppPreferencesStore } from './stores/app-preferences.store';
+import { getVbiAntdTheme, getVbiThemeStyle } from './theme';
 import './App.css';
 
 // Register once (or safely re-register)
@@ -25,21 +26,14 @@ const antdLocales = {
 const App = memo(() => {
   const locale = useAppPreferencesStore((state) => state.locale);
   const themeMode = useAppPreferencesStore((state) => state.themeMode);
-  const isDark = themeMode === 'dark';
 
   return (
     <ConfigProvider
+      button={{ autoInsertSpace: false }}
       locale={antdLocales[locale]}
-      theme={{
-        algorithm: isDark
-          ? antdTheme.darkAlgorithm
-          : antdTheme.defaultAlgorithm,
-        token: {
-          colorPrimary: '#1677ff',
-        },
-      }}
+      theme={getVbiAntdTheme(themeMode)}
     >
-      <div data-theme={themeMode}>
+      <div data-theme={themeMode} style={getVbiThemeStyle(themeMode)}>
         <BrowserRouter>
           <NavigationBinder />
           <DebugBridgeInstaller />

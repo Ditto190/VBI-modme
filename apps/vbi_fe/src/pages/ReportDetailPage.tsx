@@ -1,8 +1,10 @@
 import { ArrowLeftOutlined, FileTextOutlined } from '@ant-design/icons';
 import { Button, Layout, Spin } from 'antd';
-import { memo, useEffect } from 'react';
+import { memo, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { useShallow } from 'zustand/shallow';
 import { Collaborators } from '../components/Collaborators';
+import { useStoreLifecycle } from '../hooks/useStoreLifecycle';
 import { useTranslation } from '../i18n';
 import { useReportBuilderModel } from '../models';
 import { useNavigationStore } from '../stores/navigation.store';
@@ -18,25 +20,30 @@ export const ReportDetailPage = memo(() => {
   const { t } = useTranslation();
   const { id = '' } = useParams();
   const go = useNavigationStore((state) => state.go);
-  const bootstrap = useReportDetailStore((state) => state.bootstrap);
-  const dispose = useReportDetailStore((state) => state.dispose);
-  const syncActivePage = useReportDetailStore((state) => state.syncActivePage);
-  const reportSession = useReportBuilderModel((state) => state.sessions[id]);
+  const { bootstrap, dispose } = useReportDetailStore(
+    useShallow((state) => ({
+      bootstrap: state.bootstrap,
+      dispose: state.dispose,
+    })),
+  );
+  const reportSession = useReportBuilderModel(
+    useShallow((state) => {
+      const session = state.sessions[id];
+      return {
+        builder: session?.builder ?? null,
+        provider: session?.provider ?? null,
+      };
+    }),
+  );
 
-  useEffect(() => {
-    void bootstrap(id, userName);
-    return () => {
-      void dispose();
-    };
-  }, [bootstrap, dispose, id]);
-
-  useEffect(() => {
-    if (!id || !reportSession?.builder) return;
-    void syncActivePage();
-  }, [id, reportSession?.version, reportSession?.builder, syncActivePage]);
+  const bootReport = useCallback(
+    () => bootstrap(id, userName),
+    [bootstrap, id],
+  );
+  useStoreLifecycle(bootReport, dispose);
 
   if (!id) return <div>{t('reportDetail.invalidId')}</div>;
-  if (!reportSession?.builder) return <Spin fullscreen size="large" />;
+  if (!reportSession.builder) return <Spin fullscreen size="large" />;
 
   return (
     <Layout className="report-detail-layout">

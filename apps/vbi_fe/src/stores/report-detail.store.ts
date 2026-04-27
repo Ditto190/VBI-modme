@@ -10,15 +10,21 @@ import {
 } from './resource-session.store';
 import type { ReportPage } from '../types';
 
+type ReportViewMode = 'horizontal' | 'vertical';
+
 type ReportDetailState = {
   activePageId: string;
   chartEditorOpen: boolean;
   connectedChartId: string;
+  connectedChartIds: string[];
   connectedInsightId: string;
+  connectedInsightIds: string[];
   insightEditorOpen: boolean;
   pageActionBusy: boolean;
   reportId: string;
+  stopReportSync: (() => void) | null;
   userName: string;
+  viewMode: ReportViewMode;
   addPage(): Promise<void>;
   bootstrap(reportId: string, userName: string): Promise<void>;
   closeChartEditor(): void;
@@ -33,6 +39,8 @@ type ReportDetailState = {
   removePage(pageId: string): Promise<void>;
   selectPage(pageId: string): Promise<void>;
   setInsightContent(value: string): void;
+  setScrolledPage(pageId: string): void;
+  setViewMode(viewMode: ReportViewMode): void;
   syncActivePage(): Promise<void>;
 };
 
@@ -59,45 +67,96 @@ const updatePageResource = (
   getReportBuilder(reportId)?.page.update(pageId, callback);
 };
 
-const syncActiveResources = async (state: ReportDetailState) => {
-  const activePage = getActivePage(state.reportId, state.activePageId);
+const uniqueResourceIds = (pages: ReportPage[], key: 'chartId' | 'insightId') =>
+  [...new Set(pages.map((page) => page[key]).filter(Boolean))] as string[];
+
+const isSameIdList = (first: string[], second: string[]) =>
+  first.length === second.length &&
+  first.every((id, index) => id === second[index]);
+
+const diffIds = (source: string[], target: string[]) =>
+  source.filter((id) => !target.includes(id));
+
+const getConnectedIds = (ids: string[], activeId: string) =>
+  ids.length || !activeId ? ids : [activeId];
+
+const syncReportResources = async (
+  state: ReportDetailState,
+  pages: ReportPage[],
+) => {
+  const activePage = pages.find((page) => page.id === state.activePageId);
+  const nextChartIds = uniqueResourceIds(pages, 'chartId');
+  const nextInsightIds = uniqueResourceIds(pages, 'insightId');
+  const prevChartIds = getConnectedIds(
+    state.connectedChartIds,
+    state.connectedChartId,
+  );
+  const prevInsightIds = getConnectedIds(
+    state.connectedInsightIds,
+    state.connectedInsightId,
+  );
   const nextChartId = activePage?.chartId ?? '';
   const nextInsightId = activePage?.insightId ?? '';
-  const chartChanged = state.connectedChartId !== nextChartId;
-  const insightChanged = state.connectedInsightId !== nextInsightId;
 
-  if (chartChanged || insightChanged) {
+  if (
+    state.connectedChartId !== nextChartId ||
+    state.connectedInsightId !== nextInsightId ||
+    !isSameIdList(prevChartIds, nextChartIds) ||
+    !isSameIdList(prevInsightIds, nextInsightIds)
+  ) {
     useReportDetailStore.setState({
       connectedChartId: nextChartId,
+      connectedChartIds: nextChartIds,
       connectedInsightId: nextInsightId,
+      connectedInsightIds: nextInsightIds,
     });
   }
 
   await Promise.all([
-    state.connectedChartId && chartChanged
-      ? releaseResourceSession('chart', state.connectedChartId)
-      : Promise.resolve(),
-    state.connectedInsightId && insightChanged
-      ? releaseResourceSession('insight', state.connectedInsightId)
-      : Promise.resolve(),
-    nextChartId && chartChanged
-      ? connectResourceSession('chart', nextChartId, state.userName)
-      : Promise.resolve(),
-    nextInsightId && insightChanged
-      ? connectResourceSession('insight', nextInsightId, state.userName)
-      : Promise.resolve(),
+    ...diffIds(prevChartIds, nextChartIds).map((id) =>
+      releaseResourceSession('chart', id),
+    ),
+    ...diffIds(prevInsightIds, nextInsightIds).map((id) =>
+      releaseResourceSession('insight', id),
+    ),
+    ...diffIds(nextChartIds, prevChartIds).map((id) =>
+      connectResourceSession('chart', id, state.userName),
+    ),
+    ...diffIds(nextInsightIds, prevInsightIds).map((id) =>
+      connectResourceSession('insight', id, state.userName),
+    ),
   ]);
+};
+
+const subscribeReportSession = (reportId: string) => {
+  let current = useReportBuilderModel.getState().sessions[reportId];
+  let lastBuilder = current?.builder ?? null;
+  let lastVersion = current?.version ?? 0;
+
+  return useReportBuilderModel.subscribe((modelState) => {
+    current = modelState.sessions[reportId];
+    const nextBuilder = current?.builder ?? null;
+    const nextVersion = current?.version ?? 0;
+    if (nextBuilder === lastBuilder && nextVersion === lastVersion) return;
+    lastBuilder = nextBuilder;
+    lastVersion = nextVersion;
+    void useReportDetailStore.getState().syncActivePage();
+  });
 };
 
 export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   activePageId: '',
   chartEditorOpen: false,
   connectedChartId: '',
+  connectedChartIds: [],
   connectedInsightId: '',
+  connectedInsightIds: [],
   insightEditorOpen: false,
   pageActionBusy: false,
   reportId: '',
+  stopReportSync: null,
   userName: '',
+  viewMode: 'vertical',
   addPage: async () => {
     const state = get();
     const reportBuilder = getReportBuilder(state.reportId);
@@ -137,26 +196,42 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   bootstrap: async (reportId, userName) => {
     await get().dispose();
     if (!reportId) return;
-    set({ reportId, userName });
+    set({ reportId, userName, viewMode: 'vertical' });
     await connectResourceSession('report', reportId, userName);
+    set({ stopReportSync: subscribeReportSession(reportId) });
     await get().syncActivePage();
   },
   closeChartEditor: () => set({ chartEditorOpen: false }),
   closeInsightEditor: () => set({ insightEditorOpen: false }),
   dispose: async () => {
     const state = get();
-    await releaseResourceSession('chart', state.connectedChartId);
-    await releaseResourceSession('insight', state.connectedInsightId);
+    state.stopReportSync?.();
+    const chartIds = getConnectedIds(
+      state.connectedChartIds,
+      state.connectedChartId,
+    );
+    const insightIds = getConnectedIds(
+      state.connectedInsightIds,
+      state.connectedInsightId,
+    );
+    await Promise.all([
+      ...chartIds.map((id) => releaseResourceSession('chart', id)),
+      ...insightIds.map((id) => releaseResourceSession('insight', id)),
+    ]);
     await releaseResourceSession('report', state.reportId);
     set({
       activePageId: '',
       chartEditorOpen: false,
       connectedChartId: '',
+      connectedChartIds: [],
       connectedInsightId: '',
+      connectedInsightIds: [],
       insightEditorOpen: false,
       pageActionBusy: false,
       reportId: '',
+      stopReportSync: null,
       userName: '',
+      viewMode: 'vertical',
     });
   },
   openChartEditor: () => set({ chartEditorOpen: true }),
@@ -250,12 +325,16 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   setInsightContent: (value) => {
     getInsightBuilder(get().connectedInsightId)?.setContent(value);
   },
+  setScrolledPage: (pageId) => {
+    if (pageId && pageId !== get().activePageId) {
+      set({ activePageId: pageId });
+    }
+  },
+  setViewMode: (viewMode) => set({ viewMode }),
   syncActivePage: async () => {
     const state = get();
-    const nextActivePageId = resolveActivePageId(
-      getReportPages(state.reportId),
-      state.activePageId,
-    );
+    const pages = getReportPages(state.reportId);
+    const nextActivePageId = resolveActivePageId(pages, state.activePageId);
     set((current) => ({
       activePageId: nextActivePageId,
       chartEditorOpen:
@@ -267,7 +346,10 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
           ? current.insightEditorOpen
           : false,
     }));
-    await syncActiveResources({ ...get(), activePageId: nextActivePageId });
+    await syncReportResources(
+      { ...get(), activePageId: nextActivePageId },
+      pages,
+    );
   },
 }));
 
@@ -279,11 +361,14 @@ export const getReportDetailSnapshot = () => {
     activePageId: state.activePageId,
     chartEditorOpen: state.chartEditorOpen,
     connectedChartId: state.connectedChartId,
+    connectedChartIds: state.connectedChartIds,
     connectedInsightId: state.connectedInsightId,
+    connectedInsightIds: state.connectedInsightIds,
     insightEditorOpen: state.insightEditorOpen,
     pageActionBusy: state.pageActionBusy,
     pages: getReportPages(state.reportId),
     reportId: state.reportId,
+    viewMode: state.viewMode,
   };
 };
 

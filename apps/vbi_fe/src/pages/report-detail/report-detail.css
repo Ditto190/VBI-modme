@@ -3,5 +3,8 @@
 @import './report-detail-sidebar.css';
 @import './report-detail-sidebar-actions.css';
 @import './report-detail-stage.css';
+@import './report-detail-page-divider.css';
+@import './report-detail-surface.css';
+@import './report-detail-editor.css';
 @import './report-detail-insight.css';
 @import './report-detail-responsive.css';

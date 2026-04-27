@@ -1,36 +1,44 @@
-import { GlobalOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Space, Tooltip } from 'antd';
+import {
+  DownOutlined,
+  GlobalOutlined,
+  MoonOutlined,
+  SunOutlined,
+} from '@ant-design/icons';
+import { Button, Dropdown } from 'antd';
 import type { AppLocale } from '../../i18n';
 import { useTranslation } from '../../i18n';
 import {
   type AppThemeMode,
   useAppPreferencesStore,
 } from '../../stores/app-preferences.store';
+import './manage-preferences.css';
+
+const themeOptions: AppThemeMode[] = ['light', 'dark'];
 
 export const ManagePreferences = () => {
   const themeMode = useAppPreferencesStore((state) => state.themeMode);
   const setThemeMode = useAppPreferencesStore((state) => state.setThemeMode);
   const { locale, setLocale, t } = useTranslation();
-  const themeIcon = themeMode === 'dark' ? <MoonOutlined /> : <SunOutlined />;
-  const themeLabel =
-    themeMode === 'dark' ? t('app.theme.dark') : t('app.theme.light');
 
   return (
-    <Space className="manage-preferences" size={8}>
-      <Tooltip title={t('app.theme.switch')}>
-        <Button
-          className="manage-preference-button"
-          icon={themeIcon}
-          shape="round"
-          onClick={() =>
-            setThemeMode(
-              (themeMode === 'dark' ? 'light' : 'dark') as AppThemeMode,
-            )
-          }
-        >
-          {themeLabel}
-        </Button>
-      </Tooltip>
+    <div className="manage-preferences" aria-label={t('app.theme.switch')}>
+      <div className="manage-theme-switch" role="group">
+        {themeOptions.map((mode) => (
+          <button
+            key={mode}
+            className="manage-theme-option"
+            data-active={themeMode === mode}
+            type="button"
+            aria-pressed={themeMode === mode}
+            onClick={() => setThemeMode(mode)}
+          >
+            {mode === 'light' ? <SunOutlined /> : <MoonOutlined />}
+            <span>
+              {mode === 'light' ? t('app.theme.light') : t('app.theme.dark')}
+            </span>
+          </button>
+        ))}
+      </div>
       <Dropdown
         trigger={['click']}
         menu={{
@@ -43,13 +51,16 @@ export const ManagePreferences = () => {
         }}
       >
         <Button
-          className="manage-preference-button"
+          className="manage-locale-button"
           icon={<GlobalOutlined />}
           shape="round"
         >
-          {locale === 'zh-CN' ? t('app.language.zh') : t('app.language.en')}
+          <span>
+            {locale === 'zh-CN' ? t('app.language.zh') : t('app.language.en')}
+          </span>
+          <DownOutlined className="manage-locale-caret" />
         </Button>
       </Dropdown>
-    </Space>
+    </div>
   );
 };

@@ -1,12 +1,11 @@
 .manage-layout {
   min-height: 100vh;
-  background:
-    linear-gradient(180deg, #f8fbff 0%, #f3f6fb 44%, #eef3f8 100%), #f5f7fb;
+  background: var(--vbi-bg);
 }
 
 .manage-sider {
-  border-right: 1px solid #e6eaf2;
-  background: rgba(251, 252, 255, 0.94);
+  border-right: 1px solid var(--vbi-border);
+  background: var(--vbi-sider);
   backdrop-filter: blur(12px);
 }
 
@@ -18,14 +17,14 @@
 }
 
 .manage-brand-title {
-  color: #1f2937;
+  color: var(--vbi-text-strong);
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
 }
 
 .manage-brand-meta {
-  color: #7c8798;
+  color: var(--vbi-text-muted);
   font-size: 12px;
 }
 
@@ -36,10 +35,22 @@
 }
 
 .manage-menu .ant-menu-item {
+  box-sizing: border-box;
   border-radius: 8px;
+  border: 1px solid transparent;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
   height: 42px;
   margin-inline: 0;
   width: 100%;
+  color: var(--vbi-text-muted);
+  font-weight: 600;
+}
+
+.manage-menu .ant-menu-item-selected {
+  background: var(--vbi-active-bg);
+  color: var(--vbi-active-text);
 }
 
 .manage-content {
@@ -48,67 +59,4 @@
   box-sizing: border-box;
   background: transparent;
   padding: 28px;
-}
-
-.manage-preferences {
-  width: fit-content;
-  max-width: calc(100% - 32px);
-  margin: 18px 16px 0;
-  padding: 6px;
-  border: 1px solid #e5eaf3;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 10px 28px rgba(20, 28, 45, 0.06);
-}
-
-.manage-preferences.ant-space {
-  display: flex;
-}
-
-.manage-preference-button.ant-btn {
-  min-width: 76px;
-  justify-content: center;
-  border: 0;
-  background: rgba(255, 255, 255, 0.74);
-  color: #334155;
-  font-weight: 600;
-}
-
-.manage-preference-button.ant-btn:hover {
-  background: #fff;
-  color: #1677ff;
-}
-
-[data-theme='dark'] .manage-layout {
-  background:
-    linear-gradient(180deg, #111827 0%, #0f172a 52%, #0b1220 100%), #0f172a;
-}
-
-[data-theme='dark'] .manage-sider {
-  border-right-color: #1f2937;
-  background: rgba(17, 24, 39, 0.96);
-}
-
-[data-theme='dark'] .manage-brand-title {
-  color: #f9fafb;
-}
-
-[data-theme='dark'] .manage-brand-meta {
-  color: #9ca3af;
-}
-
-[data-theme='dark'] .manage-preferences {
-  border-color: #273449;
-  background: rgba(15, 23, 42, 0.72);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-}
-
-[data-theme='dark'] .manage-preference-button.ant-btn {
-  background: rgba(30, 41, 59, 0.72);
-  color: #d1d5db;
-}
-
-[data-theme='dark'] .manage-preference-button.ant-btn:hover {
-  background: rgba(51, 65, 85, 0.96);
-  color: #6ea8ff;
 }

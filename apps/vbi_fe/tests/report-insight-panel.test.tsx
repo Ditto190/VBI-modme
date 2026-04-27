@@ -21,8 +21,8 @@ test('report insight panel renders preview content without connected builder', (
     />,
   );
 
-  expect(screen.getByText('页面洞察摘要')).toBeInTheDocument();
   expect(screen.getByText('核心结论')).toBeInTheDocument();
   expect(screen.getByText('数据表现稳定')).toBeInTheDocument();
+  expect(screen.queryByText('页面洞察摘要')).toBeNull();
   expect(screen.queryByText('当前页面暂无洞察')).toBeNull();
 });

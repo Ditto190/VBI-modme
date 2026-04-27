@@ -1,63 +1,59 @@
 import { Empty } from 'antd';
-import type { VBIChartBuilder, VBIInsightBuilder } from '@visactor/vbi';
+import { memo } from 'react';
+import type { RefObject } from 'react';
 import { useTranslation } from '../../i18n';
-import { ReportChartPanel } from './ReportChartPanel';
-import { ReportInsightPanel } from './ReportInsightPanel';
+import { HorizontalReportRenderer } from './HorizontalReportRenderer';
+import type { ReportStagePage } from './ReportStage.types';
+import { VerticalReportRenderer } from './VerticalReportRenderer';
 
 type ReportStageProps = {
-  chartBuilder: VBIChartBuilder | null;
-  hasChart: boolean;
-  hasInsight: boolean;
-  insightBuilder: VBIInsightBuilder | null;
-  insightId: string;
-  onEditChart: () => void;
-  onEditInsight: () => void;
+  activePageId: string;
+  onEditChart: (pageId: string) => void;
+  onEditInsight: (pageId: string) => void;
+  onPageRef: (pageId: string) => (node: HTMLDivElement | null) => void;
+  pageSections: ReportStagePage[];
+  stageRef: RefObject<HTMLDivElement | null>;
+  viewMode: 'horizontal' | 'vertical';
 };
 
-export const ReportStage = ({
-  chartBuilder,
-  hasChart,
-  hasInsight,
-  insightBuilder,
-  insightId,
-  onEditChart,
-  onEditInsight,
-}: ReportStageProps) => {
-  const { t } = useTranslation();
-  const layoutClass =
-    hasChart && hasInsight
-      ? 'has-both'
-      : hasInsight
-        ? 'has-insight-only'
-        : 'has-chart-only';
+export const ReportStage = memo(
+  ({
+    activePageId,
+    onEditChart,
+    onEditInsight,
+    onPageRef,
+    pageSections,
+    stageRef,
+    viewMode,
+  }: ReportStageProps) => {
+    const { t } = useTranslation();
+    const emptyDescription = t('reportDetail.emptyStage');
 
-  if (!hasChart && !hasInsight) {
-    return (
-      <section className="report-detail-stage">
-        <div className="report-detail-empty">
+    if (!pageSections.length) {
+      return (
+        <section className="report-detail-stage report-detail-stage-empty">
           <Empty
-            description={t('reportDetail.emptyStage')}
+            description={emptyDescription}
             image={Empty.PRESENTED_IMAGE_SIMPLE}
           />
-        </div>
-      </section>
-    );
-  }
+        </section>
+      );
+    }
 
-  return (
-    <section className="report-detail-stage">
-      <div className={`report-detail-slide ${layoutClass}`}>
-        {hasInsight ? (
-          <ReportInsightPanel
-            builder={insightBuilder}
-            insightId={insightId}
-            onEdit={onEditInsight}
-          />
-        ) : null}
-        {hasChart ? (
-          <ReportChartPanel builder={chartBuilder} onEdit={onEditChart} />
-        ) : null}
-      </div>
-    </section>
-  );
-};
+    const rendererProps = {
+      activePageId,
+      emptyDescription,
+      onEditChart,
+      onEditInsight,
+      onPageRef,
+      pages: pageSections,
+      stageRef,
+    };
+
+    return viewMode === 'horizontal' ? (
+      <HorizontalReportRenderer {...rendererProps} />
+    ) : (
+      <VerticalReportRenderer {...rendererProps} />
+    );
+  },
+);

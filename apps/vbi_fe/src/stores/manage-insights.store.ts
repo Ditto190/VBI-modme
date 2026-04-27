@@ -10,60 +10,57 @@ import {
   connectResourceSession,
   releaseResourceSession,
 } from './resource-session.store';
-import type { ResourceItem } from '../types';
-import { getFilteredResourceIds } from '../utils/resource-list';
+import {
+  createResourceListActions,
+  createResourceListState,
+  loadResourceItems,
+  type ResourceListActions,
+  type ResourceListState,
+} from './resource-list.model';
 
-type ManageInsightsState = {
-  createContent: string;
-  createName: string;
-  createOpen: boolean;
-  editorName: string;
-  items: ResourceItem[];
-  loading: boolean;
-  searchText: string;
-  selectedId: string;
-  selectedRowKeys: string[];
-  userName: string;
-  bootstrap(userName: string): Promise<void>;
-  clearSelection(): void;
-  closeCreate(): void;
-  closeDetail(): Promise<void>;
-  create(): Promise<void>;
-  deleteOne(id: string): Promise<void>;
-  deleteSelected(): Promise<void>;
-  dispose(): Promise<void>;
-  load(): Promise<void>;
-  openCreate(): void;
-  openDetail(id: string): Promise<void>;
-  renameSelected(): Promise<void>;
-  selectAllFiltered(): void;
-  setCreateContent(createContent: string): void;
-  setCreateName(createName: string): void;
-  setEditorName(editorName: string): void;
-  setSearchText(searchText: string): void;
-  setSelectedRowKeys(selectedRowKeys: string[]): void;
-};
+type ManageInsightsState = ResourceListState &
+  ResourceListActions & {
+    createContent: string;
+    createName: string;
+    createOpen: boolean;
+    editorName: string;
+    loading: boolean;
+    selectedId: string;
+    userName: string;
+    bootstrap(userName: string): Promise<void>;
+    closeCreate(): void;
+    closeDetail(): Promise<void>;
+    create(): Promise<void>;
+    deleteOne(id: string): Promise<void>;
+    deleteSelected(): Promise<void>;
+    dispose(): Promise<void>;
+    load(): Promise<void>;
+    openCreate(): void;
+    openDetail(id: string): Promise<void>;
+    renameSelected(): Promise<void>;
+    setCreateContent(createContent: string): void;
+    setCreateName(createName: string): void;
+    setEditorName(editorName: string): void;
+  };
 
 const getNextInsightName = (name: string) =>
   name.trim() || tRuntime('insights.untitled');
 
 export const useManageInsightsStore = create<ManageInsightsState>(
   (set, get) => ({
+    ...createResourceListState(),
     createContent: '',
     createName: '',
     createOpen: false,
     editorName: '',
-    items: [],
     loading: false,
-    searchText: '',
     selectedId: '',
-    selectedRowKeys: [],
     userName: '',
+    ...createResourceListActions(set),
     bootstrap: async (userName) => {
       set({ userName });
       await get().load();
     },
-    clearSelection: () => set({ selectedRowKeys: [] }),
     closeCreate: () => set({ createOpen: false }),
     closeDetail: async () => {
       const { selectedId } = get();
@@ -111,12 +108,7 @@ export const useManageInsightsStore = create<ManageInsightsState>(
       });
     },
     load: async () => {
-      set({ loading: true });
-      try {
-        set({ items: await fetchInsights() });
-      } finally {
-        set({ loading: false });
-      }
+      await loadResourceItems(set, fetchInsights);
     },
     openCreate: () => set({ createOpen: true }),
     openDetail: async (id) => {
@@ -142,17 +134,40 @@ export const useManageInsightsStore = create<ManageInsightsState>(
       });
       await get().load();
     },
-    selectAllFiltered: () =>
-      set((state) => ({
-        selectedRowKeys: getFilteredResourceIds(state.items, state.searchText),
-      })),
     setCreateContent: (createContent) => set({ createContent }),
     setCreateName: (createName) => set({ createName }),
     setEditorName: (editorName) => set({ editorName }),
-    setSearchText: (searchText) => set({ searchText }),
-    setSelectedRowKeys: (selectedRowKeys) => set({ selectedRowKeys }),
   }),
 );
+
+export const selectManageInsightsPageState = (state: ManageInsightsState) => ({
+  bootstrap: state.bootstrap,
+  clearSelection: state.clearSelection,
+  closeCreate: state.closeCreate,
+  closeDetail: state.closeDetail,
+  create: state.create,
+  createContent: state.createContent,
+  createName: state.createName,
+  createOpen: state.createOpen,
+  deleteOne: state.deleteOne,
+  deleteSelected: state.deleteSelected,
+  dispose: state.dispose,
+  editorName: state.editorName,
+  filteredItems: state.filteredItems,
+  loading: state.loading,
+  openCreate: state.openCreate,
+  openDetail: state.openDetail,
+  renameSelected: state.renameSelected,
+  searchText: state.searchText,
+  selectAllFiltered: state.selectAllFiltered,
+  selectedId: state.selectedId,
+  selectedRowKeys: state.selectedRowKeys,
+  setCreateContent: state.setCreateContent,
+  setCreateName: state.setCreateName,
+  setEditorName: state.setEditorName,
+  setSearchText: state.setSearchText,
+  setSelectedRowKeys: state.setSelectedRowKeys,
+});
 
 export const getManageInsightsSnapshot = () => {
   const state = useManageInsightsStore.getState();
@@ -161,6 +176,7 @@ export const getManageInsightsSnapshot = () => {
     createName: state.createName,
     createOpen: state.createOpen,
     editorName: state.editorName,
+    filteredItems: state.filteredItems,
     items: state.items,
     loading: state.loading,
     searchText: state.searchText,

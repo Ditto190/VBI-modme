@@ -1,5 +1,6 @@
 import { Button, Popconfirm, Space } from 'antd';
 import type { TableProps } from 'antd';
+import { useMemo } from 'react';
 import type { AppLocale, Translate } from '../../i18n';
 import type { ResourceItem } from '../../types';
 
@@ -59,3 +60,28 @@ export const createResourceColumns = ({
     ),
   },
 ];
+
+export const useResourceColumns = ({
+  deleteTitle,
+  fallbackName,
+  locale,
+  onEdit,
+  onOpen,
+  onRemove,
+  onRename,
+  t,
+}: ResourceColumnOptions) =>
+  useMemo(
+    () =>
+      createResourceColumns({
+        deleteTitle,
+        fallbackName,
+        locale,
+        onEdit,
+        onOpen,
+        onRemove,
+        onRename,
+        t,
+      }),
+    [deleteTitle, fallbackName, locale, onEdit, onOpen, onRemove, onRename, t],
+  );

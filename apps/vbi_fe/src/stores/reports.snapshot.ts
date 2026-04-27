@@ -5,6 +5,7 @@ export const getReportsSnapshot = () => {
   return {
     createName: state.createName,
     editingId: state.editing?.id ?? '',
+    filteredItems: state.filteredItems,
     isCreateOpen: state.isCreateOpen,
     items: state.items,
     loading: state.loading,

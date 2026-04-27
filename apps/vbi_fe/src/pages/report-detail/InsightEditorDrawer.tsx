@@ -3,6 +3,9 @@ import { useTranslation } from '../../i18n';
 import { useInsightBuilderModel } from '../../models';
 import { useReportDetailStore } from '../../stores/report-detail.store';
 
+const insightEditorDrawerSize = 720;
+const insightEditorDrawerStyles = { wrapper: { maxWidth: '92vw' } };
+
 export const InsightEditorDrawer = () => {
   const { t } = useTranslation();
   const closeInsightEditor = useReportDetailStore(
@@ -24,8 +27,9 @@ export const InsightEditorDrawer = () => {
       destroyOnHidden
       extra={<Button onClick={closeInsightEditor}>{t('common.close')}</Button>}
       open={open}
+      size={insightEditorDrawerSize}
+      styles={insightEditorDrawerStyles}
       title={t('reportDetail.editInsight')}
-      width="min(720px, 92vw)"
       onClose={closeInsightEditor}
     >
       {insightBuilder ? (
