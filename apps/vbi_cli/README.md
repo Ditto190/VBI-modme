@@ -39,6 +39,5 @@ Tools:
 
 - `bash`: CLI-only shell command runner
 - `vbi_builder`: runs JavaScript against the injected Builder workspace
-- `vbi_skill`: lists or reads builtin VBI Agent skills and references
-- `how_to_use_vbi_builder`: compatibility alias for the `vbi-builder` skill
+- `read_skill`: lists or reads builtin VBI Agent skills and references
 - `vbi_resource`: CLI-only resource CRUD and report page operations

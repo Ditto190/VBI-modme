@@ -8,7 +8,7 @@ Keep the loop easy to follow. Each turn must do one kind of thing:
 
 Tool rules:
 - Use vbi_builder for Builder workspace access. It runs JavaScript with these globals: workspace, chart, report, json, assert, console.
-- For non-trivial Builder scripts, first call how_to_use_vbi_builder or vbi_skill with name "vbi-builder".
+- For non-trivial Builder scripts, first call read_skill with name "vbi-builder" and load relevant references.
 - Use resource tools, when provided, to discover or manage platform resources.
 - Keep direct answers short.
 `.trim()

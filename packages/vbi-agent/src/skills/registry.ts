@@ -1,5 +1,5 @@
 import { vbiBuilderSkill } from './vbi-builder/index.js'
-import type { BuiltinSkill, BuiltinSkillReference } from './types.js'
+import type { BuiltinSkill, BuiltinSkillAsset, BuiltinSkillReference } from './types.js'
 
 const builtinSkills = [vbiBuilderSkill]
 
@@ -11,9 +11,17 @@ export const findBuiltinSkill = (name: string): BuiltinSkill => {
   return skill
 }
 
-export const findBuiltinSkillReferences = (skill: BuiltinSkill, names: string[]): BuiltinSkillReference[] =>
+const findAssets = <TAsset extends BuiltinSkillAsset>(
+  skill: BuiltinSkill,
+  assets: TAsset[],
+  kind: string,
+  names: string[],
+) =>
   names.map((name) => {
-    const reference = skill.references.find((item) => item.name === name)
-    if (!reference) throw new Error(`unknown reference "${name}" for builtin skill "${skill.name}"`)
-    return reference
+    const asset = assets.find((item) => item.name === name)
+    if (!asset) throw new Error(`unknown ${kind} "${name}" for builtin skill "${skill.name}"`)
+    return asset
   })
+
+export const findBuiltinSkillReferences = (skill: BuiltinSkill, names: string[]): BuiltinSkillReference[] =>
+  findAssets(skill, skill.references, 'reference', names)

@@ -1,4 +1,5 @@
 import { createActivityLog } from './activity-log.js'
+import { formatToolCallDetail, formatToolCallSummary } from './activity-format.js'
 import { createHistory } from './history.js'
 import { extractText } from './model/stream.js'
 import type { AgentRuntimeController, AgentToolKit, ModelProvider } from './types.js'
@@ -23,7 +24,8 @@ export const createAgentRuntime = ({ model, tool }: RuntimeInput): AgentRuntimeC
       }
       activityLog.add(
         'assistant',
-        extractText(turn.assistant) || `proposed ${turn.outcome.calls.map((call) => call.name).join(', ')}`,
+        extractText(turn.assistant) || formatToolCallSummary(turn.outcome.calls),
+        formatToolCallDetail(turn.outcome.calls),
       )
       history.push(turn.assistant)
       for (const call of turn.outcome.calls) {

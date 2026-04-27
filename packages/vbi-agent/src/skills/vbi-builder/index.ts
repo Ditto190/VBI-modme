@@ -2,24 +2,26 @@
 /// <reference path="../../types/assets.d.ts" />
 
 import content from './SKILL.md?raw'
-import chartBuilderApi from './references/chart-builder-api.md?raw'
-import filters from './references/filters.md?raw'
-import reportBuilderApi from './references/report-builder-api.md?raw'
-import runtime from './references/runtime.md?raw'
+import chartBuilder from './references/chart-builder.md?raw'
+import insightBuilder from './references/insight-builder.md?raw'
+import reportBuilder from './references/report-builder.md?raw'
 import type { BuiltinSkill } from '../types.js'
 
 export const vbiBuilderSkill: BuiltinSkill = {
   content,
-  description: 'Use when writing or reviewing vbi_builder scripts that operate VBI Chart or Report builders.',
+  description: 'Use when writing or reviewing vbi_builder scripts for VBI Chart, Report, or Insight builders.',
   name: 'vbi-builder',
   references: [
-    { content: runtime, description: 'Script globals, opening resources, and result conventions.', name: 'runtime' },
     {
-      content: chartBuilderApi,
-      description: 'Chart Builder operations, encodings, and chart types.',
-      name: 'chart-builder-api',
+      content: chartBuilder,
+      description: 'VBIChartBuilder operations for chart DSL, encodings, and filters.',
+      name: 'chart-builder',
     },
-    { content: filters, description: 'Where/having filter rules and operators.', name: 'filters' },
-    { content: reportBuilderApi, description: 'Report Builder page operations.', name: 'report-builder-api' },
+    { content: reportBuilder, description: 'VBIReportBuilder page composition and snapshots.', name: 'report-builder' },
+    {
+      content: insightBuilder,
+      description: 'VBIInsightBuilder content editing and runtime access.',
+      name: 'insight-builder',
+    },
   ],
 }

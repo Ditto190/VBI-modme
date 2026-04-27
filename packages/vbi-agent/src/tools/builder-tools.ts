@@ -1,10 +1,30 @@
 import { jsonSchema } from 'ai'
 import { executeAgentScript } from '../script/runtime.js'
+import { clipText, stringifyJson } from '../text-format.js'
 import type { AgentTool, VBIAgentWorkspace } from '../types.js'
-import { createBuiltinSkillTools, renderBuiltinSkill } from './skill-tools.js'
-import { clipText, stringifyJson } from './shared.js'
+import { createBuiltinSkillTools } from './skill-tools.js'
 
 const outputLimit = 12000
+
+const pluralize = (count: number, name: string) => `${count} ${name}${count === 1 ? '' : 's'}`
+
+const describeResult = (value: unknown) => {
+  if (value === null || value === undefined) return 'null result'
+  if (Array.isArray(value)) return `array result (${value.length} items)`
+  return `${typeof value} result`
+}
+
+const formatBuilderDisplay = (logs: string[], result: unknown) =>
+  [
+    'Status: succeeded',
+    `Logs: ${logs.length ? pluralize(logs.length, 'entry') : 'none'}`,
+    ...(logs.length ? ['', 'Log output:', '```text', clipText(logs.join('\n'), outputLimit), '```'] : []),
+    '',
+    'Result:',
+    '```json',
+    clipText(stringifyJson(result ?? null), outputLimit),
+    '```',
+  ].join('\n')
 
 export const createBuilderTools = (workspace: VBIAgentWorkspace): AgentTool[] => [
   {
@@ -35,29 +55,10 @@ export const createBuilderTools = (workspace: VBIAgentWorkspace): AgentTool[] =>
       const content = clipText(stringifyJson({ logs: result.logs, result: result.result ?? null }), outputLimit)
       return {
         content,
-        display: content,
-        summary: `vbi_builder executed (${result.logs.length} logs)`,
+        display: formatBuilderDisplay(result.logs, result.result),
+        summary: `vbi_builder succeeded: ${pluralize(result.logs.length, 'log')}, ${describeResult(result.result)}`,
       }
     },
   },
   ...createBuiltinSkillTools(),
-  {
-    name: 'how_to_use_vbi_builder',
-    descriptor: {
-      description:
-        'Return the vbi-builder builtin skill. Pass references to include selected reference files before writing vbi_builder scripts.',
-      inputSchema: jsonSchema({
-        additionalProperties: false,
-        properties: {
-          references: { items: { type: 'string' }, type: 'array' },
-        },
-        type: 'object',
-      }),
-      strict: true,
-    },
-    execute: async (input) => {
-      const content = renderBuiltinSkill('vbi-builder', input.references)
-      return { content, display: content, summary: 'vbi builder skill returned' }
-    },
-  },
 ]

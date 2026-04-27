@@ -161,6 +161,10 @@ describe('createBuilderTools', () => {
     })
     const payload = JSON.parse(result.content) as { result: ReturnType<typeof builder.build> }
 
+    expect(result.summary).toBe('vbi_builder succeeded: 0 logs, object result')
+    expect(result.display).toContain('Status: succeeded')
+    expect(result.display).toContain('Logs: none')
+    expect(result.display).toContain('Result:')
     expect(payload.result).toMatchObject({
       chartType: 'line',
       dimensions: expect.arrayContaining([expect.objectContaining({ alias: 'Area', field: 'area' })]),

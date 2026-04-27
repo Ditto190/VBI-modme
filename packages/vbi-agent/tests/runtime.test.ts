@@ -68,6 +68,10 @@ describe('createAgentRuntime', () => {
     })
     await runtime.start('list files')
     expect(calls).toEqual([{ command: 'ls' }])
+    const assistantActivity = runtime.getState().activities.find((activity) => activity.kind === 'assistant')
+    expect(assistantActivity?.text).toBe('run ls')
+    expect(assistantActivity?.detail).toContain('1. bash')
+    expect(assistantActivity?.detail).toContain('"command": "ls"')
     expect(runtime.getState().activities.at(-1)?.text).toBe('done')
   })
 
@@ -177,7 +181,11 @@ describe('createAgentRuntime', () => {
       ['system', 'user'],
       ['system', 'user', 'assistant', 'tool'],
     ])
-    expect(runtime.getState().activities.map((activity) => activity.text)).toContain('bash failed')
+    const failedActivity = runtime.getState().activities.find((activity) => activity.kind === 'tool')
+    expect(failedActivity?.text).toBe('bash failed: command failed')
+    expect(failedActivity?.detail).toContain('Status: failed')
+    expect(failedActivity?.detail).toContain('Error: command failed')
+    expect(failedActivity?.detail).toContain('"command": "bad"')
     expect(runtime.getState().activities.at(-1)?.text).toBe('handled failure')
   })
 
