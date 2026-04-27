@@ -1,4 +1,4 @@
-import { inlineParameters } from 'src/sql-builder/compile/inlineParameters'
+import { inlineParameters } from '../../../../src/sql-builder/compile/inlineParameters'
 
 describe('inlineParameters extra paths', () => {
   it('params exist but no placeholders', () => {
