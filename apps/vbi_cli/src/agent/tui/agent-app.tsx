@@ -1,6 +1,5 @@
 import { Box, Static, Text, useInput, useStdout } from 'ink'
 import React, { useEffect, useState } from 'react'
-import { MarkdownText } from './markdown-text.js'
 import type { AgentActivity, AgentRuntimeController } from '@visactor/vbi-agent'
 
 const colorByKind: Record<AgentActivity['kind'], string> = {
@@ -18,10 +17,10 @@ const renderActivity = (activity: AgentActivity, index: number, width: number) =
     <Text bold color={colorByKind[activity.kind]}>
       [{activity.kind}]
     </Text>
-    <MarkdownText color={colorByKind[activity.kind]}>{tailLines(activity.text, 12)}</MarkdownText>
+    <Text color={colorByKind[activity.kind]}>{tailLines(activity.text, 12)}</Text>
     {activity.detail ? (
       <Box flexDirection="column" paddingLeft={2}>
-        <MarkdownText>{tailLines(activity.detail, 40)}</MarkdownText>
+        <Text>{tailLines(activity.detail, 40)}</Text>
       </Box>
     ) : null}
   </Box>
