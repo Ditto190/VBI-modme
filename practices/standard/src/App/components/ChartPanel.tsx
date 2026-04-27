@@ -1,11 +1,12 @@
 import { Card, Empty, Flex, Space, Typography, theme } from 'antd';
 import { VSeedRender } from 'src/components/Render';
-import { useVBIBuilder } from 'src/hooks';
+import { useConfiguredVSeed, useVBIBuilder } from 'src/hooks';
 import { useTranslation } from 'src/i18n';
 import { useVBIStore } from 'src/model';
 
 export const ChartPanel = () => {
   const vseed = useVBIStore((state) => state.vseed);
+  const configuredVSeed = useConfiguredVSeed(vseed);
   const loading = useVBIStore((state) => state.loading);
   const builder = useVBIStore((state) => state.builder);
   const isEmptyDsl = builder.isEmpty();
@@ -61,7 +62,7 @@ export const ChartPanel = () => {
           />
         </Flex>
       ) : (
-        vseed && <VSeedRender vseed={vseed} />
+        configuredVSeed && <VSeedRender vseed={configuredVSeed} />
       )}
     </Card>
   );

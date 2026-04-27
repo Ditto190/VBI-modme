@@ -1,9 +1,15 @@
 import { APP as StandardAPP } from 'standard';
 import { Drawer, Spin, Typography } from 'antd';
+import { useStandardAppProps } from '../../hooks/useStandardAppProps';
+import { useTranslation } from '../../i18n';
 import { useChartBuilderModel, useReportBuilderModel } from '../../models';
 import { useReportDetailStore } from '../../stores/report-detail.store';
 
+const chartEditorDrawerWidth = 'min(1440px, 92vw)';
+
 export const ReportEditorDrawer = () => {
+  const standardAppProps = useStandardAppProps();
+  const { t } = useTranslation();
   const chartId = useReportDetailStore((state) => state.connectedChartId);
   const closeChartEditor = useReportDetailStore(
     (state) => state.closeChartEditor,
@@ -20,24 +26,31 @@ export const ReportEditorDrawer = () => {
   const title =
     reportSession?.builder
       ?.build()
-      .pages.find((page) => page.id === activePageId)?.title || 'Chart Editor';
+      .pages.find((page) => page.id === activePageId)?.title ||
+    t('charts.editorTitle');
 
   return (
     <Drawer
+      className="report-detail-chart-drawer"
       destroyOnHidden
       open={open}
+      styles={{ body: { overflow: 'hidden', padding: 0 } }}
       title={title}
-      style={{ width: '92vw' }}
+      width={chartEditorDrawerWidth}
       onClose={closeChartEditor}
     >
       <div className="report-detail-editor">
         {chartBuilder ? (
-          <StandardAPP builder={chartBuilder} mode="edit" />
+          <StandardAPP
+            builder={chartBuilder}
+            mode="edit"
+            {...standardAppProps}
+          />
         ) : (
           <div className="report-detail-placeholder">
-            <Spin tip="连接图表编辑器中..." />
+            <Spin tip={t('reportDetail.connectingChartEditor')} />
             <Typography.Text type="secondary">
-              图表协同连接建立后会自动进入编辑态。
+              {t('reportDetail.chartEditorReady')}
             </Typography.Text>
           </div>
         )}

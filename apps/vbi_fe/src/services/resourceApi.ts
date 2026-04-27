@@ -1,5 +1,6 @@
 import { withApiErrorToast } from './apiClient';
 import { platformClient } from './platformClient';
+import { getResourceLabel, tRuntime } from '../i18n';
 import type { ResourceItem, ResourceKind } from '../types';
 
 type ResourceHandleByKind = {
@@ -28,23 +29,23 @@ export const listResources = (kind: ResourceKind) =>
       : kind === 'insight'
         ? platformClient.listInsights()
         : platformClient.listReports()) as Promise<ResourceItem[]>,
-    `加载 ${kind} 列表失败`,
+    tRuntime('api.listFailed', { resource: getResourceLabel(kind) }),
   );
 
 export const createResource = (kind: ResourceKind, name: string) =>
   withApiErrorToast(
     getResourceHandle(kind).create({ name }) as Promise<ResourceItem>,
-    `创建 ${kind} 失败`,
+    tRuntime('api.createFailed', { resource: getResourceLabel(kind) }),
   );
 
 export const renameResource = (kind: ResourceKind, id: string, name: string) =>
   withApiErrorToast(
     getResourceHandle(kind, id).rename(name) as Promise<ResourceItem>,
-    `保存 ${kind} 失败`,
+    tRuntime('api.saveFailed', { resource: getResourceLabel(kind) }),
   );
 
 export const removeResource = (kind: ResourceKind, id: string) =>
   withApiErrorToast(
     getResourceHandle(kind, id).remove() as Promise<ResourceItem>,
-    `删除 ${kind} 失败`,
+    tRuntime('api.deleteFailed', { resource: getResourceLabel(kind) }),
   );

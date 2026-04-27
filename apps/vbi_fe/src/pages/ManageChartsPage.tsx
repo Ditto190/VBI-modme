@@ -1,31 +1,27 @@
 import { APP as StandardAPP } from 'standard';
-import {
-  Button,
-  Drawer,
-  Input,
-  Modal,
-  message,
-  Popconfirm,
-  Space,
-  Typography,
-} from 'antd';
+import { Drawer, Input, Modal, message, Typography } from 'antd';
 import { useEffect } from 'react';
 import type { Key } from 'react';
+import { useTranslation } from '../i18n';
+import { useStandardAppProps } from '../hooks/useStandardAppProps';
 import { useChartBuilderModel } from '../models';
-import type { ResourceItem } from '../types';
 import { getSessionUserName } from '../utils/collaboration';
 import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
 import { useManageChartsStore } from '../stores/manage-charts.store';
-import { matchesResourceSearch } from './manage-resource/state';
+import { matchesResourceSearch } from '../utils/resource-list';
+import { createResourceColumns } from './manage-resource/resource-columns';
 
 const userName = getSessionUserName();
 const chartEditorDrawerWidth = 'min(1440px, 92vw)';
 
 export const ManageChartsPage = () => {
+  const { locale, t } = useTranslation();
+  const standardAppProps = useStandardAppProps();
   const createName = useManageChartsStore((state) => state.createName);
   const createOpen = useManageChartsStore((state) => state.createOpen);
   const editorName = useManageChartsStore((state) => state.editorName);
   const items = useManageChartsStore((state) => state.items);
+  const loading = useManageChartsStore((state) => state.loading);
   const searchText = useManageChartsStore((state) => state.searchText);
   const selectedId = useManageChartsStore((state) => state.selectedId);
   const selectedRowKeys = useManageChartsStore(
@@ -70,41 +66,21 @@ export const ManageChartsPage = () => {
     onChange: (keys: Key[]) => setSelectedRowKeys(keys.map(String)),
   };
 
-  const columns = [
-    {
-      title: '名称',
-      dataIndex: 'name',
-      key: 'name',
-      render: (value: string | null) => value || 'Untitled Chart',
-    },
-    {
-      title: '更新时间',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-      render: (value: string) => new Date(value).toLocaleString(),
-    },
-    {
-      title: '操作',
-      key: 'actions',
-      render: (_: unknown, record: ResourceItem) => (
-        <Space>
-          <Button onClick={() => void openDetail(record.id)}>编辑</Button>
-          <Popconfirm
-            title="删除 chart"
-            onConfirm={async () => deleteOne(record.id)}
-          >
-            <Button danger>删除</Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
+  const columns = createResourceColumns({
+    deleteTitle: t('charts.deleteTitle'),
+    fallbackName: t('charts.untitled'),
+    locale,
+    onEdit: openDetail,
+    onRemove: deleteOne,
+    t,
+  });
 
   return (
     <ManageResourcePageShell
       columns={columns}
-      createLabel="新建 Chart"
+      createLabel={t('charts.create')}
       dataSource={filteredItems}
+      loading={loading}
       onBatchDelete={async () => {
         if (!selectedRowKeys.length) return;
         await deleteSelected();
@@ -116,14 +92,14 @@ export const ManageChartsPage = () => {
       rowSelection={rowSelection}
       searchText={searchText}
       selectedRowKeys={selectedRowKeys}
-      title="Charts"
+      title={t('charts.title')}
     >
       <Modal
         open={createOpen}
-        title="新建 Chart"
+        title={t('charts.createTitle')}
         onOk={async () => {
           if (!createName.trim()) {
-            message.warning('请输入图表名称');
+            message.warning(t('charts.nameRequired'));
             return;
           }
           await create();
@@ -138,21 +114,21 @@ export const ManageChartsPage = () => {
       <Drawer
         width={chartEditorDrawerWidth}
         open={!!selectedId}
-        title={editorName || 'Chart Editor'}
+        title={editorName || t('charts.editorTitle')}
         onClose={() => void closeDetail()}
       >
         <Input
           style={{ marginBottom: 16 }}
           value={editorName}
           onChange={(event) => setEditorName(event.target.value)}
-          placeholder="Chart Name"
+          placeholder={t('charts.namePlaceholder')}
           onBlur={() => void renameSelected()}
           onPressEnter={() => void renameSelected()}
         />
         {builder ? (
-          <StandardAPP builder={builder} mode="edit" />
+          <StandardAPP builder={builder} mode="edit" {...standardAppProps} />
         ) : (
-          <Typography.Text>连接图表中...</Typography.Text>
+          <Typography.Text>{t('charts.connecting')}</Typography.Text>
         )}
       </Drawer>
     </ManageResourcePageShell>

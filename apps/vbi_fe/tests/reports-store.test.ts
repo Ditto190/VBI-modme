@@ -1,8 +1,6 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core';
-import {
-  getReportsSnapshot,
-  useReportsStore,
-} from '../src/stores/reports.store';
+import { useReportsStore } from '../src/stores/reports.store';
+import { getReportsSnapshot } from '../src/stores/reports.snapshot';
 import { useNavigationStore } from '../src/stores/navigation.store';
 
 rs.mock('../src/services/resourceApi', () => ({
@@ -21,6 +19,12 @@ const mockedListResources = resourceApi.listResources as unknown as {
 const mockedCreateResource = resourceApi.createResource as unknown as {
   mockResolvedValue(value: unknown): void;
 };
+const createReportItem = (id: string, name: string) => ({
+  id,
+  name,
+  createdAt: '2024-01-01T00:00:00.000Z',
+  updatedAt: '2024-01-02T00:00:00.000Z',
+});
 
 describe('reports store', () => {
   beforeEach(() => {
@@ -31,12 +35,7 @@ describe('reports store', () => {
 
   test('load stores fetched report items', async () => {
     mockedListResources.mockResolvedValue([
-      {
-        id: 'report-1',
-        name: 'Sales Report',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        updatedAt: '2024-01-02T00:00:00.000Z',
-      },
+      createReportItem('report-1', 'Sales Report'),
     ]);
 
     await useReportsStore.getState().load();
@@ -64,7 +63,7 @@ describe('reports store', () => {
       'report',
       'Revenue',
     );
-    expect(navigate).toHaveBeenCalledWith('/reports/report-2');
+    expect(navigate).toHaveBeenCalledWith('/manage/reports/report-2');
     expect(getReportsSnapshot().createName).toBe('');
     expect(getReportsSnapshot().isCreateOpen).toBe(false);
   });

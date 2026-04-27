@@ -36,6 +36,10 @@ export class ThemeBuilder {
    * @param theme - 主题名称
    */
   setTheme(theme: string) {
+    if (this.getTheme() === theme) {
+      return
+    }
+
     this.dsl.set('theme', theme)
   }
 

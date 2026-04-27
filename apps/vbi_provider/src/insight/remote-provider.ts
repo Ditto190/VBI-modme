@@ -4,6 +4,7 @@ import { createRemoteBuilderCore } from '../remote/builder-provider'
 import type {
   InsightDetail,
   InsightProvider,
+  InsightResponse,
   InsightSummary,
   InsightUpdateInput,
   VBIProviderClientOptions,
@@ -21,7 +22,18 @@ export const createRemoteInsightProvider = (config: VBIProviderClientOptions, re
     createBuilder: (doc) => new VBIInsightBuilder(doc),
     resourceId,
   })
-  const getDetail = async (): Promise<InsightDetail> => core.getLocalDetail()
+  const getRemoteDetail = async (): Promise<InsightDetail> => {
+    const resource = (await core.api.getResponse()) as InsightResponse
+    return {
+      ...resource,
+      dsl: {
+        content: resource.content ?? '',
+        uuid: resource.id,
+        version: 0,
+      },
+    }
+  }
+  const getDetail = async (): Promise<InsightDetail> => (core.state.builder ? core.getLocalDetail() : getRemoteDetail())
 
   return {
     getResourceId: core.getResourceId,

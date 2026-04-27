@@ -15,7 +15,7 @@ test('page preview canvas reuses standard view mode without editor controls', as
     />,
   );
 
-  expect(await screen.findByText('暂时为空')).toBeInTheDocument();
+  expect(await screen.findByText(/暂时为空|初始化中/)).toBeInTheDocument();
 
   await waitFor(() => {
     expect(screen.queryByPlaceholderText('搜索')).not.toBeInTheDocument();

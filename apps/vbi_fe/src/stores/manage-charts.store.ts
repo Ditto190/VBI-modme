@@ -5,11 +5,13 @@ import {
   removeResource,
   renameResource,
 } from '../services/resourceApi';
+import { tRuntime } from '../i18n';
 import {
   releaseResourceSession,
   connectResourceSession,
 } from './resource-session.store';
 import type { ResourceItem } from '../types';
+import { getFilteredResourceIds } from '../utils/resource-list';
 
 type ManageChartsState = {
   createName: string;
@@ -40,7 +42,8 @@ type ManageChartsState = {
   setSelectedRowKeys(selectedRowKeys: string[]): void;
 };
 
-const getNextChartName = (name: string) => name.trim() || 'Untitled Chart';
+const getNextChartName = (name: string) =>
+  name.trim() || tRuntime('charts.untitled');
 
 export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
   createName: '',
@@ -116,7 +119,8 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
     }
     set({
       editorName:
-        items.find((item) => item.id === id)?.name || 'Untitled Chart',
+        items.find((item) => item.id === id)?.name ||
+        tRuntime('charts.untitled'),
       selectedId: id,
     });
     await connectResourceSession('chart', id, userName);
@@ -134,15 +138,7 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
   },
   selectAllFiltered: () =>
     set((state) => ({
-      selectedRowKeys: state.items
-        .filter((item) => {
-          const query = state.searchText.trim().toLowerCase();
-          if (!query) return true;
-          return [item.id, item.name ?? ''].some((field) =>
-            field.toLowerCase().includes(query),
-          );
-        })
-        .map((item) => item.id),
+      selectedRowKeys: getFilteredResourceIds(state.items, state.searchText),
     })),
   setCreateName: (createName) => set({ createName }),
   setEditorName: (editorName) => set({ editorName }),

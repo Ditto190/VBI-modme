@@ -1,13 +1,16 @@
-import { Button, Input, Space, Table, Typography } from 'antd';
-import type { Key, ReactNode } from 'react';
+import { Table } from 'antd';
 import type { TableProps } from 'antd';
+import type { Key, ReactNode } from 'react';
+import { useTranslation } from '../../i18n';
 import type { ResourceItem } from '../../types';
+import { ManageResourceToolbar } from './ManageResourceToolbar';
 
 type Props = {
   children?: ReactNode;
   columns: TableProps<ResourceItem>['columns'];
   createLabel: string;
   dataSource: ResourceItem[];
+  loading?: boolean;
   onBatchDelete: () => void;
   onClearSelection: () => void;
   onCreate: () => void;
@@ -24,6 +27,7 @@ export const ManageResourcePageShell = ({
   columns,
   createLabel,
   dataSource,
+  loading = false,
   onBatchDelete,
   onClearSelection,
   onCreate,
@@ -33,51 +37,46 @@ export const ManageResourcePageShell = ({
   searchText,
   selectedRowKeys,
   title,
-}: Props) => (
-  <div style={{ padding: 24 }}>
-    <Space
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: 16,
-        alignItems: 'start',
-      }}
-    >
-      <Space orientation="vertical" size={8} style={{ flex: 1 }}>
-        <Typography.Title level={2} style={{ margin: 0 }}>
-          {title}
-        </Typography.Title>
-        <Input.Search
-          allowClear
-          placeholder="搜索名称或 ID"
-          style={{ maxWidth: 360 }}
-          value={searchText}
-          onChange={(event) => onSearchTextChange(event.target.value)}
+}: Props) => {
+  const { t } = useTranslation();
+
+  return (
+    <section className="manage-page">
+      <header className="manage-page-header">
+        <h1 className="manage-title">{title}</h1>
+        <div className="manage-stats">
+          <div className="manage-stat">
+            <div className="manage-stat-value">{dataSource.length}</div>
+            <div className="manage-stat-label">{t('common.visible')}</div>
+          </div>
+          <div className="manage-stat">
+            <div className="manage-stat-value">{selectedRowKeys.length}</div>
+            <div className="manage-stat-label">{t('common.selected')}</div>
+          </div>
+        </div>
+      </header>
+      <ManageResourceToolbar
+        createLabel={createLabel}
+        onBatchDelete={onBatchDelete}
+        onClearSelection={onClearSelection}
+        onCreate={onCreate}
+        onSearchTextChange={onSearchTextChange}
+        onSelectAllFiltered={onSelectAllFiltered}
+        searchText={searchText}
+        selectedRowKeys={selectedRowKeys}
+      />
+      <div className="manage-table">
+        <Table
+          rowKey="id"
+          dataSource={dataSource}
+          columns={columns}
+          loading={loading}
+          locale={{ emptyText: t('common.noData') }}
+          pagination={{ pageSize: 8, showSizeChanger: false }}
+          rowSelection={rowSelection}
         />
-      </Space>
-      <Space wrap>
-        <Button onClick={onSelectAllFiltered}>全选筛选结果</Button>
-        <Button onClick={onClearSelection} disabled={!selectedRowKeys.length}>
-          取消选择
-        </Button>
-        <Button
-          danger
-          disabled={!selectedRowKeys.length}
-          onClick={onBatchDelete}
-        >
-          批量删除
-        </Button>
-        <Button type="primary" onClick={onCreate}>
-          {createLabel}
-        </Button>
-      </Space>
-    </Space>
-    <Table
-      rowKey="id"
-      dataSource={dataSource}
-      columns={columns}
-      rowSelection={rowSelection}
-    />
-    {children}
-  </div>
-);
+      </div>
+      {children}
+    </section>
+  );
+};

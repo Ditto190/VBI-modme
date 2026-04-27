@@ -20,7 +20,7 @@ describe('debug bridge', () => {
 
   test('dump returns the current store snapshots', () => {
     const bridge = createDebugBridge();
-    useNavigationStore.getState().setPathname('/reports');
+    useNavigationStore.getState().setPathname('/manage/reports');
     useReportsStore.setState({
       items: [
         {
@@ -34,7 +34,7 @@ describe('debug bridge', () => {
 
     const dump = bridge.dump();
 
-    expect(dump.navigation).toEqual({ pathname: '/reports' });
+    expect(dump.navigation).toEqual({ pathname: '/manage/reports' });
     expect((dump.reports as { items: { id: string }[] }).items[0]?.id).toBe(
       'report-1',
     );

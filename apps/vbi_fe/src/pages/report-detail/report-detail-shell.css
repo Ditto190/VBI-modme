@@ -1,0 +1,27 @@
+.report-detail-content {
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.report-detail-shell {
+  display: grid;
+  flex: 1;
+  gap: 24px;
+  min-height: 0;
+  height: 100%;
+  padding: 28px;
+  grid-template-columns: 272px minmax(0, 1fr);
+}
+
+.report-detail-placeholder,
+.report-detail-empty {
+  display: flex;
+  gap: 12px;
+  min-height: 260px;
+  color: var(--report-muted);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

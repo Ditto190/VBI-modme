@@ -45,6 +45,9 @@ describe('ThemeBuilder', () => {
     expect(builder.theme.toJSON()).toBe('dark')
     expect(callCount).toBe(1)
 
+    builder.theme.setTheme('dark')
+    expect(callCount).toBe(1)
+
     unobserve()
     builder.theme.setTheme('light')
     expect(callCount).toBe(1)
@@ -69,6 +72,9 @@ describe('LocaleBuilder', () => {
     builder.locale.setLocale('en-US')
     expect(builder.locale.getLocale()).toBe('en-US')
     expect(builder.locale.toJSON()).toBe('en-US')
+    expect(callCount).toBe(1)
+
+    builder.locale.setLocale('en-US')
     expect(callCount).toBe(1)
 
     unobserve()

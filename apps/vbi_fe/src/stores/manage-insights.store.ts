@@ -5,11 +5,13 @@ import {
   fetchInsights,
   updateInsight,
 } from '../services/insightApi';
+import { tRuntime } from '../i18n';
 import {
   connectResourceSession,
   releaseResourceSession,
 } from './resource-session.store';
 import type { ResourceItem } from '../types';
+import { getFilteredResourceIds } from '../utils/resource-list';
 
 type ManageInsightsState = {
   createContent: string;
@@ -42,7 +44,8 @@ type ManageInsightsState = {
   setSelectedRowKeys(selectedRowKeys: string[]): void;
 };
 
-const getNextInsightName = (name: string) => name.trim() || 'Untitled Insight';
+const getNextInsightName = (name: string) =>
+  name.trim() || tRuntime('insights.untitled');
 
 export const useManageInsightsStore = create<ManageInsightsState>(
   (set, get) => ({
@@ -124,7 +127,8 @@ export const useManageInsightsStore = create<ManageInsightsState>(
       }
       set({
         editorName:
-          items.find((item) => item.id === id)?.name || 'Untitled Insight',
+          items.find((item) => item.id === id)?.name ||
+          tRuntime('insights.untitled'),
         selectedId: id,
       });
       await connectResourceSession('insight', id, userName);
@@ -140,15 +144,7 @@ export const useManageInsightsStore = create<ManageInsightsState>(
     },
     selectAllFiltered: () =>
       set((state) => ({
-        selectedRowKeys: state.items
-          .filter((item) => {
-            const query = state.searchText.trim().toLowerCase();
-            if (!query) return true;
-            return [item.id, item.name ?? ''].some((field) =>
-              field.toLowerCase().includes(query),
-            );
-          })
-          .map((item) => item.id),
+        selectedRowKeys: getFilteredResourceIds(state.items, state.searchText),
       })),
     setCreateContent: (createContent) => set({ createContent }),
     setCreateName: (createName) => set({ createName }),

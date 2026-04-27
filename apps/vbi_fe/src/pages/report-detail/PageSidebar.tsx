@@ -1,12 +1,19 @@
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Popconfirm } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { useTranslation } from '../../i18n';
 import { useReportBuilderModel } from '../../models';
 import { useReportDetailStore } from '../../stores/report-detail.store';
+import { PageSidebarItem } from './PageSidebarItem';
 
 export const PageSidebar = () => {
+  const { t } = useTranslation();
   const activePageId = useReportDetailStore((state) => state.activePageId);
   const busy = useReportDetailStore((state) => state.pageActionBusy);
   const addPage = useReportDetailStore((state) => state.addPage);
+  const addChart = useReportDetailStore((state) => state.addChart);
+  const addInsight = useReportDetailStore((state) => state.addInsight);
+  const removeChart = useReportDetailStore((state) => state.removeChart);
+  const removeInsight = useReportDetailStore((state) => state.removeInsight);
   const removePage = useReportDetailStore((state) => state.removePage);
   const reportId = useReportDetailStore((state) => state.reportId);
   const selectPage = useReportDetailStore((state) => state.selectPage);
@@ -19,43 +26,19 @@ export const PageSidebar = () => {
     <section className="report-detail-filmstrip">
       <div className="report-detail-page-list">
         {pages.map((page, index) => (
-          <article
+          <PageSidebarItem
             key={page.id}
-            className={`report-detail-page-card${page.id === activePageId ? ' is-active' : ''}`}
-            role="button"
-            tabIndex={0}
-            onClick={() => void selectPage(page.id)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                void selectPage(page.id);
-              }
-            }}
-          >
-            <span className="report-detail-page-index">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <div className="report-detail-page-title">{page.title}</div>
-            <Popconfirm
-              disabled={pages.length <= 1}
-              title="删除当前页面"
-              onConfirm={(event) => {
-                event?.stopPropagation();
-                return removePage(page.id);
-              }}
-            >
-              <Button
-                className="report-detail-page-delete"
-                danger
-                disabled={pages.length <= 1}
-                icon={<DeleteOutlined />}
-                shape="circle"
-                size="small"
-                type="text"
-                onClick={(event) => event.stopPropagation()}
-              />
-            </Popconfirm>
-          </article>
+            activePageId={activePageId}
+            index={index}
+            page={page}
+            pageCount={pages.length}
+            addChart={addChart}
+            addInsight={addInsight}
+            removeChart={removeChart}
+            removeInsight={removeInsight}
+            removePage={removePage}
+            selectPage={selectPage}
+          />
         ))}
       </div>
       <div className="report-detail-filmstrip-actions">
@@ -64,11 +47,12 @@ export const PageSidebar = () => {
           icon={<PlusOutlined />}
           loading={busy}
           size="large"
-          shape="circle"
           type="primary"
           variant="filled"
           onClick={() => void addPage()}
-        />
+        >
+          {t('reportDetail.newPage')}
+        </Button>
       </div>
     </section>
   );

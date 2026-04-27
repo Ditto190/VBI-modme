@@ -31,3 +31,19 @@ test('APP hides editor controls in view mode', async () => {
     expect(screen.queryByPlaceholderText('搜索')).not.toBeInTheDocument();
   });
 });
+
+test('APP can hide internal locale and theme controls', async () => {
+  render(
+    <APP
+      builder={createDefaultBuilder()}
+      hideLocale
+      hideTheme
+      locale="en-US"
+      theme="dark"
+    />,
+  );
+
+  expect(await screen.findByPlaceholderText('Search')).toBeInTheDocument();
+  expect(screen.queryByText('EN')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('sun')).not.toBeInTheDocument();
+});

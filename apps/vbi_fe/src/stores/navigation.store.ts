@@ -17,7 +17,7 @@ export const useNavigationStore = create<NavigationState>((set, get) => ({
     get().navigate?.(path);
   },
   openReport: (id) => {
-    get().go(`/reports/${id}`);
+    get().go(`/manage/reports/${id}`);
   },
   setNavigate: (navigate) => set({ navigate }),
   setPathname: (pathname) => set({ pathname }),

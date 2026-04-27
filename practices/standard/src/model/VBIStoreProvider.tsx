@@ -5,6 +5,7 @@ import {
   useRef,
   type PropsWithChildren,
 } from 'react';
+import type { DemoLocale, DemoTheme } from 'src/constants/builder';
 import { useStore } from 'zustand';
 import {
   createVBIStore,
@@ -12,15 +13,35 @@ import {
   type VBIStoreState,
 } from './VBIStore';
 
-const VBIStoreContext = createContext<VBIStoreApi | null>(null);
+export type VBIStoreConfig = {
+  hideLocale: boolean;
+  hideTheme: boolean;
+  locale?: DemoLocale;
+  theme?: DemoTheme;
+};
+
+type VBIStoreContextValue = {
+  config: VBIStoreConfig;
+  store: VBIStoreApi;
+};
+
+const VBIStoreContext = createContext<VBIStoreContextValue | null>(null);
 
 type VBIStoreProviderProps = PropsWithChildren<{
   builder?: VBIChartBuilder;
+  hideLocale?: boolean;
+  hideTheme?: boolean;
+  locale?: DemoLocale;
+  theme?: DemoTheme;
 }>;
 
 export const VBIStoreProvider = ({
   builder,
   children,
+  hideLocale = false,
+  hideTheme = false,
+  locale,
+  theme,
 }: VBIStoreProviderProps) => {
   const storeRef = useRef<VBIStoreApi | null>(null);
 
@@ -29,7 +50,12 @@ export const VBIStoreProvider = ({
   }
 
   return (
-    <VBIStoreContext.Provider value={storeRef.current}>
+    <VBIStoreContext.Provider
+      value={{
+        config: { hideLocale, hideTheme, locale, theme },
+        store: storeRef.current,
+      }}
+    >
       {children}
     </VBIStoreContext.Provider>
   );
@@ -42,5 +68,15 @@ export const useVBIStore = <T,>(selector: (state: VBIStoreState) => T) => {
     throw new Error('useVBIStore must be used within VBIStoreProvider');
   }
 
-  return useStore(store, selector);
+  return useStore(store.store, selector);
+};
+
+export const useVBIStoreConfig = () => {
+  const store = useContext(VBIStoreContext);
+
+  if (!store) {
+    throw new Error('useVBIStoreConfig must be used within VBIStoreProvider');
+  }
+
+  return store.config;
 };

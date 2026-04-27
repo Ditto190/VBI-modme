@@ -1,21 +1,24 @@
-import { Button, Drawer, Input, Modal, Popconfirm, Space, message } from 'antd';
+import { Button, Drawer, Input, Modal, Space, message } from 'antd';
 import { useEffect } from 'react';
+import { useTranslation } from '../i18n';
 import { useInsightBuilderModel } from '../models';
 import { useManageInsightsStore } from '../stores/manage-insights.store';
 import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import { matchesResourceSearch } from './manage-resource/state';
-import type { ResourceItem } from '../types';
+import { matchesResourceSearch } from '../utils/resource-list';
 import { getSessionUserName } from '../utils/collaboration';
+import { createResourceColumns } from './manage-resource/resource-columns';
 
 const userName = getSessionUserName();
 const insightEditorDrawerWidth = 'min(720px, 92vw)';
 
 export const ManageInsightsPage = () => {
+  const { locale, t } = useTranslation();
   const createContent = useManageInsightsStore((state) => state.createContent);
   const createName = useManageInsightsStore((state) => state.createName);
   const createOpen = useManageInsightsStore((state) => state.createOpen);
   const editorName = useManageInsightsStore((state) => state.editorName);
   const items = useManageInsightsStore((state) => state.items);
+  const loading = useManageInsightsStore((state) => state.loading);
   const searchText = useManageInsightsStore((state) => state.searchText);
   const selectedId = useManageInsightsStore((state) => state.selectedId);
   const selectedRowKeys = useManageInsightsStore(
@@ -65,41 +68,21 @@ export const ManageInsightsPage = () => {
     };
   }, [bootstrap, dispose]);
 
-  const columns = [
-    {
-      title: '名称',
-      dataIndex: 'name',
-      key: 'name',
-      render: (value: string | null) => value || 'Untitled Insight',
-    },
-    {
-      title: '更新时间',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-      render: (value: string) => new Date(value).toLocaleString(),
-    },
-    {
-      title: '操作',
-      key: 'actions',
-      render: (_: unknown, record: ResourceItem) => (
-        <Space>
-          <Button onClick={() => void openDetail(record.id)}>编辑</Button>
-          <Popconfirm
-            title="删除 insight"
-            onConfirm={async () => deleteOne(record.id)}
-          >
-            <Button danger>删除</Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
+  const columns = createResourceColumns({
+    deleteTitle: t('insights.deleteTitle'),
+    fallbackName: t('insights.untitled'),
+    locale,
+    onEdit: openDetail,
+    onRemove: deleteOne,
+    t,
+  });
 
   return (
     <ManageResourcePageShell
       columns={columns}
-      createLabel="新建 Insight"
+      createLabel={t('insights.create')}
       dataSource={filteredItems}
+      loading={loading}
       onBatchDelete={async () => {
         if (!selectedRowKeys.length) return;
         await deleteSelected();
@@ -114,14 +97,14 @@ export const ManageInsightsPage = () => {
       }}
       searchText={searchText}
       selectedRowKeys={selectedRowKeys}
-      title="Insights"
+      title={t('insights.title')}
     >
       <Modal
         open={createOpen}
-        title="新建 Insight"
+        title={t('insights.createTitle')}
         onOk={async () => {
           if (!createName.trim()) {
-            message.warning('请输入 Insight 标题');
+            message.warning(t('insights.nameRequired'));
             return;
           }
           await create();
@@ -131,13 +114,13 @@ export const ManageInsightsPage = () => {
         <Space direction="vertical" style={{ width: '100%' }} size={12}>
           <Input
             value={createName}
-            placeholder="标题"
+            placeholder={t('insights.titlePlaceholder')}
             onChange={(event) => setCreateName(event.target.value)}
           />
           <Input.TextArea
             rows={6}
             value={createContent}
-            placeholder="正文"
+            placeholder={t('insights.contentPlaceholder')}
             onChange={(event) => setCreateContent(event.target.value)}
           />
         </Space>
@@ -145,14 +128,18 @@ export const ManageInsightsPage = () => {
       <Drawer
         width={insightEditorDrawerWidth}
         open={!!selectedId}
-        title={editorName || 'Insight Editor'}
+        title={editorName || t('insights.editorTitle')}
         onClose={() => void closeDetail()}
-        extra={<Button onClick={() => void closeDetail()}>关闭</Button>}
+        extra={
+          <Button onClick={() => void closeDetail()}>
+            {t('common.close')}
+          </Button>
+        }
       >
         <Space direction="vertical" style={{ width: '100%' }} size={12}>
           <Input
             value={editorName}
-            placeholder="标题"
+            placeholder={t('insights.titlePlaceholder')}
             onChange={(event) => setEditorName(event.target.value)}
             onBlur={() => void renameSelected()}
             onPressEnter={() => void renameSelected()}
@@ -160,7 +147,7 @@ export const ManageInsightsPage = () => {
           <Input.TextArea
             autoSize={{ minRows: 10, maxRows: 20 }}
             value={insightContent}
-            placeholder="输入正文，内容会实时同步"
+            placeholder={t('insights.editContentPlaceholder')}
             onChange={(event) => {
               insightSession?.builder?.setContent(event.target.value);
             }}

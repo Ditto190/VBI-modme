@@ -1,0 +1,99 @@
+@media (max-width: 1100px) {
+  .manage-page-header,
+  .manage-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .manage-toolbar .ant-space {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .manage-search {
+    flex: none;
+    width: 100%;
+    max-width: none;
+  }
+
+  .manage-search .ant-input-search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .manage-layout.ant-layout {
+    flex-direction: column !important;
+  }
+
+  .manage-sider.ant-layout-sider {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    border-right: 0;
+    border-bottom: 1px solid #e6eaf2;
+  }
+
+  [data-theme='dark'] .manage-sider.ant-layout-sider {
+    border-bottom-color: #1f2937;
+  }
+
+  .manage-brand {
+    padding: 18px 16px 10px;
+  }
+
+  .manage-menu.ant-menu {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 12px 12px;
+  }
+
+  .manage-preferences {
+    width: fit-content;
+    max-width: calc(100% - 24px);
+    margin: 0 12px 12px;
+  }
+
+  .manage-menu .ant-menu-item {
+    flex: 0 0 auto;
+    width: auto;
+    padding-inline: 14px;
+  }
+
+  .manage-content {
+    flex: 0 0 auto !important;
+    width: 100vw;
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  .manage-page-header {
+    min-width: calc(100vw - 32px);
+    justify-content: flex-start;
+    padding: 16px;
+  }
+
+  .manage-toolbar,
+  .manage-table {
+    min-width: calc(100vw - 32px);
+  }
+
+  .manage-toolbar {
+    justify-content: flex-start;
+  }
+
+  .manage-title {
+    font-size: 26px;
+  }
+
+  .manage-stats {
+    width: 100%;
+  }
+
+  .manage-stat {
+    flex: 1;
+  }
+}

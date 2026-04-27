@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { ReportPageBuilder } from '@visactor/vbi';
 import { createInsight } from '../services/insightApi';
 import { createResource } from '../services/resourceApi';
 import { useInsightBuilderModel, useReportBuilderModel } from '../models';
@@ -25,6 +26,10 @@ type ReportDetailState = {
   dispose(): Promise<void>;
   openChartEditor(): void;
   openInsightEditor(): void;
+  addChart(pageId: string): Promise<void>;
+  addInsight(pageId: string): Promise<void>;
+  removeChart(pageId?: string): Promise<void>;
+  removeInsight(pageId?: string): Promise<void>;
   removePage(pageId: string): Promise<void>;
   selectPage(pageId: string): Promise<void>;
   setInsightContent(value: string): void;
@@ -46,26 +51,42 @@ const getActivePage = (reportId: string, activePageId: string) =>
 
 const getNextPageTitle = (pages: ReportPage[]) => `Page ${pages.length + 1}`;
 
+const updatePageResource = (
+  reportId: string,
+  pageId: string,
+  callback: (page: ReportPageBuilder) => void,
+) => {
+  getReportBuilder(reportId)?.page.update(pageId, callback);
+};
+
 const syncActiveResources = async (state: ReportDetailState) => {
   const activePage = getActivePage(state.reportId, state.activePageId);
   const nextChartId = activePage?.chartId ?? '';
   const nextInsightId = activePage?.insightId ?? '';
-  if (state.connectedChartId && state.connectedChartId !== nextChartId) {
-    await releaseResourceSession('chart', state.connectedChartId);
+  const chartChanged = state.connectedChartId !== nextChartId;
+  const insightChanged = state.connectedInsightId !== nextInsightId;
+
+  if (chartChanged || insightChanged) {
+    useReportDetailStore.setState({
+      connectedChartId: nextChartId,
+      connectedInsightId: nextInsightId,
+    });
   }
-  if (state.connectedInsightId && state.connectedInsightId !== nextInsightId) {
-    await releaseResourceSession('insight', state.connectedInsightId);
-  }
-  if (nextChartId && nextChartId !== state.connectedChartId) {
-    await connectResourceSession('chart', nextChartId, state.userName);
-  }
-  if (nextInsightId && nextInsightId !== state.connectedInsightId) {
-    await connectResourceSession('insight', nextInsightId, state.userName);
-  }
-  useReportDetailStore.setState({
-    connectedChartId: nextChartId,
-    connectedInsightId: nextInsightId,
-  });
+
+  await Promise.all([
+    state.connectedChartId && chartChanged
+      ? releaseResourceSession('chart', state.connectedChartId)
+      : Promise.resolve(),
+    state.connectedInsightId && insightChanged
+      ? releaseResourceSession('insight', state.connectedInsightId)
+      : Promise.resolve(),
+    nextChartId && chartChanged
+      ? connectResourceSession('chart', nextChartId, state.userName)
+      : Promise.resolve(),
+    nextInsightId && insightChanged
+      ? connectResourceSession('insight', nextInsightId, state.userName)
+      : Promise.resolve(),
+  ]);
 };
 
 export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
@@ -140,11 +161,83 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   },
   openChartEditor: () => set({ chartEditorOpen: true }),
   openInsightEditor: () => set({ insightEditorOpen: true }),
+  addChart: async (pageId) => {
+    const state = get();
+    const page = getActivePage(state.reportId, pageId);
+    if (!page || page.chartId) return;
+    set({ pageActionBusy: true });
+    try {
+      const chart = await createResource('chart', `${page.title} Chart`);
+      updatePageResource(state.reportId, pageId, (builder) => {
+        builder.setChartId(chart.id);
+      });
+      await get().syncActivePage();
+    } finally {
+      set({ pageActionBusy: false });
+    }
+  },
+  addInsight: async (pageId) => {
+    const state = get();
+    const page = getActivePage(state.reportId, pageId);
+    if (!page || page.insightId) return;
+    set({ pageActionBusy: true });
+    try {
+      const insight = await createInsight({
+        content: '',
+        name: `${page.title} Insight`,
+      });
+      updatePageResource(state.reportId, pageId, (builder) => {
+        builder.setInsightId(insight.id);
+      });
+      await get().syncActivePage();
+    } finally {
+      set({ pageActionBusy: false });
+    }
+  },
+  removeChart: async (pageId) => {
+    const state = get();
+    const targetPageId = pageId ?? state.activePageId;
+    const page = getActivePage(state.reportId, targetPageId);
+    if (!page?.chartId) return;
+    set({ pageActionBusy: true });
+    try {
+      updatePageResource(state.reportId, targetPageId, (builder) => {
+        builder.setChartId('');
+      });
+      if (targetPageId === state.activePageId) set({ chartEditorOpen: false });
+      await get().syncActivePage();
+    } finally {
+      set({ pageActionBusy: false });
+    }
+  },
+  removeInsight: async (pageId) => {
+    const state = get();
+    const targetPageId = pageId ?? state.activePageId;
+    const page = getActivePage(state.reportId, targetPageId);
+    if (!page?.insightId) return;
+    set({ pageActionBusy: true });
+    try {
+      updatePageResource(state.reportId, targetPageId, (builder) => {
+        builder.setInsightId('');
+      });
+      if (targetPageId === state.activePageId) {
+        set({ insightEditorOpen: false });
+      }
+      await get().syncActivePage();
+    } finally {
+      set({ pageActionBusy: false });
+    }
+  },
   removePage: async (pageId) => {
     const reportBuilder = getReportBuilder(get().reportId);
     if (!reportBuilder) return;
-    reportBuilder.page.remove(pageId);
-    await get().syncActivePage();
+    set({ pageActionBusy: true });
+    try {
+      reportBuilder.page.remove(pageId);
+      await get().syncActivePage();
+    } finally {
+      set({ pageActionBusy: false });
+    }
   },
   selectPage: async (pageId) => {
     set({
