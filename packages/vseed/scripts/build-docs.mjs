@@ -150,12 +150,16 @@ class DocsGenerator {
     const name = node.getName()
     if (name.startsWith('[Symbol')) return ''
 
+    const visitKey = `${node.getSourceFile().getFilePath()}:${node.getStart()}`
+    const visitedNames = new Set([...visited].filter((item) => !item.includes(':')))
+
     // Prevent recursion loops and excessive nesting
-    if (level > 10 || visited.has(name)) return ''
+    if (level > 10 || visited.has(visitKey)) return ''
     // Specific logic to stop recursion for children of measures
-    if (visited.has('measures') && visited.has('children')) return ''
+    if (visitedNames.has('measures') && visitedNames.has('children')) return ''
 
     const nextVisited = new Set(visited)
+    nextVisited.add(visitKey)
     nextVisited.add(name)
 
     const jsDocs = node.getJsDocs()

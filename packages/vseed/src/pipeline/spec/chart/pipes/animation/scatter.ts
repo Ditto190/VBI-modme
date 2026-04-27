@@ -1,5 +1,5 @@
 import type { ScatterAppearConfig, ScatterLoopConfig, ScatterUpdateConfig } from './types'
-import { allowAnimation, EFFECT_NONE, getPrimaryEffect, toMs, atmoPoint } from './utils'
+import { allowAnimation, EFFECT_NONE, getPrimaryEffect, toMs, atmospherePoint } from './utils'
 import { flyInScatter, scaleInScatter } from './utils/scatter'
 
 /**
@@ -33,7 +33,7 @@ export const scatterAppear = (config: ScatterAppearConfig | undefined) => {
  * 1. growth/scale: 点循环动画
  * 效果：复用飞入或缩放动画形成循环。
  * 编排逻辑：startTime = appear 存在 ? interval : 0, 有 loop 时 loopDuration = 1s, 执行后等待 interval + 1s。
- * 2. atmo: 点氛围动画
+ * 2. atmosphere: 点氛围动画
  * 效果：point 执行 breath/reveal/ripple 等氛围效果。
  * 编排逻辑：有 loop 时持续 1s, 无 loop 时持续 2s, 一轮结束后等待 interval。
  */
@@ -45,7 +45,7 @@ export const scatterLoop = (config: ScatterLoopConfig | undefined, ignoreFirstNo
   const startTime = ignoreFirstNormal ? toMs(interval) : 0
   const effect = getPrimaryEffect(config.loop)
   const loopDuration = effect === EFFECT_NONE ? 0 : 1000
-  const atmoDuration = effect === EFFECT_NONE ? 2000 : 1000
+  const atmosphereDuration = effect === EFFECT_NONE ? 2000 : 1000
   const result: any[] = []
 
   if (effect === 'growth') {
@@ -54,14 +54,14 @@ export const scatterLoop = (config: ScatterLoopConfig | undefined, ignoreFirstNo
     result.push(...scaleInScatter(loopDuration, config.loop?.ease, true, startTime, toMs(interval + 1)))
   }
 
-  if ((config.atmo?.effect ?? EFFECT_NONE) !== EFFECT_NONE) {
+  if ((config.atmosphere?.effect ?? EFFECT_NONE) !== EFFECT_NONE) {
     result.push({
       loop: true,
       startTime,
       delayAfter: toMs(interval),
-      duration: atmoDuration,
-      easing: config.atmo?.ease,
-      ...atmoPoint(config.atmo?.effect),
+      duration: atmosphereDuration,
+      easing: config.atmosphere?.ease,
+      ...atmospherePoint(config.atmosphere?.effect),
       controlOptions: { immediatelyApply: false },
     })
   }

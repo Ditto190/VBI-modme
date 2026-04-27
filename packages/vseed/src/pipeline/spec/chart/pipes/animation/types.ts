@@ -26,12 +26,12 @@ export type EffectConfig<E extends AnimationEffect> = {
 }
 
 export type AnimationEffectConfig = EffectConfig<AnimationEffect>
-export type AtmoConfig<E extends AnimationEffect = never> = { effect?: E; ease?: string; color?: string }
+export type AtmosphereConfig<E extends AnimationEffect = never> = { effect?: E; ease?: string; color?: string }
 export type LoopConfig<LE extends AnimationEffect, AE extends AnimationEffect = never> = {
   enable?: boolean
   interval?: number
   loop?: EffectConfig<LE>
-  atmo?: AtmoConfig<AE>
+  atmosphere?: AtmosphereConfig<AE>
 }
 export type AnimationLoopConfig = LoopConfig<AnimationEffect, AnimationEffect>
 
@@ -59,7 +59,11 @@ export type PieLikeLoopConfig = LoopConfig<'enlarge' | 'relocate'>
 
 export type RadarAppearConfig = EffectConfig<'radial' | 'scale'>
 export type RadarUpdateConfig = EffectConfig<'growth'>
-export type RadarLoopConfig = { enable?: boolean; interval?: number; atmo?: AtmoConfig<'ripple' | 'reveal' | 'breath'> }
+export type RadarLoopConfig = {
+  enable?: boolean
+  interval?: number
+  atmosphere?: AtmosphereConfig<'ripple' | 'reveal' | 'breath'>
+}
 
 // 堆叠/百分比/并列条、柱图
 export type BarLikeAnimation = {

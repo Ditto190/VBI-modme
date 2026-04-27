@@ -1,0 +1,20 @@
+{
+  "name": "radarAnimation",
+  "description": "Radar charts support appear, update, and atmosphere loop animation.",
+  "vseed": {
+    "chartType": "radar",
+    "animation": {
+      "enable": true,
+      "params": {
+        "appear": { "enable": true, "effects": ["scale"], "duration": 0.8 },
+        "update": { "enable": true, "effects": ["growth"], "duration": 0.6 },
+        "loop": {
+          "enable": true,
+          "interval": 1,
+          "atmosphere": { "effect": "reveal", "color": "#e15759", "ease": "quadInOut" }
+        }
+      }
+    },
+    "dataset": [{ "quality": 82, "speed": 76, "stability": 91, "cost": 64 }]
+  }
+}

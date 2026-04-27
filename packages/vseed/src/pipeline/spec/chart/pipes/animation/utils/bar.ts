@@ -1,7 +1,7 @@
 import { VScreenAnimationType } from '../types'
 import { fadeInBar, growBar, moveInBar } from './barMotion'
 
-export { atmoColorToFill, atmoColorToStroke, transform2VChartColor } from './barColor'
+export { atmosphereColorToFill, atmosphereColorToStroke, transform2VChartColor } from './barColor'
 export { getGroupCountFromSpec, groupHighLightBar } from './barGroup'
 export { fadeInBar, growBar, isHorizontalBar, moveInBar, moveOutBar } from './barMotion'
 

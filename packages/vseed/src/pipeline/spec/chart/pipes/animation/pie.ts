@@ -91,7 +91,7 @@ export const pieUpdate = (config: PieLikeUpdateConfig | undefined) => {
  * 效果：rose 新数据使用 fadeIn。
  * 编排逻辑：当 normal 的 loop 效果为 enlarge 时启用, 避免 enter 和 enlarge 同时争用 outerRadius 通道。
  */
-export const pieEnter = (config: PieLikeUpdateConfig | undefined, atmoConfig: PieLikeLoopConfig | undefined) => {
+export const pieEnter = (config: PieLikeUpdateConfig | undefined, atmosphereConfig: PieLikeLoopConfig | undefined) => {
   if (!config || !allowAnimation(config)) {
     return false
   }
@@ -100,7 +100,7 @@ export const pieEnter = (config: PieLikeUpdateConfig | undefined, atmoConfig: Pi
   // 当normal动画存在且为radius时:
   // 玫瑰图enter不能用默认, 这样会和normal动画的radius视觉通道冲突
   let configByType = {}
-  if (atmoConfig?.enable && getPrimaryEffect(atmoConfig.loop) === VScreenAnimationType.enlarge) {
+  if (atmosphereConfig?.enable && getPrimaryEffect(atmosphereConfig.loop) === VScreenAnimationType.enlarge) {
     configByType = {
       type: 'fadeIn', // 具体类型可以根据视觉效果自定
     }

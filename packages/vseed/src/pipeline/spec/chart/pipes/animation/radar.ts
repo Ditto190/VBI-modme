@@ -1,5 +1,5 @@
 import type { RadarAppearConfig, RadarLoopConfig, RadarUpdateConfig } from './types'
-import { allowAnimation, EFFECT_NONE, getPrimaryEffect, toMs, atmoPoint } from './utils'
+import { allowAnimation, EFFECT_NONE, getPrimaryEffect, toMs, atmospherePoint } from './utils'
 
 /**
  * 雷达图 入场动画
@@ -26,12 +26,12 @@ export const radarAppear = (config: RadarAppearConfig | undefined) => {
 /**
  * 雷达图 循环动画
  * 动画类型:
- * 1. atmo: 点氛围动画
+ * 1. atmosphere: 点氛围动画
  * 效果：point 执行 breath/reveal/ripple 等氛围效果。
  * 编排逻辑：startTime = appear 存在 ? interval : 0, 持续 1s, 一轮结束后等待 interval。
  * 2. none: 无循环动画
  * 效果：不配置 normal 动画。
- * 编排逻辑：当 atmo.effect 为 none 时返回 false。
+ * 编排逻辑：当 atmosphere.effect 为 none 时返回 false。
  */
 export const radarLoop = (config: RadarLoopConfig | undefined, ignoreFirstNormal: boolean) => {
   if (!config?.enable) {
@@ -39,7 +39,7 @@ export const radarLoop = (config: RadarLoopConfig | undefined, ignoreFirstNormal
   }
   const interval = config.interval ?? 0
   const startTime = ignoreFirstNormal ? toMs(interval) : 0
-  if ((config.atmo?.effect ?? EFFECT_NONE) === EFFECT_NONE) {
+  if ((config.atmosphere?.effect ?? EFFECT_NONE) === EFFECT_NONE) {
     return false
   }
 
@@ -49,8 +49,8 @@ export const radarLoop = (config: RadarLoopConfig | undefined, ignoreFirstNormal
       startTime,
       delayAfter: toMs(interval),
       duration: 1000,
-      easing: config.atmo?.ease,
-      ...atmoPoint(config.atmo?.effect),
+      easing: config.atmosphere?.ease,
+      ...atmospherePoint(config.atmosphere?.effect),
       controlOptions: { immediatelyApply: false },
     },
   }

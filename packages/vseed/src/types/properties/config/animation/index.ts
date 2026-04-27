@@ -1,1 +1,6 @@
-export * from './animation'
+export type * from './animation'
+export type * from './animationAtmosphere'
+export type * from './animationConfig'
+export type * from './animationEffect'
+export type * from './animationLoop'
+export * from './zAnimation'

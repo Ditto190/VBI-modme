@@ -1,133 +1,91 @@
-import { z } from 'zod'
+import type {
+  BarLikeAppearAnimation,
+  BarLikeUpdateAnimation,
+  LineAreaAppearAnimation,
+  LineAreaUpdateAnimation,
+  PieLikeAppearAnimation,
+  PieLikeUpdateAnimation,
+  RadarAppearAnimation,
+  RadarUpdateAnimation,
+  ScatterAppearAnimation,
+  ScatterUpdateAnimation,
+} from './animationConfig'
+import type {
+  BarLikeAnimationLoop,
+  LineAreaAnimationLoop,
+  PieLikeAnimationLoop,
+  RadarAnimationLoop,
+  ScatterAnimationLoop,
+} from './animationLoop'
 
-const zAnimationEffect = z.enum([
-  'growth',
-  'load',
-  'moveIn',
-  'highLight',
-  'none',
-  'ripple',
-  'breath',
-  'reveal',
-  'scale',
-  'radial',
-  'enlarge',
-  'relocate',
-  'wave',
-  'waveGrowth',
-])
+export interface BarLikeAnimationParams {
+  /** @description 条形/柱形图入场动画配置 */
+  appear?: BarLikeAppearAnimation
+  /** @description 条形/柱形图更新动画配置 */
+  update?: BarLikeUpdateAnimation
+  /** @description 条形/柱形图循环动画配置 */
+  loop?: BarLikeAnimationLoop
+}
+export interface LineAreaAnimationParams {
+  /** @description 折线/面积图入场动画配置 */
+  appear?: LineAreaAppearAnimation
+  /** @description 折线/面积图更新动画配置 */
+  update?: LineAreaUpdateAnimation
+  /** @description 折线/面积图循环动画配置 */
+  loop?: LineAreaAnimationLoop
+}
+export interface ScatterAnimationParams {
+  /** @description 散点图入场动画配置 */
+  appear?: ScatterAppearAnimation
+  /** @description 散点图更新动画配置 */
+  update?: ScatterUpdateAnimation
+  /** @description 散点图循环动画配置 */
+  loop?: ScatterAnimationLoop
+}
+export interface PieLikeAnimationParams {
+  /** @description 饼图/环图/玫瑰图入场动画配置 */
+  appear?: PieLikeAppearAnimation
+  /** @description 饼图/环图/玫瑰图更新动画配置 */
+  update?: PieLikeUpdateAnimation
+  /** @description 饼图/环图/玫瑰图循环动画配置 */
+  loop?: PieLikeAnimationLoop
+}
+export interface RadarAnimationParams {
+  /** @description 雷达图入场动画配置 */
+  appear?: RadarAppearAnimation
+  /** @description 雷达图更新动画配置 */
+  update?: RadarUpdateAnimation
+  /** @description 雷达图循环动画配置 */
+  loop?: RadarAnimationLoop
+}
 
-const createEffectConfig = <T extends readonly [string, ...string[]]>(effects: T) =>
-  z.object({
-    enable: z.boolean().optional(),
-    effects: z.array(z.enum(effects)).optional(),
-    ease: z.string().optional(),
-    duration: z.number().optional(),
-    color: z.string().optional(),
-  })
-
-const zAtmoBase = z.object({
-  ease: z.string().optional(),
-  color: z.string().optional(),
-  effect: zAnimationEffect.optional(),
-})
-const zPointAtmo = zAtmoBase.extend({ effect: z.enum(['ripple', 'reveal', 'breath']).optional() })
-const zNoEffectAtmo = z.object({
-  ease: z.string().optional(),
-  color: z.string().optional(),
-})
-
-const zLoopBase = z.object({
-  enable: z.boolean().optional(),
-  interval: z.number().optional(),
-})
-
-export const zBarLikeAnimation = z.object({
-  enable: z.boolean().optional(),
-  params: z
-    .object({
-      appear: createEffectConfig(['growth']).optional(),
-      update: createEffectConfig(['growth', 'moveIn']).optional(),
-      loop: z
-        .object({
-          ...zLoopBase.shape,
-          loop: createEffectConfig(['highLight', 'growth', 'moveIn', 'none']).optional(),
-          atmo: zPointAtmo.optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-})
-
-export const zLineAreaAnimation = z.object({
-  enable: z.boolean().optional(),
-  params: z
-    .object({
-      appear: createEffectConfig(['load', 'growth']).optional(),
-      update: createEffectConfig(['growth']).optional(),
-      loop: z
-        .object({
-          ...zLoopBase.shape,
-          loop: createEffectConfig(['load', 'growth', 'none']).optional(),
-          atmo: zPointAtmo.optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-})
-
-export const zScatterAnimation = z.object({
-  enable: z.boolean().optional(),
-  params: z
-    .object({
-      appear: createEffectConfig(['growth', 'scale']).optional(),
-      update: createEffectConfig(['growth']).optional(),
-      loop: z
-        .object({
-          ...zLoopBase.shape,
-          loop: createEffectConfig(['growth', 'scale', 'none']).optional(),
-          atmo: zPointAtmo.optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-})
-
-export const zPieLikeAnimation = z.object({
-  enable: z.boolean().optional(),
-  params: z
-    .object({
-      appear: createEffectConfig(['radial', 'scale']).optional(),
-      update: createEffectConfig(['radial']).optional(),
-      loop: z
-        .object({
-          ...zLoopBase.shape,
-          loop: createEffectConfig(['enlarge', 'relocate']).optional(),
-          atmo: zNoEffectAtmo.optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-})
-
-export const zRadarAnimation = z.object({
-  enable: z.boolean().optional(),
-  params: z
-    .object({
-      appear: createEffectConfig(['radial', 'scale']).optional(),
-      update: createEffectConfig(['growth']).optional(),
-      loop: z
-        .object({
-          ...zLoopBase.shape,
-          atmo: zPointAtmo.optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-})
-
-export type BarLikeAnimation = z.infer<typeof zBarLikeAnimation>
-export type LineAreaAnimation = z.infer<typeof zLineAreaAnimation>
-export type ScatterAnimation = z.infer<typeof zScatterAnimation>
-export type PieLikeAnimation = z.infer<typeof zPieLikeAnimation>
-export type RadarAnimation = z.infer<typeof zRadarAnimation>
+export interface BarLikeAnimation {
+  /** @description 是否启用条形/柱形图动画 */
+  enable?: boolean
+  /** @description 条形/柱形图动画参数 */
+  params?: BarLikeAnimationParams
+}
+export interface LineAreaAnimation {
+  /** @description 是否启用折线/面积图动画 */
+  enable?: boolean
+  /** @description 折线/面积图动画参数 */
+  params?: LineAreaAnimationParams
+}
+export interface ScatterAnimation {
+  /** @description 是否启用散点图动画 */
+  enable?: boolean
+  /** @description 散点图动画参数 */
+  params?: ScatterAnimationParams
+}
+export interface PieLikeAnimation {
+  /** @description 是否启用饼图/环图/玫瑰图动画 */
+  enable?: boolean
+  /** @description 饼图/环图/玫瑰图动画参数 */
+  params?: PieLikeAnimationParams
+}
+export interface RadarAnimation {
+  /** @description 是否启用雷达图动画 */
+  enable?: boolean
+  /** @description 雷达图动画参数 */
+  params?: RadarAnimationParams
+}

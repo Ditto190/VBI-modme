@@ -26,7 +26,7 @@ const lineFamily = ['line', 'area', 'areaPercent']
  * 效果：图表首次渲染时执行对应图表族的入场效果。
  * 编排逻辑：按 chartType 分流到柱图、折线/面积、饼图、散点图、雷达图各自的 appear 构建函数。
  * 2. normal: 循环动画
- * 效果：图表稳定展示后重复执行 loop/atmo 效果。
+ * 效果：图表稳定展示后重复执行 loop/atmosphere 效果。
  * 编排逻辑：appear 存在时 normal 延后一个 interval 启动, 避免首次入场和循环动画叠加。
  * 3. enter/update/exit: 数据变更动画
  * 效果：数据进入、更新和离场时执行对应阶段动画。

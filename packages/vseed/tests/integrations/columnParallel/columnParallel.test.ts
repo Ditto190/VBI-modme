@@ -3,8 +3,8 @@ import { Builder, registerAll } from '@visactor/vseed'
 import config_0 from './analysis/sortLegendByColorItemIds.json'
 import config_1 from './analysis/sortLegendByCustomId.json'
 import config_2 from './annotation/annotationAreaSelectorVertical.json'
-import config_3 from './annotation/annotationDifferenceLineSeries.json'
-import config_4 from './annotation/annotationDifferenceLineNegativeSeries.json'
+import config_3 from './annotation/annotationDifferenceLineNegativeSeries.json'
+import config_4 from './annotation/annotationDifferenceLineSeries.json'
 import config_5 from './axes/columnParallelXAxis.json'
 import config_6 from './axes/columnParallelXAxisEnable.json'
 import config_7 from './axes/columnParallelYAxis.json'
@@ -72,8 +72,8 @@ const cases = [
   { name: 'analysis/sortLegendByColorItemIds', vseed: config_0 },
   { name: 'analysis/sortLegendByCustomId', vseed: config_1 },
   { name: 'annotation/annotationAreaSelectorVertical', vseed: config_2 },
-  { name: 'annotation/annotationDifferenceLineSeries', vseed: config_3 },
-  { name: 'annotation/annotationDifferenceLineNegativeSeries', vseed: config_4 },
+  { name: 'annotation/annotationDifferenceLineNegativeSeries', vseed: config_3 },
+  { name: 'annotation/annotationDifferenceLineSeries', vseed: config_4 },
   { name: 'axes/columnParallelXAxis', vseed: config_5 },
   { name: 'axes/columnParallelXAxisEnable', vseed: config_6 },
   { name: 'axes/columnParallelYAxis', vseed: config_7 },

@@ -53,7 +53,7 @@ const fillColorToStrokeColor = (color: string) => {
  * @param isHorizontal 是否为横向柱图。
  * @returns 柱图氛围高亮填充色。
  */
-export const atmoColorToFill = (color: string, isGradientChart: boolean, isHorizontal: boolean) => {
+export const atmosphereColorToFill = (color: string, isGradientChart: boolean, isHorizontal: boolean) => {
   if (isGradient(color)) return transformColor2Gradient(color)
   if (!isGradientChart) return color
 
@@ -70,7 +70,7 @@ export const atmoColorToFill = (color: string, isGradientChart: boolean, isHoriz
  * @param isHorizontal 是否为横向柱图。
  * @returns 柱图氛围高亮描边色。
  */
-export const atmoColorToStroke = (color: string, isGradientChart: boolean, isHorizontal: boolean) => {
+export const atmosphereColorToStroke = (color: string, isGradientChart: boolean, isHorizontal: boolean) => {
   if (isGradient(color)) return transformColor2Gradient(color)
   if (!isGradientChart) return color
 

@@ -56,7 +56,7 @@ export const getFinalAttribute = (mark: any): Record<string, any> => {
  * @param effect 氛围动画效果。
  * @returns 点图元氛围动画配置。
  */
-export const atmoPoint = (effect?: AnimationEffect) => {
+export const atmospherePoint = (effect?: AnimationEffect) => {
   if (effect === EFFECT_NONE) {
     return {}
   }

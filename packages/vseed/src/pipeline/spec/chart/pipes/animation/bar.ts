@@ -64,10 +64,10 @@ export const barUpdate = (config: BarLikeUpdateConfig | undefined, chartType: st
  * 编排逻辑：startTime = appear 存在 ? interval : 0, loopDuration = groupDuration * groupCount + stopDuration, 一轮结束后等待 interval。
  * 2. growth/moveIn/load: mark 循环动画
  * 效果：复用对应的柱图 mark 动画。
- * 编排逻辑：先执行 loopDuration, 再等待 interval + atmoDuration 后重复。
- * 3. atmo: 流光氛围动画
+ * 编排逻辑：先执行 loopDuration, 再等待 interval + atmosphereDuration 后重复。
+ * 3. atmosphere: 流光氛围动画
  * 效果：使用 StreamLight 在柱子上形成流光。
- * 编排逻辑：延迟 loopDuration 后启动, 持续 atmoDuration, 一轮结束后等待 interval。
+ * 编排逻辑：延迟 loopDuration 后启动, 持续 atmosphereDuration, 一轮结束后等待 interval。
  */
 export const barLoop = (
   config: BarLikeLoopConfig | undefined,
@@ -79,18 +79,26 @@ export const barLoop = (
   const interval = config.interval ?? 0
   const startTime = ignoreFirstNormal ? toMs(interval) : 0
   const loop = config.loop
-  const atmo = config.atmo
+  const atmosphere = config.atmosphere
   const loopEffect = getPrimaryEffect(loop)
   const result: any[] = []
   let loopDuration = loopEffect === VScreenAnimationType.none ? 0 : 1
-  const atmoDuration = loopEffect === VScreenAnimationType.none ? 2 : 1
+  const atmosphereDuration = loopEffect === VScreenAnimationType.none ? 2 : 1
 
   if (loopEffect === VScreenAnimationType.highLight && loop) {
     const groupDuration = 0.7
     const stopDuration = 0.85
     loopDuration = groupDuration * getGroupCountFromSpec(spec).groupCount + stopDuration
     result.push(
-      ...groupHighLightBar(startTime, loop, loopDuration, interval, atmoDuration, isHorizontalBar(chartType), spec),
+      ...groupHighLightBar(
+        startTime,
+        loop,
+        loopDuration,
+        interval,
+        atmosphereDuration,
+        isHorizontalBar(chartType),
+        spec,
+      ),
     )
   } else if (loop) {
     result.push({
@@ -98,25 +106,25 @@ export const barLoop = (
       startTime,
       easing: loop.ease,
       duration: toMs(loopDuration),
-      delayAfter: toMs(interval + atmoDuration),
+      delayAfter: toMs(interval + atmosphereDuration),
       loop: true,
       controlOptions: { immediatelyApply: false },
     })
   }
 
-  if (atmo?.ease || atmo?.color) {
+  if (atmosphere?.ease || atmosphere?.color) {
     result.push({
       loop: true,
       startTime,
       delay: toMs(loopDuration),
       delayAfter: toMs(interval),
-      duration: toMs(atmoDuration),
-      easing: atmo.ease,
+      duration: toMs(atmosphereDuration),
+      easing: atmosphere.ease,
       custom: StreamLight,
       customParameters: {
         isHorizontal: isHorizontalBar(chartType),
         attribute: {
-          fill: transform2VChartColor(atmo.color),
+          fill: transform2VChartColor(atmosphere.color),
           blur: 0,
           shadowColor: 'rgba(0,0,0,0)',
         },

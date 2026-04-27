@@ -206,7 +206,7 @@ export default () => {
 
 轮播动画是指图表在完成入场后持续循环执行的动画，用于强调重点或保持动态感。
 
-#### 2.1 highlight（分组高亮） + atmo（氛围效果）
+#### 2.1 highlight（分组高亮） + atmosphere（氛围效果）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -355,7 +355,7 @@ export default () => {
           enable: true,
           interval: 3,
           loop: { enable: true, effects: ['highLight'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear', color: '#4A90E2' },
+          atmosphere: { effect: 'breath', ease: 'linear', color: '#4A90E2' },
         },
       },
     },
@@ -385,7 +385,7 @@ export default () => {
 }
 ```
 
-#### 2.2 growth（生长轮播） + atmo（氛围效果）
+#### 2.2 growth（生长轮播） + atmosphere（氛围效果）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -533,7 +533,7 @@ export default () => {
           enable: true,
           interval: 2,
           loop: { enable: true, effects: ['growth'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear', color: '#F5A623' },
+          atmosphere: { effect: 'breath', ease: 'linear', color: '#F5A623' },
         },
       },
     },
@@ -563,7 +563,7 @@ export default () => {
 }
 ```
 
-#### 2.3 moveIn（移入轮播） + atmo（氛围效果）
+#### 2.3 moveIn（移入轮播） + atmosphere（氛围效果）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -711,7 +711,7 @@ export default () => {
           enable: true,
           interval: 2,
           loop: { enable: true, effects: ['moveIn'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear', color: '#7ED321' },
+          atmosphere: { effect: 'breath', ease: 'linear', color: '#7ED321' },
         },
       },
     },
@@ -1131,7 +1131,7 @@ export default () => {
 
 轮播动画用于图表持续循环播放，增强动态表达。
 
-#### 2.1 load（加载轮播） + atmo（氛围效果：breath）
+#### 2.1 load（加载轮播） + atmosphere（氛围效果：breath）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1291,7 +1291,7 @@ export default () => {
           enable: true,
           interval: 2,
           loop: { enable: true, effects: ['load'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear' },
+          atmosphere: { effect: 'breath', ease: 'linear' },
         },
       },
     },
@@ -1321,7 +1321,7 @@ export default () => {
 }
 ```
 
-#### 2.2 load（加载轮播） + atmo（氛围效果：ripple）
+#### 2.2 load（加载轮播） + atmosphere（氛围效果：ripple）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1481,7 +1481,7 @@ export default () => {
           enable: true,
           interval: 3,
           loop: { enable: true, effects: ['load'], ease: 'circInOut', duration: 1 },
-          atmo: { effect: 'ripple', ease: 'linear' },
+          atmosphere: { effect: 'ripple', ease: 'linear' },
         },
       },
     },
@@ -2609,9 +2609,9 @@ export default () => {
 
 ### 2. 轮播动画
 
-雷达图轮播动画通过 `atmo.effect` 提供持续氛围。
+雷达图轮播动画通过 `atmosphere.effect` 提供持续氛围。
 
-#### 2.1 none（轮播） + atmo（氛围效果：ripple）
+#### 2.1 none（轮播） + atmosphere（氛围效果：ripple）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -2772,7 +2772,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['radial'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'ripple', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'ripple', ease: 'linear' } },
       },
     },
   }
@@ -2801,7 +2801,7 @@ export default () => {
 }
 ```
 
-#### 2.2 none（轮播） + atmo（氛围效果：reveal）
+#### 2.2 none（轮播） + atmosphere（氛围效果：reveal）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -2962,7 +2962,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 3, atmo: { effect: 'reveal', ease: 'linear' } },
+        loop: { enable: true, interval: 3, atmosphere: { effect: 'reveal', ease: 'linear' } },
       },
     },
   }
@@ -2991,7 +2991,7 @@ export default () => {
 }
 ```
 
-#### 2.3 none（轮播） + atmo（氛围效果：breath）
+#### 2.3 none（轮播） + atmosphere（氛围效果：breath）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3152,7 +3152,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'breath', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'breath', ease: 'linear' } },
       },
     },
   }
@@ -3539,9 +3539,9 @@ export default () => {
 
 ### 2. 轮播动画
 
-散点图轮播动画可通过 atmo 氛围提供持续节奏。
+散点图轮播动画可通过 atmosphere 氛围提供持续节奏。
 
-#### 2.1 none（轮播） + atmo（氛围效果：ripple）
+#### 2.1 none（轮播） + atmosphere（氛围效果：ripple）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3682,7 +3682,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'ripple', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'ripple', ease: 'linear' } },
       },
     },
   }
@@ -3711,7 +3711,7 @@ export default () => {
 }
 ```
 
-#### 2.2 none（轮播） + atmo（氛围效果：breath）
+#### 2.2 none（轮播） + atmosphere（氛围效果：breath）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3852,7 +3852,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['fadeIn'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'breath', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'breath', ease: 'linear' } },
       },
     },
   }
@@ -3881,7 +3881,7 @@ export default () => {
 }
 ```
 
-#### 2.3 none（轮播） + atmo（氛围效果：reveal）
+#### 2.3 none（轮播） + atmosphere（氛围效果：reveal）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -4022,7 +4022,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 3, atmo: { effect: 'reveal', ease: 'linear' } },
+        loop: { enable: true, interval: 3, atmosphere: { effect: 'reveal', ease: 'linear' } },
       },
     },
   }
