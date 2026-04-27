@@ -1,13 +1,5 @@
 import { requireString } from './resource-input.js'
-import type { ResourceInput } from './resource-input.js'
-
-type CommonProvider<TCreate> = {
-  create(input: TCreate): Promise<unknown>
-  getDetail(): Promise<unknown>
-  remove(): Promise<unknown>
-  rename(name: string): Promise<unknown>
-  snapshot(): Promise<unknown>
-}
+import type { CommonProvider, ResourceInput } from '../../types/index.js'
 
 export const executeCommonResourceAction = <TCreate>(
   provider: CommonProvider<TCreate>,

@@ -1,8 +1,6 @@
 import { streamText, type LanguageModel } from 'ai'
-import type { AgentModelConfig, ModelProvider } from '../types.js'
+import type { AgentModelConfig, ModelProvider, RequiredModelConfig } from '../types/index.js'
 import { readAiStream } from './stream.js'
-
-type RequiredModelConfig = Required<Pick<AgentModelConfig, 'apiKey' | 'model'>> & Pick<AgentModelConfig, 'baseUrl'>
 
 const validateConfig = (config: AgentModelConfig): RequiredModelConfig => {
   if (!config.apiKey) throw new Error('AGENT_API_KEY is required for agent mode')

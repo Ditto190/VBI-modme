@@ -1,6 +1,6 @@
 import { executeAgentScript } from '../script/runtime.js'
 import { clipText, stringifyJson } from '../text-format.js'
-import type { VBIAgentWorkspace } from '../types.js'
+import type { VBIAgentWorkspace } from '../types/index.js'
 
 export const scriptOutputLimit = 12000
 

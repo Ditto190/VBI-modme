@@ -27,4 +27,4 @@ export type {
   VBIWorkspaceConnectors,
   VBIWorkspaceSlot,
   VBITool,
-} from './types.js'
+} from './types/index.js'

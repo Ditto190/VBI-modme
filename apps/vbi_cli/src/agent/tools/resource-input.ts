@@ -1,4 +1,4 @@
-export type ResourceInput = Record<string, unknown>
+import type { ResourceInput } from '../../types/index.js'
 
 export const stringifyJson = (value: unknown) => JSON.stringify(value, null, 2)
 

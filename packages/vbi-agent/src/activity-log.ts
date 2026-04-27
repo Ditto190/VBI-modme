@@ -1,12 +1,10 @@
-import type { AgentActivity, AgentState } from './types.js'
-
-type StateListener = (snapshot: AgentState) => void
+import type { AgentActivity, AgentState, AgentStateListener } from './types/index.js'
 
 const cloneState = (state: AgentState): AgentState => ({ ...state, activities: [...state.activities] })
 
 export const createActivityLog = () => {
   const state: AgentState = { activities: [] }
-  const listeners = new Set<StateListener>()
+  const listeners = new Set<AgentStateListener>()
   const getState = () => cloneState(state)
   const publish = () => listeners.forEach((listener) => listener(getState()))
 
@@ -23,7 +21,7 @@ export const createActivityLog = () => {
       state.error = error instanceof Error ? error.message : String(error)
       publish()
     },
-    subscribe: (listener: StateListener) => {
+    subscribe: (listener: AgentStateListener) => {
       listeners.add(listener)
       listener(getState())
       return () => void listeners.delete(listener)

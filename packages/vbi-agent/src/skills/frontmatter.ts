@@ -1,19 +1,4 @@
-export interface SkillAssetMeta {
-  capabilities: string[]
-  description: string
-  name: string
-  references: string[]
-  tags: string[]
-  tools: string[]
-  version: string
-}
-
-export interface ParsedSkillAsset {
-  content: string
-  meta: SkillAssetMeta
-}
-
-type FrontmatterMap = Record<string, string | string[]>
+import type { FrontmatterMap, ParsedSkillAsset, SkillAssetMeta } from '../types/index.js'
 
 const emptyMeta: SkillAssetMeta = {
   capabilities: [],

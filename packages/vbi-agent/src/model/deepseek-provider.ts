@@ -1,5 +1,5 @@
 import { createDeepSeek } from '@ai-sdk/deepseek'
-import type { AgentModelConfig, ModelProvider } from '../types.js'
+import type { AgentModelConfig, ModelProvider } from '../types/index.js'
 import { createAiSdkModelProvider } from './provider.js'
 
 export const createDeepSeekModelProvider = (input: AgentModelConfig): ModelProvider =>

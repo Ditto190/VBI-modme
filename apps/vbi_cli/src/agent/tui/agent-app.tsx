@@ -1,6 +1,7 @@
 import { Box, Static, Text, useInput, useStdout } from 'ink'
 import React, { useEffect, useState } from 'react'
-import type { AgentActivity, AgentRuntimeController } from '@visactor/vbi-agent'
+import type { AgentActivity } from '@visactor/vbi-agent'
+import type { AgentAppProps } from '../../types/index.js'
 
 const colorByKind: Record<AgentActivity['kind'], string> = {
   assistant: 'cyan',
@@ -28,15 +29,7 @@ const renderActivity = (activity: AgentActivity, index: number, width: number) =
 
 const statusLine = (isRunning: boolean) => (isRunning ? 'Running... q to quit' : 'Enter to send, q to quit')
 
-export const AgentApp = ({
-  onExit,
-  runtime,
-  task,
-}: {
-  onExit(code: number): void
-  runtime: AgentRuntimeController
-  task?: string
-}) => {
+export const AgentApp = ({ onExit, runtime, task }: AgentAppProps) => {
   const [state, setState] = useState(runtime.getState())
   const [isRunning, setIsRunning] = useState(false)
   const [buffer, setBuffer] = useState('')

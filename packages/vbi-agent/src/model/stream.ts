@@ -1,5 +1,5 @@
 import type { ModelMessage, TextStreamPart, ToolSet } from 'ai'
-import type { ModelTurnResult, PendingToolCall } from '../types.js'
+import type { ModelTurnResult, PendingToolCall } from '../types/index.js'
 
 export const extractText = (message: ModelMessage): string => {
   if (typeof message.content === 'string') return message.content

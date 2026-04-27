@@ -1,5 +1,5 @@
 import path from 'node:path'
-import type { AgentCommand } from '../parse.js'
+import type { AgentCommand } from '../types/index.js'
 
 const readEnv = (name: string) => process.env[name]?.trim()
 

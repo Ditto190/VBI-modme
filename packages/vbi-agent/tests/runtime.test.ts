@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@rstest/core'
 import { createAgentRuntime } from '../src/runtime.js'
 import { createToolKit } from '../src/tools/toolkit.js'
-import type { AgentTool, ModelProvider, ModelTurnResult } from '../src/types.js'
+import type { AgentTool, ModelProvider, ModelTurnResult } from '../src/types/index.js'
 
 const createModel = (...turns: ModelTurnResult[]): ModelProvider => {
   const queue = [...turns]

@@ -1,14 +1,5 @@
 import { parseArgs } from 'node:util'
-
-export type AgentCommandMode = 'prompt' | 'tui'
-
-export interface AgentCommand {
-  apiBaseUrl?: string
-  cwd?: string
-  mode: AgentCommandMode
-  model?: string
-  task?: string
-}
+import type { AgentCommand } from './types/index.js'
 
 export const parseAgentCommand = (argv: string[]): AgentCommand => {
   const { positionals, values } = parseArgs({

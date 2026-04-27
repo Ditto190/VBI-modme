@@ -6,21 +6,11 @@ import { createElement } from 'react'
 import { createCliAgentRuntime } from './agent/runtime.js'
 import { AgentApp } from './agent/tui/agent-app.js'
 import { parseAgentCommand } from './parse.js'
+import { printPromptProgress } from './prompt-progress.js'
 import type { AgentRuntimeController } from '@visactor/vbi-agent'
-
-interface CliIO {
-  writeError?(text: string): void
-  writeOutput?(text: string): void
-}
+import type { CliIO } from './types/index.js'
 
 const toErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error))
-
-const findLastAssistantText = (runtime: AgentRuntimeController) =>
-  runtime
-    .getState()
-    .activities.filter((activity) => activity.kind === 'assistant')
-    .at(-1)
-    ?.text.trim()
 
 const findEnvFile = (cwd: string) => {
   let current = cwd
@@ -46,20 +36,21 @@ export const runPromptAgent = async (runtime: AgentRuntimeController, task: stri
     io.writeError?.('执行失败: Prompt is required. Use vbi -p "your task".')
     return 1
   }
+  const stopPrinting = printPromptProgress(runtime, io)
   try {
     await runtime.start(prompt)
   } catch (error) {
+    stopPrinting()
     io.writeError?.(`执行失败: ${toErrorMessage(error)}`)
     return 1
   }
+  stopPrinting()
 
   const state = runtime.getState()
   if (state.error) {
     io.writeError?.(`执行失败: ${state.error}`)
     return 1
   }
-  const output = findLastAssistantText(runtime)
-  if (output) io.writeOutput?.(output)
   io.writeOutput?.('执行成功')
   return 0
 }

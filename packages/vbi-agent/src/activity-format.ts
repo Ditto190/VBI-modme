@@ -1,4 +1,4 @@
-import type { PendingToolCall } from './types.js'
+import type { PendingToolCall } from './types/index.js'
 import { clipText, stringifyJson } from './text-format.js'
 
 const formatToolList = (calls: PendingToolCall[]) => calls.map((call) => call.name).join(', ')

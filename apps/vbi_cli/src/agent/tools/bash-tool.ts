@@ -1,13 +1,14 @@
 import { spawn } from 'node:child_process'
 import path from 'node:path'
 import { jsonSchema, type AgentTool } from '@visactor/vbi-agent'
+import type { BashCommandResult } from '../../types/index.js'
 
 const append = (chunks: string[], chunk?: string | null) => {
   if (chunk) chunks.push(chunk)
 }
 
 const runBashCommand = (command: string, cwd: string, timeoutMs: number) =>
-  new Promise<{ exitCode: number | null; output: string; signal: NodeJS.Signals | null }>((resolve, reject) => {
+  new Promise<BashCommandResult>((resolve, reject) => {
     const child = spawn(command, { cwd, shell: true })
     const chunks: string[] = []
     const timer = setTimeout(() => child.kill('SIGTERM'), timeoutMs)

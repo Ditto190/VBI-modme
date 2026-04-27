@@ -1,6 +1,6 @@
 import { jsonSchema } from 'ai'
 import { listSkills, readSkill, renderSkillList, searchSkillReferences } from '../skills/service.js'
-import type { AgentTool } from '../types.js'
+import type { AgentTool } from '../types/index.js'
 
 const stringify = (value: unknown) => JSON.stringify(value, null, 2)
 

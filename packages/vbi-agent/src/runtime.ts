@@ -2,9 +2,7 @@ import { createActivityLog } from './activity-log.js'
 import { formatToolCallDetail, formatToolCallSummary } from './activity-format.js'
 import { createHistory } from './history.js'
 import { extractText } from './model/stream.js'
-import type { AgentRuntimeController, AgentToolKit, ModelProvider } from './types.js'
-
-type RuntimeInput = { model: ModelProvider; tool: AgentToolKit }
+import type { AgentRuntimeController, RuntimeInput } from './types/index.js'
 
 export const createAgentRuntime = ({ model, tool }: RuntimeInput): AgentRuntimeController => {
   const activityLog = createActivityLog()

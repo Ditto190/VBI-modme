@@ -67,7 +67,12 @@ describe('runPromptAgent', () => {
     const code = await runPromptAgent(runtime, '查询Chart1的图表类型', { writeOutput: (text) => output.push(text) })
 
     expect(code).toBe(0)
-    expect(output).toEqual(['Chart1 的图表类型是 line', '执行成功'])
+    expect(output).toHaveLength(5)
+    expect(output[0]).toBe('[user] 查询Chart1的图表类型')
+    expect(output[1]).toContain('[assistant] 查询 Chart1')
+    expect(output[2]).toContain('[tool]')
+    expect(output[3]).toBe('[assistant] Chart1 的图表类型是 line')
+    expect(output[4]).toBe('执行成功')
     expect(client.chart).toHaveBeenCalledWith('Chart1')
     expect(runtime.getState().activities.map((activity) => activity.kind)).toEqual([
       'user',
@@ -83,7 +88,7 @@ describe('runPromptAgent', () => {
       start: rs.fn(async () => {
         throw new Error('Chart Chart1 not found')
       }),
-      subscribe: rs.fn(),
+      subscribe: rs.fn(() => () => undefined),
     } as unknown as AgentRuntimeController
     const errors: string[] = []
 
