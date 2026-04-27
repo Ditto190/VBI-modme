@@ -3,13 +3,31 @@ import { defineConfig } from '@rslib/core'
 export default defineConfig({
   lib: [
     {
-      bundle: false,
       format: 'esm',
       syntax: ['node 18'],
       dts: true,
+      bundle: true,
+    },
+    {
+      format: 'cjs',
+      syntax: ['node 18'],
+      bundle: true,
     },
   ],
   output: {
-    target: 'node',
+    sourceMap: true,
+  },
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            test: /\.csv$/,
+            type: 'asset/source',
+          },
+        ],
+      },
+    },
   },
 })

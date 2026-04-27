@@ -1,4 +1,4 @@
-import type { ProviderResource } from '@visactor/vbi-provider';
+import type { ProviderResource } from '@visactor/headless-bi-provider';
 
 export type ResourceKind = 'chart' | 'insight' | 'report';
 

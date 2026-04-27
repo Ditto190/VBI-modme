@@ -1,62 +1,37 @@
-import { VBIReportBuilder, type VBIReportSnapshotDSL } from '@visactor/vbi'
+import { VBIReportBuilder, type VBIReportDSL, type VBIReportSnapshotDSL } from '@visactor/vbi'
 import { createReportRemoteApi } from './remote-api'
-import { closeRemoteBuilder, createRemoteBuilderState, openRemoteBuilder } from '../remote/collaboration'
-import type { ReportProvider, ReportSummary, RemoteBuilderState, VBIProviderClientOptions } from '../types'
-
-const close = (state: RemoteBuilderState<VBIReportBuilder>) => closeRemoteBuilder(state)
-
-const getCollaborationProvider = async (
-  state: RemoteBuilderState<VBIReportBuilder>,
-  getBuilder: () => Promise<VBIReportBuilder>,
-) => {
-  await getBuilder()
-  return state.provider
-}
-
-const remove = async (state: RemoteBuilderState<VBIReportBuilder>, removeResource: () => Promise<ReportSummary>) => {
-  const summary = await removeResource()
-  await close(state)
-  state.resourceId = null
-  return summary
-}
-
-const getLocalDetail = async (
-  getBuilder: () => Promise<VBIReportBuilder>,
-  getSummary: ReportProvider['getSummary'],
-) => ({
-  ...(await getSummary()),
-  dsl: (await getBuilder()).build(),
-})
-
-const getLocalSnapshot = async (
-  getBuilder: () => Promise<VBIReportBuilder>,
-  getSummary: ReportProvider['getSummary'],
-) => ({
-  resource: await getSummary(),
-  dsl: (await getBuilder()).build(),
-})
+import { createRemoteBuilderCore } from '../remote/builder-provider'
+import type { ReportProvider, ReportSummary, VBIProviderClientOptions } from '../types'
 
 export const createRemoteReportProvider = (config: VBIProviderClientOptions, resourceId?: string): ReportProvider => {
-  const state = createRemoteBuilderState<VBIReportBuilder>(resourceId)
-  const api = createReportRemoteApi(config, state)
-  const getBuilder = () => openRemoteBuilder(config, state, api.getSession, (doc) => new VBIReportBuilder(doc))
+  const core = createRemoteBuilderCore<
+    VBIReportBuilder,
+    VBIReportDSL,
+    ReportSummary,
+    ReturnType<typeof createReportRemoteApi>
+  >({
+    config,
+    createApi: (state) => createReportRemoteApi(config, state),
+    createBuilder: (doc) => new VBIReportBuilder(doc),
+    resourceId,
+  })
 
   return {
-    getResourceId: () => state.resourceId,
-    create: api.create,
-    remove: () => remove(state, api.remove),
-    rename: api.rename,
-    open: getBuilder,
-    close: () => close(state),
-    getBuilder,
-    getCollaborationProvider: () => getCollaborationProvider(state, getBuilder),
-    getSummary: api.getSummary,
-    getDetail: () => (state.builder ? getLocalDetail(getBuilder, api.getSummary) : api.getDetail()),
-    snapshot: () => (state.builder ? getLocalSnapshot(getBuilder, api.getSummary) : api.getSnapshot()),
-    exportSnapshot: (): Promise<VBIReportSnapshotDSL> => api.exportSnapshot(),
-    createPage: api.createPage,
-    reorderPages: api.reorderPages,
-    updatePage: api.updatePage,
-    removePage: api.removePage,
+    getResourceId: core.getResourceId,
+    create: core.api.create,
+    remove: core.remove,
+    rename: core.api.rename,
+    open: core.getBuilder,
+    close: core.close,
+    getBuilder: core.getBuilder,
+    getCollaborationProvider: core.getCollaborationProvider,
+    getSummary: core.api.getSummary,
+    getDetail: () => (core.state.builder ? core.getLocalDetail() : core.api.getDetail()),
+    snapshot: () => (core.state.builder ? core.getLocalSnapshot() : core.api.getSnapshot()),
+    exportSnapshot: (): Promise<VBIReportSnapshotDSL> => core.api.exportSnapshot(),
+    createPage: core.api.createPage,
+    reorderPages: core.api.reorderPages,
+    updatePage: core.api.updatePage,
+    removePage: core.api.removePage,
   }
 }

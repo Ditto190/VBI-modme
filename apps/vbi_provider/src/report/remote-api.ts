@@ -1,4 +1,4 @@
-import type { VBIReportSnapshotDSL } from '@visactor/vbi'
+import type { VBIReportBuilder, VBIReportSnapshotDSL } from '@visactor/vbi'
 import type {
   ReportDetail,
   ReportPageInput,
@@ -6,18 +6,13 @@ import type {
   ReportSummary,
   ResourceSnapshot,
   RemoteBuilderState,
-  RemoteSessionConnection,
   VBIProviderClientOptions,
 } from '../types'
+import { createRemoteResourceApi, pickResourceSummary } from '../remote/resource-api'
 import { requestRemote } from '../remote/http'
 import { requireRemoteResourceId } from '../remote/collaboration'
 
-const toReportSummary = ({ createdAt, id, name, updatedAt }: ReportResponse): ReportSummary => ({
-  createdAt,
-  id,
-  name,
-  updatedAt,
-})
+const toReportSummary = (response: ReportSummary): ReportSummary => pickResourceSummary(response)
 
 export const toReportDetail = ({ createdAt, id, name, pages, updatedAt }: ReportResponse): ReportDetail => ({
   createdAt,
@@ -32,34 +27,30 @@ const toSnapshot = (detail: ReportDetail): ResourceSnapshot<ReportDetail['dsl']>
   dsl: detail.dsl,
 })
 
-export const createReportRemoteApi = (config: VBIProviderClientOptions, state: RemoteBuilderState<unknown>) => {
+export const createReportRemoteApi = (
+  config: VBIProviderClientOptions,
+  state: RemoteBuilderState<VBIReportBuilder>,
+) => {
   const requireId = () => requireRemoteResourceId(state, 'report')
-  const getResponse = () => requestRemote<ReportResponse>(config, `/reports/${requireId()}`)
+  const api = createRemoteResourceApi<ReportResponse, ReportSummary>({
+    config,
+    label: 'report',
+    path: '/reports',
+    state,
+    toSummary: toReportSummary,
+  })
   const mapDetail = (request: Promise<ReportResponse>) => request.then(toReportDetail)
+  const pagePath = (pageId?: string) => `/reports/${requireId()}/pages${pageId ? `/${pageId}` : ''}`
 
   return {
-    create: async (input?: { name?: string }) => {
-      const summary = await requestRemote<ReportResponse>(config, '/reports', { body: input, method: 'POST' })
-      state.resourceId = summary.id
-      return toReportSummary(await getResponse())
-    },
+    ...api,
     exportSnapshot: () => requestRemote<VBIReportSnapshotDSL>(config, `/reports/${requireId()}/snapshot`),
-    getDetail: async () => toReportDetail(await getResponse()),
-    getSession: () => requestRemote<RemoteSessionConnection>(config, `/reports/${requireId()}/collaboration`),
-    getSnapshot: async () => toSnapshot(toReportDetail(await getResponse())),
-    getSummary: async () => toReportSummary(await getResponse()),
-    remove: () =>
-      requestRemote<ReportResponse>(config, `/reports/${requireId()}`, { method: 'DELETE' }).then(toReportSummary),
-    rename: (name: string) =>
-      requestRemote<ReportResponse>(config, `/reports/${requireId()}`, { body: { name }, method: 'PATCH' }).then(
-        toReportSummary,
-      ),
+    getDetail: async () => toReportDetail(await api.getResponse()),
+    getSnapshot: async () => toSnapshot(toReportDetail(await api.getResponse())),
     createPage: (input?: { title?: string }) =>
-      mapDetail(
-        requestRemote<ReportResponse>(config, `/reports/${requireId()}/pages`, { body: input, method: 'POST' }),
-      ),
+      mapDetail(requestRemote<ReportResponse>(config, pagePath(), { body: input, method: 'POST' })),
     removePage: (pageId: string) =>
-      mapDetail(requestRemote<ReportResponse>(config, `/reports/${requireId()}/pages/${pageId}`, { method: 'DELETE' })),
+      mapDetail(requestRemote<ReportResponse>(config, pagePath(pageId), { method: 'DELETE' })),
     reorderPages: (pageIds: string[]) =>
       mapDetail(
         requestRemote<ReportResponse>(config, `/reports/${requireId()}/pages/reorder`, {
@@ -69,7 +60,7 @@ export const createReportRemoteApi = (config: VBIProviderClientOptions, state: R
       ),
     updatePage: (pageId: string, input: ReportPageInput) =>
       mapDetail(
-        requestRemote<ReportResponse>(config, `/reports/${requireId()}/pages/${pageId}`, {
+        requestRemote<ReportResponse>(config, pagePath(pageId), {
           body: input,
           method: 'PATCH',
         }),

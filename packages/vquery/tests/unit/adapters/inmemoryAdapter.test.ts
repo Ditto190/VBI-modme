@@ -1,6 +1,6 @@
-import { InMemoryAdapter } from 'src/adapters/storage-adapter/inmemoryAdapter'
-import { DatasetSchema } from 'src/types/DataSet'
-import { DatasetSource } from 'src/types'
+import { InMemoryAdapter } from '../../../src/adapters/storage-adapter/inmemoryAdapter'
+import { DatasetSchema } from '../../../src/types/DataSet'
+import { DatasetSource } from '../../../src/types'
 
 describe('InMemoryAdapter', () => {
   let adapter: InMemoryAdapter

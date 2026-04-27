@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { repoDir, pkgDir, readText, ensureCleanDir, writeText, writeJson } from './shared.mjs'
+import { repoDir, readText, ensureCleanDir, writeText, writeJson } from './shared.mjs'
 
-const sourceDir = path.resolve(pkgDir, 'docs/examples-source')
+const sourceDir = path.resolve(repoDir, 'docs/adr/packages/vbi-react/examples-source')
 const manifestPath = path.join(sourceDir, 'manifest.json')
 const outputDir = path.resolve(repoDir, 'apps/website/docs/zh-CN/vbi-react/examples')
 

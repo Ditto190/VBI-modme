@@ -1,7 +1,7 @@
 import { Dataset } from '@visactor/vquery'
 import { QueryAdapter, StorageAdapter, DatasetSource } from '@visactor/vquery'
-import { QueryResult } from 'src/types/DataSet'
-import { DatasetSchema } from 'src/types/DataSet'
+import { QueryResult } from '../../../src/types/DataSet'
+import { DatasetSchema } from '../../../src/types/DataSet'
 
 class MockQueryAdapter implements QueryAdapter {
   open = async () => {}

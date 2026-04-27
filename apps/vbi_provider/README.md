@@ -1,6 +1,6 @@
-# @visactor/vbi-provider
+# @visactor/headless-bi-provider
 
-`@visactor/vbi-provider` 是 VBI 平台级应用 SDK。
+`@visactor/headless-bi-provider` 是 VBI 平台级应用 SDK。
 
 它只暴露三种一等 Provider：
 
@@ -45,7 +45,7 @@ const createOnlyProvider = client.chart()
 ## Browser Example
 
 ```ts
-import { createVBIProviderClient } from '@visactor/vbi-provider'
+import { createVBIProviderClient } from '@visactor/headless-bi-provider'
 
 const client = createVBIProviderClient({
   baseUrl: '/api/v1',
@@ -62,7 +62,7 @@ console.log(await provider.getDetail())
 
 ```ts
 import { WebSocket } from 'ws'
-import { createVBIProviderClient } from '@visactor/vbi-provider'
+import { createVBIProviderClient } from '@visactor/headless-bi-provider'
 
 const client = createVBIProviderClient({
   baseUrl: 'http://localhost:3030/api/v1',

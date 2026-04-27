@@ -11,6 +11,7 @@ export default defineConfig({
         },
       },
       output: {
+        sourceMap: true,
         distPath: './dist/node/esm',
       },
       dts: true,
@@ -24,6 +25,7 @@ export default defineConfig({
         },
       },
       output: {
+        sourceMap: true,
         distPath: './dist/node/cjs',
       },
       dts: true,
@@ -39,6 +41,7 @@ export default defineConfig({
         },
       },
       output: {
+        sourceMap: true,
         target: 'web',
         distPath: './dist/browser/esm',
       },

@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import { registerDemoConnector } from '@visactor/headless-bi-provider';
 import { DebugBridgeInstaller } from './components/DebugBridgeInstaller';
 import { NavigationBinder } from './components/NavigationBinder';
-import { registerDemoConnector } from './utils/demoConnector';
 import { ManageChartsPage } from './pages/ManageChartsPage';
 import { ManageInsightsPage } from './pages/ManageInsightsPage';
 import { ManageLayoutPage } from './pages/ManageLayoutPage';

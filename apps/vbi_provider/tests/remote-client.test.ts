@@ -1,5 +1,5 @@
 import { createVBIProviderClient } from '../src'
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, rs, test } from '@rstest/core'
 
 const jsonResponse = <T>(data: T) => ({
   ok: true,
@@ -10,7 +10,7 @@ const jsonResponse = <T>(data: T) => ({
 
 describe('remote VBI client', () => {
   test('routes chart CRUD and references through REST endpoints', async () => {
-    const fetch = vi.fn(async (url: string, init?: { method?: string; body?: string }) => {
+    const fetch = rs.fn(async (url: string, init?: { method?: string; body?: string }) => {
       if (url.endsWith('/charts') && init?.method === 'POST') {
         return jsonResponse({
           id: 'chart-1',
@@ -44,7 +44,7 @@ describe('remote VBI client', () => {
   })
 
   test('supports report snapshot export through REST endpoint', async () => {
-    const fetch = vi.fn(async (url: string) => {
+    const fetch = rs.fn(async (url: string) => {
       if (url.endsWith('/reports/report-1/snapshot')) {
         return jsonResponse({
           report: { uuid: 'report-1' },
@@ -71,7 +71,7 @@ describe('remote VBI client', () => {
   })
 
   test('supports report page reorder through REST endpoint', async () => {
-    const fetch = vi.fn(async (url: string, init?: { method?: string; body?: string }) => {
+    const fetch = rs.fn(async (url: string, init?: { method?: string; body?: string }) => {
       if (url.endsWith('/reports/report-1/pages/reorder') && init?.method === 'PATCH') {
         return jsonResponse({
           id: 'report-1',

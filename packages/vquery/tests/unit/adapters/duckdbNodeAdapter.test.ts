@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DuckDBNodeQueryAdapter } from 'src/adapters/query-adapter/duckdbNodeAdapter'
+import { DuckDBNodeQueryAdapter } from '../../../src/adapters/query-adapter/duckdbNodeAdapter'
 import { createDuckDB } from '@duckdb/duckdb-wasm/blocking'
 
 rs.mock('@duckdb/duckdb-wasm/blocking', () => {

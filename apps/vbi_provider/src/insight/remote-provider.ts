@@ -1,70 +1,44 @@
-import { VBIInsightBuilder } from '@visactor/vbi'
+import { VBIInsightBuilder, type VBIInsightDSL } from '@visactor/vbi'
 import { createInsightRemoteApi } from './remote-api'
-import { closeRemoteBuilder, createRemoteBuilderState, openRemoteBuilder } from '../remote/collaboration'
+import { createRemoteBuilderCore } from '../remote/builder-provider'
 import type {
   InsightDetail,
   InsightProvider,
   InsightSummary,
   InsightUpdateInput,
-  RemoteBuilderState,
   VBIProviderClientOptions,
 } from '../types'
 
-const close = (state: RemoteBuilderState<VBIInsightBuilder>) => closeRemoteBuilder(state)
-
-const getCollaborationProvider = async (
-  state: RemoteBuilderState<VBIInsightBuilder>,
-  getBuilder: () => Promise<VBIInsightBuilder>,
-) => {
-  await getBuilder()
-  return state.provider
-}
-
-const remove = async (state: RemoteBuilderState<VBIInsightBuilder>, removeResource: () => Promise<InsightSummary>) => {
-  const summary = await removeResource()
-  await close(state)
-  state.resourceId = null
-  return summary
-}
-
-const getLocalDetail = async (
-  getBuilder: () => Promise<VBIInsightBuilder>,
-  getSummary: InsightProvider['getSummary'],
-) => ({
-  ...(await getSummary()),
-  dsl: (await getBuilder()).build(),
-})
-
-const getLocalSnapshot = async (
-  getBuilder: () => Promise<VBIInsightBuilder>,
-  getSummary: InsightProvider['getSummary'],
-) => ({
-  resource: await getSummary(),
-  dsl: (await getBuilder()).build(),
-})
-
 export const createRemoteInsightProvider = (config: VBIProviderClientOptions, resourceId?: string): InsightProvider => {
-  const state = createRemoteBuilderState<VBIInsightBuilder>(resourceId)
-  const api = createInsightRemoteApi(config, state)
-  const getBuilder = () => openRemoteBuilder(config, state, api.getSession, (doc) => new VBIInsightBuilder(doc))
-  const getDetail = async (): Promise<InsightDetail> => getLocalDetail(getBuilder, api.getSummary)
+  const core = createRemoteBuilderCore<
+    VBIInsightBuilder,
+    VBIInsightDSL,
+    InsightSummary,
+    ReturnType<typeof createInsightRemoteApi>
+  >({
+    config,
+    createApi: (state) => createInsightRemoteApi(config, state),
+    createBuilder: (doc) => new VBIInsightBuilder(doc),
+    resourceId,
+  })
+  const getDetail = async (): Promise<InsightDetail> => core.getLocalDetail()
 
   return {
-    getResourceId: () => state.resourceId,
-    create: api.create,
-    remove: () => remove(state, api.remove),
-    rename: api.rename,
-    open: getBuilder,
-    close: () => close(state),
-    getBuilder,
-    getCollaborationProvider: () => getCollaborationProvider(state, getBuilder),
-    getSummary: api.getSummary,
+    getResourceId: core.getResourceId,
+    create: core.api.create,
+    remove: core.remove,
+    rename: core.api.rename,
+    open: core.getBuilder,
+    close: core.close,
+    getBuilder: core.getBuilder,
+    getCollaborationProvider: core.getCollaborationProvider,
+    getSummary: core.api.getSummary,
     update: async (input: InsightUpdateInput) => {
-      await api.update(input)
+      await core.api.update(input)
       return getDetail()
     },
     getDetail,
-    snapshot: () => getLocalSnapshot(getBuilder, api.getSummary),
-    getReferences: api.getReferences,
+    snapshot: core.getLocalSnapshot,
+    getReferences: core.api.getReferences,
   }
 }

@@ -2,126 +2,73 @@
 
 This file provides guidance to Coding Agent when working with code in this repository.
 
-## 项目规范
-
-- 遵循 Single Source of Truth 原则：VBIChartDSL、VQueryDSL、VSeedDSL 驱动核心功能
-- 遵循第一性原理，做符合直觉的设计和实现
-- 遵循小函数, 小文件理念, 单个文件不超过 100 行, 单个函数不超过 50 行
-
-## 项目概览
-
-VBI（Visual Business Intelligence）是 VisActor 生态的 Monorepo，实现从数据配置到图表渲染的完整可视化流水线。
-
-``` 
-用户配置 → VBI (配置层/VBIChartDSL) → VQuery (查询层/QueryDSL→SQL) → VSeed (渲染层/VSeedDSL→Spec)
-```
-
-| 包                   | 职责                                                  |
-| -------------------- | ----------------------------------------------------- |
-| **@visactor/vbi**    | BI 构建器，基于 Yjs 协同编辑 DSL，依赖 vseed + vquery |
-| **@visactor/vquery** | 通用查询引擎，JSON DSL → SQL，支持 DuckDB/Postgres    |
-| **@visactor/vseed**  | 声明式图表生成器，语义配置 → VChart/VTable Spec       |
-
-### 目录结构
+## 目录结构
 
 ```
 VBI/
 ├── apps/                           # 应用层：文档站点、前端、后端
-│   ├── website/                    # 官网文档、示例与 playground
+│   ├── vbi_be/                     # VBI 后端应用
+│   ├── vbi_cli/                    # VBI CLI 应用壳
 │   ├── vbi_fe/                     # VBI 前端应用
-│   └── vbi_be/                     # VBI 后端应用
-├── packages/                       # 包级实现，统一包含 src/ 与 docs/
+│   ├── vbi_provider/               # VBI Provider 应用
+│   └── website/                    # 官网文档、示例与 playground
+├── packages/                       # 包级实现
 │   ├── vbi/                        # 配置层，负责 VBIChartDSL、Builder、协同编辑
-│   │   ├── src/                    # 源码
-│   │   └── docs/                   # 包级目标、ADR、计划
+│   ├── vbi-agent/                  # Builder Agent runtime 与工具协议
 │   ├── vquery/                     # 查询层，负责 QueryDSL → SQL 与数据查询
-│   │   ├── src/
-│   │   └── docs/
 │   ├── vseed/                      # 渲染层，负责 VSeedDSL → VChart/VTable Spec
-│   │   ├── src/
-│   │   └── docs/
 │   └── vbi-react/                  # React 适配与集成层
-│       ├── src/
-│       └── docs/
 ├── practices/                      # 不同复杂度的实践示例
 │   ├── standard/                   # 标准版示例
-│   │   ├── src/
-│   │   └── docs/
 │   ├── minimalist/                 # 极简实现示例
-│   │   ├── src/
-│   │   └── docs/
 │   ├── professional/               # 偏业务化的完整示例
-│   │   ├── src/
-│   │   └── docs/
 │   ├── streamlined/                # 精简结构示例
-│   │   ├── src/
-│   │   └── docs/
 │   └── vbi-react-starter/          # React Starter 示例
-│       ├── src/
-│       └── docs/
-├── docs/                           # 仓库级设计与演进记录，按主题目录组织
-│   ├── README.md                   # 文档约定说明
-│   └── YYYY-MM-DD-topic/           # 单个决策、功能、Topic目录
-│       ├── goal.md                 # 目标/需求（按需）
-│       ├── adr.md                  # 架构决策（按需）
-│       └── plan.md                 # 执行计划（按需）
+├── docs/                           # 仓库文档与历史上下文
+│   ├── adr/                        # 历史决策、主题设计、实践记录统一入口
+│   │   ├── repository/             # 仓库级 ADR 与跨应用主题设计
+│   │   ├── packages/               # package 级历史文档
+│   │   └── practices/              # practice 级历史文档
+│   ├── skills/                     # 面向 agent 的参考资料
+│   └── superpowers/                # 其他专题文档
 ├── tools/                          # 开发辅助脚本与工具
 ├── docker/                         # 本地运行与部署相关容器配置
-├── skills/                         # 仓库内置的开发辅助技能
 ├── README.md                       # 项目总览与使用说明
 ├── AGENTS.md                       # Coding Agent 协作说明
 └── CLAUDE.md                       # Claude Code 协作说明
 ```
 
-### 数据流
-
-1. 用户通过 VBI 配置图表（chartType、measures、dimensions、having 等）
-2. `VBIChartBuilder.buildVQuery()` 将 VBIChartDSL → VQueryDSL
-3. Connector 调用 VQuery 执行 SQL，返回数据集
-4. 合并 VBIChartDSL + 数据集，通过 VSeed Builder → VChart/VTable Spec
-5. 前端渲染
-
 ## 常用命令
 
-**所有 `pnpm` 命令必须在项目根目录执行，针对特定包用 `--filter`。**
+请查阅`scripts`(packages.json), 在根目录下执行.
 
-```bash
-# 全局
-pnpm run build                  # 构建所有包
-pnpm run dev                    # 启动文档站点，自动监听所有包源码
-pnpm run lint                   # 全量 Lint
-pnpm run typecheck              # 全量类型检查
-pnpm run format                 # 格式化代码
+## 验证|
 
-# 子包通用（以 vbi 为例，替换 filter 即可）
-pnpm --filter=@visactor/vbi run build
-pnpm --filter=@visactor/vbi run test
-pnpm --filter=@visactor/vbi run test:update
-pnpm --filter=@visactor/vbi run test:coverage
-pnpm --filter=@visactor/vbi run lint
-pnpm --filter=@visactor/vbi run format
-pnpm --filter=@visactor/vbi run g             # 从 JSON 生成文档、测试、API
+每次修改必须执行并通过项目仓库级别的 lint 和 typecheck
 
-# vseed 额外命令
-pnpm --filter=@visactor/vseed run test:unit
-pnpm --filter=@visactor/vseed run test:integration
-```
+## 规范
 
-## 开发流程（统一）
+- 遵循第一性原理，做符合直觉的设计和实现
+- 遵循小函数, 小文件理念, 单个文件不超过 100 行, 单个函数不超过 50 行
+  - 过长方法/函数（Long Method） — 超过 30-40 行就该拆分。
+  - 过大类/God Class — 一个类/模块承担太多职责，必须拆分。
+- 一旦发现坏味道，必须果断重构或删除，绝不留情。删除时必须同时清理所有相关引用：包括导入语句、函数调用、变量引用、类型定义、注释、测试用例、文档等下游影响。绝不允许留下“孤儿代码”或“死引用”。
+  - 常见坏味道清单（必须熟练内化并主动检测）：重复代码（Duplicated Code） — 相同或高度相似的逻辑出现两次以上，必须提取成函数/工具函数/组件。
+  - 重构后代码必须更简洁、可读性更高、职责更单一。遵循 Single Source of Truth 原则：VBIChartDSL、VQueryDSL、VSeedDSL 驱动核心功能
+  - 过度耦合（Tight Coupling） — 模块间直接依赖具体实现，应改用接口或依赖注入。
+  - 冗余注释（Redundant Comments） — 代码本身能表达的含义不需要注释，删除无用注释。
+  - 死代码/未使用代码（Dead Code） — 任何未被调用、未被导入、未被测试使用的代码，必须彻底删除。
+  - 长参数列表（Long Parameter List） — 超过 4-5 个参数应使用对象或配置对象。
+  - 数据泥团（Data Clumps） — 总是成组出现的变量，应封装成类或对象。
+  - 临时字段（Temporary Field） — 只在某些情况下使用的字段，应重构。
+  - 不恰当的暴露（Inappropriate Intimacy） — 模块之间过度了解彼此内部实现。
+  - 发散式变化 / 霰弹式修改（Divergent Change / Shotgun Surgery） — 一个变化需要改动多个地方，说明需要重新划分模块。
 
-```
-1. 先写测试用例（单元测试或集成测试 JSON Spec）
-2. 开发实现代码
-3. 运行 pnpm --filter=@visactor/[pkg] run g 生成测试文件、文档、API
-4. 验证：typecheck → lint → format → test（仅子包）
-```
+## 执行纪律
+- 在每次修改前，先扫描一遍代码，列出发现的所有坏味道。
+- 重构时优先使用删除而不是“保留但注释掉”。
+- 删除后必须验证：代码仍能正常编译/运行，且功能不变或更好。
+- 输出时只给出最终干净代码 + 必要的简短说明（说明删除了哪些坏味道）。
+- 绝不输出“可以保留”“看情况”“为了兼容”等优柔寡断的语言。
 
-## 验证指南
-
-| 场景                      | 命令                                                                              |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| **单包修改**（推荐）      | `pnpm --filter=@visactor/[pkg] run test` + `pnpm run lint` + `pnpm run typecheck` |
-| **多包/破坏性变更**       | `pnpm run lint` + `pnpm run format` + `pnpm run typecheck`                        |
-| **快速验证**（typo/文档） | `pnpm run lint`                                                                   |
-
-> **注意**：鼓励 项目仓库级别的 lint 和 typecheck
+记住： 优秀的代码不是写出来的，而是删出来的。保持极致简洁是你的最高使命。

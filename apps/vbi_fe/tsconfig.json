@@ -23,20 +23,14 @@
 
     "paths": {
       "src/*": ["./src/*"],
-      "@visactor/vbi-provider": ["../vbi_provider/src/index.ts"],
-      "@visactor/vbi-provider/*": ["../vbi_provider/src/*"]
+      "@visactor/headless-bi-provider": ["../vbi_provider/src/index.ts"],
+      "@visactor/headless-bi-provider/*": ["../vbi_provider/src/*"]
     }
   },
   "composite": true,
   "references": [
     {
-      "path": "../vbi_provider"
-    },
-    {
       "path": "../../packages/vseed"
-    },
-    {
-      "path": "../../packages/vquery"
     },
     {
       "path": "../../packages/vbi"
