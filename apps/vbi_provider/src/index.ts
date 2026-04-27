@@ -1,4 +1,5 @@
 export { createVBIProviderClient } from './client'
+export { DEMO_CONNECTOR_ID, demoConnector, registerDemoConnector } from './demo-connector'
 export type {
   ChartDetail,
   ChartProvider,

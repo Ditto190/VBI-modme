@@ -1,7 +1,8 @@
+import { hypothesisLoopSkill } from './hypothesis-loop/index.js'
 import { vbiBuilderSkill } from './vbi-builder/index.js'
 import type { BuiltinSkill, BuiltinSkillAsset, BuiltinSkillReference } from './types.js'
 
-const builtinSkills = [vbiBuilderSkill]
+const builtinSkills = [vbiBuilderSkill, hypothesisLoopSkill]
 
 export const listBuiltinSkills = () => builtinSkills
 

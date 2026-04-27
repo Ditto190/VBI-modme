@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DuckDBBundles, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm'
 import { AsyncDuckDB, selectBundle, ConsoleLogger } from '@duckdb/duckdb-wasm'
-import { QueryAdapter } from 'src/types'
-import { QueryResult } from 'src/types/DataSet'
+import { QueryAdapter } from '../../types'
+import { QueryResult } from '../../types/DataSet'
 
 export class DuckDBWebQueryAdapter implements QueryAdapter {
   private db: AsyncDuckDB | null = null

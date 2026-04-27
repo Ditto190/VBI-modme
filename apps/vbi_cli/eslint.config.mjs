@@ -14,7 +14,7 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'coverage/', 'node_modules/', 'eslint.config.mjs', 'rslib.config.ts', 'vite.config.ts'],
+    ignores: ['dist/', 'coverage/', 'node_modules/', 'eslint.config.mjs', 'rslib.config.ts', 'rstest.config.ts'],
   },
   ...defineConfig(js.configs.recommended, tseslint.configs.recommended),
   {

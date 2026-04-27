@@ -1,13 +1,75 @@
 import { jsonSchema, type AgentTool } from '@visactor/vbi-agent'
-import type { VBIProviderClient } from '@visactor/headless-bi-provider'
-import { executeInsightUpdate, executeReportPageAction, executeResourceAction } from './resource-actions.js'
-import { readString, stringifyJson } from './resource-readers.js'
+import type { InsightUpdateInput, ReportPageInput, VBIProviderClient } from '@visactor/headless-bi-provider'
+
+const stringifyJson = (value: unknown) => JSON.stringify(value, null, 2)
+
+const readString = (input: Record<string, unknown>, key: string) =>
+  typeof input[key] === 'string' && input[key].trim() ? input[key] : undefined
+
+const requireString = (input: Record<string, unknown>, key: string) => {
+  const value = readString(input, key)
+  if (!value) throw new Error(`vbi_resource.${key} is required`)
+  return value
+}
+
+const readResource = (input: Record<string, unknown>) => {
+  const value = input.resource
+  if (value === 'chart' || value === 'insight' || value === 'report') return value
+  throw new Error('vbi_resource.resource must be chart, insight, or report')
+}
+
+const executeAction = (client: VBIProviderClient, input: Record<string, unknown>) => {
+  const action = requireString(input, 'action')
+  const resource = readResource(input)
+  const id = readString(input, 'id')
+
+  if (action === 'list') {
+    if (resource === 'chart') return client.listCharts()
+    if (resource === 'insight') return client.listInsights()
+    return client.listReports()
+  }
+
+  const provider =
+    resource === 'chart' ? client.chart(id) : resource === 'insight' ? client.insight(id) : client.report(id)
+
+  if (action === 'create') {
+    const input_ = readString(input, 'name') ? { name: readString(input, 'name') } : {}
+    return provider.create(resource === 'insight' ? { ...input_, content: readString(input, 'content') } : input_)
+  }
+  if (action === 'get') return provider.getDetail()
+  if (action === 'rename') return provider.rename(requireString(input, 'name'))
+  if (action === 'remove') return provider.remove()
+  if (action === 'snapshot') return provider.snapshot()
+  return resource === 'report' ? provider.exportSnapshot() : provider.getReferences()
+}
+
+const executeInsightUpdate = (client: VBIProviderClient, input: Record<string, unknown>) =>
+  client.insight(requireString(input, 'id')).update({
+    ...(readString(input, 'content') ? { content: readString(input, 'content') } : {}),
+    ...(readString(input, 'name') ? { name: readString(input, 'name') } : {}),
+  } satisfies InsightUpdateInput)
+
+const executeReportPageAction = (client: VBIProviderClient, input: Record<string, unknown>) => {
+  const provider = client.report(requireString(input, 'id'))
+  const pageAction = requireString(input, 'pageAction')
+  if (pageAction === 'create') return provider.createPage({ title: readString(input, 'title') })
+  if (pageAction === 'remove') return provider.removePage(requireString(input, 'pageId'))
+  if (pageAction === 'reorder' && Array.isArray(input.pageIds)) return provider.reorderPages(input.pageIds as string[])
+  if (pageAction === 'update') return provider.updatePage(requireString(input, 'pageId'), readPageInput(input))
+  throw new Error('vbi_resource.pageAction must be create, remove, reorder, or update')
+}
+
+const readPageInput = (input: Record<string, unknown>): ReportPageInput => ({
+  chartId: readString(input, 'chartId'),
+  insightId: readString(input, 'insightId'),
+  title: readString(input, 'title'),
+})
 
 const executeCliResourceAction = async (client: VBIProviderClient, input: Record<string, unknown>) => {
   const action = readString(input, 'action')
   if (action === 'update' && input.resource === 'insight') return executeInsightUpdate(client, input)
   if (action === 'page' && input.resource === 'report') return executeReportPageAction(client, input)
-  return executeResourceAction(client, input)
+  return executeAction(client, input)
 }
 
 export const createResourceTools = (client: VBIProviderClient): AgentTool[] => [

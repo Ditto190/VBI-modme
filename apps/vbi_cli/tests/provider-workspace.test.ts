@@ -1,23 +1,24 @@
-import { describe, expect, test, vi } from 'vitest'
-import { createProviderWorkspace } from '../src/agent/provider-workspace.js'
+import { describe, expect, rs, test } from '@rstest/core'
+import { VBI } from '@visactor/vbi'
+import { createProviderWorkspace } from '../src/agent/provider.js'
 
 describe('createProviderWorkspace', () => {
   test('adapts selected provider resources into builder workspace slots', async () => {
     const chartBuilder = { build: () => ({ chartType: 'line' }) }
     const reportBuilder = { build: () => ({ pages: [] }) }
     const chart = {
-      getSummary: vi.fn(async () => ({ id: 'chart-1', name: 'Chart' })),
-      open: vi.fn(async () => chartBuilder),
-      snapshot: vi.fn(async () => ({ dsl: {}, resource: { id: 'chart-1' } })),
+      getSummary: rs.fn(async () => ({ id: 'chart-1', name: 'Chart' })),
+      open: rs.fn(async () => chartBuilder),
+      snapshot: rs.fn(async () => ({ dsl: {}, resource: { id: 'chart-1' } })),
     }
     const report = {
-      getSummary: vi.fn(async () => ({ id: 'report-1', name: 'Report' })),
-      open: vi.fn(async () => reportBuilder),
-      snapshot: vi.fn(async () => ({ dsl: {}, resource: { id: 'report-1' } })),
+      getSummary: rs.fn(async () => ({ id: 'report-1', name: 'Report' })),
+      open: rs.fn(async () => reportBuilder),
+      snapshot: rs.fn(async () => ({ dsl: {}, resource: { id: 'report-1' } })),
     }
     const client = {
-      chart: vi.fn(() => chart),
-      report: vi.fn(() => report),
+      chart: rs.fn(() => chart),
+      report: rs.fn(() => report),
     }
 
     const workspace = createProviderWorkspace({ chartId: 'chart-1', client: client as never, reportId: 'report-1' })
@@ -33,13 +34,13 @@ describe('createProviderWorkspace', () => {
   test('lets builder scripts open resources by id without startup ids', async () => {
     const chartBuilder = { build: () => ({ chartType: 'bar' }) }
     const chart = {
-      getSummary: vi.fn(async () => ({ id: 'chart-2', name: 'Chart 2' })),
-      open: vi.fn(async () => chartBuilder),
-      snapshot: vi.fn(async () => ({ dsl: {}, resource: { id: 'chart-2' } })),
+      getSummary: rs.fn(async () => ({ id: 'chart-2', name: 'Chart 2' })),
+      open: rs.fn(async () => chartBuilder),
+      snapshot: rs.fn(async () => ({ dsl: {}, resource: { id: 'chart-2' } })),
     }
     const client = {
-      chart: vi.fn(() => chart),
-      report: vi.fn(),
+      chart: rs.fn(() => chart),
+      report: rs.fn(),
     }
 
     const workspace = createProviderWorkspace({ client: client as never })
@@ -47,5 +48,45 @@ describe('createProviderWorkspace', () => {
     await expect(workspace.chart?.open('chart-2')).resolves.toBe(chartBuilder)
     await expect(workspace.chart?.open()).rejects.toThrow('chart id is required')
     expect(client.chart).toHaveBeenCalledWith('chart-2')
+  })
+
+  test('injects connector helpers into provider workspace', async () => {
+    const schema = [{ name: 'sales', type: 'number' }]
+    const client = {
+      chart: rs.fn(),
+      report: rs.fn(),
+    }
+
+    const workspace = createProviderWorkspace({ client: client as never })
+    const connectorId = workspace.connectors?.register('cli-test-direct', {
+      discoverSchema: async () => schema,
+      query: async () => ({ dataset: [] }),
+    })
+
+    expect(connectorId).toBe('cli-test-direct')
+    const connector = await VBI.getConnector('cli-test-direct')
+    await expect(connector.discoverSchema()).resolves.toEqual(schema)
+  })
+
+  test('registers connector for the selected chart connector id', async () => {
+    const schema = [{ name: 'profit', type: 'number' }]
+    const chartBuilder = VBI.chart.create(VBI.chart.createEmpty('cli-test-chart'))
+    const chart = {
+      open: rs.fn(async () => chartBuilder),
+    }
+    const client = {
+      chart: rs.fn(() => chart),
+      report: rs.fn(),
+    }
+
+    const workspace = createProviderWorkspace({ chartId: 'chart-3', client: client as never })
+    await expect(
+      workspace.connectors?.registerChart?.(undefined, {
+        discoverSchema: async () => schema,
+        query: async () => ({ dataset: [] }),
+      }),
+    ).resolves.toBe('cli-test-chart')
+    await expect(chartBuilder.getSchema()).resolves.toEqual(schema)
+    expect(client.chart).toHaveBeenCalledWith('chart-3')
   })
 })

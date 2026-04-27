@@ -13,10 +13,7 @@
     "allowImportingTsExtensions": true,
     "composite": true,
     "outDir": "dist",
-    "rootDir": "./src",
-    "paths": {
-      "src/*": ["./src/*"]
-    }
+    "rootDir": "./src"
   },
   "include": ["src", "src/**/*.csv"]
 }

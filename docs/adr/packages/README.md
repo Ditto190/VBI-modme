@@ -6,6 +6,7 @@
 - `vquery/`: `@visactor/vquery` 相关文档
 - `vseed/`: `@visactor/vseed` 相关文档
 - `vbi-react/`: `@visactor/vbi-react` 相关文档
+- `vbi-agent/`: `@visactor/vbi-agent` 相关文档
 
 组织原则：
 

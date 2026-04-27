@@ -1,19 +1,20 @@
 #!/usr/bin/env node
+import { render } from 'ink'
+import { createElement } from 'react'
 import { config } from 'dotenv'
 import { createAgentRuntime, createBuilderTools, createDeepSeekModelProvider, createToolKit } from '@visactor/vbi-agent'
 import { parseAgentCommand } from './parse.js'
 import { createAgentConfig } from './agent/config.js'
-import { createCliProviderClient } from './agent/provider-client.js'
-import { createProviderWorkspace } from './agent/provider-workspace.js'
+import { createCliProviderClient, createProviderWorkspace } from './agent/provider.js'
 import { createBashTool } from './agent/tools/bash-tool.js'
 import { createResourceTools } from './agent/tools/resource-tools.js'
-import { runAgentTui } from './agent/tui/run-agent-tui.js'
+import { AgentApp } from './agent/tui/agent-app.js'
 
 config({ path: '.env', quiet: true })
 
 const command = parseAgentCommand(process.argv.slice(2))
 const agentConfig = createAgentConfig(command)
-const client = createCliProviderClient({ apiBaseUrl: agentConfig.provider.apiBaseUrl })
+const client = createCliProviderClient(agentConfig.provider.apiBaseUrl)
 const workspace = createProviderWorkspace({
   client,
   chartId: agentConfig.provider.chartId,
@@ -28,4 +29,12 @@ const runtime = createAgentRuntime({
   ]),
 })
 
-process.exitCode = await runAgentTui({ runtime, task: command.task })
+process.exitCode = await new Promise<number>((resolve) => {
+  const instance = render(
+    createElement(AgentApp, {
+      onExit: (code: number) => (instance.unmount(), resolve(code)),
+      runtime,
+      task: command.task,
+    }),
+  )
+})

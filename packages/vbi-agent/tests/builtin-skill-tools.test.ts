@@ -8,6 +8,7 @@ describe('builtin skill tools', () => {
     const result = await tool.execute({})
 
     expect(result.content).toContain('vbi-builder')
+    expect(result.content).toContain('hypothesis-loop')
     expect(result.content).toContain('chart-builder')
     expect(result.content).toContain('report-builder')
   })
@@ -32,6 +33,18 @@ describe('builtin skill tools', () => {
 
     expect(result.content).toContain('# VBIChartBuilder')
     expect(result.content).toContain('## Examples')
+  })
+
+  test('returns hypothesis skill body and requested references', async () => {
+    const [tool] = createBuiltinSkillTools()
+    const result = await tool.execute({
+      name: 'hypothesis-loop',
+      references: ['experiment-design'],
+    })
+
+    expect(result.content).toContain('# Hypothesis Loop')
+    expect(result.content).toContain('vbi_experiment')
+    expect(result.content).toContain('# Experiment Design')
   })
 
   test('wraps unknown references through toolkit errors', async () => {

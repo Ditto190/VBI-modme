@@ -189,6 +189,9 @@ importers:
       '@visactor/headless-bi-provider':
         specifier: workspace:*
         version: link:../vbi_provider
+      '@visactor/vbi':
+        specifier: workspace:*
+        version: link:../../packages/vbi
       '@visactor/vbi-agent':
         specifier: workspace:*
         version: link:../../packages/vbi-agent
@@ -208,6 +211,9 @@ importers:
       '@rslib/core':
         specifier: 0.20.3
         version: 0.20.3(@emnapi/core@1.5.0)(@emnapi/runtime@1.5.0)(core-js@3.47.0)(typescript@6.0.2)
+      '@rstest/core':
+        specifier: 0.8.3
+        version: 0.8.3(happy-dom@20.4.0)(jsdom@27.4.0(@noble/hashes@1.8.0))
       '@types/node':
         specifier: 24.10.1
         version: 24.10.1
@@ -229,9 +235,6 @@ importers:
       typescript-eslint:
         specifier: 8.58.1
         version: 8.58.1(eslint@9.39.0(jiti@2.6.1))(typescript@6.0.2)
-      vitest:
-        specifier: 3.2.4
-        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.10.1)(happy-dom@20.4.0)(jiti@2.6.1)(jsdom@27.4.0(@noble/hashes@1.8.0))(sass-embedded@1.91.0)(sass@1.91.0)(terser@5.43.1)(yaml@2.8.1)
 
   apps/vbi_fe:
     dependencies:
@@ -247,9 +250,6 @@ importers:
       '@visactor/vbi':
         specifier: workspace:*
         version: link:../../packages/vbi
-      '@visactor/vquery':
-        specifier: workspace:*
-        version: link:../../packages/vquery
       '@visactor/vseed':
         specifier: workspace:*
         version: link:../../packages/vseed
@@ -338,6 +338,9 @@ importers:
       '@visactor/vbi':
         specifier: workspace:*
         version: link:../../packages/vbi
+      '@visactor/vquery':
+        specifier: workspace:*
+        version: link:../../packages/vquery
       yjs:
         specifier: 13.6.28
         version: 13.6.28
@@ -348,12 +351,12 @@ importers:
       '@rslib/core':
         specifier: 0.20.3
         version: 0.20.3(@emnapi/core@1.5.0)(@emnapi/runtime@1.5.0)(core-js@3.47.0)(typescript@6.0.2)
+      '@rstest/core':
+        specifier: 0.8.3
+        version: 0.8.3(happy-dom@20.4.0)(jsdom@27.4.0(@noble/hashes@1.8.0))
       '@types/node':
         specifier: 24.10.1
         version: 24.10.1
-      '@vitest/coverage-v8':
-        specifier: 3.2.4
-        version: 3.2.4(vitest@3.2.4(@types/debug@4.1.12)(@types/node@24.10.1)(happy-dom@20.4.0)(jiti@2.6.1)(jsdom@27.4.0(@noble/hashes@1.8.0))(sass-embedded@1.91.0)(sass@1.91.0)(terser@5.43.1)(yaml@2.8.1))
       eslint:
         specifier: 9.39.0
         version: 9.39.0(jiti@2.6.1)
@@ -369,9 +372,6 @@ importers:
       typescript-eslint:
         specifier: 8.58.1
         version: 8.58.1(eslint@9.39.0(jiti@2.6.1))(typescript@6.0.2)
-      vitest:
-        specifier: 3.2.4
-        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.10.1)(happy-dom@20.4.0)(jiti@2.6.1)(jsdom@27.4.0(@noble/hashes@1.8.0))(sass-embedded@1.91.0)(sass@1.91.0)(terser@5.43.1)(yaml@2.8.1)
 
   apps/website:
     dependencies:
@@ -12477,9 +12477,9 @@ snapshots:
 
   '@rsbuild/core@1.7.3':
     dependencies:
-      '@rspack/core': 1.7.5(@swc/helpers@0.5.18)
+      '@rspack/core': 1.7.5(@swc/helpers@0.5.21)
       '@rspack/lite-tapable': 1.1.0
-      '@swc/helpers': 0.5.18
+      '@swc/helpers': 0.5.21
       core-js: 3.47.0
       jiti: 2.6.1
 
@@ -12880,14 +12880,6 @@ snapshots:
     optionalDependencies:
       '@swc/helpers': 0.5.18
 
-  '@rspack/core@1.7.5(@swc/helpers@0.5.18)':
-    dependencies:
-      '@module-federation/runtime-tools': 0.22.0
-      '@rspack/binding': 1.7.5
-      '@rspack/lite-tapable': 1.1.0
-    optionalDependencies:
-      '@swc/helpers': 0.5.18
-
   '@rspack/core@1.7.5(@swc/helpers@0.5.21)':
     dependencies:
       '@module-federation/runtime-tools': 0.22.0
@@ -12895,7 +12887,6 @@ snapshots:
       '@rspack/lite-tapable': 1.1.0
     optionalDependencies:
       '@swc/helpers': 0.5.21
-    optional: true
 
   '@rspack/core@2.0.0-beta.3(@swc/helpers@0.5.21)':
     dependencies:

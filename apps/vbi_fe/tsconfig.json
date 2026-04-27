@@ -30,13 +30,7 @@
   "composite": true,
   "references": [
     {
-      "path": "../vbi_provider"
-    },
-    {
       "path": "../../packages/vseed"
-    },
-    {
-      "path": "../../packages/vquery"
     },
     {
       "path": "../../packages/vbi"

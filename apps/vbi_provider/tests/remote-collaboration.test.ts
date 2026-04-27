@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 
-const { FakeDoc, FakeProvider, FakeWebsocketProvider, providerInstances, websocketInstances } = vi.hoisted(() => {
+const { FakeDoc, FakeProvider, FakeWebsocketProvider, providerInstances, websocketInstances } = rs.hoisted(() => {
   const providerInstances: {
     configuration: {
       document: unknown
@@ -77,11 +77,11 @@ const { FakeDoc, FakeProvider, FakeWebsocketProvider, providerInstances, websock
   }
 })
 
-vi.mock('yjs', () => ({
+rs.mock('yjs', () => ({
   Doc: FakeDoc,
 }))
 
-vi.mock('@hocuspocus/provider', () => ({
+rs.mock('@hocuspocus/provider', () => ({
   HocuspocusProvider: FakeProvider,
   HocuspocusProviderWebsocket: FakeWebsocketProvider,
 }))

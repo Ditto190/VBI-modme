@@ -1,7 +1,6 @@
 import { Box, Static, Text, useInput, useStdout } from 'ink'
 import React, { useEffect, useState } from 'react'
 import { MarkdownText } from './markdown-text.js'
-import { useBufferInput } from './use-buffer-input.js'
 import type { AgentActivity, AgentRuntimeController } from '@visactor/vbi-agent'
 
 const colorByKind: Record<AgentActivity['kind'], string> = {
@@ -41,15 +40,9 @@ export const AgentApp = ({
 }) => {
   const [state, setState] = useState(runtime.getState())
   const [isRunning, setIsRunning] = useState(false)
+  const [buffer, setBuffer] = useState('')
   const { stdout } = useStdout()
   const width = stdout.columns ?? 80
-  const input = useBufferInput((value) => {
-    const trimmed = value.trim()
-    input.clear()
-    if (!trimmed || isRunning) return
-    setIsRunning(true)
-    void runtime.start(trimmed).finally(() => setIsRunning(false))
-  }, !isRunning)
 
   useEffect(() => runtime.subscribe(setState), [runtime])
   useEffect(() => {
@@ -58,9 +51,26 @@ export const AgentApp = ({
     void runtime.start(task).finally(() => setIsRunning(false))
   }, [runtime, task])
 
+  useInput(
+    (input_, key) => {
+      if (isRunning) return
+      if (key.return) {
+        const trimmed = buffer.trim()
+        setBuffer('')
+        if (!trimmed) return
+        setIsRunning(true)
+        void runtime.start(trimmed).finally(() => setIsRunning(false))
+        return
+      }
+      if (key.backspace || key.delete) return setBuffer((c) => c.slice(0, -1))
+      if (!key.ctrl && !key.meta && input_) setBuffer((c) => c + input_)
+    },
+    { isActive: !isRunning },
+  )
+
   useInput((value, key) => {
-    if (value === 'q' && !input.value) onExit(state.error ? 1 : 0)
-    if (key.escape) input.clear()
+    if (value === 'q' && !buffer) onExit(state.error ? 1 : 0)
+    if (key.escape) setBuffer('')
   })
 
   return (
@@ -72,7 +82,7 @@ export const AgentApp = ({
         <Text color="gray">{statusLine(isRunning)}</Text>
         <Text color="cyan">
           {'> '}
-          <Text>{input.value}</Text>
+          <Text>{buffer}</Text>
           <Text color="gray">▎</Text>
         </Text>
       </Box>

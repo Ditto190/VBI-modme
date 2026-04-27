@@ -2,8 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "rootDir": ".",
-    "types": ["vitest/globals"]
+    "rootDir": "."
   },
-  "include": ["src", "tests", "vite.config.ts"]
+  "include": ["src", "tests", "rstest.config.ts"]
 }

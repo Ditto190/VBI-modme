@@ -22,6 +22,9 @@ export type {
   ToolExecutionResult,
   VBIAgentWorkspace,
   VBIBuilderAgentInput,
+  VBIWorkspaceConnector,
+  VBIWorkspaceConnectorRegistration,
+  VBIWorkspaceConnectors,
   VBIWorkspaceSlot,
   VBITool,
 } from './types.js'

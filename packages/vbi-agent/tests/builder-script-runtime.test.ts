@@ -178,4 +178,17 @@ describe('createBuilderTools', () => {
       whereFilter: { conditions: [expect.objectContaining({ field: 'area', op: '=', value: 'East' })] },
     })
   })
+
+  test('exposes workspace connector helpers to builder scripts', async () => {
+    const register = (...[id]: [string, unknown]) => id
+    const [tool] = createBuilderTools({ connectors: { register }, chart: { open: async () => ({}) as never } })
+    const result = await tool.execute({
+      code: `
+        return json({ connectorId: workspace.connectors.register('demo', { discoverSchema: async () => [], query: async () => ({ dataset: [] }) }) });
+      `,
+    })
+    const payload = JSON.parse(result.content) as { result: { connectorId: string } }
+
+    expect(payload.result).toEqual({ connectorId: 'demo' })
+  })
 })

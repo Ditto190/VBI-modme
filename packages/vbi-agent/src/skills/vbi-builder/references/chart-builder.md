@@ -6,7 +6,7 @@ Core methods:
 
 - `build()` returns validated `VBIChartDSL`; `buildVQuery()` returns query DSL.
 - `await buildVSeed(options?)` returns render DSL from current DSL, query DSL, and adapter.
-- `getSchema()` reads schema from connector context; `isEmpty()` checks chart content.
+- `getSchema()` reads schema from connector context; in CLI flows register the connector first through `workspace.connectors`; `isEmpty()` checks chart content.
 - `getUUID()` returns resource uuid.
 - `applyUpdate(update, origin?)` and `encodeStateAsUpdate(stateVector?)` sync Yjs state.
 

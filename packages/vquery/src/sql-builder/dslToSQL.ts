@@ -1,4 +1,4 @@
-import type { QueryDSL, VQueryDSL } from 'src/types'
+import type { QueryDSL, VQueryDSL } from '../types'
 import { Kysely } from 'kysely'
 import { PostgresDialect } from './dialect'
 import { inlineParameters } from './compile'

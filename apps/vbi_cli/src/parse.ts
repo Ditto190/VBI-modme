@@ -10,13 +10,11 @@ export interface AgentCommand {
 export const parseAgentCommand = (argv: string[]): AgentCommand => {
   const flags: Record<string, string> = {}
   const positionals: string[] = []
-  for (let i = 0; i < argv.length; i += 1) {
-    const token = argv[i]
-    if (token.startsWith('--')) {
-      flags[token.slice(2)] = argv[i + 1]
-      i += 1
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i].startsWith('--')) {
+      flags[argv[i].slice(2)] = argv[++i]
     } else {
-      positionals.push(token)
+      positionals.push(argv[i])
     }
   }
   return {

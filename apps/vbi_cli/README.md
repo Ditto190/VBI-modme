@@ -39,5 +39,6 @@ Tools:
 
 - `bash`: CLI-only shell command runner
 - `vbi_builder`: runs JavaScript against the injected Builder workspace
+  - workspace also exposes `workspace.connectors.register(...)` and `workspace.connectors.registerChart(...)` for connector-dependent APIs like `builder.getSchema()`
 - `read_skill`: lists or reads builtin VBI Agent skills and references
 - `vbi_resource`: CLI-only resource CRUD and report page operations

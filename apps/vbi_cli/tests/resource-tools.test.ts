@@ -1,10 +1,10 @@
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, rs, test } from '@rstest/core'
 import { createResourceTools } from '../src/agent/tools/resource-tools.js'
 
 describe('createResourceTools', () => {
   test('lists resources through the injected provider client', async () => {
     const client = {
-      listCharts: vi.fn(async () => [{ id: 'chart-1', name: 'Chart' }]),
+      listCharts: rs.fn(async () => [{ id: 'chart-1', name: 'Chart' }]),
     }
     const [tool] = createResourceTools(client as never)
 
@@ -15,9 +15,9 @@ describe('createResourceTools', () => {
   })
 
   test('updates report pages without entering the agent package', async () => {
-    const updatePage = vi.fn(async () => ({ id: 'report-1', pages: [{ id: 'page-1', title: 'Updated' }] }))
+    const updatePage = rs.fn(async () => ({ id: 'report-1', pages: [{ id: 'page-1', title: 'Updated' }] }))
     const client = {
-      report: vi.fn(() => ({ updatePage })),
+      report: rs.fn(() => ({ updatePage })),
     }
     const [tool] = createResourceTools(client as never)
 

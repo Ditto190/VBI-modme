@@ -2,6 +2,7 @@ import { jsonSchema } from 'ai'
 import { executeAgentScript } from '../script/runtime.js'
 import { clipText, stringifyJson } from '../text-format.js'
 import type { AgentTool, VBIAgentWorkspace } from '../types.js'
+import { createExperimentTool } from './experiment-tool.js'
 import { createBuiltinSkillTools } from './skill-tools.js'
 
 const outputLimit = 12000
@@ -31,7 +32,7 @@ export const createBuilderTools = (workspace: VBIAgentWorkspace): AgentTool[] =>
     name: 'vbi_builder',
     descriptor: {
       description:
-        'Run JavaScript against the injected VBI Builder workspace. Globals: workspace, chart, report, json, assert, console. Use chart.open(id?) or report.open(id?) to open builders; if no startup id was provided, pass a resource id found with vbi_resource.',
+        'Run JavaScript against the injected VBI Builder workspace. Globals: workspace, chart, report, json, assert, console. Use chart.open(id?) or report.open(id?) to open builders; use workspace.connectors when builder APIs need connector registration such as builder.getSchema(); if no startup id was provided, pass a resource id found with vbi_resource.',
       inputSchema: jsonSchema({
         additionalProperties: false,
         properties: {
@@ -60,5 +61,6 @@ export const createBuilderTools = (workspace: VBIAgentWorkspace): AgentTool[] =>
       }
     },
   },
+  createExperimentTool(workspace),
   ...createBuiltinSkillTools(),
 ]

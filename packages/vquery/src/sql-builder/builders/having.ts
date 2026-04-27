@@ -1,5 +1,5 @@
 import type { RawBuilder, SelectQueryBuilder } from 'kysely'
-import type { Having, HavingAggregation, HavingClause } from 'src/types'
+import type { Having, HavingAggregation, HavingClause } from '../../types'
 import { sql } from 'kysely'
 import { toSqlOperator } from '../utils'
 
