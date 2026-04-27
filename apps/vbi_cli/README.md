@@ -14,8 +14,8 @@ Provider workspace adapters live in `apps/vbi_provider`. This app only wires the
 
 ```bash
 pnpm --filter=vbi_cli run build
-node apps/vbi_cli/dist/cli.js --chart-id <chart-id> -p "turn this chart into a line chart"
-node apps/vbi_cli/dist/cli.js --report-id <report-id>
+node apps/vbi_cli/dist/cli.js -p "turn this chart into a line chart"
+node apps/vbi_cli/dist/cli.js tui
 ```
 
 Environment:
@@ -33,8 +33,6 @@ Flags:
 - `--model`: model override
 - `--cwd`: working directory for `bash`
 - `--api-base-url`: provider API base URL
-- `--chart-id`: chart builder exposed to `vbi_builder`
-- `--report-id`: report builder exposed to `vbi_builder`
 
 Tools:
 

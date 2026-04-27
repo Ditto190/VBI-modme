@@ -12,8 +12,6 @@ export const createCliAgentRuntime = (command: AgentCommand, model?: ModelProvid
   const agentConfig = createAgentConfig(command)
   const provider = createVBIProviderAgentKit({
     baseUrl: agentConfig.provider.apiBaseUrl,
-    chartId: agentConfig.provider.chartId,
-    reportId: agentConfig.provider.reportId,
     ...(getWebSocketPolyfill() ? { webSocketPolyfill: getWebSocketPolyfill() } : {}),
   })
   return createVBIBuilderAgent({

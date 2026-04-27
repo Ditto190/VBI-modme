@@ -13,8 +13,6 @@ export const createAgentConfig = (command: AgentCommand) => ({
   },
   provider: {
     apiBaseUrl: command.apiBaseUrl ?? readEnv('VBI_API_BASE_URL') ?? 'http://localhost:3030/api/v1',
-    chartId: command.chartId,
-    reportId: command.reportId,
   },
   runtime: {
     cwd: resolveCwd(command.cwd),

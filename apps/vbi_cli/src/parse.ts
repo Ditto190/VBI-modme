@@ -4,11 +4,9 @@ export type AgentCommandMode = 'prompt' | 'tui'
 
 export interface AgentCommand {
   apiBaseUrl?: string
-  chartId?: string
   cwd?: string
   mode: AgentCommandMode
   model?: string
-  reportId?: string
   task?: string
 }
 
@@ -18,11 +16,9 @@ export const parseAgentCommand = (argv: string[]): AgentCommand => {
     args: argv,
     options: {
       'api-base-url': { type: 'string' },
-      'chart-id': { type: 'string' },
       cwd: { type: 'string' },
       model: { type: 'string' },
       prompt: { short: 'p', type: 'string' },
-      'report-id': { type: 'string' },
       task: { type: 'string' },
     },
   })
@@ -32,11 +28,9 @@ export const parseAgentCommand = (argv: string[]): AgentCommand => {
   const mode = isTui && !values.prompt && !values.task ? 'tui' : task ? 'prompt' : 'tui'
   return {
     apiBaseUrl: values['api-base-url'],
-    chartId: values['chart-id'],
     cwd: values.cwd,
     mode,
     model: values.model,
-    reportId: values['report-id'],
     task,
   }
 }
