@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.5.0
+
+### Minor Changes
+
+- adb1d8b: feat: vseed support animation
+
 ## 0.4.28
 
 ### Patch Changes

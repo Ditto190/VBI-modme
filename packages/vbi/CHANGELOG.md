@@ -1,5 +1,12 @@
 # @visactor/vbi
 
+## 0.5.0
+
+### Patch Changes
+
+- Updated dependencies [adb1d8b]
+  - @visactor/vseed@0.5.0
+
 ## 0.4.28
 
 ### Patch Changes
