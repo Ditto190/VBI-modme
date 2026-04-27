@@ -1,3 +1,18 @@
+---
+name: experiment-design
+description: How to turn a question into ranked hypotheses and experiment batches.
+version: 1.0.0
+tags:
+  - experiment
+  - analysis
+tools:
+  - vbi_experiment
+capabilities:
+  - rank hypotheses by value and cost
+  - design small batched experiments
+references: []
+---
+
 # Experiment Design
 
 ## Hypothesis Shape

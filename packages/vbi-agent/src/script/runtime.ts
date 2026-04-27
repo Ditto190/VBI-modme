@@ -1,9 +1,9 @@
-interface AgentScriptRuntimeInput {
+export interface AgentScriptRuntimeInput {
   code: string
   globals?: Record<string, unknown>
 }
 
-interface AgentScriptRuntimeResult {
+export interface AgentScriptRuntimeResult {
   logs: string[]
   result: unknown
 }

@@ -4,11 +4,11 @@
     "lib": ["ES2022", "DOM"],
     "noEmit": true,
     "rootDir": ".",
-    "types": ["node", "vitest/globals"],
+    "types": ["node", "@rstest/core/globals"],
     "paths": {
       "@visactor/vbi-agent": ["./src/index.ts"],
       "src/*": ["./src/*"]
     }
   },
-  "include": ["src", "tests", "vite.config.ts"]
+  "include": ["src", "tests", "rstest.config.ts"]
 }

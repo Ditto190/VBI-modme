@@ -1,6 +1,20 @@
 ---
 name: hypothesis-loop
 description: Use when the user asks for analysis that should iterate through multiple hypotheses, experiments, and validation instead of jumping to one answer.
+version: 1.0.0
+tags:
+  - analysis
+  - hypothesis
+tools:
+  - vbi_experiment
+  - vbi_builder
+capabilities:
+  - design ranked hypothesis batches
+  - run evidence-based Builder experiments
+  - classify experiment results as supported, rejected, or inconclusive
+references:
+  - experiment-design
+  - validation-rubric
 ---
 
 # Hypothesis Loop

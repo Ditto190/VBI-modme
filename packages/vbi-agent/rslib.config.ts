@@ -14,6 +14,9 @@ export default defineConfig({
       bundle: true,
     },
   ],
+  output: {
+    sourceMap: true,
+  },
   tools: {
     rspack: {
       module: {

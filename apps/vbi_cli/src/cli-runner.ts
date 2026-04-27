@@ -13,6 +13,8 @@ interface CliIO {
   writeOutput?(text: string): void
 }
 
+const toErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error))
+
 const findLastAssistantText = (runtime: AgentRuntimeController) =>
   runtime
     .getState()
@@ -36,13 +38,21 @@ const loadEnv = () => {
   config({ path: envFile ?? '.env', quiet: true })
 }
 
+const canRenderTui = () => process.stdin.isTTY && process.stdout.isTTY
+
 export const runPromptAgent = async (runtime: AgentRuntimeController, task: string | undefined, io: CliIO = {}) => {
   const prompt = task?.trim()
   if (!prompt) {
     io.writeError?.('执行失败: Prompt is required. Use vbi -p "your task".')
     return 1
   }
-  await runtime.start(prompt)
+  try {
+    await runtime.start(prompt)
+  } catch (error) {
+    io.writeError?.(`执行失败: ${toErrorMessage(error)}`)
+    return 1
+  }
+
   const state = runtime.getState()
   if (state.error) {
     io.writeError?.(`执行失败: ${state.error}`)
@@ -69,8 +79,19 @@ export const runTuiAgent = (runtime: AgentRuntimeController, task?: string) =>
   })
 
 export const runCli = async (argv = process.argv.slice(2), io: CliIO = {}) => {
-  loadEnv()
-  const command = parseAgentCommand(argv)
-  const runtime = createCliAgentRuntime(command)
-  return command.mode === 'tui' ? runTuiAgent(runtime, command.task) : runPromptAgent(runtime, command.task, io)
+  try {
+    loadEnv()
+    const command = parseAgentCommand(argv)
+    if (command.mode === 'tui' && !canRenderTui()) {
+      io.writeError?.(
+        '执行失败: TUI requires an interactive terminal. Use vbi -p "your task" for non-interactive mode.',
+      )
+      return 1
+    }
+    const runtime = createCliAgentRuntime(command)
+    return command.mode === 'tui' ? runTuiAgent(runtime, command.task) : runPromptAgent(runtime, command.task, io)
+  } catch (error) {
+    io.writeError?.(`执行失败: ${toErrorMessage(error)}`)
+    return 1
+  }
 }

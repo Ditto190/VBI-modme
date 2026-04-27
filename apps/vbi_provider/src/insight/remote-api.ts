@@ -1,40 +1,36 @@
+import type { VBIInsightBuilder } from '@visactor/vbi'
 import type {
   InsightCreateInput,
   InsightResponse,
   InsightSummary,
   InsightUpdateInput,
-  ReportReference,
   RemoteBuilderState,
-  RemoteSessionConnection,
   VBIProviderClientOptions,
 } from '../types'
+import { createRemoteResourceApi, pickResourceSummary } from '../remote/resource-api'
 import { requestRemote } from '../remote/http'
 import { requireRemoteResourceId } from '../remote/collaboration'
 
-const toSummary = ({ createdAt, id, name, updatedAt }: InsightResponse): InsightSummary => ({
-  createdAt,
-  id,
-  name,
-  updatedAt,
-})
+const toSummary = (response: InsightSummary): InsightSummary => pickResourceSummary(response)
 
-export const createInsightRemoteApi = (config: VBIProviderClientOptions, state: RemoteBuilderState<unknown>) => {
-  const requireId = () => requireRemoteResourceId(state, 'insight')
-  const getSummary = async () => toSummary(await requestRemote<InsightResponse>(config, `/insights/${requireId()}`))
+export const createInsightRemoteApi = (
+  config: VBIProviderClientOptions,
+  state: RemoteBuilderState<VBIInsightBuilder>,
+) => {
+  const api = createRemoteResourceApi<InsightResponse, InsightSummary, InsightCreateInput>({
+    config,
+    label: 'insight',
+    path: '/insights',
+    state,
+    toSummary,
+  })
 
   return {
-    create: async (input?: InsightCreateInput) => {
-      const summary = await requestRemote<InsightResponse>(config, '/insights', { body: input, method: 'POST' })
-      state.resourceId = summary.id
-      return getSummary()
-    },
-    getSession: () => requestRemote<RemoteSessionConnection>(config, `/insights/${requireId()}/collaboration`),
-    getSummary,
-    getReferences: () => requestRemote<ReportReference[]>(config, `/insights/${requireId()}/references`),
-    remove: () => requestRemote<InsightSummary>(config, `/insights/${requireId()}`, { method: 'DELETE' }),
-    rename: (name: string) =>
-      requestRemote<InsightSummary>(config, `/insights/${requireId()}`, { body: { name }, method: 'PATCH' }),
+    ...api,
     update: (input: InsightUpdateInput) =>
-      requestRemote<InsightResponse>(config, `/insights/${requireId()}`, { body: input, method: 'PATCH' }),
+      requestRemote<InsightResponse>(config, `/insights/${requireRemoteResourceId(state, 'insight')}`, {
+        body: input,
+        method: 'PATCH',
+      }),
   }
 }

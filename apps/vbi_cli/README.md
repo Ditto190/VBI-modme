@@ -2,7 +2,8 @@
 
 CLI shell for VBI Agent workflows.
 
-The reusable runtime, OpenAI-compatible model provider, and Builder tools live in `packages/vbi-agent`. This app wires them to:
+The reusable runtime, OpenAI-compatible model provider, and Builder tools live in `packages/vbi-agent`.
+Provider workspace adapters live in `apps/vbi_provider`. This app only wires them to:
 
 - Ink TUI
 - local bash tool
@@ -13,7 +14,7 @@ The reusable runtime, OpenAI-compatible model provider, and Builder tools live i
 
 ```bash
 pnpm --filter=vbi_cli run build
-node apps/vbi_cli/dist/cli.js --chart-id <chart-id> -t "turn this chart into a line chart"
+node apps/vbi_cli/dist/cli.js --chart-id <chart-id> -p "turn this chart into a line chart"
 node apps/vbi_cli/dist/cli.js --report-id <report-id>
 ```
 
@@ -40,5 +41,7 @@ Tools:
 - `bash`: CLI-only shell command runner
 - `vbi_builder`: runs JavaScript against the injected Builder workspace
   - workspace also exposes `workspace.connectors.register(...)` and `workspace.connectors.registerChart(...)` for connector-dependent APIs like `builder.getSchema()`
-- `read_skill`: lists or reads builtin VBI Agent skills and references
 - `vbi_resource`: CLI-only resource CRUD and report page operations
+- `list_skills`: lists builtin VBI Agent skills and reference metadata
+- `read_skill`: reads a builtin skill, with optional references and section filters
+- `search_skill_reference`: searches focused builtin skill reference sections

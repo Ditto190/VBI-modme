@@ -1,3 +1,20 @@
+---
+name: insight-builder
+description: VBIInsightBuilder content editing and runtime access.
+version: 1.0.0
+tags:
+  - insight
+  - builder
+  - dsl
+tools:
+  - vbi_builder
+  - vbi_resource
+capabilities:
+  - edit narrative insight content through report registries
+  - describe when direct resource updates are required
+references: []
+---
+
 # VBIInsightBuilder
 
 Use `VBIInsightBuilder` for narrative insight content.

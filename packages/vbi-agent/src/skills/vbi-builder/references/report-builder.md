@@ -1,3 +1,19 @@
+---
+name: report-builder
+description: VBIReportBuilder page composition and snapshots.
+version: 1.0.0
+tags:
+  - report
+  - builder
+  - dsl
+tools:
+  - vbi_builder
+capabilities:
+  - edit report pages and resource references
+  - inspect report snapshots when embedded DSLs are needed
+references: []
+---
+
 # VBIReportBuilder
 
 Use `VBIReportBuilder` for report DSL and page composition. Open with `const r = await report.open(id?)`.

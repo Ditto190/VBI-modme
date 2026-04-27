@@ -6,10 +6,28 @@ export default defineConfig({
       format: 'esm',
       syntax: ['node 18'],
       dts: true,
+      bundle: true,
     },
     {
       format: 'cjs',
       syntax: ['node 18'],
+      bundle: true,
     },
   ],
+  output: {
+    sourceMap: true,
+  },
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            test: /\.csv$/,
+            type: 'asset/source',
+          },
+        ],
+      },
+    },
+  },
 })

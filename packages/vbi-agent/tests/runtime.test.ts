@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from '@rstest/core'
 import { createAgentRuntime } from '../src/runtime.js'
 import { createToolKit } from '../src/tools/toolkit.js'
 import type { AgentTool, ModelProvider, ModelTurnResult } from '../src/types.js'

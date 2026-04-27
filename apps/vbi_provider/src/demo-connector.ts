@@ -1,9 +1,8 @@
 import { VBI, type VBIConnector } from '@visactor/vbi'
 import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
+import supermarketCsv from './dataset/supermarket.csv?raw'
 
 export const DEMO_CONNECTOR_ID = 'demo'
-
-const DEMO_DATASET_URL = 'https://visactor.github.io/VBI/dataset/supermarket.csv'
 
 const demoSchema: DatasetColumn[] = [
   { name: 'id', type: 'string' },
@@ -28,11 +27,20 @@ const demoSchema: DatasetColumn[] = [
   { name: 'profit', type: 'number' },
 ]
 
-const vquery = new VQuery()
+type VQueryInstance = InstanceType<typeof VQuery>
+
+let vquery: VQueryInstance | undefined
+
+const getVQuery = async () => {
+  if (vquery) return vquery
+  vquery = new VQuery()
+  return vquery
+}
 
 const ensureDemoDataset = async (schema: DatasetColumn[]) => {
+  const vquery = await getVQuery()
   if (await vquery.hasDataset(DEMO_CONNECTOR_ID)) return
-  const source: RawDatasetSource = { type: 'csv', rawDataset: DEMO_DATASET_URL }
+  const source: RawDatasetSource = { type: 'csv', rawDataset: supermarketCsv }
   await vquery.createDataset(DEMO_CONNECTOR_ID, schema, source)
 }
 
@@ -40,6 +48,7 @@ export const demoConnector: VBIConnector = {
   discoverSchema: async () => demoSchema,
   query: async ({ queryDSL, schema }) => {
     await ensureDemoDataset(schema as DatasetColumn[])
+    const vquery = await getVQuery()
     const dataset = await vquery.connectDataset(DEMO_CONNECTOR_ID)
     const result = await dataset.query(queryDSL as VQueryDSL<Record<string, string | number>>)
     return { dataset: result.dataset }

@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from '@rstest/core'
 import { executeAgentScript } from '../src/script/runtime.js'
 import { createBuilderTools } from '../src/tools/builder-tools.js'
 

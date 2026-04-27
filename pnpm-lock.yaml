@@ -195,6 +195,9 @@ importers:
       '@visactor/vbi-agent':
         specifier: workspace:*
         version: link:../../packages/vbi-agent
+      '@visactor/vquery':
+        specifier: workspace:*
+        version: link:../../packages/vquery
       dotenv:
         specifier: 17.2.1
         version: 17.2.1
@@ -532,6 +535,9 @@ importers:
       '@rslib/core':
         specifier: 0.20.3
         version: 0.20.3(@emnapi/core@1.5.0)(@emnapi/runtime@1.5.0)(core-js@3.47.0)(typescript@6.0.2)
+      '@rstest/core':
+        specifier: 0.8.3
+        version: 0.8.3(happy-dom@20.4.0)(jsdom@27.4.0(@noble/hashes@1.8.0))
       '@types/node':
         specifier: 24.10.1
         version: 24.10.1
@@ -550,9 +556,6 @@ importers:
       typescript-eslint:
         specifier: 8.58.1
         version: 8.58.1(eslint@9.39.0(jiti@2.6.1))(typescript@6.0.2)
-      vitest:
-        specifier: 3.2.4
-        version: 3.2.4(@types/debug@4.1.12)(@types/node@24.10.1)(happy-dom@20.4.0)(jiti@2.6.1)(jsdom@27.4.0(@noble/hashes@1.8.0))(sass-embedded@1.91.0)(sass@1.91.0)(terser@5.43.1)(yaml@2.8.1)
 
   packages/vbi-react:
     devDependencies:

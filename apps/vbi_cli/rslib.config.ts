@@ -1,5 +1,11 @@
 import { defineConfig } from '@rslib/core'
 
+const optionalNativeExternals = new Set(['bufferutil', 'utf-8-validate'])
+const runtimePackageExternals = new Set(['@visactor/vquery'])
+
+const isRuntimePackageExternal = (request: string) =>
+  runtimePackageExternals.has(request) || [...runtimePackageExternals].some((name) => request.startsWith(`${name}/`))
+
 export default defineConfig({
   lib: [
     {
@@ -15,7 +21,18 @@ export default defineConfig({
     },
   ],
   output: {
-    externals: ['dotenv', 'ink', 'react', 'react/jsx-runtime'],
+    sourceMap: true,
+    externals: [
+      'dotenv',
+      'ink',
+      'react',
+      'react/jsx-runtime',
+      ({ request }, callback) => {
+        if (request && optionalNativeExternals.has(request)) return callback(undefined, request, 'commonjs')
+        if (request && isRuntimePackageExternal(request)) return callback(undefined, request, 'module')
+        callback()
+      },
+    ],
     target: 'node',
   },
   source: {
@@ -29,7 +46,7 @@ export default defineConfig({
         rules: [
           {
             resourceQuery: /raw/,
-            test: /\.md$/,
+            test: /\.(csv|md)$/,
             type: 'asset/source',
           },
         ],

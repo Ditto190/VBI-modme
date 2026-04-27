@@ -1,71 +1,97 @@
 import { jsonSchema } from 'ai'
+import { listSkills, readSkill, renderSkillList, searchSkillReferences } from '../skills/service.js'
 import type { AgentTool } from '../types.js'
-import { findBuiltinSkill, findBuiltinSkillReferences, listBuiltinSkills } from '../skills/registry.js'
-import type { BuiltinSkill, BuiltinSkillAsset, BuiltinSkillReference } from '../skills/types.js'
 
-const requireStringArray = (key: string, value: unknown): string[] => {
-  if (value === undefined) return []
+const stringify = (value: unknown) => JSON.stringify(value, null, 2)
+
+const stringArraySchema = { items: { type: 'string' }, type: 'array' } as const
+
+const requireString = (key: string, value: unknown) => {
+  if (typeof value !== 'string' || !value.trim()) throw new Error(`${key} is required`)
+  return value
+}
+
+const optionalString = (value: unknown) => (typeof value === 'string' && value.trim() ? value : undefined)
+
+const optionalStringArray = (key: string, value: unknown): string[] | undefined => {
+  if (value === undefined) return undefined
   if (!Array.isArray(value) || value.some((item) => typeof item !== 'string')) {
     throw new Error(`${key} must be a string array`)
   }
   return value
 }
 
-const renderAssetList = (assets: BuiltinSkillAsset[]) =>
-  assets.map((asset) => `- ${asset.name}: ${asset.description}`).join('\n')
-
-const renderAssets = (assets: BuiltinSkillAsset[]) => assets.map((asset) => `\n\n---\n\n${asset.content.trim()}`)
-
-const renderSkill = (skill: BuiltinSkill, references: BuiltinSkillReference[] = []) =>
-  [
-    skill.content.trim(),
-    `\n## Available References\n\n${renderAssetList(skill.references)}`,
-    ...renderAssets(references),
-  ].join('')
-
-const renderSkillList = () =>
-  listBuiltinSkills()
-    .map((skill) =>
-      [
-        `- ${skill.name}: ${skill.description}`,
-        `  references: ${skill.references.map((ref) => ref.name).join(', ')}`,
-      ].join('\n'),
-    )
-    .join('\n')
-
-const createInputSchema = () =>
-  jsonSchema({
-    additionalProperties: false,
-    properties: {
-      name: { type: 'string' },
-      references: { items: { type: 'string' }, type: 'array' },
-    },
-    type: 'object',
-  })
-
-const createReadSkillTool = (name: string): AgentTool => ({
-  name,
+const createListSkillsTool = (): AgentTool => ({
+  name: 'list_skills',
   descriptor: {
-    description:
-      'List or read VBI Agent builtin skills. Pass name to read SKILL.md, and references to include selected reference files.',
-    inputSchema: createInputSchema(),
+    description: 'List VBI Agent builtin skills with metadata, tools, capabilities, and available references.',
+    inputSchema: jsonSchema({ additionalProperties: false, properties: {}, type: 'object' }),
     strict: true,
   },
-  execute: async (input) => {
-    const skillName = typeof input.name === 'string' ? input.name : undefined
-    const content = skillName ? renderBuiltinSkill(skillName, input.references) : renderSkillList()
+  execute: async () => {
+    const skills = listSkills()
     return {
-      content,
-      display: content,
-      summary: skillName ? `builtin skill ${skillName} returned` : 'builtin skills listed',
+      content: stringify({ skills }),
+      display: renderSkillList(),
+      summary: `${skills.length} builtin skills listed`,
     }
   },
 })
 
-export const renderBuiltinSkill = (name: string, referencesInput: unknown = []) => {
-  const skill = findBuiltinSkill(name)
-  const references = findBuiltinSkillReferences(skill, requireStringArray('references', referencesInput))
-  return renderSkill(skill, references)
-}
+const createReadSkillTool = (): AgentTool => ({
+  name: 'read_skill',
+  descriptor: {
+    description:
+      'Read one VBI Agent builtin skill. Use references to include selected reference files and sections to return only matching headings.',
+    inputSchema: jsonSchema({
+      additionalProperties: false,
+      properties: { name: { type: 'string' }, references: stringArraySchema, sections: stringArraySchema },
+      required: ['name'],
+      type: 'object',
+    }),
+    strict: true,
+  },
+  execute: async (input) => {
+    const result = readSkill(requireString('name', input.name), {
+      references: optionalStringArray('references', input.references),
+      sections: optionalStringArray('sections', input.sections),
+    })
+    return {
+      content: stringify(result),
+      display: result.content,
+      summary: `builtin skill ${result.skill.name} returned`,
+    }
+  },
+})
 
-export const createBuiltinSkillTools = (): AgentTool[] => [createReadSkillTool('read_skill')]
+const createSearchSkillReferenceTool = (): AgentTool => ({
+  name: 'search_skill_reference',
+  descriptor: {
+    description: 'Search VBI Agent builtin skill reference sections and return focused matching sections.',
+    inputSchema: jsonSchema({
+      additionalProperties: false,
+      properties: { name: { type: 'string' }, query: { type: 'string' }, references: stringArraySchema },
+      required: ['query'],
+      type: 'object',
+    }),
+    strict: true,
+  },
+  execute: async (input) => {
+    const matches = searchSkillReferences({
+      name: optionalString(input.name),
+      query: requireString('query', input.query),
+      references: optionalStringArray('references', input.references),
+    })
+    return {
+      content: stringify({ matches }),
+      display: matches.map((match) => `## ${match.reference.name} / ${match.section}\n\n${match.content}`).join('\n\n'),
+      summary: `skill reference search returned ${matches.length} matches`,
+    }
+  },
+})
+
+export const createBuiltinSkillTools = (): AgentTool[] => [
+  createListSkillsTool(),
+  createReadSkillTool(),
+  createSearchSkillReferenceTool(),
+]

@@ -18,7 +18,7 @@ export default defineConfig({
         rules: [
           {
             resourceQuery: /raw/,
-            test: /\.md$/,
+            test: /\.(csv|md)$/,
             type: 'asset/source',
           },
         ],

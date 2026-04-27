@@ -1,6 +1,21 @@
 ---
 name: vbi-builder
 description: Use when writing or reviewing vbi_builder scripts for VBI Chart, Report, or Insight builders inside VBI Agent.
+version: 1.0.0
+tags:
+  - builder
+  - dsl
+tools:
+  - vbi_builder
+  - vbi_resource
+capabilities:
+  - write Builder workspace scripts
+  - inspect and mutate VBI Chart, Report, and Insight DSL
+  - validate VBIChartDSL, VBIQueryDSL, and VBISeedDSL outputs
+references:
+  - chart-builder
+  - report-builder
+  - insight-builder
 ---
 
 # VBI Builder
@@ -21,8 +36,8 @@ Call `vbi_builder` with JavaScript. The script runs as an async function.
 Globals:
 
 - `workspace`: injected Builder workspace.
-- `chart`: chart workspace slot with `open(id?)`, optional `describe(id?)`, optional `save(id?)`.
-- `report`: report workspace slot with `open(id?)`, optional `describe(id?)`, optional `save(id?)`.
+- `chart`: chart workspace slot with `open(id?)`, optional `describe(id?)`, optional `snapshot(id?)`, optional `close(id?)`.
+- `report`: report workspace slot with `open(id?)`, optional `describe(id?)`, optional `snapshot(id?)`, optional `close(id?)`.
 - `json(value)`: return `value` as the tool result.
 - `assert(condition, message)`: throw a clear tool error when a precondition fails.
 - `console.log/warn/error`: captured into tool logs.

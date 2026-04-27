@@ -1,12 +1,9 @@
 import { jsonSchema } from 'ai'
-import { executeAgentScript } from '../script/runtime.js'
-import { clipText, stringifyJson } from '../text-format.js'
 import type { AgentTool, VBIAgentWorkspace } from '../types.js'
-
-const outputLimit = 12000
+import { clipJson, runWorkspaceScript } from './workspace-script.js'
 
 const createDisplay = (results: Record<string, unknown>[]) =>
-  ['Status: succeeded', '', 'Experiments:', '```json', clipText(stringifyJson(results), outputLimit), '```'].join('\n')
+  ['Status: succeeded', '', 'Experiments:', '```json', clipJson(results), '```'].join('\n')
 
 export const createExperimentTool = (workspace: VBIAgentWorkspace): AgentTool => ({
   name: 'vbi_experiment',
@@ -40,10 +37,7 @@ export const createExperimentTool = (workspace: VBIAgentWorkspace): AgentTool =>
     for (const [index, value] of input.experiments.entries()) {
       const experiment = value as Record<string, unknown>
       try {
-        const executed = await executeAgentScript({
-          code: String(experiment.code),
-          globals: { chart: workspace.chart, experiment, report: workspace.report, workspace },
-        })
+        const executed = await runWorkspaceScript(workspace, String(experiment.code), { experiment })
         results.push({
           goal: experiment.goal,
           hypothesis: experiment.hypothesis,
@@ -65,7 +59,7 @@ export const createExperimentTool = (workspace: VBIAgentWorkspace): AgentTool =>
     const failed = results.filter((item) => item.status === 'failed').length
     const succeeded = results.length - failed
     return {
-      content: clipText(stringifyJson({ results }), outputLimit),
+      content: clipJson({ results }),
       display: createDisplay(results),
       summary: `vbi_experiment finished: ${succeeded} succeeded, ${failed} failed`,
     }

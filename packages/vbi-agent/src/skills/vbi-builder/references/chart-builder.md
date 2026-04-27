@@ -1,3 +1,19 @@
+---
+name: chart-builder
+description: VBIChartBuilder operations for chart DSL, encodings, and filters.
+version: 1.0.0
+tags:
+  - chart
+  - builder
+  - dsl
+tools:
+  - vbi_builder
+capabilities:
+  - edit chart type, dimensions, measures, and filters
+  - inspect VBIChartDSL, VBIQueryDSL, and VBISeedDSL
+references: []
+---
+
 # VBIChartBuilder
 
 Use `VBIChartBuilder` for chart DSL changes. Open with `const c = await chart.open(id?)`.

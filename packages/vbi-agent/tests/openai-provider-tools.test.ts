@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { createOpenAI, createStream, jsonSchema, resetOpenAIMocks, streamText } from './openai-provider.mock.js'
 
-vi.mock('@ai-sdk/openai', () => ({ createOpenAI }))
-vi.mock('ai', () => ({ jsonSchema, streamText }))
+rs.mock('@ai-sdk/openai', () => ({ createOpenAI }))
+rs.mock('ai', () => ({ jsonSchema, streamText }))
 
 describe('createOpenAIModelProvider tools', () => {
   beforeEach(resetOpenAIMocks)

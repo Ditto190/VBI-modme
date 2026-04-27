@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import {
   chatMethod,
   createDeepSeek,
@@ -9,8 +9,8 @@ import {
   streamText,
 } from './deepseek-provider.mock.js'
 
-vi.mock('@ai-sdk/deepseek', () => ({ createDeepSeek }))
-vi.mock('ai', () => ({ jsonSchema: vi.fn(), streamText }))
+rs.mock('@ai-sdk/deepseek', () => ({ createDeepSeek }))
+rs.mock('ai', () => ({ jsonSchema: rs.fn(), streamText }))
 
 describe('createDeepSeekModelProvider', () => {
   beforeEach(resetDeepSeekMocks)

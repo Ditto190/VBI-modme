@@ -1,3 +1,5 @@
+import { parseArgs } from 'node:util'
+
 export type AgentCommandMode = 'prompt' | 'tui'
 
 export interface AgentCommand {
@@ -10,37 +12,31 @@ export interface AgentCommand {
   task?: string
 }
 
-const readFlag = (argv: string[], index: number) => argv[index + 1]
-
 export const parseAgentCommand = (argv: string[]): AgentCommand => {
-  const flags: Record<string, string | undefined> = {}
-  const positionals: string[] = []
-  let hasPromptFlag = false
-  for (let i = 0; i < argv.length; i++) {
-    const arg = argv[i]!
-    if (arg === '-p') {
-      hasPromptFlag = true
-      flags.prompt = readFlag(argv, i)
-      i++
-    } else if (arg.startsWith('--')) {
-      if (arg === '--prompt') hasPromptFlag = true
-      flags[arg.slice(2)] = readFlag(argv, i)
-      i++
-    } else {
-      positionals.push(arg)
-    }
-  }
+  const { positionals, values } = parseArgs({
+    allowPositionals: true,
+    args: argv,
+    options: {
+      'api-base-url': { type: 'string' },
+      'chart-id': { type: 'string' },
+      cwd: { type: 'string' },
+      model: { type: 'string' },
+      prompt: { short: 'p', type: 'string' },
+      'report-id': { type: 'string' },
+      task: { type: 'string' },
+    },
+  })
   const isTui = positionals[0] === 'tui'
   const positionalTask = (isTui ? positionals.slice(1) : positionals).join(' ') || undefined
-  const task = flags.prompt ?? flags.task ?? positionalTask
-  const mode = isTui && !hasPromptFlag && !flags.task ? 'tui' : task ? 'prompt' : 'tui'
+  const task = values.prompt ?? values.task ?? positionalTask
+  const mode = isTui && !values.prompt && !values.task ? 'tui' : task ? 'prompt' : 'tui'
   return {
-    apiBaseUrl: flags['api-base-url'],
-    chartId: flags['chart-id'],
-    cwd: flags.cwd,
+    apiBaseUrl: values['api-base-url'],
+    chartId: values['chart-id'],
+    cwd: values.cwd,
     mode,
-    model: flags.model,
-    reportId: flags['report-id'],
+    model: values.model,
+    reportId: values['report-id'],
     task,
   }
 }

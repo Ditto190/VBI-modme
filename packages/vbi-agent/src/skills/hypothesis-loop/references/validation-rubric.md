@@ -1,3 +1,18 @@
+---
+name: validation-rubric
+description: How to classify experiment outcomes and decide the next loop.
+version: 1.0.0
+tags:
+  - validation
+  - analysis
+tools:
+  - vbi_experiment
+capabilities:
+  - classify experiment evidence
+  - decide the next analysis loop
+references: []
+---
+
 # Validation Rubric
 
 Use these verdicts consistently:

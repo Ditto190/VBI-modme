@@ -1,9 +1,9 @@
 import { describe, expect, rs, test } from '@rstest/core'
 import { VBI } from '@visactor/vbi'
+import { createVBIProviderWorkspace } from '@visactor/headless-bi-provider'
 import { createAgentRuntime, createBuilderTools, createToolKit } from '@visactor/vbi-agent'
-import { createProviderWorkspace } from '../src/agent/provider.js'
 import { runPromptAgent } from '../src/cli-runner.js'
-import type { ModelProvider } from '@visactor/vbi-agent'
+import type { AgentRuntimeController, ModelProvider } from '@visactor/vbi-agent'
 
 const chartTypeScript = [
   "const builder = await chart.open('Chart1')",
@@ -57,7 +57,7 @@ describe('runPromptAgent', () => {
       chart: rs.fn(() => ({ open: rs.fn(async () => builder) })),
       report: rs.fn(),
     }
-    const workspace = createProviderWorkspace({ client: client as never })
+    const workspace = createVBIProviderWorkspace({ client: client as never })
     const runtime = createAgentRuntime({
       model: createChartTypeModel(),
       tool: createToolKit(createBuilderTools(workspace)),
@@ -75,5 +75,21 @@ describe('runPromptAgent', () => {
       'tool',
       'assistant',
     ])
+  })
+
+  test('reports runtime failures without throwing', async () => {
+    const runtime = {
+      getState: () => ({ activities: [] }),
+      start: rs.fn(async () => {
+        throw new Error('Chart Chart1 not found')
+      }),
+      subscribe: rs.fn(),
+    } as unknown as AgentRuntimeController
+    const errors: string[] = []
+
+    const code = await runPromptAgent(runtime, '查询Chart1的图表类型', { writeError: (text) => errors.push(text) })
+
+    expect(code).toBe(1)
+    expect(errors).toEqual(['执行失败: Chart Chart1 not found'])
   })
 })
