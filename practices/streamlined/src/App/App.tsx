@@ -107,7 +107,6 @@ export const APP = (props: APPProps) => {
       style={{
         height: '100%',
         overflow: 'hidden',
-        backgroundColor: '#f5f7fa',
       }}
     >
       {/* 左侧面板：Chart Source（数据集与字段列表） */}
@@ -500,8 +499,6 @@ const ChartWrapper = () => {
       style={{
         flex: 1,
         position: 'relative',
-        padding: '16px',
-        backgroundColor: loading ? '#fafafa' : 'white',
       }}
     >
       {loading && (
@@ -539,7 +536,6 @@ const ChartWrapper = () => {
             color: '#8c8c8c',
             border: '2px dashed #d9d9d9',
             borderRadius: '8px',
-            backgroundColor: '#fafafa',
           }}
         >
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>📊</div>

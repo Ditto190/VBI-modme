@@ -33,7 +33,7 @@ export const APP = (props: APPProps) => {
   }
 
   return (
-    <Flex vertical style={{ height: '100vh', padding: '16px', backgroundColor: '#f5f5f5' }}>
+    <Flex vertical style={{ height: '100vh' }}>
       {/* 1. Webpage Title */}
       <Title level={3} style={{ margin: '0 0 16px 0', color: '#333' }}>
         Minimalist
@@ -89,7 +89,7 @@ const ChartWrapper = () => {
       loading={loading}
       styles={{
         root: { height: '100%' },
-        body: { padding: '12px', height: '100%' },
+        body: { padding: 0, height: '100%' },
       }}
     >
       {vseed && <VSeedRender vseed={vseed} />}

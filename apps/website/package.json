@@ -19,7 +19,6 @@
     "@visactor/vseed": "workspace:*",
     "@visactor/vtable": "1.23.1",
     "standard": "workspace:*",
-    "standard-report": "workspace:*",
     "minimalist": "workspace:*",
     "professional": "workspace:*",
     "streamlined": "workspace:*",

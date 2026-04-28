@@ -13,25 +13,20 @@ export const fieldPanelStyle: CSSProperties = {
   height: '100%',
   minHeight: 0,
   overflow: 'hidden',
-  padding: 10,
 }
 
 export const chartRendererStyle: CSSProperties = {
   ...baseCardStyle,
-  background: 'var(--starter-panel)',
   height: '100%',
   minHeight: 0,
   minWidth: 0,
   overflow: 'hidden',
-  padding: 12,
 }
 
 export const chartCanvasStyle: CSSProperties = {
-  background: 'var(--starter-canvas)',
   borderRadius: 'var(--starter-radius-sm)',
   minHeight: 0,
   overflow: 'hidden',
-  padding: 8,
 }
 
 export const layoutStyle: CSSProperties = {
