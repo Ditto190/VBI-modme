@@ -8,10 +8,12 @@ import {
   type ProfessionalLocale,
   type ProfessionalTheme,
 } from 'src/constants/builder'
+import { useVBIStoreConfig } from 'src/model'
 
 const normalizeLimit = (limit: number) => Math.max(1, Math.round(limit))
 
 export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
+  const config = useVBIStoreConfig()
   const state = useBuilderDocState({
     builder,
     fallback: {
@@ -37,6 +39,8 @@ export const useVBIBuilder = (builder: VBIChartBuilder | undefined) => {
 
   return {
     ...state,
+    locale: config.locale ?? state.locale,
+    theme: config.theme ?? state.theme,
     setLocale,
     setTheme,
     setLimit,

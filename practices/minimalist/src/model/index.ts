@@ -1,1 +1,1 @@
-export { useVBIStore } from './VBIStore'
+export { VBIStoreProvider, useVBIStore, useVBIStoreConfig } from './VBIStoreProvider'

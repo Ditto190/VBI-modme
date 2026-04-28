@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useSyncExternalStore } from 'react'
 import type { VBIChartBuilder } from '@visactor/vbi'
 
 export const useBuilderDocState = <T>(params: {
@@ -7,30 +7,21 @@ export const useBuilderDocState = <T>(params: {
   getSnapshot: (builder: VBIChartBuilder) => T
 }) => {
   const { builder, fallback, getSnapshot } = params
-  const [state, setState] = useState<T>(fallback)
-  const getSnapshotRef = useRef(getSnapshot)
+  const versionRef = useRef(0)
+  const getVersion = useCallback(() => versionRef.current, [])
+  const subscribe = useCallback(
+    (notify: () => void) => {
+      if (!builder) return () => {}
+      const sync = () => {
+        versionRef.current += 1
+        notify()
+      }
+      builder.doc.on('update', sync)
+      return () => builder.doc.off('update', sync)
+    },
+    [builder],
+  )
+  const version = useSyncExternalStore(subscribe, getVersion, getVersion)
 
-  useEffect(() => {
-    getSnapshotRef.current = getSnapshot
-  }, [getSnapshot])
-
-  useEffect(() => {
-    if (!builder) {
-      setState(fallback)
-      return
-    }
-
-    const sync = () => {
-      setState(getSnapshotRef.current(builder))
-    }
-
-    sync()
-    builder.doc.on('update', sync)
-
-    return () => {
-      builder.doc.off('update', sync)
-    }
-  }, [builder, fallback])
-
-  return state
+  return useMemo(() => (builder ? getSnapshot(builder) : fallback), [builder, fallback, getSnapshot, version])
 }

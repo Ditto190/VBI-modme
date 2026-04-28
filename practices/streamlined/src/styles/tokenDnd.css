@@ -1,0 +1,32 @@
+.stream-token-drop {
+  position: relative;
+}
+
+.stream-token-drop[draggable='true'] {
+  cursor: grab;
+}
+
+.stream-token-drop:active {
+  cursor: grabbing;
+}
+
+.stream-token-drop--before::before,
+.stream-token-drop--after::after {
+  position: absolute;
+  z-index: 1;
+  right: 8px;
+  left: 8px;
+  height: 2px;
+  border-radius: var(--stream-radius-pill);
+  background: var(--stream-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--stream-accent) 14%, transparent);
+  content: '';
+}
+
+.stream-token-drop--before::before {
+  top: -1px;
+}
+
+.stream-token-drop--after::after {
+  bottom: -1px;
+}

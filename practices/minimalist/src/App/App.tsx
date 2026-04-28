@@ -1,98 +1,61 @@
-import { Flex, Spin, Card, Typography } from 'antd'
-import { VSeedRender } from 'src/components/Render'
-import { MeasuresList } from 'src/components/Fields/MeasuresList'
-import { DimensionsList } from 'src/components/Fields/DimensionsList'
-import { VBIChartBuilder } from '@visactor/vbi'
-import { ChartTypeSelector } from 'src/components/ChartType'
-import { MeasureShelf } from 'src/components/Shelfs/MeasureShelf'
-import { DimensionShelf } from 'src/components/Shelfs/DimensionShelf'
-import { useVBIStore } from 'src/model'
-import { useEffect } from 'react'
-import { useShallow } from 'zustand/shallow'
-
-const { Title } = Typography
+import type { VBIChartBuilder } from '@visactor/vbi'
+import { ConfigProvider } from 'antd'
+import { ChartBody } from 'src/components/ChartBody'
+import { EditMode } from 'src/components/EditMode'
+import { getLabels } from 'src/config/labels'
+import { antdLocales, getThemeConfig } from 'src/config/theme'
+import { DEMO_DEFAULT_LOCALE, DEMO_DEFAULT_THEME, type DemoLocale, type DemoTheme } from 'src/constants/builder'
+import { useFullscreen } from 'src/hooks/useFullscreen'
+import { useVBIStore, useVBIStoreConfig, VBIStoreProvider } from 'src/model'
+import type { AppMode } from 'src/types'
+import './app.css'
 
 interface APPProps {
   builder?: VBIChartBuilder
+  hideLocale?: boolean
+  hideTheme?: boolean
+  locale?: DemoLocale
+  mode?: AppMode
+  theme?: DemoTheme
 }
 
-export const APP = (props: APPProps) => {
-  const { initialize, initialized } = useVBIStore(
-    useShallow((state) => ({
-      initialize: state.initialize,
-      initialized: state.initialized,
-    })),
-  )
-
-  useEffect(() => {
-    return initialize(props.builder)
-  }, [])
-
-  if (!initialized) {
-    return <Spin tip='Initializing...' fullscreen />
-  }
+const AppContent = ({ mode }: { mode: AppMode }) => {
+  const dsl = useVBIStore((state) => state.dsl)
+  const config = useVBIStoreConfig()
+  const themeMode = config.theme ?? (dsl.theme as DemoTheme | undefined) ?? DEMO_DEFAULT_THEME
+  const localeMode = config.locale ?? (dsl.locale as DemoLocale | undefined) ?? DEMO_DEFAULT_LOCALE
+  const labels = getLabels(localeMode)
+  const fullscreen = useFullscreen(mode === 'edit')
 
   return (
-    <Flex vertical style={{ height: '100vh', padding: '16px', backgroundColor: '#f5f5f5' }}>
-      {/* 1. Webpage Title */}
-      <Title level={3} style={{ margin: '0 0 16px 0', color: '#333' }}>
-        Minimalist
-      </Title>
-
-      <Flex style={{ height: 'calc(100% - 48px)', gap: '20px' }}>
-        {/* Left Column: Chart Selector & Selected Shelves */}
-        <Flex vertical gap={20} style={{ width: '250px', flexShrink: 0 }}>
-          <ChartTypeSelector />
-
-          <Card
-            title='Selected Dimensions'
-            styles={{
-              body: { padding: '12px', overflowY: 'auto', maxHeight: '30vh' },
-            }}
-          >
-            <DimensionShelf style={{ flexDirection: 'column' }} />
-          </Card>
-
-          <Card
-            title='Selected Measures'
-            styles={{
-              body: { padding: '12px', overflowY: 'auto', maxHeight: '30vh' },
-            }}
-          >
-            <MeasureShelf style={{ flexDirection: 'column' }} />
-          </Card>
-        </Flex>
-
-        {/* Right Column: Available Lists & Chart Wrapper */}
-        <Flex vertical gap={20} style={{ flexGrow: 1, minWidth: 0 }}>
-          {/* Top of Chart: Horizontal Options */}
-          <Card styles={{ body: { padding: '12px' } }}>
-            <Flex vertical gap={12}>
-              <DimensionsList />
-              <MeasuresList />
-            </Flex>
-          </Card>
-
-          {/* Bottom: Chart Result */}
-          <ChartWrapper />
-        </Flex>
-      </Flex>
-    </Flex>
+    <ConfigProvider componentSize='small' locale={antdLocales[localeMode]} theme={getThemeConfig(themeMode)}>
+      <div
+        ref={fullscreen.rootRef}
+        className={`mini-app mini-app--${themeMode}${fullscreen.isFullscreen ? ' mini-app--fullscreen' : ''}`}
+      >
+        {mode === 'edit' ? (
+          <EditMode
+            isFullscreen={fullscreen.isFullscreen}
+            labels={labels}
+            onToggleFullscreen={fullscreen.toggleFullscreen}
+          />
+        ) : (
+          <ChartBody labels={labels} />
+        )}
+      </div>
+    </ConfigProvider>
   )
 }
 
-const ChartWrapper = () => {
-  const vseed = useVBIStore((state) => state.vseed)
-  const loading = useVBIStore((state) => state.loading)
-  return (
-    <Card
-      loading={loading}
-      styles={{
-        root: { height: '100%' },
-        body: { padding: '12px', height: '100%' },
-      }}
-    >
-      {vseed && <VSeedRender vseed={vseed} />}
-    </Card>
-  )
-}
+export const APP = ({
+  builder,
+  hideLocale = false,
+  hideTheme = false,
+  locale = DEMO_DEFAULT_LOCALE,
+  mode = 'edit',
+  theme = DEMO_DEFAULT_THEME,
+}: APPProps) => (
+  <VBIStoreProvider builder={builder} hideLocale={hideLocale} hideTheme={hideTheme} locale={locale} theme={theme}>
+    <AppContent mode={mode} />
+  </VBIStoreProvider>
+)

@@ -1,146 +1,87 @@
-import { VBI } from '@visactor/vbi'
+import { VBI, type VBIChartBuilder } from '@visactor/vbi'
 import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
+import {
+  PROFESSIONAL_DEFAULT_LIMIT,
+  PROFESSIONAL_DEFAULT_LOCALE,
+  PROFESSIONAL_DEFAULT_THEME,
+} from 'src/constants/builder'
+import { inferSchema, normalizeDataset, rowsToDataset, type LocalRow } from './localDataset'
+import { parseCsv } from './parseCsv'
+import { supermarketSchema } from './supermarketSchema'
 
-let localData: unknown[] = []
+export const CONNECTOR_ID = 'professionalLocalData'
+
+type QueryValue = string | number
+
+let localData: LocalRow[] = []
 let localSchema: DatasetColumn[] | null = null
 let datasetNeedsRefresh = true
+let demoDataPromise: Promise<void> | null = null
+let connectorRegistered = false
 
-export const createLocalConnector = (connectorId: string) => {
-  const vquery = new VQuery()
-
-  VBI.registerConnector(connectorId, async () => {
-    return {
-      discoverSchema: async () => {
-        if (localData.length === 0) {
-          return []
-        }
-
-        if (localSchema) {
-          return localSchema
-        }
-
-        // 从数据的第一行推断字段类型
-        const firstRow = localData[0]
-        if (typeof firstRow !== 'object' || firstRow === null) {
-          return []
-        }
-        const schema = Object.entries(firstRow as Record<string, unknown>).map(([name, value]) => ({
-          name,
-          type: typeof value === 'number' ? 'number' : 'string',
-        }))
-        return schema
-      },
-
-      query: async ({ queryDSL, schema }) => {
-        const hasDataset = await vquery.hasDataset(connectorId)
-
-        if (hasDataset && datasetNeedsRefresh) {
-          await vquery.dropDataset(connectorId)
-        }
-
-        if (!(await vquery.hasDataset(connectorId))) {
-          if (localData.length === 0) {
-            return { dataset: [] }
-          }
-
-          const datasetSource = { type: 'json', rawDataset: localData }
-          await vquery.createDataset(connectorId, schema as DatasetColumn[], datasetSource as RawDatasetSource)
-          datasetNeedsRefresh = false
-        }
-
-        const dataset = await vquery.connectDataset(connectorId)
-        const queryResult = await dataset.query(queryDSL as VQueryDSL<Record<string, string | number>>)
-
-        // 度量感知的类型转换：将度量结果从字符串转换为数字
-        let normalizedDataset = queryResult.dataset
-        if (queryDSL.select && Array.isArray(queryDSL.select)) {
-          // 识别度量列和维度列，查询结果列名优先 alias，否则 field
-          const measureFields: { field: string; alias: string }[] = []
-          const dimensionFields: { field: string; alias: string }[] = []
-
-          for (const item of queryDSL.select) {
-            if (typeof item === 'string') {
-              dimensionFields.push({ field: item, alias: item })
-              continue
-            }
-
-            if (typeof item === 'object' && item !== null) {
-              const field = (item as any).field as string | undefined
-              const alias = ((item as any).alias ?? field) as string | undefined
-
-              if (!field || !alias) {
-                continue
-              }
-
-              if ((item as any).aggr?.func) {
-                measureFields.push({ field, alias })
-              } else {
-                dimensionFields.push({ field, alias })
-              }
-            }
-          }
-
-          if (measureFields.length > 0 || dimensionFields.length > 0) {
-            // SQL 列名优先是 alias（如果提供），否则是 field
-            normalizedDataset = queryResult.dataset.map((row) => {
-              const next: Record<string, any> = {}
-
-              for (const { field, alias } of measureFields) {
-                const sourceKey = alias || field
-                const raw = (row as any)[sourceKey]
-
-                if (raw != null) {
-                  let num: number
-                  if (typeof raw === 'string') {
-                    num = Number(raw)
-                  } else if (typeof raw === 'bigint') {
-                    num = Number(raw)
-                  } else if (typeof raw === 'number') {
-                    num = raw
-                  } else {
-                    num = NaN
-                  }
-
-                  // 保留查询结果列名（优先 alias，否则 field），避免下游取不到值
-                  if (!Number.isNaN(num)) {
-                    next[sourceKey] = num
-                  }
-                }
-              }
-
-              for (const { field, alias } of dimensionFields) {
-                const sourceKey = alias || field
-                const raw = (row as any)[sourceKey]
-                if (raw != null) {
-                  next[sourceKey] = raw
-                }
-              }
-
-              return next
-            })
-          }
-        }
-
-        return {
-          dataset: normalizedDataset,
-        }
-      },
-    }
-  })
-
-  return connectorId
-}
-
-export const setLocalData = (data: unknown[]) => {
-  localData = data
-  localSchema = null
-  datasetNeedsRefresh = true
-}
-
-export const setLocalDataWithSchema = (data: unknown[], schema: DatasetColumn[] | null) => {
+export const setLocalDataWithSchema = (data: LocalRow[], schema: DatasetColumn[] | null) => {
   localData = data
   localSchema = schema
   datasetNeedsRefresh = true
+  demoDataPromise = null
 }
 
 export const getLocalData = () => localData
+
+const loadDemoData = async () => {
+  if (localData.length > 0 || localSchema) return
+  const response = await fetch('https://visactor.github.io/VBI/dataset/supermarket.csv')
+  if (!response.ok) throw new Error(`Failed to fetch demo data: ${response.status}`)
+  const [headerRow = [], ...dataRows] = parseCsv(await response.text())
+  const headers = headerRow.map((item) => item.trim())
+  setLocalDataWithSchema(rowsToDataset(headers, dataRows, supermarketSchema), supermarketSchema)
+}
+
+const ensureDemoDataLoaded = async () => {
+  if (localData.length > 0) return
+  demoDataPromise ??= loadDemoData().finally(() => {
+    demoDataPromise = null
+  })
+  await demoDataPromise
+}
+
+export const createLocalConnector = (connectorId = CONNECTOR_ID) => {
+  if (connectorRegistered) return connectorId
+  connectorRegistered = true
+  const vquery = new VQuery()
+
+  VBI.registerConnector(connectorId, async () => ({
+    discoverSchema: async () => localSchema ?? (localData.length ? inferSchema(localData) : []),
+    query: async ({ queryDSL, schema }) => {
+      if ((await vquery.hasDataset(connectorId)) && datasetNeedsRefresh) await vquery.dropDataset(connectorId)
+      if (!(await vquery.hasDataset(connectorId))) {
+        if (localData.length === 0) return { dataset: [] }
+        await vquery.createDataset(
+          connectorId,
+          schema as DatasetColumn[],
+          { rawDataset: localData, type: 'json' } as RawDatasetSource,
+        )
+        datasetNeedsRefresh = false
+      }
+      const dataset = await vquery.connectDataset(connectorId)
+      const dsl = queryDSL as VQueryDSL<Record<string, QueryValue>>
+      const result = await dataset.query(dsl)
+      return { dataset: normalizeDataset(dsl, result.dataset as LocalRow[]) }
+    },
+  }))
+  return connectorId
+}
+
+export const createDefaultBuilder = (): VBIChartBuilder => {
+  createLocalConnector()
+  const builder = VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID))
+  builder.locale.setLocale(PROFESSIONAL_DEFAULT_LOCALE)
+  builder.theme.setTheme(PROFESSIONAL_DEFAULT_THEME)
+  builder.limit.setLimit(PROFESSIONAL_DEFAULT_LIMIT)
+  return builder
+}
+
+export const initVBIConnector = async () => {
+  createLocalConnector()
+  await ensureDemoDataLoaded()
+}

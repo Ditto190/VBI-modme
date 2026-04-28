@@ -1,11 +1,16 @@
 import { VBI, type VBIChartBuilder } from '@visactor/vbi'
 import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
 
-export const connectorId = 'demo'
+export const DEMO_CONNECTOR_ID = 'demo'
+
+let registered = false
 
 export const registerDemoConnector = () => {
+  if (registered) return DEMO_CONNECTOR_ID
+  registered = true
+
   const vquery = new VQuery()
-  VBI.registerConnector(connectorId, async () => {
+  VBI.registerConnector(DEMO_CONNECTOR_ID, async () => {
     return {
       discoverSchema: async () => {
         return [
@@ -33,12 +38,12 @@ export const registerDemoConnector = () => {
         ]
       },
       query: async ({ queryDSL, schema }) => {
-        if (!(await vquery.hasDataset(connectorId))) {
+        if (!(await vquery.hasDataset(DEMO_CONNECTOR_ID))) {
           const url = 'https://visactor.github.io/VBI/dataset/supermarket.csv'
           const datasetSource = { type: 'csv', rawDataset: url }
-          await vquery.createDataset(connectorId, schema as DatasetColumn[], datasetSource as RawDatasetSource)
+          await vquery.createDataset(DEMO_CONNECTOR_ID, schema as DatasetColumn[], datasetSource as RawDatasetSource)
         }
-        const dataset = await vquery.connectDataset(connectorId)
+        const dataset = await vquery.connectDataset(DEMO_CONNECTOR_ID)
         const queryResult = await dataset.query(queryDSL as VQueryDSL<Record<string, string | number>>)
 
         return {
@@ -47,8 +52,14 @@ export const registerDemoConnector = () => {
       },
     }
   })
-  return connectorId
+  return DEMO_CONNECTOR_ID
 }
 
-registerDemoConnector()
-export const defaultBuilder: VBIChartBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
+export const createDefaultBuilder = (): VBIChartBuilder => {
+  registerDemoConnector()
+  return VBI.chart.create(VBI.chart.createEmpty(DEMO_CONNECTOR_ID))
+}
+
+export const initDemoConnector = async () => {
+  registerDemoConnector()
+}

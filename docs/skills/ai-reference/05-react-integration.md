@@ -17,7 +17,7 @@
 
 ## 5.2 VBI-react 包提供的内容（仅 vbi-react-starter 使用）
 
-VBI-react 包位于 `packages/vbi-react/`，包含 **7 个 hooks** 和 **4 个组件**。只有 `vbi-react-starter` 使用这个包。其他 practice（minimalist/streamlined/professional/standard/standard-report）都使用各自独立的实现。
+VBI-react 包位于 `packages/vbi-react/`，包含 **7 个 hooks** 和 **4 个组件**。只有 `vbi-react-starter` 使用这个包。其他 practice（minimalist/streamlined/professional/standard）都使用各自独立的实现。
 
 ### Hooks
 

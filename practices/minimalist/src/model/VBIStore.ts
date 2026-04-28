@@ -1,85 +1,62 @@
-import { VBIChartBuilder, VBIChartDSL, isVBIFilter } from '@visactor/vbi'
-import { VSeed } from '@visactor/vseed'
-import { defaultBuilder } from 'src/utils/demoConnector'
-import { create } from 'zustand'
+import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
+import type { VSeed } from '@visactor/vseed'
+import { createStore, type StoreApi } from 'zustand/vanilla'
+import { createDefaultBuilder } from 'src/utils/demoConnector'
 
-type DestroyCallback = () => void
+type SchemaColumn = { name: string; type: string }
 
-interface BearState {
-  loading: boolean
-  vseed: VSeed | null
+export type VBIStoreState = {
   builder: VBIChartBuilder
-  initialized: boolean
-
   dsl: VBIChartDSL
-
-  initialize: (builder?: VBIChartBuilder) => DestroyCallback
-  bindEvent: () => DestroyCallback
-
-  setDsl: (dsl: VBIChartDSL) => void
-  setLoading: (loading: boolean) => void
-  setVSeed: (vseed: VSeed | null) => void
+  loading: boolean
+  schema: SchemaColumn[]
+  vseed: VSeed | null
 }
 
-export const useVBIStore = create<BearState>((set, get) => ({
-  loading: false,
-  vseed: null,
-  initialized: false,
-  builder: defaultBuilder,
-  dsl: defaultBuilder.dsl.toJSON() as VBIChartDSL,
+export type VBIStoreApi = StoreApi<VBIStoreState>
+type StoreGet = VBIStoreApi['getState']
+type StoreSet = VBIStoreApi['setState']
 
-  setLoading: (loading: boolean) => set({ loading }),
-  setVSeed: (vseed: VSeed | null) => set({ vseed }),
-  setDsl: (dsl: VBIChartDSL) => set({ dsl }),
+const readDsl = (builder: VBIChartBuilder) => builder.dsl.toJSON() as VBIChartDSL
 
-  // 初始化
-  initialize: (builder?: VBIChartBuilder) => {
-    if (builder) {
-      set({ builder })
+const syncSchema = async (builder: VBIChartBuilder, set: StoreSet, get: StoreGet) => {
+  const schema = await builder.getSchema()
+  if (get().builder === builder) set({ schema })
+}
+
+const bindBuilder = (builder: VBIChartBuilder, set: StoreSet, get: StoreGet) => {
+  const update = async () => {
+    if (get().builder !== builder) return
+    const dsl = readDsl(builder)
+    if (builder.isEmpty()) {
+      set({ dsl, loading: false, vseed: null })
+      return
     }
-    set({ initialized: true })
-
-    const callback = get().bindEvent()
-
-    return () => {
-      callback()
-      set({ loading: false, vseed: null, initialized: false })
+    set({ dsl, loading: true })
+    try {
+      set({ dsl: readDsl(builder), vseed: await builder.buildVSeed() })
+    } catch {
+      if (get().builder === builder) set({ vseed: null })
+    } finally {
+      if (get().builder === builder) set({ loading: false })
     }
-  },
+  }
 
-  bindEvent: () => {
-    const { builder, setLoading, setVSeed, setDsl } = get()
-    const updateAll = async () => {
-      setLoading(true)
-      try {
-        const newVSeed = await builder.buildVSeed()
-        setVSeed(newVSeed)
-        setDsl(builder.dsl.toJSON() as VBIChartDSL)
-      } catch (e: any) {
-        console.error('VSeed Build Error:', e)
-        import('antd').then(({ message }) => {
-          message.error('筛选器配置有误导致数据构建失败，已为您自动移除无效筛选器，请重新配置。')
-        })
+  builder.doc.on('update', update)
+  void update()
+  return () => builder.doc.off('update', update)
+}
 
-        const filters = builder.whereFilter.toJSON().conditions
-        if (filters && filters.length > 0) {
-          const lastFilter = filters[filters.length - 1]
-          if (isVBIFilter(lastFilter)) {
-            builder.doc.transact(() => {
-              builder.whereFilter.remove(lastFilter.id)
-            })
-            // Avoid triggering immediately if possible, or let it trigger again and succeed
-            window.dispatchEvent(new CustomEvent('vbi-filter-error', { detail: lastFilter }))
-          }
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    builder.doc.on('update', updateAll)
-    return () => {
-      builder.doc.off('update', updateAll)
-    }
-  },
-}))
+export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
+  const initialBuilder = builder ?? createDefaultBuilder()
+  const store = createStore<VBIStoreState>(() => ({
+    builder: initialBuilder,
+    dsl: readDsl(initialBuilder),
+    loading: false,
+    schema: [],
+    vseed: null,
+  }))
+  void syncSchema(initialBuilder, store.setState, store.getState)
+  bindBuilder(initialBuilder, store.setState, store.getState)
+  return store
+}

@@ -1,0 +1,40 @@
+.stream-row-count {
+  display: inline-flex;
+  align-items: center;
+  height: var(--stream-control-height-sm);
+  padding: 0 8px;
+  border: 1px solid color-mix(in srgb, var(--stream-accent) 30%, var(--stream-border));
+  border-radius: var(--stream-radius-pill);
+  background: color-mix(in srgb, var(--stream-accent) 10%, transparent);
+  color: var(--stream-text);
+  font-size: var(--stream-font-sm);
+  white-space: nowrap;
+}
+
+.stream-row-count::before {
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--stream-success);
+  content: '';
+}
+
+.stream-settings-content {
+  display: grid;
+  min-width: 170px;
+  gap: 9px;
+}
+
+.stream-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--stream-gap-xl);
+  color: var(--stream-muted);
+  font-size: var(--stream-font-sm);
+}
+
+.stream-setting-row .ant-input-number {
+  width: 88px;
+}

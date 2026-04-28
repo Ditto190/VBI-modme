@@ -1,0 +1,83 @@
+.pro-config {
+  align-content: start;
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  display: grid;
+  gap: 8px;
+  inset: 0;
+  overflow: auto;
+  padding: 8px;
+  position: absolute;
+  z-index: 3;
+}
+
+.pro-config--active {
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+}
+
+.pro-config__head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pro-config__head strong {
+  font-size: 12px;
+}
+
+.pro-config__head span {
+  color: var(--muted);
+}
+
+.pro-config__slots {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.pro-slot {
+  background: var(--raised);
+  border: 1px dashed var(--line);
+  display: grid;
+  gap: 4px;
+  min-height: 44px;
+  padding: 6px;
+}
+
+.pro-slot--dragging {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.pro-slot--available {
+  background: color-mix(in srgb, var(--accent) 7%, var(--raised));
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+}
+
+.pro-slot--blocked {
+  background: color-mix(in srgb, var(--muted) 8%, var(--raised));
+  border-style: solid;
+  opacity: 0.58;
+}
+
+.pro-slot__label {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  font-size: 10px;
+  font-weight: 700;
+  justify-content: space-between;
+}
+
+.pro-slot__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 21px;
+}
+
+.pro-slot__body em {
+  color: var(--muted);
+  font-style: normal;
+}
