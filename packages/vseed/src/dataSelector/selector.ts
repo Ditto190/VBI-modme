@@ -358,7 +358,7 @@ export const executeDynamicFilter = async (
     })
 
     if (!success) {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.warn('[vseed] Dynamic filter execution failed:', error)
       return {
         success: false,
@@ -371,7 +371,7 @@ export const executeDynamicFilter = async (
     try {
       validateFilterResult(data, filter)
     } catch (validationError) {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.error('[vseed] Dynamic filter result validation failed:', validationError)
       return {
         success: false,
@@ -391,7 +391,7 @@ export const executeDynamicFilter = async (
     // - validateCodeSafety 验证失败
     // - 数据验证失败
     const errorMessage = error instanceof Error ? error.message : String(error)
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.error('[vseed] Dynamic filter execution threw exception:', errorMessage)
 
     return {

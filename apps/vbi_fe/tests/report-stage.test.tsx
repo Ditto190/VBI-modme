@@ -1,18 +1,18 @@
-import { createRef } from 'react';
-import { expect, rs, test } from '@rstest/core';
-import { render, screen } from '@testing-library/react';
+import { createRef } from 'react'
+import { expect, rs, test } from '@rstest/core'
+import { render, screen } from '@testing-library/react'
 
 rs.mock('../src/pages/report-detail/ReportChartPanel', () => ({
   ReportChartPanel: () => <div className="report-detail-slide-chart" />,
-}));
+}))
 
 rs.mock('../src/pages/report-detail/ReportInsightPanel', () => ({
   ReportInsightPanel: () => <div className="report-detail-slide-note" />,
-}));
+}))
 
-const { ReportStage } = await import('../src/pages/report-detail/ReportStage');
+const { ReportStage } = await import('../src/pages/report-detail/ReportStage')
 
-const noop = () => {};
+const noop = () => {}
 
 const emptyPage = {
   chartBuilder: null,
@@ -25,7 +25,7 @@ const emptyPage = {
     chartId: '',
     insightId: '',
   },
-};
+}
 
 const bothPage = {
   ...emptyPage,
@@ -36,7 +36,7 @@ const bothPage = {
     chartId: 'chart-1',
     insightId: 'insight-1',
   },
-};
+}
 
 const secondPage = {
   ...bothPage,
@@ -45,7 +45,7 @@ const secondPage = {
     id: 'page-2',
     title: 'Page 2',
   },
-};
+}
 
 test('report stage renders empty when page has no resources', () => {
   render(
@@ -58,10 +58,10 @@ test('report stage renders empty when page has no resources', () => {
       stageRef={createRef()}
       viewMode="vertical"
     />,
-  );
+  )
 
-  expect(screen.getByText('当前页面暂无图表和洞察')).toBeInTheDocument();
-});
+  expect(screen.getByText('当前页面暂无图表和洞察')).toBeInTheDocument()
+})
 
 test('report stage places insight before chart when both resources exist', () => {
   const { container } = render(
@@ -74,18 +74,15 @@ test('report stage places insight before chart when both resources exist', () =>
       stageRef={createRef()}
       viewMode="vertical"
     />,
-  );
+  )
   const sections = [
     ...container.querySelectorAll(
       '.report-detail-vertical-slide .report-detail-slide-note, .report-detail-vertical-slide .report-detail-slide-chart',
     ),
-  ].map((node) => node.className);
+  ].map((node) => node.className)
 
-  expect(sections).toEqual([
-    'report-detail-slide-note',
-    'report-detail-slide-chart',
-  ]);
-});
+  expect(sections).toEqual(['report-detail-slide-note', 'report-detail-slide-chart'])
+})
 
 test('report stage renders page title dividers after each page', () => {
   const { container } = render(
@@ -98,13 +95,13 @@ test('report stage renders page title dividers after each page', () => {
       stageRef={createRef()}
       viewMode="vertical"
     />,
-  );
-  const dividers = container.querySelectorAll('.report-detail-page-divider');
+  )
+  const dividers = container.querySelectorAll('.report-detail-page-divider')
 
-  expect(dividers).toHaveLength(2);
-  expect(dividers[0].textContent).toBe('01Page 1');
-  expect(dividers[1].textContent).toBe('02Page 2');
-});
+  expect(dividers).toHaveLength(2)
+  expect(dividers[0].textContent).toBe('01Page 1')
+  expect(dividers[1].textContent).toBe('02Page 2')
+})
 
 test('report stage renders insight-only pages without chart panel', () => {
   const { container } = render(
@@ -126,13 +123,13 @@ test('report stage renders insight-only pages without chart panel', () => {
       stageRef={createRef()}
       viewMode="vertical"
     />,
-  );
+  )
 
-  expect(container.querySelector('.report-detail-slide-note')).toBeTruthy();
-  expect(container.querySelector('.report-detail-slide-chart')).toBeNull();
-  expect(container.querySelector('.report-detail-vertical-stage')).toBeTruthy();
-  expect(container.querySelector('.report-detail-horizontal-stage')).toBeNull();
-});
+  expect(container.querySelector('.report-detail-slide-note')).toBeTruthy()
+  expect(container.querySelector('.report-detail-slide-chart')).toBeNull()
+  expect(container.querySelector('.report-detail-vertical-stage')).toBeTruthy()
+  expect(container.querySelector('.report-detail-horizontal-stage')).toBeNull()
+})
 
 test('report stage uses the horizontal renderer in horizontal mode', () => {
   const { container } = render(
@@ -145,19 +142,14 @@ test('report stage uses the horizontal renderer in horizontal mode', () => {
       stageRef={createRef()}
       viewMode="horizontal"
     />,
-  );
+  )
   const sections = [
     ...container.querySelectorAll(
       '.report-detail-horizontal-slide .report-detail-slide-note, .report-detail-horizontal-slide .report-detail-slide-chart',
     ),
-  ].map((node) => node.className);
+  ].map((node) => node.className)
 
-  expect(
-    container.querySelector('.report-detail-horizontal-stage'),
-  ).toBeTruthy();
-  expect(container.querySelector('.report-detail-vertical-stage')).toBeNull();
-  expect(sections).toEqual([
-    'report-detail-slide-note',
-    'report-detail-slide-chart',
-  ]);
-});
+  expect(container.querySelector('.report-detail-horizontal-stage')).toBeTruthy()
+  expect(container.querySelector('.report-detail-vertical-stage')).toBeNull()
+  expect(sections).toEqual(['report-detail-slide-note', 'report-detail-slide-chart'])
+})

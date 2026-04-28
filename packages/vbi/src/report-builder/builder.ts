@@ -15,9 +15,10 @@ import { getOrCreateReportPages } from 'src/vbi/from'
 import type { VBIResourceRegistry } from 'src/vbi/resources'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 
-export class VBIReportBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>
-  implements VBIReportBuilderInterface<TQueryDSL, TSeedDSL>
-{
+export class VBIReportBuilder<
+  TQueryDSL = DefaultVBIQueryDSL,
+  TSeedDSL = DefaultVBISeedDSL,
+> implements VBIReportBuilderInterface<TQueryDSL, TSeedDSL> {
   public doc: Y.Doc
   public dsl: Y.Map<any>
   public undoManager: UndoManager

@@ -18,23 +18,22 @@ export type AnnotationPointConfig = Pick<
   | 'offsetY'
 >
 
-export interface AnnotationHorizontalLineConfig
-  extends Pick<
-    AnnotationHorizontalLine,
-    | 'textFontSize'
-    | 'lineColor'
-    | 'lineStyle'
-    | 'lineVisible'
-    | 'lineWidth'
-    | 'textColor'
-    | 'textBackgroundBorderColor'
-    | 'textBackgroundBorderRadius'
-    | 'textBackgroundBorderWidth'
-    | 'textBackgroundColor'
-    | 'textBackgroundPadding'
-    | 'textBackgroundVisible'
-    | 'textFontWeight'
-  > {
+export interface AnnotationHorizontalLineConfig extends Pick<
+  AnnotationHorizontalLine,
+  | 'textFontSize'
+  | 'lineColor'
+  | 'lineStyle'
+  | 'lineVisible'
+  | 'lineWidth'
+  | 'textColor'
+  | 'textBackgroundBorderColor'
+  | 'textBackgroundBorderRadius'
+  | 'textBackgroundBorderWidth'
+  | 'textBackgroundColor'
+  | 'textBackgroundPadding'
+  | 'textBackgroundVisible'
+  | 'textFontWeight'
+> {
   /**
    * 起点图标是否显示
    */

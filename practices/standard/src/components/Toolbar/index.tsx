@@ -7,24 +7,24 @@ import {
   SunOutlined,
   UndoOutlined,
   CloudUploadOutlined,
-} from '@ant-design/icons';
-import { Button, InputNumber, Segmented, Space, Tooltip, theme } from 'antd';
-import React, { useState } from 'react';
-import { ChartTypeSelector } from 'src/components/ChartType';
-import { CSVModal } from 'src/components/CSVModal';
-import type { DemoLocale, DemoTheme } from 'src/constants/builder';
-import { useVBIBuilder, useVBIUndoManager } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore, useVBIStoreConfig } from 'src/model';
-import { CONNECTOR_ID } from 'src/utils/localConnector';
-import { formatDefaultLimit } from './config';
+} from '@ant-design/icons'
+import { Button, InputNumber, Segmented, Space, Tooltip, theme } from 'antd'
+import React, { useState } from 'react'
+import { ChartTypeSelector } from 'src/components/ChartType'
+import { CSVModal } from 'src/components/CSVModal'
+import type { DemoLocale, DemoTheme } from 'src/constants/builder'
+import { useVBIBuilder, useVBIUndoManager } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore, useVBIStoreConfig } from 'src/model'
+import { CONNECTOR_ID } from 'src/utils/localConnector'
+import { formatDefaultLimit } from './config'
 
 const normalizeLimitValue = (value: number) => {
-  return Math.max(1, Math.round(value));
-};
+  return Math.max(1, Math.round(value))
+}
 
 const ToolbarDivider = () => {
-  const { token } = theme.useToken();
+  const { token } = theme.useToken()
 
   return (
     <span
@@ -35,44 +35,36 @@ const ToolbarDivider = () => {
         flexShrink: 0,
       }}
     />
-  );
-};
+  )
+}
 
 export const Toolbar: React.FC<{
-  isFullscreen: boolean;
-  onToggleFullscreen: () => void | Promise<void>;
+  isFullscreen: boolean
+  onToggleFullscreen: () => void | Promise<void>
 }> = ({ isFullscreen, onToggleFullscreen }) => {
-  const [isCSVModalOpen, setIsCSVModalOpen] = useState(false);
-  const builder = useVBIStore((state) => state.builder);
-  const switchSource = useVBIStore((state) => state.switchSource);
-  const { token } = theme.useToken();
-  const { hideLocale, hideTheme } = useVBIStoreConfig();
-  const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder);
-  const { t, locale, setLocale } = useTranslation();
-  const {
-    theme: themeMode,
-    limit,
-    setTheme,
-    setLimit,
-  } = useVBIBuilder(builder);
-  const defaultLimitText = formatDefaultLimit(locale);
+  const [isCSVModalOpen, setIsCSVModalOpen] = useState(false)
+  const builder = useVBIStore((state) => state.builder)
+  const switchSource = useVBIStore((state) => state.switchSource)
+  const { token } = theme.useToken()
+  const { hideLocale, hideTheme } = useVBIStoreConfig()
+  const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder)
+  const { t, locale, setLocale } = useTranslation()
+  const { theme: themeMode, limit, setTheme, setLimit } = useVBIBuilder(builder)
+  const defaultLimitText = formatDefaultLimit(locale)
 
   const formatNumber = (value: string | number | undefined | null) => {
     if (value === undefined || value === null || value === '') {
-      return '';
+      return ''
     }
 
-    const numericValue =
-      typeof value === 'number'
-        ? value
-        : Number(String(value).replace(/[^\d.-]/g, ''));
+    const numericValue = typeof value === 'number' ? value : Number(String(value).replace(/[^\d.-]/g, ''))
 
     if (!Number.isFinite(numericValue)) {
-      return '';
+      return ''
     }
 
-    return new Intl.NumberFormat(locale).format(numericValue);
-  };
+    return new Intl.NumberFormat(locale).format(numericValue)
+  }
 
   return (
     <div
@@ -124,9 +116,7 @@ export const Toolbar: React.FC<{
                 size="small"
               />
             </Tooltip>
-            <Tooltip
-              title={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}
-            >
+            <Tooltip title={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
               <Button
                 icon={<RedoOutlined style={{ fontSize: 12 }} />}
                 onClick={redo}
@@ -152,7 +142,7 @@ export const Toolbar: React.FC<{
             style={{ width: 96 }}
             onChange={(value) => {
               if (typeof value === 'number') {
-                setLimit(normalizeLimitValue(value));
+                setLimit(normalizeLimitValue(value))
               }
             }}
             size="small"
@@ -180,9 +170,7 @@ export const Toolbar: React.FC<{
             <>
               <ToolbarDivider />
 
-              <Tooltip
-                title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}
-              >
+              <Tooltip title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}>
                 <Segmented
                   size="small"
                   value={locale}
@@ -200,9 +188,7 @@ export const Toolbar: React.FC<{
             <>
               <ToolbarDivider />
 
-              <Tooltip
-                title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}
-              >
+              <Tooltip title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}>
                 <Segmented
                   size="small"
                   value={themeMode}
@@ -224,11 +210,7 @@ export const Toolbar: React.FC<{
             </>
           ) : null}
 
-          <Tooltip
-            title={t(
-              isFullscreen ? 'toolbarFullscreenExit' : 'toolbarFullscreenEnter',
-            )}
-          >
+          <Tooltip title={t(isFullscreen ? 'toolbarFullscreenExit' : 'toolbarFullscreenEnter')}>
             <Button
               icon={
                 isFullscreen ? (
@@ -238,7 +220,7 @@ export const Toolbar: React.FC<{
                 )
               }
               onClick={() => {
-                void onToggleFullscreen();
+                void onToggleFullscreen()
               }}
               size="small"
             />
@@ -249,10 +231,10 @@ export const Toolbar: React.FC<{
         open={isCSVModalOpen}
         onCancel={() => setIsCSVModalOpen(false)}
         onConfirm={async (data, schema) => {
-          await switchSource(CONNECTOR_ID, data, schema);
-          setIsCSVModalOpen(false);
+          await switchSource(CONNECTOR_ID, data, schema)
+          setIsCSVModalOpen(false)
         }}
       />
     </div>
-  );
-};
+  )
+}

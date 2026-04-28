@@ -1,43 +1,35 @@
-import React from 'react';
-import { PlusOutlined, NumberOutlined } from '@ant-design/icons';
-import './Shelf.css';
+import React from 'react'
+import { PlusOutlined, NumberOutlined } from '@ant-design/icons'
+import './Shelf.css'
 
 export interface DimensionShelfProps {
-  items: string[];
-  onAdd?: (field: string) => void;
-  existingFields?: string[];
-  style?: React.CSSProperties;
+  items: string[]
+  onAdd?: (field: string) => void
+  existingFields?: string[]
+  style?: React.CSSProperties
 }
 
-const DimensionShelf: React.FC<DimensionShelfProps> = ({
-  items,
-  onAdd,
-  existingFields = [],
-  style,
-}) => {
+const DimensionShelf: React.FC<DimensionShelfProps> = ({ items, onAdd, existingFields = [], style }) => {
   const handleAction = (field: string) => {
     if (onAdd && !existingFields.includes(field)) {
-      onAdd(field);
+      onAdd(field)
     }
-  };
+  }
 
   return (
     <div className="shelf" style={style}>
       <div className="shelf-items">
         {items.map((field) => {
-          const isExists = existingFields.includes(field);
+          const isExists = existingFields.includes(field)
           return (
             <div
               key={field}
               className="shelf-item"
               draggable
               onDragStart={(e) => {
-                e.dataTransfer.setData(
-                  'application/x-vbi-dimension-field',
-                  field,
-                );
-                e.dataTransfer.setData('text/plain', field);
-                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('application/x-vbi-dimension-field', field)
+                e.dataTransfer.setData('text/plain', field)
+                e.dataTransfer.effectAllowed = 'move'
               }}
             >
               <NumberOutlined style={{ marginRight: 4 }} />
@@ -54,11 +46,11 @@ const DimensionShelf: React.FC<DimensionShelfProps> = ({
                 <PlusOutlined style={{ color: '#e0e0e0' }} />
               </button>
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DimensionShelf;
+export default DimensionShelf

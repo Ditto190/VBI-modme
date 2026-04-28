@@ -1,62 +1,53 @@
-import React, { useMemo, useState } from 'react';
-import { AppstoreOutlined } from '@ant-design/icons';
-import { Button, Popover, Typography, theme } from 'antd';
-import { useVBIChartType } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
-import {
-  getChartTypeGroups,
-  getChartTypeMeta,
-} from 'src/components/Toolbar/config';
+import React, { useMemo, useState } from 'react'
+import { AppstoreOutlined } from '@ant-design/icons'
+import { Button, Popover, Typography, theme } from 'antd'
+import { useVBIChartType } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
+import { getChartTypeGroups, getChartTypeMeta } from 'src/components/Toolbar/config'
 
-const { Text } = Typography;
-const PANEL_CARD_WIDTH = 96;
-const PANEL_CARD_HEIGHT = 64;
+const { Text } = Typography
+const PANEL_CARD_WIDTH = 96
+const PANEL_CARD_HEIGHT = 64
 
 export const ChartTypeSelector = ({
   compact = false,
   showText = true,
   style,
 }: {
-  compact?: boolean;
-  showText?: boolean;
-  style?: React.CSSProperties;
+  compact?: boolean
+  showText?: boolean
+  style?: React.CSSProperties
 }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const { chartType, changeChartType, getAvailableChartTypes } =
-    useVBIChartType(builder);
-  const [open, setOpen] = useState(false);
-  const { token } = theme.useToken();
-  const { t } = useTranslation();
+  const builder = useVBIStore((state) => state.builder)
+  const { chartType, changeChartType, getAvailableChartTypes } = useVBIChartType(builder)
+  const [open, setOpen] = useState(false)
+  const { token } = theme.useToken()
+  const { t } = useTranslation()
 
-  const availableChartTypes = getAvailableChartTypes();
+  const availableChartTypes = getAvailableChartTypes()
 
   const groupedChartTypes = useMemo(() => {
     return getChartTypeGroups(t)
       .map((group) => ({
         ...group,
-        items: availableChartTypes.filter(
-          (type) => getChartTypeMeta(type, t).group === group.key,
-        ),
+        items: availableChartTypes.filter((type) => getChartTypeMeta(type, t).group === group.key),
       }))
-      .filter((group) => group.items.length > 0);
-  }, [availableChartTypes, t]);
+      .filter((group) => group.items.length > 0)
+  }, [availableChartTypes, t])
 
-  const currentChartMeta = useMemo(
-    () => getChartTypeMeta(chartType, t),
-    [chartType, t],
-  );
-  const triggerTooltip = `${currentChartMeta.label}: ${currentChartMeta.description}`;
+  const currentChartMeta = useMemo(() => getChartTypeMeta(chartType, t), [chartType, t])
+  const triggerTooltip = `${currentChartMeta.label}: ${currentChartMeta.description}`
 
   const handleSelect = (type: string) => {
-    changeChartType(type);
-    setOpen(false);
-  };
+    changeChartType(type)
+    setOpen(false)
+  }
 
   const renderChartCard = (type: string) => {
-    const meta = getChartTypeMeta(type, t);
-    const selected = chartType === type;
-    const tooltipText = `${meta.label}: ${meta.description}`;
+    const meta = getChartTypeMeta(type, t)
+    const selected = chartType === type
+    const tooltipText = `${meta.label}: ${meta.description}`
 
     return (
       <button
@@ -75,9 +66,7 @@ export const ChartTypeSelector = ({
           height: PANEL_CARD_HEIGHT,
           padding: '8px 6px',
           borderRadius: token.borderRadius,
-          border: `1px solid ${
-            selected ? token.colorPrimaryBorder : token.colorBorderSecondary
-          }`,
+          border: `1px solid ${selected ? token.colorPrimaryBorder : token.colorBorderSecondary}`,
           background: selected ? token.colorPrimaryBg : token.colorBgContainer,
           color: selected ? token.colorPrimary : token.colorText,
           cursor: 'pointer',
@@ -113,8 +102,8 @@ export const ChartTypeSelector = ({
           {meta.label}
         </span>
       </button>
-    );
-  };
+    )
+  }
 
   const content = (
     <div
@@ -154,7 +143,7 @@ export const ChartTypeSelector = ({
         ))}
       </div>
     </div>
-  );
+  )
 
   return (
     <div style={style}>
@@ -246,5 +235,5 @@ export const ChartTypeSelector = ({
         </Button>
       </Popover>
     </div>
-  );
-};
+  )
+}

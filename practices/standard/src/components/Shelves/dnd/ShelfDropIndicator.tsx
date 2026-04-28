@@ -1,10 +1,4 @@
-export const ShelfDropIndicator = ({
-  color,
-  isActive,
-}: {
-  color: string;
-  isActive: boolean;
-}) => {
+export const ShelfDropIndicator = ({ color, isActive }: { color: string; isActive: boolean }) => {
   return (
     <span
       style={{
@@ -16,5 +10,5 @@ export const ShelfDropIndicator = ({
         transition: 'all 0.12s ease',
       }}
     />
-  );
-};
+  )
+}

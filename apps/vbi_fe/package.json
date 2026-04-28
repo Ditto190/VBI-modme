@@ -7,8 +7,8 @@
     "build": "rsbuild build",
     "dev": "rsbuild dev --open",
     "dev:docker": "rsbuild dev --host 0.0.0.0",
-    "format": "prettier --write .",
-    "lint": "eslint .",
+    "format": "oxfmt .",
+    "lint": "oxlint .",
     "preview": "rsbuild preview",
     "test": "rstest",
     "test:watch": "rstest --watch",
@@ -32,7 +32,6 @@
     "zustand": "5.0.6"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.1",
     "@rsbuild/core": "1.6.14",
     "@rsbuild/plugin-react": "1.4.2",
     "@rstest/core": "0.8.3",
@@ -41,13 +40,7 @@
     "@testing-library/react": "16.3.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "eslint": "9.39.1",
-    "eslint-plugin-react-hooks": "7.0.1",
-    "eslint-plugin-react-refresh": "0.4.24",
-    "globals": "16.5.0",
     "jsdom": "27.3.0",
-    "prettier": "3.7.3",
-    "typescript": "6.0.2",
-    "typescript-eslint": "8.58.1"
+    "typescript": "6.0.2"
   }
 }

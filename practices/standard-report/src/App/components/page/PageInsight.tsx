@@ -6,5 +6,5 @@ export const PageInsight = () => {
       <div className="standard-report-insight-line" />
       <div className="standard-report-insight-line is-short" />
     </div>
-  );
-};
+  )
+}

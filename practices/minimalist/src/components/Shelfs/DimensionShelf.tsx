@@ -1,43 +1,41 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import { VBIDimension } from '@visactor/vbi';
-import { Button, Flex, Space } from 'antd';
-import { useEffect, useState } from 'react';
-import { useVBIStore } from 'src/model';
+import { DeleteOutlined } from '@ant-design/icons'
+import { VBIDimension } from '@visactor/vbi'
+import { Button, Flex, Space } from 'antd'
+import { useEffect, useState } from 'react'
+import { useVBIStore } from 'src/model'
 
 export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
-  const builder = useVBIStore((state) => state.builder);
+  const builder = useVBIStore((state) => state.builder)
 
-  const [dimensions, setDimensions] = useState<VBIDimension[]>(
-    builder.dimensions.toJSON(),
-  );
+  const [dimensions, setDimensions] = useState<VBIDimension[]>(builder.dimensions.toJSON())
 
   useEffect(() => {
     const updateDimensions = () => {
-      setDimensions(builder.dimensions.toJSON());
-    };
-    const unobserve = builder.dimensions.observe(updateDimensions);
-    return unobserve;
-  }, [builder]);
+      setDimensions(builder.dimensions.toJSON())
+    }
+    const unobserve = builder.dimensions.observe(updateDimensions)
+    return unobserve
+  }, [builder])
 
   const deleteDimension = (field: VBIDimension['field']) => {
-    builder.dimensions.remove(field);
-  };
+    builder.dimensions.remove(field)
+  }
 
   const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const data = JSON.parse(e.dataTransfer.getData('application/json'));
+      const data = JSON.parse(e.dataTransfer.getData('application/json'))
       if (data.type === 'dimension') {
         builder.doc.transact(() => {
           builder.dimensions.add(data.name, (node) => {
-            node.setAlias(data.alias || data.name);
-          });
-        });
+            node.setAlias(data.alias || data.name)
+          })
+        })
       }
     } catch (err) {
-      console.error('Drop error', err);
+      console.error('Drop error', err)
     }
-  };
+  }
 
   return (
     <Flex
@@ -53,16 +51,9 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
       onDragOver={(e) => e.preventDefault()}
       onDrop={handleDrop}
     >
-      {dimensions.length === 0 && (
-        <div style={{ color: '#bfbfbf', textAlign: 'center' }}>
-          Drop Dimensions Here
-        </div>
-      )}
+      {dimensions.length === 0 && <div style={{ color: '#bfbfbf', textAlign: 'center' }}>Drop Dimensions Here</div>}
       {dimensions.map((dimension) => (
-        <Space.Compact
-          key={`dimension-shelf-${dimension.field}`}
-          style={{ width: '100%' }}
-        >
+        <Space.Compact key={`dimension-shelf-${dimension.field}`} style={{ width: '100%' }}>
           <Button
             shape="round"
             style={{
@@ -74,13 +65,9 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
           >
             {dimension.alias}
           </Button>
-          <Button
-            shape="round"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteDimension(dimension.field)}
-          />
+          <Button shape="round" icon={<DeleteOutlined />} onClick={() => deleteDimension(dimension.field)} />
         </Space.Compact>
       ))}
     </Flex>
-  );
-};
+  )
+}

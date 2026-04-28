@@ -1,24 +1,19 @@
-import { Card, Flex, theme } from 'antd';
-import {
-  DimensionShelf,
-  HavingShelf,
-  MeasureShelf,
-  WhereShelf,
-} from 'src/components/Shelves';
-import { useTranslation } from 'src/i18n';
-import { FilterRootOperatorToggle } from './FilterRootOperatorToggle';
-import { ShelfRow } from './ShelfRow';
+import { Card, Flex, theme } from 'antd'
+import { DimensionShelf, HavingShelf, MeasureShelf, WhereShelf } from 'src/components/Shelves'
+import { useTranslation } from 'src/i18n'
+import { FilterRootOperatorToggle } from './FilterRootOperatorToggle'
+import { ShelfRow } from './ShelfRow'
 
 const SHELF_STYLE: React.CSSProperties = {
   minHeight: 34,
   height: 34,
   flex: '1 1 0',
   minWidth: 0,
-};
+}
 
 export const ShelfPanel = () => {
-  const { t } = useTranslation();
-  const { token } = theme.useToken();
+  const { t } = useTranslation()
+  const { token } = theme.useToken()
 
   return (
     <Card
@@ -41,16 +36,8 @@ export const ShelfPanel = () => {
           minWidth: 0,
         }}
       >
-        <ShelfRow
-          label={t('panelsShelvesDimensions')}
-          shelf={<DimensionShelf style={SHELF_STYLE} />}
-          borderBottom
-        />
-        <ShelfRow
-          label={t('panelsShelvesMeasures')}
-          shelf={<MeasureShelf style={SHELF_STYLE} />}
-          borderBottom
-        />
+        <ShelfRow label={t('panelsShelvesDimensions')} shelf={<DimensionShelf style={SHELF_STYLE} />} borderBottom />
+        <ShelfRow label={t('panelsShelvesMeasures')} shelf={<MeasureShelf style={SHELF_STYLE} />} borderBottom />
         <ShelfRow
           label={t('panelsShelvesWhere')}
           shelf={<WhereShelf showRootOperator={false} style={SHELF_STYLE} />}
@@ -65,5 +52,5 @@ export const ShelfPanel = () => {
         />
       </Flex>
     </Card>
-  );
-};
+  )
+}

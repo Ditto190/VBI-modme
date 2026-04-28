@@ -1,26 +1,22 @@
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  FileTextOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
-import { Outlet } from 'react-router-dom';
-import { useTranslation } from '../i18n';
-import { useAppPreferencesStore } from '../stores/app-preferences.store';
-import { useNavigationStore } from '../stores/navigation.store';
-import './manage-resource/manage-layout.css';
-import './manage-resource/manage-resource.css';
-import './manage-resource/manage-resource-table.css';
-import './manage-resource/manage-responsive.css';
-import { ManagePreferences } from './manage-resource/ManagePreferences';
+import { AppstoreOutlined, BarChartOutlined, FileTextOutlined } from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
+import { Outlet } from 'react-router-dom'
+import { useTranslation } from '../i18n'
+import { useAppPreferencesStore } from '../stores/app-preferences.store'
+import { useNavigationStore } from '../stores/navigation.store'
+import './manage-resource/manage-layout.css'
+import './manage-resource/manage-resource.css'
+import './manage-resource/manage-resource-table.css'
+import './manage-resource/manage-responsive.css'
+import { ManagePreferences } from './manage-resource/ManagePreferences'
 
-const { Sider, Content } = Layout;
+const { Sider, Content } = Layout
 
 export const ManageLayoutPage = () => {
-  const pathname = useNavigationStore((state) => state.pathname);
-  const go = useNavigationStore((state) => state.go);
-  const themeMode = useAppPreferencesStore((state) => state.themeMode);
-  const { t } = useTranslation();
+  const pathname = useNavigationStore((state) => state.pathname)
+  const go = useNavigationStore((state) => state.go)
+  const themeMode = useAppPreferencesStore((state) => state.themeMode)
+  const { t } = useTranslation()
 
   return (
     <Layout className="manage-layout">
@@ -58,5 +54,5 @@ export const ManageLayoutPage = () => {
         <Outlet />
       </Content>
     </Layout>
-  );
-};
+  )
+}

@@ -1,19 +1,19 @@
-import { Input, Modal, message } from 'antd';
-import { useTranslation } from '../../i18n';
-import type { ResourceItem } from '../../types';
+import { Input, Modal, message } from 'antd'
+import { useTranslation } from '../../i18n'
+import type { ResourceItem } from '../../types'
 
 type Props = {
-  createName: string;
-  editing: ResourceItem | null;
-  isCreateOpen: boolean;
-  renameValue: string;
-  onCloseCreate: () => void;
-  onConfirmCreate: () => Promise<void>;
-  onConfirmRename: () => Promise<void>;
-  onCreateNameChange: (value: string) => void;
-  onRenameCancel: () => void;
-  onRenameValueChange: (value: string) => void;
-};
+  createName: string
+  editing: ResourceItem | null
+  isCreateOpen: boolean
+  renameValue: string
+  onCloseCreate: () => void
+  onConfirmCreate: () => Promise<void>
+  onConfirmRename: () => Promise<void>
+  onCreateNameChange: (value: string) => void
+  onRenameCancel: () => void
+  onRenameValueChange: (value: string) => void
+}
 
 export const ReportResourceModals = ({
   createName,
@@ -27,7 +27,7 @@ export const ReportResourceModals = ({
   onRenameCancel,
   onRenameValueChange,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <>
@@ -36,29 +36,18 @@ export const ReportResourceModals = ({
         title={t('reports.createTitle')}
         onOk={async () => {
           if (!createName.trim()) {
-            message.warning(t('reports.nameRequired'));
-            return;
+            message.warning(t('reports.nameRequired'))
+            return
           }
-          await onConfirmCreate();
+          await onConfirmCreate()
         }}
         onCancel={onCloseCreate}
       >
-        <Input
-          value={createName}
-          onChange={(event) => onCreateNameChange(event.target.value)}
-        />
+        <Input value={createName} onChange={(event) => onCreateNameChange(event.target.value)} />
       </Modal>
-      <Modal
-        open={!!editing}
-        title={t('reports.renameTitle')}
-        onOk={onConfirmRename}
-        onCancel={onRenameCancel}
-      >
-        <Input
-          value={renameValue}
-          onChange={(event) => onRenameValueChange(event.target.value)}
-        />
+      <Modal open={!!editing} title={t('reports.renameTitle')} onOk={onConfirmRename} onCancel={onRenameCancel}>
+        <Input value={renameValue} onChange={(event) => onRenameValueChange(event.target.value)} />
       </Modal>
     </>
-  );
-};
+  )
+}

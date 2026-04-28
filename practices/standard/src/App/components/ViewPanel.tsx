@@ -1,18 +1,18 @@
-import { Empty, Flex, Space, Spin, Typography, theme } from 'antd';
-import { VSeedRender } from 'src/components/Render';
-import { useConfiguredVSeed, useVBIBuilder } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
+import { Empty, Flex, Space, Spin, Typography, theme } from 'antd'
+import { VSeedRender } from 'src/components/Render'
+import { useConfiguredVSeed, useVBIBuilder } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
 
 export const ViewPanel = () => {
-  const vseed = useVBIStore((state) => state.vseed);
-  const configuredVSeed = useConfiguredVSeed(vseed);
-  const loading = useVBIStore((state) => state.loading);
-  const builder = useVBIStore((state) => state.builder);
-  const isEmptyDsl = builder.isEmpty();
-  const { token } = theme.useToken();
-  const { theme: themeMode } = useVBIBuilder(builder);
-  const { t } = useTranslation();
+  const vseed = useVBIStore((state) => state.vseed)
+  const configuredVSeed = useConfiguredVSeed(vseed)
+  const loading = useVBIStore((state) => state.loading)
+  const builder = useVBIStore((state) => state.builder)
+  const isEmptyDsl = builder.isEmpty()
+  const { token } = theme.useToken()
+  const { theme: themeMode } = useVBIBuilder(builder)
+  const { t } = useTranslation()
 
   return (
     <div className="demo-app-view-shell">
@@ -45,12 +45,8 @@ export const ViewPanel = () => {
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 description={
                   <Space orientation="vertical" size={2}>
-                    <Typography.Text strong>
-                      {t('appEmptyTitle')}
-                    </Typography.Text>
-                    <Typography.Text type="secondary">
-                      {t('appEmptyDescription')}
-                    </Typography.Text>
+                    <Typography.Text strong>{t('appEmptyTitle')}</Typography.Text>
+                    <Typography.Text type="secondary">{t('appEmptyDescription')}</Typography.Text>
                   </Space>
                 }
               />
@@ -63,5 +59,5 @@ export const ViewPanel = () => {
         </div>
       </Spin>
     </div>
-  );
-};
+  )
+}

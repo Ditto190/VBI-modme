@@ -1,19 +1,19 @@
-import { Button, Popconfirm, Space } from 'antd';
-import type { TableProps } from 'antd';
-import { useMemo } from 'react';
-import type { AppLocale, Translate } from '../../i18n';
-import type { ResourceItem } from '../../types';
+import { Button, Popconfirm, Space } from 'antd'
+import type { TableProps } from 'antd'
+import { useMemo } from 'react'
+import type { AppLocale, Translate } from '../../i18n'
+import type { ResourceItem } from '../../types'
 
 type ResourceColumnOptions = {
-  deleteTitle: string;
-  fallbackName: string;
-  locale: AppLocale;
-  onEdit?: (id: string) => void | Promise<void>;
-  onOpen?: (id: string) => void;
-  onRemove: (id: string) => Promise<void>;
-  onRename?: (item: ResourceItem) => void;
-  t: Translate;
-};
+  deleteTitle: string
+  fallbackName: string
+  locale: AppLocale
+  onEdit?: (id: string) => void | Promise<void>
+  onOpen?: (id: string) => void
+  onRemove: (id: string) => Promise<void>
+  onRename?: (item: ResourceItem) => void
+  t: Translate
+}
 
 export const createResourceColumns = ({
   deleteTitle,
@@ -47,19 +47,15 @@ export const createResourceColumns = ({
             {t('common.open')}
           </Button>
         ) : null}
-        {onEdit ? (
-          <Button onClick={() => onEdit(record.id)}>{t('common.edit')}</Button>
-        ) : null}
-        {onRename ? (
-          <Button onClick={() => onRename(record)}>{t('common.rename')}</Button>
-        ) : null}
+        {onEdit ? <Button onClick={() => onEdit(record.id)}>{t('common.edit')}</Button> : null}
+        {onRename ? <Button onClick={() => onRename(record)}>{t('common.rename')}</Button> : null}
         <Popconfirm title={deleteTitle} onConfirm={() => onRemove(record.id)}>
           <Button danger>{t('common.delete')}</Button>
         </Popconfirm>
       </Space>
     ),
   },
-];
+]
 
 export const useResourceColumns = ({
   deleteTitle,
@@ -84,4 +80,4 @@ export const useResourceColumns = ({
         t,
       }),
     [deleteTitle, fallbackName, locale, onEdit, onOpen, onRemove, onRename, t],
-  );
+  )

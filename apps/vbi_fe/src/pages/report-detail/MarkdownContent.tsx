@@ -1,9 +1,9 @@
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 type MarkdownContentProps = {
-  content: string;
-};
+  content: string
+}
 
 export const MarkdownContent = ({ content }: MarkdownContentProps) => (
   <div className="report-detail-markdown">
@@ -20,4 +20,4 @@ export const MarkdownContent = ({ content }: MarkdownContentProps) => (
       {content}
     </ReactMarkdown>
   </div>
-);
+)

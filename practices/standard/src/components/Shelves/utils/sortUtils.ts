@@ -1,33 +1,30 @@
-import type { VBISort } from '@visactor/vbi';
-import type { Translate } from 'src/i18n';
+import type { VBISort } from '@visactor/vbi'
+import type { Translate } from 'src/i18n'
 
 export const getSortMenuSelectedKeys = (sort?: VBISort) => {
   if (!sort) {
-    return [];
+    return []
   }
 
-  return [`sort:${sort.order}`];
-};
+  return [`sort:${sort.order}`]
+}
 
-export const formatSortMenuSummary = (
-  sort: VBISort | undefined,
-  t: Translate,
-) => {
+export const formatSortMenuSummary = (sort: VBISort | undefined, t: Translate) => {
   if (!sort) {
-    return undefined;
+    return undefined
   }
 
   if (sort.order === 'asc') {
-    return t('shelvesSortAsc');
+    return t('shelvesSortAsc')
   }
 
-  return t('shelvesSortDesc');
-};
+  return t('shelvesSortDesc')
+}
 
 export const formatSortDisplaySuffix = (sort?: VBISort) => {
   if (!sort) {
-    return '';
+    return ''
   }
 
-  return sort.order === 'asc' ? ' ↑' : ' ↓';
-};
+  return sort.order === 'asc' ? ' ↑' : ' ↓'
+}

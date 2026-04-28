@@ -1,76 +1,62 @@
-import { InboxOutlined } from '@ant-design/icons';
-import type { DatasetColumn } from '@visactor/vquery';
-import {
-  Button,
-  Input,
-  message,
-  Modal,
-  Select,
-  Space,
-  Table,
-  Typography,
-  Upload,
-} from 'antd';
-import React, { useState } from 'react';
-import { useTranslation } from 'src/i18n';
-import { inferSchema, rowsToDataset } from 'src/utils/dataset';
-import type { LocalRow } from 'src/utils/localConnector';
-import { parseCsv } from 'src/utils/parseCsv';
+import { InboxOutlined } from '@ant-design/icons'
+import type { DatasetColumn } from '@visactor/vquery'
+import { Button, Input, message, Modal, Select, Space, Table, Typography, Upload } from 'antd'
+import React, { useState } from 'react'
+import { useTranslation } from 'src/i18n'
+import { inferSchema, rowsToDataset } from 'src/utils/dataset'
+import type { LocalRow } from 'src/utils/localConnector'
+import { parseCsv } from 'src/utils/parseCsv'
 
-const { Dragger } = Upload;
-const { Text } = Typography;
+const { Dragger } = Upload
+const { Text } = Typography
 
 interface CSVModalProps {
-  open: boolean;
-  onCancel: () => void;
-  onConfirm: (data: LocalRow[], schema: DatasetColumn[]) => void;
+  open: boolean
+  onCancel: () => void
+  onConfirm: (data: LocalRow[], schema: DatasetColumn[]) => void
 }
 
-export const CSVModal: React.FC<CSVModalProps> = ({
-  open,
-  onCancel,
-  onConfirm,
-}) => {
-  const { t } = useTranslation();
-  const [step, setStep] = useState<1 | 2>(1);
-  const [headers, setHeaders] = useState<string[]>([]);
-  const [rawRows, setRawRows] = useState<string[][]>([]);
-  const [schema, setSchema] = useState<DatasetColumn[]>([]);
+export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm }) => {
+  const { t } = useTranslation()
+  const [step, setStep] = useState<1 | 2>(1)
+  const [headers, setHeaders] = useState<string[]>([])
+  const [rawRows, setRawRows] = useState<string[][]>([])
+  const [schema, setSchema] = useState<DatasetColumn[]>([])
 
   const handleUpload = async (file: File) => {
     try {
-      const text = await file.text();
-      const [headerRow = [], ...dataRows] = parseCsv(text);
+      const text = await file.text()
+      const [headerRow = [], ...dataRows] = parseCsv(text)
 
       if (headerRow.length === 0) {
-        message.error(t('csvModalErrorEmpty'));
-        return false;
+        message.error(t('csvModalErrorEmpty'))
+        return false
       }
 
-      setHeaders(headerRow);
-      setRawRows(dataRows);
-      setSchema(inferSchema(headerRow, dataRows));
-      setStep(2);
+      setHeaders(headerRow)
+      setRawRows(dataRows)
+      setSchema(inferSchema(headerRow, dataRows))
+      setStep(2)
     } catch (error) {
-      console.error('Failed to parse CSV:', error);
-      message.error(t('csvModalErrorParse'));
+      console.error('Failed to parse CSV:', error)
+      message.error(t('csvModalErrorParse'))
     }
-    return false; // Prevent auto upload
-  };
+    return false // Prevent auto upload
+  }
 
   const handleConfirm = () => {
-    const data = rowsToDataset(headers, rawRows, schema);
-    onConfirm(data, schema);
-    handleReset();
-  };
+    const data = rowsToDataset(headers, rawRows, schema)
+    onConfirm(data, schema)
+    handleReset()
+  }
 
   const handleReset = () => {
-    setStep(1);
-    setHeaders([]);
-    setRawRows([]);
-    setSchema([]);
-    onCancel();
-  };
+    setStep(1)
+    setHeaders([])
+    setRawRows([])
+    setSchema([])
+    onCancel()
+  }
 
   const columns = [
     {
@@ -87,9 +73,9 @@ export const CSVModal: React.FC<CSVModalProps> = ({
         <Input
           value={text}
           onChange={(e) => {
-            const newSchema = [...schema];
-            newSchema[index].name = e.target.value;
-            setSchema(newSchema);
+            const newSchema = [...schema]
+            newSchema[index].name = e.target.value
+            setSchema(newSchema)
           }}
         />
       ),
@@ -103,9 +89,9 @@ export const CSVModal: React.FC<CSVModalProps> = ({
           value={text}
           style={{ width: 120 }}
           onChange={(value) => {
-            const newSchema = [...schema];
-            newSchema[index].type = value as DatasetColumn['type'];
-            setSchema(newSchema);
+            const newSchema = [...schema]
+            newSchema[index].type = value as DatasetColumn['type']
+            setSchema(newSchema)
           }}
           options={[
             { label: t('csvModalTypeString'), value: 'string' },
@@ -117,7 +103,7 @@ export const CSVModal: React.FC<CSVModalProps> = ({
         />
       ),
     },
-  ];
+  ]
 
   return (
     <Modal
@@ -137,12 +123,7 @@ export const CSVModal: React.FC<CSVModalProps> = ({
       }
     >
       {step === 1 ? (
-        <Dragger
-          multiple={false}
-          beforeUpload={handleUpload}
-          accept=".csv"
-          showUploadList={false}
-        >
+        <Dragger multiple={false} beforeUpload={handleUpload} accept=".csv" showUploadList={false}>
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
@@ -150,14 +131,8 @@ export const CSVModal: React.FC<CSVModalProps> = ({
           <p className="ant-upload-hint">{t('csvModalDraggerHint')}</p>
         </Dragger>
       ) : (
-        <Table
-          dataSource={schema}
-          columns={columns}
-          rowKey="name"
-          pagination={false}
-          scroll={{ y: 400 }}
-        />
+        <Table dataSource={schema} columns={columns} rowKey="name" pagination={false} scroll={{ y: 400 }} />
       )}
     </Modal>
-  );
-};
+  )
+}

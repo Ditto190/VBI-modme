@@ -1,1 +1,1 @@
-export * from './useFilterRootOperator';
+export * from './useFilterRootOperator'

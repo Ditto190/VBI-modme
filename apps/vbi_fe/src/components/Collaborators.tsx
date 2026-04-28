@@ -1,8 +1,8 @@
-import { Avatar, Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
-import { HocuspocusProvider } from '@hocuspocus/provider';
-import { funnel } from 'remeda';
-import { CollaboratorCursorOverlay } from './CollaboratorCursorOverlay';
+import { Avatar, Tooltip } from 'antd'
+import { useEffect, useState } from 'react'
+import { HocuspocusProvider } from '@hocuspocus/provider'
+import { funnel } from 'remeda'
+import { CollaboratorCursorOverlay } from './CollaboratorCursorOverlay'
 import {
   getAvatarUsers,
   getCollaboratorClients,
@@ -10,25 +10,25 @@ import {
   getCursorUsers,
   mergeLocalCursor,
   type CollaboratorClient,
-} from './collaborators-state';
+} from './collaborators-state'
 
 type CollaboratorsProps = {
-  provider: HocuspocusProvider;
-};
+  provider: HocuspocusProvider
+}
 
 export const Collaborators = ({ provider }: CollaboratorsProps) => {
-  const [clients, setClients] = useState<CollaboratorClient[]>([]);
-  const awareness = provider.awareness;
+  const [clients, setClients] = useState<CollaboratorClient[]>([])
+  const awareness = provider.awareness
 
   useEffect(() => {
-    if (!awareness) return;
+    if (!awareness) return
 
     const mouseMoveFunnel = funnel<[MouseEvent], MouseEvent>(
       (event) => {
-        const user = awareness.getLocalState()?.user;
-        const nextUser = mergeLocalCursor(user, getCursorPosition(event));
+        const user = awareness.getLocalState()?.user
+        const nextUser = mergeLocalCursor(user, getCursorPosition(event))
         if (nextUser) {
-          awareness.setLocalStateField('user', nextUser);
+          awareness.setLocalStateField('user', nextUser)
         }
       },
       {
@@ -36,25 +36,25 @@ export const Collaborators = ({ provider }: CollaboratorsProps) => {
         triggerAt: 'both',
         reducer: (_prev, event) => event,
       },
-    );
+    )
 
     const updateClients = () => {
-      setClients(getCollaboratorClients(awareness.getStates()));
-    };
-    const handleMouseMove = (event: MouseEvent) => mouseMoveFunnel.call(event);
+      setClients(getCollaboratorClients(awareness.getStates()))
+    }
+    const handleMouseMove = (event: MouseEvent) => mouseMoveFunnel.call(event)
 
-    updateClients();
-    window.addEventListener('mousemove', handleMouseMove);
-    awareness.on('change', updateClients);
+    updateClients()
+    window.addEventListener('mousemove', handleMouseMove)
+    awareness.on('change', updateClients)
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      awareness.off('change', updateClients);
-      mouseMoveFunnel.cancel();
-    };
-  }, [awareness]);
+      window.removeEventListener('mousemove', handleMouseMove)
+      awareness.off('change', updateClients)
+      mouseMoveFunnel.cancel()
+    }
+  }, [awareness])
 
-  if (!awareness) return null;
+  if (!awareness) return null
 
   return (
     <>
@@ -75,17 +75,13 @@ export const Collaborators = ({ provider }: CollaboratorsProps) => {
           >
             {getAvatarUsers(clients).map((user) => (
               <Tooltip title={user.name} placement="top" key={user.id}>
-                <Avatar style={{ backgroundColor: user.color }}>
-                  {user.name[0]?.toUpperCase()}
-                </Avatar>
+                <Avatar style={{ backgroundColor: user.color }}>{user.name[0]?.toUpperCase()}</Avatar>
               </Tooltip>
             ))}
           </Avatar.Group>
         </div>
       </div>
-      <CollaboratorCursorOverlay
-        users={getCursorUsers(clients, awareness.clientID)}
-      />
+      <CollaboratorCursorOverlay users={getCursorUsers(clients, awareness.clientID)} />
     </>
-  );
-};
+  )
+}

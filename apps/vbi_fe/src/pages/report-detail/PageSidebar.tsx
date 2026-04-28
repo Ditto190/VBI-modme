@@ -1,18 +1,18 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { useShallow } from 'zustand/shallow';
-import { useTranslation } from '../../i18n';
-import { useReportBuilderModel } from '../../models';
-import { useReportDetailStore } from '../../stores/report-detail.store';
-import { PageSidebarItem } from './PageSidebarItem';
+import { PlusOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
+import { useShallow } from 'zustand/shallow'
+import { useTranslation } from '../../i18n'
+import { useReportBuilderModel } from '../../models'
+import { useReportDetailStore } from '../../stores/report-detail.store'
+import { PageSidebarItem } from './PageSidebarItem'
 
 const viewModeOptions = [
   { key: 'vertical', label: 'reportDetail.viewVertical' },
   { key: 'horizontal', label: 'reportDetail.viewHorizontal' },
-] as const;
+] as const
 
 export const PageSidebar = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const {
     activePageId,
     addChart,
@@ -41,12 +41,10 @@ export const PageSidebar = () => {
       setViewMode: state.setViewMode,
       viewMode: state.viewMode,
     })),
-  );
+  )
 
-  const reportSession = useReportBuilderModel(
-    (state) => state.sessions[reportId],
-  );
-  const pages = reportSession?.builder?.build().pages ?? [];
+  const reportSession = useReportBuilderModel((state) => state.sessions[reportId])
+  const pages = reportSession?.builder?.build().pages ?? []
 
   return (
     <section className="report-detail-filmstrip">
@@ -94,5 +92,5 @@ export const PageSidebar = () => {
         </Button>
       </div>
     </section>
-  );
-};
+  )
+}

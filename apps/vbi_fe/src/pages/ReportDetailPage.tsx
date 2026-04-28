@@ -1,49 +1,46 @@
-import { ArrowLeftOutlined, FileTextOutlined } from '@ant-design/icons';
-import { Button, Layout, Spin } from 'antd';
-import { memo, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { useShallow } from 'zustand/shallow';
-import { Collaborators } from '../components/Collaborators';
-import { useStoreLifecycle } from '../hooks/useStoreLifecycle';
-import { useTranslation } from '../i18n';
-import { useReportBuilderModel } from '../models';
-import { useNavigationStore } from '../stores/navigation.store';
-import { useReportDetailStore } from '../stores/report-detail.store';
-import { getSessionUserName } from '../utils/collaboration';
-import { ReportWorkspace } from './report-detail/ReportWorkspace';
-import './report-detail/report-detail.css';
+import { ArrowLeftOutlined, FileTextOutlined } from '@ant-design/icons'
+import { Button, Layout, Spin } from 'antd'
+import { memo, useCallback } from 'react'
+import { useParams } from 'react-router-dom'
+import { useShallow } from 'zustand/shallow'
+import { Collaborators } from '../components/Collaborators'
+import { useStoreLifecycle } from '../hooks/useStoreLifecycle'
+import { useTranslation } from '../i18n'
+import { useReportBuilderModel } from '../models'
+import { useNavigationStore } from '../stores/navigation.store'
+import { useReportDetailStore } from '../stores/report-detail.store'
+import { getSessionUserName } from '../utils/collaboration'
+import { ReportWorkspace } from './report-detail/ReportWorkspace'
+import './report-detail/report-detail.css'
 
-const { Header, Content } = Layout;
-const userName = getSessionUserName();
+const { Header, Content } = Layout
+const userName = getSessionUserName()
 
 export const ReportDetailPage = memo(() => {
-  const { t } = useTranslation();
-  const { id = '' } = useParams();
-  const go = useNavigationStore((state) => state.go);
+  const { t } = useTranslation()
+  const { id = '' } = useParams()
+  const go = useNavigationStore((state) => state.go)
   const { bootstrap, dispose } = useReportDetailStore(
     useShallow((state) => ({
       bootstrap: state.bootstrap,
       dispose: state.dispose,
     })),
-  );
+  )
   const reportSession = useReportBuilderModel(
     useShallow((state) => {
-      const session = state.sessions[id];
+      const session = state.sessions[id]
       return {
         builder: session?.builder ?? null,
         provider: session?.provider ?? null,
-      };
+      }
     }),
-  );
+  )
 
-  const bootReport = useCallback(
-    () => bootstrap(id, userName),
-    [bootstrap, id],
-  );
-  useStoreLifecycle(bootReport, dispose);
+  const bootReport = useCallback(() => bootstrap(id, userName), [bootstrap, id])
+  useStoreLifecycle(bootReport, dispose)
 
-  if (!id) return <div>{t('reportDetail.invalidId')}</div>;
-  if (!reportSession.builder) return <Spin fullscreen size="large" />;
+  if (!id) return <div>{t('reportDetail.invalidId')}</div>
+  if (!reportSession.builder) return <Spin fullscreen size="large" />
 
   return (
     <Layout className="report-detail-layout">
@@ -68,14 +65,12 @@ export const ReportDetailPage = memo(() => {
           </div>
         </div>
         <div className="report-detail-app-meta">
-          {reportSession.provider ? (
-            <Collaborators provider={reportSession.provider} />
-          ) : null}
+          {reportSession.provider ? <Collaborators provider={reportSession.provider} /> : null}
         </div>
       </Header>
       <Content className="report-detail-content">
         <ReportWorkspace />
       </Content>
     </Layout>
-  );
-});
+  )
+})

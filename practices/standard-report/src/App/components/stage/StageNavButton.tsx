@@ -1,19 +1,14 @@
-import type { ReactNode } from 'react';
-import { Button } from 'antd';
+import type { ReactNode } from 'react'
+import { Button } from 'antd'
 
 type StageNavButtonProps = {
-  children: ReactNode;
-  disabled: boolean;
-  label: string;
-  onClick: () => void;
-};
+  children: ReactNode
+  disabled: boolean
+  label: string
+  onClick: () => void
+}
 
-export const StageNavButton = ({
-  children,
-  disabled,
-  label,
-  onClick,
-}: StageNavButtonProps) => {
+export const StageNavButton = ({ children, disabled, label, onClick }: StageNavButtonProps) => {
   return (
     <Button
       className="standard-report-stage-nav"
@@ -27,5 +22,5 @@ export const StageNavButton = ({
     >
       {children}
     </Button>
-  );
-};
+  )
+}

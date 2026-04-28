@@ -1,1 +1,1 @@
-export { DimensionShelf } from './shelves/DimensionShelf';
+export { DimensionShelf } from './shelves/DimensionShelf'

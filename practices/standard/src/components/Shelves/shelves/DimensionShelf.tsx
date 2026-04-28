@@ -1,17 +1,13 @@
-import { theme } from 'antd';
-import type { MenuProps } from 'antd';
-import { useMemo } from 'react';
-import { useVBIBuilder, useVBIDimensions, useVBISchemaFields } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
-import type { VBIDimension } from '@visactor/vbi';
-import { getFieldRoleBySchemaType } from 'src/utils/fieldRole';
-import {
-  FieldShelf,
-  SHELF_MENU_ITEM_STYLE,
-  type FieldShelfTone,
-} from '../common/FieldShelf';
-import { openShelfRenameModal } from '../common/openShelfRenameModal';
+import { theme } from 'antd'
+import type { MenuProps } from 'antd'
+import { useMemo } from 'react'
+import { useVBIBuilder, useVBIDimensions, useVBISchemaFields } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
+import type { VBIDimension } from '@visactor/vbi'
+import { getFieldRoleBySchemaType } from 'src/utils/fieldRole'
+import { FieldShelf, SHELF_MENU_ITEM_STYLE, type FieldShelfTone } from '../common/FieldShelf'
+import { openShelfRenameModal } from '../common/openShelfRenameModal'
 import {
   formatDimensionDateAggregate,
   getDefaultDimensionDateAggregate,
@@ -19,29 +15,17 @@ import {
   isDateDimensionField,
   normalizeDimensionDateAggregate,
   type DimensionDateAggregate,
-} from '../utils/dimensionDateAggregateUtils';
-import {
-  buildShelfMenuLabel,
-  SHELF_MENU_SUBMENU_OFFSET,
-} from '../utils/menuItemUtils';
-import { getDimensionMenuSelectedKeys } from '../utils/menuSelectionUtils';
-import {
-  formatSortDisplaySuffix,
-  formatSortMenuSummary,
-} from '../utils/sortUtils';
-import {
-  reorderYArrayByInsertIndex,
-  type YArrayLike,
-} from '../utils/reorderUtils';
+} from '../utils/dimensionDateAggregateUtils'
+import { buildShelfMenuLabel, SHELF_MENU_SUBMENU_OFFSET } from '../utils/menuItemUtils'
+import { getDimensionMenuSelectedKeys } from '../utils/menuSelectionUtils'
+import { formatSortDisplaySuffix, formatSortMenuSummary } from '../utils/sortUtils'
+import { reorderYArrayByInsertIndex, type YArrayLike } from '../utils/reorderUtils'
 
 const DELETE_DIVIDER_STYLE: React.CSSProperties = {
   marginBlock: 0,
-};
+}
 
-const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<
-  NonNullable<VBIDimension['encoding']>,
-  string
-> = {
+const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIDimension['encoding']>, string> = {
   xAxis: 'shelvesDimensionEncodingXAxis',
   yAxis: 'shelvesDimensionEncodingYAxis',
   angle: 'shelvesDimensionEncodingAngle',
@@ -53,31 +37,20 @@ const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<
   column: 'shelvesDimensionEncodingColumn',
   player: 'shelvesDimensionEncodingPlayer',
   hierarchy: 'shelvesDimensionEncodingHierarchy',
-};
+}
 
 export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const { token } = theme.useToken();
-  const { theme: themeMode } = useVBIBuilder(builder);
-  const { t } = useTranslation();
-  const {
-    dimensions,
-    addDimension,
-    removeDimension,
-    updateDimension,
-    findDimension,
-  } = useVBIDimensions(builder);
-  const { fieldTypeMap } = useVBISchemaFields(builder);
+  const builder = useVBIStore((state) => state.builder)
+  const { token } = theme.useToken()
+  const { theme: themeMode } = useVBIBuilder(builder)
+  const { t } = useTranslation()
+  const { dimensions, addDimension, removeDimension, updateDimension, findDimension } = useVBIDimensions(builder)
+  const { fieldTypeMap } = useVBISchemaFields(builder)
   const dimensionShelfTone = useMemo<FieldShelfTone>(() => {
-    const accent = themeMode === 'dark' ? '#91caff' : '#0958d9';
-    const border =
-      themeMode === 'dark' ? 'rgba(145, 202, 255, 0.34)' : '#b7d9ff';
-    const hoverBackground =
-      themeMode === 'dark' ? 'rgba(32, 79, 183, 0.18)' : '#eef5ff';
-    const iconBackground =
-      themeMode === 'dark'
-        ? 'rgba(145, 202, 255, 0.14)'
-        : 'rgba(22, 119, 255, 0.12)';
+    const accent = themeMode === 'dark' ? '#91caff' : '#0958d9'
+    const border = themeMode === 'dark' ? 'rgba(145, 202, 255, 0.34)' : '#b7d9ff'
+    const hoverBackground = themeMode === 'dark' ? 'rgba(32, 79, 183, 0.18)' : '#eef5ff'
+    const iconBackground = themeMode === 'dark' ? 'rgba(145, 202, 255, 0.14)' : 'rgba(22, 119, 255, 0.12)'
 
     return {
       trackBackground: token.colorBgContainer,
@@ -93,29 +66,27 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
       iconBackground,
       iconHoverBackground: hoverBackground,
       iconColor: accent,
-    };
-  }, [themeMode, token]);
+    }
+  }, [themeMode, token])
 
   const isDateField = (fieldName: string) => {
-    return isDateDimensionField(fieldTypeMap[fieldName]);
-  };
+    return isDateDimensionField(fieldTypeMap[fieldName])
+  }
 
   const addFieldAt = (params: { fieldName: string; insertIndex: number }) => {
-    const { fieldName, insertIndex } = params;
-    const originalLength = dimensions.length;
+    const { fieldName, insertIndex } = params
+    const originalLength = dimensions.length
 
     addDimension(fieldName, (node) => {
       if (isDateField(fieldName)) {
-        node.setAggregate(getDefaultDimensionDateAggregate());
+        node.setAggregate(getDefaultDimensionDateAggregate())
       }
-    });
+    })
 
     if (insertIndex < originalLength) {
-      const yDimensions = builder.dsl.get('dimensions') as
-        | YArrayLike
-        | undefined;
+      const yDimensions = builder.dsl.get('dimensions') as YArrayLike | undefined
       if (!yDimensions) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
@@ -123,90 +94,71 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
           yArray: yDimensions,
           dragIndex: originalLength,
           insertIndex,
-        });
-      });
+        })
+      })
     }
-  };
+  }
 
   const renameDimension = (id: string, alias: string) => {
     updateDimension(id, (node) => {
-      node.setAlias(alias);
-    });
-  };
+      node.setAlias(alias)
+    })
+  }
 
-  const changeAggregate = (
-    id: string,
-    aggregate: DimensionDateAggregate | undefined,
-  ) => {
+  const changeAggregate = (id: string, aggregate: DimensionDateAggregate | undefined) => {
     if (!aggregate) {
-      const dimensionNode = findDimension(id) as
-        | { clearAggregate?: () => unknown }
-        | undefined;
+      const dimensionNode = findDimension(id) as { clearAggregate?: () => unknown } | undefined
 
       if (typeof dimensionNode?.clearAggregate === 'function') {
         builder.doc.transact(() => {
-          dimensionNode.clearAggregate?.();
-        });
-        return;
+          dimensionNode.clearAggregate?.()
+        })
+        return
       }
 
-      const targetIndex = dimensions.findIndex(
-        (dimension) => dimension.id === id,
-      );
-      const yDimensions = builder.dsl.get('dimensions') as
-        | YArrayLike<{ delete: (key: string) => void }>
-        | undefined;
-      const yDimension = yDimensions?.get(targetIndex);
+      const targetIndex = dimensions.findIndex((dimension) => dimension.id === id)
+      const yDimensions = builder.dsl.get('dimensions') as YArrayLike<{ delete: (key: string) => void }> | undefined
+      const yDimension = yDimensions?.get(targetIndex)
       if (!yDimension) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
-        yDimension.delete('aggregate');
-      });
-      return;
+        yDimension.delete('aggregate')
+      })
+      return
     }
 
     updateDimension(id, (node) => {
-      node.setAggregate(aggregate);
-    });
-  };
+      node.setAggregate(aggregate)
+    })
+  }
 
-  const changeEncoding = (
-    id: string,
-    encoding: NonNullable<VBIDimension['encoding']>,
-  ) => {
+  const changeEncoding = (id: string, encoding: NonNullable<VBIDimension['encoding']>) => {
     updateDimension(id, (node) => {
-      node.setEncoding(encoding);
-    });
-  };
+      node.setEncoding(encoding)
+    })
+  }
 
   const changeSort = (id: string, sort: VBIDimension['sort'] | undefined) => {
     updateDimension(id, (node) => {
       if (sort) {
-        node.setSort(sort);
-        return;
+        node.setSort(sort)
+        return
       }
 
-      node.clearSort();
-    });
-  };
+      node.clearSort()
+    })
+  }
 
-  const buildMenuItems = (
-    dimension: (typeof dimensions)[number],
-  ): MenuProps['items'] => {
-    const items: NonNullable<MenuProps['items']> = [];
-    const supportedEncodings =
-      builder.chartType.getSupportedDimensionEncodings();
-    const dimensionIndex = dimensions.findIndex(
-      (item) => item.id === dimension.id,
-    );
+  const buildMenuItems = (dimension: (typeof dimensions)[number]): MenuProps['items'] => {
+    const items: NonNullable<MenuProps['items']> = []
+    const supportedEncodings = builder.chartType.getSupportedDimensionEncodings()
+    const dimensionIndex = dimensions.findIndex((item) => item.id === dimension.id)
     const recommendedEncoding =
       dimensionIndex >= 0
-        ? builder.chartType.getRecommendedDimensionEncodings(dimensions.length)[
-            dimensionIndex
-          ]
-        : undefined;
+        ? builder.chartType.getRecommendedDimensionEncodings(dimensions.length)[dimensionIndex]
+        : undefined
 
     if (isDateField(dimension.field)) {
       items.push({
@@ -225,7 +177,7 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
             style: SHELF_MENU_ITEM_STYLE,
           },
         ],
-      });
+      })
     }
 
     items.push({
@@ -233,26 +185,19 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
       label: t('shelvesMenuEncoding'),
       popupOffset: SHELF_MENU_SUBMENU_OFFSET,
       children: supportedEncodings.map((encoding) => {
-        const recommendedSuffix =
-          recommendedEncoding === encoding ? t('commonStatusRecommended') : '';
+        const recommendedSuffix = recommendedEncoding === encoding ? t('commonStatusRecommended') : ''
 
         return {
           key: `encoding:${encoding}`,
-          label: buildShelfMenuLabel(
-            t(DIMENSION_ENCODING_LABEL_KEY_MAP[encoding]),
-            recommendedSuffix,
-          ),
+          label: buildShelfMenuLabel(t(DIMENSION_ENCODING_LABEL_KEY_MAP[encoding]), recommendedSuffix),
           style: SHELF_MENU_ITEM_STYLE,
-        };
+        }
       }),
-    });
+    })
 
     items.push({
       key: 'sort',
-      label: buildShelfMenuLabel(
-        t('shelvesMenuSort'),
-        formatSortMenuSummary(dimension.sort, t),
-      ),
+      label: buildShelfMenuLabel(t('shelvesMenuSort'), formatSortMenuSummary(dimension.sort, t)),
       popupOffset: SHELF_MENU_SUBMENU_OFFSET,
       children: [
         {
@@ -271,7 +216,7 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
           style: SHELF_MENU_ITEM_STYLE,
         },
       ],
-    });
+    })
 
     items.push(
       {
@@ -285,58 +230,49 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
       },
       {
         key: 'delete',
-        label: (
-          <span style={{ color: '#ff4d4f' }}>{t('shelvesMenuDelete')}</span>
-        ),
+        label: <span style={{ color: '#ff4d4f' }}>{t('shelvesMenuDelete')}</span>,
         style: SHELF_MENU_ITEM_STYLE,
       },
-    );
+    )
 
-    return items;
-  };
+    return items
+  }
 
-  const handleMenuClick = (
-    dimension: (typeof dimensions)[number],
-    key: string,
-  ) => {
+  const handleMenuClick = (dimension: (typeof dimensions)[number], key: string) => {
     if (key.startsWith('aggregate:')) {
-      const aggregateKey = key.replace('aggregate:', '');
+      const aggregateKey = key.replace('aggregate:', '')
 
       if (aggregateKey === 'none') {
-        changeAggregate(dimension.id, undefined);
-        return;
+        changeAggregate(dimension.id, undefined)
+        return
       }
 
-      const nextAggregate = getDimensionDateAggregateItems(t).find(
-        (item) => item.key === aggregateKey,
-      )?.aggregate;
+      const nextAggregate = getDimensionDateAggregateItems(t).find((item) => item.key === aggregateKey)?.aggregate
 
       if (nextAggregate) {
-        changeAggregate(dimension.id, nextAggregate);
+        changeAggregate(dimension.id, nextAggregate)
       }
-      return;
+      return
     }
 
     if (key.startsWith('sort:')) {
-      const nextSort = key.replace('sort:', '');
+      const nextSort = key.replace('sort:', '')
 
       if (nextSort === 'clear') {
-        changeSort(dimension.id, undefined);
-        return;
+        changeSort(dimension.id, undefined)
+        return
       }
 
       if (nextSort === 'asc' || nextSort === 'desc') {
-        changeSort(dimension.id, { order: nextSort });
+        changeSort(dimension.id, { order: nextSort })
       }
-      return;
+      return
     }
 
     if (key.startsWith('encoding:')) {
-      const nextEncoding = key.replace('encoding:', '') as NonNullable<
-        VBIDimension['encoding']
-      >;
-      changeEncoding(dimension.id, nextEncoding);
-      return;
+      const nextEncoding = key.replace('encoding:', '') as NonNullable<VBIDimension['encoding']>
+      changeEncoding(dimension.id, nextEncoding)
+      return
     }
 
     if (key === 'rename') {
@@ -349,33 +285,28 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
         id: dimension.id,
         currentAlias: dimension.alias || dimension.field,
         onRename: renameDimension,
-      });
-      return;
+      })
+      return
     }
 
     if (key === 'delete') {
-      removeDimension(dimension.id);
+      removeDimension(dimension.id)
     }
-  };
+  }
 
   const getDimensionDisplayLabel = (dimension: (typeof dimensions)[number]) => {
-    const baseLabel = dimension.alias || dimension.field;
+    const baseLabel = dimension.alias || dimension.field
     const aggregate = formatDimensionDateAggregate(
-      normalizeDimensionDateAggregate(
-        dimension.aggregate,
-        fieldTypeMap[dimension.field],
-      ),
+      normalizeDimensionDateAggregate(dimension.aggregate, fieldTypeMap[dimension.field]),
       t,
-    );
+    )
 
     if (!aggregate) {
-      return `${baseLabel}${formatSortDisplaySuffix(dimension.sort)}`;
+      return `${baseLabel}${formatSortDisplaySuffix(dimension.sort)}`
     }
 
-    return `${aggregate}(${baseLabel})${formatSortDisplaySuffix(
-      dimension.sort,
-    )}`;
-  };
+    return `${aggregate}(${baseLabel})${formatSortDisplaySuffix(dimension.sort)}`
+  }
 
   return (
     <FieldShelf
@@ -392,27 +323,23 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
         role: getFieldRoleBySchemaType(fieldTypeMap[item.field]),
       })}
       buildMenuItems={buildMenuItems}
-      getMenuSelectedKeys={(item) =>
-        getDimensionMenuSelectedKeys(item, fieldTypeMap[item.field])
-      }
+      getMenuSelectedKeys={(item) => getDimensionMenuSelectedKeys(item, fieldTypeMap[item.field])}
       onMenuClick={handleMenuClick}
       onRemove={removeDimension}
       onAddFieldAt={(payload, insertIndex) => {
         if (!payload.field) {
-          return;
+          return
         }
 
         addFieldAt({
           fieldName: payload.field,
           insertIndex,
-        });
+        })
       }}
       onReorder={(dragIndex, insertIndex) => {
-        const yDimensions = builder.dsl.get('dimensions') as
-          | YArrayLike
-          | undefined;
+        const yDimensions = builder.dsl.get('dimensions') as YArrayLike | undefined
         if (!yDimensions) {
-          return;
+          return
         }
 
         builder.doc.transact(() => {
@@ -420,9 +347,9 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
             yArray: yDimensions,
             dragIndex,
             insertIndex,
-          });
-        });
+          })
+        })
       }}
     />
-  );
-};
+  )
+}

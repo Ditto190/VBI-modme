@@ -1,1 +1,1 @@
-export { isValidDoc } from './isValidDoc';
+export { isValidDoc } from './isValidDoc'

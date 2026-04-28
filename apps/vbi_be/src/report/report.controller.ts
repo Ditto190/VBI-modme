@@ -1,26 +1,15 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import {
-  ApiDataResponse,
-  ApiErrorResponse,
-} from '../common/swagger/api-response.decorator';
-import { CreateReportDto } from './dto/create-report.dto';
-import { CreateReportPageDto } from './dto/create-report-page.dto';
-import { ReorderReportPagesDto } from './dto/reorder-report-pages.dto';
-import { UpdateReportDto } from './dto/update-report.dto';
-import { UpdateReportPageDto } from './dto/update-report-page.dto';
-import { ReportCollaborationSessionEntity } from './entities/report-collaboration-session.entity';
-import { ReportDetailEntity, ReportEntity } from './entities/report.entity';
-import { ReportSnapshotEntity } from './entities/report-snapshot.entity';
-import { ReportService } from './report.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiDataResponse, ApiErrorResponse } from '../common/swagger/api-response.decorator'
+import { CreateReportDto } from './dto/create-report.dto'
+import { CreateReportPageDto } from './dto/create-report-page.dto'
+import { ReorderReportPagesDto } from './dto/reorder-report-pages.dto'
+import { UpdateReportDto } from './dto/update-report.dto'
+import { UpdateReportPageDto } from './dto/update-report-page.dto'
+import { ReportCollaborationSessionEntity } from './entities/report-collaboration-session.entity'
+import { ReportDetailEntity, ReportEntity } from './entities/report.entity'
+import { ReportSnapshotEntity } from './entities/report-snapshot.entity'
+import { ReportService } from './report.service'
 
 @ApiTags('reports')
 @Controller('reports')
@@ -41,7 +30,7 @@ export class ReportController {
     status: 400,
   })
   create(@Body() dto: CreateReportDto) {
-    return this.reportService.create(dto);
+    return this.reportService.create(dto)
   }
 
   @Get()
@@ -53,7 +42,7 @@ export class ReportController {
     type: ReportEntity,
   })
   findAll() {
-    return this.reportService.findAll();
+    return this.reportService.findAll()
   }
 
   @Get(':id')
@@ -70,7 +59,7 @@ export class ReportController {
     status: 404,
   })
   findOne(@Param('id') id: string) {
-    return this.reportService.findOne(id);
+    return this.reportService.findOne(id)
   }
 
   @Get(':id/collaboration')
@@ -82,7 +71,7 @@ export class ReportController {
     type: ReportCollaborationSessionEntity,
   })
   getCollaborationSession(@Param('id') id: string) {
-    return this.reportService.getCollaborationSession(id);
+    return this.reportService.getCollaborationSession(id)
   }
 
   @Get(':id/snapshot')
@@ -99,7 +88,7 @@ export class ReportController {
     status: 404,
   })
   snapshot(@Param('id') id: string) {
-    return this.reportService.snapshot(id);
+    return this.reportService.snapshot(id)
   }
 
   @Patch(':id')
@@ -122,7 +111,7 @@ export class ReportController {
     status: 400,
   })
   update(@Param('id') id: string, @Body() dto: UpdateReportDto) {
-    return this.reportService.update(id, dto);
+    return this.reportService.update(id, dto)
   }
 
   @Delete(':id')
@@ -139,7 +128,7 @@ export class ReportController {
     status: 404,
   })
   remove(@Param('id') id: string) {
-    return this.reportService.remove(id);
+    return this.reportService.remove(id)
   }
 
   @Post(':id/pages')
@@ -162,7 +151,7 @@ export class ReportController {
     status: 400,
   })
   createPage(@Param('id') id: string, @Body() dto: CreateReportPageDto) {
-    return this.reportService.createPage(id, dto);
+    return this.reportService.createPage(id, dto)
   }
 
   @Patch(':id/pages/reorder')
@@ -185,7 +174,7 @@ export class ReportController {
     status: 400,
   })
   reorderPages(@Param('id') id: string, @Body() dto: ReorderReportPagesDto) {
-    return this.reportService.reorderPages(id, dto);
+    return this.reportService.reorderPages(id, dto)
   }
 
   @Patch(':id/pages/:pageId')
@@ -208,12 +197,8 @@ export class ReportController {
     message: 'Validation failed',
     status: 400,
   })
-  updatePage(
-    @Param('id') id: string,
-    @Param('pageId') pageId: string,
-    @Body() dto: UpdateReportPageDto,
-  ) {
-    return this.reportService.updatePage(id, pageId, dto);
+  updatePage(@Param('id') id: string, @Param('pageId') pageId: string, @Body() dto: UpdateReportPageDto) {
+    return this.reportService.updatePage(id, pageId, dto)
   }
 
   @Delete(':id/pages/:pageId')
@@ -236,6 +221,6 @@ export class ReportController {
     status: 409,
   })
   removePage(@Param('id') id: string, @Param('pageId') pageId: string) {
-    return this.reportService.removePage(id, pageId);
+    return this.reportService.removePage(id, pageId)
   }
 }

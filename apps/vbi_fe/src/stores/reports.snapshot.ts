@@ -1,7 +1,7 @@
-import { useReportsStore } from './reports.store';
+import { useReportsStore } from './reports.store'
 
 export const getReportsSnapshot = () => {
-  const state = useReportsStore.getState();
+  const state = useReportsStore.getState()
   return {
     createName: state.createName,
     editingId: state.editing?.id ?? '',
@@ -12,5 +12,5 @@ export const getReportsSnapshot = () => {
     renameValue: state.renameValue,
     searchText: state.searchText,
     selectedRowKeys: state.selectedRowKeys,
-  };
-};
+  }
+}

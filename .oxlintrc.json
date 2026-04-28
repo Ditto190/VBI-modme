@@ -1,0 +1,55 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "oxc"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2022": true,
+    "jest": true,
+    "vitest": true
+  },
+  "ignorePatterns": [
+    "node_modules/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "**/.turbo/**",
+    "**/*.tsbuildinfo",
+    "apps/website/doc_build/**",
+    "apps/website/scripts/**",
+    "packages/vseed/scripts/**",
+    "**/rslib.config.ts",
+    "**/rstest.config.ts",
+    "**/rstest.setup.ts",
+    "**/vite.config.ts",
+    "**/vite.setup.ts",
+    "**/eslint.config.mjs",
+    "**/tsconfig.*"
+  ],
+  "rules": {
+    "no-console": "off",
+    "typescript/no-explicit-any": "off",
+    "typescript/triple-slash-reference": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "apps/vbi_cli/**/*.ts",
+        "apps/vbi_provider/**/*.ts",
+        "packages/vbi-agent/**/*.ts",
+        "packages/vbi-react/**/*.{ts,tsx}",
+        "packages/vseed/**/*.{ts,tsx}"
+      ],
+      "rules": {
+        "typescript/consistent-type-exports": "error",
+        "typescript/consistent-type-imports": "error"
+      }
+    },
+    {
+      "files": ["packages/vbi-react/**/*.{ts,tsx}", "packages/vseed/**/*.{ts,tsx}"],
+      "rules": {
+        "no-console": "error",
+        "typescript/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+      }
+    }
+  ]
+}

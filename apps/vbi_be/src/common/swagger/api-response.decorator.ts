@@ -1,20 +1,15 @@
-import { applyDecorators, Type } from '@nestjs/common';
-import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger';
+import { applyDecorators, Type } from '@nestjs/common'
+import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger'
 
 type DataResponseOptions = {
-  description: string;
-  isArray?: boolean;
-  status: number;
-  type: Type<unknown>;
-};
+  description: string
+  isArray?: boolean
+  status: number
+  type: Type<unknown>
+}
 
-const getDataSchema = ({
-  isArray,
-  type,
-}: Pick<DataResponseOptions, 'isArray' | 'type'>) =>
-  isArray
-    ? { type: 'array', items: { $ref: getSchemaPath(type) } }
-    : { $ref: getSchemaPath(type) };
+const getDataSchema = ({ isArray, type }: Pick<DataResponseOptions, 'isArray' | 'type'>) =>
+  isArray ? { type: 'array', items: { $ref: getSchemaPath(type) } } : { $ref: getSchemaPath(type) }
 
 export const ApiDataResponse = (options: DataResponseOptions) =>
   applyDecorators(
@@ -31,16 +26,16 @@ export const ApiDataResponse = (options: DataResponseOptions) =>
         },
       },
     }),
-  );
+  )
 
 export const ApiErrorResponse = ({
   description,
   message,
   status,
 }: {
-  description: string;
-  message: string;
-  status: number;
+  description: string
+  message: string
+  status: number
 }) =>
   applyDecorators(
     ApiResponse({
@@ -60,4 +55,4 @@ export const ApiErrorResponse = ({
         },
       },
     }),
-  );
+  )

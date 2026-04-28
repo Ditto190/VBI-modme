@@ -1,8 +1,8 @@
-import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-import { CloseOutlined, DownOutlined } from '@ant-design/icons';
-import { Popover, Typography, theme } from 'antd';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities'
+import { CloseOutlined, DownOutlined } from '@ant-design/icons'
+import { Popover, Typography, theme } from 'antd'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   ShelfItemDropZones,
   createShelfItemDragId,
@@ -11,55 +11,47 @@ import {
   type ShelfType,
   useShelfDndRegistration,
   useShelfItemDropTargets,
-} from '../dnd';
-import {
-  ShelfRootOperatorButton,
-  type RootOperator,
-  type RootOperatorButtonColor,
-} from './ShelfRootOperatorButton';
-import { ShelfTrack, type ShelfTone } from './ShelfTrack';
+} from '../dnd'
+import { ShelfRootOperatorButton, type RootOperator, type RootOperatorButtonColor } from './ShelfRootOperatorButton'
+import { ShelfTrack, type ShelfTone } from './ShelfTrack'
 
-const REMOVE_ICON_DEFAULT_COLOR = '#8c8c8c';
-const REMOVE_ICON_HOVER_COLOR = '#ff4d4f';
-const SHELF_ITEM_SPACING = 6;
+const REMOVE_ICON_DEFAULT_COLOR = '#8c8c8c'
+const REMOVE_ICON_HOVER_COLOR = '#ff4d4f'
+const SHELF_ITEM_SPACING = 6
 
-export type FilterShelfTone = ShelfTone;
+export type FilterShelfTone = ShelfTone
 
 type FilterShelfItem = {
-  id: string;
-  field: string;
-};
+  id: string
+  field: string
+}
 
 type FilterShelfProps<TItem extends FilterShelfItem> = {
-  shelf: ShelfType;
-  items: TItem[];
-  style?: React.CSSProperties;
-  placeholder: string;
-  tone: FilterShelfTone;
-  maxLabelWidth?: number;
-  showRootOperator?: boolean;
-  rootOperator?: RootOperator;
-  rootOperatorColors?: RootOperatorButtonColor;
-  onRootOperatorChange?: (nextOperator: RootOperator) => void;
-  getDisplayText: (item: TItem) => string;
-  getItemPayload: (item: TItem) => ShelfFieldPayload;
-  onAddFieldAt: (payload: ShelfFieldPayload, insertIndex: number) => void;
-  onReorder: (dragIndex: number, insertIndex: number) => void;
-  onRemove: (id: string) => void;
-  renderEditor: (params: {
-    item: TItem;
-    isOpen: boolean;
-    close: () => void;
-  }) => React.ReactNode;
-};
+  shelf: ShelfType
+  items: TItem[]
+  style?: React.CSSProperties
+  placeholder: string
+  tone: FilterShelfTone
+  maxLabelWidth?: number
+  showRootOperator?: boolean
+  rootOperator?: RootOperator
+  rootOperatorColors?: RootOperatorButtonColor
+  onRootOperatorChange?: (nextOperator: RootOperator) => void
+  getDisplayText: (item: TItem) => string
+  getItemPayload: (item: TItem) => ShelfFieldPayload
+  onAddFieldAt: (payload: ShelfFieldPayload, insertIndex: number) => void
+  onReorder: (dragIndex: number, insertIndex: number) => void
+  onRemove: (id: string) => void
+  renderEditor: (params: { item: TItem; isOpen: boolean; close: () => void }) => React.ReactNode
+}
 
 const getItemStyle = (params: {
-  isHovered: boolean;
-  isDragging: boolean;
-  tone: FilterShelfTone;
-  transform: string | undefined;
+  isHovered: boolean
+  isDragging: boolean
+  tone: FilterShelfTone
+  transform: string | undefined
 }): React.CSSProperties => {
-  const { isHovered, isDragging, tone, transform } = params;
+  const { isHovered, isDragging, tone, transform } = params
 
   return {
     display: 'inline-flex',
@@ -67,9 +59,7 @@ const getItemStyle = (params: {
     gap: 3,
     padding: '0 5px',
     backgroundColor: isHovered ? tone.itemHoverBackground : tone.itemBackground,
-    border: isHovered
-      ? `1px solid ${tone.itemHoverBorder}`
-      : `1px solid ${tone.itemBorder}`,
+    border: isHovered ? `1px solid ${tone.itemHoverBorder}` : `1px solid ${tone.itemBorder}`,
     borderRadius: 8,
     cursor: isDragging ? 'grabbing' : 'grab',
     fontSize: 11,
@@ -80,14 +70,11 @@ const getItemStyle = (params: {
     opacity: isDragging ? 0 : 1,
     visibility: isDragging ? 'hidden' : 'visible',
     transform,
-  };
-};
+  }
+}
 
-const getIconStyle = (params: {
-  isHovered: boolean;
-  tone: FilterShelfTone;
-}): React.CSSProperties => {
-  const { isHovered, tone } = params;
+const getIconStyle = (params: { isHovered: boolean; tone: FilterShelfTone }): React.CSSProperties => {
+  const { isHovered, tone } = params
 
   return {
     display: 'inline-flex',
@@ -99,8 +86,8 @@ const getIconStyle = (params: {
     backgroundColor: isHovered ? tone.iconHoverBackground : tone.iconBackground,
     color: tone.iconColor,
     flexShrink: 0,
-  };
-};
+  }
+}
 
 const getRemoveIconWrapperStyle = (isHovered: boolean): React.CSSProperties => {
   return {
@@ -113,30 +100,26 @@ const getRemoveIconWrapperStyle = (isHovered: boolean): React.CSSProperties => {
     opacity: isHovered ? 1 : 0,
     transition: 'width 0.2s, margin-left 0.2s, opacity 0.2s',
     flexShrink: 0,
-  };
-};
+  }
+}
 
 const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
-  shelf: ShelfType;
-  item: TItem;
-  index: number;
-  displayText: string;
-  tone: FilterShelfTone;
-  maxLabelWidth: number;
-  isHovered: boolean;
-  setHoveredItemId: (id: string | null) => void;
-  payload: ShelfFieldPayload;
-  isOpen: boolean;
-  close: () => void;
-  setOpen: (open: boolean) => void;
-  onRemove: (id: string) => void;
-  renderEditor: (params: {
-    item: TItem;
-    isOpen: boolean;
-    close: () => void;
-  }) => React.ReactNode;
+  shelf: ShelfType
+  item: TItem
+  index: number
+  displayText: string
+  tone: FilterShelfTone
+  maxLabelWidth: number
+  isHovered: boolean
+  setHoveredItemId: (id: string | null) => void
+  payload: ShelfFieldPayload
+  isOpen: boolean
+  close: () => void
+  setOpen: (open: boolean) => void
+  onRemove: (id: string) => void
+  renderEditor: (params: { item: TItem; isOpen: boolean; close: () => void }) => React.ReactNode
 }) => {
-  const { token } = theme.useToken();
+  const { token } = theme.useToken()
   const {
     shelf,
     item,
@@ -152,24 +135,23 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
     setOpen,
     onRemove,
     renderEditor,
-  } = props;
+  } = props
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: createShelfItemDragId(shelf, item.id),
-      data: {
-        kind: 'shelf-item',
-        shelf,
-        itemId: item.id,
-        index,
-        payload,
-        label: displayText,
-      } satisfies ShelfItemDragData,
-    });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: createShelfItemDragId(shelf, item.id),
+    data: {
+      kind: 'shelf-item',
+      shelf,
+      itemId: item.id,
+      index,
+      payload,
+      label: displayText,
+    } satisfies ShelfItemDragData,
+  })
   const dropTargets = useShelfItemDropTargets({
     shelf,
     index,
-  });
+  })
 
   return (
     <div
@@ -216,9 +198,7 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
             isHovered: isHovered || dropTargets.isOver,
             isDragging,
             tone,
-            transform: isDragging
-              ? undefined
-              : CSS.Translate.toString(transform),
+            transform: isDragging ? undefined : CSS.Translate.toString(transform),
           })}
         >
           <span
@@ -243,8 +223,8 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
           <span style={getRemoveIconWrapperStyle(isHovered)}>
             <CloseOutlined
               onClick={(event) => {
-                event.stopPropagation();
-                onRemove(item.id);
+                event.stopPropagation()
+                onRemove(item.id)
               }}
               style={{
                 fontSize: 8,
@@ -252,22 +232,20 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
                 color: REMOVE_ICON_DEFAULT_COLOR,
               }}
               onMouseEnter={(event) => {
-                event.currentTarget.style.color = REMOVE_ICON_HOVER_COLOR;
+                event.currentTarget.style.color = REMOVE_ICON_HOVER_COLOR
               }}
               onMouseLeave={(event) => {
-                event.currentTarget.style.color = REMOVE_ICON_DEFAULT_COLOR;
+                event.currentTarget.style.color = REMOVE_ICON_DEFAULT_COLOR
               }}
             />
           </span>
         </div>
       </Popover>
     </div>
-  );
-};
+  )
+}
 
-export const FilterShelf = <TItem extends FilterShelfItem>(
-  props: FilterShelfProps<TItem>,
-) => {
+export const FilterShelf = <TItem extends FilterShelfItem>(props: FilterShelfProps<TItem>) => {
   const {
     shelf,
     items,
@@ -285,18 +263,18 @@ export const FilterShelf = <TItem extends FilterShelfItem>(
     onReorder,
     onRemove,
     renderEditor,
-  } = props;
+  } = props
 
-  const [editingItemId, setEditingItemId] = useState<string | null>(null);
-  const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
-  const prevIdsRef = useRef<string[]>([]);
+  const [editingItemId, setEditingItemId] = useState<string | null>(null)
+  const [hoveredItemId, setHoveredItemId] = useState<string | null>(null)
+  const prevIdsRef = useRef<string[]>([])
 
   const dndItems = useMemo(() => {
     return items.map((item) => ({
       id: item.id,
       payload: getItemPayload(item),
-    }));
-  }, [getItemPayload, items]);
+    }))
+  }, [getItemPayload, items])
 
   const dndAdapter = useMemo(() => {
     return {
@@ -305,36 +283,36 @@ export const FilterShelf = <TItem extends FilterShelfItem>(
       addFieldAt: onAddFieldAt,
       removeItem: onRemove,
       reorderWithin: onReorder,
-    };
-  }, [dndItems, onAddFieldAt, onRemove, onReorder, shelf]);
+    }
+  }, [dndItems, onAddFieldAt, onRemove, onReorder, shelf])
 
-  useShelfDndRegistration(dndAdapter);
+  useShelfDndRegistration(dndAdapter)
 
   useEffect(() => {
-    const currentIds = Array.isArray(items) ? items.map((item) => item.id) : [];
-    const prevIds = Array.isArray(prevIdsRef.current) ? prevIdsRef.current : [];
-    const newIds = currentIds.filter((id) => !prevIds.includes(id));
+    const currentIds = Array.isArray(items) ? items.map((item) => item.id) : []
+    const prevIds = Array.isArray(prevIdsRef.current) ? prevIdsRef.current : []
+    const newIds = currentIds.filter((id) => !prevIds.includes(id))
 
     if (newIds.length > 0) {
-      setEditingItemId(newIds[newIds.length - 1] ?? null);
+      setEditingItemId(newIds[newIds.length - 1] ?? null)
     }
 
-    prevIdsRef.current = currentIds;
-  }, [items]);
+    prevIdsRef.current = currentIds
+  }, [items])
 
   const currentEditingItem = useMemo(() => {
     if (!editingItemId) {
-      return undefined;
+      return undefined
     }
 
-    return items.find((item) => item.id === editingItemId);
-  }, [editingItemId, items]);
+    return items.find((item) => item.id === editingItemId)
+  }, [editingItemId, items])
 
   useEffect(() => {
     if (editingItemId && !currentEditingItem) {
-      setEditingItemId(null);
+      setEditingItemId(null)
     }
-  }, [editingItemId, currentEditingItem]);
+  }, [editingItemId, currentEditingItem])
 
   return (
     <ShelfTrack
@@ -344,10 +322,7 @@ export const FilterShelf = <TItem extends FilterShelfItem>(
       tone={tone}
       style={style}
       leading={
-        showRootOperator &&
-        rootOperator &&
-        rootOperatorColors &&
-        onRootOperatorChange ? (
+        showRootOperator && rootOperator && rootOperatorColors && onRootOperatorChange ? (
           <ShelfRootOperatorButton
             operator={rootOperator}
             colors={rootOperatorColors}
@@ -357,10 +332,10 @@ export const FilterShelf = <TItem extends FilterShelfItem>(
       }
     >
       {items.map((item, index) => {
-        const payload = getItemPayload(item);
-        const displayText = getDisplayText(item);
-        const isHovered = hoveredItemId === item.id;
-        const isOpen = editingItemId === item.id;
+        const payload = getItemPayload(item)
+        const displayText = getDisplayText(item)
+        const isHovered = hoveredItemId === item.id
+        const isOpen = editingItemId === item.id
 
         return (
           <FilterShelfTag
@@ -379,16 +354,16 @@ export const FilterShelf = <TItem extends FilterShelfItem>(
             setOpen={(open) => {
               setEditingItemId((prev) => {
                 if (open) {
-                  return item.id;
+                  return item.id
                 }
-                return prev === item.id ? null : prev;
-              });
+                return prev === item.id ? null : prev
+              })
             }}
             onRemove={onRemove}
             renderEditor={renderEditor}
           />
-        );
+        )
       })}
     </ShelfTrack>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Select,
   Input,
@@ -12,7 +12,7 @@ import {
   Badge,
   Empty,
   theme,
-} from 'antd';
+} from 'antd'
 import {
   FilterOutlined,
   DeleteOutlined,
@@ -20,7 +20,7 @@ import {
   EditOutlined,
   ClearOutlined,
   CheckOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 import {
   getDefaultWhereOperator,
   getWhereDisplayText,
@@ -30,67 +30,67 @@ import {
   normalizeWhereOperator,
   normalizeWhereRangeValue,
   serializeWhereFilterValue,
-} from './whereFilterUtils';
-import { DateFilterEditor } from './DateFilterEditor';
-import { getDefaultDatePredicate } from './dateFilterUtils';
-import type { VBIWhereDatePredicate } from '@visactor/vbi';
-import { useTranslation } from 'src/i18n';
+} from './whereFilterUtils'
+import { DateFilterEditor } from './DateFilterEditor'
+import { getDefaultDatePredicate } from './dateFilterUtils'
+import type { VBIWhereDatePredicate } from '@visactor/vbi'
+import { useTranslation } from 'src/i18n'
 
-const { Option = Select.Option } = Select;
-const { Text } = Typography;
+const { Option = Select.Option } = Select
+const { Text } = Typography
 
 const POPOVER_TEXT_BUTTON_STYLE: React.CSSProperties = {
   height: 22,
   padding: '0 12px',
-};
+}
 
 const POPOVER_ICON_BUTTON_STYLE: React.CSSProperties = {
   width: 22,
   minWidth: 22,
   height: 22,
   padding: 0,
-};
+}
 
 export interface FilterItem {
-  id?: string;
-  field: string;
-  operator: string;
-  value: unknown;
+  id?: string
+  field: string
+  operator: string
+  value: unknown
 }
 
 export interface FilterField {
-  name: string;
-  role: 'dimension' | 'measure';
-  type?: string;
-  isDate?: boolean;
+  name: string
+  role: 'dimension' | 'measure'
+  type?: string
+  isDate?: boolean
 }
 
 interface FilterPanelProps {
-  fields: FilterField[];
-  activeFields?: string[];
-  filters: FilterItem[];
-  onAdd?: (filter: FilterItem) => void;
-  onRemove?: (id: string) => void;
-  onClear?: () => void;
-  onChange?: (filters: FilterItem[]) => void;
-  onCancel?: () => void;
-  embedded?: boolean;
-  itemEdit?: boolean;
-  open?: boolean;
-  fixedField?: string;
+  fields: FilterField[]
+  activeFields?: string[]
+  filters: FilterItem[]
+  onAdd?: (filter: FilterItem) => void
+  onRemove?: (id: string) => void
+  onClear?: () => void
+  onChange?: (filters: FilterItem[]) => void
+  onCancel?: () => void
+  embedded?: boolean
+  itemEdit?: boolean
+  open?: boolean
+  fixedField?: string
 }
 
 const getFieldRoleLabel = (field: FilterField, t: (key: string) => string) => {
   if (field.role === 'measure') {
-    return t('filtersFieldRolesMeasure');
+    return t('filtersFieldRolesMeasure')
   }
 
   if (field.isDate) {
-    return t('filtersFieldRolesDateDimension');
+    return t('filtersFieldRolesDateDimension')
   }
 
-  return t('filtersFieldRolesDimension');
-};
+  return t('filtersFieldRolesDimension')
+}
 
 export const FilterPanel: React.FC<FilterPanelProps> = ({
   fields,
@@ -106,116 +106,97 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   open = false,
   fixedField,
 }) => {
-  const { token } = theme.useToken();
-  const { t } = useTranslation();
-  const [popoverOpen, setPopoverOpen] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [form] = Form.useForm();
-  const [datePredicate, setDatePredicate] =
-    useState<VBIWhereDatePredicate | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { token } = theme.useToken()
+  const { t } = useTranslation()
+  const [popoverOpen, setPopoverOpen] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [form] = Form.useForm()
+  const [datePredicate, setDatePredicate] = useState<VBIWhereDatePredicate | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const operator = Form.useWatch('operator', form);
-  const selectedFieldFromForm = Form.useWatch('field', form);
-  const isSingleItemEdit = itemEdit && filters.length === 1;
-  const fixedEditingField = isSingleItemEdit
-    ? fixedField || filters[0]?.field
-    : undefined;
-  const selectedField = selectedFieldFromForm ?? fixedEditingField;
+  const operator = Form.useWatch('operator', form)
+  const selectedFieldFromForm = Form.useWatch('field', form)
+  const isSingleItemEdit = itemEdit && filters.length === 1
+  const fixedEditingField = isSingleItemEdit ? fixedField || filters[0]?.field : undefined
+  const selectedField = selectedFieldFromForm ?? fixedEditingField
 
   // 根据选择的字段自动判断类型
-  const selectedFieldMeta = selectedField
-    ? fields.find((f) => f.name === selectedField)
-    : undefined;
-  const selectedFieldRole = selectedFieldMeta?.role ?? 'dimension';
-  const isDateField = selectedFieldMeta?.isDate === true;
+  const selectedFieldMeta = selectedField ? fields.find((f) => f.name === selectedField) : undefined
+  const selectedFieldRole = selectedFieldMeta?.role ?? 'dimension'
+  const isDateField = selectedFieldMeta?.isDate === true
 
   const availableOperators = React.useMemo(() => {
-    return getWhereOperatorOptions(selectedFieldRole, t);
-  }, [selectedFieldRole, t]);
+    return getWhereOperatorOptions(selectedFieldRole, t)
+  }, [selectedFieldRole, t])
 
   const inputStrategy = React.useMemo(() => {
-    return getWhereFilterInputStrategy(operator, selectedFieldRole);
-  }, [operator, selectedFieldRole]);
+    return getWhereFilterInputStrategy(operator, selectedFieldRole)
+  }, [operator, selectedFieldRole])
 
   // Reset form when opening/closing
   useEffect(() => {
     if (itemEdit) {
-      return;
+      return
     }
     if (!popoverOpen) {
-      setIsAdding(false);
-      setEditingId(null);
-      setDatePredicate(null);
-      form.resetFields();
+      setIsAdding(false)
+      setEditingId(null)
+      setDatePredicate(null)
+      form.resetFields()
     }
-  }, [popoverOpen, form, itemEdit]);
+  }, [popoverOpen, form, itemEdit])
 
   // itemEdit 模式下，每次打开都从当前 builder 值回填表单
   useEffect(() => {
     if (!isSingleItemEdit || !open) {
-      return;
+      return
     }
 
-    const item = filters[0];
+    const item = filters[0]
     if (normalizeWhereOperator(item.operator) === 'date') {
-      setDatePredicate(item.value as VBIWhereDatePredicate);
-      form.setFieldsValue({ field: item.field });
+      setDatePredicate(item.value as VBIWhereDatePredicate)
+      form.setFieldsValue({ field: item.field })
     } else {
-      setDatePredicate(null);
+      setDatePredicate(null)
       form.setFieldsValue({
         field: item.field,
         operator: normalizeWhereOperator(item.operator),
         value: getWhereFilterFormValue(item.operator, item.value),
-      });
+      })
     }
-  }, [isSingleItemEdit, open, filters, form]);
+  }, [isSingleItemEdit, open, filters, form])
 
   // Update operator when role changes (skip in date mode)
   useEffect(() => {
     if (isDateField || datePredicate) {
-      return;
+      return
     }
     if (isAdding || editingId || (isSingleItemEdit && open)) {
-      const currentOperator = normalizeWhereOperator(
-        form.getFieldValue('operator'),
-      );
-      if (
-        currentOperator &&
-        !availableOperators.find((op) => op.value === currentOperator)
-      ) {
-        form.setFieldValue('operator', availableOperators[0]?.value);
+      const currentOperator = normalizeWhereOperator(form.getFieldValue('operator'))
+      if (currentOperator && !availableOperators.find((op) => op.value === currentOperator)) {
+        form.setFieldValue('operator', availableOperators[0]?.value)
       }
     }
-  }, [
-    availableOperators,
-    form,
-    isAdding,
-    editingId,
-    isSingleItemEdit,
-    open,
-    isDateField,
-    datePredicate,
-  ]);
+  }, [availableOperators, form, isAdding, editingId, isSingleItemEdit, open, isDateField, datePredicate])
 
   // 按输入策略维护表单值形状 (skip in date mode)
   useEffect(() => {
     if (isDateField || datePredicate) {
-      return;
+      return
     }
     if (isAdding || editingId || (isSingleItemEdit && open)) {
-      const currentValue = form.getFieldValue('value');
+      const currentValue = form.getFieldValue('value')
 
       if (inputStrategy === 'none') {
         if (currentValue !== undefined) {
-          form.setFieldValue('value', undefined);
+          form.setFieldValue('value', undefined)
         }
-        return;
+        return
       }
 
       if (inputStrategy === 'range') {
-        const normalizedRange = normalizeWhereRangeValue(currentValue);
+        const normalizedRange = normalizeWhereRangeValue(currentValue)
         const changed =
           currentValue !== normalizedRange &&
           (!currentValue ||
@@ -224,100 +205,87 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             currentValue.min !== normalizedRange.min ||
             currentValue.max !== normalizedRange.max ||
             currentValue.leftOp !== normalizedRange.leftOp ||
-            currentValue.rightOp !== normalizedRange.rightOp);
+            currentValue.rightOp !== normalizedRange.rightOp)
 
         if (changed) {
-          form.setFieldValue('value', normalizedRange);
+          form.setFieldValue('value', normalizedRange)
         }
-        return;
+        return
       }
 
       if (inputStrategy === 'tags') {
         if (!Array.isArray(currentValue)) {
-          form.setFieldValue(
-            'value',
-            getWhereFilterFormValue(operator, currentValue),
-          );
+          form.setFieldValue('value', getWhereFilterFormValue(operator, currentValue))
         }
-        return;
+        return
       }
 
       if (Array.isArray(currentValue)) {
-        form.setFieldValue('value', currentValue[0]);
-        return;
+        form.setFieldValue('value', currentValue[0])
+        return
       }
 
       if (typeof currentValue === 'object' && currentValue !== null) {
-        form.setFieldValue('value', undefined);
+        form.setFieldValue('value', undefined)
       }
     }
-  }, [
-    form,
-    inputStrategy,
-    isAdding,
-    editingId,
-    isSingleItemEdit,
-    open,
-    operator,
-    isDateField,
-    datePredicate,
-  ]);
+  }, [form, inputStrategy, isAdding, editingId, isSingleItemEdit, open, operator, isDateField, datePredicate])
 
   const handleAddClick = () => {
-    setEditingId(null);
-    setDatePredicate(null);
-    form.resetFields();
+    setEditingId(null)
+    setDatePredicate(null)
+    form.resetFields()
     form.setFieldsValue({
       operator: getDefaultWhereOperator('dimension'),
-    });
-    setIsAdding(true);
-  };
+    })
+    setIsAdding(true)
+  }
 
   const handleEdit = (id: string) => {
-    const item = filters.find((f) => f.id === id);
-    if (!item) return;
+    const item = filters.find((f) => f.id === id)
+    if (!item) return
 
-    setEditingId(id);
-    setIsAdding(false);
+    setEditingId(id)
+    setIsAdding(false)
 
     if (normalizeWhereOperator(item.operator) === 'date') {
-      setDatePredicate(item.value as VBIWhereDatePredicate);
-      form.setFieldsValue({ field: item.field });
+      setDatePredicate(item.value as VBIWhereDatePredicate)
+      form.setFieldsValue({ field: item.field })
     } else {
-      setDatePredicate(null);
+      setDatePredicate(null)
       form.setFieldsValue({
         field: item.field,
         operator: normalizeWhereOperator(item.operator),
         value: getWhereFilterFormValue(item.operator, item.value),
-      });
+      })
     }
-  };
+  }
 
   const handleSubmit = () => {
     form.validateFields().then((values) => {
-      const field = values.field ?? fixedEditingField;
+      const field = values.field ?? fixedEditingField
       if (!field) {
-        return;
+        return
       }
 
-      const fieldMeta = fields.find((f) => f.name === field);
-      const isDateSubmit = fieldMeta?.isDate === true || datePredicate !== null;
+      const fieldMeta = fields.find((f) => f.name === field)
+      const isDateSubmit = fieldMeta?.isDate === true || datePredicate !== null
 
-      let normalizedOperator: string;
-      let finalValue: unknown;
+      let normalizedOperator: string
+      let finalValue: unknown
 
       if (isDateSubmit && datePredicate) {
-        normalizedOperator = 'date';
-        finalValue = datePredicate;
+        normalizedOperator = 'date'
+        finalValue = datePredicate
       } else {
-        const { operator, value } = values;
-        const fieldRole = fieldMeta?.role ?? selectedFieldRole ?? 'dimension';
-        normalizedOperator = normalizeWhereOperator(operator);
+        const { operator, value } = values
+        const fieldRole = fieldMeta?.role ?? selectedFieldRole ?? 'dimension'
+        normalizedOperator = normalizeWhereOperator(operator)
         finalValue = serializeWhereFilterValue({
           operator: normalizedOperator,
           fieldRole,
           value,
-        });
+        })
       }
 
       // 获取原有 filter 的 id（编辑模式）
@@ -325,76 +293,76 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         ? filters[0]
         : editingId
           ? filters.find((f) => f.id === editingId)
-          : undefined;
+          : undefined
       const newFilter: FilterItem = {
         id: existingFilter?.id,
         field,
         operator: normalizedOperator,
         value: finalValue,
-      };
+      }
 
       if (editingId || isSingleItemEdit) {
         // 编辑模式：优先使用 onChange 回调
         if (onChange) {
-          const newFilters = [...filters];
-          const targetId = existingFilter?.id;
-          const editIndex = newFilters.findIndex((f) => f.id === targetId);
+          const newFilters = [...filters]
+          const targetId = existingFilter?.id
+          const editIndex = newFilters.findIndex((f) => f.id === targetId)
           if (editIndex >= 0) {
-            newFilters[editIndex] = { ...newFilters[editIndex], ...newFilter };
-            onChange(newFilters);
+            newFilters[editIndex] = { ...newFilters[editIndex], ...newFilter }
+            onChange(newFilters)
           }
         } else if (onRemove) {
           // 兼容模式：先删除再添加
           if (existingFilter?.id) {
-            onRemove(existingFilter.id);
+            onRemove(existingFilter.id)
           }
-          onAdd?.(newFilter);
+          onAdd?.(newFilter)
         }
       } else if (onChange) {
         // 添加模式：如果有 onChange 则使用全量更新
-        onChange([...filters, newFilter]);
+        onChange([...filters, newFilter])
       } else if (onAdd) {
-        onAdd(newFilter);
+        onAdd(newFilter)
       }
 
-      setIsAdding(false);
-      setEditingId(null);
-      setDatePredicate(null);
-      form.resetFields();
-    });
-  };
+      setIsAdding(false)
+      setEditingId(null)
+      setDatePredicate(null)
+      form.resetFields()
+    })
+  }
 
   const handleCancel = () => {
-    setIsAdding(false);
-    setEditingId(null);
-    setDatePredicate(null);
-    form.resetFields();
-    onCancel?.();
-  };
+    setIsAdding(false)
+    setEditingId(null)
+    setDatePredicate(null)
+    form.resetFields()
+    onCancel?.()
+  }
 
   const handleDelete = (id: string) => {
     // 优先使用 onChange 回调
     if (onChange) {
-      const newFilters = filters.filter((f) => f.id !== id);
-      onChange(newFilters);
+      const newFilters = filters.filter((f) => f.id !== id)
+      onChange(newFilters)
     } else if (onRemove) {
-      onRemove(id);
+      onRemove(id)
     }
-  };
+  }
 
   const handleClearAll = () => {
     // 优先使用 onChange 回调
     if (onChange) {
-      onChange([]);
+      onChange([])
     } else if (onClear) {
-      onClear();
+      onClear()
     }
-  };
+  }
 
   // Generate filter display text
   const getFilterDisplayText = (item: FilterItem) => {
-    return getWhereDisplayText(item, t);
-  };
+    return getWhereDisplayText(item, t)
+  }
 
   const renderFilterForm = () => (
     <Form
@@ -414,9 +382,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         <Form.Item
           label={t('filtersFormField')}
           name="field"
-          rules={[
-            { required: true, message: t('filtersValidationSelectField') },
-          ]}
+          rules={[{ required: true, message: t('filtersValidationSelectField') }]}
           style={{ marginBottom: 8 }}
         >
           <Select
@@ -424,37 +390,32 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             showSearch
             variant="filled"
             onChange={(fieldName) => {
-              const nextField = fields.find((f) => f.name === fieldName);
-              const nextFieldRole = nextField?.role ?? 'dimension';
+              const nextField = fields.find((f) => f.name === fieldName)
+              const nextFieldRole = nextField?.role ?? 'dimension'
               if (nextField?.isDate) {
-                setDatePredicate(getDefaultDatePredicate());
+                setDatePredicate(getDefaultDatePredicate())
                 form.setFieldsValue({
                   operator: undefined,
                   value: undefined,
-                });
+                })
               } else {
-                setDatePredicate(null);
+                setDatePredicate(null)
                 form.setFieldsValue({
                   operator: getDefaultWhereOperator(nextFieldRole),
                   value: undefined,
-                });
+                })
               }
             }}
           >
             {fields.map((f) => {
-              const isActive = activeFields.includes(f.name);
+              const isActive = activeFields.includes(f.name)
               return (
                 <Option key={f.name} value={f.name}>
-                  <span
-                    style={
-                      isActive ? { color: '#e39700', fontWeight: 'bold' } : {}
-                    }
-                  >
-                    {f.name} ({getFieldRoleLabel(f, t)}){' '}
-                    {isActive ? t('commonStatusRecommended') : ''}
+                  <span style={isActive ? { color: '#e39700', fontWeight: 'bold' } : {}}>
+                    {f.name} ({getFieldRoleLabel(f, t)}) {isActive ? t('commonStatusRecommended') : ''}
                   </span>
                 </Option>
-              );
+              )
             })}
           </Select>
         </Form.Item>
@@ -462,25 +423,20 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
       {isDateField || datePredicate ? (
         <div style={{ marginBottom: 10 }}>
-          <DateFilterEditor
-            value={datePredicate ?? getDefaultDatePredicate()}
-            onChange={setDatePredicate}
-          />
+          <DateFilterEditor value={datePredicate ?? getDefaultDatePredicate()} onChange={setDatePredicate} />
         </div>
       ) : (
         <>
           <Form.Item
             label={isSingleItemEdit ? undefined : t('filtersFormOperator')}
             name="operator"
-            rules={[
-              { required: true, message: t('filtersValidationSelectOperator') },
-            ]}
+            rules={[{ required: true, message: t('filtersValidationSelectOperator') }]}
             style={{ marginBottom: 10 }}
           >
             <Select
               variant="filled"
               onChange={() => {
-                form.setFieldsValue({ value: undefined });
+                form.setFieldsValue({ value: undefined })
               }}
             >
               {availableOperators.map((op) => (
@@ -492,14 +448,9 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
           </Form.Item>
 
           {inputStrategy === 'none' ? (
-            <div style={{ color: '#999', fontSize: 11, padding: '6px 0 10px' }}>
-              {t('filtersFormNoValueRequired')}
-            </div>
+            <div style={{ color: '#999', fontSize: 11, padding: '6px 0 10px' }}>{t('filtersFormNoValueRequired')}</div>
           ) : inputStrategy === 'range' ? (
-            <Form.Item
-              label={isSingleItemEdit ? undefined : t('filtersFormRange')}
-              style={{ marginBottom: 10 }}
-            >
+            <Form.Item label={isSingleItemEdit ? undefined : t('filtersFormRange')} style={{ marginBottom: 10 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Form.Item name={['value', 'min']} noStyle>
                   {selectedFieldRole === 'measure' ? (
@@ -518,10 +469,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   )}
                 </Form.Item>
                 <Form.Item name={['value', 'leftOp']} noStyle>
-                  <Select
-                    variant="filled"
-                    style={{ width: isSingleItemEdit ? 36 : 48 }}
-                  >
+                  <Select variant="filled" style={{ width: isSingleItemEdit ? 36 : 48 }}>
                     <Option value="<">&lt;</Option>
                     <Option value="<=">&lt;=</Option>
                   </Select>
@@ -532,10 +480,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   </Text>
                 )}
                 <Form.Item name={['value', 'rightOp']} noStyle>
-                  <Select
-                    variant="filled"
-                    style={{ width: isSingleItemEdit ? 36 : 48 }}
-                  >
+                  <Select variant="filled" style={{ width: isSingleItemEdit ? 36 : 48 }}>
                     <Option value="<">&lt;</Option>
                     <Option value="<=">&lt;=</Option>
                   </Select>
@@ -566,11 +511,9 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 {
                   validator: (_, value) => {
                     if (Array.isArray(value) && value.length > 0) {
-                      return Promise.resolve();
+                      return Promise.resolve()
                     }
-                    return Promise.reject(
-                      new Error(t('filtersValidationEnterAtLeastOneValue')),
-                    );
+                    return Promise.reject(new Error(t('filtersValidationEnterAtLeastOneValue')))
                   },
                 },
               ]}
@@ -581,9 +524,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 variant="filled"
                 tokenSeparators={[',']}
                 placeholder={
-                  selectedFieldRole === 'measure'
-                    ? t('filtersFormInputNumbers')
-                    : t('filtersFormInputValues')
+                  selectedFieldRole === 'measure' ? t('filtersFormInputNumbers') : t('filtersFormInputValues')
                 }
                 style={{ width: '100%' }}
               />
@@ -594,9 +535,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
               name="value"
               rules={[
                 {
-                  required: !['is null', 'is not null'].includes(
-                    operator ?? '',
-                  ),
+                  required: !['is null', 'is not null'].includes(operator ?? ''),
                   message: t('filtersValidationEnterValue'),
                 },
               ]}
@@ -610,10 +549,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   controls={false}
                 />
               ) : (
-                <Input
-                  placeholder={t('filtersFormInputValue')}
-                  variant="filled"
-                />
+                <Input placeholder={t('filtersFormInputValue')} variant="filled" />
               )}
             </Form.Item>
           )}
@@ -622,11 +558,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
       <Form.Item style={{ marginBottom: 0, marginTop: 2, textAlign: 'right' }}>
         <Space size={8}>
-          <Button
-            size="small"
-            onClick={handleCancel}
-            style={POPOVER_TEXT_BUTTON_STYLE}
-          >
+          <Button size="small" onClick={handleCancel} style={POPOVER_TEXT_BUTTON_STYLE}>
             {t('commonActionsCancel')}
           </Button>
           <Button
@@ -636,23 +568,17 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             icon={<CheckOutlined />}
             style={POPOVER_TEXT_BUTTON_STYLE}
           >
-            {editingId || isSingleItemEdit
-              ? t('commonActionsSave')
-              : t('commonActionsAdd')}
+            {editingId || isSingleItemEdit ? t('commonActionsSave') : t('commonActionsAdd')}
           </Button>
         </Space>
       </Form.Item>
     </Form>
-  );
+  )
 
   const renderFilterList = () => (
     <div style={{ width: 256 }}>
       {filters.length === 0 && !isAdding ? (
-        <Empty
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-          description={t('filtersEmptyWhere')}
-          style={{ margin: '20px 0' }}
-        />
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t('filtersEmptyWhere')} style={{ margin: '20px 0' }} />
       ) : (
         <div style={{ maxHeight: 200, overflow: 'auto' }}>
           {filters.map((item, index) => (
@@ -665,14 +591,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: 10,
-                borderBottom:
-                  index < filters.length - 1
-                    ? `1px solid ${token.colorBorderSecondary}`
-                    : 'none',
-                background:
-                  editingId === item.id
-                    ? token.colorFillSecondary
-                    : 'transparent',
+                borderBottom: index < filters.length - 1 ? `1px solid ${token.colorBorderSecondary}` : 'none',
+                background: editingId === item.id ? token.colorFillSecondary : 'transparent',
                 borderRadius: token.borderRadiusSM,
               }}
             >
@@ -710,7 +630,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
       {isAdding && renderFilterForm()}
     </div>
-  );
+  )
 
   const popoverContent = (
     <div ref={containerRef}>
@@ -756,16 +676,16 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
       {renderFilterList()}
     </div>
-  );
+  )
 
   // itemEdit 模式：只渲染单个 item 的编辑表单
   if (itemEdit && filters.length === 1) {
-    return <div ref={containerRef}>{renderFilterForm()}</div>;
+    return <div ref={containerRef}>{renderFilterForm()}</div>
   }
 
   // embedded 模式下直接渲染内容，不显示按钮
   if (embedded) {
-    return popoverContent;
+    return popoverContent
   }
 
   return (
@@ -789,5 +709,5 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         </Button>
       </Badge>
     </Popover>
-  );
-};
+  )
+}

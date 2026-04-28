@@ -98,37 +98,6 @@ function getCoverageData() {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function updatePackageReadme(coverageData) {
-  try {
-    const readmePath = join(__dirname, '../README.md')
-    if (!existsSync(readmePath)) {
-      writeFileSync(readmePath, '# VBI\n\n', 'utf8')
-    }
-    let readme = readFileSync(readmePath, 'utf8')
-
-    const badgeRegex = /\[!\[Coverage\]\([^)]+\)\]\([^)]+\)/
-    const newBadge = `[![Coverage](${coverageData.badgeUrl})](https://github.com/VisActor/VBI/actions/workflows/coverage.yml)`
-
-    if (badgeRegex.test(readme)) {
-      readme = readme.replace(badgeRegex, newBadge)
-    } else {
-      // If no badge exists, insert it after the first header or at the top
-      const headerRegex = /(^#\s+.*$)/m
-      if (headerRegex.test(readme)) {
-        readme = readme.replace(headerRegex, `$1\n\n${newBadge}`)
-      } else {
-        readme = `${newBadge}\n\n${readme}`
-      }
-    }
-
-    writeFileSync(readmePath, readme, 'utf8')
-    console.log('Package README.md updated successfully')
-  } catch (error) {
-    console.error('Error updating Package README.md:', error.message)
-  }
-}
-
 function updateRootReadme(coverageData) {
   try {
     const readmePath = join(__dirname, '../../../README.md')
@@ -167,5 +136,4 @@ function updateRootReadme(coverageData) {
 
 const coverage = getCoverageData()
 console.log('Coverage data:', coverage)
-// updatePackageReadme(coverage)
 updateRootReadme(coverage)

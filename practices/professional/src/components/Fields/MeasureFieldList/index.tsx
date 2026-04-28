@@ -1,36 +1,28 @@
-import React, { useState } from 'react';
-import type { VBIMeasure } from '@visactor/vbi';
-import {
-  DeleteOutlined,
-  FontSizeOutlined,
-  EditOutlined,
-} from '@ant-design/icons';
-import { Modal, Input, Select, Form } from 'antd';
-import '../FieldList.css';
-import { useTranslation } from 'src/i18n';
+import React, { useState } from 'react'
+import type { VBIMeasure } from '@visactor/vbi'
+import { DeleteOutlined, FontSizeOutlined, EditOutlined } from '@ant-design/icons'
+import { Modal, Input, Select, Form } from 'antd'
+import '../FieldList.css'
+import { useTranslation } from 'src/i18n'
 
 export interface MeasureFieldListProps {
-  items: string[];
+  items: string[]
   measures?: Record<
     string,
     {
-      alias?: string;
-      aggregate?: NonNullable<VBIMeasure['aggregate']>;
+      alias?: string
+      aggregate?: NonNullable<VBIMeasure['aggregate']>
     }
-  >;
-  dimensionMeasures?: string[];
-  onRemove: (field: string) => void;
-  onRename?: (field: string, newAlias: string) => void;
-  onChangeAggregate?: (
-    field: string,
-    func: NonNullable<VBIMeasure['aggregate']>['func'],
-    quantile?: number,
-  ) => void;
-  onDropDimension?: (field: string) => void;
-  style?: React.CSSProperties;
+  >
+  dimensionMeasures?: string[]
+  onRemove: (field: string) => void
+  onRename?: (field: string, newAlias: string) => void
+  onChangeAggregate?: (field: string, func: NonNullable<VBIMeasure['aggregate']>['func'], quantile?: number) => void
+  onDropDimension?: (field: string) => void
+  style?: React.CSSProperties
 }
 
-type MeasureAggregateFunc = NonNullable<VBIMeasure['aggregate']>['func'];
+type MeasureAggregateFunc = NonNullable<VBIMeasure['aggregate']>['func']
 
 // 所有 11 种聚合方式的选项
 const ALL_AGGREGATE_OPTIONS = [
@@ -45,13 +37,13 @@ const ALL_AGGREGATE_OPTIONS = [
   { label: 'Std Dev', value: 'stddev' },
   { label: 'Median', value: 'median' },
   { label: 'Quantile', value: 'quantile' },
-];
+]
 
 // Dimension 字段只能用 count 聚合
 const DIMENSION_AGGREGATE_OPTIONS = [
   { label: 'Count', value: 'count' },
   { label: 'Count Distinct', value: 'countDistinct' },
-];
+]
 
 const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
   items,
@@ -63,57 +55,48 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
   onDropDimension,
   style,
 }) => {
-  const { locale } = useTranslation();
-  const isZh = locale === 'zh-CN';
-  const [editingField, setEditingField] = useState<string | null>(null);
-  const [editAlias, setEditAlias] = useState('');
-  const [editAggregate, setEditAggregate] =
-    useState<MeasureAggregateFunc>('sum');
-  const [editQuantile, setEditQuantile] = useState(0.5);
-  const [hoveredDropZone, setHoveredDropZone] = useState(false);
+  const { locale } = useTranslation()
+  const isZh = locale === 'zh-CN'
+  const [editingField, setEditingField] = useState<string | null>(null)
+  const [editAlias, setEditAlias] = useState('')
+  const [editAggregate, setEditAggregate] = useState<MeasureAggregateFunc>('sum')
+  const [editQuantile, setEditQuantile] = useState(0.5)
+  const [hoveredDropZone, setHoveredDropZone] = useState(false)
 
   const handleEdit = (field: string) => {
-    const measure = measures[field];
-    setEditingField(field);
-    setEditAlias(measure?.alias || field);
+    const measure = measures[field]
+    setEditingField(field)
+    setEditAlias(measure?.alias || field)
 
     // 如果这个字段来自 dimension，聚合函数只能是 count 或 countDistinct
-    const isDimensionMeasure = dimensionMeasures.includes(field);
-    let defaultFunc = measure?.aggregate?.func || 'sum';
-    if (
-      isDimensionMeasure &&
-      !['count', 'countDistinct'].includes(defaultFunc)
-    ) {
-      defaultFunc = 'count';
+    const isDimensionMeasure = dimensionMeasures.includes(field)
+    let defaultFunc = measure?.aggregate?.func || 'sum'
+    if (isDimensionMeasure && !['count', 'countDistinct'].includes(defaultFunc)) {
+      defaultFunc = 'count'
     }
-    setEditAggregate(defaultFunc);
-    setEditQuantile(
-      measure?.aggregate?.func === 'quantile'
-        ? measure.aggregate.quantile || 0.5
-        : 0.5,
-    );
-  };
+    setEditAggregate(defaultFunc)
+    setEditQuantile(measure?.aggregate?.func === 'quantile' ? measure.aggregate.quantile || 0.5 : 0.5)
+  }
 
   const handleSave = () => {
     if (editingField) {
       // 先修改聚合函数
       if (onChangeAggregate) {
-        const quantile =
-          editAggregate === 'quantile' ? editQuantile : undefined;
-        onChangeAggregate(editingField, editAggregate, quantile);
+        const quantile = editAggregate === 'quantile' ? editQuantile : undefined
+        onChangeAggregate(editingField, editAggregate, quantile)
       }
       // 如果修改了别名，再进行重命名
-      const oldAlias = measures[editingField]?.alias || editingField;
+      const oldAlias = measures[editingField]?.alias || editingField
       if (onRename && editAlias !== oldAlias) {
-        onRename(editingField, editAlias);
+        onRename(editingField, editAlias)
       }
     }
 
     // 使用setTimeout确保状态更新完成后再关闭Modal
     setTimeout(() => {
-      setEditingField(null);
-    }, 0);
-  };
+      setEditingField(null)
+    }, 0)
+  }
 
   return (
     <>
@@ -121,24 +104,23 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
         className="fieldlist"
         style={style}
         onDragOver={(e) => {
-          if (!onDropDimension) return;
-          e.preventDefault();
-          e.dataTransfer.dropEffect = 'move';
-          setHoveredDropZone(true);
+          if (!onDropDimension) return
+          e.preventDefault()
+          e.dataTransfer.dropEffect = 'move'
+          setHoveredDropZone(true)
         }}
         onDragLeave={() => {
-          setHoveredDropZone(false);
+          setHoveredDropZone(false)
         }}
         onDrop={(e) => {
-          if (!onDropDimension) return;
-          e.preventDefault();
+          if (!onDropDimension) return
+          e.preventDefault()
           const field =
-            e.dataTransfer.getData('application/x-vbi-dimension-field') ||
-            e.dataTransfer.getData('text/plain');
+            e.dataTransfer.getData('application/x-vbi-dimension-field') || e.dataTransfer.getData('text/plain')
           if (field) {
-            onDropDimension(field);
+            onDropDimension(field)
           }
-          setHoveredDropZone(false);
+          setHoveredDropZone(false)
         }}
       >
         <div
@@ -158,21 +140,13 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
             transition: 'background-color 0.2s',
           }}
         >
-          {items.length === 0 && (
-            <div className="fieldlist-empty">
-              {isZh ? '还没有添加指标' : 'No measures added'}
-            </div>
-          )}
+          {items.length === 0 && <div className="fieldlist-empty">{isZh ? '还没有添加指标' : 'No measures added'}</div>}
           {items.map((field) => {
-            const measure = measures[field];
-            const displayName = measure?.alias || field;
-            const aggregateFunc = measure?.aggregate?.func || 'sum';
+            const measure = measures[field]
+            const displayName = measure?.alias || field
+            const aggregateFunc = measure?.aggregate?.func || 'sum'
             return (
-              <div
-                key={field}
-                className="fieldlist-item"
-                style={{ cursor: 'grab' }}
-              >
+              <div key={field} className="fieldlist-item" style={{ cursor: 'grab' }}>
                 <FontSizeOutlined style={{ marginRight: 4 }} />
                 <span className="fieldlist-item-text">
                   {displayName} ({aggregateFunc})
@@ -181,8 +155,8 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
                   <button
                     className="fieldlist-item-action"
                     onClick={(e) => {
-                      e.stopPropagation();
-                      handleEdit(field);
+                      e.stopPropagation()
+                      handleEdit(field)
                     }}
                     title={isZh ? '编辑' : 'Edit'}
                   >
@@ -191,15 +165,15 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
                   <button
                     className="fieldlist-item-remove"
                     onClick={(e) => {
-                      e.stopPropagation();
-                      onRemove(field);
+                      e.stopPropagation()
+                      onRemove(field)
                     }}
                   >
                     <DeleteOutlined />
                   </button>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
@@ -245,7 +219,7 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default MeasureFieldList;
+export default MeasureFieldList

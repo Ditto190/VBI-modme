@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class ReportReferenceEntity {
   @ApiProperty()
-  reportId: string;
+  reportId: string
 
   @ApiProperty()
-  pageId: string;
+  pageId: string
 }

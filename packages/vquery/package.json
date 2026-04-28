@@ -45,9 +45,9 @@
     "build:docs": "node scripts/build-examples.js",
     "g": "pnpm run build:test && pnpm run build:docs && pnpm run test:update",
     "dev": "rslib build --watch --no-clean",
-    "lint": "eslint .",
+    "lint": "oxlint .",
     "test": "rstest",
-    "format": "prettier --write .",
+    "format": "oxfmt .",
     "test:update": "rstest --update",
     "test:coverage": "rstest --coverage && node scripts/build-coverage-badge.mjs && open ./coverage/index.html",
     "typecheck": "tsc --noEmit"
@@ -58,14 +58,10 @@
     "web-worker": "1.5.0"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.0",
     "@rslib/core": "0.20.3",
     "@rstest/core": "0.8.3",
     "@types/node": "24.10.1",
     "@rstest/coverage-istanbul": "0.2.1",
-    "eslint": "9.39.0",
-    "globals": "16.4.0",
-    "typescript": "6.0.2",
-    "typescript-eslint": "8.58.1"
+    "typescript": "6.0.2"
   }
 }

@@ -1,4 +1,4 @@
-import { useDraggable } from '@dnd-kit/core';
+import { useDraggable } from '@dnd-kit/core'
 import {
   CalendarOutlined,
   FontSizeOutlined,
@@ -7,37 +7,19 @@ import {
   DownOutlined,
   SearchOutlined,
   UpOutlined,
-} from '@ant-design/icons';
-import {
-  Badge,
-  Button,
-  Card,
-  Checkbox,
-  Divider,
-  Flex,
-  Input,
-  Popover,
-  Typography,
-  theme,
-} from 'antd';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  createSchemaFieldDragId,
-  type SchemaFieldDragData,
-} from 'src/components/Shelves/dnd';
-import { getDefaultDimensionDateAggregate } from 'src/components/Shelves/dimensionDateAggregateUtils';
-import type { VBISchemaField } from 'src/hooks/useVBISchemaFields';
-import {
-  useVBIDimensions,
-  useVBIMeasures,
-  useVBISchemaFields,
-} from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
-import type { FieldRole } from 'src/utils/fieldRole';
+} from '@ant-design/icons'
+import { Badge, Button, Card, Checkbox, Divider, Flex, Input, Popover, Typography, theme } from 'antd'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
+import { createSchemaFieldDragId, type SchemaFieldDragData } from 'src/components/Shelves/dnd'
+import { getDefaultDimensionDateAggregate } from 'src/components/Shelves/dimensionDateAggregateUtils'
+import type { VBISchemaField } from 'src/hooks/useVBISchemaFields'
+import { useVBIDimensions, useVBIMeasures, useVBISchemaFields } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
+import type { FieldRole } from 'src/utils/fieldRole'
 
-const MAX_VISIBLE_FIELDS = 10;
-const FIELD_ROLE_OPTIONS: FieldRole[] = ['dimension', 'measure'];
+const MAX_VISIBLE_FIELDS = 10
+const FIELD_ROLE_OPTIONS: FieldRole[] = ['dimension', 'measure']
 const FIELD_TYPE_LABEL_KEYS: Record<string, string> = {
   number: 'panelsFieldsTypeNumber',
   string: 'panelsFieldsTypeString',
@@ -45,36 +27,25 @@ const FIELD_TYPE_LABEL_KEYS: Record<string, string> = {
   datetime: 'panelsFieldsTypeDatetime',
   timestamp: 'panelsFieldsTypeTimestamp',
   boolean: 'panelsFieldsTypeBoolean',
-};
+}
 
-const getFieldIcon = (
-  field: Pick<VBISchemaField, 'isDate' | 'role'>,
-  color: string,
-) => {
+const getFieldIcon = (field: Pick<VBISchemaField, 'isDate' | 'role'>, color: string) => {
   if (field.role === 'measure') {
-    return <NumberOutlined style={{ color, fontSize: 12 }} />;
+    return <NumberOutlined style={{ color, fontSize: 12 }} />
   }
 
   if (field.isDate) {
-    return <CalendarOutlined style={{ color, fontSize: 12 }} />;
+    return <CalendarOutlined style={{ color, fontSize: 12 }} />
   }
 
-  return <FontSizeOutlined style={{ color, fontSize: 12 }} />;
-};
+  return <FontSizeOutlined style={{ color, fontSize: 12 }} />
+}
 
-const FieldListItem = ({
-  field,
-  onClick,
-}: {
-  field: VBISchemaField;
-  onClick: () => void;
-}) => {
-  const { token } = theme.useToken();
-  const [isHovered, setIsHovered] = useState(false);
-  const accentColor =
-    field.role === 'measure' ? token.colorSuccess : token.colorPrimary;
-  const hoverBackground =
-    field.role === 'measure' ? token.colorSuccessBg : token.colorPrimaryBg;
+const FieldListItem = ({ field, onClick }: { field: VBISchemaField; onClick: () => void }) => {
+  const { token } = theme.useToken()
+  const [isHovered, setIsHovered] = useState(false)
+  const accentColor = field.role === 'measure' ? token.colorSuccess : token.colorPrimary
+  const hoverBackground = field.role === 'measure' ? token.colorSuccessBg : token.colorPrimaryBg
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: createSchemaFieldDragId({
       field: field.name,
@@ -89,7 +60,7 @@ const FieldListItem = ({
       },
       label: field.name,
     } satisfies SchemaFieldDragData,
-  });
+  })
 
   return (
     <div
@@ -138,8 +109,8 @@ const FieldListItem = ({
         {field.name}
       </span>
     </div>
-  );
-};
+  )
+}
 
 const FieldSection = ({
   title,
@@ -150,17 +121,17 @@ const FieldSection = ({
   expandLabel,
   collapseLabel,
 }: {
-  title: string;
-  fields: VBISchemaField[];
-  onAddField: (field: VBISchemaField) => void;
-  expanded: boolean;
-  onToggleExpanded: () => void;
-  expandLabel: string;
-  collapseLabel: string;
+  title: string
+  fields: VBISchemaField[]
+  onAddField: (field: VBISchemaField) => void
+  expanded: boolean
+  onToggleExpanded: () => void
+  expandLabel: string
+  collapseLabel: string
 }) => {
-  const { token } = theme.useToken();
-  const visibleFields = expanded ? fields : fields.slice(0, MAX_VISIBLE_FIELDS);
-  const shouldShowToggle = fields.length > MAX_VISIBLE_FIELDS;
+  const { token } = theme.useToken()
+  const visibleFields = expanded ? fields : fields.slice(0, MAX_VISIBLE_FIELDS)
+  const shouldShowToggle = fields.length > MAX_VISIBLE_FIELDS
 
   return (
     <Flex vertical gap={4}>
@@ -177,11 +148,7 @@ const FieldSection = ({
       </Typography.Text>
       <Flex vertical gap={1}>
         {visibleFields.map((field) => (
-          <FieldListItem
-            key={`${field.role}-field-${field.name}`}
-            field={field}
-            onClick={() => onAddField(field)}
-          />
+          <FieldListItem key={`${field.role}-field-${field.name}`} field={field} onClick={() => onAddField(field)} />
         ))}
         {shouldShowToggle && (
           <Button
@@ -202,153 +169,126 @@ const FieldSection = ({
         )}
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
 const formatFallbackTypeLabel = (fieldType: string) => {
-  return fieldType
-    .replace(/[_-]+/g, ' ')
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
-};
+  return fieldType.replace(/[_-]+/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
+}
 
 export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const { token } = theme.useToken();
-  const { t } = useTranslation();
-  const [keyword, setKeyword] = useState('');
-  const [selectedRoles, setSelectedRoles] =
-    useState<FieldRole[]>(FIELD_ROLE_OPTIONS);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [isDimensionsExpanded, setIsDimensionsExpanded] = useState(false);
-  const [isMeasuresExpanded, setIsMeasuresExpanded] = useState(false);
-  const hasInitializedTypeFiltersRef = useRef(false);
-  const { dimensions: shelfDimensions, addDimension } =
-    useVBIDimensions(builder);
-  const { measures: shelfMeasures, addMeasure } = useVBIMeasures(builder);
-  const { schemaFields } = useVBISchemaFields(builder);
+  const builder = useVBIStore((state) => state.builder)
+  const { token } = theme.useToken()
+  const { t } = useTranslation()
+  const [keyword, setKeyword] = useState('')
+  const [selectedRoles, setSelectedRoles] = useState<FieldRole[]>(FIELD_ROLE_OPTIONS)
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
+  const [isDimensionsExpanded, setIsDimensionsExpanded] = useState(false)
+  const [isMeasuresExpanded, setIsMeasuresExpanded] = useState(false)
+  const hasInitializedTypeFiltersRef = useRef(false)
+  const { dimensions: shelfDimensions, addDimension } = useVBIDimensions(builder)
+  const { measures: shelfMeasures, addMeasure } = useVBIMeasures(builder)
+  const { schemaFields } = useVBISchemaFields(builder)
 
   const fieldTypeOptions = useMemo(() => {
     return Array.from(
-      new Set(
-        schemaFields
-          .map((field) => field.type)
-          .filter((fieldType): fieldType is string => Boolean(fieldType)),
-      ),
-    );
-  }, [schemaFields]);
+      new Set(schemaFields.map((field) => field.type).filter((fieldType): fieldType is string => Boolean(fieldType))),
+    )
+  }, [schemaFields])
 
   useEffect(() => {
     if (hasInitializedTypeFiltersRef.current) {
-      return;
+      return
     }
 
     if (fieldTypeOptions.length === 0) {
-      return;
+      return
     }
 
-    hasInitializedTypeFiltersRef.current = true;
-    setSelectedTypes(fieldTypeOptions);
-  }, [fieldTypeOptions]);
+    hasInitializedTypeFiltersRef.current = true
+    setSelectedTypes(fieldTypeOptions)
+  }, [fieldTypeOptions])
 
-  const effectiveSelectedTypes = hasInitializedTypeFiltersRef.current
-    ? selectedTypes
-    : fieldTypeOptions;
+  const effectiveSelectedTypes = hasInitializedTypeFiltersRef.current ? selectedTypes : fieldTypeOptions
 
-  const normalizedKeyword = keyword.trim().toLowerCase();
+  const normalizedKeyword = keyword.trim().toLowerCase()
   const filteredFields = useMemo(() => {
     return schemaFields.filter((field) => {
       if (!selectedRoles.includes(field.role)) {
-        return false;
+        return false
       }
 
       if (!effectiveSelectedTypes.includes(field.type)) {
-        return false;
+        return false
       }
 
       if (!normalizedKeyword) {
-        return true;
+        return true
       }
 
       return (
-        field.name.toLowerCase().includes(normalizedKeyword) ||
-        field.type.toLowerCase().includes(normalizedKeyword)
-      );
-    });
-  }, [effectiveSelectedTypes, normalizedKeyword, schemaFields, selectedRoles]);
+        field.name.toLowerCase().includes(normalizedKeyword) || field.type.toLowerCase().includes(normalizedKeyword)
+      )
+    })
+  }, [effectiveSelectedTypes, normalizedKeyword, schemaFields, selectedRoles])
 
   const dimensions = useMemo(() => {
-    return filteredFields.filter((field) => field.role === 'dimension');
-  }, [filteredFields]);
+    return filteredFields.filter((field) => field.role === 'dimension')
+  }, [filteredFields])
 
   const measures = useMemo(() => {
-    return filteredFields.filter((field) => field.role === 'measure');
-  }, [filteredFields]);
+    return filteredFields.filter((field) => field.role === 'measure')
+  }, [filteredFields])
 
-  const hasFields = dimensions.length > 0 || measures.length > 0;
+  const hasFields = dimensions.length > 0 || measures.length > 0
   const hasActiveFilter =
-    selectedRoles.length !== FIELD_ROLE_OPTIONS.length ||
-    effectiveSelectedTypes.length !== fieldTypeOptions.length;
+    selectedRoles.length !== FIELD_ROLE_OPTIONS.length || effectiveSelectedTypes.length !== fieldTypeOptions.length
 
   const getFieldTypeLabel = (fieldType: string) => {
-    const key = FIELD_TYPE_LABEL_KEYS[fieldType.toLowerCase()];
-    return key ? t(key) : formatFallbackTypeLabel(fieldType);
-  };
+    const key = FIELD_TYPE_LABEL_KEYS[fieldType.toLowerCase()]
+    return key ? t(key) : formatFallbackTypeLabel(fieldType)
+  }
 
   const addField = (field: VBISchemaField) => {
     if (field.role === 'measure') {
       if (!shelfMeasures.some((measure) => measure.field === field.name)) {
-        addMeasure(field.name);
+        addMeasure(field.name)
       }
-      return;
+      return
     }
 
     if (!shelfDimensions.some((dimension) => dimension.field === field.name)) {
       addDimension(field.name, (node) => {
         if (field.isDate) {
-          node.setAggregate(getDefaultDimensionDateAggregate());
+          node.setAggregate(getDefaultDimensionDateAggregate())
         }
-      });
+      })
     }
-  };
+  }
 
   const resetFilters = () => {
-    setSelectedRoles(FIELD_ROLE_OPTIONS);
-    setSelectedTypes(fieldTypeOptions);
-  };
+    setSelectedRoles(FIELD_ROLE_OPTIONS)
+    setSelectedTypes(fieldTypeOptions)
+  }
 
   const filterContent = (
     <Flex vertical gap={8} style={{ width: 188 }}>
       <Flex align="center" justify="space-between">
-        <Typography.Text style={{ fontSize: 12, fontWeight: 500 }}>
-          {t('panelsFieldsFiltersTitle')}
-        </Typography.Text>
-        <Button
-          type="text"
-          size="small"
-          onClick={resetFilters}
-          style={{ paddingInline: 4, height: 22, fontSize: 11 }}
-        >
+        <Typography.Text style={{ fontSize: 12, fontWeight: 500 }}>{t('panelsFieldsFiltersTitle')}</Typography.Text>
+        <Button type="text" size="small" onClick={resetFilters} style={{ paddingInline: 4, height: 22, fontSize: 11 }}>
           {t('panelsFieldsFiltersReset')}
         </Button>
       </Flex>
 
       <Flex vertical gap={6}>
-        <Typography.Text
-          type="secondary"
-          style={{ fontSize: 11, lineHeight: '16px' }}
-        >
+        <Typography.Text type="secondary" style={{ fontSize: 11, lineHeight: '16px' }}>
           {t('panelsFieldsFiltersRole')}
         </Typography.Text>
-        <Checkbox.Group
-          value={selectedRoles}
-          onChange={(values) => setSelectedRoles(values as FieldRole[])}
-        >
+        <Checkbox.Group value={selectedRoles} onChange={(values) => setSelectedRoles(values as FieldRole[])}>
           <Flex vertical gap={4}>
             {FIELD_ROLE_OPTIONS.map((role) => (
               <Checkbox key={role} value={role}>
-                {role === 'dimension'
-                  ? t('panelsFieldsFilterDimension')
-                  : t('panelsFieldsFilterMeasure')}
+                {role === 'dimension' ? t('panelsFieldsFilterDimension') : t('panelsFieldsFilterMeasure')}
               </Checkbox>
             ))}
           </Flex>
@@ -358,16 +298,10 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
       <Divider style={{ margin: 0 }} />
 
       <Flex vertical gap={6}>
-        <Typography.Text
-          type="secondary"
-          style={{ fontSize: 11, lineHeight: '16px' }}
-        >
+        <Typography.Text type="secondary" style={{ fontSize: 11, lineHeight: '16px' }}>
           {t('panelsFieldsFiltersType')}
         </Typography.Text>
-        <Checkbox.Group
-          value={selectedTypes}
-          onChange={(values) => setSelectedTypes(values as string[])}
-        >
+        <Checkbox.Group value={selectedTypes} onChange={(values) => setSelectedTypes(values as string[])}>
           <Flex vertical gap={4}>
             {fieldTypeOptions.map((fieldType) => (
               <Checkbox key={fieldType} value={fieldType}>
@@ -378,15 +312,11 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
         </Checkbox.Group>
       </Flex>
     </Flex>
-  );
+  )
 
   return (
     <Card
-      title={
-        <span style={{ fontSize: 13, fontWeight: 500 }}>
-          {t('panelsFieldsTitle')}
-        </span>
-      }
+      title={<span style={{ fontSize: 13, fontWeight: 500 }}>{t('panelsFieldsTitle')}</span>}
       size="small"
       style={{ ...style }}
       styles={{
@@ -418,11 +348,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
           onChange={(event) => setKeyword(event.target.value)}
           placeholder={t('panelsFieldsSearchPlaceholder')}
           style={{ flex: 1 }}
-          prefix={
-            <SearchOutlined
-              style={{ color: token.colorTextQuaternary, fontSize: 12 }}
-            />
-          }
+          prefix={<SearchOutlined style={{ color: token.colorTextQuaternary, fontSize: 12 }} />}
         />
         <Popover
           trigger="click"
@@ -447,17 +373,9 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
                 height: 28,
                 padding: 0,
                 borderRadius: token.borderRadiusSM,
-                border: `1px solid ${
-                  hasActiveFilter
-                    ? token.colorPrimaryBorder
-                    : token.colorBorderSecondary
-                }`,
-                color: hasActiveFilter
-                  ? token.colorPrimary
-                  : token.colorTextSecondary,
-                backgroundColor: hasActiveFilter
-                  ? token.colorPrimaryBg
-                  : token.colorFillQuaternary,
+                border: `1px solid ${hasActiveFilter ? token.colorPrimaryBorder : token.colorBorderSecondary}`,
+                color: hasActiveFilter ? token.colorPrimary : token.colorTextSecondary,
+                backgroundColor: hasActiveFilter ? token.colorPrimaryBg : token.colorFillQuaternary,
               }}
             />
           </Badge>
@@ -473,17 +391,13 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
                 fields={dimensions}
                 onAddField={addField}
                 expanded={isDimensionsExpanded}
-                onToggleExpanded={() =>
-                  setIsDimensionsExpanded((expanded) => !expanded)
-                }
+                onToggleExpanded={() => setIsDimensionsExpanded((expanded) => !expanded)}
                 expandLabel={t('panelsFieldsExpand')}
                 collapseLabel={t('panelsFieldsCollapse')}
               />
             )}
 
-            {dimensions.length > 0 && measures.length > 0 && (
-              <Divider style={{ margin: '6px 0' }} />
-            )}
+            {dimensions.length > 0 && measures.length > 0 && <Divider style={{ margin: '6px 0' }} />}
 
             {measures.length > 0 && (
               <FieldSection
@@ -491,29 +405,20 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
                 fields={measures}
                 onAddField={addField}
                 expanded={isMeasuresExpanded}
-                onToggleExpanded={() =>
-                  setIsMeasuresExpanded((expanded) => !expanded)
-                }
+                onToggleExpanded={() => setIsMeasuresExpanded((expanded) => !expanded)}
                 expandLabel={t('panelsFieldsExpand')}
                 collapseLabel={t('panelsFieldsCollapse')}
               />
             )}
           </Flex>
         ) : (
-          <Flex
-            align="center"
-            justify="center"
-            style={{ height: '100%', minHeight: 120, paddingInline: 12 }}
-          >
-            <Typography.Text
-              type="secondary"
-              style={{ fontSize: 12, textAlign: 'center' }}
-            >
+          <Flex align="center" justify="center" style={{ height: '100%', minHeight: 120, paddingInline: 12 }}>
+            <Typography.Text type="secondary" style={{ fontSize: 12, textAlign: 'center' }}>
               {t('panelsFieldsEmpty')}
             </Typography.Text>
           </Flex>
         )}
       </div>
     </Card>
-  );
-});
+  )
+})

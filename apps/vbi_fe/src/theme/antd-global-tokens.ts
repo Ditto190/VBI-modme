@@ -1,11 +1,9 @@
-import type { ThemeConfig } from 'antd';
-import type { VbiThemePalette } from './palette';
+import type { ThemeConfig } from 'antd'
+import type { VbiThemePalette } from './palette'
 
-type GlobalTokens = NonNullable<ThemeConfig['token']>;
+type GlobalTokens = NonNullable<ThemeConfig['token']>
 
-export const createVbiAntdGlobalTokens = (
-  p: VbiThemePalette,
-): GlobalTokens => ({
+export const createVbiAntdGlobalTokens = (p: VbiThemePalette): GlobalTokens => ({
   colorBgBase: p.bgSolid,
   colorBgContainer: p.surfaceSolid,
   colorBgContainerDisabled: p.controlMuted,
@@ -66,4 +64,4 @@ export const createVbiAntdGlobalTokens = (
   borderRadius: 8,
   controlHeight: 32,
   boxShadow: p.shadow,
-});
+})

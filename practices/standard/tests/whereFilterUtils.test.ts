@@ -1,30 +1,27 @@
-import { expect, test } from '@rstest/core';
+import { expect, test } from '@rstest/core'
 import {
   getWhereFilterFormValue,
   getWhereFilterInputStrategy,
   normalizeWhereOperator,
   serializeWhereFilterValue,
-} from '../src/components/Filter/whereFilterUtils';
+} from '../src/components/Filter/whereFilterUtils'
 
 test('normalizes legacy operators for UI display', () => {
-  expect(normalizeWhereOperator('eq')).toBe('=');
-  expect(normalizeWhereOperator('gte')).toBe('>=');
-});
+  expect(normalizeWhereOperator('eq')).toBe('=')
+  expect(normalizeWhereOperator('gte')).toBe('>=')
+})
 
 test('selects input strategy by operator and field role', () => {
-  expect(getWhereFilterInputStrategy('in', 'dimension')).toBe('tags');
-  expect(getWhereFilterInputStrategy('in', 'measure')).toBe('tags');
-  expect(getWhereFilterInputStrategy('>', 'measure')).toBe('number');
-  expect(getWhereFilterInputStrategy('like', 'dimension')).toBe('text');
-});
+  expect(getWhereFilterInputStrategy('in', 'dimension')).toBe('tags')
+  expect(getWhereFilterInputStrategy('in', 'measure')).toBe('tags')
+  expect(getWhereFilterInputStrategy('>', 'measure')).toBe('number')
+  expect(getWhereFilterInputStrategy('like', 'dimension')).toBe('text')
+})
 
 test('converts stored tag values back to form values', () => {
-  expect(getWhereFilterFormValue('in', ['华东', '华北'])).toEqual([
-    '华东',
-    '华北',
-  ]);
-  expect(getWhereFilterFormValue('in', '华东')).toEqual(['华东']);
-});
+  expect(getWhereFilterFormValue('in', ['华东', '华北'])).toEqual(['华东', '华北'])
+  expect(getWhereFilterFormValue('in', '华东')).toEqual(['华东'])
+})
 
 test('serializes tag and numeric values with operator-aware rules', () => {
   expect(
@@ -33,7 +30,7 @@ test('serializes tag and numeric values with operator-aware rules', () => {
       fieldRole: 'dimension',
       value: ['华东', '华北'],
     }),
-  ).toEqual(['华东', '华北']);
+  ).toEqual(['华东', '华北'])
 
   expect(
     serializeWhereFilterValue({
@@ -41,7 +38,7 @@ test('serializes tag and numeric values with operator-aware rules', () => {
       fieldRole: 'measure',
       value: ['1', '2.5'],
     }),
-  ).toEqual([1, 2.5]);
+  ).toEqual([1, 2.5])
 
   expect(
     serializeWhereFilterValue({
@@ -49,5 +46,5 @@ test('serializes tag and numeric values with operator-aware rules', () => {
       fieldRole: 'measure',
       value: '42',
     }),
-  ).toBe(42);
-});
+  ).toBe(42)
+})

@@ -1,15 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class ChartEntity {
   @ApiProperty()
-  id: string;
+  id: string
 
   @ApiProperty({ nullable: true, required: false })
-  name: string | null;
+  name: string | null
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt: Date
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt: Date
 }

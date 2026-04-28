@@ -12,8 +12,8 @@
     "dev": "pnpm --filter=website run dev",
     "tui": "pnpm --filter=@visactor/headless-bi-cli run tui",
     "build": "turbo build",
-    "format": "pnpm prettier --write .",
-    "lint": "pnpm -r lint",
+    "format": "oxfmt .",
+    "lint": "oxlint .",
     "typecheck": "pnpm turbo typecheck",
     "g": "pnpm -r g && pnpm run format",
     "dev:rsdoctor": "pnpm --filter=@visactor/vseed run dev:rsdoctor",
@@ -27,12 +27,17 @@
     "vbi:dev:down": "docker compose -f ./docker/docker-compose.dev.yml down",
     "vbi:dev:rebuild": "docker compose -f ./docker/docker-compose.dev.yml down && docker compose -f ./docker/docker-compose.dev.yml build --no-cache && docker compose -f ./docker/docker-compose.dev.yml up --force-recreate",
     "prepare": "husky",
-    "postinstall": "shx test -e .env || shx cp .env.example .env"
+    "postinstall": "shx test -e .env || shx cp .env.example .env",
+    "format:check": "oxfmt --check .",
+    "lint:fix": "oxlint --fix ."
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,md,mdx}": [
-      "pnpm format",
-      "pnpm lint"
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint --fix --no-error-on-unmatched-pattern"
+    ],
+    "*.{json,md,mdx,css,scss,html,yml,yaml}": [
+      "oxfmt --no-error-on-unmatched-pattern"
     ]
   },
   "workspaces": [
@@ -49,9 +54,10 @@
     "husky": "9.1.7",
     "lint-staged": "16.1.6",
     "node-fetch": "2.6.7",
-    "prettier": "3.6.2",
     "shx": "0.4.0",
-    "turbo": "2.8.19"
+    "turbo": "2.8.19",
+    "oxfmt": "0.47.0",
+    "oxlint": "1.62.0"
   },
   "packageManager": "pnpm@10.26.1",
   "license": "MIT",

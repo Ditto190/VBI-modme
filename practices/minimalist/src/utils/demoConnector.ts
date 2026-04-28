@@ -1,15 +1,10 @@
-import { VBI, type VBIChartBuilder } from '@visactor/vbi';
-import {
-  VQuery,
-  type DatasetColumn,
-  type RawDatasetSource,
-  type VQueryDSL,
-} from '@visactor/vquery';
+import { VBI, type VBIChartBuilder } from '@visactor/vbi'
+import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
 
-export const connectorId = 'demo';
+export const connectorId = 'demo'
 
 export const registerDemoConnector = () => {
-  const vquery = new VQuery();
+  const vquery = new VQuery()
   VBI.registerConnector(connectorId, async () => {
     return {
       discoverSchema: async () => {
@@ -35,33 +30,25 @@ export const registerDemoConnector = () => {
           { name: 'amount', type: 'number' },
           { name: 'discount', type: 'number' },
           { name: 'profit', type: 'number' },
-        ];
+        ]
       },
       query: async ({ queryDSL, schema }) => {
         if (!(await vquery.hasDataset(connectorId))) {
-          const url = 'https://visactor.github.io/VBI/dataset/supermarket.csv';
-          const datasetSource = { type: 'csv', rawDataset: url };
-          await vquery.createDataset(
-            connectorId,
-            schema as DatasetColumn[],
-            datasetSource as RawDatasetSource,
-          );
+          const url = 'https://visactor.github.io/VBI/dataset/supermarket.csv'
+          const datasetSource = { type: 'csv', rawDataset: url }
+          await vquery.createDataset(connectorId, schema as DatasetColumn[], datasetSource as RawDatasetSource)
         }
-        const dataset = await vquery.connectDataset(connectorId);
-        const queryResult = await dataset.query(
-          queryDSL as VQueryDSL<Record<string, string | number>>,
-        );
+        const dataset = await vquery.connectDataset(connectorId)
+        const queryResult = await dataset.query(queryDSL as VQueryDSL<Record<string, string | number>>)
 
         return {
           dataset: queryResult.dataset,
-        };
+        }
       },
-    };
-  });
-  return connectorId;
-};
+    }
+  })
+  return connectorId
+}
 
-registerDemoConnector();
-export const defaultBuilder: VBIChartBuilder = VBI.chart.create(
-  VBI.chart.createEmpty(connectorId),
-);
+registerDemoConnector()
+export const defaultBuilder: VBIChartBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId))

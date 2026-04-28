@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DuckDBBundles, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm'
 import { AsyncDuckDB, selectBundle, ConsoleLogger } from '@duckdb/duckdb-wasm'
 import { QueryAdapter } from '../../types'

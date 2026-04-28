@@ -1,11 +1,7 @@
-import {
-  isVBIHavingFilter,
-  isVBIHavingGroup,
-  type VBIHavingClause,
-} from '@visactor/vbi';
-import { theme } from 'antd';
-import { useCallback, useMemo } from 'react';
-import { HavingFilterPanel, type HavingItem } from 'src/components/Filter';
+import { isVBIHavingFilter, isVBIHavingGroup, type VBIHavingClause } from '@visactor/vbi'
+import { theme } from 'antd'
+import { useCallback, useMemo } from 'react'
+import { HavingFilterPanel, type HavingItem } from 'src/components/Filter'
 import {
   getDefaultHavingAggregateByFieldRole,
   getDefaultHavingOperator,
@@ -14,76 +10,68 @@ import {
   normalizeHavingAggregate,
   normalizeHavingOperator,
   toHavingDslOperator,
-} from 'src/components/Filter/havingFilterUtils';
-import {
-  useVBIBuilder,
-  useVBIHavingFilter,
-  useVBISchemaFields,
-} from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
-import type { FieldRole } from 'src/utils/fieldRole';
-import { FilterShelf, type FilterShelfTone } from '../common/FilterShelf';
-import { useFilterRootOperator } from '../hooks/useFilterRootOperator';
-import {
-  reorderYArrayByInsertIndex,
-  type YArrayLike,
-} from '../utils/reorderUtils';
+} from 'src/components/Filter/havingFilterUtils'
+import { useVBIBuilder, useVBIHavingFilter, useVBISchemaFields } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
+import type { FieldRole } from 'src/utils/fieldRole'
+import { FilterShelf, type FilterShelfTone } from '../common/FilterShelf'
+import { useFilterRootOperator } from '../hooks/useFilterRootOperator'
+import { reorderYArrayByInsertIndex, type YArrayLike } from '../utils/reorderUtils'
 
 type HavingShelfItem = HavingItem & {
-  id: string;
-};
+  id: string
+}
 
 const flattenHavingFilters = (
   clauses: VBIHavingClause[],
   fieldRoleMap: Record<string, FieldRole>,
 ): HavingShelfItem[] => {
-  const result: HavingShelfItem[] = [];
+  const result: HavingShelfItem[] = []
 
   const traverse = (items: VBIHavingClause[]) => {
     items.forEach((item) => {
       if (isVBIHavingGroup(item)) {
-        traverse(item.conditions);
-        return;
+        traverse(item.conditions)
+        return
       }
 
       if (!isVBIHavingFilter(item) || !item.id) {
-        return;
+        return
       }
 
-      const fieldRole = fieldRoleMap[item.field] ?? 'measure';
+      const fieldRole = fieldRoleMap[item.field] ?? 'measure'
       result.push({
         id: item.id,
         field: item.field,
         aggregate: normalizeHavingAggregate(item.aggregate, fieldRole),
         operator: normalizeHavingOperator(item.op),
         value: item.value,
-      });
-    });
-  };
+      })
+    })
+  }
 
-  traverse(clauses);
-  return result;
-};
+  traverse(clauses)
+  return result
+}
 
 export const HavingShelf = ({
   style,
   showRootOperator = true,
 }: {
-  style?: React.CSSProperties;
-  showRootOperator?: boolean;
+  style?: React.CSSProperties
+  showRootOperator?: boolean
 }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const { token } = theme.useToken();
-  const { theme: themeMode } = useVBIBuilder(builder);
-  const { t } = useTranslation();
-  const { filters: havingFilterClauses } = useVBIHavingFilter(builder);
-  const { schemaFields, fieldRoleMap, fieldTypeMap } =
-    useVBISchemaFields(builder);
+  const builder = useVBIStore((state) => state.builder)
+  const { token } = theme.useToken()
+  const { theme: themeMode } = useVBIBuilder(builder)
+  const { t } = useTranslation()
+  const { filters: havingFilterClauses } = useVBIHavingFilter(builder)
+  const { schemaFields, fieldRoleMap, fieldTypeMap } = useVBISchemaFields(builder)
   const { operator, setOperator } = useFilterRootOperator({
     builder,
     type: 'having',
-  });
+  })
 
   const allFields = useMemo(() => {
     return schemaFields.map((field) => ({
@@ -91,22 +79,18 @@ export const HavingShelf = ({
       role: field.role,
       type: field.type,
       isDate: field.isDate,
-    }));
-  }, [schemaFields]);
+    }))
+  }, [schemaFields])
 
   const havingFilterItems = useMemo(() => {
-    return flattenHavingFilters(havingFilterClauses, fieldRoleMap);
-  }, [havingFilterClauses, fieldRoleMap]);
+    return flattenHavingFilters(havingFilterClauses, fieldRoleMap)
+  }, [havingFilterClauses, fieldRoleMap])
 
   const havingShelfTone = useMemo<FilterShelfTone>(() => {
-    const accent = themeMode === 'dark' ? '#5cdbd3' : '#13c2c2';
-    const border = themeMode === 'dark' ? 'rgba(92, 219, 211, 0.4)' : '#87e8de';
-    const hoverBackground =
-      themeMode === 'dark' ? 'rgba(19, 194, 194, 0.14)' : '#e6fffb';
-    const iconBackground =
-      themeMode === 'dark'
-        ? 'rgba(92, 219, 211, 0.14)'
-        : 'rgba(19, 194, 194, 0.12)';
+    const accent = themeMode === 'dark' ? '#5cdbd3' : '#13c2c2'
+    const border = themeMode === 'dark' ? 'rgba(92, 219, 211, 0.4)' : '#87e8de'
+    const hoverBackground = themeMode === 'dark' ? 'rgba(19, 194, 194, 0.14)' : '#e6fffb'
+    const iconBackground = themeMode === 'dark' ? 'rgba(92, 219, 211, 0.14)' : 'rgba(19, 194, 194, 0.12)'
 
     return {
       trackBackground: token.colorBgContainer,
@@ -122,27 +106,23 @@ export const HavingShelf = ({
       iconBackground,
       iconHoverBackground: hoverBackground,
       iconColor: accent,
-    };
-  }, [themeMode, token]);
+    }
+  }, [themeMode, token])
 
   const havingRootOperatorColors = useMemo(() => {
     return {
       border: themeMode === 'dark' ? 'rgba(92, 219, 211, 0.4)' : '#87e8de',
       color: themeMode === 'dark' ? '#5cdbd3' : '#13c2c2',
       background: token.colorBgContainer,
-    };
-  }, [themeMode, token]);
+    }
+  }, [themeMode, token])
 
   const reorderHavingFilters = useCallback(
     (dragIndex: number, insertIndex: number) => {
-      const havingRoot = builder.dsl.get('havingFilter') as
-        | { get: (key: string) => unknown }
-        | undefined;
-      const conditions = havingRoot?.get('conditions') as
-        | YArrayLike
-        | undefined;
+      const havingRoot = builder.dsl.get('havingFilter') as { get: (key: string) => unknown } | undefined
+      const conditions = havingRoot?.get('conditions') as YArrayLike | undefined
       if (!conditions) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
@@ -150,88 +130,80 @@ export const HavingShelf = ({
           yArray: conditions,
           dragIndex,
           insertIndex,
-        });
-      });
+        })
+      })
     },
     [builder],
-  );
+  )
 
   const handleHavingFilterAdd = useCallback(
     (item: HavingItem) => {
       if (!builder) {
-        return;
+        return
       }
 
-      const fieldRole = fieldRoleMap[item.field] ?? 'measure';
-      const aggregate = normalizeHavingAggregate(item.aggregate, fieldRole);
+      const fieldRole = fieldRoleMap[item.field] ?? 'measure'
+      const aggregate = normalizeHavingAggregate(item.aggregate, fieldRole)
 
       builder.doc.transact(() => {
         builder.havingFilter.add(item.field, (node) => {
-          node.setAggregate(aggregate);
-          node.setOperator(toHavingDslOperator(item.operator));
+          node.setAggregate(aggregate)
+          node.setOperator(toHavingDslOperator(item.operator))
           if (item.value !== undefined) {
-            node.setValue(item.value);
+            node.setValue(item.value)
           }
-        });
-      });
+        })
+      })
     },
     [builder, fieldRoleMap],
-  );
+  )
 
   const handleHavingFilterRemove = useCallback(
     (id: string) => {
       if (!builder) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
-        builder.havingFilter.remove(id);
-      });
+        builder.havingFilter.remove(id)
+      })
     },
     [builder],
-  );
+  )
 
   const handleHavingFilterUpdate = useCallback(
     (updatedItem: HavingItem) => {
       if (!builder || !updatedItem.id) {
-        return;
+        return
       }
 
-      const existingFilter = builder.havingFilter.find(
-        (entry) => entry.getId() === updatedItem.id,
-      );
-      const existingField =
-        existingFilter && 'getField' in existingFilter
-          ? existingFilter.getField()
-          : undefined;
-      const fieldRole = fieldRoleMap[updatedItem.field] ?? 'measure';
-      const aggregate = normalizeHavingAggregate(
-        updatedItem.aggregate,
-        fieldRole,
-      );
+      const existingFilter = builder.havingFilter.find((entry) => entry.getId() === updatedItem.id)
+      const existingField = existingFilter && 'getField' in existingFilter ? existingFilter.getField() : undefined
+      const fieldRole = fieldRoleMap[updatedItem.field] ?? 'measure'
+      const aggregate = normalizeHavingAggregate(updatedItem.aggregate, fieldRole)
 
       builder.doc.transact(() => {
         if (existingField !== updatedItem.field) {
-          builder.havingFilter.remove(updatedItem.id as string);
+          builder.havingFilter.remove(updatedItem.id as string)
           builder.havingFilter.add(updatedItem.field, (node) => {
-            node.setAggregate(aggregate);
-            node.setOperator(toHavingDslOperator(updatedItem.operator));
+            node.setAggregate(aggregate)
+            node.setOperator(toHavingDslOperator(updatedItem.operator))
             if (updatedItem.value !== undefined) {
-              node.setValue(updatedItem.value);
+              node.setValue(updatedItem.value)
             }
-          });
-          return;
+          })
+          return
         }
 
         builder.havingFilter.update(updatedItem.id as string, (node) => {
-          node.setAggregate(aggregate);
-          node.setOperator(toHavingDslOperator(updatedItem.operator));
-          node.setValue(updatedItem.value);
-        });
-      });
+          node.setAggregate(aggregate)
+          node.setOperator(toHavingDslOperator(updatedItem.operator))
+          node.setValue(updatedItem.value)
+        })
+      })
     },
     [builder, fieldRoleMap],
-  );
+  )
 
   return (
     <FilterShelf
@@ -253,16 +225,12 @@ export const HavingShelf = ({
       })}
       onAddFieldAt={(payload, insertIndex) => {
         if (!payload.field) {
-          return;
+          return
         }
 
-        const currentLength = havingFilterItems.length;
-        const defaultAggregate = getDefaultHavingAggregateByFieldRole(
-          payload.role,
-        );
-        const defaultOperator = getDefaultHavingOperator(
-          isHavingNumericAggregate(payload.role, defaultAggregate),
-        );
+        const currentLength = havingFilterItems.length
+        const defaultAggregate = getDefaultHavingAggregateByFieldRole(payload.role)
+        const defaultOperator = getDefaultHavingOperator(isHavingNumericAggregate(payload.role, defaultAggregate))
 
         handleHavingFilterAdd({
           id: '',
@@ -270,27 +238,27 @@ export const HavingShelf = ({
           aggregate: defaultAggregate,
           operator: defaultOperator,
           value: undefined,
-        });
+        })
 
         if (insertIndex < currentLength) {
-          reorderHavingFilters(currentLength, insertIndex);
+          reorderHavingFilters(currentLength, insertIndex)
         }
       }}
       onReorder={reorderHavingFilters}
       onRemove={(id) => {
         if (id.startsWith('temp_')) {
-          return;
+          return
         }
-        handleHavingFilterRemove(id);
+        handleHavingFilterRemove(id)
       }}
       renderEditor={({ item, isOpen, close }) => {
         const handleUpdate = (filters: HavingItem[]) => {
-          const firstFilter = filters[0];
+          const firstFilter = filters[0]
           if (firstFilter) {
-            handleHavingFilterUpdate(firstFilter);
+            handleHavingFilterUpdate(firstFilter)
           }
-          close();
-        };
+          close()
+        }
 
         return (
           <HavingFilterPanel
@@ -302,8 +270,8 @@ export const HavingShelf = ({
             open={isOpen}
             fixedField={item.field}
           />
-        );
+        )
       }}
     />
-  );
-};
+  )
+}

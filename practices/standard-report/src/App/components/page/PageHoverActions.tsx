@@ -1,21 +1,15 @@
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { Button, Tooltip } from 'antd'
 
 type PageHoverActionsProps = {
-  canRemove: boolean;
-  showPlaceholder: boolean;
-  onAddPage: () => void;
-  onEdit: () => void;
-  onRemovePage: () => void;
-};
+  canRemove: boolean
+  showPlaceholder: boolean
+  onAddPage: () => void
+  onEdit: () => void
+  onRemovePage: () => void
+}
 
-const getActions = ({
-  canRemove,
-  onAddPage,
-  onEdit,
-  onRemovePage,
-  showPlaceholder,
-}: PageHoverActionsProps) => {
+const getActions = ({ canRemove, onAddPage, onEdit, onRemovePage, showPlaceholder }: PageHoverActionsProps) => {
   return [
     {
       icon: <EditOutlined />,
@@ -39,17 +33,14 @@ const getActions = ({
           },
         ]
       : []),
-  ];
-};
+  ]
+}
 
 export const PageHoverActions = (props: PageHoverActionsProps) => {
-  const actions = getActions(props);
+  const actions = getActions(props)
 
   return (
-    <div
-      className="standard-report-page-toolset"
-      data-testid="standard-report-actions"
-    >
+    <div className="standard-report-page-toolset" data-testid="standard-report-actions">
       {actions.map((action) => (
         <Tooltip key={action.key} title={action.label}>
           <Button
@@ -65,5 +56,5 @@ export const PageHoverActions = (props: PageHoverActionsProps) => {
         </Tooltip>
       ))}
     </div>
-  );
-};
+  )
+}

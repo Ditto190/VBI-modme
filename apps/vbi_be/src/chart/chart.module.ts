@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { PrismaService } from '../app/prisma.service';
-import { ChartController } from './chart.controller';
-import { ChartService } from './chart.service';
+import { Module } from '@nestjs/common'
+import { PrismaService } from '../app/prisma.service'
+import { ChartController } from './chart.controller'
+import { ChartService } from './chart.service'
 
 @Module({
   controllers: [ChartController],

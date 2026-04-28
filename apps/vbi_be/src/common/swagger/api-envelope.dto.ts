@@ -1,27 +1,27 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class ApiEnvelopeDto {
   @ApiProperty({ example: 200 })
-  code: number;
+  code: number
 
   @ApiProperty({ example: 'Success' })
-  message: string;
+  message: string
 
   @ApiProperty({
     additionalProperties: true,
     nullable: true,
     type: 'object',
   })
-  data: Record<string, unknown> | null;
+  data: Record<string, unknown> | null
 }
 
 export class ApiErrorEnvelopeDto {
   @ApiProperty({ example: 400 })
-  code: number;
+  code: number
 
   @ApiProperty({ example: 'Bad Request' })
-  message: string;
+  message: string
 
   @ApiProperty({ nullable: true, example: null })
-  data: null;
+  data: null
 }

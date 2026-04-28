@@ -1,21 +1,21 @@
-import type { VBIReportBuilder, VBIReportPageDSL } from '@visactor/vbi';
-import { Carousel } from 'antd';
-import type { CarouselRef } from 'antd/es/carousel';
-import type { CSSProperties } from 'react';
-import { useCallback, useRef } from 'react';
-import { useCarouselDisplayIndex } from '../../hooks/useCarouselDisplayIndex';
-import { PagePreviewCard } from '../page/PagePreviewCard';
+import type { VBIReportBuilder, VBIReportPageDSL } from '@visactor/vbi'
+import { Carousel } from 'antd'
+import type { CarouselRef } from 'antd/es/carousel'
+import type { CSSProperties } from 'react'
+import { useCallback, useRef } from 'react'
+import { useCarouselDisplayIndex } from '../../hooks/useCarouselDisplayIndex'
+import { PagePreviewCard } from '../page/PagePreviewCard'
 
 type ReportCarouselProps = {
-  pages: VBIReportPageDSL[];
-  activePageId: string;
-  reportBuilder: VBIReportBuilder;
-  style?: CSSProperties;
-  onAdd: () => void;
-  onChange: (pageId: string) => void;
-  onEdit: (pageId: string, sourceElement?: HTMLElement | null) => void;
-  onRemove: (pageId: string) => void;
-};
+  pages: VBIReportPageDSL[]
+  activePageId: string
+  reportBuilder: VBIReportBuilder
+  style?: CSSProperties
+  onAdd: () => void
+  onChange: (pageId: string) => void
+  onEdit: (pageId: string, sourceElement?: HTMLElement | null) => void
+  onRemove: (pageId: string) => void
+}
 
 export const ReportCarousel = ({
   pages,
@@ -26,15 +26,15 @@ export const ReportCarousel = ({
   onEdit,
   onRemove,
 }: ReportCarouselProps) => {
-  const carouselRef = useRef<CarouselRef | null>(null);
-  const { goTo } = useCarouselDisplayIndex(pages, activePageId, carouselRef);
+  const carouselRef = useRef<CarouselRef | null>(null)
+  const { goTo } = useCarouselDisplayIndex(pages, activePageId, carouselRef)
   const handleAfterChange = useCallback(
     (index: number) => {
-      const nextPage = pages[index];
-      if (nextPage) onChange(nextPage.id);
+      const nextPage = pages[index]
+      if (nextPage) onChange(nextPage.id)
     },
     [onChange, pages],
-  );
+  )
 
   return (
     <Carousel
@@ -60,5 +60,5 @@ export const ReportCarousel = ({
         </div>
       ))}
     </Carousel>
-  );
-};
+  )
+}

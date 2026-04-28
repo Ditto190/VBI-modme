@@ -1,14 +1,12 @@
-import { createPortal } from 'react-dom';
-import type { CollaboratorClient } from './collaborators-state';
+import { createPortal } from 'react-dom'
+import type { CollaboratorClient } from './collaborators-state'
 
 type CollaboratorCursorOverlayProps = {
-  users: CollaboratorClient[];
-};
+  users: CollaboratorClient[]
+}
 
-export const CollaboratorCursorOverlay = ({
-  users,
-}: CollaboratorCursorOverlayProps) => {
-  if (typeof document === 'undefined') return null;
+export const CollaboratorCursorOverlay = ({ users }: CollaboratorCursorOverlayProps) => {
+  if (typeof document === 'undefined') return null
 
   return createPortal(
     <div
@@ -21,9 +19,9 @@ export const CollaboratorCursorOverlay = ({
       }}
     >
       {users.map((user) => {
-        if (!user.cursor) return null;
+        if (!user.cursor) return null
 
-        const { x, y } = user.cursor;
+        const { x, y } = user.cursor
 
         return (
           <div
@@ -71,9 +69,9 @@ export const CollaboratorCursorOverlay = ({
               {user.name}
             </div>
           </div>
-        );
+        )
       })}
     </div>,
     document.body,
-  );
-};
+  )
+}

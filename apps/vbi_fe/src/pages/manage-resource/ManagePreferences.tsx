@@ -1,24 +1,16 @@
-import {
-  DownOutlined,
-  GlobalOutlined,
-  MoonOutlined,
-  SunOutlined,
-} from '@ant-design/icons';
-import { Button, Dropdown } from 'antd';
-import type { AppLocale } from '../../i18n';
-import { useTranslation } from '../../i18n';
-import {
-  type AppThemeMode,
-  useAppPreferencesStore,
-} from '../../stores/app-preferences.store';
-import './manage-preferences.css';
+import { DownOutlined, GlobalOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons'
+import { Button, Dropdown } from 'antd'
+import type { AppLocale } from '../../i18n'
+import { useTranslation } from '../../i18n'
+import { type AppThemeMode, useAppPreferencesStore } from '../../stores/app-preferences.store'
+import './manage-preferences.css'
 
-const themeOptions: AppThemeMode[] = ['light', 'dark'];
+const themeOptions: AppThemeMode[] = ['light', 'dark']
 
 export const ManagePreferences = () => {
-  const themeMode = useAppPreferencesStore((state) => state.themeMode);
-  const setThemeMode = useAppPreferencesStore((state) => state.setThemeMode);
-  const { locale, setLocale, t } = useTranslation();
+  const themeMode = useAppPreferencesStore((state) => state.themeMode)
+  const setThemeMode = useAppPreferencesStore((state) => state.setThemeMode)
+  const { locale, setLocale, t } = useTranslation()
 
   return (
     <div className="manage-preferences" aria-label={t('app.theme.switch')}>
@@ -33,9 +25,7 @@ export const ManagePreferences = () => {
             onClick={() => setThemeMode(mode)}
           >
             {mode === 'light' ? <SunOutlined /> : <MoonOutlined />}
-            <span>
-              {mode === 'light' ? t('app.theme.light') : t('app.theme.dark')}
-            </span>
+            <span>{mode === 'light' ? t('app.theme.light') : t('app.theme.dark')}</span>
           </button>
         ))}
       </div>
@@ -50,17 +40,11 @@ export const ManagePreferences = () => {
           ],
         }}
       >
-        <Button
-          className="manage-locale-button"
-          icon={<GlobalOutlined />}
-          shape="round"
-        >
-          <span>
-            {locale === 'zh-CN' ? t('app.language.zh') : t('app.language.en')}
-          </span>
+        <Button className="manage-locale-button" icon={<GlobalOutlined />} shape="round">
+          <span>{locale === 'zh-CN' ? t('app.language.zh') : t('app.language.en')}</span>
           <DownOutlined className="manage-locale-caret" />
         </Button>
       </Dropdown>
     </div>
-  );
-};
+  )
+}

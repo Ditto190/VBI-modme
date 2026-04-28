@@ -4,22 +4,22 @@ import {
   FileTextOutlined,
   FundProjectionScreenOutlined,
   PlusCircleOutlined,
-} from '@ant-design/icons';
-import { Button, Dropdown } from 'antd';
-import type { MenuProps } from 'antd';
-import { useTranslation } from '../../i18n';
+} from '@ant-design/icons'
+import { Button, Dropdown } from 'antd'
+import type { MenuProps } from 'antd'
+import { useTranslation } from '../../i18n'
 
 type PageSidebarMenuProps = {
-  hasChart: boolean;
-  hasInsight: boolean;
-  pageCount: number;
-  pageId: string;
-  addChart: (pageId: string) => unknown;
-  addInsight: (pageId: string) => unknown;
-  removeChart: (pageId: string) => unknown;
-  removeInsight: (pageId: string) => unknown;
-  removePage: (pageId: string) => unknown;
-};
+  hasChart: boolean
+  hasInsight: boolean
+  pageCount: number
+  pageId: string
+  addChart: (pageId: string) => unknown
+  addInsight: (pageId: string) => unknown
+  removeChart: (pageId: string) => unknown
+  removeInsight: (pageId: string) => unknown
+  removePage: (pageId: string) => unknown
+}
 
 export const PageSidebarMenu = ({
   addChart,
@@ -32,7 +32,7 @@ export const PageSidebarMenu = ({
   removeInsight,
   removePage,
 }: PageSidebarMenuProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const menuItems: MenuProps['items'] = [
     {
       disabled: hasChart,
@@ -73,7 +73,7 @@ export const PageSidebarMenu = ({
       label: t('reportDetail.deletePage'),
       onClick: () => void removePage(pageId),
     },
-  ];
+  ]
 
   return (
     <Dropdown menu={{ items: menuItems }} trigger={['click']}>
@@ -87,5 +87,5 @@ export const PageSidebarMenu = ({
         onClick={(event) => event.stopPropagation()}
       />
     </Dropdown>
-  );
-};
+  )
+}

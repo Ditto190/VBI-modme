@@ -1,27 +1,27 @@
-import { Table } from 'antd';
-import type { TableProps } from 'antd';
-import { useCallback, useMemo } from 'react';
-import type { Key, ReactNode } from 'react';
-import { useTranslation } from '../../i18n';
-import type { ResourceItem } from '../../types';
-import { ManageResourceToolbar } from './ManageResourceToolbar';
+import { Table } from 'antd'
+import type { TableProps } from 'antd'
+import { useCallback, useMemo } from 'react'
+import type { Key, ReactNode } from 'react'
+import { useTranslation } from '../../i18n'
+import type { ResourceItem } from '../../types'
+import { ManageResourceToolbar } from './ManageResourceToolbar'
 
 type Props = {
-  children?: ReactNode;
-  columns: TableProps<ResourceItem>['columns'];
-  createLabel: string;
-  dataSource: ResourceItem[];
-  loading?: boolean;
-  onClearSelection: () => void;
-  onCreate: () => void;
-  onDeleteSelected: () => Promise<void>;
-  onSearchTextChange: (value: string) => void;
-  onSelectAllFiltered: () => void;
-  searchText: string;
-  selectedRowKeys: Key[];
-  setSelectedRowKeys(selectedRowKeys: string[]): void;
-  title: string;
-};
+  children?: ReactNode
+  columns: TableProps<ResourceItem>['columns']
+  createLabel: string
+  dataSource: ResourceItem[]
+  loading?: boolean
+  onClearSelection: () => void
+  onCreate: () => void
+  onDeleteSelected: () => Promise<void>
+  onSearchTextChange: (value: string) => void
+  onSelectAllFiltered: () => void
+  searchText: string
+  selectedRowKeys: Key[]
+  setSelectedRowKeys(selectedRowKeys: string[]): void
+  title: string
+}
 
 export const ManageResourcePageShell = ({
   children,
@@ -39,18 +39,18 @@ export const ManageResourcePageShell = ({
   setSelectedRowKeys,
   title,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const rowSelection = useMemo<TableProps<ResourceItem>['rowSelection']>(
     () => ({
       selectedRowKeys,
       onChange: (keys) => setSelectedRowKeys(keys.map(String)),
     }),
     [selectedRowKeys, setSelectedRowKeys],
-  );
+  )
   const deleteSelected = useCallback(async () => {
-    if (!selectedRowKeys.length) return;
-    await onDeleteSelected();
-  }, [onDeleteSelected, selectedRowKeys.length]);
+    if (!selectedRowKeys.length) return
+    await onDeleteSelected()
+  }, [onDeleteSelected, selectedRowKeys.length])
 
   return (
     <section className="manage-page">
@@ -90,5 +90,5 @@ export const ManageResourcePageShell = ({
       </div>
       {children}
     </section>
-  );
-};
+  )
+}

@@ -1,85 +1,72 @@
-import {
-  Button,
-  Flex,
-  Input,
-  InputNumber,
-  Select,
-  Segmented,
-  Switch,
-  Typography,
-  theme,
-} from 'antd';
-import { useCallback, useMemo } from 'react';
-import type { VBIMeasureFormat } from '@visactor/vbi';
-import { useTranslation } from 'src/i18n';
+import { Button, Flex, Input, InputNumber, Select, Segmented, Switch, Typography, theme } from 'antd'
+import { useCallback, useMemo } from 'react'
+import type { VBIMeasureFormat } from '@visactor/vbi'
+import { useTranslation } from 'src/i18n'
 
 type MeasureFormatPanelProps = {
-  format?: VBIMeasureFormat;
-  onFormatChange: (format: VBIMeasureFormat | undefined) => void;
-};
+  format?: VBIMeasureFormat
+  onFormatChange: (format: VBIMeasureFormat | undefined) => void
+}
 
-const FORMAT_TYPES = ['number', 'percent', 'permille', 'scientific'] as const;
+const FORMAT_TYPES = ['number', 'percent', 'permille', 'scientific'] as const
 
 const FORMAT_TYPE_LABEL_KEYS: Record<string, string> = {
   number: 'formatTypeNumber',
   percent: 'formatTypePercent',
   permille: 'formatTypePermille',
   scientific: 'formatTypeScientific',
-};
+}
 
 const LABEL_STYLE: React.CSSProperties = {
   fontSize: 12,
   marginBottom: 0,
   whiteSpace: 'nowrap',
   minWidth: 70,
-};
+}
 
 const PANEL_STYLE: React.CSSProperties = {
   width: 280,
   padding: '14px 16px 12px',
-};
+}
 
 const FormatForm = (props: {
-  format?: VBIMeasureFormat;
-  onFormatChange: (format: VBIMeasureFormat | undefined) => void;
+  format?: VBIMeasureFormat
+  onFormatChange: (format: VBIMeasureFormat | undefined) => void
 }) => {
-  const { format, onFormatChange } = props;
-  const { t } = useTranslation();
+  const { format, onFormatChange } = props
+  const { t } = useTranslation()
 
-  const isAutoFormat =
-    format !== undefined &&
-    'autoFormat' in format &&
-    format.autoFormat === true;
+  const isAutoFormat = format !== undefined && 'autoFormat' in format && format.autoFormat === true
 
   const customFormat = useMemo(() => {
     if (!format || isAutoFormat) {
-      return {};
+      return {}
     }
-    return format;
-  }, [format, isAutoFormat]);
+    return format
+  }, [format, isAutoFormat])
 
   const handleAutoToggle = useCallback(
     (checked: boolean) => {
       if (checked) {
-        onFormatChange({ autoFormat: true });
+        onFormatChange({ autoFormat: true })
       } else {
-        onFormatChange({ type: 'number', fractionDigits: 2 });
+        onFormatChange({ type: 'number', fractionDigits: 2 })
       }
     },
     [onFormatChange],
-  );
+  )
 
   const updateField = useCallback(
     (key: string, value: unknown) => {
-      const base = isAutoFormat ? {} : { ...customFormat };
+      const base = isAutoFormat ? {} : { ...customFormat }
       onFormatChange({
         ...base,
         autoFormat: false,
         [key]: value,
-      } as VBIMeasureFormat);
+      } as VBIMeasureFormat)
     },
     [customFormat, isAutoFormat, onFormatChange],
-  );
+  )
 
   return (
     <Flex vertical gap={10} style={PANEL_STYLE}>
@@ -97,9 +84,7 @@ const FormatForm = (props: {
       {!isAutoFormat && (
         <>
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatTypeLabel')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatTypeLabel')}</Typography.Text>
             <Select
               size="small"
               variant="filled"
@@ -114,40 +99,30 @@ const FormatForm = (props: {
           </Flex>
 
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatPrefix')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatPrefix')}</Typography.Text>
             <Input
               size="small"
               variant="filled"
               value={customFormat.prefix ?? ''}
-              onChange={(e) =>
-                updateField('prefix', e.target.value || undefined)
-              }
+              onChange={(e) => updateField('prefix', e.target.value || undefined)}
               style={{ width: 140 }}
               placeholder="$, \u00A5..."
             />
           </Flex>
 
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatSuffix')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatSuffix')}</Typography.Text>
             <Input
               size="small"
               variant="filled"
               value={customFormat.suffix ?? ''}
-              onChange={(e) =>
-                updateField('suffix', e.target.value || undefined)
-              }
+              onChange={(e) => updateField('suffix', e.target.value || undefined)}
               style={{ width: 140 }}
             />
           </Flex>
 
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatRatio')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatRatio')}</Typography.Text>
             <InputNumber
               size="small"
               variant="filled"
@@ -159,25 +134,19 @@ const FormatForm = (props: {
           </Flex>
 
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatSymbol')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatSymbol')}</Typography.Text>
             <Input
               size="small"
               variant="filled"
               value={customFormat.symbol ?? ''}
-              onChange={(e) =>
-                updateField('symbol', e.target.value || undefined)
-              }
+              onChange={(e) => updateField('symbol', e.target.value || undefined)}
               style={{ width: 140 }}
               placeholder="\u4E07, K..."
             />
           </Flex>
 
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatFractionDigits')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatFractionDigits')}</Typography.Text>
             <InputNumber
               size="small"
               variant="filled"
@@ -190,9 +159,7 @@ const FormatForm = (props: {
           </Flex>
 
           <Flex align="center" justify="space-between">
-            <Typography.Text style={LABEL_STYLE}>
-              {t('formatThousandSeparator')}
-            </Typography.Text>
+            <Typography.Text style={LABEL_STYLE}>{t('formatThousandSeparator')}</Typography.Text>
             <Switch
               size="small"
               checked={customFormat.thousandSeparator ?? false}
@@ -212,12 +179,12 @@ const FormatForm = (props: {
         {t('formatClear')}
       </Button>
     </Flex>
-  );
-};
+  )
+}
 
 export const MeasureFormatPanel = (props: MeasureFormatPanelProps) => {
-  const { format, onFormatChange } = props;
-  const { token } = theme.useToken();
+  const { format, onFormatChange } = props
+  const { token } = theme.useToken()
 
   return (
     <div
@@ -232,5 +199,5 @@ export const MeasureFormatPanel = (props: MeasureFormatPanelProps) => {
     >
       <FormatForm format={format} onFormatChange={onFormatChange} />
     </div>
-  );
-};
+  )
+}

@@ -78,7 +78,6 @@ export const VSeedRender = withVisible((props: { vseed: VSeed }) => {
     }
     const theme = dark ? 'dark' : 'light'
     const builder = Builder.from(vseed.theme ? vseed : { ...vseed, theme })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let spec = builder.build() as Record<string, any>
     spec = {
       ...spec,

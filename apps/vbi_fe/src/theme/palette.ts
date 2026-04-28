@@ -71,7 +71,7 @@ export const vbiThemePalettes = {
     primaryShadow: '0 10px 22px rgba(255, 255, 255, 0.12)',
     activeShadow: 'none',
   },
-} as const;
+} as const
 
-export type VbiThemeMode = keyof typeof vbiThemePalettes;
-export type VbiThemePalette = (typeof vbiThemePalettes)[VbiThemeMode];
+export type VbiThemeMode = keyof typeof vbiThemePalettes
+export type VbiThemePalette = (typeof vbiThemePalettes)[VbiThemeMode]

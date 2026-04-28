@@ -1,22 +1,22 @@
-import { Button, Tooltip } from 'antd';
-import { useTranslation } from 'src/i18n';
+import { Button, Tooltip } from 'antd'
+import { useTranslation } from 'src/i18n'
 
-export type RootOperator = 'and' | 'or';
+export type RootOperator = 'and' | 'or'
 
 export type RootOperatorButtonColor = {
-  border: string;
-  color: string;
-  background?: string;
-};
+  border: string
+  color: string
+  background?: string
+}
 
 export const ShelfRootOperatorButton = (props: {
-  operator: RootOperator;
-  colors: RootOperatorButtonColor;
-  onChange: (nextOperator: RootOperator) => void;
+  operator: RootOperator
+  colors: RootOperatorButtonColor
+  onChange: (nextOperator: RootOperator) => void
 }) => {
-  const { operator, colors, onChange } = props;
-  const nextOperator: RootOperator = operator === 'and' ? 'or' : 'and';
-  const { t } = useTranslation();
+  const { operator, colors, onChange } = props
+  const nextOperator: RootOperator = operator === 'and' ? 'or' : 'and'
+  const { t } = useTranslation()
 
   return (
     <Tooltip
@@ -62,5 +62,5 @@ export const ShelfRootOperatorButton = (props: {
         </span>
       </Button>
     </Tooltip>
-  );
-};
+  )
+}

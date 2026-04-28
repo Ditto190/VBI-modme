@@ -1,4 +1,4 @@
-import type { DatasetColumn } from '@visactor/vquery';
+import type { DatasetColumn } from '@visactor/vquery'
 
 export const supermarketSchema: DatasetColumn[] = [
   { name: 'id', type: 'string' },
@@ -21,4 +21,4 @@ export const supermarketSchema: DatasetColumn[] = [
   { name: 'amount', type: 'number' },
   { name: 'discount', type: 'number' },
   { name: 'profit', type: 'number' },
-];
+]

@@ -1,64 +1,52 @@
 // FieldList.tsx
-import React, { useState } from 'react';
-import {
-  DeleteOutlined,
-  NumberOutlined,
-  FontSizeOutlined,
-} from '@ant-design/icons';
-import './FieldList.css';
+import React, { useState } from 'react'
+import { DeleteOutlined, NumberOutlined, FontSizeOutlined } from '@ant-design/icons'
+import './FieldList.css'
 
 export interface FieldListProps {
-  title: string;
-  items: string[];
-  onAdd?: (field: string) => void;
-  onRemove: (field: string) => void;
-  onDropDimension?: (field: string) => void;
-  style?: React.CSSProperties;
+  title: string
+  items: string[]
+  onAdd?: (field: string) => void
+  onRemove: (field: string) => void
+  onDropDimension?: (field: string) => void
+  style?: React.CSSProperties
 }
 
-const FieldList: React.FC<FieldListProps> = ({
-  title,
-  items,
-  onAdd,
-  onRemove,
-  onDropDimension,
-  style,
-}) => {
-  const [hoveredDropZone, setHoveredDropZone] = useState(false);
+const FieldList: React.FC<FieldListProps> = ({ title, items, onAdd, onRemove, onDropDimension, style }) => {
+  const [hoveredDropZone, setHoveredDropZone] = useState(false)
   const getIcon = () => {
-    const lowerTitle = title.toLowerCase();
+    const lowerTitle = title.toLowerCase()
     if (lowerTitle.includes('dimension')) {
-      return <NumberOutlined style={{ marginRight: 4 }} />;
+      return <NumberOutlined style={{ marginRight: 4 }} />
     }
     if (lowerTitle.includes('measure')) {
-      return <FontSizeOutlined style={{ marginRight: 4 }} />;
+      return <FontSizeOutlined style={{ marginRight: 4 }} />
     }
-    return null;
-  };
+    return null
+  }
 
   return (
     <div
       className="fieldlist"
       style={style}
       onDragOver={(e) => {
-        if (!onDropDimension) return;
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        setHoveredDropZone(true);
+        if (!onDropDimension) return
+        e.preventDefault()
+        e.dataTransfer.dropEffect = 'move'
+        setHoveredDropZone(true)
       }}
       onDragLeave={() => {
-        setHoveredDropZone(false);
+        setHoveredDropZone(false)
       }}
       onDrop={(e) => {
-        if (!onDropDimension) return;
-        e.preventDefault();
+        if (!onDropDimension) return
+        e.preventDefault()
         const field =
-          e.dataTransfer.getData('application/x-vbi-dimension-field') ||
-          e.dataTransfer.getData('text/plain');
+          e.dataTransfer.getData('application/x-vbi-dimension-field') || e.dataTransfer.getData('text/plain')
         if (field) {
-          onDropDimension(field);
+          onDropDimension(field)
         }
-        setHoveredDropZone(false);
+        setHoveredDropZone(false)
       }}
     >
       <div
@@ -78,22 +66,16 @@ const FieldList: React.FC<FieldListProps> = ({
           transition: 'background-color 0.2s',
         }}
       >
-        {items.length === 0 && (
-          <div className="fieldlist-empty">Drop {title.toLowerCase()} here</div>
-        )}
+        {items.length === 0 && <div className="fieldlist-empty">Drop {title.toLowerCase()} here</div>}
         {items.map((field) => (
-          <div
-            key={field}
-            className="fieldlist-item"
-            onClick={() => onAdd && onAdd(field)}
-          >
+          <div key={field} className="fieldlist-item" onClick={() => onAdd && onAdd(field)}>
             {getIcon()}
             <span className="fieldlist-item-text">{field}</span>
             <button
               className="fieldlist-item-remove"
               onClick={(e) => {
-                e.stopPropagation();
-                onRemove(field);
+                e.stopPropagation()
+                onRemove(field)
               }}
             >
               <DeleteOutlined />
@@ -102,7 +84,7 @@ const FieldList: React.FC<FieldListProps> = ({
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FieldList;
+export default FieldList

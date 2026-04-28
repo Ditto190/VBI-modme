@@ -1,20 +1,17 @@
-import { useShallow } from 'zustand/shallow';
-import { useTranslation } from '../i18n';
-import { useStandardAppProps } from '../hooks/useStandardAppProps';
-import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle';
-import { useChartBuilderModel } from '../models';
-import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import {
-  selectManageChartsPageState,
-  useManageChartsStore,
-} from '../stores/manage-charts.store';
-import { useResourceColumns } from './manage-resource/resource-columns';
-import { ChartResourceModals } from './manage-resource/ChartResourceModals';
+import { useShallow } from 'zustand/shallow'
+import { useTranslation } from '../i18n'
+import { useStandardAppProps } from '../hooks/useStandardAppProps'
+import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
+import { useChartBuilderModel } from '../models'
+import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell'
+import { selectManageChartsPageState, useManageChartsStore } from '../stores/manage-charts.store'
+import { useResourceColumns } from './manage-resource/resource-columns'
+import { ChartResourceModals } from './manage-resource/ChartResourceModals'
 
 export const ManageChartsPage = () => {
-  const { locale, t } = useTranslation();
-  const standardAppProps = useStandardAppProps();
-  const state = useManageChartsStore(useShallow(selectManageChartsPageState));
+  const { locale, t } = useTranslation()
+  const standardAppProps = useStandardAppProps()
+  const state = useManageChartsStore(useShallow(selectManageChartsPageState))
   const {
     bootstrap: bootstrapStore,
     clearSelection,
@@ -40,11 +37,9 @@ export const ManageChartsPage = () => {
     setEditorName,
     setSearchText,
     setSelectedRowKeys,
-  } = state;
-  const builder = useChartBuilderModel(
-    (store) => store.sessions[selectedId]?.builder ?? null,
-  );
-  useUserStoreLifecycle(bootstrapStore, dispose);
+  } = state
+  const builder = useChartBuilderModel((store) => store.sessions[selectedId]?.builder ?? null)
+  useUserStoreLifecycle(bootstrapStore, dispose)
   const columns = useResourceColumns({
     deleteTitle: t('charts.deleteTitle'),
     fallbackName: t('charts.untitled'),
@@ -52,7 +47,7 @@ export const ManageChartsPage = () => {
     onEdit: openDetail,
     onRemove: deleteOne,
     t,
-  });
+  })
 
   return (
     <ManageResourcePageShell
@@ -86,5 +81,5 @@ export const ManageChartsPage = () => {
         t={t}
       />
     </ManageResourcePageShell>
-  );
-};
+  )
+}
