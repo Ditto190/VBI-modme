@@ -35,6 +35,7 @@ export const ConfigFieldEditor = ({ builder, items, labels }: ConfigFieldEditorP
 const ConfigFieldRow = ({ builder, item, labels }: ConfigFieldRowProps) => (
   <div className={`pro-field-config pro-field-config--${item.role}`}>
     <FieldToken
+      dragId={`config-token-${item.id}`}
       item={item}
       labels={labels}
       onAction={(field, action) => runMappedFieldAction(builder, labels, field, action)}

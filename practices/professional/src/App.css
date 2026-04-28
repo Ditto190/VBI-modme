@@ -2,9 +2,12 @@
 @import './styles/panels.css';
 @import './styles/workspace.css';
 @import './styles/overlay.css';
+@import './styles/slots.css';
 @import './styles/configEditor.css';
 @import './styles/tokens.css';
 @import './styles/antd.css';
 @import './styles/filter.css';
+@import './styles/filterChip.css';
 @import './styles/filterForm.css';
 @import './styles/scrollbar.css';
+@import './styles/dnd.css';

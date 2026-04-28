@@ -6,8 +6,6 @@ type LeftDataPanelProps = {
   fields: SchemaField[]
   labels: ProfessionalLabels
   onAddField: (field: SchemaField) => void
-  onDragEnd: () => void
-  onDragStart: (field: SchemaField) => void
 }
 
 export const LeftDataPanel = (props: LeftDataPanelProps) => (

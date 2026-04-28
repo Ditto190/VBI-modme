@@ -9,6 +9,11 @@ type FilterActionsProps = {
   onRootOperatorChange?: (operator: RootOperator) => void
 }
 
+type EmptyFilterRowProps = {
+  text: string
+  onAdd: () => void
+}
+
 export const FilterTitle = ({ text }: { text: string }) => (
   <Space>
     <FilterOutlined />
@@ -21,4 +26,11 @@ export const FilterActions = (props: FilterActionsProps) => (
     <RootOperatorControl value={props.rootOperator} onChange={props.onRootOperatorChange} />
     <Button type='text' size='small' icon={<PlusOutlined />} onClick={props.onAdd} />
   </Space>
+)
+
+export const EmptyFilterRow = ({ text, onAdd }: EmptyFilterRowProps) => (
+  <button className='pro-filter-empty-row' type='button' onClick={onAdd}>
+    <FilterTitle text={text} />
+    <PlusOutlined />
+  </button>
 )

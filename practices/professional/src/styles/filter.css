@@ -6,6 +6,25 @@
   overflow: hidden;
 }
 
+.pro-filter-empty-row {
+  align-items: center;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  height: 30px;
+  justify-content: space-between;
+  padding: 0 8px;
+  text-align: left;
+}
+
+.pro-filter-empty-row:hover {
+  background: color-mix(in srgb, var(--accent) 7%, var(--raised));
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+}
+
 .pro-filter-card :where(.ant-card-head) {
   border-bottom: 0 !important;
   min-height: 25px !important;
@@ -23,55 +42,12 @@
 .pro-filter-card :where(.ant-card-body) {
   align-items: center;
   display: flex;
-  min-height: 20px;
+  min-height: 34px;
   overflow: hidden;
-  padding: 2px 6px !important;
+  padding: 4px 6px 6px !important;
 }
 
 .pro-filter-field-active {
   color: var(--accent);
   font-weight: 700;
-}
-
-.pro-filter-item {
-  border-block-end: 0 !important;
-  padding: 4px 0 !important;
-}
-
-.pro-filter-empty {
-  color: var(--muted);
-  font-size: 11px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.pro-filter-card :where(.ant-list) {
-  width: 100%;
-}
-
-.pro-filter-card :where(.ant-list-items) {
-  display: flex;
-  gap: 5px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-gutter: stable;
-}
-
-.pro-filter-card :where(.ant-list-item) {
-  background: color-mix(in srgb, var(--accent) 8%, var(--raised));
-  border: 1px solid var(--line) !important;
-  flex: 0 0 auto;
-  gap: 4px;
-  max-width: 170px;
-  min-height: 24px;
-  padding: 2px 4px !important;
-}
-
-.pro-filter-card :where(.ant-list-item-action) {
-  margin-inline-start: 2px !important;
-}
-
-.pro-filter-text {
-  max-width: 104px;
 }

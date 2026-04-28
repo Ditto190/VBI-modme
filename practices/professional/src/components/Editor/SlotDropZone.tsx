@@ -1,8 +1,9 @@
-import { Fragment, type DragEvent, useState } from 'react'
+import { Fragment } from 'react'
+import { useDroppable } from '@dnd-kit/core'
 import { FieldToken } from './FieldToken'
+import { SlotDropTarget } from './dnd/SlotDropTarget'
 import type { ProfessionalLabels } from 'src/config/labels'
 import type { FieldSlot, MappedField, SchemaField } from 'src/types'
-import { readDraggedRole } from 'src/utils/dragDrop'
 
 type SlotDropZoneProps = {
   activeRole?: SchemaField['role'] | null
@@ -18,20 +19,13 @@ const acceptsRole = (slot: FieldSlot, role: SchemaField['role'] | undefined) =>
 
 export const SlotDropZone = (props: SlotDropZoneProps) => {
   const { activeRole, labels, slot, values } = props
-  const [insertIndex, setInsertIndex] = useState<number | null>(null)
   const isAvailable = acceptsRole(slot, activeRole ?? undefined)
   const isBlocked = Boolean(activeRole && !isAvailable)
-
-  const readInsertIndex = (event: DragEvent<HTMLDivElement>) => {
-    const tokens = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('.pro-slot-token'))
-    const targetIndex = tokens.findIndex((token) => {
-      const rect = token.getBoundingClientRect()
-      const isBeforeRow = event.clientY < rect.top + rect.height / 2
-      const isSameRowBeforeToken = event.clientY <= rect.bottom && event.clientX < rect.left + rect.width / 2
-      return isBeforeRow || isSameRowBeforeToken
-    })
-    return targetIndex < 0 ? values.length : targetIndex
-  }
+  const { isOver, setNodeRef } = useDroppable({
+    id: `slot-${props.slotIndex}-slot`,
+    data: { insertIndex: values.length, kind: 'slot-insert', slot, slotIndex: props.slotIndex, target: 'slot' },
+    disabled: !isAvailable,
+  })
 
   return (
     <div
@@ -39,16 +33,11 @@ export const SlotDropZone = (props: SlotDropZoneProps) => {
         'pro-slot',
         isAvailable ? 'pro-slot--available' : '',
         isBlocked ? 'pro-slot--blocked' : '',
-        insertIndex !== null ? 'pro-slot--dragging' : '',
+        activeRole ? 'pro-slot--dragging' : '',
+        isOver ? 'pro-slot--over' : '',
       ].join(' ')}
       data-slot-index={props.slotIndex}
-      onDragLeave={() => setInsertIndex(null)}
-      onDragOver={(event) => {
-        const role = readDraggedRole(event)
-        if (!acceptsRole(slot, role)) return
-        event.preventDefault()
-        setInsertIndex(readInsertIndex(event))
-      }}
+      ref={setNodeRef}
     >
       <div className='pro-slot__label'>
         <span>{slot.title}</span>
@@ -58,19 +47,35 @@ export const SlotDropZone = (props: SlotDropZoneProps) => {
         {values.length ? (
           values.map((value, index) => (
             <Fragment key={value.id}>
-              {insertIndex === index && <DropIndexLabel index={index} labels={labels} />}
-              <FieldToken item={value} labels={labels} onAction={props.onFieldAction} />
+              <SlotDropTarget
+                activeRole={activeRole ?? null}
+                insertIndex={index}
+                slot={slot}
+                slotIndex={props.slotIndex}
+              />
+              <FieldToken
+                dragId={`slot-${props.slotIndex}-token-${value.id}`}
+                item={value}
+                labels={labels}
+                slotTokenIndex={index}
+                onAction={props.onFieldAction}
+              />
             </Fragment>
           ))
         ) : (
-          <em>{labels.dropHere}</em>
+          <SlotDropTarget activeRole={activeRole ?? null} insertIndex={0} slot={slot} slotIndex={props.slotIndex}>
+            {labels.dropHere}
+          </SlotDropTarget>
         )}
-        {insertIndex === values.length && <DropIndexLabel index={values.length} labels={labels} />}
+        {values.length > 0 && (
+          <SlotDropTarget
+            activeRole={activeRole ?? null}
+            insertIndex={values.length}
+            slot={slot}
+            slotIndex={props.slotIndex}
+          />
+        )}
       </div>
     </div>
   )
 }
-
-const DropIndexLabel = ({ index, labels }: { index: number; labels: ProfessionalLabels }) => (
-  <span className='pro-slot-index'>{`${labels.insertAt} ${index + 1}`}</span>
-)

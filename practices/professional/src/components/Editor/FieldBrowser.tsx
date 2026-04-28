@@ -1,50 +1,16 @@
-import { CalendarOutlined, FontSizeOutlined, NumberOutlined, SearchOutlined, TableOutlined } from '@ant-design/icons'
 import { Input, Select } from 'antd'
 import { useMemo, useState } from 'react'
+import { SearchOutlined, TableOutlined } from '@ant-design/icons'
+import { FieldGroup } from './FieldGroup'
 import type { ProfessionalLabels } from 'src/config/labels'
 import type { SchemaField } from 'src/types'
 import { groupFields } from 'src/utils/fieldUtils'
-import { writeDraggedField } from 'src/utils/dragDrop'
 
 type FieldBrowserProps = {
   fields: SchemaField[]
   labels: ProfessionalLabels
   onAddField: (field: SchemaField) => void
-  onDragEnd: () => void
-  onDragStart: (field: SchemaField) => void
 }
-
-const iconByField = (field: SchemaField) => {
-  if (field.role === 'measure') return <NumberOutlined />
-  if (field.isDate) return <CalendarOutlined />
-  return <FontSizeOutlined />
-}
-
-const FieldGroup = (props: FieldBrowserProps & { fields: SchemaField[]; title: string }) => (
-  <section className='pro-field-group'>
-    <div className='pro-field-group__title'>
-      <span>{props.title}</span>
-      <span>{props.fields.length}</span>
-    </div>
-    {props.fields.map((field) => (
-      <button
-        className={`pro-field pro-field--${field.role}`}
-        draggable
-        key={`${field.role}-${field.name}`}
-        onClick={() => props.onAddField(field)}
-        onDragEnd={props.onDragEnd}
-        onDragStart={(event) => {
-          writeDraggedField(event, field)
-          props.onDragStart(field)
-        }}
-        type='button'
-      >
-        <span className='pro-field__icon'>{iconByField(field)}</span>
-        <span className='pro-field__name'>{field.name}</span>
-      </button>
-    ))}
-  </section>
-)
 
 export const FieldBrowser = (props: FieldBrowserProps) => {
   const [keyword, setKeyword] = useState('')
@@ -77,8 +43,18 @@ export const FieldBrowser = (props: FieldBrowserProps) => {
         onChange={(event) => setKeyword(event.target.value)}
       />
       <div className='pro-field-scroll'>
-        <FieldGroup {...props} fields={measures} title={props.labels.metrics} />
-        <FieldGroup {...props} fields={dimensions} title={props.labels.dimensions} />
+        <FieldGroup
+          fields={measures}
+          labels={props.labels}
+          title={props.labels.metrics}
+          onAddField={props.onAddField}
+        />
+        <FieldGroup
+          fields={dimensions}
+          labels={props.labels}
+          title={props.labels.dimensions}
+          onAddField={props.onAddField}
+        />
       </div>
     </section>
   )
