@@ -4,7 +4,12 @@ import { zAnnotationDifferenceLine } from '../../annotation/zAnnotationDifferenc
 import { zAnnotationHorizontalLine } from '../../annotation/zAnnotationHorizontalLine'
 import { zAnnotationArea } from '../../annotation/zAnnotationArea'
 
-export const zAnnotationPointConfig = zAnnotationPoint.omit({ selector: true, measureId: true, text: true }).partial()
+export const zAnnotationPointConfig = zAnnotationPoint
+  .omit({ selector: true, measureId: true, text: true })
+  .partial()
+  .extend({
+    textBackgroundOpacity: z.number().nullish(),
+  })
 
 // Use pick to explicitly list fields we want to expose in config variants.
 export const zAnnotationHorizontalLineConfig = zAnnotationHorizontalLine
@@ -27,6 +32,9 @@ export const zAnnotationHorizontalLineConfig = zAnnotationHorizontalLine
   })
   // extend with additional config-only fields that runtime schema doesn't include
   .extend({
+    lineDash: z.array(z.number()).nullish(),
+    textBackgroundOpacity: z.number().nullish(),
+
     endSymbolVisible: z.boolean().nullish(),
     endSymbolType: z.string().nullish(),
     endSymbolSize: z.number().nullish(),
@@ -61,14 +69,22 @@ export const zAnnotationAreaConfig = zAnnotationArea
 
     outerPadding: true,
   })
+  .extend({
+    textBackgroundOpacity: z.number().nullish(),
+  })
   .partial()
 
 export const zAnnotationDifferenceLineConfig = zAnnotationDifferenceLine
   .pick({
     lineColor: true,
+    lineStyle: true,
     textColor: true,
     textFontSize: true,
     textBackgroundColor: true,
+  })
+  .extend({
+    lineDash: z.array(z.number()).nullish(),
+    textBackgroundOpacity: z.number().nullish(),
   })
   .partial()
 

@@ -52,6 +52,7 @@ export const annotationAreaBand: VChartSpecPipe = (spec, context) => {
 
       outerPadding = theme?.outerPadding ?? 4,
     } = annotationArea
+    const textBackgroundOpacity = theme?.textBackgroundOpacity
     const textPosition: string = annotationArea.textPosition ?? defaultTextPosition
     const textAlign =
       annotationArea.textAlign ??
@@ -174,7 +175,6 @@ export const annotationAreaBand: VChartSpecPipe = (spec, context) => {
         visible: true,
         text: text,
         style: {
-          opacity: 0.95,
           textAlign: textAlign,
           textBaseline: textBaseline,
           stroke: textBackgroundColor,
@@ -188,7 +188,7 @@ export const annotationAreaBand: VChartSpecPipe = (spec, context) => {
           visible: textBackgroundVisible,
           padding: textBackgroundPadding,
           style: {
-            opacity: 0.95,
+            opacity: textBackgroundOpacity ?? 0.95,
             cornerRadius: textBackgroundBorderRadius ?? 4,
             fill: textBackgroundColor,
             stroke: textBackgroundBorderColor,

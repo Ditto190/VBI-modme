@@ -57,4 +57,9 @@ export type AnnotationDifferenceLine = {
    * @description 线条颜色。
    */
   lineColor?: string
+
+  /**
+   * @description 线条样式。
+   */
+  lineStyle?: 'solid' | 'dashed' | 'dotted'
 }

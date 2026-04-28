@@ -1,5 +1,23 @@
 import type { Datum, ValueDynamicFilter } from 'src/types'
 
+export type AnnotationLineStyle = 'solid' | 'dashed' | 'dotted'
+
+export const getAnnotationLineDash = (lineStyle?: AnnotationLineStyle | null, lineDash?: number[] | null) => {
+  if (Array.isArray(lineDash)) {
+    return lineDash
+  }
+
+  if (lineStyle === 'dashed') {
+    return [2, 2]
+  }
+
+  if (lineStyle === 'dotted') {
+    return [2, 5]
+  }
+
+  return [0]
+}
+
 export const isSubset = (sub: Datum, obj: Datum, excludeMeasuresIds?: string[]) => {
   return Object.entries(sub).every(([key, value]) => {
     if (excludeMeasuresIds && excludeMeasuresIds.includes(key)) {

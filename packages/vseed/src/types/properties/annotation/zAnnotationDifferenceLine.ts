@@ -16,4 +16,5 @@ export const zAnnotationDifferenceLine = z.object({
   textColor: z.string().nullish(),
   textBackgroundColor: z.string().nullish(),
   lineColor: z.string().nullish(),
+  lineStyle: z.enum(['solid', 'dashed', 'dotted']).nullish(),
 })

@@ -96,6 +96,7 @@ export const generateAnnotationPointPipe = (options: {
         offsetX = theme?.offsetX ?? 0,
         offsetY = theme?.offsetY ?? 0,
       } = annotationPoint
+      const textBackgroundOpacity = theme?.textBackgroundOpacity
 
       const dataset = advancedVSeed.dataset.flat()
       const selectedData =
@@ -127,7 +128,7 @@ export const generateAnnotationPointPipe = (options: {
               visible: textBackgroundVisible,
               padding: textBackgroundPadding,
               style: {
-                opacity: 0.95,
+                opacity: textBackgroundOpacity ?? 0.95,
                 cornerRadius: textBackgroundBorderRadius ?? 4,
                 fill: textBackgroundColor,
                 stroke: textBackgroundBorderColor,
@@ -138,7 +139,6 @@ export const generateAnnotationPointPipe = (options: {
             },
           },
           style: {
-            opacity: 0.95,
             visible: true,
             textAlign: textAlign,
             textBaseline: textBaseline,
