@@ -101,7 +101,7 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
   return (
     <>
       <div
-        className="fieldlist"
+        className='fieldlist'
         style={style}
         onDragOver={(e) => {
           if (!onDropDimension) return
@@ -124,7 +124,7 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
         }}
       >
         <div
-          className="fieldlist-title"
+          className='fieldlist-title'
           style={{
             backgroundColor: hoveredDropZone ? '#e6f4ff' : 'transparent',
             transition: 'background-color 0.2s',
@@ -133,27 +133,27 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
           {isZh ? '指标' : 'MEASURES'}
         </div>
         <div
-          className="fieldlist-items"
+          className='fieldlist-items'
           style={{
             backgroundColor: hoveredDropZone ? '#e6f4ff' : 'transparent',
             borderRadius: '2px',
             transition: 'background-color 0.2s',
           }}
         >
-          {items.length === 0 && <div className="fieldlist-empty">{isZh ? '还没有添加指标' : 'No measures added'}</div>}
+          {items.length === 0 && <div className='fieldlist-empty'>{isZh ? '还没有添加指标' : 'No measures added'}</div>}
           {items.map((field) => {
             const measure = measures[field]
             const displayName = measure?.alias || field
             const aggregateFunc = measure?.aggregate?.func || 'sum'
             return (
-              <div key={field} className="fieldlist-item" style={{ cursor: 'grab' }}>
+              <div key={field} className='fieldlist-item' style={{ cursor: 'grab' }}>
                 <FontSizeOutlined style={{ marginRight: 4 }} />
-                <span className="fieldlist-item-text">
+                <span className='fieldlist-item-text'>
                   {displayName} ({aggregateFunc})
                 </span>
                 <div style={{ display: 'flex', gap: '4px' }}>
                   <button
-                    className="fieldlist-item-action"
+                    className='fieldlist-item-action'
                     onClick={(e) => {
                       e.stopPropagation()
                       handleEdit(field)
@@ -163,7 +163,7 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
                     <EditOutlined />
                   </button>
                   <button
-                    className="fieldlist-item-remove"
+                    className='fieldlist-item-remove'
                     onClick={(e) => {
                       e.stopPropagation()
                       onRemove(field)
@@ -184,7 +184,7 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
         onOk={handleSave}
         onCancel={() => setEditingField(null)}
       >
-        <Form layout="vertical">
+        <Form layout='vertical'>
           <Form.Item label={isZh ? '显示名' : 'Alias'}>
             <Input
               value={editAlias}
@@ -206,13 +206,13 @@ const MeasureFieldList: React.FC<MeasureFieldListProps> = ({
           {editAggregate === 'quantile' && (
             <Form.Item label={isZh ? '分位数 (0-1)' : 'Quantile (0-1)'}>
               <Input
-                type="number"
+                type='number'
                 min={0}
                 max={1}
                 step={0.1}
                 value={editQuantile}
                 onChange={(e) => setEditQuantile(parseFloat(e.target.value))}
-                placeholder="0.5"
+                placeholder='0.5'
               />
             </Form.Item>
           )}

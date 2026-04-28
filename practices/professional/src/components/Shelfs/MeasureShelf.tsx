@@ -17,14 +17,14 @@ const MeasureShelf: React.FC<MeasureShelfProps> = ({ items, onAdd, existingField
   }
 
   return (
-    <div className="shelf" style={style}>
-      <div className="shelf-items">
+    <div className='shelf' style={style}>
+      <div className='shelf-items'>
         {items.map((field) => {
           const isExists = existingFields.includes(field)
           return (
             <div
               key={field}
-              className="shelf-item"
+              className='shelf-item'
               draggable
               onDragStart={(e) => {
                 e.dataTransfer.setData('application/x-vbi-measure-field', field)
@@ -33,9 +33,9 @@ const MeasureShelf: React.FC<MeasureShelfProps> = ({ items, onAdd, existingField
               }}
             >
               <FontSizeOutlined style={{ marginRight: 4 }} />
-              <span className="shelf-item-text">{field}</span>
+              <span className='shelf-item-text'>{field}</span>
               <button
-                className="shelf-item-remove"
+                className='shelf-item-remove'
                 onClick={() => handleAction(field)}
                 disabled={isExists}
                 style={{

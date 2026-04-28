@@ -101,19 +101,19 @@ export const Toolbar: React.FC<{
             <Button
               icon={<CloudUploadOutlined style={{ fontSize: 12 }} />}
               onClick={() => setIsCSVModalOpen(true)}
-              size="small"
+              size='small'
             />
           </Tooltip>
 
           <ToolbarDivider />
 
-          <Space.Compact size="small">
+          <Space.Compact size='small'>
             <Tooltip title={`${t('toolbarHistoryUndo')} (Ctrl/Cmd+Z)`}>
               <Button
                 icon={<UndoOutlined style={{ fontSize: 12 }} />}
                 onClick={undo}
                 disabled={!canUndo}
-                size="small"
+                size='small'
               />
             </Tooltip>
             <Tooltip title={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
@@ -121,7 +121,7 @@ export const Toolbar: React.FC<{
                 icon={<RedoOutlined style={{ fontSize: 12 }} />}
                 onClick={redo}
                 disabled={!canRedo}
-                size="small"
+                size='small'
               />
             </Tooltip>
           </Space.Compact>
@@ -145,7 +145,7 @@ export const Toolbar: React.FC<{
                 setLimit(normalizeLimitValue(value))
               }
             }}
-            size="small"
+            size='small'
             placeholder={t('toolbarLimitPlaceholder', {
               defaultLimit: defaultLimitText,
             })}
@@ -172,7 +172,7 @@ export const Toolbar: React.FC<{
 
               <Tooltip title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}>
                 <Segmented
-                  size="small"
+                  size='small'
                   value={locale}
                   options={[
                     { label: t('toolbarLocaleSwitchZh'), value: 'zh-CN' },
@@ -190,7 +190,7 @@ export const Toolbar: React.FC<{
 
               <Tooltip title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}>
                 <Segmented
-                  size="small"
+                  size='small'
                   value={themeMode}
                   options={[
                     {
@@ -222,7 +222,7 @@ export const Toolbar: React.FC<{
               onClick={() => {
                 void onToggleFullscreen()
               }}
-              size="small"
+              size='small'
             />
           </Tooltip>
         </div>

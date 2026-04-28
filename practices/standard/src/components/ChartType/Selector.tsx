@@ -52,7 +52,7 @@ export const ChartTypeSelector = ({
     return (
       <button
         key={type}
-        type="button"
+        type='button'
         title={tooltipText}
         aria-label={tooltipText}
         onClick={() => handleSelect(type)}
@@ -149,10 +149,10 @@ export const ChartTypeSelector = ({
     <div style={style}>
       <Popover
         content={content}
-        trigger="click"
+        trigger='click'
         open={open}
         onOpenChange={setOpen}
-        placement="bottomLeft"
+        placement='bottomLeft'
         styles={{
           root: { padding: 0 },
           container: {

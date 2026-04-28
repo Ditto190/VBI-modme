@@ -359,7 +359,7 @@ export const MeasureShelf = ({ style }: { style?: React.CSSProperties }) => {
 
   return (
     <FieldShelf
-      shelf="measures"
+      shelf='measures'
       items={measures}
       placeholder={t('shelvesPlaceholdersMeasures')}
       tone={measureShelfTone}

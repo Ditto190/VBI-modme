@@ -395,21 +395,21 @@ export function APP() {
 
   if (!initialized) {
     return (
-      <ConfigProvider locale={antdLocale} theme={themeConfig} componentSize="small">
+      <ConfigProvider locale={antdLocale} theme={themeConfig} componentSize='small'>
         <Spin tip={t('appInitializing')} fullscreen />
       </ConfigProvider>
     )
   }
 
   return (
-    <ConfigProvider locale={antdLocale} theme={themeConfig} componentSize="small">
+    <ConfigProvider locale={antdLocale} theme={themeConfig} componentSize='small'>
       <div className={`app-root app-root-${themeMode}`}>
-        <div className="builder-layout">
+        <div className='builder-layout'>
           {!builderCollapsed && (
             <>
-              <div className="left-panel" style={{ width: leftWidth }}>
-                <div className="builder-toolbar">
-                  <div className="builder-toolbar-main">
+              <div className='left-panel' style={{ width: leftWidth }}>
+                <div className='builder-toolbar'>
+                  <div className='builder-toolbar-main'>
                     <ChartTypeSelector
                       value={chartType}
                       options={availableChartTypes}
@@ -429,13 +429,13 @@ export function APP() {
                       addonBefore={t('toolbarRows')}
                     />
                     <Button
-                      className="collapse-btn"
+                      className='collapse-btn'
                       onClick={() => setBuilderCollapsed(true)}
                       icon={<LeftOutlined />}
                     />
                   </div>
-                  <div className="builder-toolbar-meta">
-                    <div className="toolbar-actions">
+                  <div className='builder-toolbar-meta'>
+                    <div className='toolbar-actions'>
                       <Tooltip title={t('toolbarUndo')}>
                         <Button icon={<UndoOutlined />} disabled={!canUndo} onClick={() => undo()} />
                       </Tooltip>
@@ -462,8 +462,8 @@ export function APP() {
                   </div>
                 </div>
 
-                <div className="left-panel-header">
-                  <span className="title">{t('toolbarData')}</span>
+                <div className='left-panel-header'>
+                  <span className='title'>{t('toolbarData')}</span>
                   <Dropdown
                     menu={{
                       items: [
@@ -478,14 +478,14 @@ export function APP() {
                         }
                       },
                     }}
-                    placement="bottomRight"
+                    placement='bottomRight'
                   >
-                    <Button type="text" icon={<UploadOutlined />} />
+                    <Button type='text' icon={<UploadOutlined />} />
                   </Dropdown>
                 </div>
 
-                <div className="left-panel-scroll">
-                  <div className="panel-card">
+                <div className='left-panel-scroll'>
+                  <div className='panel-card'>
                     <FilterPanel
                       fields={allFields}
                       activeFields={activeFields}
@@ -496,7 +496,7 @@ export function APP() {
                     />
                   </div>
 
-                  <div className="panel-card">
+                  <div className='panel-card'>
                     <HavingFilterPanel
                       fields={allFields}
                       filters={havingFilterItems}
@@ -506,29 +506,29 @@ export function APP() {
                     />
                   </div>
 
-                  <div className="panel-section-title">{t('fieldsAvailableDimensions')}</div>
+                  <div className='panel-section-title'>{t('fieldsAvailableDimensions')}</div>
                   <DimensionShelf
                     items={availableDimensions}
                     onAdd={addFieldAsDimension}
                     existingFields={dimensionFields}
                   />
 
-                  <div className="panel-section-title">{t('fieldsAvailableMeasures')}</div>
+                  <div className='panel-section-title'>{t('fieldsAvailableMeasures')}</div>
                   <MeasureShelf
                     items={availableMeasures}
                     onAdd={(field) => addFieldAsMeasure(field)}
                     existingFields={measureFields}
                   />
 
-                  {schemaFields.length === 0 && <div className="data-hint">{t('dataHint')}</div>}
+                  {schemaFields.length === 0 && <div className='data-hint'>{t('dataHint')}</div>}
                 </div>
               </div>
 
-              <div className="splitter" onMouseDown={() => setDragging(true)} />
+              <div className='splitter' onMouseDown={() => setDragging(true)} />
 
-              <div className="middle-panel">
-                <div className="middle-panel-scroll">
-                  <div className="panel-card panel-stack">
+              <div className='middle-panel'>
+                <div className='middle-panel-scroll'>
+                  <div className='panel-card panel-stack'>
                     <DimensionFieldList
                       items={dimensions}
                       fieldTypeMap={fieldTypeMap}
@@ -550,7 +550,7 @@ export function APP() {
                     />
                   </div>
 
-                  <div className="panel-card encoding-card">
+                  <div className='panel-card encoding-card'>
                     <EncodingPanel
                       supportedEncodings={supportedEncodings}
                       encodingInfo={encodingInfo}
@@ -567,14 +567,14 @@ export function APP() {
             </>
           )}
 
-          <div className="canvas-panel">
+          <div className='canvas-panel'>
             {builderCollapsed && (
-              <Button className="expand-btn" icon={<RightOutlined />} onClick={() => setBuilderCollapsed(false)} />
+              <Button className='expand-btn' icon={<RightOutlined />} onClick={() => setBuilderCollapsed(false)} />
             )}
             {vseed ? (
               <VSeedRender vseed={vseed} themeMode={themeMode} />
             ) : (
-              <Empty className="canvas-empty" description={t('canvasEmpty')} />
+              <Empty className='canvas-empty' description={t('canvasEmpty')} />
             )}
           </div>
         </div>

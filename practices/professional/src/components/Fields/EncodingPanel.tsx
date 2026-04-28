@@ -169,7 +169,7 @@ const EncodingPanel: React.FC<EncodingPanelProps> = ({
               >
                 {measures.length > 0 ? (
                   measures.map((name) => (
-                    <Tag key={name} color="blue" style={{ margin: 0 }}>
+                    <Tag key={name} color='blue' style={{ margin: 0 }}>
                       {name}
                     </Tag>
                   ))

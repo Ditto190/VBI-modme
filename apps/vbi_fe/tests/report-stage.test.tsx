@@ -3,11 +3,11 @@ import { expect, rs, test } from '@rstest/core'
 import { render, screen } from '@testing-library/react'
 
 rs.mock('../src/pages/report-detail/ReportChartPanel', () => ({
-  ReportChartPanel: () => <div className="report-detail-slide-chart" />,
+  ReportChartPanel: () => <div className='report-detail-slide-chart' />,
 }))
 
 rs.mock('../src/pages/report-detail/ReportInsightPanel', () => ({
-  ReportInsightPanel: () => <div className="report-detail-slide-note" />,
+  ReportInsightPanel: () => <div className='report-detail-slide-note' />,
 }))
 
 const { ReportStage } = await import('../src/pages/report-detail/ReportStage')
@@ -50,13 +50,13 @@ const secondPage = {
 test('report stage renders empty when page has no resources', () => {
   render(
     <ReportStage
-      activePageId="page-1"
+      activePageId='page-1'
       onEditChart={noop}
       onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[]}
       stageRef={createRef()}
-      viewMode="vertical"
+      viewMode='vertical'
     />,
   )
 
@@ -66,13 +66,13 @@ test('report stage renders empty when page has no resources', () => {
 test('report stage places insight before chart when both resources exist', () => {
   const { container } = render(
     <ReportStage
-      activePageId="page-1"
+      activePageId='page-1'
       onEditChart={noop}
       onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[bothPage]}
       stageRef={createRef()}
-      viewMode="vertical"
+      viewMode='vertical'
     />,
   )
   const sections = [
@@ -87,13 +87,13 @@ test('report stage places insight before chart when both resources exist', () =>
 test('report stage renders page title dividers after each page', () => {
   const { container } = render(
     <ReportStage
-      activePageId="page-1"
+      activePageId='page-1'
       onEditChart={noop}
       onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[bothPage, secondPage]}
       stageRef={createRef()}
-      viewMode="vertical"
+      viewMode='vertical'
     />,
   )
   const dividers = container.querySelectorAll('.report-detail-page-divider')
@@ -106,7 +106,7 @@ test('report stage renders page title dividers after each page', () => {
 test('report stage renders insight-only pages without chart panel', () => {
   const { container } = render(
     <ReportStage
-      activePageId="page-1"
+      activePageId='page-1'
       onEditChart={noop}
       onEditInsight={noop}
       onPageRef={() => () => undefined}
@@ -121,7 +121,7 @@ test('report stage renders insight-only pages without chart panel', () => {
         },
       ]}
       stageRef={createRef()}
-      viewMode="vertical"
+      viewMode='vertical'
     />,
   )
 
@@ -134,13 +134,13 @@ test('report stage renders insight-only pages without chart panel', () => {
 test('report stage uses the horizontal renderer in horizontal mode', () => {
   const { container } = render(
     <ReportStage
-      activePageId="page-1"
+      activePageId='page-1'
       onEditChart={noop}
       onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[bothPage]}
       stageRef={createRef()}
-      viewMode="horizontal"
+      viewMode='horizontal'
     />,
   )
   const sections = [

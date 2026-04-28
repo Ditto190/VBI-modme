@@ -19,7 +19,7 @@ export const APP = ({ reportBuilder, vbi }: AppProps) => {
   }, [reportBuilder, initialize, vbi])
 
   if (!initialized) {
-    return <Spin tip="初始化报表中..." fullscreen />
+    return <Spin tip='初始化报表中...' fullscreen />
   }
 
   return <ReportWorkbench />

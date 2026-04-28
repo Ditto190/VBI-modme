@@ -72,7 +72,7 @@ const FormatForm = (props: {
     <Flex vertical gap={10} style={PANEL_STYLE}>
       <Segmented
         block
-        size="small"
+        size='small'
         value={isAutoFormat ? 'auto' : 'custom'}
         options={[
           { label: t('formatAuto'), value: 'auto' },
@@ -83,11 +83,11 @@ const FormatForm = (props: {
 
       {!isAutoFormat && (
         <>
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatTypeLabel')}</Typography.Text>
             <Select
-              size="small"
-              variant="filled"
+              size='small'
+              variant='filled'
               value={customFormat.type ?? 'number'}
               onChange={(v) => updateField('type', v)}
               style={{ width: 140 }}
@@ -98,34 +98,34 @@ const FormatForm = (props: {
             />
           </Flex>
 
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatPrefix')}</Typography.Text>
             <Input
-              size="small"
-              variant="filled"
+              size='small'
+              variant='filled'
               value={customFormat.prefix ?? ''}
               onChange={(e) => updateField('prefix', e.target.value || undefined)}
               style={{ width: 140 }}
-              placeholder="$, \u00A5..."
+              placeholder='$, \u00A5...'
             />
           </Flex>
 
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatSuffix')}</Typography.Text>
             <Input
-              size="small"
-              variant="filled"
+              size='small'
+              variant='filled'
               value={customFormat.suffix ?? ''}
               onChange={(e) => updateField('suffix', e.target.value || undefined)}
               style={{ width: 140 }}
             />
           </Flex>
 
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatRatio')}</Typography.Text>
             <InputNumber
-              size="small"
-              variant="filled"
+              size='small'
+              variant='filled'
               value={customFormat.ratio ?? 1}
               onChange={(v) => updateField('ratio', v ?? undefined)}
               style={{ width: 140 }}
@@ -133,23 +133,23 @@ const FormatForm = (props: {
             />
           </Flex>
 
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatSymbol')}</Typography.Text>
             <Input
-              size="small"
-              variant="filled"
+              size='small'
+              variant='filled'
               value={customFormat.symbol ?? ''}
               onChange={(e) => updateField('symbol', e.target.value || undefined)}
               style={{ width: 140 }}
-              placeholder="\u4E07, K..."
+              placeholder='\u4E07, K...'
             />
           </Flex>
 
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatFractionDigits')}</Typography.Text>
             <InputNumber
-              size="small"
-              variant="filled"
+              size='small'
+              variant='filled'
               value={customFormat.fractionDigits ?? 2}
               onChange={(v) => updateField('fractionDigits', v ?? undefined)}
               style={{ width: 140 }}
@@ -158,10 +158,10 @@ const FormatForm = (props: {
             />
           </Flex>
 
-          <Flex align="center" justify="space-between">
+          <Flex align='center' justify='space-between'>
             <Typography.Text style={LABEL_STYLE}>{t('formatThousandSeparator')}</Typography.Text>
             <Switch
-              size="small"
+              size='small'
               checked={customFormat.thousandSeparator ?? false}
               onChange={(checked) => updateField('thousandSeparator', checked)}
             />
@@ -170,8 +170,8 @@ const FormatForm = (props: {
       )}
 
       <Button
-        size="small"
-        type="text"
+        size='small'
+        type='text'
         danger
         onClick={() => onFormatChange(undefined)}
         style={{ alignSelf: 'flex-start' }}

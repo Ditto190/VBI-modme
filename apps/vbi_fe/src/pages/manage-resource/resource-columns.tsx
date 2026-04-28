@@ -43,7 +43,7 @@ export const createResourceColumns = ({
     render: (_: unknown, record: ResourceItem) => (
       <Space>
         {onOpen ? (
-          <Button type="primary" onClick={() => onOpen(record.id)}>
+          <Button type='primary' onClick={() => onOpen(record.id)}>
             {t('common.open')}
           </Button>
         ) : null}

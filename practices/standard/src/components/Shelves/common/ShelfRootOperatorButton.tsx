@@ -26,8 +26,8 @@ export const ShelfRootOperatorButton = (props: {
       })}
     >
       <Button
-        type="text"
-        size="small"
+        type='text'
+        size='small'
         onClick={() => onChange(nextOperator)}
         style={{
           display: 'inline-flex',

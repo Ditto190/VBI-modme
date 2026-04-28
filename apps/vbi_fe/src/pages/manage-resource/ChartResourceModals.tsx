@@ -68,7 +68,7 @@ export const ChartResourceModals = ({
         onPressEnter={() => void renameSelected()}
       />
       {builder ? (
-        <StandardAPP builder={builder} mode="edit" {...standardAppProps} />
+        <StandardAPP builder={builder} mode='edit' {...standardAppProps} />
       ) : (
         <Typography.Text>{t('charts.connecting')}</Typography.Text>
       )}

@@ -26,7 +26,7 @@ export const ReportEditorDrawer = () => {
 
   return (
     <Drawer
-      className="report-detail-chart-drawer"
+      className='report-detail-chart-drawer'
       destroyOnHidden
       open={open}
       size={chartEditorDrawerSize}
@@ -34,13 +34,13 @@ export const ReportEditorDrawer = () => {
       title={title}
       onClose={closeChartEditor}
     >
-      <div className="report-detail-editor">
+      <div className='report-detail-editor'>
         {chartBuilder ? (
-          <StandardAPP builder={chartBuilder} mode="edit" {...standardAppProps} />
+          <StandardAPP builder={chartBuilder} mode='edit' {...standardAppProps} />
         ) : (
-          <div className="report-detail-placeholder">
+          <div className='report-detail-placeholder'>
             <Spin tip={t('reportDetail.connectingChartEditor')} />
-            <Typography.Text type="secondary">{t('reportDetail.chartEditorReady')}</Typography.Text>
+            <Typography.Text type='secondary'>{t('reportDetail.chartEditorReady')}</Typography.Text>
           </div>
         )}
       </div>

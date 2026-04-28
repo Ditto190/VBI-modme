@@ -30,7 +30,7 @@ const HorizontalReportPage = memo(
         data-report-page-id={page.id}
         ref={onPageRef(page.id)}
       >
-        <div className="report-detail-horizontal-slide">
+        <div className='report-detail-horizontal-slide'>
           {hasInsight ? (
             <ReportInsightPanel builder={insightBuilder} insightId={page.insightId} onEdit={editInsight} />
           ) : null}
@@ -46,8 +46,8 @@ const HorizontalReportPage = memo(
 
 export const HorizontalReportRenderer = memo(
   ({ activePageId, emptyDescription, onEditChart, onEditInsight, onPageRef, pages, stageRef }: ReportRendererProps) => (
-    <section ref={stageRef} className="report-detail-stage report-detail-horizontal-stage">
-      <div className="report-detail-horizontal-track">
+    <section ref={stageRef} className='report-detail-stage report-detail-horizontal-stage'>
+      <div className='report-detail-horizontal-track'>
         {pages.map((page, index) => (
           <Fragment key={page.page.id}>
             <HorizontalReportPage
@@ -58,7 +58,7 @@ export const HorizontalReportRenderer = memo(
               onEditInsight={onEditInsight}
               onPageRef={onPageRef}
             />
-            <ReportPageDivider index={index} mode="horizontal" title={page.page.title} />
+            <ReportPageDivider index={index} mode='horizontal' title={page.page.title} />
           </Fragment>
         ))}
       </div>

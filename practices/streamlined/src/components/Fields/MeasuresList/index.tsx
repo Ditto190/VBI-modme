@@ -37,7 +37,7 @@ export const MeasuresList = ({ style }: { style?: React.CSSProperties }) => {
 
   return (
     <Card
-      title="Measures"
+      title='Measures'
       style={{ ...style }}
       styles={{
         body: {
@@ -53,7 +53,7 @@ export const MeasuresList = ({ style }: { style?: React.CSSProperties }) => {
       }}
     >
       <List
-        size="small"
+        size='small'
         dataSource={measures}
         split={false}
         renderItem={(item) => (

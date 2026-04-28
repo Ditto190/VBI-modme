@@ -35,22 +35,22 @@ export const CollaboratorCursorOverlay = ({ users }: CollaboratorCursorOverlayPr
             }}
           >
             <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
               style={{
                 display: 'block',
                 filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
               }}
             >
               <path
-                d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+                d='M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z'
                 fill={user.color}
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
+                stroke='white'
+                strokeWidth='1.5'
+                strokeLinejoin='round'
               />
             </svg>
             <div

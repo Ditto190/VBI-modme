@@ -8,7 +8,7 @@ test('page preview canvas reuses standard view mode without editor controls', as
   render(
     <PagePreviewCanvas
       builder={createDefaultBuilder()}
-      pageId="page-1"
+      pageId='page-1'
       previewRef={createRef<HTMLDivElement>()}
       showPlaceholder={false}
       onEdit={() => undefined}
@@ -28,7 +28,7 @@ test('empty preview keeps the full-card edit entry', async () => {
   render(
     <PagePreviewCanvas
       builder={createDefaultBuilder()}
-      pageId="page-2"
+      pageId='page-2'
       previewRef={createRef<HTMLDivElement>()}
       showPlaceholder
       onEdit={() => {

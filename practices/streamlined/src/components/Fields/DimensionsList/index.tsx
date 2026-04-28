@@ -41,7 +41,7 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
 
   return (
     <Card
-      title="Dimensions"
+      title='Dimensions'
       style={{ ...style }}
       styles={{
         body: {
@@ -57,7 +57,7 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
       }}
     >
       <List
-        size="small"
+        size='small'
         dataSource={dimensions}
         split={false}
         renderItem={(item) => (

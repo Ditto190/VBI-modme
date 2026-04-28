@@ -55,7 +55,7 @@ export const MeasureShelf = ({ style }: { style?: React.CSSProperties }) => {
       {measures.map((measure) => (
         <Space.Compact key={`measure-shelf-${measure.field}`} style={{ width: '100%' }}>
           <Button
-            shape="round"
+            shape='round'
             style={{
               color: '#52c41a',
               flexGrow: 1,
@@ -65,7 +65,7 @@ export const MeasureShelf = ({ style }: { style?: React.CSSProperties }) => {
           >
             {measure.field}
           </Button>
-          <Button shape="round" icon={<DeleteOutlined />} onClick={() => deleteMeasure(measure.field)} />
+          <Button shape='round' icon={<DeleteOutlined />} onClick={() => deleteMeasure(measure.field)} />
         </Space.Compact>
       ))}
     </Flex>

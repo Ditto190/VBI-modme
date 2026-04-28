@@ -47,8 +47,8 @@ export const PageSidebar = () => {
   const pages = reportSession?.builder?.build().pages ?? []
 
   return (
-    <section className="report-detail-filmstrip">
-      <div className="report-detail-page-list">
+    <section className='report-detail-filmstrip'>
+      <div className='report-detail-page-list'>
         {pages.map((page, index) => (
           <PageSidebarItem
             key={page.id}
@@ -65,13 +65,13 @@ export const PageSidebar = () => {
           />
         ))}
       </div>
-      <div className="report-detail-filmstrip-actions">
-        <div className="report-detail-filmstrip-mode">
+      <div className='report-detail-filmstrip-actions'>
+        <div className='report-detail-filmstrip-mode'>
           {viewModeOptions.map(({ key, label }) => (
             <Button
               key={key}
-              className="report-detail-mode-btn"
-              size="small"
+              className='report-detail-mode-btn'
+              size='small'
               type={viewMode === key ? 'primary' : 'default'}
               onClick={() => setViewMode(key)}
             >
@@ -80,12 +80,12 @@ export const PageSidebar = () => {
           ))}
         </div>
         <Button
-          className="report-detail-page-create"
+          className='report-detail-page-create'
           icon={<PlusOutlined />}
           loading={busy}
-          size="large"
-          type="primary"
-          variant="filled"
+          size='large'
+          type='primary'
+          variant='filled'
           onClick={() => void addPage()}
         >
           {t('reportDetail.newPage')}

@@ -58,8 +58,8 @@ export const DateFilterEditor: React.FC<DateFilterEditorProps> = ({ value, onCha
       <Select
         value={predicate.type}
         onChange={handleTypeChange}
-        variant="filled"
-        size="small"
+        variant='filled'
+        size='small'
         style={{ width: '100%' }}
       >
         {DATE_TYPES.map((type) => (
@@ -100,11 +100,11 @@ const RangeFields: React.FC<{
 
   return (
     <RangePicker
-      size="small"
-      variant="filled"
+      size='small'
+      variant='filled'
       value={toRangePickerValue(value)}
       onChange={handleChange}
-      format="YYYY-MM-DD"
+      format='YYYY-MM-DD'
       inputReadOnly
       style={{ width: '100%' }}
       placeholder={[t('dateFilterStartPlaceholder'), t('dateFilterEndPlaceholder')]}
@@ -125,8 +125,8 @@ const RelativeFields: React.FC<{
   return (
     <Space size={6} style={{ width: '100%' }}>
       <Select
-        size="small"
-        variant="filled"
+        size='small'
+        variant='filled'
         value={value.mode}
         onChange={(mode) => onChange({ ...value, mode })}
         style={{ width: 80 }}
@@ -138,8 +138,8 @@ const RelativeFields: React.FC<{
         ))}
       </Select>
       <InputNumber
-        size="small"
-        variant="filled"
+        size='small'
+        variant='filled'
         min={1}
         value={value.amount}
         onChange={(v) => v != null && onChange({ ...value, amount: v })}
@@ -165,8 +165,8 @@ const CurrentFields: React.FC<{
     <Space size={6} style={{ width: '100%' }}>
       <UnitSelect value={value.unit} onChange={(unit) => onChange({ ...value, unit })} />
       <InputNumber
-        size="small"
-        variant="filled"
+        size='small'
+        variant='filled'
         value={value.offset ?? 0}
         onChange={(v) => onChange({ ...value, offset: v ?? 0 })}
         style={{ width: 64 }}
@@ -222,8 +222,8 @@ const PeriodFields: React.FC<{
     <Space size={6} style={{ width: '100%' }} wrap>
       <UnitSelect value={value.unit} onChange={handleUnitChange} />
       <DatePicker
-        size="small"
-        variant="filled"
+        size='small'
+        variant='filled'
         picker={PERIOD_PICKERS[value.unit]}
         value={toPeriodPickerValue(value)}
         onChange={(date) => {
@@ -298,7 +298,7 @@ const UnitSelect: React.FC<{
   const { t } = useTranslation()
 
   return (
-    <Select size="small" variant="filled" value={value} onChange={onChange} style={{ width: 80 }}>
+    <Select size='small' variant='filled' value={value} onChange={onChange} style={{ width: 80 }}>
       {DATE_UNITS.map((u) => (
         <Option key={u} value={u}>
           {t(`dateFilterUnit${u.charAt(0).toUpperCase()}${u.slice(1)}`)}

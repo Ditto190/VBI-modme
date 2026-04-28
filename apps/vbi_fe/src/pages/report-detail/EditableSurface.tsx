@@ -25,9 +25,9 @@ const renderAction = (action: EditableSurfaceAction) => {
         danger={action.danger}
         disabled={action.disabled}
         icon={action.icon}
-        shape="circle"
-        size="small"
-        type="text"
+        shape='circle'
+        size='small'
+        type='text'
         onClick={action.confirm ? undefined : action.onClick}
       />
     </Tooltip>
@@ -49,9 +49,9 @@ const renderAction = (action: EditableSurfaceAction) => {
 }
 
 export const EditableSurface = ({ actions, children }: { actions: EditableSurfaceAction[]; children: ReactNode }) => (
-  <section className="report-detail-surface">
-    <div className="report-detail-surface-body">{children}</div>
-    <div className="report-detail-surface-toolbar">
+  <section className='report-detail-surface'>
+    <div className='report-detail-surface-body'>{children}</div>
+    <div className='report-detail-surface-toolbar'>
       {actions.map((action) => (
         <span key={action.ariaLabel}>{renderAction(action)}</span>
       ))}

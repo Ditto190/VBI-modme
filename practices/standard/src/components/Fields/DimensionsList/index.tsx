@@ -99,7 +99,7 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
   return (
     <Card
       title={<span style={{ fontSize: 13, fontWeight: 500 }}>{t('panelsFieldsDimensions')}</span>}
-      size="small"
+      size='small'
       style={{ ...style }}
       styles={{
         body: {

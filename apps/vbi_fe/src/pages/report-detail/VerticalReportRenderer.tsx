@@ -30,7 +30,7 @@ const VerticalReportPage = memo(
         data-report-page-id={page.id}
         ref={onPageRef(page.id)}
       >
-        <div className="report-detail-vertical-slide">
+        <div className='report-detail-vertical-slide'>
           {hasInsight ? (
             <ReportInsightPanel builder={insightBuilder} insightId={page.insightId} onEdit={editInsight} />
           ) : null}
@@ -46,8 +46,8 @@ const VerticalReportPage = memo(
 
 export const VerticalReportRenderer = memo(
   ({ activePageId, emptyDescription, onEditChart, onEditInsight, onPageRef, pages, stageRef }: ReportRendererProps) => (
-    <section ref={stageRef} className="report-detail-stage report-detail-vertical-stage">
-      <div className="report-detail-vertical-track">
+    <section ref={stageRef} className='report-detail-stage report-detail-vertical-stage'>
+      <div className='report-detail-vertical-track'>
         {pages.map((page, index) => (
           <Fragment key={page.page.id}>
             <VerticalReportPage
@@ -58,7 +58,7 @@ export const VerticalReportRenderer = memo(
               onEditInsight={onEditInsight}
               onPageRef={onPageRef}
             />
-            <ReportPageDivider index={index} mode="vertical" title={page.page.title} />
+            <ReportPageDivider index={index} mode='vertical' title={page.page.title} />
           </Fragment>
         ))}
       </div>

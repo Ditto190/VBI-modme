@@ -46,7 +46,7 @@ export const PageSidebarItem = ({
   return (
     <article
       className={`report-detail-page-card${page.id === activePageId ? ' is-active' : ''}`}
-      role="button"
+      role='button'
       tabIndex={0}
       onClick={() => void selectPage(page.id)}
       onKeyDown={(event) => {
@@ -55,12 +55,12 @@ export const PageSidebarItem = ({
         void selectPage(page.id)
       }}
     >
-      <span className="report-detail-page-icon">
+      <span className='report-detail-page-icon'>
         <PageIcon />
       </span>
-      <div className="report-detail-page-copy">
-        <span className="report-detail-page-index">{String(index + 1).padStart(2, '0')}</span>
-        <div className="report-detail-page-title">{page.title}</div>
+      <div className='report-detail-page-copy'>
+        <span className='report-detail-page-index'>{String(index + 1).padStart(2, '0')}</span>
+        <div className='report-detail-page-title'>{page.title}</div>
       </div>
       <PageSidebarMenu
         addChart={addChart}

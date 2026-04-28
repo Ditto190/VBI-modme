@@ -27,8 +27,8 @@ export const ManageResourceToolbar = ({
   const { t } = useTranslation()
 
   return (
-    <div className="manage-toolbar">
-      <div className="manage-search">
+    <div className='manage-toolbar'>
+      <div className='manage-search'>
         <Input.Search
           allowClear
           placeholder={t('common.searchPlaceholder')}
@@ -46,7 +46,7 @@ export const ManageResourceToolbar = ({
         <Button danger icon={<DeleteOutlined />} disabled={!selectedRowKeys.length} onClick={onBatchDelete}>
           {t('common.delete')}
         </Button>
-        <Button icon={<PlusOutlined />} type="primary" onClick={onCreate}>
+        <Button icon={<PlusOutlined />} type='primary' onClick={onCreate}>
           {createLabel}
         </Button>
       </Space>

@@ -13,14 +13,14 @@ const tailLines = (value: string, limit: number) => value.split('\n').slice(-lim
 const divider = (width: number) => '─'.repeat(Math.max(24, width - 2))
 
 const renderActivity = (activity: AgentActivity, index: number, width: number) => (
-  <Box flexDirection="column" key={index} marginBottom={1}>
-    {index ? <Text color="gray">{divider(width)}</Text> : null}
+  <Box flexDirection='column' key={index} marginBottom={1}>
+    {index ? <Text color='gray'>{divider(width)}</Text> : null}
     <Text bold color={colorByKind[activity.kind]}>
       [{activity.kind}]
     </Text>
     <Text color={colorByKind[activity.kind]}>{tailLines(activity.text, 12)}</Text>
     {activity.detail ? (
-      <Box flexDirection="column" paddingLeft={2}>
+      <Box flexDirection='column' paddingLeft={2}>
         <Text>{tailLines(activity.detail, 40)}</Text>
       </Box>
     ) : null}
@@ -68,14 +68,14 @@ export const AgentApp = ({ onExit, runtime, task }: AgentAppProps) => {
   return (
     <>
       <Static items={state.activities}>{(activity, index) => renderActivity(activity, index, width)}</Static>
-      <Box flexDirection="column">
-        <Text color="blue">VBI Agent</Text>
-        {state.error ? <Text color="red">{state.error}</Text> : null}
-        <Text color="gray">{statusLine(isRunning)}</Text>
-        <Text color="cyan">
+      <Box flexDirection='column'>
+        <Text color='blue'>VBI Agent</Text>
+        {state.error ? <Text color='red'>{state.error}</Text> : null}
+        <Text color='gray'>{statusLine(isRunning)}</Text>
+        <Text color='cyan'>
           {'> '}
           <Text>{buffer}</Text>
-          <Text color="gray">▎</Text>
+          <Text color='gray'>▎</Text>
         </Text>
       </Box>
     </>

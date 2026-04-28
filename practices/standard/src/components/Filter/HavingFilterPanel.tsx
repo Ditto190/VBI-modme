@@ -422,7 +422,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
     if (inputStrategy === 'none') {
       return (
         <Form.Item style={{ marginBottom: 10 }}>
-          <Text type="secondary" style={{ fontSize: 11 }}>
+          <Text type='secondary' style={{ fontSize: 11 }}>
             {t('filtersFormNoValueRequired')}
           </Text>
         </Form.Item>
@@ -435,7 +435,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
           <div style={{ display: 'flex', gap: 10 }}>
             <Form.Item name={['value', 'min']} noStyle>
               <InputNumber
-                variant="filled"
+                variant='filled'
                 controls={false}
                 style={{ width: '100%' }}
                 placeholder={t('filtersFormMinValue')}
@@ -443,7 +443,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             </Form.Item>
             <Form.Item name={['value', 'max']} noStyle>
               <InputNumber
-                variant="filled"
+                variant='filled'
                 controls={false}
                 style={{ width: '100%' }}
                 placeholder={t('filtersFormMaxValue')}
@@ -458,13 +458,13 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
       return (
         <Form.Item
           label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-          name="value"
+          name='value'
           rules={[{ required: true, message: t('filtersValidationEnterValue') }]}
           style={{ marginBottom: 10 }}
         >
           <Select
-            mode="tags"
-            variant="filled"
+            mode='tags'
+            variant='filled'
             tokenSeparators={[',']}
             placeholder={t('filtersFormInputMultipleValues')}
           />
@@ -476,12 +476,12 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
       return (
         <Form.Item
           label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-          name="value"
+          name='value'
           rules={[{ required: true, message: t('filtersValidationEnterNumber') }]}
           style={{ marginBottom: 10 }}
         >
           <InputNumber
-            variant="filled"
+            variant='filled'
             controls={false}
             style={{ width: '100%' }}
             placeholder={t('filtersFormInputNumber')}
@@ -493,11 +493,11 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
     return (
       <Form.Item
         label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-        name="value"
+        name='value'
         rules={[{ required: true, message: t('filtersValidationEnterValue') }]}
         style={{ marginBottom: 10 }}
       >
-        <Input placeholder={t('filtersFormInputValue')} variant="filled" />
+        <Input placeholder={t('filtersFormInputValue')} variant='filled' />
       </Form.Item>
     )
   }
@@ -505,8 +505,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
   const renderHavingForm = () => (
     <Form
       form={form}
-      layout="vertical"
-      size="small"
+      layout='vertical'
+      size='small'
       requiredMark={false}
       style={{
         width: isSingleItemEdit ? 230 : 254,
@@ -520,14 +520,14 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
       {!isSingleItemEdit && (
         <Form.Item
           label={t('filtersFormField')}
-          name="field"
+          name='field'
           rules={[{ required: true, message: t('filtersValidationSelectField') }]}
           style={{ marginBottom: 8 }}
         >
           <Select
             placeholder={t('filtersFormSelectField')}
             showSearch
-            variant="filled"
+            variant='filled'
             onChange={(fieldName) => {
               const fieldRole = getFieldRole(fields, fieldName)
               const aggregate = getDefaultHavingAggregateByFieldRole(fieldRole)
@@ -554,7 +554,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       <Form.Item
         label={isSingleItemEdit ? undefined : t('filtersFormAggregate')}
-        name="aggregateFunc"
+        name='aggregateFunc'
         rules={[{ required: true, message: t('filtersValidationSelectAggregate') }]}
         style={{ marginBottom: 10 }}
       >
@@ -582,7 +582,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             </div>
           )}
           <Select
-            variant="filled"
+            variant='filled'
             options={aggregateSelectOptions}
             value={selectedAggregateFunc}
             placeholder={t('filtersFormSelectAggregate')}
@@ -596,12 +596,12 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       <Form.Item
         label={isSingleItemEdit ? undefined : t('filtersFormOperator')}
-        name="operator"
+        name='operator'
         rules={[{ required: true, message: t('filtersValidationSelectOperator') }]}
         style={{ marginBottom: 10 }}
       >
         <Select
-          variant="filled"
+          variant='filled'
           onChange={() => {
             form.setFieldValue('value', undefined)
           }}
@@ -618,12 +618,12 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       <Form.Item style={{ marginBottom: 0, marginTop: 2, textAlign: 'right' }}>
         <Space size={8}>
-          <Button size="small" onClick={handleCancel} style={POPOVER_TEXT_BUTTON_STYLE}>
+          <Button size='small' onClick={handleCancel} style={POPOVER_TEXT_BUTTON_STYLE}>
             {t('commonActionsCancel')}
           </Button>
           <Button
-            type="primary"
-            size="small"
+            type='primary'
+            size='small'
             onClick={handleSubmit}
             icon={<CheckOutlined />}
             style={POPOVER_TEXT_BUTTON_STYLE}
@@ -666,8 +666,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
               <Space size={2}>
                 <Tooltip title={t('commonActionsEdit')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     icon={<EditOutlined />}
                     onClick={() => item.id && handleEdit(item.id)}
                     style={{
@@ -678,8 +678,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
                 </Tooltip>
                 <Tooltip title={t('commonActionsDelete')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<DeleteOutlined />}
                     onClick={() => item.id && handleDelete(item.id)}
@@ -714,8 +714,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             <>
               <Tooltip title={t('commonActionsAddCondition')}>
                 <Button
-                  type="text"
-                  size="small"
+                  type='text'
+                  size='small'
                   icon={<PlusOutlined />}
                   onClick={handleAddClick}
                   style={POPOVER_ICON_BUTTON_STYLE}
@@ -724,8 +724,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
               {filters.length > 0 && (
                 <Tooltip title={t('commonActionsClearAll')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<ClearOutlined />}
                     onClick={handleClearAll}
@@ -753,10 +753,10 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
   return (
     <Popover
       content={popoverContent}
-      trigger="click"
+      trigger='click'
       open={popoverOpen}
       onOpenChange={setPopoverOpen}
-      placement="left"
+      placement='left'
       styles={{
         root: { padding: 0 },
         container: {
@@ -765,8 +765,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
         },
       }}
     >
-      <Badge count={filters.length} size="small" offset={[8, 0]}>
-        <Button size="small" icon={<FilterOutlined />}>
+      <Badge count={filters.length} size='small' offset={[8, 0]}>
+        <Button size='small' icon={<FilterOutlined />}>
           {t('filtersButtonsHaving')}
         </Button>
       </Badge>

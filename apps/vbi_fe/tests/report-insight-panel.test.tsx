@@ -11,7 +11,7 @@ rs.mock('../src/pages/report-detail/useInsightPreview', () => ({
 const { ReportInsightPanel } = await import('../src/pages/report-detail/ReportInsightPanel')
 
 test('report insight panel renders preview content without connected builder', () => {
-  render(<ReportInsightPanel builder={null} insightId="insight-1" onEdit={() => undefined} />)
+  render(<ReportInsightPanel builder={null} insightId='insight-1' onEdit={() => undefined} />)
 
   expect(screen.getByText('核心结论')).toBeInTheDocument()
   expect(screen.getByText('数据表现稳定')).toBeInTheDocument()

@@ -34,7 +34,7 @@ export const InsightEditorDrawer = () => {
           onChange={(event) => setInsightContent(event.target.value)}
         />
       ) : (
-        <div className="report-detail-placeholder">
+        <div className='report-detail-placeholder'>
           <Spin tip={t('reportDetail.connectingInsightEditor')} />
         </div>
       )}

@@ -90,7 +90,7 @@ const DimensionFieldList: React.FC<DimensionFieldListProps> = ({
   return (
     <>
       <div
-        className="fieldlist"
+        className='fieldlist'
         style={style}
         onDragOver={(event) => {
           if (!onDropDimension) {
@@ -115,7 +115,7 @@ const DimensionFieldList: React.FC<DimensionFieldListProps> = ({
         }}
       >
         <div
-          className="fieldlist-title"
+          className='fieldlist-title'
           style={{
             backgroundColor: hoveredDropZone ? '#e6f4ff' : 'transparent',
             transition: 'background-color 0.2s',
@@ -124,7 +124,7 @@ const DimensionFieldList: React.FC<DimensionFieldListProps> = ({
           {isZh ? '维度' : 'DIMENSIONS'}
         </div>
         <div
-          className="fieldlist-items"
+          className='fieldlist-items'
           style={{
             backgroundColor: hoveredDropZone ? '#e6f4ff' : 'transparent',
             borderRadius: '2px',
@@ -132,22 +132,22 @@ const DimensionFieldList: React.FC<DimensionFieldListProps> = ({
           }}
         >
           {items.length === 0 && (
-            <div className="fieldlist-empty">{isZh ? '还没有添加维度' : 'No dimensions added'}</div>
+            <div className='fieldlist-empty'>{isZh ? '还没有添加维度' : 'No dimensions added'}</div>
           )}
           {items.map((item) => {
             const aggregateLabel = formatAggregate(item.aggregate)
             const displayName = item.alias || item.field
             const suffix = aggregateLabel ? `${aggregateLabel} · ` : ''
             return (
-              <div key={item.id} className="fieldlist-item">
+              <div key={item.id} className='fieldlist-item'>
                 <NumberOutlined style={{ marginRight: 4 }} />
-                <span className="fieldlist-item-text">
+                <span className='fieldlist-item-text'>
                   {suffix}
                   {displayName}
                 </span>
                 <div style={{ display: 'flex', gap: 4 }}>
                   <button
-                    className="fieldlist-item-action"
+                    className='fieldlist-item-action'
                     onClick={(event) => {
                       event.stopPropagation()
                       handleEdit(item)
@@ -157,7 +157,7 @@ const DimensionFieldList: React.FC<DimensionFieldListProps> = ({
                     <EditOutlined />
                   </button>
                   <button
-                    className="fieldlist-item-remove"
+                    className='fieldlist-item-remove'
                     onClick={(event) => {
                       event.stopPropagation()
                       onRemove(item.id)
@@ -178,7 +178,7 @@ const DimensionFieldList: React.FC<DimensionFieldListProps> = ({
         onOk={handleSave}
         onCancel={() => setEditingId(null)}
       >
-        <Form layout="vertical">
+        <Form layout='vertical'>
           <Form.Item label={isZh ? '显示名' : 'Alias'}>
             <Input
               value={editAlias}

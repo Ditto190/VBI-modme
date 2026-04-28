@@ -11,13 +11,13 @@ type StageNavButtonProps = {
 export const StageNavButton = ({ children, disabled, label, onClick }: StageNavButtonProps) => {
   return (
     <Button
-      className="standard-report-stage-nav"
+      className='standard-report-stage-nav'
       aria-label={label}
-      color="default"
+      color='default'
       disabled={disabled}
-      shape="circle"
-      size="large"
-      variant="filled"
+      shape='circle'
+      size='large'
+      variant='filled'
       onClick={onClick}
     >
       {children}

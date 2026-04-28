@@ -367,8 +367,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   const renderFilterForm = () => (
     <Form
       form={form}
-      layout="vertical"
-      size="small"
+      layout='vertical'
+      size='small'
       requiredMark={false}
       style={{
         width: isSingleItemEdit ? 214 : 238,
@@ -381,14 +381,14 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
       {!isSingleItemEdit && (
         <Form.Item
           label={t('filtersFormField')}
-          name="field"
+          name='field'
           rules={[{ required: true, message: t('filtersValidationSelectField') }]}
           style={{ marginBottom: 8 }}
         >
           <Select
             placeholder={t('filtersFormSelectField')}
             showSearch
-            variant="filled"
+            variant='filled'
             onChange={(fieldName) => {
               const nextField = fields.find((f) => f.name === fieldName)
               const nextFieldRole = nextField?.role ?? 'dimension'
@@ -429,12 +429,12 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         <>
           <Form.Item
             label={isSingleItemEdit ? undefined : t('filtersFormOperator')}
-            name="operator"
+            name='operator'
             rules={[{ required: true, message: t('filtersValidationSelectOperator') }]}
             style={{ marginBottom: 10 }}
           >
             <Select
-              variant="filled"
+              variant='filled'
               onChange={() => {
                 form.setFieldsValue({ value: undefined })
               }}
@@ -456,22 +456,22 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   {selectedFieldRole === 'measure' ? (
                     <InputNumber
                       placeholder={t('filtersFormMin')}
-                      variant="filled"
+                      variant='filled'
                       style={{ width: isSingleItemEdit ? 46 : 62 }}
                       controls={false}
                     />
                   ) : (
                     <Input
                       placeholder={t('filtersFormMin')}
-                      variant="filled"
+                      variant='filled'
                       style={{ width: isSingleItemEdit ? 46 : 62 }}
                     />
                   )}
                 </Form.Item>
                 <Form.Item name={['value', 'leftOp']} noStyle>
-                  <Select variant="filled" style={{ width: isSingleItemEdit ? 36 : 48 }}>
-                    <Option value="<">&lt;</Option>
-                    <Option value="<=">&lt;=</Option>
+                  <Select variant='filled' style={{ width: isSingleItemEdit ? 36 : 48 }}>
+                    <Option value='<'>&lt;</Option>
+                    <Option value='<='>&lt;=</Option>
                   </Select>
                 </Form.Item>
                 {!isSingleItemEdit && (
@@ -480,23 +480,23 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   </Text>
                 )}
                 <Form.Item name={['value', 'rightOp']} noStyle>
-                  <Select variant="filled" style={{ width: isSingleItemEdit ? 36 : 48 }}>
-                    <Option value="<">&lt;</Option>
-                    <Option value="<=">&lt;=</Option>
+                  <Select variant='filled' style={{ width: isSingleItemEdit ? 36 : 48 }}>
+                    <Option value='<'>&lt;</Option>
+                    <Option value='<='>&lt;=</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item name={['value', 'max']} noStyle>
                   {selectedFieldRole === 'measure' ? (
                     <InputNumber
                       placeholder={t('filtersFormMax')}
-                      variant="filled"
+                      variant='filled'
                       style={{ width: isSingleItemEdit ? 46 : 62 }}
                       controls={false}
                     />
                   ) : (
                     <Input
                       placeholder={t('filtersFormMax')}
-                      variant="filled"
+                      variant='filled'
                       style={{ width: isSingleItemEdit ? 46 : 62 }}
                     />
                   )}
@@ -506,7 +506,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
           ) : inputStrategy === 'tags' ? (
             <Form.Item
               label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-              name="value"
+              name='value'
               rules={[
                 {
                   validator: (_, value) => {
@@ -520,8 +520,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
               style={{ marginBottom: 10 }}
             >
               <Select
-                mode="tags"
-                variant="filled"
+                mode='tags'
+                variant='filled'
                 tokenSeparators={[',']}
                 placeholder={
                   selectedFieldRole === 'measure' ? t('filtersFormInputNumbers') : t('filtersFormInputValues')
@@ -532,7 +532,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
           ) : (
             <Form.Item
               label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-              name="value"
+              name='value'
               rules={[
                 {
                   required: !['is null', 'is not null'].includes(operator ?? ''),
@@ -543,13 +543,13 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             >
               {inputStrategy === 'number' ? (
                 <InputNumber
-                  variant="filled"
+                  variant='filled'
                   placeholder={t('filtersFormInputNumber')}
                   style={{ width: '100%' }}
                   controls={false}
                 />
               ) : (
-                <Input placeholder={t('filtersFormInputValue')} variant="filled" />
+                <Input placeholder={t('filtersFormInputValue')} variant='filled' />
               )}
             </Form.Item>
           )}
@@ -558,12 +558,12 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
       <Form.Item style={{ marginBottom: 0, marginTop: 2, textAlign: 'right' }}>
         <Space size={8}>
-          <Button size="small" onClick={handleCancel} style={POPOVER_TEXT_BUTTON_STYLE}>
+          <Button size='small' onClick={handleCancel} style={POPOVER_TEXT_BUTTON_STYLE}>
             {t('commonActionsCancel')}
           </Button>
           <Button
-            type="primary"
-            size="small"
+            type='primary'
+            size='small'
             onClick={handleSubmit}
             icon={<CheckOutlined />}
             style={POPOVER_TEXT_BUTTON_STYLE}
@@ -602,8 +602,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
               <Space size={2}>
                 <Tooltip title={t('commonActionsEdit')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     icon={<EditOutlined />}
                     onClick={() => item.id && handleEdit(item.id)}
                     style={{
@@ -614,8 +614,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </Tooltip>
                 <Tooltip title={t('commonActionsDelete')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<DeleteOutlined />}
                     onClick={() => item.id && handleDelete(item.id)}
@@ -650,8 +650,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             <>
               <Tooltip title={t('commonActionsAddCondition')}>
                 <Button
-                  type="text"
-                  size="small"
+                  type='text'
+                  size='small'
                   icon={<PlusOutlined />}
                   onClick={handleAddClick}
                   style={POPOVER_ICON_BUTTON_STYLE}
@@ -660,8 +660,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
               {filters.length > 0 && (
                 <Tooltip title={t('commonActionsClearAll')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<ClearOutlined />}
                     onClick={handleClearAll}
@@ -691,10 +691,10 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   return (
     <Popover
       content={popoverContent}
-      trigger="click"
+      trigger='click'
       open={popoverOpen}
       onOpenChange={setPopoverOpen}
-      placement="left"
+      placement='left'
       styles={{
         root: { padding: 0 },
         container: {
@@ -703,8 +703,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         },
       }}
     >
-      <Badge count={filters.length} size="small" offset={[8, 0]}>
-        <Button size="small" icon={<FilterOutlined />}>
+      <Badge count={filters.length} size='small' offset={[8, 0]}>
+        <Button size='small' icon={<FilterOutlined />}>
           {t('filtersButtonsWhere')}
         </Button>
       </Badge>

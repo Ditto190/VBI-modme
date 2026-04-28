@@ -13,14 +13,14 @@ export const ManagePreferences = () => {
   const { locale, setLocale, t } = useTranslation()
 
   return (
-    <div className="manage-preferences" aria-label={t('app.theme.switch')}>
-      <div className="manage-theme-switch" role="group">
+    <div className='manage-preferences' aria-label={t('app.theme.switch')}>
+      <div className='manage-theme-switch' role='group'>
         {themeOptions.map((mode) => (
           <button
             key={mode}
-            className="manage-theme-option"
+            className='manage-theme-option'
             data-active={themeMode === mode}
-            type="button"
+            type='button'
             aria-pressed={themeMode === mode}
             onClick={() => setThemeMode(mode)}
           >
@@ -40,9 +40,9 @@ export const ManagePreferences = () => {
           ],
         }}
       >
-        <Button className="manage-locale-button" icon={<GlobalOutlined />} shape="round">
+        <Button className='manage-locale-button' icon={<GlobalOutlined />} shape='round'>
           <span>{locale === 'zh-CN' ? t('app.language.zh') : t('app.language.en')}</span>
-          <DownOutlined className="manage-locale-caret" />
+          <DownOutlined className='manage-locale-caret' />
         </Button>
       </Dropdown>
     </div>

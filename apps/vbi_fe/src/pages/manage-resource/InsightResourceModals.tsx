@@ -54,7 +54,7 @@ export const InsightResourceModals = ({
       }}
       onCancel={closeCreate}
     >
-      <Space orientation="vertical" style={fullWidth} size={12}>
+      <Space orientation='vertical' style={fullWidth} size={12}>
         <Input
           value={createName}
           placeholder={t('insights.titlePlaceholder')}
@@ -76,7 +76,7 @@ export const InsightResourceModals = ({
       onClose={() => void closeDetail()}
       extra={<Button onClick={() => void closeDetail()}>{t('common.close')}</Button>}
     >
-      <Space orientation="vertical" style={fullWidth} size={12}>
+      <Space orientation='vertical' style={fullWidth} size={12}>
         <Input
           value={editorName}
           placeholder={t('insights.titlePlaceholder')}

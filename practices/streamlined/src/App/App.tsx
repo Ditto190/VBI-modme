@@ -93,7 +93,7 @@ export const APP = (props: APPProps) => {
   }
 
   if (!initialized) {
-    return <Spin tip="Initializing..." fullscreen />
+    return <Spin tip='Initializing...' fullscreen />
   }
 
   return (
@@ -118,7 +118,7 @@ export const APP = (props: APPProps) => {
             Chart Source
           </div>
         }
-        size="small"
+        size='small'
         style={{
           width: 280,
           height: '100%',
@@ -207,7 +207,7 @@ export const APP = (props: APPProps) => {
         }}
       >
         <Card
-          size="small"
+          size='small'
           style={{
             flex: 1,
             margin: '16px 0',
@@ -400,7 +400,7 @@ export const APP = (props: APPProps) => {
               Chart Preview
             </div>
           }
-          size="small"
+          size='small'
           style={{
             flex: 2,
             margin: '16px 0',
@@ -428,7 +428,7 @@ export const APP = (props: APPProps) => {
               RESULTS
             </div>
           }
-          size="small"
+          size='small'
           style={{
             flex: 1,
             margin: '0 16px 16px 8px',
@@ -520,7 +520,7 @@ const ChartWrapper = () => {
             zIndex: 10,
           }}
         >
-          <Spin size="large" />
+          <Spin size='large' />
           <div style={{ marginTop: 16, color: '#595959', fontWeight: 500 }}>Rendering chart...</div>
         </div>
       )}

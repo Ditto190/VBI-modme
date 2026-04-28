@@ -175,8 +175,8 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
           isOpen,
           close,
         })}
-        trigger="click"
-        placement="bottom"
+        trigger='click'
+        placement='bottom'
         open={isOpen}
         onOpenChange={setOpen}
         arrow={false}

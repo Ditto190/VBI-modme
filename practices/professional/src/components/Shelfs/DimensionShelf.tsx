@@ -17,14 +17,14 @@ const DimensionShelf: React.FC<DimensionShelfProps> = ({ items, onAdd, existingF
   }
 
   return (
-    <div className="shelf" style={style}>
-      <div className="shelf-items">
+    <div className='shelf' style={style}>
+      <div className='shelf-items'>
         {items.map((field) => {
           const isExists = existingFields.includes(field)
           return (
             <div
               key={field}
-              className="shelf-item"
+              className='shelf-item'
               draggable
               onDragStart={(e) => {
                 e.dataTransfer.setData('application/x-vbi-dimension-field', field)
@@ -33,9 +33,9 @@ const DimensionShelf: React.FC<DimensionShelfProps> = ({ items, onAdd, existingF
               }}
             >
               <NumberOutlined style={{ marginRight: 4 }} />
-              <span className="shelf-item-text">{field}</span>
+              <span className='shelf-item-text'>{field}</span>
               <button
-                className="shelf-item-remove"
+                className='shelf-item-remove'
                 onClick={() => handleAction(field)}
                 disabled={isExists}
                 style={{

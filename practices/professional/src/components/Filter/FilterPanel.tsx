@@ -194,7 +194,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
   return (
     <Card
-      size="small"
+      size='small'
       title={
         <Space>
           <FilterOutlined />
@@ -205,17 +205,17 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         <Space size={4}>
           {onRootOperatorChange && (
             <Radio.Group
-              size="small"
+              size='small'
               value={rootOperator}
               onChange={(event) => onRootOperatorChange(event.target.value)}
-              optionType="button"
+              optionType='button'
               options={[
                 { label: 'AND', value: 'and' },
                 { label: 'OR', value: 'or' },
               ]}
             />
           )}
-          <Button type="text" size="small" icon={<PlusOutlined />} onClick={handleAddClick} />
+          <Button type='text' size='small' icon={<PlusOutlined />} onClick={handleAddClick} />
         </Space>
       }
       style={{ marginBottom: 0 }}
@@ -238,26 +238,26 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
         </div>
       ) : (
         <List
-          size="small"
+          size='small'
           dataSource={filters}
           renderItem={(item, index) => {
             return (
               <List.Item
                 style={{ padding: '8px 0' }}
                 actions={[
-                  <Tooltip title={t('filtersEdit')} key="edit">
+                  <Tooltip title={t('filtersEdit')} key='edit'>
                     <Button
-                      type="text"
-                      size="small"
+                      type='text'
+                      size='small'
                       icon={<EditOutlined />}
                       onClick={() => handleEdit(index)}
                       style={{ color: '#1890ff' }}
                     />
                   </Tooltip>,
-                  <Tooltip title={t('filtersDelete')} key="delete">
+                  <Tooltip title={t('filtersDelete')} key='delete'>
                     <Button
-                      type="text"
-                      size="small"
+                      type='text'
+                      size='small'
                       danger
                       icon={<DeleteOutlined />}
                       onClick={() => handleDelete(index)}
@@ -306,15 +306,15 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
       >
         <Form
           form={form}
-          layout="vertical"
+          layout='vertical'
           initialValues={{
             operator: 'in',
             role: 'dimension',
           }}
         >
-          <Form.Item label={t('filtersRole')} name="role">
+          <Form.Item label={t('filtersRole')} name='role'>
             <Radio.Group
-              optionType="button"
+              optionType='button'
               onChange={(e) => {
                 form.setFieldsValue({
                   field: undefined,
@@ -323,14 +323,14 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 })
               }}
             >
-              <Radio value="dimension">{t('filtersDimension')}</Radio>
-              <Radio value="measure">{t('filtersMeasure')}</Radio>
+              <Radio value='dimension'>{t('filtersDimension')}</Radio>
+              <Radio value='measure'>{t('filtersMeasure')}</Radio>
             </Radio.Group>
           </Form.Item>
 
           <Form.Item
             label={t('filtersField')}
-            name="field"
+            name='field'
             rules={[
               {
                 required: true,
@@ -361,10 +361,10 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             </Select>
           </Form.Item>
 
-          <Form.Item label={t('filtersOperator')} name="operator" rules={[{ required: true }]}>
+          <Form.Item label={t('filtersOperator')} name='operator' rules={[{ required: true }]}>
             {selectedRole === 'dimension' ? (
               <Radio.Group
-                optionType="button"
+                optionType='button'
                 onChange={() => {
                   form.setFieldsValue({
                     value: undefined,
@@ -408,8 +408,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </Form.Item>
                 <Form.Item name={['value', 'leftOp']} noStyle>
                   <Select style={{ width: '60px' }}>
-                    <Option value="<">&lt;</Option>
-                    <Option value="<=">&lt;=</Option>
+                    <Option value='<'>&lt;</Option>
+                    <Option value='<='>&lt;=</Option>
                   </Select>
                 </Form.Item>
                 <Text ellipsis style={{ maxWidth: '80px', textAlign: 'center' }} title={selectedField || '变量'}>
@@ -417,8 +417,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </Text>
                 <Form.Item name={['value', 'rightOp']} noStyle>
                   <Select style={{ width: '60px' }}>
-                    <Option value="<">&lt;</Option>
-                    <Option value="<=">&lt;=</Option>
+                    <Option value='<'>&lt;</Option>
+                    <Option value='<='>&lt;=</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item name={['value', 'max']} noStyle>
@@ -429,7 +429,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
           ) : (
             <Form.Item
               label={t('filtersValue')}
-              name="value"
+              name='value'
               rules={[
                 {
                   required: true,

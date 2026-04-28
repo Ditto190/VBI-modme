@@ -6,11 +6,11 @@ type MarkdownContentProps = {
 }
 
 export const MarkdownContent = ({ content }: MarkdownContentProps) => (
-  <div className="report-detail-markdown">
+  <div className='report-detail-markdown'>
     <ReactMarkdown
       components={{
         a: ({ children, href }) => (
-          <a href={href} rel="noreferrer" target="_blank">
+          <a href={href} rel='noreferrer' target='_blank'>
             {children}
           </a>
         ),

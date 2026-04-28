@@ -70,25 +70,25 @@ export const MeasuresList = memo(({ style }: { style?: React.CSSProperties }) =>
           </div>
 
           <Button
-            size="small"
-            shape="circle"
-            type="text"
+            size='small'
+            shape='circle'
+            type='text'
             icon={<PlusOutlined style={{ color: '#52c41a', fontSize: '12px' }} />}
             onClick={() => console.log('Trigger custom measure logic')}
             style={{ marginTop: '2px', backgroundColor: '#f6ffed' }}
           />
           <Button
-            size="small"
-            shape="circle"
-            type="text"
+            size='small'
+            shape='circle'
+            type='text'
             icon={<SettingOutlined style={{ color: '#52c41a', fontSize: '12px' }} />}
             //onClick={() => handleAddCustomDimension(builder, 'Custom')}
             style={{ marginTop: '2px', backgroundColor: '#f6ffed' }}
           />
           <Button
-            size="small"
-            shape="circle"
-            type="text"
+            size='small'
+            shape='circle'
+            type='text'
             icon={<DeleteOutlined style={{ color: '#52c41a', fontSize: '12px' }} />}
             //onClick={() => handleAddCustomDimension(builder, 'Custom')}
             style={{ marginTop: '2px', backgroundColor: '#f6ffed' }}
@@ -113,8 +113,8 @@ export const MeasuresList = memo(({ style }: { style?: React.CSSProperties }) =>
                   style={{ cursor: 'grab' }}
                 >
                   <Button
-                    size="small"
-                    shape="round"
+                    size='small'
+                    shape='round'
                     icon={<DragOutlined style={{ color: '#bfbfbf' }} />}
                     style={{
                       fontSize: '13px',
@@ -130,8 +130,8 @@ export const MeasuresList = memo(({ style }: { style?: React.CSSProperties }) =>
           </div>
 
           <Button
-            size="small"
-            type="text"
+            size='small'
+            type='text'
             icon={expanded ? <UpOutlined /> : <DownOutlined />}
             onClick={() => setExpanded(!expanded)}
             style={{ marginTop: '2px', color: '#888' }}

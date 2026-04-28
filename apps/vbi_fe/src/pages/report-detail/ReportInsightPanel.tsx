@@ -30,18 +30,18 @@ export const ReportInsightPanel = memo(({ builder, insightId, onEdit }: ReportIn
   )
 
   return (
-    <div className="report-detail-slide-note">
+    <div className='report-detail-slide-note'>
       <EditableSurface actions={actions}>
-        <div className="report-detail-insight-panel">
+        <div className='report-detail-insight-panel'>
           {showLoading ? (
-            <div className="report-detail-placeholder">
+            <div className='report-detail-placeholder'>
               <Spin />
             </div>
           ) : content ? (
             <MarkdownContent content={content} />
           ) : (
             <Empty
-              className="report-detail-insight-empty"
+              className='report-detail-insight-empty'
               description={t('reportDetail.emptyInsight')}
               image={<FileSearchOutlined />}
             />

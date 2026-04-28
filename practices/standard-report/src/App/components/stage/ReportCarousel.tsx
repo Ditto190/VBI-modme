@@ -39,13 +39,13 @@ export const ReportCarousel = ({
   return (
     <Carousel
       ref={carouselRef}
-      className="standard-report-carousel"
+      className='standard-report-carousel'
       infinite={false}
       dots={false}
       afterChange={handleAfterChange}
     >
       {pages.map((page, index) => (
-        <div key={page.id} className="standard-report-slide">
+        <div key={page.id} className='standard-report-slide'>
           <PagePreviewCard
             canRemove={pages.length > 1}
             index={index}

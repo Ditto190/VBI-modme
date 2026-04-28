@@ -109,13 +109,13 @@ export const ShelfTrack = ({ shelf, itemsCount, placeholder, tone, style, leadin
         <div style={trackStyle}>
           {isEmpty ? (
             <>
-              <ShelfBoundaryDropZone shelf={shelf} insertIndex={0} anchor="empty" color={tone.iconColor} edge="start" />
+              <ShelfBoundaryDropZone shelf={shelf} insertIndex={0} anchor='empty' color={tone.iconColor} edge='start' />
               <span style={getPlaceholderStyle(tone)}>{placeholder}</span>
             </>
           ) : (
             <>
               {children}
-              <DropArea shelf={shelf} insertIndex={itemsCount} anchor="tail" color={tone.iconColor} flexible />
+              <DropArea shelf={shelf} insertIndex={itemsCount} anchor='tail' color={tone.iconColor} flexible />
             </>
           )}
         </div>

@@ -14,7 +14,7 @@ test('insight preview follows builder document updates', () => {
   const builder = new VBIInsightBuilder(new Y.Doc())
   builder.setContent('初始洞察')
 
-  render(<PreviewProbe builder={builder} insightId="insight-1" />)
+  render(<PreviewProbe builder={builder} insightId='insight-1' />)
 
   expect(screen.getByText('初始洞察')).toBeInTheDocument()
 

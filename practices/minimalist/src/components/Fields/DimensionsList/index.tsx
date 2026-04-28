@@ -99,17 +99,17 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
           </div>
 
           <Button
-            size="small"
-            shape="circle"
-            type="text"
+            size='small'
+            shape='circle'
+            type='text'
             icon={<PlusOutlined style={{ color: '#1890ff', fontSize: '12px' }} />}
             style={{ marginTop: '2px', backgroundColor: '#e6f4ff' }}
           />
 
           <Button
-            size="small"
-            shape="circle"
-            type="text"
+            size='small'
+            shape='circle'
+            type='text'
             icon={<SettingOutlined style={{ color: '#1890ff', fontSize: '12px' }} />}
             onClick={() => {
               modify(1)
@@ -137,8 +137,8 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
               {Object.entries(groups).map(([category, items]) => (
                 <Dropdown key={category} menu={renderDropdownMenu(category, items)} trigger={['click']}>
                   <Button
-                    size="small"
-                    shape="round"
+                    size='small'
+                    shape='round'
                     style={{
                       fontSize: '13px',
                       height: '28px',
@@ -157,8 +157,8 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
                   onDragStart={(e) => handleDragStart(e, 'standalone', item.name, item.alias)}
                 >
                   <Button
-                    size="small"
-                    shape="round"
+                    size='small'
+                    shape='round'
                     icon={<DragOutlined style={{ color: '#bfbfbf' }} />}
                     style={{
                       fontSize: '13px',
@@ -191,8 +191,8 @@ export const DimensionsList = memo(({ style }: { style?: React.CSSProperties }) 
           </div>
 
           <Button
-            size="small"
-            type="text"
+            size='small'
+            type='text'
             icon={expanded ? <UpOutlined /> : <DownOutlined />}
             onClick={() => setExpanded(!expanded)}
             style={{ marginTop: '2px', color: '#888' }}

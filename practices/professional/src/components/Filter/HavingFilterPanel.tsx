@@ -145,7 +145,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
   return (
     <Card
-      size="small"
+      size='small'
       title={
         <Space>
           <FilterOutlined />
@@ -156,7 +156,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
         <Space size={4}>
           {onRootOperatorChange && (
             <Select
-              size="small"
+              size='small'
               value={rootOperator}
               onChange={onRootOperatorChange}
               style={{ width: 74 }}
@@ -166,7 +166,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
               ]}
             />
           )}
-          <Button type="text" size="small" icon={<PlusOutlined />} onClick={handleAdd} />
+          <Button type='text' size='small' icon={<PlusOutlined />} onClick={handleAdd} />
         </Space>
       }
       styles={{ body: { padding: 12 } }}
@@ -184,19 +184,19 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
         </div>
       ) : (
         <List
-          size="small"
+          size='small'
           dataSource={filters}
           renderItem={(item, index) => (
             <List.Item
               style={{ padding: '8px 0' }}
               actions={[
-                <Tooltip title={isZh ? '编辑' : 'Edit'} key="edit">
-                  <Button type="text" size="small" icon={<EditOutlined />} onClick={() => handleEdit(index)} />
+                <Tooltip title={isZh ? '编辑' : 'Edit'} key='edit'>
+                  <Button type='text' size='small' icon={<EditOutlined />} onClick={() => handleEdit(index)} />
                 </Tooltip>,
-                <Tooltip title={isZh ? '删除' : 'Delete'} key="delete">
+                <Tooltip title={isZh ? '删除' : 'Delete'} key='delete'>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<DeleteOutlined />}
                     onClick={() => handleDelete(index)}
@@ -231,10 +231,10 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
           setEditingIndex(null)
         }}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} layout='vertical'>
           <Form.Item
             label={isZh ? '字段' : 'Field'}
-            name="field"
+            name='field'
             rules={[
               {
                 required: true,
@@ -257,7 +257,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
           </Form.Item>
           <Form.Item
             label={isZh ? '聚合方式' : 'Aggregate'}
-            name="aggregate"
+            name='aggregate'
             rules={[
               {
                 required: true,
@@ -268,13 +268,13 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             <Select options={aggregateOptions} />
           </Form.Item>
           {selectedAggregate === 'quantile' && (
-            <Form.Item label="Quantile" name="quantile">
+            <Form.Item label='Quantile' name='quantile'>
               <InputNumber min={0} max={1} step={0.1} style={{ width: '100%' }} />
             </Form.Item>
           )}
           <Form.Item
             label={isZh ? '操作符' : 'Operator'}
-            name="operator"
+            name='operator'
             rules={[
               {
                 required: true,
@@ -298,7 +298,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
           ) : (
             <Form.Item
               label={isZh ? '值' : 'Value'}
-              name="value"
+              name='value'
               rules={[
                 {
                   required: true,

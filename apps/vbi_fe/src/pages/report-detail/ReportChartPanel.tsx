@@ -28,12 +28,12 @@ export const ReportChartPanel = memo(({ builder, onEdit }: ReportChartPanelProps
   )
 
   return (
-    <div className="report-detail-slide-chart">
+    <div className='report-detail-slide-chart'>
       <EditableSurface actions={actions}>
         {builder ? (
-          <StandardAPP builder={builder} mode="view" {...standardAppProps} />
+          <StandardAPP builder={builder} mode='view' {...standardAppProps} />
         ) : (
-          <div className="report-detail-placeholder">
+          <div className='report-detail-placeholder'>
             <Spin />
           </div>
         )}

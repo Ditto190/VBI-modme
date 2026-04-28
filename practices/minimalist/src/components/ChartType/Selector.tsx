@@ -44,7 +44,7 @@ export const ChartTypeSelector = (props: { style?: React.CSSProperties }) => {
         value={chartType}
         onChange={changeChartType}
         style={{ width: '100%' }}
-        optionLabelProp="label"
+        optionLabelProp='label'
       >
         {availableChartTypes.map((type) => (
           <Select.Option key={type} value={type} label={type}>

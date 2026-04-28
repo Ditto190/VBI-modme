@@ -15,10 +15,10 @@ export const ViewPanel = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="demo-app-view-shell">
-      <Spin spinning={loading} wrapperClassName="demo-app-view-spinner">
+    <div className='demo-app-view-shell'>
+      <Spin spinning={loading} wrapperClassName='demo-app-view-spinner'>
         <div
-          className="demo-app-view-frame"
+          className='demo-app-view-frame'
           style={{
             borderRadius: token.borderRadiusOuter,
             border: `1px solid ${token.colorBorderSecondary}`,
@@ -31,9 +31,9 @@ export const ViewPanel = () => {
           {isEmptyDsl ? (
             <Flex
               vertical
-              align="center"
-              justify="center"
-              className="demo-app-view-empty"
+              align='center'
+              justify='center'
+              className='demo-app-view-empty'
               style={{
                 background:
                   themeMode === 'light'
@@ -44,15 +44,15 @@ export const ViewPanel = () => {
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 description={
-                  <Space orientation="vertical" size={2}>
+                  <Space orientation='vertical' size={2}>
                     <Typography.Text strong>{t('appEmptyTitle')}</Typography.Text>
-                    <Typography.Text type="secondary">{t('appEmptyDescription')}</Typography.Text>
+                    <Typography.Text type='secondary'>{t('appEmptyDescription')}</Typography.Text>
                   </Space>
                 }
               />
             </Flex>
           ) : configuredVSeed ? (
-            <div className="demo-app-view-renderer">
+            <div className='demo-app-view-renderer'>
               <VSeedRender vseed={configuredVSeed} />
             </div>
           ) : null}

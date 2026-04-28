@@ -136,7 +136,7 @@ const FieldSection = ({
   return (
     <Flex vertical gap={4}>
       <Typography.Text
-        type="secondary"
+        type='secondary'
         style={{
           fontSize: 11,
           fontWeight: 500,
@@ -152,8 +152,8 @@ const FieldSection = ({
         ))}
         {shouldShowToggle && (
           <Button
-            type="text"
-            size="small"
+            type='text'
+            size='small'
             onClick={onToggleExpanded}
             icon={expanded ? <UpOutlined /> : <DownOutlined />}
             style={{
@@ -273,15 +273,15 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
 
   const filterContent = (
     <Flex vertical gap={8} style={{ width: 188 }}>
-      <Flex align="center" justify="space-between">
+      <Flex align='center' justify='space-between'>
         <Typography.Text style={{ fontSize: 12, fontWeight: 500 }}>{t('panelsFieldsFiltersTitle')}</Typography.Text>
-        <Button type="text" size="small" onClick={resetFilters} style={{ paddingInline: 4, height: 22, fontSize: 11 }}>
+        <Button type='text' size='small' onClick={resetFilters} style={{ paddingInline: 4, height: 22, fontSize: 11 }}>
           {t('panelsFieldsFiltersReset')}
         </Button>
       </Flex>
 
       <Flex vertical gap={6}>
-        <Typography.Text type="secondary" style={{ fontSize: 11, lineHeight: '16px' }}>
+        <Typography.Text type='secondary' style={{ fontSize: 11, lineHeight: '16px' }}>
           {t('panelsFieldsFiltersRole')}
         </Typography.Text>
         <Checkbox.Group value={selectedRoles} onChange={(values) => setSelectedRoles(values as FieldRole[])}>
@@ -298,7 +298,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
       <Divider style={{ margin: 0 }} />
 
       <Flex vertical gap={6}>
-        <Typography.Text type="secondary" style={{ fontSize: 11, lineHeight: '16px' }}>
+        <Typography.Text type='secondary' style={{ fontSize: 11, lineHeight: '16px' }}>
           {t('panelsFieldsFiltersType')}
         </Typography.Text>
         <Checkbox.Group value={selectedTypes} onChange={(values) => setSelectedTypes(values as string[])}>
@@ -317,7 +317,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
   return (
     <Card
       title={<span style={{ fontSize: 13, fontWeight: 500 }}>{t('panelsFieldsTitle')}</span>}
-      size="small"
+      size='small'
       style={{ ...style }}
       styles={{
         root: {
@@ -342,7 +342,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
     >
       <Flex gap={4}>
         <Input
-          size="small"
+          size='small'
           allowClear
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
@@ -351,8 +351,8 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
           prefix={<SearchOutlined style={{ color: token.colorTextQuaternary, fontSize: 12 }} />}
         />
         <Popover
-          trigger="click"
-          placement="bottomRight"
+          trigger='click'
+          placement='bottomRight'
           content={filterContent}
           styles={{
             container: {
@@ -363,8 +363,8 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
         >
           <Badge dot={hasActiveFilter}>
             <Button
-              type="text"
-              size="small"
+              type='text'
+              size='small'
               icon={<FilterOutlined />}
               aria-label={t('panelsFieldsFiltersTitle')}
               style={{
@@ -412,8 +412,8 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
             )}
           </Flex>
         ) : (
-          <Flex align="center" justify="center" style={{ height: '100%', minHeight: 120, paddingInline: 12 }}>
-            <Typography.Text type="secondary" style={{ fontSize: 12, textAlign: 'center' }}>
+          <Flex align='center' justify='center' style={{ height: '100%', minHeight: 120, paddingInline: 12 }}>
+            <Typography.Text type='secondary' style={{ fontSize: 12, textAlign: 'center' }}>
               {t('panelsFieldsEmpty')}
             </Typography.Text>
           </Flex>

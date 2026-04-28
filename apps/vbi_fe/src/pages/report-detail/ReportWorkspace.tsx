@@ -96,9 +96,9 @@ export const ReportWorkspace = memo(() => {
 
   if (!pages.length) {
     return (
-      <div className="report-detail-shell">
+      <div className='report-detail-shell'>
         <PageSidebar />
-        <div className="report-detail-stage report-detail-stage-empty">
+        <div className='report-detail-stage report-detail-stage-empty'>
           <Empty description={t('reportDetail.emptyReport')} image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </div>
       </div>
@@ -106,7 +106,7 @@ export const ReportWorkspace = memo(() => {
   }
 
   return (
-    <div className="report-detail-shell">
+    <div className='report-detail-shell'>
       <PageSidebar />
       <ReportStage
         activePageId={activePageId}

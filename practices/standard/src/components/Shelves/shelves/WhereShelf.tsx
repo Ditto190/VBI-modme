@@ -162,7 +162,7 @@ export const WhereShelf = ({
 
   return (
     <FilterShelf
-      shelf="where"
+      shelf='where'
       items={whereFilterItems}
       style={style}
       placeholder={t('shelvesPlaceholdersFilters')}

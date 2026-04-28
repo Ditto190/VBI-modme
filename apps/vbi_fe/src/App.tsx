@@ -34,14 +34,14 @@ const App = memo(() => {
           <NavigationBinder />
           <DebugBridgeInstaller />
           <Routes>
-            <Route path="/" element={<Navigate to="/manage/reports" replace />} />
-            <Route path="/reports/:id" element={<ReportDetailPage />} />
-            <Route path="/manage/reports/:id" element={<ReportDetailPage />} />
-            <Route path="/manage" element={<ManageLayoutPage />}>
-              <Route index element={<Navigate to="/manage/reports" replace />} />
-              <Route path="reports" element={<ReportsPage />} />
-              <Route path="charts" element={<ManageChartsPage />} />
-              <Route path="insights" element={<ManageInsightsPage />} />
+            <Route path='/' element={<Navigate to='/manage/reports' replace />} />
+            <Route path='/reports/:id' element={<ReportDetailPage />} />
+            <Route path='/manage/reports/:id' element={<ReportDetailPage />} />
+            <Route path='/manage' element={<ManageLayoutPage />}>
+              <Route index element={<Navigate to='/manage/reports' replace />} />
+              <Route path='reports' element={<ReportsPage />} />
+              <Route path='charts' element={<ManageChartsPage />} />
+              <Route path='insights' element={<ManageInsightsPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

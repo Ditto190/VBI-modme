@@ -53,17 +53,17 @@ export const ManageResourcePageShell = ({
   }, [onDeleteSelected, selectedRowKeys.length])
 
   return (
-    <section className="manage-page">
-      <header className="manage-page-header">
-        <h1 className="manage-title">{title}</h1>
-        <div className="manage-stats">
-          <div className="manage-stat">
-            <div className="manage-stat-value">{dataSource.length}</div>
-            <div className="manage-stat-label">{t('common.visible')}</div>
+    <section className='manage-page'>
+      <header className='manage-page-header'>
+        <h1 className='manage-title'>{title}</h1>
+        <div className='manage-stats'>
+          <div className='manage-stat'>
+            <div className='manage-stat-value'>{dataSource.length}</div>
+            <div className='manage-stat-label'>{t('common.visible')}</div>
           </div>
-          <div className="manage-stat">
-            <div className="manage-stat-value">{selectedRowKeys.length}</div>
-            <div className="manage-stat-label">{t('common.selected')}</div>
+          <div className='manage-stat'>
+            <div className='manage-stat-value'>{selectedRowKeys.length}</div>
+            <div className='manage-stat-label'>{t('common.selected')}</div>
           </div>
         </div>
       </header>
@@ -77,9 +77,9 @@ export const ManageResourcePageShell = ({
         searchText={searchText}
         selectedRowKeys={selectedRowKeys}
       />
-      <div className="manage-table">
+      <div className='manage-table'>
         <Table
-          rowKey="id"
+          rowKey='id'
           dataSource={dataSource}
           columns={columns}
           loading={loading}

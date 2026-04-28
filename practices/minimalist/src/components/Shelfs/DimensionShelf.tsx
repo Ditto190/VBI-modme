@@ -55,7 +55,7 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
       {dimensions.map((dimension) => (
         <Space.Compact key={`dimension-shelf-${dimension.field}`} style={{ width: '100%' }}>
           <Button
-            shape="round"
+            shape='round'
             style={{
               color: '#1890ff',
               flexGrow: 1,
@@ -65,7 +65,7 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
           >
             {dimension.alias}
           </Button>
-          <Button shape="round" icon={<DeleteOutlined />} onClick={() => deleteDimension(dimension.field)} />
+          <Button shape='round' icon={<DeleteOutlined />} onClick={() => deleteDimension(dimension.field)} />
         </Space.Compact>
       ))}
     </Flex>

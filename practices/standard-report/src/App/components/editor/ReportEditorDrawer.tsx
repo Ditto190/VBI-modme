@@ -167,45 +167,45 @@ export const ReportEditorDrawer = () => {
 
   return createPortal(
     <AnimatePresence>
-      <div className={`standard-report-editor-root is-${phase}`} data-testid="standard-report-editor-root">
+      <div className={`standard-report-editor-root is-${phase}`} data-testid='standard-report-editor-root'>
         <motion.div
-          className="standard-report-editor-backdrop"
+          className='standard-report-editor-backdrop'
           initial={{ opacity: 0 }}
           animate={{ opacity: phase === 'closing' ? 0 : 1 }}
           transition={BACKDROP_TRANSITION}
           onClick={beginClose}
         />
-        <div className="standard-report-editor">
+        <div className='standard-report-editor'>
           <motion.div
-            className="standard-report-editor-frame"
+            className='standard-report-editor-frame'
             initial={false}
             animate={getFrameMotionValues(frameRect)}
             transition={FRAME_TRANSITION}
             onAnimationComplete={handleFrameAnimationComplete}
           >
-            <div className="standard-report-editor-header">
-              <div className="standard-report-editor-nav">
+            <div className='standard-report-editor-header'>
+              <div className='standard-report-editor-nav'>
                 <Button
-                  className="standard-report-editor-back"
-                  color="default"
-                  variant="text"
+                  className='standard-report-editor-back'
+                  color='default'
+                  variant='text'
                   icon={<ArrowLeftOutlined />}
                   onClick={beginClose}
                 >
                   Go Back
                 </Button>
               </div>
-              <div className="standard-report-editor-summary">
-                <span className="standard-report-editor-kicker">Chart Editor</span>
-                <h2 className="standard-report-editor-title">{page?.title || '编辑图表'}</h2>
+              <div className='standard-report-editor-summary'>
+                <span className='standard-report-editor-kicker'>Chart Editor</span>
+                <h2 className='standard-report-editor-title'>{page?.title || '编辑图表'}</h2>
               </div>
             </div>
 
-            <div className="standard-report-editor-body">
+            <div className='standard-report-editor-body'>
               {showEditor && pageBuilder?.chart ? (
-                <StandardAPP builder={pageBuilder.chart} mode="edit" />
+                <StandardAPP builder={pageBuilder.chart} mode='edit' />
               ) : (
-                <div className="standard-report-editor-placeholder" />
+                <div className='standard-report-editor-placeholder' />
               )}
             </div>
           </motion.div>

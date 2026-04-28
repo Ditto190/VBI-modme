@@ -79,11 +79,11 @@ export const PageSidebarMenu = ({
     <Dropdown menu={{ items: menuItems }} trigger={['click']}>
       <Button
         aria-label={t('reportDetail.pageMenu')}
-        className="report-detail-page-menu"
+        className='report-detail-page-menu'
         icon={<EllipsisOutlined />}
-        shape="circle"
-        size="small"
-        type="text"
+        shape='circle'
+        size='small'
+        type='text'
         onClick={(event) => event.stopPropagation()}
       />
     </Dropdown>

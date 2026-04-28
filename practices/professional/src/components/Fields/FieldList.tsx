@@ -27,7 +27,7 @@ const FieldList: React.FC<FieldListProps> = ({ title, items, onAdd, onRemove, on
 
   return (
     <div
-      className="fieldlist"
+      className='fieldlist'
       style={style}
       onDragOver={(e) => {
         if (!onDropDimension) return
@@ -50,7 +50,7 @@ const FieldList: React.FC<FieldListProps> = ({ title, items, onAdd, onRemove, on
       }}
     >
       <div
-        className="fieldlist-title"
+        className='fieldlist-title'
         style={{
           backgroundColor: hoveredDropZone ? '#e6f4ff' : 'transparent',
           transition: 'background-color 0.2s',
@@ -59,20 +59,20 @@ const FieldList: React.FC<FieldListProps> = ({ title, items, onAdd, onRemove, on
         {title}
       </div>
       <div
-        className="fieldlist-items"
+        className='fieldlist-items'
         style={{
           backgroundColor: hoveredDropZone ? '#e6f4ff' : 'transparent',
           borderRadius: '2px',
           transition: 'background-color 0.2s',
         }}
       >
-        {items.length === 0 && <div className="fieldlist-empty">Drop {title.toLowerCase()} here</div>}
+        {items.length === 0 && <div className='fieldlist-empty'>Drop {title.toLowerCase()} here</div>}
         {items.map((field) => (
-          <div key={field} className="fieldlist-item" onClick={() => onAdd && onAdd(field)}>
+          <div key={field} className='fieldlist-item' onClick={() => onAdd && onAdd(field)}>
             {getIcon()}
-            <span className="fieldlist-item-text">{field}</span>
+            <span className='fieldlist-item-text'>{field}</span>
             <button
-              className="fieldlist-item-remove"
+              className='fieldlist-item-remove'
               onClick={(e) => {
                 e.stopPropagation()
                 onRemove(field)

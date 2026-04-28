@@ -15,8 +15,8 @@ export const ShelfRow = ({
 
   return (
     <Flex
-      align="center"
-      justify="space-between"
+      align='center'
+      justify='space-between'
       style={{
         minHeight: 34,
         minWidth: 0,
@@ -25,7 +25,7 @@ export const ShelfRow = ({
       }}
     >
       <Flex
-        align="center"
+        align='center'
         justify={operator ? 'space-between' : 'flex-start'}
         style={{
           width: 88,

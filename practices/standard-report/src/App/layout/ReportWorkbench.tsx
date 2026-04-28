@@ -13,7 +13,7 @@ export const ReportWorkbench = () => {
     <ConfigProvider
       locale={REPORT_ANTD_LOCALES[viewConfig.locale]}
       theme={createThemeConfig(viewConfig.theme)}
-      componentSize="small"
+      componentSize='small'
     >
       <ReportStage />
       <ReportEditorDrawer />

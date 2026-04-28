@@ -181,14 +181,14 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
 
   return (
     <Card
-      size="small"
+      size='small'
       title={
         <Space>
           <FilterOutlined />
           数据筛选器
         </Space>
       }
-      extra={<Button type="text" size="small" icon={<PlusOutlined />} onClick={handleAddClick} />}
+      extra={<Button type='text' size='small' icon={<PlusOutlined />} onClick={handleAddClick} />}
       style={{ marginBottom: 0 }}
       styles={{
         body: {
@@ -209,26 +209,26 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
         </div>
       ) : (
         <List
-          size="small"
+          size='small'
           dataSource={filters}
           renderItem={(item, index) => {
             return (
               <List.Item
                 style={{ padding: '8px 0' }}
                 actions={[
-                  <Tooltip title="编辑" key="edit">
+                  <Tooltip title='编辑' key='edit'>
                     <Button
-                      type="text"
-                      size="small"
+                      type='text'
+                      size='small'
                       icon={<EditOutlined />}
                       onClick={() => handleEdit(index)}
                       style={{ color: '#1890ff' }}
                     />
                   </Tooltip>,
-                  <Tooltip title="删除" key="delete">
+                  <Tooltip title='删除' key='delete'>
                     <Button
-                      type="text"
-                      size="small"
+                      type='text'
+                      size='small'
                       danger
                       icon={<DeleteOutlined />}
                       onClick={() => handleDelete(index)}
@@ -272,20 +272,20 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
           setEditingIndex(null)
         }}
         okText={editingIndex !== null ? '保存' : '添加'}
-        cancelText="取消"
+        cancelText='取消'
         destroyOnClose
       >
         <Form
           form={form}
-          layout="vertical"
+          layout='vertical'
           initialValues={{
             operator: 'in',
             role: 'dimension',
           }}
         >
-          <Form.Item label="字段类型" name="role">
+          <Form.Item label='字段类型' name='role'>
             <Radio.Group
-              optionType="button"
+              optionType='button'
               onChange={(e) => {
                 form.setFieldsValue({
                   field: undefined,
@@ -294,14 +294,14 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
                 })
               }}
             >
-              <Radio value="dimension">维度 (Dimension)</Radio>
-              <Radio value="measure">度量 (Measure)</Radio>
+              <Radio value='dimension'>维度 (Dimension)</Radio>
+              <Radio value='measure'>度量 (Measure)</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label="字段" name="field" rules={[{ required: true, message: '请选择字段' }]}>
+          <Form.Item label='字段' name='field' rules={[{ required: true, message: '请选择字段' }]}>
             <Select
-              placeholder="选择要筛选的字段"
+              placeholder='选择要筛选的字段'
               showSearch
               onChange={() => {
                 form.setFieldsValue({
@@ -323,10 +323,10 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
             </Select>
           </Form.Item>
 
-          <Form.Item label="操作符" name="operator" rules={[{ required: true }]}>
+          <Form.Item label='操作符' name='operator' rules={[{ required: true }]}>
             {selectedRole === 'dimension' ? (
               <Radio.Group
-                optionType="button"
+                optionType='button'
                 onChange={() => {
                   form.setFieldsValue({
                     value: undefined,
@@ -356,7 +356,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
             )}
           </Form.Item>
           {operator === 'between' ? (
-            <Form.Item label="范围设置">
+            <Form.Item label='范围设置'>
               <div
                 style={{
                   display: 'flex',
@@ -365,12 +365,12 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
                 }}
               >
                 <Form.Item name={['value', 'min']} noStyle>
-                  <InputNumber placeholder="最小值" style={{ width: '80px' }} controls={false} />
+                  <InputNumber placeholder='最小值' style={{ width: '80px' }} controls={false} />
                 </Form.Item>
                 <Form.Item name={['value', 'leftOp']} noStyle>
                   <Select style={{ width: '60px' }}>
-                    <Option value="<">&lt;</Option>
-                    <Option value="<=">&lt;=</Option>
+                    <Option value='<'>&lt;</Option>
+                    <Option value='<='>&lt;=</Option>
                   </Select>
                 </Form.Item>
                 <Text ellipsis style={{ maxWidth: '80px', textAlign: 'center' }} title={selectedField || '变量'}>
@@ -378,17 +378,17 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ fields, activeFields =
                 </Text>
                 <Form.Item name={['value', 'rightOp']} noStyle>
                   <Select style={{ width: '60px' }}>
-                    <Option value="<">&lt;</Option>
-                    <Option value="<=">&lt;=</Option>
+                    <Option value='<'>&lt;</Option>
+                    <Option value='<='>&lt;=</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item name={['value', 'max']} noStyle>
-                  <InputNumber placeholder="最大值" style={{ width: '80px' }} controls={false} />
+                  <InputNumber placeholder='最大值' style={{ width: '80px' }} controls={false} />
                 </Form.Item>
               </div>
             </Form.Item>
           ) : (
-            <Form.Item label="筛选值" name="value" rules={[{ required: true, message: '请输入筛选值' }]}>
+            <Form.Item label='筛选值' name='value' rules={[{ required: true, message: '请输入筛选值' }]}>
               <Input
                 placeholder={
                   ['in', 'not in', '=', '!='].includes(operator)

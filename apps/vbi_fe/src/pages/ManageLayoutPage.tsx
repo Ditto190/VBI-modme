@@ -19,15 +19,15 @@ export const ManageLayoutPage = () => {
   const { t } = useTranslation()
 
   return (
-    <Layout className="manage-layout">
-      <Sider className="manage-sider" width={240} theme={themeMode}>
-        <div className="manage-brand">
-          <div className="manage-brand-title">{t('app.brand.title')}</div>
-          <div className="manage-brand-meta">{t('app.brand.meta')}</div>
+    <Layout className='manage-layout'>
+      <Sider className='manage-sider' width={240} theme={themeMode}>
+        <div className='manage-brand'>
+          <div className='manage-brand-title'>{t('app.brand.title')}</div>
+          <div className='manage-brand-meta'>{t('app.brand.meta')}</div>
         </div>
         <Menu
-          className="manage-menu"
-          mode="inline"
+          className='manage-menu'
+          mode='inline'
           selectedKeys={[pathname]}
           items={[
             {
@@ -50,7 +50,7 @@ export const ManageLayoutPage = () => {
         />
         <ManagePreferences />
       </Sider>
-      <Content className="manage-content">
+      <Content className='manage-content'>
         <Outlet />
       </Content>
     </Layout>

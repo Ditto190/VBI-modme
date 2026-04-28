@@ -199,7 +199,7 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
       >
         <Dropdown
           trigger={['click']}
-          placement="bottom"
+          placement='bottom'
           menu={{
             rootClassName: 'fieldshelf-dropdown',
             items: buildMenuItems(item),

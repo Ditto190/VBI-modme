@@ -310,7 +310,7 @@ export const DimensionShelf = ({ style }: { style?: React.CSSProperties }) => {
 
   return (
     <FieldShelf
-      shelf="dimensions"
+      shelf='dimensions'
       items={dimensions}
       placeholder={t('shelvesPlaceholdersDimensions')}
       tone={dimensionShelfTone}

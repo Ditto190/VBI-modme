@@ -115,7 +115,7 @@ export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm })
         step === 2 ? (
           <Space>
             <Button onClick={() => setStep(1)}>{t('csvModalBtnBack')}</Button>
-            <Button type="primary" onClick={handleConfirm}>
+            <Button type='primary' onClick={handleConfirm}>
               {t('csvModalBtnConfirm')}
             </Button>
           </Space>
@@ -123,15 +123,15 @@ export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm })
       }
     >
       {step === 1 ? (
-        <Dragger multiple={false} beforeUpload={handleUpload} accept=".csv" showUploadList={false}>
-          <p className="ant-upload-drag-icon">
+        <Dragger multiple={false} beforeUpload={handleUpload} accept='.csv' showUploadList={false}>
+          <p className='ant-upload-drag-icon'>
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">{t('csvModalDraggerText')}</p>
-          <p className="ant-upload-hint">{t('csvModalDraggerHint')}</p>
+          <p className='ant-upload-text'>{t('csvModalDraggerText')}</p>
+          <p className='ant-upload-hint'>{t('csvModalDraggerHint')}</p>
         </Dragger>
       ) : (
-        <Table dataSource={schema} columns={columns} rowKey="name" pagination={false} scroll={{ y: 400 }} />
+        <Table dataSource={schema} columns={columns} rowKey='name' pagination={false} scroll={{ y: 400 }} />
       )}
     </Modal>
   )

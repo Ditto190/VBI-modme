@@ -207,7 +207,7 @@ export const HavingShelf = ({
 
   return (
     <FilterShelf
-      shelf="having"
+      shelf='having'
       items={havingFilterItems}
       style={style}
       placeholder={t('shelvesPlaceholdersFilters')}

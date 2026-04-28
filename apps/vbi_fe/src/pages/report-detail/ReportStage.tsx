@@ -23,7 +23,7 @@ export const ReportStage = memo(
 
     if (!pageSections.length) {
       return (
-        <section className="report-detail-stage report-detail-stage-empty">
+        <section className='report-detail-stage report-detail-stage-empty'>
           <Empty description={emptyDescription} image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </section>
       )

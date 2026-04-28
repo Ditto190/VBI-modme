@@ -40,15 +40,15 @@ export const PageHoverActions = (props: PageHoverActionsProps) => {
   const actions = getActions(props)
 
   return (
-    <div className="standard-report-page-toolset" data-testid="standard-report-actions">
+    <div className='standard-report-page-toolset' data-testid='standard-report-actions'>
       {actions.map((action) => (
         <Tooltip key={action.key} title={action.label}>
           <Button
-            className="standard-report-icon-button"
-            color="default"
-            shape="circle"
-            size="middle"
-            variant="text"
+            className='standard-report-icon-button'
+            color='default'
+            shape='circle'
+            size='middle'
+            variant='text'
             aria-label={action.label}
             icon={action.icon}
             onClick={action.onClick}

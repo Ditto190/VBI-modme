@@ -35,8 +35,8 @@ export const ChartPanel = () => {
       {isEmptyDsl ? (
         <Flex
           vertical
-          align="center"
-          justify="center"
+          align='center'
+          justify='center'
           style={{
             height: '100%',
             minHeight: 300,
@@ -52,9 +52,9 @@ export const ChartPanel = () => {
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
             description={
-              <Space orientation="vertical" size={2}>
+              <Space orientation='vertical' size={2}>
                 <Typography.Text strong>{t('appEmptyTitle')}</Typography.Text>
-                <Typography.Text type="secondary">{t('appEmptyDescription')}</Typography.Text>
+                <Typography.Text type='secondary'>{t('appEmptyDescription')}</Typography.Text>
               </Space>
             }
           />

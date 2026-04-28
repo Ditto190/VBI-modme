@@ -8,9 +8,9 @@ export const buildShelfMenuLabel = (label: string, extra?: string) => {
   }
 
   return (
-    <Flex align="center" justify="space-between" gap={12} style={{ width: '100%' }}>
+    <Flex align='center' justify='space-between' gap={12} style={{ width: '100%' }}>
       <span>{label}</span>
-      <Typography.Text style={{ fontSize: 10 }} type="secondary">
+      <Typography.Text style={{ fontSize: 10 }} type='secondary'>
         {extra}
       </Typography.Text>
     </Flex>

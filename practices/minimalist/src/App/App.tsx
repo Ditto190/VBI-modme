@@ -29,7 +29,7 @@ export const APP = (props: APPProps) => {
   }, [])
 
   if (!initialized) {
-    return <Spin tip="Initializing..." fullscreen />
+    return <Spin tip='Initializing...' fullscreen />
   }
 
   return (
@@ -45,7 +45,7 @@ export const APP = (props: APPProps) => {
           <ChartTypeSelector />
 
           <Card
-            title="Selected Dimensions"
+            title='Selected Dimensions'
             styles={{
               body: { padding: '12px', overflowY: 'auto', maxHeight: '30vh' },
             }}
@@ -54,7 +54,7 @@ export const APP = (props: APPProps) => {
           </Card>
 
           <Card
-            title="Selected Measures"
+            title='Selected Measures'
             styles={{
               body: { padding: '12px', overflowY: 'auto', maxHeight: '30vh' },
             }}

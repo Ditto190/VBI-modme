@@ -74,7 +74,7 @@ export const Collaborators = ({ provider }: CollaboratorsProps) => {
             }}
           >
             {getAvatarUsers(clients).map((user) => (
-              <Tooltip title={user.name} placement="top" key={user.id}>
+              <Tooltip title={user.name} placement='top' key={user.id}>
                 <Avatar style={{ backgroundColor: user.color }}>{user.name[0]?.toUpperCase()}</Avatar>
               </Tooltip>
             ))}

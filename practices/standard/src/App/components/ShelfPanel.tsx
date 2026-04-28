@@ -17,7 +17,7 @@ export const ShelfPanel = () => {
 
   return (
     <Card
-      size="small"
+      size='small'
       style={{
         minWidth: 0,
         borderColor: token.colorBorderSecondary,
@@ -41,13 +41,13 @@ export const ShelfPanel = () => {
         <ShelfRow
           label={t('panelsShelvesWhere')}
           shelf={<WhereShelf showRootOperator={false} style={SHELF_STYLE} />}
-          operator={<FilterRootOperatorToggle type="where" />}
+          operator={<FilterRootOperatorToggle type='where' />}
           borderBottom
         />
         <ShelfRow
           label={t('panelsShelvesHaving')}
           shelf={<HavingShelf showRootOperator={false} style={SHELF_STYLE} />}
-          operator={<FilterRootOperatorToggle type="having" />}
+          operator={<FilterRootOperatorToggle type='having' />}
           borderBottom={false}
         />
       </Flex>

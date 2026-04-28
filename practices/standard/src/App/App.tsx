@@ -75,7 +75,7 @@ const DemoWorkbench = ({
   return (
     <ShelfDndProvider>
       <Flex
-        className="demo-app-workbench"
+        className='demo-app-workbench'
         vertical
         style={{
           height: '100%',
@@ -88,7 +88,7 @@ const DemoWorkbench = ({
         }}
       >
         <Card
-          size="small"
+          size='small'
           style={{
             borderRadius: token.borderRadiusOuter,
             overflow: 'hidden',
@@ -169,7 +169,7 @@ const AppContent = ({
   }, [mode])
 
   return (
-    <ConfigProvider locale={antdLocale} theme={antdThemeConfig} componentSize="small">
+    <ConfigProvider locale={antdLocale} theme={antdThemeConfig} componentSize='small'>
       <div
         ref={appRootRef}
         className={`demo-app-root demo-app-root--${mode}`}
@@ -185,9 +185,9 @@ const AppContent = ({
           mode === 'edit' ? (
             <Spin tip={t('appInitializing')} fullscreen />
           ) : (
-            <div className="demo-app-view-loading">
+            <div className='demo-app-view-loading'>
               <Spin spinning tip={t('appInitializing')}>
-                <div className="demo-app-view-loading-target" />
+                <div className='demo-app-view-loading-target' />
               </Spin>
             </div>
           )
