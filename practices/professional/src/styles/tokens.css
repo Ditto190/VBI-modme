@@ -17,6 +17,8 @@
 
 .pro-slot-token {
   align-items: center;
+  border-radius: 999px;
+  cursor: grab;
   display: inline-flex;
   gap: 3px;
 }
@@ -39,26 +41,6 @@
 
 .pro-token-menu:hover {
   color: var(--text);
-}
-
-.pro-slot-index {
-  align-items: center;
-  background: transparent !important;
-  border: 0 !important;
-  color: var(--accent) !important;
-  display: flex;
-  flex: 1 0 100%;
-  font-weight: 700;
-  gap: 6px;
-  min-height: 16px;
-  pointer-events: none;
-}
-
-.pro-slot-index::before {
-  background: var(--accent);
-  content: '';
-  flex: 1;
-  height: 2px;
 }
 
 .pro-chip--measure {

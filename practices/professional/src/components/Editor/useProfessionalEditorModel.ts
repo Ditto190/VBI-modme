@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { ComponentProps } from 'react'
 import { getFieldSlots } from 'src/config/slotConfig'
 import { getLabels } from 'src/config/labels'
@@ -25,7 +24,6 @@ type EditorModel = {
 }
 
 export const useProfessionalEditorModel = (mode: 'edit' | 'view'): EditorModel => {
-  const [draggingRole, setDraggingRole] = useState<SchemaField['role'] | null>(null)
   const initialized = useVBIStore((state) => state.initialized)
   const storeBuilder = useVBIStore((state) => state.builder)
   const dsl = useVBIStore((state) => state.dsl)
@@ -64,8 +62,6 @@ export const useProfessionalEditorModel = (mode: 'edit' | 'view'): EditorModel =
               fields,
               labels,
               onAddField: addField,
-              onDragEnd: () => setDraggingRole(null),
-              onDragStart: (field: SchemaField) => setDraggingRole(field.role),
             }
           : null,
       workspace: {
@@ -78,7 +74,6 @@ export const useProfessionalEditorModel = (mode: 'edit' | 'view'): EditorModel =
         fields,
         hideLocale: config.hideLocale,
         hideTheme: config.hideTheme,
-        draggingRole,
         isFullscreen: fullscreen.isFullscreen,
         labels,
         limit: builderState.limit,
@@ -89,7 +84,6 @@ export const useProfessionalEditorModel = (mode: 'edit' | 'view'): EditorModel =
         theme,
         vseed: configuredVSeed,
         onChartTypeChange: chart.changeChartType,
-        onDragDone: () => setDraggingRole(null),
         onLimitChange: builderState.setLimit,
         onLocaleChange: builderState.setLocale,
         onRedo: undo.redo,

@@ -1,8 +1,8 @@
 .pro-config-editor {
   border-top: 1px solid var(--line);
   display: grid;
-  gap: 6px;
-  padding-top: 8px;
+  gap: 5px;
+  padding-top: 7px;
 }
 
 .pro-config-editor__title {
@@ -13,13 +13,22 @@
 
 .pro-field-config {
   align-items: center;
+  background: color-mix(in srgb, var(--raised) 82%, var(--panel));
   border: 1px solid var(--line);
+  border-radius: 8px;
   display: grid;
   gap: 5px;
   grid-template-columns: minmax(96px, 1fr) minmax(88px, 1fr) 82px 74px 82px;
-  padding: 5px;
+  min-height: 36px;
+  padding: 4px 6px;
 }
 
 .pro-field-config--dimension {
   grid-template-columns: minmax(96px, 1fr) minmax(88px, 1fr) 82px 74px;
+}
+
+.pro-field-config .ant-input,
+.pro-field-config .ant-select-selector {
+  border-radius: 7px !important;
+  min-height: 28px;
 }

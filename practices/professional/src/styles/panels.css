@@ -57,6 +57,7 @@
   align-items: center;
   background: var(--raised);
   border: 1px solid var(--line);
+  border-radius: 4px;
   box-sizing: border-box;
   color: var(--text);
   cursor: grab;
@@ -67,7 +68,17 @@
   margin-bottom: 4px;
   padding: 0 6px;
   text-align: left;
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.14s ease;
   width: 100%;
+}
+
+.pro-field:hover {
+  background: color-mix(in srgb, var(--accent) 8%, var(--raised));
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+  transform: translateX(2px);
 }
 
 .pro-field__icon {

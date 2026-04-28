@@ -1,0 +1,93 @@
+.pro-filter-list {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+  width: 100%;
+}
+
+.pro-filter-chip {
+  align-items: center;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 58%),
+    color-mix(in srgb, var(--raised) 96%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+  border-radius: 999px;
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--text) 7%, transparent);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  height: 30px;
+  max-width: 310px;
+  min-width: 0;
+  padding: 0 4px 0 10px;
+  transition:
+    background 0.14s ease,
+    border-color 0.14s ease,
+    box-shadow 0.14s ease;
+}
+
+.pro-filter-chip:hover {
+  background: color-mix(in srgb, var(--accent) 9%, var(--raised));
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--line));
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+.pro-filter-chip__content {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+}
+
+.pro-filter-chip__field,
+.pro-filter-chip__full,
+.pro-filter-chip__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-filter-chip__field,
+.pro-filter-chip__full {
+  color: var(--text);
+  font-weight: 650;
+  max-width: 128px;
+}
+
+.pro-filter-chip__op {
+  background: color-mix(in srgb, var(--accent) 12%, var(--raised));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  padding: 0 5px;
+}
+
+.pro-filter-chip__value {
+  color: var(--muted);
+  max-width: 112px;
+}
+
+.pro-filter-chip__actions {
+  align-items: center;
+  display: flex;
+  gap: 1px;
+  opacity: 0.74;
+}
+
+.pro-filter-chip:hover .pro-filter-chip__actions {
+  opacity: 1;
+}
+
+.pro-filter-chip__actions .ant-btn {
+  height: 22px;
+  min-width: 22px;
+  width: 22px;
+}

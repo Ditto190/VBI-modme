@@ -1,36 +1,44 @@
 import { MoreOutlined } from '@ant-design/icons'
 import { Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
-import type { DragEvent } from 'react'
 import type { ProfessionalLabels } from 'src/config/labels'
 import { dateAggregateOptions, measureAggregateOptions, sortOptions } from 'src/utils/fieldOptions'
 import { getFieldLabel } from 'src/utils/mappedFields'
-import { writeDraggedToken } from 'src/utils/dragDrop'
 import type { MappedField } from 'src/types'
+import { useProfessionalDraggable } from './dnd/useProfessionalDraggable'
 
 type FieldTokenProps = {
+  dragId?: string
   item: MappedField
   labels: ProfessionalLabels
   onAction: (item: MappedField, action: string) => void
+  slotTokenIndex?: number
 }
 
-export const FieldToken = ({ item, labels, onAction }: FieldTokenProps) => (
-  <span
-    className={`pro-slot-token pro-slot-token--${item.role}`}
-    draggable
-    onDragStart={(event: DragEvent) => writeDraggedToken(event, { id: item.id, role: item.role })}
-  >
-    <span className='pro-slot-token__label'>{getFieldLabel(item)}</span>
-    <Dropdown
-      trigger={['click']}
-      menu={{ items: menuItems(item, labels), onClick: ({ key }) => onAction(item, String(key)) }}
+export const FieldToken = ({ dragId, item, labels, onAction, slotTokenIndex }: FieldTokenProps) => {
+  const draggable = useProfessionalDraggable(dragId ?? `token-${item.id}`, { item, kind: 'mapped-field' })
+
+  return (
+    <span
+      {...draggable.attributes}
+      {...draggable.listeners}
+      {...draggable.pointerHandlers}
+      className={`pro-slot-token pro-slot-token--${item.role}${draggable.isDragging ? ' pro-slot-token--dragging' : ''}`}
+      data-slot-token-index={slotTokenIndex}
+      ref={draggable.setNodeRef}
     >
-      <button className='pro-token-menu' type='button' onClick={(event) => event.preventDefault()}>
-        <MoreOutlined />
-      </button>
-    </Dropdown>
-  </span>
-)
+      <span className='pro-slot-token__label'>{getFieldLabel(item)}</span>
+      <Dropdown
+        trigger={['click']}
+        menu={{ items: menuItems(item, labels), onClick: ({ key }) => onAction(item, String(key)) }}
+      >
+        <button className='pro-token-menu' type='button' onClick={(event) => event.preventDefault()}>
+          <MoreOutlined />
+        </button>
+      </Dropdown>
+    </span>
+  )
+}
 
 const menuItems = (item: MappedField, labels: ProfessionalLabels): MenuProps['items'] => [
   ...((item.role === 'measure' ? measureItems(labels) : dimensionItems(item, labels)) ?? []),
