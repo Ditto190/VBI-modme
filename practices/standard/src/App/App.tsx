@@ -1,46 +1,38 @@
-import { VBIChartBuilder } from '@visactor/vbi';
-import { theme as antdTheme, Card, ConfigProvider, Flex, Spin } from 'antd';
-import enUS from 'antd/locale/en_US';
-import zhCN from 'antd/locale/zh_CN';
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ShelfDndProvider } from 'src/components/Shelves/dnd';
-import { Toolbar } from 'src/components/Toolbar';
-import {
-  DEMO_DEFAULT_LOCALE,
-  DEMO_DEFAULT_THEME,
-  type DemoLocale,
-  type DemoTheme,
-} from 'src/constants/builder';
-import { useVBIBuilder } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore, VBIStoreProvider } from 'src/model';
-import { initVBIConnector } from 'src/utils/localConnector';
-import { useShallow } from 'zustand/shallow';
-import './app.css';
-import { ChartPanel, FieldsPanel, ShelfPanel, ViewPanel } from './components';
+import { VBIChartBuilder } from '@visactor/vbi'
+import { theme as antdTheme, Card, ConfigProvider, Flex, Spin } from 'antd'
+import enUS from 'antd/locale/en_US'
+import zhCN from 'antd/locale/zh_CN'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ShelfDndProvider } from 'src/components/Shelves/dnd'
+import { Toolbar } from 'src/components/Toolbar'
+import { DEMO_DEFAULT_LOCALE, DEMO_DEFAULT_THEME, type DemoLocale, type DemoTheme } from 'src/constants/builder'
+import { useVBIBuilder } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore, VBIStoreProvider } from 'src/model'
+import { initVBIConnector } from 'src/utils/localConnector'
+import { useShallow } from 'zustand/shallow'
+import './app.css'
+import { ChartPanel, FieldsPanel, ShelfPanel, ViewPanel } from './components'
 
-type AppMode = 'view' | 'edit';
+type AppMode = 'view' | 'edit'
 
 interface APPProps {
-  builder?: VBIChartBuilder;
-  hideLocale?: boolean;
-  hideTheme?: boolean;
-  locale?: DemoLocale;
-  mode?: AppMode;
-  theme?: DemoTheme;
+  builder?: VBIChartBuilder
+  hideLocale?: boolean
+  hideTheme?: boolean
+  locale?: DemoLocale
+  mode?: AppMode
+  theme?: DemoTheme
 }
 
 const DEMO_ANTD_LOCALES = {
   'zh-CN': zhCN,
   'en-US': enUS,
-} as const;
+} as const
 
 const createThemeConfig = (themeMode: DemoTheme) => {
   return {
-    algorithm:
-      themeMode === 'dark'
-        ? antdTheme.darkAlgorithm
-        : antdTheme.defaultAlgorithm,
+    algorithm: themeMode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     token: {
       colorPrimary: themeMode === 'dark' ? '#6ea8ff' : '#1677ff',
       borderRadius: 10,
@@ -53,16 +45,12 @@ const createThemeConfig = (themeMode: DemoTheme) => {
       fontSize: 12,
       fontSizeSM: 12,
     },
-  };
-};
+  }
+}
 
 const DemoWorkbenchPanels = memo(() => {
   return (
-    <Flex
-      vertical={false}
-      gap={8}
-      style={{ flex: 1, minHeight: 0, minWidth: 0 }}
-    >
+    <Flex vertical={false} gap={8} style={{ flex: 1, minHeight: 0, minWidth: 0 }}>
       <FieldsPanel />
 
       <Flex vertical gap={8} style={{ flex: '1 1 0', minWidth: 0 }}>
@@ -70,24 +58,24 @@ const DemoWorkbenchPanels = memo(() => {
         <ChartPanel />
       </Flex>
     </Flex>
-  );
-});
+  )
+})
 
 const DemoWorkbench = ({
   themeMode,
   isFullscreen,
   onToggleFullscreen,
 }: {
-  themeMode: DemoTheme;
-  isFullscreen: boolean;
-  onToggleFullscreen: () => void | Promise<void>;
+  themeMode: DemoTheme
+  isFullscreen: boolean
+  onToggleFullscreen: () => void | Promise<void>
 }) => {
-  const { token } = antdTheme.useToken();
+  const { token } = antdTheme.useToken()
 
   return (
     <ShelfDndProvider>
       <Flex
-        className="demo-app-workbench"
+        className='demo-app-workbench'
         vertical
         style={{
           height: '100%',
@@ -100,15 +88,12 @@ const DemoWorkbench = ({
         }}
       >
         <Card
-          size="small"
+          size='small'
           style={{
             borderRadius: token.borderRadiusOuter,
             overflow: 'hidden',
             borderColor: token.colorBorderSecondary,
-            background:
-              themeMode === 'dark'
-                ? 'rgba(12, 19, 31, 0.9)'
-                : 'rgba(255, 255, 255, 0.9)',
+            background: themeMode === 'dark' ? 'rgba(12, 19, 31, 0.9)' : 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(10px)',
           }}
           styles={{
@@ -117,91 +102,81 @@ const DemoWorkbench = ({
             },
           }}
         >
-          <Toolbar
-            isFullscreen={isFullscreen}
-            onToggleFullscreen={onToggleFullscreen}
-          />
+          <Toolbar isFullscreen={isFullscreen} onToggleFullscreen={onToggleFullscreen} />
         </Card>
         <DemoWorkbenchPanels />
       </Flex>
     </ShelfDndProvider>
-  );
-};
+  )
+}
 
 const AppContent = ({
   initialized,
   mode,
   themeMode,
 }: {
-  initialized: boolean;
-  mode: AppMode;
-  themeMode: DemoTheme;
+  initialized: boolean
+  mode: AppMode
+  themeMode: DemoTheme
 }) => {
-  const logState = useVBIStore((state) => state.logState);
-  const { locale, t } = useTranslation();
-  const antdLocale = DEMO_ANTD_LOCALES[locale];
-  const antdThemeConfig = useMemo(
-    () => createThemeConfig(themeMode),
-    [themeMode],
-  );
-  const appRootRef = useRef<HTMLDivElement>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const logState = useVBIStore((state) => state.logState)
+  const { locale, t } = useTranslation()
+  const antdLocale = DEMO_ANTD_LOCALES[locale]
+  const antdThemeConfig = useMemo(() => createThemeConfig(themeMode), [themeMode])
+  const appRootRef = useRef<HTMLDivElement>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     if (mode !== 'edit') {
-      return;
+      return
     }
 
     const handleFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement === appRootRef.current);
-    };
+      setIsFullscreen(document.fullscreenElement === appRootRef.current)
+    }
 
-    handleFullscreenChange();
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    handleFullscreenChange()
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    };
-  }, [mode]);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [mode])
 
   const toggleFullscreen = useCallback(async () => {
     if (mode !== 'edit') {
-      return;
+      return
     }
 
-    const target = appRootRef.current;
+    const target = appRootRef.current
     if (!target) {
-      return;
+      return
     }
 
     try {
       if (document.fullscreenElement === target) {
-        await document.exitFullscreen();
-        return;
+        await document.exitFullscreen()
+        return
       }
 
       if (document.fullscreenElement) {
-        await document.exitFullscreen();
+        await document.exitFullscreen()
       }
 
-      await target.requestFullscreen();
+      await target.requestFullscreen()
     } catch (error) {
-      console.error('Failed to toggle fullscreen:', error);
+      console.error('Failed to toggle fullscreen:', error)
     }
-  }, [mode]);
+  }, [mode])
 
   return (
-    <ConfigProvider
-      locale={antdLocale}
-      theme={antdThemeConfig}
-      componentSize="small"
-    >
+    <ConfigProvider locale={antdLocale} theme={antdThemeConfig} componentSize='small'>
       <div
         ref={appRootRef}
         className={`demo-app-root demo-app-root--${mode}`}
         onClick={
           mode === 'edit'
             ? () => {
-                void logState();
+                void logState()
               }
             : undefined
         }
@@ -210,60 +185,50 @@ const AppContent = ({
           mode === 'edit' ? (
             <Spin tip={t('appInitializing')} fullscreen />
           ) : (
-            <div className="demo-app-view-loading">
+            <div className='demo-app-view-loading'>
               <Spin spinning tip={t('appInitializing')}>
-                <div className="demo-app-view-loading-target" />
+                <div className='demo-app-view-loading-target' />
               </Spin>
             </div>
           )
         ) : mode === 'edit' ? (
-          <DemoWorkbench
-            themeMode={themeMode}
-            isFullscreen={isFullscreen}
-            onToggleFullscreen={toggleFullscreen}
-          />
+          <DemoWorkbench themeMode={themeMode} isFullscreen={isFullscreen} onToggleFullscreen={toggleFullscreen} />
         ) : (
           <ViewPanel />
         )}
       </div>
     </ConfigProvider>
-  );
-};
+  )
+}
 
-const AppShell = ({
-  builder,
-  mode,
-}: {
-  builder?: VBIChartBuilder;
-  mode: AppMode;
-}) => {
+const AppShell = ({ builder, mode }: { builder?: VBIChartBuilder; mode: AppMode }) => {
   const { initialize, initialized, storeBuilder } = useVBIStore(
     useShallow((state) => ({
       initialize: state.initialize,
       initialized: state.initialized,
       storeBuilder: state.builder,
     })),
-  );
-  const { theme } = useVBIBuilder(storeBuilder);
+  )
+  const { theme } = useVBIBuilder(storeBuilder)
 
   useEffect(() => {
-    let isActive = true;
-    let cleanup: ReturnType<typeof initialize> | undefined;
+    let isActive = true
+    let cleanup: ReturnType<typeof initialize> | undefined
 
     void (async () => {
-      await initVBIConnector();
-      if (!isActive) return;
-      cleanup = initialize(builder);
-    })();
+      await initVBIConnector()
+      if (!isActive) return
+      cleanup = initialize(builder)
+    })()
 
     return () => {
-      isActive = false;
-      cleanup?.();
-    };
-  }, [builder, initialize]);
+      isActive = false
+      cleanup?.()
+    }
+  }, [builder, initialize])
 
-  return <AppContent initialized={initialized} mode={mode} themeMode={theme} />;
-};
+  return <AppContent initialized={initialized} mode={mode} themeMode={theme} />
+}
 
 export const APP = ({
   builder,
@@ -274,14 +239,8 @@ export const APP = ({
   theme = DEMO_DEFAULT_THEME,
 }: APPProps) => {
   return (
-    <VBIStoreProvider
-      builder={builder}
-      hideLocale={hideLocale}
-      hideTheme={hideTheme}
-      locale={locale}
-      theme={theme}
-    >
+    <VBIStoreProvider builder={builder} hideLocale={hideLocale} hideTheme={hideTheme} locale={locale} theme={theme}>
       <AppShell builder={builder} mode={mode} />
     </VBIStoreProvider>
-  );
-};
+  )
+}

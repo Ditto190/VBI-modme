@@ -1,22 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  NotFoundException,
-  Put,
-} from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import {
-  ApiDataResponse,
-  ApiErrorResponse,
-} from '../common/swagger/api-response.decorator';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity } from './entities/user.entity';
+import { Body, Controller, Delete, Get, Param, Post, NotFoundException, Put } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiDataResponse, ApiErrorResponse } from '../common/swagger/api-response.decorator'
+import { UserService } from './user.service'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
+import { UserEntity } from './entities/user.entity'
 
 @ApiTags('user')
 @Controller('user')
@@ -37,11 +25,11 @@ export class UserController {
     status: 404,
   })
   async getUser(@Param('id') id: string): Promise<UserEntity> {
-    const user = await this.userService.user({ id: Number(id) });
+    const user = await this.userService.user({ id: Number(id) })
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${id} not found`)
     }
-    return user;
+    return user
   }
 
   @Get()
@@ -53,7 +41,7 @@ export class UserController {
     type: UserEntity,
   })
   async getUsers(): Promise<UserEntity[]> {
-    return this.userService.users();
+    return this.userService.users()
   }
 
   @Post()
@@ -70,7 +58,7 @@ export class UserController {
     status: 400,
   })
   async signupUser(@Body() userData: CreateUserDto): Promise<UserEntity> {
-    return this.userService.createUser(userData);
+    return this.userService.createUser(userData)
   }
 
   @Put(':id')
@@ -87,14 +75,11 @@ export class UserController {
     message: 'Validation failed',
     status: 400,
   })
-  async updateUser(
-    @Param('id') id: string,
-    @Body() userData: UpdateUserDto,
-  ): Promise<UserEntity> {
+  async updateUser(@Param('id') id: string, @Body() userData: UpdateUserDto): Promise<UserEntity> {
     return this.userService.updateUser({
       where: { id: Number(id) },
       data: userData,
-    });
+    })
   }
 
   @Delete(':id')
@@ -106,6 +91,6 @@ export class UserController {
     type: UserEntity,
   })
   async deleteUser(@Param('id') id: string): Promise<UserEntity> {
-    return this.userService.deleteUser({ id: Number(id) });
+    return this.userService.deleteUser({ id: Number(id) })
   }
 }

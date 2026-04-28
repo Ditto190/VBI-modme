@@ -1,26 +1,20 @@
-import { Button, Drawer, Input, Spin } from 'antd';
-import { useTranslation } from '../../i18n';
-import { useInsightBuilderModel } from '../../models';
-import { useReportDetailStore } from '../../stores/report-detail.store';
+import { Button, Drawer, Input, Spin } from 'antd'
+import { useTranslation } from '../../i18n'
+import { useInsightBuilderModel } from '../../models'
+import { useReportDetailStore } from '../../stores/report-detail.store'
 
-const insightEditorDrawerSize = 720;
-const insightEditorDrawerStyles = { wrapper: { maxWidth: '92vw' } };
+const insightEditorDrawerSize = 720
+const insightEditorDrawerStyles = { wrapper: { maxWidth: '92vw' } }
 
 export const InsightEditorDrawer = () => {
-  const { t } = useTranslation();
-  const closeInsightEditor = useReportDetailStore(
-    (state) => state.closeInsightEditor,
-  );
-  const insightId = useReportDetailStore((state) => state.connectedInsightId);
-  const open = useReportDetailStore((state) => state.insightEditorOpen);
-  const setInsightContent = useReportDetailStore(
-    (state) => state.setInsightContent,
-  );
-  const insightSession = useInsightBuilderModel(
-    (state) => state.sessions[insightId],
-  );
-  const insightBuilder = insightSession?.builder ?? null;
-  const content = insightBuilder?.build().content ?? '';
+  const { t } = useTranslation()
+  const closeInsightEditor = useReportDetailStore((state) => state.closeInsightEditor)
+  const insightId = useReportDetailStore((state) => state.connectedInsightId)
+  const open = useReportDetailStore((state) => state.insightEditorOpen)
+  const setInsightContent = useReportDetailStore((state) => state.setInsightContent)
+  const insightSession = useInsightBuilderModel((state) => state.sessions[insightId])
+  const insightBuilder = insightSession?.builder ?? null
+  const content = insightBuilder?.build().content ?? ''
 
   return (
     <Drawer
@@ -40,10 +34,10 @@ export const InsightEditorDrawer = () => {
           onChange={(event) => setInsightContent(event.target.value)}
         />
       ) : (
-        <div className="report-detail-placeholder">
+        <div className='report-detail-placeholder'>
           <Spin tip={t('reportDetail.connectingInsightEditor')} />
         </div>
       )}
     </Drawer>
-  );
-};
+  )
+}

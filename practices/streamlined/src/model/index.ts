@@ -1,1 +1,1 @@
-export { useVBIStore } from './VBIStore';
+export { useVBIStore } from './VBIStore'

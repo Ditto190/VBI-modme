@@ -1,16 +1,11 @@
-import { VBI, type VBIReportBuilder } from '@visactor/vbi';
-import {
-  VQuery,
-  type DatasetColumn,
-  type RawDatasetSource,
-  type VQueryDSL,
-} from '@visactor/vquery';
-import { ensureReportHasPage } from './report-pages';
+import { VBI, type VBIReportBuilder } from '@visactor/vbi'
+import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
+import { ensureReportHasPage } from './report-pages'
 
-export const connectorId = 'demo';
+export const connectorId = 'demo'
 
 export const registerDemoConnector = () => {
-  const vquery = new VQuery();
+  const vquery = new VQuery()
 
   VBI.registerConnector(connectorId, async () => {
     return {
@@ -40,37 +35,29 @@ export const registerDemoConnector = () => {
         if (!(await vquery.hasDataset(connectorId))) {
           const datasetSource = {
             type: 'csv',
-            rawDataset:
-              'https://visactor.github.io/VBI/dataset/supermarket.csv',
-          };
+            rawDataset: 'https://visactor.github.io/VBI/dataset/supermarket.csv',
+          }
 
-          await vquery.createDataset(
-            connectorId,
-            schema as DatasetColumn[],
-            datasetSource as RawDatasetSource,
-          );
+          await vquery.createDataset(connectorId, schema as DatasetColumn[], datasetSource as RawDatasetSource)
         }
 
-        const dataset = await vquery.connectDataset(connectorId);
-        const queryResult = await dataset.query(
-          queryDSL as VQueryDSL<Record<string, string | number>>,
-        );
+        const dataset = await vquery.connectDataset(connectorId)
+        const queryResult = await dataset.query(queryDSL as VQueryDSL<Record<string, string | number>>)
 
-        return { dataset: queryResult.dataset };
+        return { dataset: queryResult.dataset }
       },
-    };
-  });
+    }
+  })
 
-  return connectorId;
-};
+  return connectorId
+}
 
-registerDemoConnector();
+registerDemoConnector()
 
 export const createDefaultReportBuilder = (): VBIReportBuilder => {
-  const reportBuilder = VBI.report.create(VBI.report.createEmpty());
-  ensureReportHasPage(reportBuilder, connectorId);
-  return reportBuilder;
-};
+  const reportBuilder = VBI.report.create(VBI.report.createEmpty())
+  ensureReportHasPage(reportBuilder, connectorId)
+  return reportBuilder
+}
 
-export const defaultReportBuilder: VBIReportBuilder =
-  createDefaultReportBuilder();
+export const defaultReportBuilder: VBIReportBuilder = createDefaultReportBuilder()

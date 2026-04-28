@@ -1,5 +1,5 @@
-import type { ProviderResource } from '@visactor/headless-bi-provider';
+import type { ProviderResource } from '@visactor/headless-bi-provider'
 
-export type ResourceKind = 'chart' | 'insight' | 'report';
+export type ResourceKind = 'chart' | 'insight' | 'report'
 
-export type ResourceItem = ProviderResource;
+export type ResourceItem = ProviderResource

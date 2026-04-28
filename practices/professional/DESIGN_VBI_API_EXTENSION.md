@@ -6,13 +6,13 @@
 
 ```typescript
 interface VBIMeasure {
-  field: string; // 数据字段名（不可修改）
-  alias: string; // 用户定义的别名（可修改）
-  encoding: 'yAxis' | 'xAxis' | 'color' | 'label' | 'tooltip' | 'size';
+  field: string // 数据字段名（不可修改）
+  alias: string // 用户定义的别名（可修改）
+  encoding: 'yAxis' | 'xAxis' | 'color' | 'label' | 'tooltip' | 'size'
   aggregate: {
-    func: 'sum' | 'count' | 'avg' | 'min' | 'max' | 'quantile';
-    quantile?: number; // 仅当 func === 'quantile' 时必需
-  };
+    func: 'sum' | 'count' | 'avg' | 'min' | 'max' | 'quantile'
+    quantile?: number // 仅当 func === 'quantile' 时必需
+  }
 }
 ```
 
@@ -26,7 +26,7 @@ export const zAggregate = z.discriminatedUnion('func', [
     func: z.literal(['quantile']),
     quantile: z.number().min(0).max(1),
   }),
-]);
+])
 
 // packages/vbi/src/types/dsl/measures/measures.ts
 export const zVBIMeasure = z.object({
@@ -34,9 +34,9 @@ export const zVBIMeasure = z.object({
   alias: z.string(),
   encoding: z.enum(['yAxis', 'xAxis', 'color', 'label', 'tooltip', 'size']),
   aggregate: zAggregate,
-});
+})
 
-export type VBIMeasure = z.infer<typeof zVBIMeasure>;
+export type VBIMeasure = z.infer<typeof zVBIMeasure>
 ```
 
 ---
@@ -147,22 +147,22 @@ export class MeasureNodeBuilder {
   /**
    * 修改指标别名
    */
-  setAlias(alias: string): this;
+  setAlias(alias: string): this
 
   /**
    * 修改指标编码通道
    */
-  setEncoding(encoding: VBIMeasure['encoding']): this;
+  setEncoding(encoding: VBIMeasure['encoding']): this
 
   /**
    * 修改指标聚合方式
    */
-  setAggregate(aggregate: VBIMeasure['aggregate']): this;
+  setAggregate(aggregate: VBIMeasure['aggregate']): this
 
   /**
    * 获取最终的 VBIMeasure 对象
    */
-  build(): VBIMeasure;
+  build(): VBIMeasure
 }
 ```
 
@@ -196,7 +196,7 @@ export class ChartTypeBuilder {
     heatmap: ['xAxis', 'yAxis', 'color'],
     boxplot: ['yAxis', 'xAxis', 'color'],
     histogram: ['yAxis', 'color'],
-  };
+  }
 
   /**
    * 获取指定图表类型支持的编码通道列表
@@ -204,7 +204,7 @@ export class ChartTypeBuilder {
    * @returns 支持的编码通道数组，未知类型返回 ['yAxis'] 作为默认值
    */
   getSupportedEncodings(chartType: string): string[] {
-    return this.ENCODING_MAP[chartType] || ['yAxis'];
+    return this.ENCODING_MAP[chartType] || ['yAxis']
   }
 }
 ```
@@ -284,21 +284,21 @@ changeChartTypeWithAutoFix(
 
 ```typescript
 // 1. 前端获取指标
-const measures = builder.measures.getMeasures();
+const measures = builder.measures.getMeasures()
 
 // 2. 用户编辑并确认
-const newAlias = '销售总和';
-const index = 0;
+const newAlias = '销售总和'
+const index = 0
 
 // 3. 调用 VBI API
-builder.measures.getMeasureNodeAt(index)?.setAlias(newAlias);
+builder.measures.getMeasureNodeAt(index)?.setAlias(newAlias)
 
 // 4. Yjs DSL 自动更新（通过 Y.Map.set()）
 
 // 5. 前端监听更新
 builder.measures.observe(() => {
-  setMeasures(builder.measures.getMeasures());
-});
+  setMeasures(builder.measures.getMeasures())
+})
 
 // 6. UI 重新渲染
 ```
@@ -307,10 +307,10 @@ builder.measures.observe(() => {
 
 ```typescript
 // 1. 用户点击删除
-const index = 0;
+const index = 0
 
 // 2. 调用 VBI API
-builder.measures.removeMeasureAt(index);
+builder.measures.removeMeasureAt(index)
 
 // 3. observe 回调触发，前端自动更新列表
 ```

@@ -1,3 +1,3 @@
-import type { VBIReportDSL } from '@visactor/vbi';
+import type { VBIReportDSL } from '@visactor/vbi'
 
-export type ReportPage = VBIReportDSL['pages'][number];
+export type ReportPage = VBIReportDSL['pages'][number]

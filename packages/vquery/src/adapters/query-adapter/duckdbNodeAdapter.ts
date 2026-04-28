@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DuckDBBundles } from '@duckdb/duckdb-wasm/blocking'
 import { createDuckDB, ConsoleLogger, NODE_RUNTIME, DuckDBConnection } from '@duckdb/duckdb-wasm/blocking'
 import { createRequire } from 'node:module'

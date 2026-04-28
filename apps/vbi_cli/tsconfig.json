@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "jsx": "react-jsx",
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "DOM"],
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",

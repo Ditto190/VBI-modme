@@ -1,8 +1,8 @@
-import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-import { CloseOutlined, DownOutlined } from '@ant-design/icons';
-import { Dropdown, Typography, theme, type MenuProps } from 'antd';
-import { useMemo, useState } from 'react';
+import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities'
+import { CloseOutlined, DownOutlined } from '@ant-design/icons'
+import { Dropdown, Typography, theme, type MenuProps } from 'antd'
+import { useMemo, useState } from 'react'
 import {
   ShelfItemDropZones,
   createShelfItemDragId,
@@ -11,13 +11,13 @@ import {
   type ShelfType,
   useShelfDndRegistration,
   useShelfItemDropTargets,
-} from '../dnd';
-import { ShelfTrack, type ShelfTone } from './ShelfTrack';
-import './FieldShelf.css';
+} from '../dnd'
+import { ShelfTrack, type ShelfTone } from './ShelfTrack'
+import './FieldShelf.css'
 
-const REMOVE_ICON_DEFAULT_COLOR = '#8c8c8c';
-const REMOVE_ICON_HOVER_COLOR = '#ff4d4f';
-const SHELF_ITEM_SPACING = 6;
+const REMOVE_ICON_DEFAULT_COLOR = '#8c8c8c'
+const REMOVE_ICON_HOVER_COLOR = '#ff4d4f'
+const SHELF_ITEM_SPACING = 6
 
 export const SHELF_MENU_ITEM_STYLE: React.CSSProperties = {
   minHeight: 32,
@@ -26,7 +26,7 @@ export const SHELF_MENU_ITEM_STYLE: React.CSSProperties = {
   borderRadius: 0,
   width: '100%',
   boxSizing: 'border-box',
-};
+}
 
 export const SHELF_MENU_SUBMENU_TITLE_STYLE: React.CSSProperties = {
   minHeight: 32,
@@ -35,40 +35,40 @@ export const SHELF_MENU_SUBMENU_TITLE_STYLE: React.CSSProperties = {
   borderRadius: 0,
   width: '100%',
   boxSizing: 'border-box',
-};
+}
 
-export type FieldShelfTone = ShelfTone;
+export type FieldShelfTone = ShelfTone
 
 type FieldShelfItem = {
-  id: string;
-  field: string;
-  alias?: string | null;
-};
+  id: string
+  field: string
+  alias?: string | null
+}
 
 type FieldShelfProps<TItem extends FieldShelfItem> = {
-  shelf: ShelfType;
-  items: TItem[];
-  placeholder: string;
-  tone: FieldShelfTone;
-  style?: React.CSSProperties;
-  maxLabelWidth?: number;
-  getDisplayLabel?: (item: TItem) => string;
-  getItemPayload: (item: TItem) => ShelfFieldPayload;
-  buildMenuItems: (item: TItem) => MenuProps['items'];
-  getMenuSelectedKeys?: (item: TItem) => string[];
-  onMenuClick: (item: TItem, key: string) => void;
-  onRemove: (id: string) => void;
-  onAddFieldAt: (payload: ShelfFieldPayload, insertIndex: number) => void;
-  onReorder: (dragIndex: number, insertIndex: number) => void;
-};
+  shelf: ShelfType
+  items: TItem[]
+  placeholder: string
+  tone: FieldShelfTone
+  style?: React.CSSProperties
+  maxLabelWidth?: number
+  getDisplayLabel?: (item: TItem) => string
+  getItemPayload: (item: TItem) => ShelfFieldPayload
+  buildMenuItems: (item: TItem) => MenuProps['items']
+  getMenuSelectedKeys?: (item: TItem) => string[]
+  onMenuClick: (item: TItem, key: string) => void
+  onRemove: (id: string) => void
+  onAddFieldAt: (payload: ShelfFieldPayload, insertIndex: number) => void
+  onReorder: (dragIndex: number, insertIndex: number) => void
+}
 
 const getItemStyle = (params: {
-  isHovered: boolean;
-  isDragging: boolean;
-  tone: FieldShelfTone;
-  transform: string | undefined;
+  isHovered: boolean
+  isDragging: boolean
+  tone: FieldShelfTone
+  transform: string | undefined
 }): React.CSSProperties => {
-  const { isHovered, isDragging, tone, transform } = params;
+  const { isHovered, isDragging, tone, transform } = params
 
   return {
     display: 'inline-flex',
@@ -76,9 +76,7 @@ const getItemStyle = (params: {
     gap: 3,
     padding: '0 5px',
     backgroundColor: isHovered ? tone.itemHoverBackground : tone.itemBackground,
-    border: isHovered
-      ? `1px solid ${tone.itemHoverBorder}`
-      : `1px solid ${tone.itemBorder}`,
+    border: isHovered ? `1px solid ${tone.itemHoverBorder}` : `1px solid ${tone.itemBorder}`,
     borderRadius: 8,
     cursor: isDragging ? 'grabbing' : 'grab',
     fontSize: 11,
@@ -89,14 +87,11 @@ const getItemStyle = (params: {
     opacity: isDragging ? 0 : 1,
     visibility: isDragging ? 'hidden' : 'visible',
     transform,
-  };
-};
+  }
+}
 
-const getIconStyle = (params: {
-  isHovered: boolean;
-  tone: FieldShelfTone;
-}): React.CSSProperties => {
-  const { isHovered, tone } = params;
+const getIconStyle = (params: { isHovered: boolean; tone: FieldShelfTone }): React.CSSProperties => {
+  const { isHovered, tone } = params
 
   return {
     display: 'inline-flex',
@@ -108,8 +103,8 @@ const getIconStyle = (params: {
     backgroundColor: isHovered ? tone.iconHoverBackground : tone.iconBackground,
     color: tone.iconColor,
     flexShrink: 0,
-  };
-};
+  }
+}
 
 const getRemoveIconWrapperStyle = (isHovered: boolean): React.CSSProperties => {
   return {
@@ -122,25 +117,25 @@ const getRemoveIconWrapperStyle = (isHovered: boolean): React.CSSProperties => {
     opacity: isHovered ? 1 : 0,
     transition: 'width 0.2s, margin-left 0.2s, opacity 0.2s',
     flexShrink: 0,
-  };
-};
+  }
+}
 
 const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
-  shelf: ShelfType;
-  item: TItem;
-  index: number;
-  displayLabel: string;
-  tone: FieldShelfTone;
-  maxLabelWidth: number;
-  isHovered: boolean;
-  setHoveredItemId: (id: string | null) => void;
-  payload: ShelfFieldPayload;
-  buildMenuItems: (item: TItem) => MenuProps['items'];
-  getMenuSelectedKeys?: (item: TItem) => string[];
-  onMenuClick: (item: TItem, key: string) => void;
-  onRemove: (id: string) => void;
+  shelf: ShelfType
+  item: TItem
+  index: number
+  displayLabel: string
+  tone: FieldShelfTone
+  maxLabelWidth: number
+  isHovered: boolean
+  setHoveredItemId: (id: string | null) => void
+  payload: ShelfFieldPayload
+  buildMenuItems: (item: TItem) => MenuProps['items']
+  getMenuSelectedKeys?: (item: TItem) => string[]
+  onMenuClick: (item: TItem, key: string) => void
+  onRemove: (id: string) => void
 }) => {
-  const { token } = theme.useToken();
+  const { token } = theme.useToken()
   const {
     shelf,
     item,
@@ -155,24 +150,23 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
     getMenuSelectedKeys,
     onMenuClick,
     onRemove,
-  } = props;
+  } = props
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: createShelfItemDragId(shelf, item.id),
-      data: {
-        kind: 'shelf-item',
-        shelf,
-        itemId: item.id,
-        index,
-        payload,
-        label: displayLabel,
-      } satisfies ShelfItemDragData,
-    });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: createShelfItemDragId(shelf, item.id),
+    data: {
+      kind: 'shelf-item',
+      shelf,
+      itemId: item.id,
+      index,
+      payload,
+      label: displayLabel,
+    } satisfies ShelfItemDragData,
+  })
   const dropTargets = useShelfItemDropTargets({
     shelf,
     index,
-  });
+  })
 
   return (
     <div
@@ -205,15 +199,15 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
       >
         <Dropdown
           trigger={['click']}
-          placement="bottom"
+          placement='bottom'
           menu={{
             rootClassName: 'fieldshelf-dropdown',
             items: buildMenuItems(item),
             selectable: true,
             selectedKeys: getMenuSelectedKeys?.(item),
             onClick: ({ key, domEvent }) => {
-              domEvent.stopPropagation();
-              onMenuClick(item, String(key));
+              domEvent.stopPropagation()
+              onMenuClick(item, String(key))
             },
             style: {
               fontSize: 11,
@@ -234,7 +228,7 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
         >
           <span
             onClick={(event) => {
-              event.stopPropagation();
+              event.stopPropagation()
             }}
             style={{
               display: 'inline-flex',
@@ -270,8 +264,8 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
         <span style={getRemoveIconWrapperStyle(isHovered)}>
           <CloseOutlined
             onClick={(event) => {
-              event.stopPropagation();
-              onRemove(item.id);
+              event.stopPropagation()
+              onRemove(item.id)
             }}
             style={{
               fontSize: 8,
@@ -279,21 +273,19 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
               color: REMOVE_ICON_DEFAULT_COLOR,
             }}
             onMouseEnter={(event) => {
-              event.currentTarget.style.color = REMOVE_ICON_HOVER_COLOR;
+              event.currentTarget.style.color = REMOVE_ICON_HOVER_COLOR
             }}
             onMouseLeave={(event) => {
-              event.currentTarget.style.color = REMOVE_ICON_DEFAULT_COLOR;
+              event.currentTarget.style.color = REMOVE_ICON_DEFAULT_COLOR
             }}
           />
         </span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export const FieldShelf = <TItem extends FieldShelfItem>(
-  props: FieldShelfProps<TItem>,
-) => {
+export const FieldShelf = <TItem extends FieldShelfItem>(props: FieldShelfProps<TItem>) => {
   const {
     shelf,
     items,
@@ -309,16 +301,16 @@ export const FieldShelf = <TItem extends FieldShelfItem>(
     onRemove,
     onAddFieldAt,
     onReorder,
-  } = props;
+  } = props
 
-  const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
+  const [hoveredItemId, setHoveredItemId] = useState<string | null>(null)
 
   const dndItems = useMemo(() => {
     return items.map((item) => ({
       id: item.id,
       payload: getItemPayload(item),
-    }));
-  }, [getItemPayload, items]);
+    }))
+  }, [getItemPayload, items])
 
   const dndAdapter = useMemo(() => {
     return {
@@ -327,25 +319,17 @@ export const FieldShelf = <TItem extends FieldShelfItem>(
       addFieldAt: onAddFieldAt,
       removeItem: onRemove,
       reorderWithin: onReorder,
-    };
-  }, [dndItems, onAddFieldAt, onRemove, onReorder, shelf]);
+    }
+  }, [dndItems, onAddFieldAt, onRemove, onReorder, shelf])
 
-  useShelfDndRegistration(dndAdapter);
+  useShelfDndRegistration(dndAdapter)
 
   return (
-    <ShelfTrack
-      shelf={shelf}
-      itemsCount={items.length}
-      placeholder={placeholder}
-      tone={tone}
-      style={style}
-    >
+    <ShelfTrack shelf={shelf} itemsCount={items.length} placeholder={placeholder} tone={tone} style={style}>
       {items.map((item, index) => {
-        const payload = getItemPayload(item);
-        const displayLabel = getDisplayLabel
-          ? getDisplayLabel(item)
-          : item.alias || item.field;
-        const isHovered = hoveredItemId === item.id;
+        const payload = getItemPayload(item)
+        const displayLabel = getDisplayLabel ? getDisplayLabel(item) : item.alias || item.field
+        const isHovered = hoveredItemId === item.id
 
         return (
           <FieldShelfTag
@@ -364,8 +348,8 @@ export const FieldShelf = <TItem extends FieldShelfItem>(
             onMenuClick={onMenuClick}
             onRemove={onRemove}
           />
-        );
+        )
       })}
     </ShelfTrack>
-  );
-};
+  )
+}

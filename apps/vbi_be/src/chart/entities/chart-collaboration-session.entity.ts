@@ -1,19 +1,19 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { ChartEntity } from './chart.entity';
+import { ApiProperty } from '@nestjs/swagger'
+import { ChartEntity } from './chart.entity'
 
 export class ChartCollaborationSessionEntity {
   @ApiProperty()
-  resourceId: string;
+  resourceId: string
 
   @ApiProperty()
-  protocol: 'hocuspocus';
+  protocol: 'hocuspocus'
 
   @ApiProperty()
-  roomName: string;
+  roomName: string
 
   @ApiProperty()
-  websocketUrl: string;
+  websocketUrl: string
 
   @ApiProperty({ type: ChartEntity })
-  resource: ChartEntity;
+  resource: ChartEntity
 }

@@ -1,5 +1,3 @@
 export * from './render'
 export * from './guide'
-export * from './vquery'
 export * from './vseed'
-export * from './demoConnector'

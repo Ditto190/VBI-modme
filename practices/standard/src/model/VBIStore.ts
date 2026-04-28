@@ -1,94 +1,84 @@
-import { VBI, VBIChartBuilder, VBIChartDSL } from '@visactor/vbi';
-import { type DatasetColumn } from '@visactor/vquery';
-import { VSeed } from '@visactor/vseed';
-import {
-  createDefaultBuilder,
-  setLocalDataWithSchema,
-} from 'src/utils/localConnector';
-import { createStore, type StoreApi } from 'zustand/vanilla';
+import { VBI, VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
+import { type DatasetColumn } from '@visactor/vquery'
+import { VSeed } from '@visactor/vseed'
+import { createDefaultBuilder, setLocalDataWithSchema } from 'src/utils/localConnector'
+import { createStore, type StoreApi } from 'zustand/vanilla'
 
-type DestroyCallback = () => void;
+type DestroyCallback = () => void
 
 export interface VBIStoreState {
-  loading: boolean;
-  vseed: VSeed | null;
-  builder: VBIChartBuilder;
-  initialized: boolean;
+  loading: boolean
+  vseed: VSeed | null
+  builder: VBIChartBuilder
+  initialized: boolean
 
-  dsl: VBIChartDSL;
+  dsl: VBIChartDSL
 
-  initialize: (builder?: VBIChartBuilder) => DestroyCallback;
-  bindEvent: () => DestroyCallback;
-  logState: () => Promise<void>;
+  initialize: (builder?: VBIChartBuilder) => DestroyCallback
+  bindEvent: () => DestroyCallback
+  logState: () => Promise<void>
 
-  setDsl: (dsl: VBIChartDSL) => void;
-  setLoading: (loading: boolean) => void;
-  setVSeed: (vseed: VSeed | null) => void;
-  switchSource: (
-    connectorId: string,
-    data?: any[],
-    schema?: DatasetColumn[],
-  ) => Promise<void>;
+  setDsl: (dsl: VBIChartDSL) => void
+  setLoading: (loading: boolean) => void
+  setVSeed: (vseed: VSeed | null) => void
+  switchSource: (connectorId: string, data?: any[], schema?: DatasetColumn[]) => Promise<void>
 }
 
-export type VBIStoreApi = StoreApi<VBIStoreState>;
+export type VBIStoreApi = StoreApi<VBIStoreState>
 
 type VSeedCacheEntry = {
-  dslSnapshot: string;
-  vseed: VSeed | null;
-  pending?: Promise<VSeed | null>;
-};
+  dslSnapshot: string
+  vseed: VSeed | null
+  pending?: Promise<VSeed | null>
+}
 
-const vseedCache = new WeakMap<VBIChartBuilder, VSeedCacheEntry>();
+const vseedCache = new WeakMap<VBIChartBuilder, VSeedCacheEntry>()
 
 const getInitialBuilder = (builder?: VBIChartBuilder) => {
-  return builder ?? createDefaultBuilder();
-};
+  return builder ?? createDefaultBuilder()
+}
 
 const getDslState = (builder: VBIChartBuilder) => {
-  const dsl = builder.dsl.toJSON() as VBIChartDSL;
+  const dsl = builder.dsl.toJSON() as VBIChartDSL
   return {
     dsl,
     snapshot: JSON.stringify(dsl),
-  };
-};
+  }
+}
 
-const loadVSeed = async (
-  builder: VBIChartBuilder,
-  dslSnapshot: string,
-): Promise<VSeed | null> => {
-  const cached = vseedCache.get(builder);
+const loadVSeed = async (builder: VBIChartBuilder, dslSnapshot: string): Promise<VSeed | null> => {
+  const cached = vseedCache.get(builder)
 
   if (cached?.dslSnapshot === dslSnapshot) {
     if (cached.pending) {
-      return cached.pending;
+      return cached.pending
     }
 
-    return cached.vseed;
+    return cached.vseed
   }
 
   const pending = builder
     .buildVSeed()
     .then((vseed) => {
-      vseedCache.set(builder, { dslSnapshot, vseed });
-      return vseed;
+      vseedCache.set(builder, { dslSnapshot, vseed })
+      return vseed
     })
     .catch((error) => {
-      vseedCache.delete(builder);
-      throw error;
-    });
+      vseedCache.delete(builder)
+      throw error
+    })
 
   vseedCache.set(builder, {
     dslSnapshot,
     vseed: cached?.vseed ?? null,
     pending,
-  });
+  })
 
-  return pending;
-};
+  return pending
+}
 
 export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
-  const initialBuilder = getInitialBuilder(builder);
+  const initialBuilder = getInitialBuilder(builder)
 
   return createStore<VBIStoreState>((set, get) => ({
     loading: false,
@@ -101,104 +91,104 @@ export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
     setVSeed: (vseed) => set({ vseed }),
     setDsl: (dsl) => set({ dsl }),
     logState: async () => {
-      const { builder, vseed } = get();
+      const { builder, vseed } = get()
 
-      console.group('selected builder');
+      console.group('selected builder')
 
-      console.info('builder', builder);
-      console.info('vbi', builder.build());
-      console.info('vquery', builder.buildVQuery());
-      console.info('vseed', vseed);
+      console.info('builder', builder)
+      console.info('vbi', builder.build())
+      console.info('vquery', builder.buildVQuery())
+      console.info('vseed', vseed)
 
-      console.groupEnd();
+      console.groupEnd()
     },
 
     initialize: (nextBuilder) => {
-      const builder = nextBuilder ?? get().builder;
+      const builder = nextBuilder ?? get().builder
       set({
         builder,
         dsl: builder.dsl.toJSON() as VBIChartDSL,
         loading: false,
         vseed: null,
         initialized: true,
-      });
+      })
 
-      const dispose = get().bindEvent();
+      const dispose = get().bindEvent()
 
       return () => {
-        dispose();
-        set({ loading: false, vseed: null, initialized: false });
-      };
+        dispose()
+        set({ loading: false, vseed: null, initialized: false })
+      }
     },
 
     bindEvent: () => {
-      const builder = get().builder;
+      const builder = get().builder
 
       const updateAll = async () => {
         if (get().builder !== builder) {
-          return;
+          return
         }
 
-        const { dsl, snapshot } = getDslState(builder);
+        const { dsl, snapshot } = getDslState(builder)
         if (builder.isEmpty()) {
-          vseedCache.set(builder, { dslSnapshot: snapshot, vseed: null });
-          set({ dsl, loading: false, vseed: null });
-          return;
+          vseedCache.set(builder, { dslSnapshot: snapshot, vseed: null })
+          set({ dsl, loading: false, vseed: null })
+          return
         }
 
-        const cached = vseedCache.get(builder);
+        const cached = vseedCache.get(builder)
         if (cached?.dslSnapshot === snapshot && !cached.pending) {
-          set({ dsl, loading: false, vseed: cached.vseed });
-          return;
+          set({ dsl, loading: false, vseed: cached.vseed })
+          return
         }
 
-        set({ dsl, loading: true });
+        set({ dsl, loading: true })
 
         try {
-          const newVSeed = await loadVSeed(builder, snapshot);
-          const currentState = getDslState(builder);
+          const newVSeed = await loadVSeed(builder, snapshot)
+          const currentState = getDslState(builder)
 
           if (get().builder !== builder || currentState.snapshot !== snapshot) {
-            return;
+            return
           }
 
-          set({ dsl: currentState.dsl, vseed: newVSeed });
+          set({ dsl: currentState.dsl, vseed: newVSeed })
         } catch (error) {
-          console.error('VSeed Build Error:', error);
+          console.error('VSeed Build Error:', error)
         } finally {
           if (get().builder === builder) {
-            set({ loading: false });
+            set({ loading: false })
           }
         }
-      };
+      }
 
-      builder.doc.on('update', updateAll);
-      void updateAll();
+      builder.doc.on('update', updateAll)
+      void updateAll()
 
       return () => {
-        builder.doc.off('update', updateAll);
-      };
+        builder.doc.off('update', updateAll)
+      }
     },
 
     switchSource: async (connectorId, data, schema) => {
       if (data && schema) {
-        setLocalDataWithSchema(data, schema);
+        setLocalDataWithSchema(data, schema)
       }
 
-      const builder = get().builder;
-      const theme = builder.theme.getTheme();
-      const locale = builder.locale.getLocale();
-      const limit = builder.limit.getLimit();
+      const builder = get().builder
+      const theme = builder.theme.getTheme()
+      const locale = builder.locale.getLocale()
+      const limit = builder.limit.getLimit()
 
-      const nextBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId));
+      const nextBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
 
-      nextBuilder.theme.setTheme(theme);
-      nextBuilder.locale.setLocale(locale);
+      nextBuilder.theme.setTheme(theme)
+      nextBuilder.locale.setLocale(locale)
       if (limit) {
-        nextBuilder.limit.setLimit(limit);
+        nextBuilder.limit.setLimit(limit)
       }
 
-      get().initialize(nextBuilder);
+      get().initialize(nextBuilder)
     },
-  }));
-};
+  }))
+}

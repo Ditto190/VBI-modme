@@ -1,5 +1,4 @@
 import { defineConfig } from '@rspress/core'
-import { pluginLlms } from '@rspress/plugin-llms'
 import { pluginPlayground } from '@rspress/plugin-playground'
 import { pluginPreview } from '@rspress/plugin-preview'
 import * as path from 'node:path'
@@ -10,8 +9,8 @@ export default defineConfig({
   root: './docs',
   base: '/VBI/',
   globalStyles: path.join(__dirname, 'components/styles/index.css'),
+  llms: true,
   plugins: [
-    pluginLlms(),
     pluginPreview(),
     pluginPlayground({
       include: [
@@ -72,17 +71,28 @@ export default defineConfig({
   },
   builderConfig: {
     tools: {
-      rspack: {
-        resolve: {
-          conditionNames: ['source', '...'],
-        },
+      rspack: (config, { isServer }) => {
+        config.resolve.alias = {
+          ...config.resolve.alias,
+          '@visactor/vquery': path.join(__dirname, '../../packages/vquery/src/browser.ts'),
+        }
+
+        if (isServer) {
+          config.resolve.alias['@duckdb/duckdb-wasm$'] = path.join(
+            __dirname,
+            'components/shims/duckdbWasmSsr.ts',
+          )
+          config.externals = [...(Array.isArray(config.externals) ? config.externals : []), 'yjs']
+        }
+
+        config.resolve.conditionNames = ['source', '...']
       },
     },
     server: {
       open: true,
     },
     output: {
-      sourceMap: true,
+      sourceMap: false,
       assetPrefix: 'https://visactor.github.io/VBI/',
     },
   },

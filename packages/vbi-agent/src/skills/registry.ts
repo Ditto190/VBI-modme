@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../types/assets.d.ts" />
 
 import hypothesisLoop from './hypothesis-loop/SKILL.md?raw'

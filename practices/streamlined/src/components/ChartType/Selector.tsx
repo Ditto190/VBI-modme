@@ -1,14 +1,14 @@
-import { Select } from 'antd';
-import { useVBIStore } from 'src/model';
+import { Select } from 'antd'
+import { useVBIStore } from 'src/model'
 
 export const ChartTypeSelector = (props: { style?: React.CSSProperties }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const chartType = useVBIStore((state) => state.dsl.chartType);
+  const builder = useVBIStore((state) => state.builder)
+  const chartType = useVBIStore((state) => state.dsl.chartType)
 
-  const { style } = props;
+  const { style } = props
   const changeChartType = (chartType: string) => {
-    builder.chartType.changeChartType(chartType);
-  };
+    builder.chartType.changeChartType(chartType)
+  }
 
   // const [chartType, setChartType] = useState(builder.chartType.getChartType());
 
@@ -24,7 +24,7 @@ export const ChartTypeSelector = (props: { style?: React.CSSProperties }) => {
   //   };
   // }, [builder]);
 
-  const availableChartTypes = builder.chartType.getAvailableChartTypes();
+  const availableChartTypes = builder.chartType.getAvailableChartTypes()
   return (
     <div style={style}>
       <Select
@@ -40,5 +40,5 @@ export const ChartTypeSelector = (props: { style?: React.CSSProperties }) => {
         ))}
       </Select>
     </div>
-  );
-};
+  )
+}

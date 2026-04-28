@@ -1,18 +1,18 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { useShallow } from 'zustand/shallow';
-import { useTranslation } from '../../i18n';
-import { useReportBuilderModel } from '../../models';
-import { useReportDetailStore } from '../../stores/report-detail.store';
-import { PageSidebarItem } from './PageSidebarItem';
+import { PlusOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
+import { useShallow } from 'zustand/shallow'
+import { useTranslation } from '../../i18n'
+import { useReportBuilderModel } from '../../models'
+import { useReportDetailStore } from '../../stores/report-detail.store'
+import { PageSidebarItem } from './PageSidebarItem'
 
 const viewModeOptions = [
   { key: 'vertical', label: 'reportDetail.viewVertical' },
   { key: 'horizontal', label: 'reportDetail.viewHorizontal' },
-] as const;
+] as const
 
 export const PageSidebar = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const {
     activePageId,
     addChart,
@@ -41,16 +41,14 @@ export const PageSidebar = () => {
       setViewMode: state.setViewMode,
       viewMode: state.viewMode,
     })),
-  );
+  )
 
-  const reportSession = useReportBuilderModel(
-    (state) => state.sessions[reportId],
-  );
-  const pages = reportSession?.builder?.build().pages ?? [];
+  const reportSession = useReportBuilderModel((state) => state.sessions[reportId])
+  const pages = reportSession?.builder?.build().pages ?? []
 
   return (
-    <section className="report-detail-filmstrip">
-      <div className="report-detail-page-list">
+    <section className='report-detail-filmstrip'>
+      <div className='report-detail-page-list'>
         {pages.map((page, index) => (
           <PageSidebarItem
             key={page.id}
@@ -67,13 +65,13 @@ export const PageSidebar = () => {
           />
         ))}
       </div>
-      <div className="report-detail-filmstrip-actions">
-        <div className="report-detail-filmstrip-mode">
+      <div className='report-detail-filmstrip-actions'>
+        <div className='report-detail-filmstrip-mode'>
           {viewModeOptions.map(({ key, label }) => (
             <Button
               key={key}
-              className="report-detail-mode-btn"
-              size="small"
+              className='report-detail-mode-btn'
+              size='small'
               type={viewMode === key ? 'primary' : 'default'}
               onClick={() => setViewMode(key)}
             >
@@ -82,17 +80,17 @@ export const PageSidebar = () => {
           ))}
         </div>
         <Button
-          className="report-detail-page-create"
+          className='report-detail-page-create'
           icon={<PlusOutlined />}
           loading={busy}
-          size="large"
-          type="primary"
-          variant="filled"
+          size='large'
+          type='primary'
+          variant='filled'
           onClick={() => void addPage()}
         >
           {t('reportDetail.newPage')}
         </Button>
       </div>
     </section>
-  );
-};
+  )
+}

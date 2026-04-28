@@ -1,11 +1,9 @@
-import type { ThemeConfig } from 'antd';
-import type { VbiThemePalette } from './palette';
+import type { ThemeConfig } from 'antd'
+import type { VbiThemePalette } from './palette'
 
-type ComponentTokens = NonNullable<ThemeConfig['components']>;
+type ComponentTokens = NonNullable<ThemeConfig['components']>
 
-export const createVbiAntdComponentTokens = (
-  p: VbiThemePalette,
-): ComponentTokens => ({
+export const createVbiAntdComponentTokens = (p: VbiThemePalette): ComponentTokens => ({
   Button: {
     dangerShadow: 'none',
     primaryColor: p.primaryText,
@@ -63,4 +61,4 @@ export const createVbiAntdComponentTokens = (
     rowSelectedBg: p.activeBg,
     rowSelectedHoverBg: p.hoverBg,
   },
-});
+})

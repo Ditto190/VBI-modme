@@ -1,6 +1,6 @@
-import { VQuery } from '@visactor/vquery'
 import { VBI } from '@visactor/vbi'
 import type { DatasetColumn, RawDatasetSource, VQueryDSL } from '@visactor/vquery'
+
 export const DEMO_CONNECTOR_ID = 'demoSupermarket'
 
 const SUPERMARKET_SCHEMA: Array<{ name: string; type: string }> = [
@@ -26,40 +26,44 @@ const SUPERMARKET_SCHEMA: Array<{ name: string; type: string }> = [
   { name: 'profit', type: 'number' },
 ]
 
-VBI.registerConnector(DEMO_CONNECTOR_ID, async () => {
-  const vquery = new VQuery()
-
-  return {
-    discoverSchema: async () => {
-      return SUPERMARKET_SCHEMA
-    },
-    query: async ({ queryDSL }) => {
-      const url = 'https://visactor.github.io/VBI/dataset/supermarket.csv'
-      const datasetSource: RawDatasetSource = {
-        type: 'csv',
-        rawDataset: url,
-      }
-      const hasDataset = await vquery.hasDataset(DEMO_CONNECTOR_ID)
-      if (!hasDataset) {
-        await vquery.createDataset(DEMO_CONNECTOR_ID, SUPERMARKET_SCHEMA as DatasetColumn[], datasetSource)
-      }
-      const dataset = await vquery.connectDataset(
-        DEMO_CONNECTOR_ID,
-        SUPERMARKET_SCHEMA as DatasetColumn[],
-        datasetSource,
-      )
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const queryResult = await dataset.query(queryDSL as VQueryDSL<any>)
-      await dataset.disconnect()
-
-      return {
-        dataset: queryResult.dataset,
-      }
-    },
-  }
-})
+let registered = false
 
 export const registerDemoConnector = () => {
-  // No-op: connector auto-registers at module load
+  if (registered) {
+    return
+  }
+  registered = true
+
+  VBI.registerConnector(DEMO_CONNECTOR_ID, async () => {
+    const { VQuery } = await import('@visactor/vquery')
+    const vquery = new VQuery()
+
+    return {
+      discoverSchema: async () => {
+        return SUPERMARKET_SCHEMA
+      },
+      query: async ({ queryDSL }) => {
+        const url = 'https://visactor.github.io/VBI/dataset/supermarket.csv'
+        const datasetSource: RawDatasetSource = {
+          type: 'csv',
+          rawDataset: url,
+        }
+        const hasDataset = await vquery.hasDataset(DEMO_CONNECTOR_ID)
+        if (!hasDataset) {
+          await vquery.createDataset(DEMO_CONNECTOR_ID, SUPERMARKET_SCHEMA as DatasetColumn[], datasetSource)
+        }
+        const dataset = await vquery.connectDataset(
+          DEMO_CONNECTOR_ID,
+          SUPERMARKET_SCHEMA as DatasetColumn[],
+          datasetSource,
+        )
+        const queryResult = await dataset.query(queryDSL as VQueryDSL<any>)
+        await dataset.disconnect()
+
+        return {
+          dataset: queryResult.dataset,
+        }
+      },
+    }
+  })
 }

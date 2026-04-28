@@ -16,7 +16,7 @@ This file is a living design and delivery record. It must stay aligned with the 
 
 | Area                                                              | Status          | Notes                                                                                                                                                                                                                                                                                                                                                                                      |
 | ----------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `packages/vbi-react` package scaffold                             | **Completed**   | `package.json`, `tsconfig`, `rslib`, `vitest`, `eslint`, `README` are added                                                                                                                                                                                                                                                                                                                |
+| `packages/vbi-react` package scaffold                             | **Completed**   | `package.json`, `tsconfig`, `rslib`, `vitest`, Oxlint, `README` are added                                                                                                                                                                                                                                                                                                                  |
 | Core hooks: `useVBI`, `useVSeed`                                  | **Completed**   | Implemented in `packages/vbi-react/src/hooks/` and verified by package tests                                                                                                                                                                                                                                                                                                               |
 | Basic field hooks: `useChartType`, `useMeasures`, `useDimensions` | **Completed**   | Implemented against current `@visactor/vbi` builder APIs; `useChartType`, `useMeasures`, and `useDimensions` are all covered by package tests                                                                                                                                                                                                                                              |
 | `buildVSeed({ signal })` support in `@visactor/vbi`               | **Completed**   | `signal` is now accepted by `VBIChartBuilder.buildVSeed` and forwarded to `connector.query`                                                                                                                                                                                                                                                                                                |
@@ -25,7 +25,7 @@ This file is a living design and delivery record. It must stay aligned with the 
 | `practices/professional` temporary components validation          | **Completed**   | A temporary `vbi-react Starter` preview inside `practices/professional` validated the first component slice, plus the explicit supermarket schema, quoted CSV parsing, local dataset refresh, and result-key normalization fixes needed to make that preview usable; `professional` is now being restored to its original role instead of remaining the long-term showcase                 |
 | Standalone `practices/vbi-react-starter` validation demo          | **Completed**   | The temporary starter preview has now been extracted into `practices/vbi-react-starter`, which becomes the main component-level validation target                                                                                                                                                                                                                                          |
 | Website docs / examples integration                               | **In Progress** | The website now exposes a dedicated `vbi-react Starter` practice page backed by the standalone demo, while broader docs/example reuse is still pending                                                                                                                                                                                                                                     |
-| Verification (`typecheck`, tests, build, lint`)                   | **In Progress** | Under Node `24.12.0`, `@visactor/vbi-react` tests, `typecheck`, and `build` pass with the starter components included; `lint` still needs dedicated follow-up, and `@visactor/vbi` currently has upstream typecheck issues in chart-type enums                                                                                                                                             |
+| Verification (`typecheck`, tests, build, lint`)                   | **In Progress** | Under Node `24.12.0`, `@visactor/vbi-react` tests, `typecheck`, `build`, and Oxlint pass with the starter components included; broader repo verification is tracked separately                                                                                                                                                                                                             |
 
 ## 1. Current Architecture Analysis
 
@@ -532,7 +532,7 @@ export function useVSeed(builder: VBIChartBuilder, options: UseVSeedOptions = {}
   useEffect(() => {
     isUnmountedRef.current = false
     build()
-  }, [debouncedDsl, build]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [debouncedDsl, build])
 
   return { vseed, loading, error, refetch: build }
 }
@@ -975,7 +975,6 @@ packages/vbi-react/
 ├── tsconfig.json
 ├── tsconfig.test.json
 ├── vite.config.ts
-├── eslint.config.mjs
 ├── rslib.config.ts
 ├── DESIGN.md
 ├── src/

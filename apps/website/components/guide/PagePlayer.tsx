@@ -682,9 +682,9 @@ const PagePlayer = memo(() => {
       >
         {/* 第一行：播放控制 */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <button onClick={handlePrev} style={btnStyle} title="Previous">
-            <svg viewBox="0 0 24 24" style={iconStyle}>
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+          <button onClick={handlePrev} style={btnStyle} title='Previous'>
+            <svg viewBox='0 0 24 24' style={iconStyle}>
+              <path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z' />
             </svg>
           </button>
 
@@ -707,24 +707,24 @@ const PagePlayer = memo(() => {
             ))}
           </select>
 
-          <button onClick={handleNext} style={btnStyle} title="Next">
-            <svg viewBox="0 0 24 24" style={iconStyle}>
-              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+          <button onClick={handleNext} style={btnStyle} title='Next'>
+            <svg viewBox='0 0 24 24' style={iconStyle}>
+              <path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' />
             </svg>
           </button>
 
           <button onClick={togglePlay} style={{ ...btnStyle, minWidth: 80 }} title={isPlaying ? 'Pause' : 'Play'}>
             {isPlaying ? (
               <>
-                <svg viewBox="0 0 24 24" style={{ ...iconStyle, marginRight: 4 }}>
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                <svg viewBox='0 0 24 24' style={{ ...iconStyle, marginRight: 4 }}>
+                  <path d='M6 19h4V5H6v14zm8-14v14h4V5h-4z' />
                 </svg>
                 Pause
               </>
             ) : (
               <>
-                <svg viewBox="0 0 24 24" style={{ ...iconStyle, marginRight: 4 }}>
-                  <path d="M8 5v14l11-7z" />
+                <svg viewBox='0 0 24 24' style={{ ...iconStyle, marginRight: 4 }}>
+                  <path d='M8 5v14l11-7z' />
                 </svg>
                 Play
               </>
@@ -735,8 +735,8 @@ const PagePlayer = memo(() => {
         {/* 第二行：进度条 */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <input
-            type="range"
-            min="0"
+            type='range'
+            min='0'
             max={order.length - 1}
             value={currentIndex}
             onChange={(e) => setCurrentIndex(Number(e.target.value))}

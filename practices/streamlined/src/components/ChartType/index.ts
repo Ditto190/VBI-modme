@@ -1,1 +1,1 @@
-export { ChartTypeSelector } from './Selector';
+export { ChartTypeSelector } from './Selector'

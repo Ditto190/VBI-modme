@@ -1,41 +1,36 @@
-import { useRef, useSyncExternalStore } from 'react';
-import type { Doc } from 'yjs';
+import { useRef, useSyncExternalStore } from 'react'
+import type { Doc } from 'yjs'
 
-type DocLike = Pick<Doc, 'on' | 'off'>;
+type DocLike = Pick<Doc, 'on' | 'off'>
 
 type BuilderLike = {
-  doc: DocLike;
-};
+  doc: DocLike
+}
 
-const subscribeBuilder = (
-  builder: BuilderLike | null,
-  callback: () => void,
-) => {
+const subscribeBuilder = (builder: BuilderLike | null, callback: () => void) => {
   if (!builder) {
-    return () => undefined;
+    return () => undefined
   }
 
-  builder.doc.on('update', callback);
+  builder.doc.on('update', callback)
   return () => {
-    builder.doc.off('update', callback);
-  };
-};
+    builder.doc.off('update', callback)
+  }
+}
 
-export const useBuilderVersion = <TBuilder extends BuilderLike>(
-  builder: TBuilder | null,
-) => {
-  const versionRef = useRef(0);
+export const useBuilderVersion = <TBuilder extends BuilderLike>(builder: TBuilder | null) => {
+  const versionRef = useRef(0)
 
   return useSyncExternalStore(
     (callback) =>
       subscribeBuilder(builder, () => {
-        versionRef.current += 1;
-        callback();
+        versionRef.current += 1
+        callback()
       }),
     () => versionRef.current,
     () => 0,
-  );
-};
+  )
+}
 
 export const useBuilderSnapshot = <TBuilder extends BuilderLike, T>(
   builder: TBuilder | null,
@@ -46,4 +41,4 @@ export const useBuilderSnapshot = <TBuilder extends BuilderLike, T>(
     (callback) => subscribeBuilder(builder, callback),
     () => (builder ? getSnapshot(builder) : fallback),
     () => fallback,
-  );
+  )

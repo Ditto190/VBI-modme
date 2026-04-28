@@ -30,9 +30,10 @@ import {
 } from './modules'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 
-export class VBIChartBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>
-  implements VBIChartBuilderInterface<TQueryDSL, TSeedDSL>
-{
+export class VBIChartBuilder<
+  TQueryDSL = DefaultVBIQueryDSL,
+  TSeedDSL = DefaultVBISeedDSL,
+> implements VBIChartBuilderInterface<TQueryDSL, TSeedDSL> {
   public doc: Y.Doc
   public dsl: Y.Map<any>
   public adapters: VBIChartBuilderAdapters<TQueryDSL, TSeedDSL>

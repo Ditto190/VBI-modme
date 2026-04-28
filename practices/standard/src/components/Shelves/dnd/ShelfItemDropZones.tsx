@@ -1,5 +1,5 @@
-import type React from 'react';
-import { ShelfDropIndicator } from './ShelfDropIndicator';
+import type React from 'react'
+import { ShelfDropIndicator } from './ShelfDropIndicator'
 
 const getZoneStyle = (side: 'before' | 'after'): React.CSSProperties => {
   return {
@@ -13,8 +13,8 @@ const getZoneStyle = (side: 'before' | 'after'): React.CSSProperties => {
     pointerEvents: 'none',
     zIndex: 2,
     ...(side === 'before' ? { left: 0 } : { right: 0 }),
-  };
-};
+  }
+}
 
 export const ShelfItemDropZones = ({
   color,
@@ -23,11 +23,11 @@ export const ShelfItemDropZones = ({
   isBeforeOver,
   isAfterOver,
 }: {
-  color: string;
-  beforeRef: React.RefCallback<HTMLDivElement>;
-  afterRef: React.RefCallback<HTMLDivElement>;
-  isBeforeOver: boolean;
-  isAfterOver: boolean;
+  color: string
+  beforeRef: React.RefCallback<HTMLDivElement>
+  afterRef: React.RefCallback<HTMLDivElement>
+  isBeforeOver: boolean
+  isAfterOver: boolean
 }) => {
   return (
     <>
@@ -38,5 +38,5 @@ export const ShelfItemDropZones = ({
         <ShelfDropIndicator color={color} isActive={isAfterOver} />
       </div>
     </>
-  );
-};
+  )
+}

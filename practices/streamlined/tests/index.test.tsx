@@ -1,5 +1,5 @@
-import { expect, test } from '@rstest/core';
+import { expect, test } from '@rstest/core'
 
 test('initial test', async () => {
-  expect(1).toBe(1);
-});
+  expect(1).toBe(1)
+})

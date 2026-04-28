@@ -20,18 +20,12 @@ const wrapIDBRequest = <T>(
     }
   })
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const idbPut = <T>(db: IDBDatabase, storeName: string, value: T): Promise<any> => {
   return wrapIDBRequest(db, storeName, 'readwrite', (store) => store.put(value))
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const idbGet = <T>(db: IDBDatabase, storeName: string, key: any): Promise<T | undefined> => {
   return wrapIDBRequest(db, storeName, 'readonly', (store) => store.get(key))
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const idbDelete = (db: IDBDatabase, storeName: string, key: any): Promise<any> => {
   return wrapIDBRequest(db, storeName, 'readwrite', (store) => store.delete(key))
 }

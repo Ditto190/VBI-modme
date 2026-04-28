@@ -10,8 +10,10 @@ export interface VBIChartBuildVQueryContext<TQueryDSL = DefaultVBIQueryDSL, TSee
   builder: VBIChartBuilderInterface<TQueryDSL, TSeedDSL>
 }
 
-export interface VBIChartBuildVSeedContext<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>
-  extends VBIChartBuildVQueryContext<TQueryDSL, TSeedDSL> {
+export interface VBIChartBuildVSeedContext<
+  TQueryDSL = DefaultVBIQueryDSL,
+  TSeedDSL = DefaultVBISeedDSL,
+> extends VBIChartBuildVQueryContext<TQueryDSL, TSeedDSL> {
   options: BuildVSeedOptions
   queryDSL: TQueryDSL
 }

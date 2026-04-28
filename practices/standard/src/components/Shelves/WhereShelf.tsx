@@ -1,1 +1,1 @@
-export { WhereShelf } from './shelves/WhereShelf';
+export { WhereShelf } from './shelves/WhereShelf'

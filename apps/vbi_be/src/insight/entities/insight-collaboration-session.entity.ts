@@ -1,19 +1,19 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { InsightEntity } from './insight.entity';
+import { ApiProperty } from '@nestjs/swagger'
+import { InsightEntity } from './insight.entity'
 
 export class InsightCollaborationSessionEntity {
   @ApiProperty()
-  resourceId: string;
+  resourceId: string
 
   @ApiProperty()
-  protocol: 'hocuspocus';
+  protocol: 'hocuspocus'
 
   @ApiProperty()
-  roomName: string;
+  roomName: string
 
   @ApiProperty()
-  websocketUrl: string;
+  websocketUrl: string
 
   @ApiProperty({ type: InsightEntity })
-  resource: InsightEntity;
+  resource: InsightEntity
 }

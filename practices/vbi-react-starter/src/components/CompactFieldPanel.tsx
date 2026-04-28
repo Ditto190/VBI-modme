@@ -89,9 +89,9 @@ function formatOption(option: FieldOption): string {
 function CompactFieldRowTags(props: { aggregate?: string; encoding?: string }) {
   const { aggregate, encoding } = props
   return (
-    <div className="compact-field-tags">
-      {encoding ? <span className="compact-field-tag">Enc: {encoding}</span> : null}
-      {aggregate ? <span className="compact-field-tag">Agg: {aggregate}</span> : null}
+    <div className='compact-field-tags'>
+      {encoding ? <span className='compact-field-tag'>Enc: {encoding}</span> : null}
+      {aggregate ? <span className='compact-field-tag'>Agg: {aggregate}</span> : null}
     </div>
   )
 }
@@ -137,22 +137,22 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
   }, [availableMeasures, selectedMeasure])
 
   return (
-    <section className="compact-field-panel" style={style}>
+    <section className='compact-field-panel' style={style}>
       <header>
         <strong>{title}</strong>
       </header>
-      <div className="compact-field-sections">
-        <section className="compact-field-section">
-          <div className="compact-field-toolbar">
+      <div className='compact-field-sections'>
+        <section className='compact-field-section'>
+          <div className='compact-field-toolbar'>
             <strong>{dimensionsTitle}</strong>
-            <div className="compact-field-add-row">
+            <div className='compact-field-add-row'>
               <select
-                aria-label="Available dimensions"
+                aria-label='Available dimensions'
                 onChange={(event) => setSelectedDimension(event.target.value)}
                 value={selectedDimension}
               >
                 {availableDimensions.length === 0 ? (
-                  <option value="">No dimensions available</option>
+                  <option value=''>No dimensions available</option>
                 ) : (
                   availableDimensions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -162,26 +162,26 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                 )}
               </select>
               <button
-                aria-label="Add selected dimension"
+                aria-label='Add selected dimension'
                 disabled={!selectedDimension}
                 onClick={() => addDimension(selectedDimension)}
-                type="button"
+                type='button'
               >
                 Add
               </button>
             </div>
           </div>
-          <ul aria-label="Selected dimensions" className="compact-field-list">
-            {dimensions.length === 0 ? <li className="compact-field-empty">No dimensions selected</li> : null}
+          <ul aria-label='Selected dimensions' className='compact-field-list'>
+            {dimensions.length === 0 ? <li className='compact-field-empty'>No dimensions selected</li> : null}
             {dimensions.map((dimension) => (
-              <li className="compact-field-item" key={dimension.id}>
-                <div className="compact-field-item-row">
-                  <div className="compact-field-main">
+              <li className='compact-field-item' key={dimension.id}>
+                <div className='compact-field-item-row'>
+                  <div className='compact-field-main'>
                     <strong>{dimension.alias || dimension.field}</strong>
                     <span>{dimension.field}</span>
                   </div>
                   <CompactFieldRowTags aggregate={dimension.aggregate?.func} encoding={dimension.encoding} />
-                  <div className="compact-field-actions">
+                  <div className='compact-field-actions'>
                     <button
                       aria-label={
                         editingDimensionId === dimension.id
@@ -189,25 +189,25 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                           : `Edit dimension ${dimension.field}`
                       }
                       onClick={() => setEditingDimensionId((id) => (id === dimension.id ? null : dimension.id))}
-                      type="button"
+                      type='button'
                     >
                       {editingDimensionId === dimension.id ? 'Done' : 'Edit'}
                     </button>
                     <button
                       aria-label={`Remove dimension ${dimension.field}`}
                       onClick={() => removeDimension(dimension.id)}
-                      type="button"
+                      type='button'
                     >
                       Remove
                     </button>
                   </div>
                 </div>
                 {editingDimensionId === dimension.id ? (
-                  <div className="compact-field-editor">
+                  <div className='compact-field-editor'>
                     <input
                       aria-label={`Alias for dimension ${dimension.field}`}
                       onChange={(event) => updateDimension(dimension.id, { alias: event.target.value })}
-                      placeholder="Alias"
+                      placeholder='Alias'
                       value={dimension.alias ?? ''}
                     />
                     <select
@@ -234,7 +234,7 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                       }}
                       value={dimension.aggregate?.func ?? ''}
                     >
-                      <option value="">No aggregate</option>
+                      <option value=''>No aggregate</option>
                       {dimensionAggregateOptions.map((func) => (
                         <option key={func} value={func}>
                           {func}
@@ -247,17 +247,17 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
             ))}
           </ul>
         </section>
-        <section className="compact-field-section">
-          <div className="compact-field-toolbar">
+        <section className='compact-field-section'>
+          <div className='compact-field-toolbar'>
             <strong>{measuresTitle}</strong>
-            <div className="compact-field-add-row">
+            <div className='compact-field-add-row'>
               <select
-                aria-label="Available measures"
+                aria-label='Available measures'
                 onChange={(event) => setSelectedMeasure(event.target.value)}
                 value={selectedMeasure}
               >
                 {availableMeasures.length === 0 ? (
-                  <option value="">No measures available</option>
+                  <option value=''>No measures available</option>
                 ) : (
                   availableMeasures.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -267,26 +267,26 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                 )}
               </select>
               <button
-                aria-label="Add selected measure"
+                aria-label='Add selected measure'
                 disabled={!selectedMeasure}
                 onClick={() => addMeasure(selectedMeasure)}
-                type="button"
+                type='button'
               >
                 Add
               </button>
             </div>
           </div>
-          <ul aria-label="Selected measures" className="compact-field-list">
-            {measures.length === 0 ? <li className="compact-field-empty">No measures selected</li> : null}
+          <ul aria-label='Selected measures' className='compact-field-list'>
+            {measures.length === 0 ? <li className='compact-field-empty'>No measures selected</li> : null}
             {measures.map((measure) => (
-              <li className="compact-field-item" key={measure.id}>
-                <div className="compact-field-item-row">
-                  <div className="compact-field-main">
+              <li className='compact-field-item' key={measure.id}>
+                <div className='compact-field-item-row'>
+                  <div className='compact-field-main'>
                     <strong>{measure.alias || measure.field}</strong>
                     <span>{measure.field}</span>
                   </div>
                   <CompactFieldRowTags aggregate={measure.aggregate?.func} encoding={measure.encoding} />
-                  <div className="compact-field-actions">
+                  <div className='compact-field-actions'>
                     <button
                       aria-label={
                         editingMeasureId === measure.id
@@ -294,25 +294,25 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                           : `Edit measure ${measure.field}`
                       }
                       onClick={() => setEditingMeasureId((id) => (id === measure.id ? null : measure.id))}
-                      type="button"
+                      type='button'
                     >
                       {editingMeasureId === measure.id ? 'Done' : 'Edit'}
                     </button>
                     <button
                       aria-label={`Remove measure ${measure.field}`}
                       onClick={() => removeMeasure(measure.id)}
-                      type="button"
+                      type='button'
                     >
                       Remove
                     </button>
                   </div>
                 </div>
                 {editingMeasureId === measure.id ? (
-                  <div className="compact-field-editor">
+                  <div className='compact-field-editor'>
                     <input
                       aria-label={`Alias for measure ${measure.field}`}
                       onChange={(event) => updateMeasure(measure.id, { alias: event.target.value })}
-                      placeholder="Alias"
+                      placeholder='Alias'
                       value={measure.alias ?? ''}
                     />
                     <select
@@ -359,7 +359,7 @@ export function CompactFieldPanel(props: CompactFieldPanelProps) {
                           updateMeasure(measure.id, { aggregate: { func: 'quantile', quantile } })
                         }}
                         step={0.05}
-                        type="number"
+                        type='number'
                         value={measure.aggregate?.func === 'quantile' ? (measure.aggregate.quantile ?? 0.5) : 0.5}
                       />
                     ) : null}

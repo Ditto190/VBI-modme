@@ -1,16 +1,16 @@
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 type MarkdownContentProps = {
-  content: string;
-};
+  content: string
+}
 
 export const MarkdownContent = ({ content }: MarkdownContentProps) => (
-  <div className="report-detail-markdown">
+  <div className='report-detail-markdown'>
     <ReactMarkdown
       components={{
         a: ({ children, href }) => (
-          <a href={href} rel="noreferrer" target="_blank">
+          <a href={href} rel='noreferrer' target='_blank'>
             {children}
           </a>
         ),
@@ -20,4 +20,4 @@ export const MarkdownContent = ({ content }: MarkdownContentProps) => (
       {content}
     </ReactMarkdown>
   </div>
-);
+)

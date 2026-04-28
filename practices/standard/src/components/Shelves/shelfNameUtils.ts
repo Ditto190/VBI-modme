@@ -1,1 +1,1 @@
-export * from './utils/shelfNameUtils';
+export * from './utils/shelfNameUtils'

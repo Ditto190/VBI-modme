@@ -1,49 +1,38 @@
-import { useCallback, useMemo } from 'react';
-import { theme } from 'antd';
-import { FilterPanel, type FilterItem } from 'src/components/Filter';
-import {
-  getWhereDisplayText,
-  normalizeWhereOperator,
-} from 'src/components/Filter/whereFilterUtils';
-import { getDefaultDatePredicate } from 'src/components/Filter/dateFilterUtils';
-import { isDateSchemaType } from 'src/utils/fieldRole';
-import type { VBIWhereDatePredicate } from '@visactor/vbi';
-import {
-  useVBIBuilder,
-  useVBISchemaFields,
-  useVBIWhereFilter,
-} from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
-import { FilterShelf, type FilterShelfTone } from '../common/FilterShelf';
-import { useFilterRootOperator } from '../hooks/useFilterRootOperator';
-import {
-  reorderYArrayByInsertIndex,
-  type YArrayLike,
-} from '../utils/reorderUtils';
+import { useCallback, useMemo } from 'react'
+import { theme } from 'antd'
+import { FilterPanel, type FilterItem } from 'src/components/Filter'
+import { getWhereDisplayText, normalizeWhereOperator } from 'src/components/Filter/whereFilterUtils'
+import { getDefaultDatePredicate } from 'src/components/Filter/dateFilterUtils'
+import { isDateSchemaType } from 'src/utils/fieldRole'
+import type { VBIWhereDatePredicate } from '@visactor/vbi'
+import { useVBIBuilder, useVBISchemaFields, useVBIWhereFilter } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
+import { FilterShelf, type FilterShelfTone } from '../common/FilterShelf'
+import { useFilterRootOperator } from '../hooks/useFilterRootOperator'
+import { reorderYArrayByInsertIndex, type YArrayLike } from '../utils/reorderUtils'
 
 type WhereShelfItem = FilterItem & {
-  id: string;
-};
+  id: string
+}
 
 export const WhereShelf = ({
   style,
   showRootOperator = true,
 }: {
-  style?: React.CSSProperties;
-  showRootOperator?: boolean;
+  style?: React.CSSProperties
+  showRootOperator?: boolean
 }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const { token } = theme.useToken();
-  const { theme: themeMode } = useVBIBuilder(builder);
-  const { t } = useTranslation();
-  const { flattenFilters } = useVBIWhereFilter(builder);
-  const { schemaFields, fieldRoleMap, fieldTypeMap } =
-    useVBISchemaFields(builder);
+  const builder = useVBIStore((state) => state.builder)
+  const { token } = theme.useToken()
+  const { theme: themeMode } = useVBIBuilder(builder)
+  const { t } = useTranslation()
+  const { flattenFilters } = useVBIWhereFilter(builder)
+  const { schemaFields, fieldRoleMap, fieldTypeMap } = useVBISchemaFields(builder)
   const { operator, setOperator } = useFilterRootOperator({
     builder,
     type: 'where',
-  });
+  })
 
   const allFields = useMemo(() => {
     return schemaFields.map((field) => ({
@@ -51,19 +40,14 @@ export const WhereShelf = ({
       role: field.role,
       type: field.type,
       isDate: field.isDate,
-    }));
-  }, [schemaFields]);
+    }))
+  }, [schemaFields])
 
   const whereShelfTone = useMemo<FilterShelfTone>(() => {
-    const accent = themeMode === 'dark' ? '#ffd591' : '#d46b08';
-    const border =
-      themeMode === 'dark' ? 'rgba(255, 213, 145, 0.42)' : '#ffd591';
-    const hoverBackground =
-      themeMode === 'dark' ? 'rgba(255, 165, 61, 0.14)' : '#fff4e6';
-    const iconBackground =
-      themeMode === 'dark'
-        ? 'rgba(255, 165, 61, 0.14)'
-        : 'rgba(250, 140, 22, 0.12)';
+    const accent = themeMode === 'dark' ? '#ffd591' : '#d46b08'
+    const border = themeMode === 'dark' ? 'rgba(255, 213, 145, 0.42)' : '#ffd591'
+    const hoverBackground = themeMode === 'dark' ? 'rgba(255, 165, 61, 0.14)' : '#fff4e6'
+    const iconBackground = themeMode === 'dark' ? 'rgba(255, 165, 61, 0.14)' : 'rgba(250, 140, 22, 0.12)'
 
     return {
       trackBackground: token.colorBgContainer,
@@ -79,16 +63,16 @@ export const WhereShelf = ({
       iconBackground,
       iconHoverBackground: hoverBackground,
       iconColor: accent,
-    };
-  }, [themeMode, token]);
+    }
+  }, [themeMode, token])
 
   const whereRootOperatorColors = useMemo(() => {
     return {
       border: themeMode === 'dark' ? 'rgba(255, 213, 145, 0.42)' : '#ffd591',
       color: themeMode === 'dark' ? '#ffd591' : '#d46b08',
       background: token.colorBgContainer,
-    };
-  }, [themeMode, token]);
+    }
+  }, [themeMode, token])
 
   const whereFilterItems = useMemo((): WhereShelfItem[] => {
     return flattenFilters()
@@ -98,17 +82,15 @@ export const WhereShelf = ({
         field: item.field,
         operator: normalizeWhereOperator(item.op),
         value: item.value,
-      }));
-  }, [flattenFilters]);
+      }))
+  }, [flattenFilters])
 
   const reorderWhereFilters = useCallback(
     (dragIndex: number, insertIndex: number) => {
-      const whereRoot = builder.dsl.get('whereFilter') as
-        | { get: (key: string) => unknown }
-        | undefined;
-      const conditions = whereRoot?.get('conditions') as YArrayLike | undefined;
+      const whereRoot = builder.dsl.get('whereFilter') as { get: (key: string) => unknown } | undefined
+      const conditions = whereRoot?.get('conditions') as YArrayLike | undefined
       if (!conditions) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
@@ -116,71 +98,71 @@ export const WhereShelf = ({
           yArray: conditions,
           dragIndex,
           insertIndex,
-        });
-      });
+        })
+      })
     },
     [builder],
-  );
+  )
 
   const handleWhereFilterAdd = useCallback(
     (item: FilterItem) => {
       if (!builder) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
         builder.whereFilter.add(item.field, (node) => {
           if (item.operator === 'date') {
-            node.setDate(item.value as VBIWhereDatePredicate);
+            node.setDate(item.value as VBIWhereDatePredicate)
           } else {
-            node.setOperator(item.operator);
+            node.setOperator(item.operator)
             if (item.value !== undefined) {
-              node.setValue(item.value);
+              node.setValue(item.value)
             }
           }
-        });
-      });
+        })
+      })
     },
     [builder],
-  );
+  )
 
   const handleWhereFilterRemove = useCallback(
     (id: string) => {
       if (!builder) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
-        builder.whereFilter.remove(id);
-      });
+        builder.whereFilter.remove(id)
+      })
     },
     [builder],
-  );
+  )
 
   const handleWhereFilterUpdate = useCallback(
     (updatedItem: FilterItem) => {
       if (!builder || !updatedItem.id) {
-        return;
+        return
       }
 
       builder.doc.transact(() => {
         builder.whereFilter.update(updatedItem.id as string, (node) => {
-          node.setField(updatedItem.field);
+          node.setField(updatedItem.field)
           if (updatedItem.operator === 'date') {
-            node.setDate(updatedItem.value as VBIWhereDatePredicate);
+            node.setDate(updatedItem.value as VBIWhereDatePredicate)
           } else {
-            node.setOperator(updatedItem.operator);
-            node.setValue(updatedItem.value);
+            node.setOperator(updatedItem.operator)
+            node.setValue(updatedItem.value)
           }
-        });
-      });
+        })
+      })
     },
     [builder],
-  );
+  )
 
   return (
     <FilterShelf
-      shelf="where"
+      shelf='where'
       items={whereFilterItems}
       style={style}
       placeholder={t('shelvesPlaceholdersFilters')}
@@ -198,37 +180,37 @@ export const WhereShelf = ({
       })}
       onAddFieldAt={(payload, insertIndex) => {
         if (!payload.field) {
-          return;
+          return
         }
 
-        const isDate = isDateSchemaType(fieldTypeMap[payload.field]);
-        const currentLength = whereFilterItems.length;
+        const isDate = isDateSchemaType(fieldTypeMap[payload.field])
+        const currentLength = whereFilterItems.length
         handleWhereFilterAdd({
           id: '',
           field: payload.field,
           operator: isDate ? 'date' : '=',
           value: isDate ? getDefaultDatePredicate() : undefined,
-        });
+        })
 
         if (insertIndex < currentLength) {
-          reorderWhereFilters(currentLength, insertIndex);
+          reorderWhereFilters(currentLength, insertIndex)
         }
       }}
       onReorder={reorderWhereFilters}
       onRemove={(id) => {
         if (id.startsWith('temp_')) {
-          return;
+          return
         }
-        handleWhereFilterRemove(id);
+        handleWhereFilterRemove(id)
       }}
       renderEditor={({ item, isOpen, close }) => {
         const handleUpdate = (filters: FilterItem[]) => {
-          const firstFilter = filters[0];
+          const firstFilter = filters[0]
           if (firstFilter) {
-            handleWhereFilterUpdate(firstFilter);
+            handleWhereFilterUpdate(firstFilter)
           }
-          close();
-        };
+          close()
+        }
 
         return (
           <FilterPanel
@@ -240,8 +222,8 @@ export const WhereShelf = ({
             open={isOpen}
             fixedField={item.field}
           />
-        );
+        )
       }}
     />
-  );
-};
+  )
+}

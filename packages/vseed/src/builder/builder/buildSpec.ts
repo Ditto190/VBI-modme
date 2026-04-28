@@ -28,7 +28,7 @@ export const buildSpec = (builder: Builder, advancedVSeed: AdvancedVSeed): Spec 
     builder.spec = spec as Spec
     return spec as Spec
   } catch (e) {
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.error(e)
     throw new Error(`buildSpec error: ${(e as Error).message}`)
   } finally {

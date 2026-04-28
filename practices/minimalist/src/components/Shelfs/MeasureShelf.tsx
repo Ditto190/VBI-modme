@@ -1,43 +1,41 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import { VBIMeasure } from '@visactor/vbi';
-import { Button, Flex, Space } from 'antd';
-import { useEffect, useState } from 'react';
-import { useVBIStore } from 'src/model';
+import { DeleteOutlined } from '@ant-design/icons'
+import { VBIMeasure } from '@visactor/vbi'
+import { Button, Flex, Space } from 'antd'
+import { useEffect, useState } from 'react'
+import { useVBIStore } from 'src/model'
 
 export const MeasureShelf = ({ style }: { style?: React.CSSProperties }) => {
-  const builder = useVBIStore((state) => state.builder);
-  const [measures, setMeasures] = useState<VBIMeasure[]>(
-    builder.measures.toJSON(),
-  );
+  const builder = useVBIStore((state) => state.builder)
+  const [measures, setMeasures] = useState<VBIMeasure[]>(builder.measures.toJSON())
 
   useEffect(() => {
     const updateMeasures = () => {
-      setMeasures(builder.measures.toJSON());
-    };
-    const unobserve = builder.measures.observe(updateMeasures);
-    return unobserve;
-  }, [builder]);
+      setMeasures(builder.measures.toJSON())
+    }
+    const unobserve = builder.measures.observe(updateMeasures)
+    return unobserve
+  }, [builder])
 
   const deleteMeasure = (field: VBIMeasure['field']) => {
-    builder.measures.remove(field);
-  };
+    builder.measures.remove(field)
+  }
 
   const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const data = JSON.parse(e.dataTransfer.getData('application/json'));
+      const data = JSON.parse(e.dataTransfer.getData('application/json'))
       if (data.type === 'measure') {
         builder.doc.transact(() => {
           builder.measures.add(data.name, (node) => {
-            node.setAlias(data.name);
-            node.setAggregate({ func: 'sum' });
-          });
-        });
+            node.setAlias(data.name)
+            node.setAggregate({ func: 'sum' })
+          })
+        })
       }
     } catch (err) {
-      console.error('Drop error', err);
+      console.error('Drop error', err)
     }
-  };
+  }
 
   return (
     <Flex
@@ -53,18 +51,11 @@ export const MeasureShelf = ({ style }: { style?: React.CSSProperties }) => {
       onDragOver={(e) => e.preventDefault()}
       onDrop={handleDrop}
     >
-      {measures.length === 0 && (
-        <div style={{ color: '#bfbfbf', textAlign: 'center' }}>
-          Drop Measures Here
-        </div>
-      )}
+      {measures.length === 0 && <div style={{ color: '#bfbfbf', textAlign: 'center' }}>Drop Measures Here</div>}
       {measures.map((measure) => (
-        <Space.Compact
-          key={`measure-shelf-${measure.field}`}
-          style={{ width: '100%' }}
-        >
+        <Space.Compact key={`measure-shelf-${measure.field}`} style={{ width: '100%' }}>
           <Button
-            shape="round"
+            shape='round'
             style={{
               color: '#52c41a',
               flexGrow: 1,
@@ -74,13 +65,9 @@ export const MeasureShelf = ({ style }: { style?: React.CSSProperties }) => {
           >
             {measure.field}
           </Button>
-          <Button
-            shape="round"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteMeasure(measure.field)}
-          />
+          <Button shape='round' icon={<DeleteOutlined />} onClick={() => deleteMeasure(measure.field)} />
         </Space.Compact>
       ))}
     </Flex>
-  );
-};
+  )
+}

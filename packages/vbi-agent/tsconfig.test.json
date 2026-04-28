@@ -1,8 +1,6 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": ["./tsconfig.json", "../../tsconfig.test.json"],
   "compilerOptions": {
-    "lib": ["ES2022", "DOM"],
-    "noEmit": true,
     "rootDir": ".",
     "types": ["node", "@rstest/core/globals"],
     "paths": {

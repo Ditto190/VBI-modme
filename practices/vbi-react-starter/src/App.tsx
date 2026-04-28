@@ -193,10 +193,10 @@ export function APP() {
   }, [])
 
   return (
-    <div className="starter-page starter-theme">
+    <div className='starter-page starter-theme'>
       <BuilderLayout
         footer={
-          <div className="starter-footer-slot">
+          <div className='starter-footer-slot'>
             <StarterFooter
               availableDimensionsCount={availableDimensions.length}
               availableMeasuresCount={availableMeasures.length}
@@ -215,7 +215,7 @@ export function APP() {
               dimensionOptions={dimensionOptions}
               measureOptions={measureOptions}
               style={fieldPanelStyle}
-              title="Starter Fields"
+              title='Starter Fields'
             />
           ) : undefined
         }
@@ -253,7 +253,7 @@ export function APP() {
         }
       />
 
-      <input accept=".csv,text/csv" hidden onChange={handleFileChange} ref={fileInputRef} type="file" />
+      <input accept='.csv,text/csv' hidden onChange={handleFileChange} ref={fileInputRef} type='file' />
     </div>
   )
 }

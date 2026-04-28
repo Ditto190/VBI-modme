@@ -1,17 +1,14 @@
-import { useShallow } from 'zustand/shallow';
-import { useTranslation } from '../i18n';
-import {
-  selectReportsPageState,
-  useReportsStore,
-} from '../stores/reports.store';
-import { useStoreLifecycle } from '../hooks/useStoreLifecycle';
-import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import { useResourceColumns } from './manage-resource/resource-columns';
-import { ReportResourceModals } from './reports/ReportResourceModals';
+import { useShallow } from 'zustand/shallow'
+import { useTranslation } from '../i18n'
+import { selectReportsPageState, useReportsStore } from '../stores/reports.store'
+import { useStoreLifecycle } from '../hooks/useStoreLifecycle'
+import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell'
+import { useResourceColumns } from './manage-resource/resource-columns'
+import { ReportResourceModals } from './reports/ReportResourceModals'
 
 export const ReportsPage = () => {
-  const { locale, t } = useTranslation();
-  const state = useReportsStore(useShallow(selectReportsPageState));
+  const { locale, t } = useTranslation()
+  const state = useReportsStore(useShallow(selectReportsPageState))
 
   const {
     bootstrap,
@@ -38,9 +35,9 @@ export const ReportsPage = () => {
     setSelectedRowKeys,
     startRename,
     stopRename,
-  } = state;
+  } = state
 
-  useStoreLifecycle(bootstrap);
+  useStoreLifecycle(bootstrap)
 
   const columns = useResourceColumns({
     deleteTitle: t('reports.deleteTitle'),
@@ -50,7 +47,7 @@ export const ReportsPage = () => {
     onRemove: remove,
     onRename: startRename,
     t,
-  });
+  })
 
   return (
     <ManageResourcePageShell
@@ -81,5 +78,5 @@ export const ReportsPage = () => {
         onRenameValueChange={setRenameValue}
       />
     </ManageResourcePageShell>
-  );
-};
+  )
+}

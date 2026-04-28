@@ -1,20 +1,15 @@
-import { useShallow } from 'zustand/shallow';
-import { useTranslation } from '../i18n';
-import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle';
-import { useInsightBuilderModel } from '../models';
-import {
-  selectManageInsightsPageState,
-  useManageInsightsStore,
-} from '../stores/manage-insights.store';
-import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell';
-import { useResourceColumns } from './manage-resource/resource-columns';
-import { InsightResourceModals } from './manage-resource/InsightResourceModals';
+import { useShallow } from 'zustand/shallow'
+import { useTranslation } from '../i18n'
+import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
+import { useInsightBuilderModel } from '../models'
+import { selectManageInsightsPageState, useManageInsightsStore } from '../stores/manage-insights.store'
+import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell'
+import { useResourceColumns } from './manage-resource/resource-columns'
+import { InsightResourceModals } from './manage-resource/InsightResourceModals'
 
 export const ManageInsightsPage = () => {
-  const { locale, t } = useTranslation();
-  const state = useManageInsightsStore(
-    useShallow(selectManageInsightsPageState),
-  );
+  const { locale, t } = useTranslation()
+  const state = useManageInsightsStore(useShallow(selectManageInsightsPageState))
   const {
     bootstrap: bootstrapStore,
     clearSelection,
@@ -42,12 +37,10 @@ export const ManageInsightsPage = () => {
     setEditorName,
     setSearchText,
     setSelectedRowKeys,
-  } = state;
-  const insightSession = useInsightBuilderModel(
-    (store) => store.sessions[selectedId],
-  );
-  const insightContent = insightSession?.builder?.build().content ?? '';
-  useUserStoreLifecycle(bootstrapStore, dispose);
+  } = state
+  const insightSession = useInsightBuilderModel((store) => store.sessions[selectedId])
+  const insightContent = insightSession?.builder?.build().content ?? ''
+  useUserStoreLifecycle(bootstrapStore, dispose)
   const columns = useResourceColumns({
     deleteTitle: t('insights.deleteTitle'),
     fallbackName: t('insights.untitled'),
@@ -55,7 +48,7 @@ export const ManageInsightsPage = () => {
     onEdit: openDetail,
     onRemove: deleteOne,
     t,
-  });
+  })
 
   return (
     <ManageResourcePageShell
@@ -91,5 +84,5 @@ export const ManageInsightsPage = () => {
         t={t}
       />
     </ManageResourcePageShell>
-  );
-};
+  )
+}

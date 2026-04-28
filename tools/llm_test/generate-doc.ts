@@ -47,7 +47,7 @@ async function generateDoc() {
   const outDir = path.resolve(__dirname, './new-type')
   try {
     await fs.access(outDir)
-  } catch (error) {
+  } catch {
     await fs.mkdir(outDir)
   }
   await generateSchema()

@@ -1,28 +1,28 @@
-import { Button, Drawer, Input, Modal, Space, message } from 'antd';
-import type { VBIInsightBuilder } from '@visactor/vbi';
-import type { Translate } from '../../i18n';
-import type { BuilderSession } from '../../models/resource-builder.types';
+import { Button, Drawer, Input, Modal, Space, message } from 'antd'
+import type { VBIInsightBuilder } from '@visactor/vbi'
+import type { Translate } from '../../i18n'
+import type { BuilderSession } from '../../models/resource-builder.types'
 
 type Props = {
-  createContent: string;
-  createName: string;
-  createOpen: boolean;
-  editorName: string;
-  insightContent: string;
-  insightSession?: BuilderSession<VBIInsightBuilder>;
-  selectedId: string;
-  t: Translate;
-  closeCreate(): void;
-  closeDetail(): Promise<void>;
-  create(): Promise<void>;
-  renameSelected(): Promise<void>;
-  setCreateContent(createContent: string): void;
-  setCreateName(createName: string): void;
-  setEditorName(editorName: string): void;
-};
+  createContent: string
+  createName: string
+  createOpen: boolean
+  editorName: string
+  insightContent: string
+  insightSession?: BuilderSession<VBIInsightBuilder>
+  selectedId: string
+  t: Translate
+  closeCreate(): void
+  closeDetail(): Promise<void>
+  create(): Promise<void>
+  renameSelected(): Promise<void>
+  setCreateContent(createContent: string): void
+  setCreateName(createName: string): void
+  setEditorName(editorName: string): void
+}
 
-const drawerStyles = { wrapper: { maxWidth: '92vw' } };
-const fullWidth = { width: '100%' };
+const drawerStyles = { wrapper: { maxWidth: '92vw' } }
+const fullWidth = { width: '100%' }
 
 export const InsightResourceModals = ({
   closeCreate,
@@ -47,14 +47,14 @@ export const InsightResourceModals = ({
       title={t('insights.createTitle')}
       onOk={async () => {
         if (!createName.trim()) {
-          message.warning(t('insights.nameRequired'));
-          return;
+          message.warning(t('insights.nameRequired'))
+          return
         }
-        await create();
+        await create()
       }}
       onCancel={closeCreate}
     >
-      <Space orientation="vertical" style={fullWidth} size={12}>
+      <Space orientation='vertical' style={fullWidth} size={12}>
         <Input
           value={createName}
           placeholder={t('insights.titlePlaceholder')}
@@ -74,11 +74,9 @@ export const InsightResourceModals = ({
       styles={drawerStyles}
       title={editorName || t('insights.editorTitle')}
       onClose={() => void closeDetail()}
-      extra={
-        <Button onClick={() => void closeDetail()}>{t('common.close')}</Button>
-      }
+      extra={<Button onClick={() => void closeDetail()}>{t('common.close')}</Button>}
     >
-      <Space orientation="vertical" style={fullWidth} size={12}>
+      <Space orientation='vertical' style={fullWidth} size={12}>
         <Input
           value={editorName}
           placeholder={t('insights.titlePlaceholder')}
@@ -91,10 +89,10 @@ export const InsightResourceModals = ({
           value={insightContent}
           placeholder={t('insights.editContentPlaceholder')}
           onChange={(event) => {
-            insightSession?.builder?.setContent(event.target.value);
+            insightSession?.builder?.setContent(event.target.value)
           }}
         />
       </Space>
     </Drawer>
   </>
-);
+)

@@ -3,7 +3,6 @@
   overflow: auto;
 }
 
-.fieldshelf-dropdown
-  .ant-dropdown-menu-submenu-title.ant-dropdown-menu-submenu-title {
+.fieldshelf-dropdown .ant-dropdown-menu-submenu-title.ant-dropdown-menu-submenu-title {
   border-radius: 0;
 }
