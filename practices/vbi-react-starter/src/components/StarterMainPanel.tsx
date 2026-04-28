@@ -21,12 +21,12 @@ type StarterMainPanelProps = {
 
 function renderNoDataState(onLoadDemoData: () => void) {
   return (
-    <div className="starter-card starter-main-surface">
+    <div className='starter-card starter-main-surface'>
       <StarterEmptyState
-        actionLabel="Load demo data"
-        description="点击上方的 Load demo data，或上传一个 CSV 文件，左侧字段面板就会立即可用。"
+        actionLabel='Load demo data'
+        description='点击上方的 Load demo data，或上传一个 CSV 文件，左侧字段面板就会立即可用。'
         onAction={onLoadDemoData}
-        title="No data loaded yet"
+        title='No data loaded yet'
       />
     </div>
   )
@@ -38,12 +38,12 @@ function renderFieldSelectionState(
   onShowFieldPanel: () => void,
 ) {
   return (
-    <div className="starter-card starter-main-surface">
+    <div className='starter-card starter-main-surface'>
       <StarterEmptyState
         actionLabel={isCompactLayout && !isFieldPanelVisible ? 'Show fields panel' : undefined}
-        description="数据已经准备好。先在左侧添加维度和指标，再让 starter components 自动出图。"
+        description='数据已经准备好。先在左侧添加维度和指标，再让 starter components 自动出图。'
         onAction={isCompactLayout && !isFieldPanelVisible ? onShowFieldPanel : undefined}
-        title="Choose fields to start"
+        title='Choose fields to start'
       />
     </div>
   )
@@ -64,7 +64,7 @@ export function StarterMainPanel(props: StarterMainPanelProps) {
   if (debugState === 'error') {
     return (
       <StarterRenderError
-        errorMessage="Debug state forced by query: ?debugState=error"
+        errorMessage='Debug state forced by query: ?debugState=error'
         onRetry={() => {
           const url = new URL(window.location.href)
           url.searchParams.delete('debugState')

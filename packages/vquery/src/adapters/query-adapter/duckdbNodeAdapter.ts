@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DuckDBBundles } from '@duckdb/duckdb-wasm/blocking'
 import { createDuckDB, ConsoleLogger, NODE_RUNTIME, DuckDBConnection } from '@duckdb/duckdb-wasm/blocking'
 import { createRequire } from 'node:module'
-import { QueryAdapter } from 'src/types'
-import { QueryResult } from 'src/types/DataSet'
+import { QueryAdapter } from '../../types'
+import { QueryResult } from '../../types/DataSet'
 
 export class DuckDBNodeQueryAdapter implements QueryAdapter {
   private bindings: any | null = null

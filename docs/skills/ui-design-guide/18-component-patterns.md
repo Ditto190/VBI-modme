@@ -162,7 +162,7 @@ const vseed = useVBIStore((s) => s.vseed)
 const loading = useVBIStore((s) => s.loading)
 
 if (loading) return <Spin />
-if (!vseed) return <Empty description="请添加维度和度量" />
+if (!vseed) return <Empty description='请添加维度和度量' />
 return <VSeedRender vseed={vseed} />
 ```
 

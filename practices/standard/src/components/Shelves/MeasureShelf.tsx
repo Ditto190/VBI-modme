@@ -1,1 +1,1 @@
-export { MeasureShelf } from './shelves/MeasureShelf';
+export { MeasureShelf } from './shelves/MeasureShelf'

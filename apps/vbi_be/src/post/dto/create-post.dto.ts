@@ -1,22 +1,22 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator'
 
 export class CreatePostDto {
   @ApiProperty({ example: 'Quarterly summary' })
   @IsString()
-  title: string;
+  title: string
 
   @ApiPropertyOptional({ example: 'Post content' })
   @IsOptional()
   @IsString()
-  content?: string;
+  content?: string
 
   @ApiProperty({ example: 'alice@example.com' })
   @IsEmail()
-  authorEmail: string;
+  authorEmail: string
 
   @ApiPropertyOptional({ example: false })
   @IsOptional()
   @IsBoolean()
-  published?: boolean;
+  published?: boolean
 }

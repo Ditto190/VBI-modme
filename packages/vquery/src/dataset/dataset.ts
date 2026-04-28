@@ -1,6 +1,5 @@
-import { DatasetColumn, DatasetSource, QueryDSL, VQueryDSL } from 'src/types'
-import { QueryAdapter, StorageAdapter } from 'src/types'
-import { convertDSLToSQL } from 'src/sql-builder'
+import { DatasetColumn, DatasetSource, QueryDSL, QueryAdapter, StorageAdapter, VQueryDSL } from '../types'
+import { convertDSLToSQL } from '../sql-builder'
 import { READ_FUNCTION_MAP, buildColumnsStruct } from './constants'
 
 export class Dataset {

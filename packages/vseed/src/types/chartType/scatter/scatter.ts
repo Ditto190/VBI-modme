@@ -25,6 +25,7 @@ import type {
   LogisticRegressionLine,
   DimensionLinkage,
   Page,
+  ScatterAnimation,
 } from '../../properties'
 
 /**
@@ -141,6 +142,11 @@ export interface Scatter {
    * @description 框选配置，用于开启/关闭 brush 框选能力
    */
   brush?: Brush
+  /**
+   * 动画配置
+   * @description 图表动画配置，按图表类型约束可选效果
+   */
+  animation?: ScatterAnimation
 
   /**
    * x轴

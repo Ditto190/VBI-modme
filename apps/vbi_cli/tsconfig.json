@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "ignoreDeprecations": "6.0",
-    "lib": ["ES2022"],
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM"],
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -10,16 +11,15 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"],
     "paths": {
-      "@visactor/vbi-provider": ["../packages/vbi-provider/src/index.ts"],
-      "@visactor/vbi-provider/*": ["../packages/vbi-provider/src/*"]
-    }
+      "@visactor/vbi-agent": ["../../packages/vbi-agent/src/index.ts"]
+    },
+    "types": ["node"]
   },
   "references": [
     {
-      "path": "../packages/vbi-provider"
+      "path": "../../packages/vbi"
     }
   ],
-  "include": ["src", "tests"]
+  "include": ["rslib.config.ts", "rstest.config.ts", "src", "tests"]
 }

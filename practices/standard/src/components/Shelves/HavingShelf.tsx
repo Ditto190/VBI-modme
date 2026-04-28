@@ -1,1 +1,1 @@
-export { HavingShelf } from './shelves/HavingShelf';
+export { HavingShelf } from './shelves/HavingShelf'

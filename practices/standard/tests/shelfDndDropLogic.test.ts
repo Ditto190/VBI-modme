@@ -1,15 +1,15 @@
-import { expect, test } from '@rstest/core';
+import { expect, test } from '@rstest/core'
 import {
   getNormalizedReorderIndex,
   isNoopShelfReorder,
   normalizeShelfInsertIndex,
   resolveShelfDropAction,
-} from '../src/components/Shelves/dnd';
+} from '../src/components/Shelves/dnd'
 
 test('normalizes reorder index for forward and backward moves', () => {
-  expect(getNormalizedReorderIndex(0, 2)).toBe(1);
-  expect(getNormalizedReorderIndex(3, 1)).toBe(1);
-});
+  expect(getNormalizedReorderIndex(0, 2)).toBe(1)
+  expect(getNormalizedReorderIndex(3, 1)).toBe(1)
+})
 
 test('treats self-edge drops as no-op reorders', () => {
   expect(
@@ -17,15 +17,15 @@ test('treats self-edge drops as no-op reorders', () => {
       dragIndex: 1,
       insertIndex: 1,
     }),
-  ).toBe(true);
+  ).toBe(true)
 
   expect(
     isNoopShelfReorder({
       dragIndex: 1,
       insertIndex: 2,
     }),
-  ).toBe(true);
-});
+  ).toBe(true)
+})
 
 test('keeps adjacent item swap as a real reorder', () => {
   expect(
@@ -54,8 +54,8 @@ test('keeps adjacent item swap as a real reorder', () => {
     shelf: 'dimensions',
     dragIndex: 0,
     insertIndex: 2,
-  });
-});
+  })
+})
 
 test('resolves schema field drop to add action', () => {
   expect(
@@ -86,8 +86,8 @@ test('resolves schema field drop to add action', () => {
       type: 'number',
       role: 'measure',
     },
-  });
-});
+  })
+})
 
 test('resolves cross-shelf move and clamps insert index', () => {
   expect(
@@ -121,10 +121,10 @@ test('resolves cross-shelf move and clamps insert index', () => {
       field: 'region',
       role: 'dimension',
     },
-  });
-});
+  })
+})
 
 test('clamps insert index boundaries', () => {
-  expect(normalizeShelfInsertIndex(-3, 4)).toBe(0);
-  expect(normalizeShelfInsertIndex(6, 4)).toBe(4);
-});
+  expect(normalizeShelfInsertIndex(-3, 4)).toBe(0)
+  expect(normalizeShelfInsertIndex(6, 4)).toBe(4)
+})

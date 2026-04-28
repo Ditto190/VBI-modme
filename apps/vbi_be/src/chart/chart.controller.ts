@@ -1,24 +1,13 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import {
-  ApiDataResponse,
-  ApiErrorResponse,
-} from '../common/swagger/api-response.decorator';
-import { ChartDetailEntity } from './entities/chart-detail.entity';
-import { ChartCollaborationSessionEntity } from './entities/chart-collaboration-session.entity';
-import { ChartEntity } from './entities/chart.entity';
-import { ChartService } from './chart.service';
-import { CreateChartDto } from './dto/create-chart.dto';
-import { UpdateChartDto } from './dto/update-chart.dto';
-import { ReportReferenceEntity } from '../report/entities/report-reference.entity';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiDataResponse, ApiErrorResponse } from '../common/swagger/api-response.decorator'
+import { ChartDetailEntity } from './entities/chart-detail.entity'
+import { ChartCollaborationSessionEntity } from './entities/chart-collaboration-session.entity'
+import { ChartEntity } from './entities/chart.entity'
+import { ChartService } from './chart.service'
+import { CreateChartDto } from './dto/create-chart.dto'
+import { UpdateChartDto } from './dto/update-chart.dto'
+import { ReportReferenceEntity } from '../report/entities/report-reference.entity'
 
 @ApiTags('charts')
 @Controller('charts')
@@ -39,7 +28,7 @@ export class ChartController {
     status: 400,
   })
   create(@Body() dto: CreateChartDto) {
-    return this.chartService.create(dto);
+    return this.chartService.create(dto)
   }
 
   @Get()
@@ -51,7 +40,7 @@ export class ChartController {
     type: ChartEntity,
   })
   findAll() {
-    return this.chartService.findAll();
+    return this.chartService.findAll()
   }
 
   @Get(':id')
@@ -68,7 +57,7 @@ export class ChartController {
     status: 404,
   })
   findOne(@Param('id') id: string) {
-    return this.chartService.findOne(id);
+    return this.chartService.findOne(id)
   }
 
   @Get(':id/references')
@@ -86,7 +75,7 @@ export class ChartController {
     status: 404,
   })
   findReferences(@Param('id') id: string) {
-    return this.chartService.findReferences(id);
+    return this.chartService.findReferences(id)
   }
 
   @Get(':id/collaboration')
@@ -98,7 +87,7 @@ export class ChartController {
     type: ChartCollaborationSessionEntity,
   })
   getCollaborationSession(@Param('id') id: string) {
-    return this.chartService.getCollaborationSession(id);
+    return this.chartService.getCollaborationSession(id)
   }
 
   @Patch(':id')
@@ -121,7 +110,7 @@ export class ChartController {
     status: 400,
   })
   update(@Param('id') id: string, @Body() dto: UpdateChartDto) {
-    return this.chartService.update(id, dto);
+    return this.chartService.update(id, dto)
   }
 
   @Delete(':id')
@@ -143,6 +132,6 @@ export class ChartController {
     status: 409,
   })
   remove(@Param('id') id: string) {
-    return this.chartService.remove(id);
+    return this.chartService.remove(id)
   }
 }

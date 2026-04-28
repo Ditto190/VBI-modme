@@ -1,5 +1,5 @@
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
+import { defineConfig } from '@rsbuild/core'
+import { pluginReact } from '@rsbuild/plugin-react'
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
@@ -22,9 +22,18 @@ export default defineConfig({
   },
   tools: {
     rspack: {
+      module: {
+        rules: [
+          {
+            resourceQuery: /raw/,
+            test: /\.csv$/,
+            type: 'asset/source',
+          },
+        ],
+      },
       resolve: {
         conditionNames: ['source', '...'],
       },
     },
   },
-});
+})

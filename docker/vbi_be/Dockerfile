@@ -20,8 +20,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm --filter @visactor/vquery build
 RUN pnpm --filter @visactor/vseed build
 RUN pnpm --filter @visactor/vbi build
-RUN pnpm --filter vbi_be build
-RUN pnpm --filter vbi_be deploy --prod --legacy /out
+RUN pnpm --filter @visactor/headless-bi-be build
+RUN pnpm --filter @visactor/headless-bi-be deploy --prod --legacy /out
 
 FROM node:24.12.0-slim AS runner
 

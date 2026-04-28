@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* oxlint-disable no-console */
 /**
  * 增强的安全代码执行器
  * @description 专为 AI 生成代码设计的安全沙箱

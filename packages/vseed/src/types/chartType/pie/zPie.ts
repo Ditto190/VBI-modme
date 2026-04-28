@@ -13,6 +13,7 @@ import {
   zTooltip,
   zBrush,
   zPage,
+  zPieLikeAnimation,
 } from '../../properties'
 
 export const zPie = z.object({
@@ -28,6 +29,7 @@ export const zPie = z.object({
   legend: zLegend.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zPieLikeAnimation.nullish(),
   theme: zTheme.nullish(),
   locale: zLocale.nullish(),
 })

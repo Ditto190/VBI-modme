@@ -11,6 +11,7 @@ import { zAnnotationConfig } from './annotation/zAnnotation'
 import { zPivotChartGridConfig } from './pivotGrid'
 import { zDimensionLinkage } from './dimensionLinkage/dimensionLinkage'
 import { zRegionPadding } from '../regionPadding'
+import { zBarLikeAnimation } from './animation'
 
 import { zBrushConfig } from '../brush/zBrush'
 
@@ -32,6 +33,7 @@ export const zBarConfig = z.object({
   dimensionLinkage: zDimensionLinkage.nullish(),
 
   brush: zBrushConfig.nullish(),
+  animation: zBarLikeAnimation.nullish(),
 })
 export const zBarParallelConfig = zBarConfig
 export const zBarPercentConfig = zBarConfig

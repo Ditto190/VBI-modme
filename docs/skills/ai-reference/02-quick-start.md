@@ -106,7 +106,7 @@ const builder = createDefaultBuilder()
 // 渲染应用
 render(
   <VBIStoreProvider builder={builder}>
-    <APP builder={builder} mode="edit" />
+    <APP builder={builder} mode='edit' />
   </VBIStoreProvider>,
   dom,
 )

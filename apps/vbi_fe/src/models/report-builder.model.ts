@@ -1,3 +1,3 @@
-import { createResourceBuilderModel } from './create-resource-builder.model';
+import { createResourceBuilderModel } from './create-resource-builder.model'
 
-export const useReportBuilderModel = createResourceBuilderModel('report');
+export const useReportBuilderModel = createResourceBuilderModel('report')

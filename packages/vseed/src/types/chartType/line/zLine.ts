@@ -26,6 +26,7 @@ import {
   zXBandAxis,
   zYLinearAxis,
   zPage,
+  zLineAreaAnimation,
 } from '../../properties'
 
 import { z } from 'zod'
@@ -45,6 +46,7 @@ export const zLine = z.object({
   regionPadding: zRegionPadding.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
+  animation: zLineAreaAnimation.nullish(),
   xAxis: zXBandAxis.nullish(),
   yAxis: zYLinearAxis.nullish(),
   crosshairLine: zCrosshairLine.nullish(),

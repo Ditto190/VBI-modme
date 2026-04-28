@@ -19,8 +19,5 @@ export const selectBundle = rs.fn().mockResolvedValue({
 })
 
 export const ConsoleLogger = rs.fn()
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type DuckDBBundles = any
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AsyncDuckDBConnection = any

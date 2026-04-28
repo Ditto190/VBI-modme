@@ -1,0 +1,41 @@
+{
+  "name": "@visactor/vbi-agent",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "format": "oxfmt .",
+    "lint": "oxlint .",
+    "test": "rstest",
+    "test:update": "rstest --update",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@ai-sdk/deepseek": "2.0.29",
+    "@ai-sdk/openai": "3.0.53",
+    "ai": "6.0.168",
+    "@visactor/vbi": "workspace:*",
+    "zod": "4.1.8"
+  },
+  "devDependencies": {
+    "@rstest/core": "0.8.3",
+    "@rslib/core": "0.20.3",
+    "@types/node": "24.10.1",
+    "typescript": "6.0.2"
+  }
+}

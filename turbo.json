@@ -1,13 +1,33 @@
 {
   "$schema": "https://turborepo.com/schema.json",
+  "globalDependencies": [
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "tsconfig.base.json",
+    "tsconfig.test.json",
+    ".oxlintrc.json",
+    ".oxfmtrc.json"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "doc_build/**"]
+      "outputs": ["dist/**"]
+    },
+    "website#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["doc_build/**"]
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "doc_build/**"]
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "test:update": {
+      "dependsOn": ["^build"],
+      "cache": false
     }
   }
 }

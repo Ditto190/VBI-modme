@@ -1,17 +1,18 @@
-import { Card, Empty, Flex, Space, Typography, theme } from 'antd';
-import { VSeedRender } from 'src/components/Render';
-import { useVBIBuilder } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
+import { Card, Empty, Flex, Space, Typography, theme } from 'antd'
+import { VSeedRender } from 'src/components/Render'
+import { useConfiguredVSeed, useVBIBuilder } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore } from 'src/model'
 
 export const ChartPanel = () => {
-  const vseed = useVBIStore((state) => state.vseed);
-  const loading = useVBIStore((state) => state.loading);
-  const builder = useVBIStore((state) => state.builder);
-  const isEmptyDsl = builder.isEmpty();
-  const { token } = theme.useToken();
-  const { theme: themeMode } = useVBIBuilder(builder);
-  const { t } = useTranslation();
+  const vseed = useVBIStore((state) => state.vseed)
+  const configuredVSeed = useConfiguredVSeed(vseed)
+  const loading = useVBIStore((state) => state.loading)
+  const builder = useVBIStore((state) => state.builder)
+  const isEmptyDsl = builder.isEmpty()
+  const { token } = theme.useToken()
+  const { theme: themeMode } = useVBIBuilder(builder)
+  const { t } = useTranslation()
 
   return (
     <Card
@@ -34,8 +35,8 @@ export const ChartPanel = () => {
       {isEmptyDsl ? (
         <Flex
           vertical
-          align="center"
-          justify="center"
+          align='center'
+          justify='center'
           style={{
             height: '100%',
             minHeight: 300,
@@ -51,18 +52,16 @@ export const ChartPanel = () => {
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
             description={
-              <Space orientation="vertical" size={2}>
+              <Space orientation='vertical' size={2}>
                 <Typography.Text strong>{t('appEmptyTitle')}</Typography.Text>
-                <Typography.Text type="secondary">
-                  {t('appEmptyDescription')}
-                </Typography.Text>
+                <Typography.Text type='secondary'>{t('appEmptyDescription')}</Typography.Text>
               </Space>
             }
           />
         </Flex>
       ) : (
-        vseed && <VSeedRender vseed={vseed} />
+        configuredVSeed && <VSeedRender vseed={configuredVSeed} />
       )}
     </Card>
-  );
-};
+  )
+}

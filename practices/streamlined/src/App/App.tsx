@@ -1,22 +1,19 @@
-import { Flex, Spin, Card } from 'antd';
-import { VSeedRender } from 'src/components/Render';
-import { MeasuresList } from 'src/components/Fields/MeasuresList';
-import { DimensionsList } from 'src/components/Fields/DimensionsList';
-import { VBIChartBuilder } from '@visactor/vbi';
-import { ChartTypeSelector } from 'src/components/ChartType';
+import { Flex, Spin, Card } from 'antd'
+import { VSeedRender } from 'src/components/Render'
+import { MeasuresList } from 'src/components/Fields/MeasuresList'
+import { DimensionsList } from 'src/components/Fields/DimensionsList'
+import { VBIChartBuilder } from '@visactor/vbi'
+import { ChartTypeSelector } from 'src/components/ChartType'
 
-import { MeasureShelf } from 'src/components/Shelfs/MeasureShelf';
-import { DimensionShelf } from 'src/components/Shelfs/DimensionShelf';
-import {
-  FilterPanel,
-  type FilterItem,
-} from 'src/components/Filter/FilterPanel';
-import { useVBIStore } from 'src/model';
-import { useEffect, useState, useMemo } from 'react';
-import { useShallow } from 'zustand/shallow';
+import { MeasureShelf } from 'src/components/Shelfs/MeasureShelf'
+import { DimensionShelf } from 'src/components/Shelfs/DimensionShelf'
+import { FilterPanel, type FilterItem } from 'src/components/Filter/FilterPanel'
+import { useVBIStore } from 'src/model'
+import { useEffect, useState, useMemo } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 interface APPProps {
-  builder?: VBIChartBuilder;
+  builder?: VBIChartBuilder
 }
 
 export const APP = (props: APPProps) => {
@@ -27,90 +24,85 @@ export const APP = (props: APPProps) => {
       builder: state.builder,
       dsl: state.dsl,
     })),
-  );
+  )
 
   const activeFields = useMemo(() => {
-    if (!dsl) return [];
-    const fields = new Set<string>();
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!dsl) return []
+    const fields = new Set<string>()
     const extractFields = (items: any[]) => {
       items?.forEach((item) => {
         if (item && typeof item === 'object') {
           if ('field' in item && typeof item.field === 'string') {
-            fields.add(item.field);
+            fields.add(item.field)
           }
           if ('children' in item && Array.isArray(item.children)) {
-            extractFields(item.children);
+            extractFields(item.children)
           }
         }
-      });
-    };
+      })
+    }
 
-    extractFields(dsl.dimensions || []);
-    extractFields(dsl.measures || []);
-    return Array.from(fields);
-  }, [dsl]);
+    extractFields(dsl.dimensions || [])
+    extractFields(dsl.measures || [])
+    return Array.from(fields)
+  }, [dsl])
 
-  const [allFields, setAllFields] = useState<
-    { name: string; role: 'dimension' | 'measure' }[]
-  >([]);
-  const [filters, setFilters] = useState<FilterItem[]>([]);
+  const [allFields, setAllFields] = useState<{ name: string; role: 'dimension' | 'measure' }[]>([])
+  const [filters, setFilters] = useState<FilterItem[]>([])
 
   useEffect(() => {
     const handleFilterError = () => {
-      setFilters((prev) => prev.slice(0, -1));
-    };
-    window.addEventListener('vbi-filter-error', handleFilterError);
-    return () =>
-      window.removeEventListener('vbi-filter-error', handleFilterError);
-  }, []);
+      setFilters((prev) => prev.slice(0, -1))
+    }
+    window.addEventListener('vbi-filter-error', handleFilterError)
+    return () => window.removeEventListener('vbi-filter-error', handleFilterError)
+  }, [])
 
   useEffect(() => {
     if (initialized && builder) {
       const fetchSchema = async () => {
-        const schema = await builder.getSchema();
+        const schema = await builder.getSchema()
         setAllFields(
           schema.map((s: { name: string; type: string }) => ({
             name: s.name,
             role: s.type === 'number' ? 'measure' : 'dimension',
           })),
-        );
-      };
-      fetchSchema();
+        )
+      }
+      fetchSchema()
     }
-  }, [initialized, builder]);
+  }, [initialized, builder])
 
   useEffect(() => {
-    return initialize(props.builder);
-  }, []);
+    return initialize(props.builder)
+  }, [])
 
   const handleFilterChange = (newFilters: FilterItem[]) => {
-    setFilters(newFilters);
+    setFilters(newFilters)
     if (builder) {
       builder.doc.transact(() => {
-        builder.whereFilter.clear();
+        builder.whereFilter.clear()
         newFilters.forEach((f) => {
           builder.whereFilter.add(f.field, (node) => {
-            node.setOperator(f.operator);
-            node.setValue(f.value);
-          });
-        });
-      });
+            node.setOperator(f.operator)
+            node.setValue(f.value)
+          })
+        })
+      })
     }
-  };
+  }
 
   if (!initialized) {
-    return <Spin tip="Initializing..." fullscreen />;
+    return <Spin tip='Initializing...' fullscreen />
   }
 
   return (
     <Flex
       vertical={false}
       onClick={() => {
-        console.group(`selected vbi`);
-        console.log('state', useVBIStore.getState());
-        console.groupEnd();
+        console.group(`selected vbi`)
+        console.log('state', useVBIStore.getState())
+        console.groupEnd()
       }}
       style={{
         height: '100%',
@@ -126,7 +118,7 @@ export const APP = (props: APPProps) => {
             Chart Source
           </div>
         }
-        size="small"
+        size='small'
         style={{
           width: 280,
           height: '100%',
@@ -215,7 +207,7 @@ export const APP = (props: APPProps) => {
         }}
       >
         <Card
-          size="small"
+          size='small'
           style={{
             flex: 1,
             margin: '16px 0',
@@ -359,7 +351,7 @@ export const APP = (props: APPProps) => {
             >
               <button
                 onClick={() => {
-                  console.log('Update chart');
+                  console.log('Update chart')
                 }}
                 style={{
                   background: 'linear-gradient(90deg, #1890ff, #096dd9)',
@@ -375,14 +367,12 @@ export const APP = (props: APPProps) => {
                   width: '100%',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                  e.currentTarget.style.boxShadow =
-                    '0 4px 12px rgba(24,144,255,0.4)';
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(24,144,255,0.4)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow =
-                    '0 2px 8px rgba(24,144,255,0.3)';
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(24,144,255,0.3)'
                 }}
               >
                 UPDATE CHART
@@ -410,7 +400,7 @@ export const APP = (props: APPProps) => {
               Chart Preview
             </div>
           }
-          size="small"
+          size='small'
           style={{
             flex: 2,
             margin: '16px 0',
@@ -438,7 +428,7 @@ export const APP = (props: APPProps) => {
               RESULTS
             </div>
           }
-          size="small"
+          size='small'
           style={{
             flex: 1,
             margin: '0 16px 16px 8px',
@@ -499,12 +489,12 @@ export const APP = (props: APPProps) => {
         </Card>
       </div>
     </Flex>
-  );
-};
+  )
+}
 
 const ChartWrapper = () => {
-  const vseed = useVBIStore((state) => state.vseed);
-  const loading = useVBIStore((state) => state.loading);
+  const vseed = useVBIStore((state) => state.vseed)
+  const loading = useVBIStore((state) => state.loading)
   return (
     <div
       style={{
@@ -530,10 +520,8 @@ const ChartWrapper = () => {
             zIndex: 10,
           }}
         >
-          <Spin size="large" />
-          <div style={{ marginTop: 16, color: '#595959', fontWeight: 500 }}>
-            Rendering chart...
-          </div>
+          <Spin size='large' />
+          <div style={{ marginTop: 16, color: '#595959', fontWeight: 500 }}>Rendering chart...</div>
         </div>
       )}
       {vseed ? (
@@ -555,19 +543,12 @@ const ChartWrapper = () => {
           }}
         >
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>📊</div>
-          <div
-            style={{ fontSize: '16px', fontWeight: 500, marginBottom: '8px' }}
-          >
-            Chart Preview
-          </div>
-          <div
-            style={{ fontSize: '13px', textAlign: 'center', maxWidth: '300px' }}
-          >
-            Configure dimensions and measures, then click UPDATE CHART to render
-            visualization
+          <div style={{ fontSize: '16px', fontWeight: 500, marginBottom: '8px' }}>Chart Preview</div>
+          <div style={{ fontSize: '13px', textAlign: 'center', maxWidth: '300px' }}>
+            Configure dimensions and measures, then click UPDATE CHART to render visualization
           </div>
         </div>
       )}
     </div>
-  );
-};
+  )
+}

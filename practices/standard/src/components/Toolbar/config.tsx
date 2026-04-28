@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 import {
   ApartmentOutlined,
   AreaChartOutlined,
@@ -15,31 +15,24 @@ import {
   PieChartOutlined,
   RadarChartOutlined,
   TableOutlined,
-} from '@ant-design/icons';
-import { DEMO_DEFAULT_LIMIT, type DemoLocale } from 'src/constants/builder';
-import type { Translate } from 'src/i18n';
+} from '@ant-design/icons'
+import { DEMO_DEFAULT_LIMIT, type DemoLocale } from 'src/constants/builder'
+import type { Translate } from 'src/i18n'
 
-export type ChartGroupKey =
-  | 'table'
-  | 'comparison'
-  | 'trend'
-  | 'proportion'
-  | 'distribution'
-  | 'hierarchy'
-  | 'dynamic';
+export type ChartGroupKey = 'table' | 'comparison' | 'trend' | 'proportion' | 'distribution' | 'hierarchy' | 'dynamic'
 
 export interface ChartTypeGroupMeta {
-  key: ChartGroupKey;
-  labelKey: string;
-  descriptionKey: string;
+  key: ChartGroupKey
+  labelKey: string
+  descriptionKey: string
 }
 
 export interface ChartTypeMeta {
-  type: string;
-  group: ChartGroupKey;
-  labelKey: string;
-  descriptionKey: string;
-  icon: ReactNode;
+  type: string
+  group: ChartGroupKey
+  labelKey: string
+  descriptionKey: string
+  icon: ReactNode
 }
 
 export const CHART_TYPE_GROUPS: ChartTypeGroupMeta[] = [
@@ -78,7 +71,7 @@ export const CHART_TYPE_GROUPS: ChartTypeGroupMeta[] = [
     labelKey: 'toolbarChartTypeGroupsDynamicLabel',
     descriptionKey: 'toolbarChartTypeGroupsDynamicDescription',
   },
-];
+]
 
 export const CHART_TYPE_METAS: ChartTypeMeta[] = [
   {
@@ -298,11 +291,12 @@ export const CHART_TYPE_METAS: ChartTypeMeta[] = [
     descriptionKey: 'toolbarChartTypeItemsRaceDonutDescription',
     icon: <PieChartOutlined />,
   },
-];
+]
 
-export const CHART_TYPE_META_MAP = Object.fromEntries(
-  CHART_TYPE_METAS.map((meta) => [meta.type, meta]),
-) as Record<string, ChartTypeMeta>;
+export const CHART_TYPE_META_MAP = Object.fromEntries(CHART_TYPE_METAS.map((meta) => [meta.type, meta])) as Record<
+  string,
+  ChartTypeMeta
+>
 
 const FALLBACK_CHART_META: ChartTypeMeta = {
   type: 'unknown',
@@ -310,18 +304,18 @@ const FALLBACK_CHART_META: ChartTypeMeta = {
   labelKey: 'toolbarChartTypeFallbackLabel',
   descriptionKey: 'toolbarChartTypeFallbackDescription',
   icon: <DotChartOutlined />,
-};
+}
 
 export const getChartTypeGroups = (t: Translate) => {
   return CHART_TYPE_GROUPS.map((group) => ({
     ...group,
     label: t(group.labelKey),
     description: t(group.descriptionKey),
-  }));
-};
+  }))
+}
 
 export const getChartTypeMeta = (chartType: string, t: Translate) => {
-  const meta = CHART_TYPE_META_MAP[chartType];
+  const meta = CHART_TYPE_META_MAP[chartType]
 
   if (!meta) {
     return {
@@ -329,16 +323,16 @@ export const getChartTypeMeta = (chartType: string, t: Translate) => {
       type: chartType,
       label: chartType,
       description: t(FALLBACK_CHART_META.descriptionKey),
-    };
+    }
   }
 
   return {
     ...meta,
     label: t(meta.labelKey),
     description: t(meta.descriptionKey),
-  };
-};
+  }
+}
 
 export const formatDefaultLimit = (locale: DemoLocale) => {
-  return new Intl.NumberFormat(locale).format(DEMO_DEFAULT_LIMIT);
-};
+  return new Intl.NumberFormat(locale).format(DEMO_DEFAULT_LIMIT)
+}

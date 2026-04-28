@@ -1,51 +1,46 @@
-import type { VBIMeasureFormat } from '@visactor/vbi';
-import type { Translate } from 'src/i18n';
+import type { VBIMeasureFormat } from '@visactor/vbi'
+import type { Translate } from 'src/i18n'
 
 const FORMAT_TYPE_LABEL_KEYS: Record<string, string> = {
   number: 'formatTypeNumber',
   percent: 'formatTypePercent',
   permille: 'formatTypePermille',
   scientific: 'formatTypeScientific',
-};
+}
 
-export const formatMeasureFormatLabel = (
-  format: VBIMeasureFormat | undefined,
-  t: Translate,
-): string => {
+export const formatMeasureFormatLabel = (format: VBIMeasureFormat | undefined, t: Translate): string => {
   if (!format) {
-    return t('formatNoFormat');
+    return t('formatNoFormat')
   }
 
   if ('autoFormat' in format && format.autoFormat === true) {
-    return t('formatAuto');
+    return t('formatAuto')
   }
 
-  const parts: string[] = [];
-  const typePart = format.type
-    ? t(FORMAT_TYPE_LABEL_KEYS[format.type] ?? 'formatTypeNumber')
-    : t('formatTypeNumber');
-  parts.push(typePart);
+  const parts: string[] = []
+  const typePart = format.type ? t(FORMAT_TYPE_LABEL_KEYS[format.type] ?? 'formatTypeNumber') : t('formatTypeNumber')
+  parts.push(typePart)
 
   if (format.prefix) {
-    parts.unshift(format.prefix);
+    parts.unshift(format.prefix)
   }
 
   if (format.symbol) {
-    parts.push(format.symbol);
+    parts.push(format.symbol)
   }
 
   if (format.fractionDigits !== undefined) {
-    parts.push(`(${format.fractionDigits}${t('formatFractionDigits')})`);
+    parts.push(`(${format.fractionDigits}${t('formatFractionDigits')})`)
   }
 
-  return parts.join('');
-};
+  return parts.join('')
+}
 
 export type FormatPreset = {
-  key: string;
-  label: string;
-  format: VBIMeasureFormat;
-};
+  key: string
+  label: string
+  format: VBIMeasureFormat
+}
 
 export const getFormatPresets = (t: Translate): FormatPreset[] => {
   return [
@@ -91,5 +86,5 @@ export const getFormatPresets = (t: Translate): FormatPreset[] => {
       label: `${t('formatTypeScientific')} (3)`,
       format: { type: 'scientific', fractionDigits: 3 },
     },
-  ];
-};
+  ]
+}

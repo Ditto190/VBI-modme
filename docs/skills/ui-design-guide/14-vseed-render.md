@@ -98,7 +98,7 @@ export const ChartPanel = () => {
   }
 
   if (!vseed) {
-    return <Empty description="请添加维度和度量" />
+    return <Empty description='请添加维度和度量' />
   }
 
   return <VSeedRender vseed={vseed} />

@@ -7,5 +7,15 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@internal/bugserver-trigger", "vseed-llm-test", "website", "vbi_fe", "vbi_be"]
+  "ignore": [
+    "@visactor/vbi-agent",
+    "@visactor/vbi-react",
+    "@visactor/headless-bi-be",
+    "@visactor/headless-bi-cli",
+    "@visactor/headless-bi-fe",
+    "@visactor/headless-bi-provider",
+    "@internal/bugserver-trigger",
+    "vseed-llm-test",
+    "website"
+  ]
 }

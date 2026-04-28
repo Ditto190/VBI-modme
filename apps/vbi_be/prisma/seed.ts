@@ -1,12 +1,12 @@
 // apps/vbi_be/prisma/seed.ts
-import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
-const connectionString = `${process.env.DATABASE_URL}`;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
+import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
+const connectionString = `${process.env.DATABASE_URL}`
+const pool = new Pool({ connectionString })
+const adapter = new PrismaPg(pool)
 
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   // 1. 比如创建一个默认管理员
@@ -24,16 +24,16 @@ async function main() {
         },
       },
     },
-  });
-  console.info({ admin });
+  })
+  console.info({ admin })
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })

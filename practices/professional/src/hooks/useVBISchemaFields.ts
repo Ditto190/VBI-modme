@@ -1,35 +1,31 @@
-import { useEffect, useMemo, useState } from 'react';
-import type { VBIChartBuilder } from '@visactor/vbi';
+import { useEffect, useMemo, useState } from 'react'
+import type { VBIChartBuilder } from '@visactor/vbi'
 
-export type SchemaFieldRole = 'dimension' | 'measure';
+export type SchemaFieldRole = 'dimension' | 'measure'
 
 export interface VBISchemaField {
-  name: string;
-  type: string;
-  role: SchemaFieldRole;
+  name: string
+  type: string
+  role: SchemaFieldRole
 }
 
-const EMPTY_SCHEMA: VBISchemaField[] = [];
+const EMPTY_SCHEMA: VBISchemaField[] = []
 
-export const useVBISchemaFields = (
-  builder: VBIChartBuilder | undefined,
-  refreshKey = 0,
-) => {
-  const [schemaFields, setSchemaFields] =
-    useState<VBISchemaField[]>(EMPTY_SCHEMA);
+export const useVBISchemaFields = (builder: VBIChartBuilder | undefined, refreshKey = 0) => {
+  const [schemaFields, setSchemaFields] = useState<VBISchemaField[]>(EMPTY_SCHEMA)
 
   useEffect(() => {
-    let destroyed = false;
+    let destroyed = false
 
     const run = async () => {
       if (!builder) {
-        setSchemaFields(EMPTY_SCHEMA);
-        return;
+        setSchemaFields(EMPTY_SCHEMA)
+        return
       }
 
-      const schema = await builder.getSchema();
+      const schema = await builder.getSchema()
       if (destroyed) {
-        return;
+        return
       }
 
       setSchemaFields(
@@ -38,30 +34,26 @@ export const useVBISchemaFields = (
           type: item.type,
           role: item.type === 'number' ? 'measure' : 'dimension',
         })),
-      );
-    };
+      )
+    }
 
-    void run();
+    void run()
     return () => {
-      destroyed = true;
-    };
-  }, [builder, refreshKey]);
+      destroyed = true
+    }
+  }, [builder, refreshKey])
 
   const fieldRoleMap = useMemo(() => {
-    return Object.fromEntries(
-      schemaFields.map((item) => [item.name, item.role]),
-    ) as Record<string, SchemaFieldRole>;
-  }, [schemaFields]);
+    return Object.fromEntries(schemaFields.map((item) => [item.name, item.role])) as Record<string, SchemaFieldRole>
+  }, [schemaFields])
 
   const fieldTypeMap = useMemo(() => {
-    return Object.fromEntries(
-      schemaFields.map((item) => [item.name, item.type]),
-    ) as Record<string, string>;
-  }, [schemaFields]);
+    return Object.fromEntries(schemaFields.map((item) => [item.name, item.type])) as Record<string, string>
+  }, [schemaFields])
 
   return {
     schemaFields,
     fieldRoleMap,
     fieldTypeMap,
-  };
-};
+  }
+}

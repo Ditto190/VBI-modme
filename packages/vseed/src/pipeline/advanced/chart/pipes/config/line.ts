@@ -22,6 +22,7 @@ export const lineConfig: AdvancedPipe = (advancedVSeed, context) => {
     'brush',
     'dimensionLinkage',
     'player',
+    'animation',
   ]) as Config['line']
 
   const config = replaceNullToUndefined(pickedConfig)

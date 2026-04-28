@@ -347,7 +347,7 @@ import { ChartRenderer } from '@visactor/vbi-react'
 import { ChartTypeSelector } from '@visactor/vbi-react'
 ;<ChartTypeSelector
   builder={builder}
-  label="图表类型"
+  label='图表类型'
   getOptionLabel={(type) =>
     ({
       column: '柱状图',
@@ -389,8 +389,8 @@ import { FieldPanel } from '@visactor/vbi-react'
     { label: 'Y Axis', value: 'yAxis' },
     { label: 'Color', value: 'color' },
   ]}
-  dimensionsTitle="维度"
-  measuresTitle="度量"
+  dimensionsTitle='维度'
+  measuresTitle='度量'
 />
 ```
 

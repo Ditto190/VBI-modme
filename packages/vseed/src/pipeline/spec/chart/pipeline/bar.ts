@@ -1,6 +1,7 @@
 import type { PivotChartSpecPipeline, VChartSpecPipeline } from 'src/types'
 import {
   initBar,
+  animation,
   datasetYX,
   xLinear,
   yBand,
@@ -44,6 +45,7 @@ import {
 const bar: VChartSpecPipeline = [
   fontFamilyTheme,
   initBar,
+  animation,
   regionPadding,
   stackCornerRadius,
   barMaxWidth,
@@ -75,6 +77,7 @@ const pivotBar: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initBar,
+    animation,
     regionPadding,
     stackCornerRadius,
     barMaxWidth,

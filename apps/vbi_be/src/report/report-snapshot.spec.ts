@@ -1,4 +1,4 @@
-import { buildReportSnapshot } from './report-snapshot';
+import { buildReportSnapshot } from './report-snapshot'
 
 describe('buildReportSnapshot', () => {
   test('builds report snapshot from report pages and resource maps', () => {
@@ -38,14 +38,14 @@ describe('buildReportSnapshot', () => {
           dsl: { uuid: 'insight-1', content: 'hello', version: 0 },
         },
       ],
-    );
+    )
 
     expect(snapshot).toMatchObject({
       report: { uuid: 'report-1' },
       charts: { 'chart-1': { uuid: 'chart-1' } },
       insights: { 'insight-1': { uuid: 'insight-1', content: 'hello' } },
-    });
-  });
+    })
+  })
 
   test('throws when a page references a missing chart', () => {
     expect(() =>
@@ -70,6 +70,6 @@ describe('buildReportSnapshot', () => {
           },
         ],
       ),
-    ).toThrow('Missing chart resource "chart-404"');
-  });
-});
+    ).toThrow('Missing chart resource "chart-404"')
+  })
+})

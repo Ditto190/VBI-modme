@@ -7,42 +7,24 @@ import {
   useSensors,
   type DragEndEvent,
   type DragStartEvent,
-} from '@dnd-kit/core';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { theme } from 'antd';
-import { resolveShelfDropAction } from './dropLogic';
-import type {
-  ShelfDndAdapter,
-  ShelfDragData,
-  ShelfInsertAnchor,
-  ShelfType,
-} from './types';
+} from '@dnd-kit/core'
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
+import { theme } from 'antd'
+import { resolveShelfDropAction } from './dropLogic'
+import type { ShelfDndAdapter, ShelfDragData, ShelfInsertAnchor, ShelfType } from './types'
 
 type ShelfDndContextValue = {
-  registerShelf: (adapter: ShelfDndAdapter) => () => void;
-  isDragging: boolean;
-  activeDrag: ShelfDragData | null;
-};
+  registerShelf: (adapter: ShelfDndAdapter) => () => void
+  isDragging: boolean
+  activeDrag: ShelfDragData | null
+}
 
-const ShelfDndContext = createContext<ShelfDndContextValue | undefined>(
-  undefined,
-);
+const ShelfDndContext = createContext<ShelfDndContextValue | undefined>(undefined)
 
-export const ShelfDndProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const { token } = theme.useToken();
-  const [activeDrag, setActiveDrag] = useState<ShelfDragData | null>(null);
-  const adaptersRef = useRef<Map<ShelfType, ShelfDndAdapter>>(new Map());
+export const ShelfDndProvider = ({ children }: { children: React.ReactNode }) => {
+  const { token } = theme.useToken()
+  const [activeDrag, setActiveDrag] = useState<ShelfDragData | null>(null)
+  const adaptersRef = useRef<Map<ShelfType, ShelfDndAdapter>>(new Map())
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -50,47 +32,47 @@ export const ShelfDndProvider = ({
         distance: 4,
       },
     }),
-  );
+  )
 
   const registerShelf = useCallback((adapter: ShelfDndAdapter) => {
-    adaptersRef.current.set(adapter.shelf, adapter);
+    adaptersRef.current.set(adapter.shelf, adapter)
 
     return () => {
-      const current = adaptersRef.current.get(adapter.shelf);
+      const current = adaptersRef.current.get(adapter.shelf)
       if (current === adapter) {
-        adaptersRef.current.delete(adapter.shelf);
+        adaptersRef.current.delete(adapter.shelf)
       }
-    };
-  }, []);
+    }
+  }, [])
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
-    const data = event.active.data.current as ShelfDragData | undefined;
-    setActiveDrag(data ?? null);
-  }, []);
+    const data = event.active.data.current as ShelfDragData | undefined
+    setActiveDrag(data ?? null)
+  }, [])
 
   const handleDragEnd = useCallback((event: DragEndEvent) => {
-    const activeData = event.active.data.current as ShelfDragData | undefined;
+    const activeData = event.active.data.current as ShelfDragData | undefined
     const overData = event.over?.data.current as
       | {
-          kind?: string;
-          shelf?: ShelfType;
-          insertIndex?: number;
-          anchor?: ShelfInsertAnchor | string;
+          kind?: string
+          shelf?: ShelfType
+          insertIndex?: number
+          anchor?: ShelfInsertAnchor | string
         }
-      | undefined;
-    setActiveDrag(null);
+      | undefined
+    setActiveDrag(null)
 
     if (!activeData || !overData) {
-      return;
+      return
     }
 
     if (overData.kind !== 'shelf-insert' || !overData.shelf) {
-      return;
+      return
     }
 
-    const targetAdapter = adaptersRef.current.get(overData.shelf);
+    const targetAdapter = adaptersRef.current.get(overData.shelf)
     if (!targetAdapter) {
-      return;
+      return
     }
 
     const anchor =
@@ -99,7 +81,7 @@ export const ShelfDndProvider = ({
       overData.anchor === 'empty' ||
       overData.anchor === 'tail'
         ? overData.anchor
-        : 'tail';
+        : 'tail'
 
     const action = resolveShelfDropAction({
       activeDrag: activeData,
@@ -110,39 +92,39 @@ export const ShelfDndProvider = ({
         anchor,
       },
       targetItemCount: targetAdapter.items.length,
-    });
+    })
 
     if (action.type === 'none') {
-      return;
+      return
     }
 
     if (action.type === 'add-field') {
-      targetAdapter.addFieldAt(action.payload, action.insertIndex);
-      return;
+      targetAdapter.addFieldAt(action.payload, action.insertIndex)
+      return
     }
 
     if (action.type === 'reorder') {
-      targetAdapter.reorderWithin(action.dragIndex, action.insertIndex);
-      return;
+      targetAdapter.reorderWithin(action.dragIndex, action.insertIndex)
+      return
     }
 
-    const sourceAdapter = adaptersRef.current.get(action.sourceShelf);
-    const latestTargetAdapter = adaptersRef.current.get(action.targetShelf);
+    const sourceAdapter = adaptersRef.current.get(action.sourceShelf)
+    const latestTargetAdapter = adaptersRef.current.get(action.targetShelf)
     if (!sourceAdapter || !latestTargetAdapter) {
-      return;
+      return
     }
 
-    latestTargetAdapter.addFieldAt(action.payload, action.insertIndex);
-    sourceAdapter.removeItem(action.itemId);
-  }, []);
+    latestTargetAdapter.addFieldAt(action.payload, action.insertIndex)
+    sourceAdapter.removeItem(action.itemId)
+  }, [])
 
   const contextValue = useMemo<ShelfDndContextValue>(() => {
     return {
       registerShelf,
       isDragging: Boolean(activeDrag),
       activeDrag,
-    };
-  }, [activeDrag, registerShelf]);
+    }
+  }, [activeDrag, registerShelf])
 
   return (
     <ShelfDndContext.Provider value={contextValue}>
@@ -181,13 +163,13 @@ export const ShelfDndProvider = ({
         </DragOverlay>
       </DndContext>
     </ShelfDndContext.Provider>
-  );
-};
+  )
+}
 
 export const useShelfDndContext = () => {
-  const context = useContext(ShelfDndContext);
+  const context = useContext(ShelfDndContext)
   if (!context) {
-    throw new Error('useShelfDndContext must be used within ShelfDndProvider');
+    throw new Error('useShelfDndContext must be used within ShelfDndProvider')
   }
-  return context;
-};
+  return context
+}

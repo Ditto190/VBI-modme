@@ -34,13 +34,13 @@ export function ChartRenderer(props: ChartRendererProps) {
 
   if (error) {
     content = renderError?.(error, refetch) ?? (
-      <div role="alert" style={{ display: 'grid', gap: 8 }}>
+      <div role='alert' style={{ display: 'grid', gap: 8 }}>
         <span>{error.message}</span>
         <button
           onClick={() => {
             void refetch()
           }}
-          type="button"
+          type='button'
         >
           Retry
         </button>
@@ -59,7 +59,7 @@ export function ChartRenderer(props: ChartRendererProps) {
       className={joinClassNames('vbi-react-chart-renderer', className)}
       style={{ display: 'grid', gap: 8, ...style }}
     >
-      {loading && vseed ? <div aria-live="polite">Updating chart…</div> : null}
+      {loading && vseed ? <div aria-live='polite'>Updating chart…</div> : null}
       {content}
     </section>
   )

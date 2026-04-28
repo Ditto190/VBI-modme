@@ -1,12 +1,7 @@
-import { useDroppable } from '@dnd-kit/core';
-import { useShelfDndContext } from './ShelfDndProvider';
-import { ShelfDropIndicator } from './ShelfDropIndicator';
-import {
-  createShelfInsertId,
-  type ShelfInsertAnchor,
-  type ShelfInsertTargetData,
-  type ShelfType,
-} from './types';
+import { useDroppable } from '@dnd-kit/core'
+import { useShelfDndContext } from './ShelfDndProvider'
+import { ShelfDropIndicator } from './ShelfDropIndicator'
+import { createShelfInsertId, type ShelfInsertAnchor, type ShelfInsertTargetData, type ShelfType } from './types'
 
 export const DropArea = ({
   shelf,
@@ -15,13 +10,13 @@ export const DropArea = ({
   color,
   flexible = false,
 }: {
-  shelf: ShelfType;
-  insertIndex: number;
-  anchor: ShelfInsertAnchor;
-  color: string;
-  flexible?: boolean;
+  shelf: ShelfType
+  insertIndex: number
+  anchor: ShelfInsertAnchor
+  color: string
+  flexible?: boolean
 }) => {
-  const { isDragging } = useShelfDndContext();
+  const { isDragging } = useShelfDndContext()
   const { setNodeRef, isOver } = useDroppable({
     id: createShelfInsertId({
       shelf,
@@ -34,7 +29,7 @@ export const DropArea = ({
       insertIndex,
       anchor,
     } satisfies ShelfInsertTargetData,
-  });
+  })
 
   return (
     <div
@@ -53,5 +48,5 @@ export const DropArea = ({
     >
       <ShelfDropIndicator color={color} isActive={isOver} />
     </div>
-  );
-};
+  )
+}

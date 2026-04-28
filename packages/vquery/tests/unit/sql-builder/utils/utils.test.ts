@@ -1,4 +1,4 @@
-import { isSelectItem } from 'src/sql-builder/utils'
+import { isSelectItem } from '../../../../src/sql-builder/utils'
 
 describe('utils', () => {
   it('isSelectItem', () => {

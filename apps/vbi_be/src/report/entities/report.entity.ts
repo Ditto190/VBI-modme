@@ -1,34 +1,34 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class ReportEntity {
   @ApiProperty()
-  id: string;
+  id: string
 
   @ApiProperty({ nullable: true, required: false })
-  name: string | null;
+  name: string | null
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt: Date
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt: Date
 }
 
 export class ReportPageEntity {
   @ApiProperty()
-  id: string;
+  id: string
 
   @ApiProperty()
-  title: string;
+  title: string
 
   @ApiProperty()
-  chartId: string;
+  chartId: string
 
   @ApiProperty()
-  insightId: string;
+  insightId: string
 }
 
 export class ReportDetailEntity extends ReportEntity {
   @ApiProperty({ type: [ReportPageEntity] })
-  pages: ReportPageEntity[];
+  pages: ReportPageEntity[]
 }

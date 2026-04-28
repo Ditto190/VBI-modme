@@ -10,15 +10,18 @@
   "description": "VSeed, an elegant data composer, transforming complexity into simplicity.",
   "scripts": {
     "dev": "pnpm --filter=website run dev",
+    "tui": "turbo build --filter=@visactor/headless-bi-cli && pnpm --filter=@visactor/headless-bi-cli run tui",
     "build": "turbo build",
-    "format": "pnpm prettier --write .",
-    "lint": "pnpm -r lint",
-    "typecheck": "pnpm turbo typecheck",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint --fix .",
+    "lint:check": "oxlint .",
+    "typecheck": "turbo typecheck",
     "g": "pnpm -r g && pnpm run format",
     "dev:rsdoctor": "pnpm --filter=@visactor/vseed run dev:rsdoctor",
     "build:rsdoctor": "pnpm --filter=@visactor/vseed run build:rsdoctor",
-    "test": "pnpm -r test",
-    "test:update": "pnpm -r test:update",
+    "test": "turbo test",
+    "test:update": "turbo test:update",
     "test:coverage": "pnpm -r test:coverage",
     "publish:ci": "turbo run build --filter=@visactor/vseed --filter=@visactor/vquery --filter=@visactor/vbi && pnpm changeset publish --filter=@visactor/vseed,@visactor/vquery,@visactor/vbi --access=public",
     "vbi:dev": "docker compose -f ./docker/docker-compose.dev.yml up -d",
@@ -29,16 +32,14 @@
     "postinstall": "shx test -e .env || shx cp .env.example .env"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,md,mdx}": [
-      "pnpm format",
-      "pnpm lint"
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint --fix --no-error-on-unmatched-pattern"
+    ],
+    "*.{json,md,mdx,css,scss,html,yml,yaml}": [
+      "oxfmt --no-error-on-unmatched-pattern"
     ]
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "tools/*"
-  ],
   "engines": {
     "node": ">=24.12.0",
     "pnpm": ">=10.26.1"
@@ -48,9 +49,10 @@
     "husky": "9.1.7",
     "lint-staged": "16.1.6",
     "node-fetch": "2.6.7",
-    "prettier": "3.6.2",
+    "oxfmt": "0.47.0",
+    "oxlint": "1.62.0",
     "shx": "0.4.0",
-    "turbo": "2.8.19"
+    "turbo": "2.9.6"
   },
   "packageManager": "pnpm@10.26.1",
   "license": "MIT",

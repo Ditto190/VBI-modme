@@ -1,79 +1,124 @@
-import { APP as StandardAPP } from 'standard';
-import { Spin, Typography } from 'antd';
-import {
-  useChartBuilderModel,
-  useInsightBuilderModel,
-  useReportBuilderModel,
-} from '../../models';
-import { useReportDetailStore } from '../../stores/report-detail.store';
-import { InsightEditorDrawer } from './InsightEditorDrawer';
-import { PageSidebar } from './PageSidebar';
-import { ReportEditorDrawer } from './ReportEditorDrawer';
-import { EditableSurface } from './EditableSurface';
+import { Empty } from 'antd'
+import { memo, useCallback, useMemo } from 'react'
+import { useShallow } from 'zustand/shallow'
+import { useTranslation } from '../../i18n'
+import { useChartBuilderModel, useInsightBuilderModel, useReportBuilderModel } from '../../models'
+import { useReportDetailStore } from '../../stores/report-detail.store'
+import { InsightEditorDrawer } from './InsightEditorDrawer'
+import { PageSidebar } from './PageSidebar'
+import { ReportEditorDrawer } from './ReportEditorDrawer'
+import { ReportStage } from './ReportStage'
+import { useReportStageScroll } from './useReportStageScroll'
 
-export const ReportWorkspace = () => {
-  const activePageId = useReportDetailStore((state) => state.activePageId);
-  const chartId = useReportDetailStore((state) => state.connectedChartId);
-  const insightId = useReportDetailStore((state) => state.connectedInsightId);
-  const openChartEditor = useReportDetailStore(
-    (state) => state.openChartEditor,
-  );
-  const openInsightEditor = useReportDetailStore(
-    (state) => state.openInsightEditor,
-  );
-  const reportId = useReportDetailStore((state) => state.reportId);
-  const reportSession = useReportBuilderModel(
-    (state) => state.sessions[reportId],
-  );
-  const chartBuilder = useChartBuilderModel(
-    (state) => state.sessions[chartId]?.builder ?? null,
-  );
-  const insightBuilder = useInsightBuilderModel(
-    (state) => state.sessions[insightId]?.builder ?? null,
-  );
-  const pages = reportSession?.builder?.build().pages ?? [];
-  const page = pages.find((item) => item.id === activePageId);
-  const insightContent = insightBuilder?.build().content?.trim() ?? '';
+export const ReportWorkspace = memo(() => {
+  const { t } = useTranslation()
+  const { activePageId, openChartEditor, openInsightEditor, reportId, selectPage, setScrolledPage, viewMode } =
+    useReportDetailStore(
+      useShallow((state) => ({
+        activePageId: state.activePageId,
+        openChartEditor: state.openChartEditor,
+        openInsightEditor: state.openInsightEditor,
+        reportId: state.reportId,
+        selectPage: state.selectPage,
+        setScrolledPage: state.setScrolledPage,
+        viewMode: state.viewMode,
+      })),
+    )
 
-  if (!page) {
+  const reportSession = useReportBuilderModel((state) => state.sessions[reportId])
+  const reportBuilder = reportSession?.builder
+  const reportVersion = reportSession?.version ?? 0
+  const pages = useMemo(() => {
+    void reportVersion
+    return reportBuilder?.build().pages ?? []
+  }, [reportBuilder, reportVersion])
+  const pageIds = useMemo(() => pages.map((page) => page.id), [pages])
+  const chartBuilders = useChartBuilderModel(
+    useShallow((state) =>
+      Object.fromEntries(
+        pages
+          .map((page) => page.chartId)
+          .filter(Boolean)
+          .map((id) => [id, state.sessions[id]?.builder ?? null]),
+      ),
+    ),
+  )
+  const insightBuilders = useInsightBuilderModel(
+    useShallow((state) =>
+      Object.fromEntries(
+        pages
+          .map((page) => page.insightId)
+          .filter(Boolean)
+          .map((id) => [id, state.sessions[id]?.builder ?? null]),
+      ),
+    ),
+  )
+
+  const { setPageNode, stageRef } = useReportStageScroll({
+    activePageId,
+    pageIds,
+    setScrolledPage,
+    viewMode,
+  })
+
+  const viewPages = useMemo(
+    () =>
+      pages.map((page) => ({
+        chartBuilder: page.chartId && page.chartId in chartBuilders ? (chartBuilders[page.chartId] ?? null) : null,
+        hasChart: !!page.chartId,
+        hasInsight: !!page.insightId,
+        insightBuilder:
+          page.insightId && page.insightId in insightBuilders ? (insightBuilders[page.insightId] ?? null) : null,
+        page,
+      })),
+    [chartBuilders, insightBuilders, pages],
+  )
+
+  const editChart = useCallback(
+    (pageId: string) => {
+      void (async () => {
+        await selectPage(pageId)
+        openChartEditor()
+      })()
+    },
+    [openChartEditor, selectPage],
+  )
+
+  const editInsight = useCallback(
+    (pageId: string) => {
+      void (async () => {
+        await selectPage(pageId)
+        openInsightEditor()
+      })()
+    },
+    [openInsightEditor, selectPage],
+  )
+
+  if (!pages.length) {
     return (
-      <div className="report-detail-empty">
-        <Typography.Text type="secondary">
-          当前报告没有可用页面。
-        </Typography.Text>
+      <div className='report-detail-shell'>
+        <PageSidebar />
+        <div className='report-detail-stage report-detail-stage-empty'>
+          <Empty description={t('reportDetail.emptyReport')} image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </div>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="report-detail-shell">
+    <div className='report-detail-shell'>
       <PageSidebar />
-      <section className="report-detail-stage">
-        <div className="report-detail-slide">
-          <div className="report-detail-slide-chart">
-            <EditableSurface onEdit={openChartEditor}>
-              {chartBuilder ? (
-                <StandardAPP builder={chartBuilder} mode="view" />
-              ) : (
-                <div className="report-detail-placeholder">
-                  <Spin tip="连接图表中..." />
-                </div>
-              )}
-            </EditableSurface>
-          </div>
-          <div className="report-detail-slide-note">
-            <EditableSurface onEdit={openInsightEditor}>
-              <div className="report-detail-insight-panel">
-                <Typography.Paragraph className="report-detail-insight">
-                  {insightContent || '暂无洞察'}
-                </Typography.Paragraph>
-              </div>
-            </EditableSurface>
-          </div>
-        </div>
-      </section>
+      <ReportStage
+        activePageId={activePageId}
+        onEditChart={editChart}
+        onEditInsight={editInsight}
+        onPageRef={setPageNode}
+        pageSections={viewPages}
+        stageRef={stageRef}
+        viewMode={viewMode}
+      />
       <ReportEditorDrawer />
       <InsightEditorDrawer />
     </div>
-  );
-};
+  )
+})

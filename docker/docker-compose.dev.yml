@@ -11,7 +11,7 @@ services:
       - ../apps/vbi_fe/src:/app/apps/vbi_fe/src
       - ../apps/vbi_fe/public:/app/apps/vbi_fe/public
       - ../apps/vbi_fe/rsbuild.config.ts:/app/apps/vbi_fe/rsbuild.config.ts
-      - ../apps/packages:/app/apps/packages
+      - ../apps/vbi_provider:/app/apps/vbi_provider
       - ../packages:/app/packages
       - ../practices:/app/practices
     environment:
@@ -27,7 +27,7 @@ services:
     build:
       context: ..
       dockerfile: docker/vbi_be/Dockerfile.dev
-    command: pnpm --filter vbi_be start:debug
+    command: pnpm --filter @visactor/headless-bi-be start:debug
     ports:
       - '${VBI_BE_PORT:-3030}:3030'
       - '${VBI_DEBUG_PORT:-9229}:9229'

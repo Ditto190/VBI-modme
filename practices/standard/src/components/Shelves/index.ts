@@ -1,1 +1,1 @@
-export * from './shelves';
+export * from './shelves'

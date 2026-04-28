@@ -5,6 +5,7 @@ import {
   xBand,
   yLinear,
   initArea,
+  animation,
   backgroundColor,
   label,
   tooltip,
@@ -48,6 +49,7 @@ import {
 const areaPercent: VChartSpecPipeline = [
   fontFamilyTheme,
   initArea,
+  animation,
   regionPadding,
   stackInverse,
   colorAdapter(color, linearColor),
@@ -81,6 +83,7 @@ const pivotAreaPercent: PivotChartSpecPipeline = [
   pivotIndicators([
     fontFamilyTheme,
     initArea,
+    animation,
     regionPadding,
     stackInverse,
     colorAdapter(color, linearColor),

@@ -1,23 +1,12 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import {
-  ApiDataResponse,
-  ApiErrorResponse,
-} from '../common/swagger/api-response.decorator';
-import { ReportReferenceEntity } from '../report/entities/report-reference.entity';
-import { CreateInsightDto } from './dto/create-insight.dto';
-import { UpdateInsightDto } from './dto/update-insight.dto';
-import { InsightCollaborationSessionEntity } from './entities/insight-collaboration-session.entity';
-import { InsightDetailEntity, InsightEntity } from './entities/insight.entity';
-import { InsightService } from './insight.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiDataResponse, ApiErrorResponse } from '../common/swagger/api-response.decorator'
+import { ReportReferenceEntity } from '../report/entities/report-reference.entity'
+import { CreateInsightDto } from './dto/create-insight.dto'
+import { UpdateInsightDto } from './dto/update-insight.dto'
+import { InsightCollaborationSessionEntity } from './entities/insight-collaboration-session.entity'
+import { InsightDetailEntity, InsightEntity } from './entities/insight.entity'
+import { InsightService } from './insight.service'
 
 @ApiTags('insights')
 @Controller('insights')
@@ -38,7 +27,7 @@ export class InsightController {
     status: 400,
   })
   create(@Body() dto: CreateInsightDto) {
-    return this.insightService.create(dto);
+    return this.insightService.create(dto)
   }
 
   @Get()
@@ -50,7 +39,7 @@ export class InsightController {
     type: InsightEntity,
   })
   findAll() {
-    return this.insightService.findAll();
+    return this.insightService.findAll()
   }
 
   @Get(':id')
@@ -67,7 +56,7 @@ export class InsightController {
     status: 404,
   })
   findOne(@Param('id') id: string) {
-    return this.insightService.findOne(id);
+    return this.insightService.findOne(id)
   }
 
   @Get(':id/references')
@@ -85,7 +74,7 @@ export class InsightController {
     status: 404,
   })
   findReferences(@Param('id') id: string) {
-    return this.insightService.findReferences(id);
+    return this.insightService.findReferences(id)
   }
 
   @Get(':id/collaboration')
@@ -97,7 +86,7 @@ export class InsightController {
     type: InsightCollaborationSessionEntity,
   })
   getCollaborationSession(@Param('id') id: string) {
-    return this.insightService.getCollaborationSession(id);
+    return this.insightService.getCollaborationSession(id)
   }
 
   @Patch(':id')
@@ -120,7 +109,7 @@ export class InsightController {
     status: 400,
   })
   update(@Param('id') id: string, @Body() dto: UpdateInsightDto) {
-    return this.insightService.update(id, dto);
+    return this.insightService.update(id, dto)
   }
 
   @Delete(':id')
@@ -142,6 +131,6 @@ export class InsightController {
     status: 409,
   })
   remove(@Param('id') id: string) {
-    return this.insightService.remove(id);
+    return this.insightService.remove(id)
   }
 }

@@ -1,22 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  NotFoundException,
-  Put,
-} from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import {
-  ApiDataResponse,
-  ApiErrorResponse,
-} from '../common/swagger/api-response.decorator';
-import { PostService } from './post.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { PostEntity } from './entities/post.entity';
+import { Body, Controller, Delete, Get, Param, Post, NotFoundException, Put } from '@nestjs/common'
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiDataResponse, ApiErrorResponse } from '../common/swagger/api-response.decorator'
+import { PostService } from './post.service'
+import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { PostEntity } from './entities/post.entity'
 
 @ApiTags('post')
 @Controller('post')
@@ -37,11 +25,11 @@ export class PostController {
     status: 404,
   })
   async getPost(@Param('id') id: string): Promise<PostEntity> {
-    const post = await this.postService.post({ id: Number(id) });
+    const post = await this.postService.post({ id: Number(id) })
     if (!post) {
-      throw new NotFoundException(`Post with ID ${id} not found`);
+      throw new NotFoundException(`Post with ID ${id} not found`)
     }
-    return post;
+    return post
   }
 
   @Get()
@@ -53,7 +41,7 @@ export class PostController {
     type: PostEntity,
   })
   async getPosts(): Promise<PostEntity[]> {
-    return this.postService.posts();
+    return this.postService.posts()
   }
 
   @Post()
@@ -70,7 +58,7 @@ export class PostController {
     status: 400,
   })
   async createPost(@Body() postData: CreatePostDto): Promise<PostEntity> {
-    const { title, content, authorEmail, published } = postData;
+    const { title, content, authorEmail, published } = postData
     return this.postService.createPost({
       title,
       content,
@@ -78,7 +66,7 @@ export class PostController {
       author: {
         connect: { email: authorEmail },
       },
-    });
+    })
   }
 
   @Put(':id')
@@ -95,14 +83,11 @@ export class PostController {
     message: 'Validation failed',
     status: 400,
   })
-  async updatePost(
-    @Param('id') id: string,
-    @Body() postData: UpdatePostDto,
-  ): Promise<PostEntity> {
+  async updatePost(@Param('id') id: string, @Body() postData: UpdatePostDto): Promise<PostEntity> {
     return this.postService.updatePost({
       where: { id: Number(id) },
       data: postData,
-    });
+    })
   }
 
   @Delete(':id')
@@ -114,6 +99,6 @@ export class PostController {
     type: PostEntity,
   })
   async deletePost(@Param('id') id: string): Promise<PostEntity> {
-    return this.postService.deletePost({ id: Number(id) });
+    return this.postService.deletePost({ id: Number(id) })
   }
 }

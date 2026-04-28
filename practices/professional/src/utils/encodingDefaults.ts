@@ -20,11 +20,11 @@ export const CHART_DEFAULT_ENCODING: Record<string, string> = {
   // Default fallback
   table: 'yAxis',
   default: 'yAxis',
-};
+}
 
 /**
  * Get default encoding for a chart type
  */
 export function getDefaultEncodingForChart(chartType: string): string {
-  return CHART_DEFAULT_ENCODING[chartType] || CHART_DEFAULT_ENCODING.default;
+  return CHART_DEFAULT_ENCODING[chartType] || CHART_DEFAULT_ENCODING.default
 }

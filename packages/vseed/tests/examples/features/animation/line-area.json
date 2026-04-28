@@ -1,0 +1,27 @@
+{
+  "name": "lineAreaAnimation",
+  "description": "Line and area charts support appear, update, and loop animation.",
+  "vseed": {
+    "chartType": "line",
+    "animation": {
+      "enable": true,
+      "params": {
+        "appear": { "enable": true, "effects": ["load"], "duration": 1, "ease": "cubicOut" },
+        "update": { "enable": true, "effects": ["growth"], "duration": 0.5 },
+        "loop": {
+          "enable": true,
+          "interval": 1,
+          "loop": { "enable": true, "effects": ["growth"], "duration": 1 },
+          "atmosphere": { "effect": "breath", "color": "#f28e2b", "ease": "quadInOut" }
+        }
+      }
+    },
+    "dataset": [
+      { "date": "2019", "profit": 10 },
+      { "date": "2020", "profit": 35 },
+      { "date": "2021", "profit": 28 }
+    ],
+    "dimensions": [{ "id": "date", "alias": "Date" }],
+    "measures": [{ "id": "profit", "alias": "Profit" }]
+  }
+}

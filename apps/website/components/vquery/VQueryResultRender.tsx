@@ -1,4 +1,4 @@
-import { VQuery, VQueryDSL, DatasetColumn } from '@visactor/vquery'
+import type { VQueryDSL, DatasetColumn } from '@visactor/vquery'
 import { useEffect, useState, useRef } from 'react'
 import { VSeedRender } from '@components'
 import { VSeed } from '@visactor/vseed'
@@ -47,6 +47,7 @@ const VQueryResultRenderBase = ({ vqueryConfig }: { vqueryConfig: VQueryConfig }
   const dark = useDark()
   useEffect(() => {
     const run = async () => {
+      const { VQuery } = await import('@visactor/vquery')
       const vquery = new VQuery()
       const { datasetId, schema, dataset: rawDataset, vquery: vqueryDSL } = vqueryConfig
 
@@ -62,11 +63,10 @@ const VQueryResultRenderBase = ({ vqueryConfig }: { vqueryConfig: VQueryConfig }
         dataset: queryResult.dataset,
         theme: dark ? 'dark' : 'light',
       } as VSeed
-      console.log('debug', nextVSeed)
       setVSeed(nextVSeed)
     }
     run()
-  }, [dark])
+  }, [dark, vqueryConfig])
 
   if (vseed) {
     return <VSeedRender vseed={vseed} />

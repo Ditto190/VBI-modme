@@ -1,1 +1,1 @@
-export * from './utils/dimensionDateAggregateUtils';
+export * from './utils/dimensionDateAggregateUtils'

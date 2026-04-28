@@ -1,13 +1,9 @@
 #!/usr/bin/env node
-import { runCli } from './run.js'
+import { runCli } from './cli-runner.js'
 
-const exitCode = await runCli(process.argv.slice(2), {
-  getClient: async () => {
-    const { createCliClient } = await import('./client.js')
-    return createCliClient()
-  },
-  stderr: process.stderr,
-  stdout: process.stdout,
+const code = await runCli(process.argv.slice(2), {
+  writeError: (text) => console.error(text),
+  writeOutput: (text) => console.log(text),
 })
 
-process.exitCode = exitCode
+process.exit(code)

@@ -5,6 +5,7 @@ import { zPieLabel } from './label'
 import { zLegend } from './legend/legend'
 import { zTooltip } from './tooltip/tooltip'
 import { zPivotChartGridConfig } from './pivotGrid'
+import { zPieLikeAnimation } from './animation'
 
 export const zRoseConfig = z.object({
   backgroundColor: zBackgroundColor.nullish(),
@@ -14,6 +15,7 @@ export const zRoseConfig = z.object({
   legend: zLegend.nullish(),
 
   pivotGrid: zPivotChartGridConfig.nullish(),
+  animation: zPieLikeAnimation.nullish(),
 })
 export const zRoseParallelConfig = zRoseConfig
 

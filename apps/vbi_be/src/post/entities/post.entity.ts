@@ -1,18 +1,18 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class PostEntity {
   @ApiProperty({ example: 1 })
-  id: number;
+  id: number
 
   @ApiProperty({ example: 'Quarterly summary' })
-  title: string;
+  title: string
 
   @ApiPropertyOptional({ example: 'Post content', nullable: true })
-  content: string | null;
+  content: string | null
 
   @ApiProperty({ example: false })
-  published: boolean;
+  published: boolean
 
   @ApiProperty({ example: 1 })
-  authorId: number;
+  authorId: number
 }

@@ -223,20 +223,20 @@ await vquery.createDataset(connectorId, schema, ds)
 
 ---
 
-## 6. ESLint react-hooks/exhaustive-deps
+## 6. Hook 依赖数组
 
 ### 问题
 
-在组件中使用 `// eslint-disable-next-line react-hooks/exhaustive-deps` 后，Linter 报错："Definition for rule 'react-hooks/exhaustive-deps' was not found"。
+组件中遗漏 `useCallback` / `useEffect` 依赖会导致闭包读取旧状态。
 
 ### 原因
 
-项目中没有安装 `eslint-plugin-react-hooks`，该规则不存在。
+项目使用 Oxlint，不再保留 ESLint react-hooks 插件规则作为兜底。
 
 ### 解决方案
 
-- ❌ 不要使用 `// eslint-disable-next-line react-hooks/exhaustive-deps`
-- ✅ 在 `useCallback` 的依赖数组中包含所有需要的依赖，或显式写 `// eslint-disable-next-line @typescript-eslint/no-explicit-any`
+- ❌ 不要依赖 lint disable 注释跳过依赖检查
+- ✅ 在依赖数组中包含所有需要的依赖，或重构出稳定的回调/状态边界
 
 ---
 

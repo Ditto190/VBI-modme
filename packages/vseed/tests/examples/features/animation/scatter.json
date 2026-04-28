@@ -1,0 +1,31 @@
+{
+  "name": "scatterAnimation",
+  "description": "Scatter charts support scale appear, growth update, and point atmosphere animation.",
+  "vseed": {
+    "chartType": "scatter",
+    "animation": {
+      "enable": true,
+      "params": {
+        "appear": { "enable": true, "effects": ["scale"], "duration": 0.8 },
+        "update": { "enable": true, "effects": ["growth"], "duration": 0.5 },
+        "loop": {
+          "enable": true,
+          "interval": 1,
+          "loop": { "enable": true, "effects": ["growth"], "duration": 1 },
+          "atmosphere": { "effect": "ripple", "color": "#76b7b2", "ease": "linear" }
+        }
+      }
+    },
+    "dataset": [
+      { "date": "2019", "sales": 20, "profit": 10 },
+      { "date": "2020", "sales": 60, "profit": 35 },
+      { "date": "2021", "sales": 80, "profit": 28 }
+    ],
+    "dimensions": [{ "id": "date", "alias": "Date" }],
+    "measures": [
+      { "id": "sales", "alias": "Sales", "encoding": "xAxis" },
+      { "id": "profit", "alias": "Profit", "encoding": "yAxis" }
+    ],
+    "label": { "enable": false }
+  }
+}

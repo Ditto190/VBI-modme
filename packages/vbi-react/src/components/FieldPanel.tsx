@@ -159,7 +159,7 @@ export function FieldPanel(props: FieldPanelProps) {
             <strong style={sectionTitleStyle}>{dimensionsTitle}</strong>
             <div style={{ display: 'flex', gap: 8 }}>
               <select
-                aria-label="Available dimensions"
+                aria-label='Available dimensions'
                 onChange={(event) => {
                   setSelectedDimension(event.target.value)
                 }}
@@ -167,7 +167,7 @@ export function FieldPanel(props: FieldPanelProps) {
                 value={selectedDimension}
               >
                 {availableDimensionOptions.length === 0 ? (
-                  <option value="">No dimensions available</option>
+                  <option value=''>No dimensions available</option>
                 ) : (
                   availableDimensionOptions.map((dimensionOption) => (
                     <option key={dimensionOption.value} value={dimensionOption.value}>
@@ -186,7 +186,7 @@ export function FieldPanel(props: FieldPanelProps) {
                   addDimension(selectedDimension)
                 }}
                 style={actionButtonStyle}
-                type="button"
+                type='button'
               >
                 Add dimension
               </button>
@@ -195,7 +195,7 @@ export function FieldPanel(props: FieldPanelProps) {
 
           <div style={{ border: '1px solid #d9d9d9', borderRadius: 8, minHeight: 0, overflow: 'hidden' }}>
             <ul
-              aria-label="Selected dimensions"
+              aria-label='Selected dimensions'
               style={{
                 alignContent: 'start',
                 display: 'grid',
@@ -237,7 +237,7 @@ export function FieldPanel(props: FieldPanelProps) {
                       style={controlStyle}
                       value={dimension.aggregate?.func ?? ''}
                     >
-                      <option value="">None</option>
+                      <option value=''>None</option>
                       {dimensionAggregateOptions.map((aggregateOption) => (
                         <option key={aggregateOption.value} value={aggregateOption.value}>
                           {aggregateOption.label ?? aggregateOption.value}
@@ -269,7 +269,7 @@ export function FieldPanel(props: FieldPanelProps) {
                       removeDimension(dimension.id)
                     }}
                     style={actionButtonStyle}
-                    type="button"
+                    type='button'
                   >
                     Remove dimension {dimension.field}
                   </button>
@@ -285,7 +285,7 @@ export function FieldPanel(props: FieldPanelProps) {
             <strong style={sectionTitleStyle}>{measuresTitle}</strong>
             <div style={{ display: 'flex', gap: 8 }}>
               <select
-                aria-label="Available measures"
+                aria-label='Available measures'
                 onChange={(event) => {
                   setSelectedMeasure(event.target.value)
                 }}
@@ -293,7 +293,7 @@ export function FieldPanel(props: FieldPanelProps) {
                 value={selectedMeasure}
               >
                 {availableMeasureOptions.length === 0 ? (
-                  <option value="">No measures available</option>
+                  <option value=''>No measures available</option>
                 ) : (
                   availableMeasureOptions.map((measureOption) => (
                     <option key={measureOption.value} value={measureOption.value}>
@@ -312,7 +312,7 @@ export function FieldPanel(props: FieldPanelProps) {
                   addMeasure(selectedMeasure)
                 }}
                 style={actionButtonStyle}
-                type="button"
+                type='button'
               >
                 Add measure
               </button>
@@ -321,7 +321,7 @@ export function FieldPanel(props: FieldPanelProps) {
 
           <div style={{ border: '1px solid #d9d9d9', borderRadius: 8, minHeight: 0, overflow: 'hidden' }}>
             <ul
-              aria-label="Selected measures"
+              aria-label='Selected measures'
               style={{
                 alignContent: 'start',
                 display: 'grid',
@@ -393,7 +393,7 @@ export function FieldPanel(props: FieldPanelProps) {
                       removeMeasure(measure.id)
                     }}
                     style={actionButtonStyle}
-                    type="button"
+                    type='button'
                   >
                     Remove measure {measure.field}
                   </button>

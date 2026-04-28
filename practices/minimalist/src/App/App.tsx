@@ -1,19 +1,19 @@
-import { Flex, Spin, Card, Typography } from 'antd';
-import { VSeedRender } from 'src/components/Render';
-import { MeasuresList } from 'src/components/Fields/MeasuresList';
-import { DimensionsList } from 'src/components/Fields/DimensionsList';
-import { VBIChartBuilder } from '@visactor/vbi';
-import { ChartTypeSelector } from 'src/components/ChartType';
-import { MeasureShelf } from 'src/components/Shelfs/MeasureShelf';
-import { DimensionShelf } from 'src/components/Shelfs/DimensionShelf';
-import { useVBIStore } from 'src/model';
-import { useEffect } from 'react';
-import { useShallow } from 'zustand/shallow';
+import { Flex, Spin, Card, Typography } from 'antd'
+import { VSeedRender } from 'src/components/Render'
+import { MeasuresList } from 'src/components/Fields/MeasuresList'
+import { DimensionsList } from 'src/components/Fields/DimensionsList'
+import { VBIChartBuilder } from '@visactor/vbi'
+import { ChartTypeSelector } from 'src/components/ChartType'
+import { MeasureShelf } from 'src/components/Shelfs/MeasureShelf'
+import { DimensionShelf } from 'src/components/Shelfs/DimensionShelf'
+import { useVBIStore } from 'src/model'
+import { useEffect } from 'react'
+import { useShallow } from 'zustand/shallow'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 interface APPProps {
-  builder?: VBIChartBuilder;
+  builder?: VBIChartBuilder
 }
 
 export const APP = (props: APPProps) => {
@@ -22,21 +22,18 @@ export const APP = (props: APPProps) => {
       initialize: state.initialize,
       initialized: state.initialized,
     })),
-  );
+  )
 
   useEffect(() => {
-    return initialize(props.builder);
-  }, []);
+    return initialize(props.builder)
+  }, [])
 
   if (!initialized) {
-    return <Spin tip="Initializing..." fullscreen />;
+    return <Spin tip='Initializing...' fullscreen />
   }
 
   return (
-    <Flex
-      vertical
-      style={{ height: '100vh', padding: '16px', backgroundColor: '#f5f5f5' }}
-    >
+    <Flex vertical style={{ height: '100vh', padding: '16px', backgroundColor: '#f5f5f5' }}>
       {/* 1. Webpage Title */}
       <Title level={3} style={{ margin: '0 0 16px 0', color: '#333' }}>
         Minimalist
@@ -48,7 +45,7 @@ export const APP = (props: APPProps) => {
           <ChartTypeSelector />
 
           <Card
-            title="Selected Dimensions"
+            title='Selected Dimensions'
             styles={{
               body: { padding: '12px', overflowY: 'auto', maxHeight: '30vh' },
             }}
@@ -57,7 +54,7 @@ export const APP = (props: APPProps) => {
           </Card>
 
           <Card
-            title="Selected Measures"
+            title='Selected Measures'
             styles={{
               body: { padding: '12px', overflowY: 'auto', maxHeight: '30vh' },
             }}
@@ -81,12 +78,12 @@ export const APP = (props: APPProps) => {
         </Flex>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
 const ChartWrapper = () => {
-  const vseed = useVBIStore((state) => state.vseed);
-  const loading = useVBIStore((state) => state.loading);
+  const vseed = useVBIStore((state) => state.vseed)
+  const loading = useVBIStore((state) => state.loading)
   return (
     <Card
       loading={loading}
@@ -97,5 +94,5 @@ const ChartWrapper = () => {
     >
       {vseed && <VSeedRender vseed={vseed} />}
     </Card>
-  );
-};
+  )
+}

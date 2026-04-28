@@ -1,38 +1,38 @@
-import { useDroppable } from '@dnd-kit/core';
-import { DropArea, ShelfBoundaryDropZone, type ShelfType } from '../dnd';
+import { useDroppable } from '@dnd-kit/core'
+import { DropArea, ShelfBoundaryDropZone, type ShelfType } from '../dnd'
 
 export type ShelfTone = {
-  trackBackground: string;
-  trackBorder: string;
-  placeholderColor: string;
-  dragOverBackground: string;
-  dragOverBorder: string;
-  itemBackground: string;
-  itemHoverBackground: string;
-  itemBorder: string;
-  itemHoverBorder: string;
-  textColor: string;
-  iconBackground: string;
-  iconHoverBackground: string;
-  iconColor: string;
-};
+  trackBackground: string
+  trackBorder: string
+  placeholderColor: string
+  dragOverBackground: string
+  dragOverBorder: string
+  itemBackground: string
+  itemHoverBackground: string
+  itemBorder: string
+  itemHoverBorder: string
+  textColor: string
+  iconBackground: string
+  iconHoverBackground: string
+  iconColor: string
+}
 
 type ShelfTrackProps = {
-  shelf: ShelfType;
-  itemsCount: number;
-  placeholder: string;
-  tone: ShelfTone;
-  style?: React.CSSProperties;
-  leading?: React.ReactNode;
-  children: React.ReactNode;
-};
+  shelf: ShelfType
+  itemsCount: number
+  placeholder: string
+  tone: ShelfTone
+  style?: React.CSSProperties
+  leading?: React.ReactNode
+  children: React.ReactNode
+}
 
 const getContainerStyle = (params: {
-  isDragOver: boolean;
-  tone: ShelfTone;
-  style?: React.CSSProperties;
+  isDragOver: boolean
+  tone: ShelfTone
+  style?: React.CSSProperties
 }): React.CSSProperties => {
-  const { isDragOver, tone, style } = params;
+  const { isDragOver, tone, style } = params
 
   return {
     flexBasis: 300,
@@ -50,8 +50,8 @@ const getContainerStyle = (params: {
     position: 'relative',
     background: isDragOver ? tone.dragOverBackground : tone.trackBackground,
     ...style,
-  };
-};
+  }
+}
 
 const rowStyle: React.CSSProperties = {
   display: 'inline-flex',
@@ -59,7 +59,7 @@ const rowStyle: React.CSSProperties = {
   gap: 6,
   minWidth: '100%',
   minHeight: '100%',
-};
+}
 
 const trackStyle: React.CSSProperties = {
   position: 'relative',
@@ -68,7 +68,7 @@ const trackStyle: React.CSSProperties = {
   minWidth: 0,
   minHeight: 20,
   flex: '1 0 auto',
-};
+}
 
 const getPlaceholderStyle = (tone: ShelfTone): React.CSSProperties => {
   return {
@@ -79,19 +79,11 @@ const getPlaceholderStyle = (tone: ShelfTone): React.CSSProperties => {
     fontSize: 11,
     padding: '0 6px 0 0',
     flexShrink: 0,
-  };
-};
+  }
+}
 
-export const ShelfTrack = ({
-  shelf,
-  itemsCount,
-  placeholder,
-  tone,
-  style,
-  leading,
-  children,
-}: ShelfTrackProps) => {
-  const isEmpty = itemsCount === 0;
+export const ShelfTrack = ({ shelf, itemsCount, placeholder, tone, style, leading, children }: ShelfTrackProps) => {
+  const isEmpty = itemsCount === 0
   const { setNodeRef, isOver } = useDroppable({
     id: `shelf-empty:${shelf}`,
     disabled: !isEmpty,
@@ -101,7 +93,7 @@ export const ShelfTrack = ({
       insertIndex: 0,
       anchor: 'empty',
     },
-  });
+  })
 
   return (
     <div
@@ -117,29 +109,17 @@ export const ShelfTrack = ({
         <div style={trackStyle}>
           {isEmpty ? (
             <>
-              <ShelfBoundaryDropZone
-                shelf={shelf}
-                insertIndex={0}
-                anchor="empty"
-                color={tone.iconColor}
-                edge="start"
-              />
+              <ShelfBoundaryDropZone shelf={shelf} insertIndex={0} anchor='empty' color={tone.iconColor} edge='start' />
               <span style={getPlaceholderStyle(tone)}>{placeholder}</span>
             </>
           ) : (
             <>
               {children}
-              <DropArea
-                shelf={shelf}
-                insertIndex={itemsCount}
-                anchor="tail"
-                color={tone.iconColor}
-                flexible
-              />
+              <DropArea shelf={shelf} insertIndex={itemsCount} anchor='tail' color={tone.iconColor} flexible />
             </>
           )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

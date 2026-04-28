@@ -1,12 +1,12 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class UserEntity {
   @ApiProperty({ example: 1 })
-  id: number;
+  id: number
 
   @ApiProperty({ example: 'alice@example.com' })
-  email: string;
+  email: string
 
   @ApiPropertyOptional({ example: 'Alice', nullable: true })
-  name: string | null;
+  name: string | null
 }

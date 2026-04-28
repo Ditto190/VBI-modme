@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { IndexedDBAdapter } from 'src/adapters/storage-adapter/indexeddbAdapter'
-import { DatasetSchema } from 'src/types/DataSet'
-import { DatasetSource } from 'src/types'
+import { IndexedDBAdapter } from '../../../src/adapters/storage-adapter/indexeddbAdapter'
+import { DatasetSchema } from '../../../src/types/DataSet'
+import { DatasetSource } from '../../../src/types'
 
 describe('IndexedDBAdapter', () => {
   let adapter: IndexedDBAdapter

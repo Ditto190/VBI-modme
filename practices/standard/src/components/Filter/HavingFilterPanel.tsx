@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Select,
   Input,
@@ -13,7 +13,7 @@ import {
   Badge,
   Tag,
   theme,
-} from 'antd';
+} from 'antd'
 import {
   FilterOutlined,
   DeleteOutlined,
@@ -21,9 +21,9 @@ import {
   EditOutlined,
   ClearOutlined,
   CheckOutlined,
-} from '@ant-design/icons';
-import type { VBIHavingAggregate } from '@visactor/vbi';
-import { useTranslation } from 'src/i18n';
+} from '@ant-design/icons'
+import type { VBIHavingAggregate } from '@visactor/vbi'
+import { useTranslation } from 'src/i18n'
 import {
   getDefaultHavingAggregateByFieldRole,
   getDefaultHavingOperator,
@@ -39,87 +39,79 @@ import {
   serializeHavingFilterValue,
   toHavingAggregate,
   type HavingFilterRangeValue,
-} from './havingFilterUtils';
+} from './havingFilterUtils'
 
-const { Option = Select.Option } = Select;
-const { Text } = Typography;
+const { Option = Select.Option } = Select
+const { Text } = Typography
 
 const POPOVER_TEXT_BUTTON_STYLE: React.CSSProperties = {
   height: 22,
   padding: '0 12px',
-};
+}
 
 const POPOVER_ICON_BUTTON_STYLE: React.CSSProperties = {
   width: 22,
   minWidth: 22,
   height: 22,
   padding: 0,
-};
+}
 
 export interface HavingItem {
-  id?: string;
-  field: string;
-  aggregate: VBIHavingAggregate;
-  operator: string;
-  value: unknown;
+  id?: string
+  field: string
+  aggregate: VBIHavingAggregate
+  operator: string
+  value: unknown
 }
 
 export interface HavingField {
-  name: string;
-  role: 'dimension' | 'measure';
-  type?: string;
-  isDate?: boolean;
+  name: string
+  role: 'dimension' | 'measure'
+  type?: string
+  isDate?: boolean
 }
 
 interface HavingFilterPanelProps {
-  fields: HavingField[];
-  activeFields?: string[];
-  filters: HavingItem[];
-  onChange?: (filters: HavingItem[]) => void;
-  onAdd?: (filter: HavingItem) => void;
-  onRemove?: (id: string) => void;
-  onCancel?: () => void;
-  embedded?: boolean;
-  itemEdit?: boolean;
-  open?: boolean;
-  fixedField?: string;
+  fields: HavingField[]
+  activeFields?: string[]
+  filters: HavingItem[]
+  onChange?: (filters: HavingItem[]) => void
+  onAdd?: (filter: HavingItem) => void
+  onRemove?: (id: string) => void
+  onCancel?: () => void
+  embedded?: boolean
+  itemEdit?: boolean
+  open?: boolean
+  fixedField?: string
 }
 
 type HavingFormValues = {
-  field: string;
-  aggregateFunc: string;
-  operator: string;
-  value: HavingFormValue;
-};
+  field: string
+  aggregateFunc: string
+  operator: string
+  value: HavingFormValue
+}
 
-type HavingFormValue =
-  | string
-  | number
-  | Array<string | number>
-  | HavingFilterRangeValue
-  | undefined;
+type HavingFormValue = string | number | Array<string | number> | HavingFilterRangeValue | undefined
 
-const getFieldRole = (
-  fields: HavingField[],
-  fieldName: string | undefined,
-): 'dimension' | 'measure' => {
+const getFieldRole = (fields: HavingField[], fieldName: string | undefined): 'dimension' | 'measure' => {
   if (!fieldName) {
-    return 'measure';
+    return 'measure'
   }
-  return fields.find((field) => field.name === fieldName)?.role ?? 'measure';
-};
+  return fields.find((field) => field.name === fieldName)?.role ?? 'measure'
+}
 
 const getFieldRoleLabel = (field: HavingField, t: (key: string) => string) => {
   if (field.role === 'measure') {
-    return t('filtersFieldRolesMeasure');
+    return t('filtersFieldRolesMeasure')
   }
 
   if (field.isDate) {
-    return t('filtersFieldRolesDateDimension');
+    return t('filtersFieldRolesDateDimension')
   }
 
-  return t('filtersFieldRolesDimension');
-};
+  return t('filtersFieldRolesDimension')
+}
 
 export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
   fields,
@@ -134,51 +126,47 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
   open = false,
   fixedField,
 }) => {
-  const { token } = theme.useToken();
-  const { t } = useTranslation();
-  const [popoverOpen, setPopoverOpen] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [form] = Form.useForm<HavingFormValues>();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { token } = theme.useToken()
+  const { t } = useTranslation()
+  const [popoverOpen, setPopoverOpen] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [form] = Form.useForm<HavingFormValues>()
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const selectedFieldFromForm = Form.useWatch('field', form);
-  const selectedAggregateFunc = Form.useWatch('aggregateFunc', form);
-  const selectedOperator = normalizeHavingOperator(
-    Form.useWatch('operator', form),
-  );
-  const isSingleItemEdit = itemEdit && filters.length === 1;
-  const fixedEditingField = isSingleItemEdit
-    ? fixedField || filters[0]?.field
-    : undefined;
-  const selectedField = selectedFieldFromForm ?? fixedEditingField;
+  const selectedFieldFromForm = Form.useWatch('field', form)
+  const selectedAggregateFunc = Form.useWatch('aggregateFunc', form)
+  const selectedOperator = normalizeHavingOperator(Form.useWatch('operator', form))
+  const isSingleItemEdit = itemEdit && filters.length === 1
+  const fixedEditingField = isSingleItemEdit ? fixedField || filters[0]?.field : undefined
+  const selectedField = selectedFieldFromForm ?? fixedEditingField
 
   const sortedFields = React.useMemo(() => {
-    const activeSet = new Set(activeFields);
+    const activeSet = new Set(activeFields)
     return [...fields].sort((a, b) => {
-      const aActive = activeSet.has(a.name);
-      const bActive = activeSet.has(b.name);
-      if (aActive && !bActive) return -1;
-      if (!aActive && bActive) return 1;
-      return 0;
-    });
-  }, [fields, activeFields]);
+      const aActive = activeSet.has(a.name)
+      const bActive = activeSet.has(b.name)
+      if (aActive && !bActive) return -1
+      if (!aActive && bActive) return 1
+      return 0
+    })
+  }, [fields, activeFields])
 
   const selectedFieldRole = React.useMemo(() => {
     if (selectedField) {
-      return getFieldRole(fields, selectedField);
+      return getFieldRole(fields, selectedField)
     }
 
     if (isSingleItemEdit) {
-      return getFieldRole(fields, filters[0]?.field);
+      return getFieldRole(fields, filters[0]?.field)
     }
 
-    return 'measure';
-  }, [fields, selectedField, isSingleItemEdit, filters]);
+    return 'measure'
+  }, [fields, selectedField, isSingleItemEdit, filters])
 
   const aggregateOptionGroups = React.useMemo(() => {
-    return getHavingAggregateOptionGroupsByFieldRole(selectedFieldRole, t);
-  }, [selectedFieldRole, t]);
+    return getHavingAggregateOptionGroupsByFieldRole(selectedFieldRole, t)
+  }, [selectedFieldRole, t])
 
   const aggregateSelectOptions = React.useMemo(() => {
     return aggregateOptionGroups.map((group) => ({
@@ -187,226 +175,199 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
         label: item.label,
         value: item.value,
       })),
-    }));
-  }, [aggregateOptionGroups]);
+    }))
+  }, [aggregateOptionGroups])
 
   const availableAggregateFuncs = React.useMemo(() => {
-    return aggregateOptionGroups.flatMap((group) =>
-      group.options.map((item) => item.value),
-    );
-  }, [aggregateOptionGroups]);
+    return aggregateOptionGroups.flatMap((group) => group.options.map((item) => item.value))
+  }, [aggregateOptionGroups])
 
   const recommendedAggregateOptions = React.useMemo(() => {
-    return (
-      aggregateOptionGroups.find((group) => group.key === 'common')?.options ??
-      []
-    );
-  }, [aggregateOptionGroups]);
+    return aggregateOptionGroups.find((group) => group.key === 'common')?.options ?? []
+  }, [aggregateOptionGroups])
 
   const selectedAggregate = React.useMemo(() => {
-    const fallback = getDefaultHavingAggregateByFieldRole(selectedFieldRole);
-    const aggregate = selectedAggregateFunc
-      ? toHavingAggregate(selectedAggregateFunc)
-      : fallback;
-    return normalizeHavingAggregate(aggregate, selectedFieldRole);
-  }, [selectedAggregateFunc, selectedFieldRole]);
+    const fallback = getDefaultHavingAggregateByFieldRole(selectedFieldRole)
+    const aggregate = selectedAggregateFunc ? toHavingAggregate(selectedAggregateFunc) : fallback
+    return normalizeHavingAggregate(aggregate, selectedFieldRole)
+  }, [selectedAggregateFunc, selectedFieldRole])
 
   const isNumericValue = React.useMemo(() => {
-    return isHavingNumericAggregate(selectedFieldRole, selectedAggregate);
-  }, [selectedFieldRole, selectedAggregate]);
+    return isHavingNumericAggregate(selectedFieldRole, selectedAggregate)
+  }, [selectedFieldRole, selectedAggregate])
 
   const operatorOptions = React.useMemo(() => {
-    return getHavingOperatorOptions(isNumericValue, t);
-  }, [isNumericValue, t]);
+    return getHavingOperatorOptions(isNumericValue, t)
+  }, [isNumericValue, t])
 
   const inputStrategy = React.useMemo(() => {
-    return getHavingFilterInputStrategy(selectedOperator, isNumericValue);
-  }, [selectedOperator, isNumericValue]);
+    return getHavingFilterInputStrategy(selectedOperator, isNumericValue)
+  }, [selectedOperator, isNumericValue])
 
-  const isActive = embedded || popoverOpen || (isSingleItemEdit && open);
+  const isActive = embedded || popoverOpen || (isSingleItemEdit && open)
 
   useEffect(() => {
     if (itemEdit) {
-      return;
+      return
     }
     if (!popoverOpen) {
-      setIsAdding(false);
-      setEditingId(null);
-      form.resetFields();
+      setIsAdding(false)
+      setEditingId(null)
+      form.resetFields()
     }
-  }, [popoverOpen, form, itemEdit]);
+  }, [popoverOpen, form, itemEdit])
 
   useEffect(() => {
     if (!isSingleItemEdit || !open) {
-      return;
+      return
     }
 
-    const current = filters[0];
+    const current = filters[0]
     if (!current) {
-      return;
+      return
     }
 
-    const fieldRole = getFieldRole(fields, current.field);
-    const aggregate = normalizeHavingAggregate(current.aggregate, fieldRole);
-    const operator = normalizeHavingOperator(current.operator);
+    const fieldRole = getFieldRole(fields, current.field)
+    const aggregate = normalizeHavingAggregate(current.aggregate, fieldRole)
+    const operator = normalizeHavingOperator(current.operator)
 
     form.setFieldsValue({
       field: current.field,
       aggregateFunc: aggregate.func,
       operator,
-      value: getHavingFilterFormValue(
-        operator,
-        current.value,
-      ) as HavingFormValue,
-    });
-  }, [isSingleItemEdit, open, filters, fields, form]);
+      value: getHavingFilterFormValue(operator, current.value) as HavingFormValue,
+    })
+  }, [isSingleItemEdit, open, filters, fields, form])
 
   useEffect(() => {
     if (!isActive) {
-      return;
+      return
     }
 
-    const currentAggregateFunc = form.getFieldValue('aggregateFunc');
-    if (
-      currentAggregateFunc &&
-      availableAggregateFuncs.includes(currentAggregateFunc)
-    ) {
-      return;
+    const currentAggregateFunc = form.getFieldValue('aggregateFunc')
+    if (currentAggregateFunc && availableAggregateFuncs.includes(currentAggregateFunc)) {
+      return
     }
 
-    form.setFieldValue(
-      'aggregateFunc',
-      getDefaultHavingAggregateByFieldRole(selectedFieldRole).func,
-    );
-  }, [form, isActive, selectedFieldRole, availableAggregateFuncs]);
+    form.setFieldValue('aggregateFunc', getDefaultHavingAggregateByFieldRole(selectedFieldRole).func)
+  }, [form, isActive, selectedFieldRole, availableAggregateFuncs])
 
   useEffect(() => {
     if (!isActive) {
-      return;
+      return
     }
 
-    const currentOperator = normalizeHavingOperator(
-      form.getFieldValue('operator'),
-    );
+    const currentOperator = normalizeHavingOperator(form.getFieldValue('operator'))
     if (operatorOptions.some((option) => option.value === currentOperator)) {
-      return;
+      return
     }
 
-    form.setFieldValue('operator', getDefaultHavingOperator(isNumericValue));
-  }, [form, isActive, operatorOptions, isNumericValue]);
+    form.setFieldValue('operator', getDefaultHavingOperator(isNumericValue))
+  }, [form, isActive, operatorOptions, isNumericValue])
 
   useEffect(() => {
     if (!isActive) {
-      return;
+      return
     }
 
-    const currentValue = form.getFieldValue('value');
+    const currentValue = form.getFieldValue('value')
     if (inputStrategy === 'none') {
       if (currentValue !== undefined) {
-        form.setFieldValue('value', undefined);
+        form.setFieldValue('value', undefined)
       }
-      return;
+      return
     }
 
     if (inputStrategy === 'range') {
-      const normalizedRange = normalizeHavingRangeValue(currentValue);
+      const normalizedRange = normalizeHavingRangeValue(currentValue)
       const hasChanged =
         !currentValue ||
         typeof currentValue !== 'object' ||
         Array.isArray(currentValue) ||
         currentValue.min !== normalizedRange.min ||
-        currentValue.max !== normalizedRange.max;
+        currentValue.max !== normalizedRange.max
 
       if (hasChanged) {
-        form.setFieldValue('value', normalizedRange);
+        form.setFieldValue('value', normalizedRange)
       }
-      return;
+      return
     }
 
     if (inputStrategy === 'tags') {
       if (!Array.isArray(currentValue)) {
-        form.setFieldValue(
-          'value',
-          getHavingFilterFormValue(
-            selectedOperator,
-            currentValue,
-          ) as HavingFormValue,
-        );
+        form.setFieldValue('value', getHavingFilterFormValue(selectedOperator, currentValue) as HavingFormValue)
       }
-      return;
+      return
     }
 
     if (Array.isArray(currentValue)) {
-      form.setFieldValue('value', currentValue[0]);
-      return;
+      form.setFieldValue('value', currentValue[0])
+      return
     }
 
     if (typeof currentValue === 'object' && currentValue !== null) {
-      form.setFieldValue('value', undefined);
+      form.setFieldValue('value', undefined)
     }
-  }, [form, inputStrategy, isActive, selectedOperator]);
+  }, [form, inputStrategy, isActive, selectedOperator])
 
   const handleAddClick = () => {
-    setEditingId(null);
-    form.resetFields();
+    setEditingId(null)
+    form.resetFields()
     form.setFieldsValue({
       aggregateFunc: 'sum',
       operator: getDefaultHavingOperator(true),
-    });
-    setIsAdding(true);
-  };
+    })
+    setIsAdding(true)
+  }
 
   const handleEdit = (id: string) => {
-    const item = filters.find((filter) => filter.id === id);
+    const item = filters.find((filter) => filter.id === id)
     if (!item) {
-      return;
+      return
     }
 
-    const fieldRole = getFieldRole(fields, item.field);
-    const aggregate = normalizeHavingAggregate(item.aggregate, fieldRole);
-    const operator = normalizeHavingOperator(item.operator);
+    const fieldRole = getFieldRole(fields, item.field)
+    const aggregate = normalizeHavingAggregate(item.aggregate, fieldRole)
+    const operator = normalizeHavingOperator(item.operator)
 
-    setEditingId(id);
-    setIsAdding(false);
+    setEditingId(id)
+    setIsAdding(false)
     form.setFieldsValue({
       field: item.field,
       aggregateFunc: aggregate.func,
       operator,
       value: getHavingFilterFormValue(operator, item.value) as HavingFormValue,
-    });
-  };
+    })
+  }
 
   const handleCancel = () => {
-    setIsAdding(false);
-    setEditingId(null);
-    form.resetFields();
-    onCancel?.();
-  };
+    setIsAdding(false)
+    setEditingId(null)
+    form.resetFields()
+    onCancel?.()
+  }
 
   const handleSubmit = () => {
     form.validateFields().then((values) => {
-      const field = values.field ?? fixedEditingField;
+      const field = values.field ?? fixedEditingField
       if (!field) {
-        return;
+        return
       }
 
-      const fieldRole = getFieldRole(fields, field);
-      const aggregate = normalizeHavingAggregate(
-        toHavingAggregate(values.aggregateFunc),
-        fieldRole,
-      );
-      const operator = normalizeHavingOperator(values.operator);
+      const fieldRole = getFieldRole(fields, field)
+      const aggregate = normalizeHavingAggregate(toHavingAggregate(values.aggregateFunc), fieldRole)
+      const operator = normalizeHavingOperator(values.operator)
       const finalValue = serializeHavingFilterValue({
         operator,
         isNumericValue: isHavingNumericAggregate(fieldRole, aggregate),
         value: values.value,
-      });
+      })
 
       const existingFilter = isSingleItemEdit
         ? filters[0]
         : editingId
           ? filters.find((filter) => filter.id === editingId)
-          : undefined;
+          : undefined
 
       const nextFilter: HavingItem = {
         id: existingFilter?.id,
@@ -414,72 +375,67 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
         aggregate,
         operator,
         value: finalValue,
-      };
+      }
 
       if (editingId || isSingleItemEdit) {
         if (onChange) {
-          const nextFilters = [...filters];
-          const targetId = existingFilter?.id;
-          const targetIndex = nextFilters.findIndex(
-            (item) => item.id === targetId,
-          );
+          const nextFilters = [...filters]
+          const targetId = existingFilter?.id
+          const targetIndex = nextFilters.findIndex((item) => item.id === targetId)
           if (targetIndex >= 0) {
             nextFilters[targetIndex] = {
               ...nextFilters[targetIndex],
               ...nextFilter,
-            };
-            onChange(nextFilters);
+            }
+            onChange(nextFilters)
           }
         } else if (onRemove && existingFilter?.id) {
-          onRemove(existingFilter.id);
-          onAdd?.(nextFilter);
+          onRemove(existingFilter.id)
+          onAdd?.(nextFilter)
         }
       } else if (onAdd) {
-        onAdd(nextFilter);
+        onAdd(nextFilter)
       } else if (onChange) {
-        onChange([...filters, nextFilter]);
+        onChange([...filters, nextFilter])
       }
 
-      setIsAdding(false);
-      setEditingId(null);
-      form.resetFields();
-    });
-  };
+      setIsAdding(false)
+      setEditingId(null)
+      form.resetFields()
+    })
+  }
 
   const handleDelete = (id: string) => {
     if (onChange) {
-      onChange(filters.filter((item) => item.id !== id));
-      return;
+      onChange(filters.filter((item) => item.id !== id))
+      return
     }
 
-    onRemove?.(id);
-  };
+    onRemove?.(id)
+  }
 
   const handleClearAll = () => {
-    onChange?.([]);
-  };
+    onChange?.([])
+  }
 
   const renderValueFormItem = () => {
     if (inputStrategy === 'none') {
       return (
         <Form.Item style={{ marginBottom: 10 }}>
-          <Text type="secondary" style={{ fontSize: 11 }}>
+          <Text type='secondary' style={{ fontSize: 11 }}>
             {t('filtersFormNoValueRequired')}
           </Text>
         </Form.Item>
-      );
+      )
     }
 
     if (inputStrategy === 'range') {
       return (
-        <Form.Item
-          label={isSingleItemEdit ? undefined : t('filtersFormValueRange')}
-          style={{ marginBottom: 10 }}
-        >
+        <Form.Item label={isSingleItemEdit ? undefined : t('filtersFormValueRange')} style={{ marginBottom: 10 }}>
           <div style={{ display: 'flex', gap: 10 }}>
             <Form.Item name={['value', 'min']} noStyle>
               <InputNumber
-                variant="filled"
+                variant='filled'
                 controls={false}
                 style={{ width: '100%' }}
                 placeholder={t('filtersFormMinValue')}
@@ -487,7 +443,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             </Form.Item>
             <Form.Item name={['value', 'max']} noStyle>
               <InputNumber
-                variant="filled"
+                variant='filled'
                 controls={false}
                 style={{ width: '100%' }}
                 placeholder={t('filtersFormMaxValue')}
@@ -495,66 +451,62 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             </Form.Item>
           </div>
         </Form.Item>
-      );
+      )
     }
 
     if (inputStrategy === 'tags') {
       return (
         <Form.Item
           label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-          name="value"
-          rules={[
-            { required: true, message: t('filtersValidationEnterValue') },
-          ]}
+          name='value'
+          rules={[{ required: true, message: t('filtersValidationEnterValue') }]}
           style={{ marginBottom: 10 }}
         >
           <Select
-            mode="tags"
-            variant="filled"
+            mode='tags'
+            variant='filled'
             tokenSeparators={[',']}
             placeholder={t('filtersFormInputMultipleValues')}
           />
         </Form.Item>
-      );
+      )
     }
 
     if (inputStrategy === 'number') {
       return (
         <Form.Item
           label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-          name="value"
-          rules={[
-            { required: true, message: t('filtersValidationEnterNumber') },
-          ]}
+          name='value'
+          rules={[{ required: true, message: t('filtersValidationEnterNumber') }]}
           style={{ marginBottom: 10 }}
         >
           <InputNumber
-            variant="filled"
+            variant='filled'
             controls={false}
             style={{ width: '100%' }}
             placeholder={t('filtersFormInputNumber')}
           />
         </Form.Item>
-      );
+      )
     }
 
     return (
       <Form.Item
         label={isSingleItemEdit ? undefined : t('filtersFormValue')}
-        name="value"
+        name='value'
         rules={[{ required: true, message: t('filtersValidationEnterValue') }]}
         style={{ marginBottom: 10 }}
       >
-        <Input placeholder={t('filtersFormInputValue')} variant="filled" />
+        <Input placeholder={t('filtersFormInputValue')} variant='filled' />
       </Form.Item>
-    );
-  };
+    )
+  }
 
   const renderHavingForm = () => (
     <Form
       form={form}
-      layout="vertical"
-      size="small"
+      layout='vertical'
+      size='small'
       requiredMark={false}
       style={{
         width: isSingleItemEdit ? 230 : 254,
@@ -568,42 +520,33 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
       {!isSingleItemEdit && (
         <Form.Item
           label={t('filtersFormField')}
-          name="field"
-          rules={[
-            { required: true, message: t('filtersValidationSelectField') },
-          ]}
+          name='field'
+          rules={[{ required: true, message: t('filtersValidationSelectField') }]}
           style={{ marginBottom: 8 }}
         >
           <Select
             placeholder={t('filtersFormSelectField')}
             showSearch
-            variant="filled"
+            variant='filled'
             onChange={(fieldName) => {
-              const fieldRole = getFieldRole(fields, fieldName);
-              const aggregate = getDefaultHavingAggregateByFieldRole(fieldRole);
+              const fieldRole = getFieldRole(fields, fieldName)
+              const aggregate = getDefaultHavingAggregateByFieldRole(fieldRole)
               form.setFieldsValue({
                 aggregateFunc: aggregate.func,
-                operator: getDefaultHavingOperator(
-                  isHavingNumericAggregate(fieldRole, aggregate),
-                ),
+                operator: getDefaultHavingOperator(isHavingNumericAggregate(fieldRole, aggregate)),
                 value: undefined,
-              });
+              })
             }}
           >
             {sortedFields.map((field) => {
-              const isActive = activeFields.includes(field.name);
+              const isActive = activeFields.includes(field.name)
               return (
                 <Option key={field.name} value={field.name}>
-                  <span
-                    style={
-                      isActive ? { color: '#e39700', fontWeight: 'bold' } : {}
-                    }
-                  >
-                    {field.name} ({getFieldRoleLabel(field, t)}){' '}
-                    {isActive ? t('commonStatusRecommended') : ''}
+                  <span style={isActive ? { color: '#e39700', fontWeight: 'bold' } : {}}>
+                    {field.name} ({getFieldRoleLabel(field, t)}) {isActive ? t('commonStatusRecommended') : ''}
                   </span>
                 </Option>
-              );
+              )
             })}
           </Select>
         </Form.Item>
@@ -611,10 +554,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       <Form.Item
         label={isSingleItemEdit ? undefined : t('filtersFormAggregate')}
-        name="aggregateFunc"
-        rules={[
-          { required: true, message: t('filtersValidationSelectAggregate') },
-        ]}
+        name='aggregateFunc'
+        rules={[{ required: true, message: t('filtersValidationSelectAggregate') }]}
         style={{ marginBottom: 10 }}
       >
         <div>
@@ -632,7 +573,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
                   key={`having-aggregate-quick-${option.value}`}
                   checked={selectedAggregateFunc === option.value}
                   onChange={() => {
-                    form.setFieldValue('aggregateFunc', option.value);
+                    form.setFieldValue('aggregateFunc', option.value)
                   }}
                 >
                   {option.shortLabel}
@@ -641,12 +582,12 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             </div>
           )}
           <Select
-            variant="filled"
+            variant='filled'
             options={aggregateSelectOptions}
             value={selectedAggregateFunc}
             placeholder={t('filtersFormSelectAggregate')}
             onChange={(value) => {
-              form.setFieldValue('aggregateFunc', value);
+              form.setFieldValue('aggregateFunc', value)
             }}
             style={{ width: '100%' }}
           />
@@ -655,16 +596,14 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       <Form.Item
         label={isSingleItemEdit ? undefined : t('filtersFormOperator')}
-        name="operator"
-        rules={[
-          { required: true, message: t('filtersValidationSelectOperator') },
-        ]}
+        name='operator'
+        rules={[{ required: true, message: t('filtersValidationSelectOperator') }]}
         style={{ marginBottom: 10 }}
       >
         <Select
-          variant="filled"
+          variant='filled'
           onChange={() => {
-            form.setFieldValue('value', undefined);
+            form.setFieldValue('value', undefined)
           }}
         >
           {operatorOptions.map((option) => (
@@ -679,28 +618,22 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       <Form.Item style={{ marginBottom: 0, marginTop: 2, textAlign: 'right' }}>
         <Space size={8}>
-          <Button
-            size="small"
-            onClick={handleCancel}
-            style={POPOVER_TEXT_BUTTON_STYLE}
-          >
+          <Button size='small' onClick={handleCancel} style={POPOVER_TEXT_BUTTON_STYLE}>
             {t('commonActionsCancel')}
           </Button>
           <Button
-            type="primary"
-            size="small"
+            type='primary'
+            size='small'
             onClick={handleSubmit}
             icon={<CheckOutlined />}
             style={POPOVER_TEXT_BUTTON_STYLE}
           >
-            {editingId || isSingleItemEdit
-              ? t('commonActionsSave')
-              : t('commonActionsAdd')}
+            {editingId || isSingleItemEdit ? t('commonActionsSave') : t('commonActionsAdd')}
           </Button>
         </Space>
       </Form.Item>
     </Form>
-  );
+  )
 
   const renderHavingList = () => (
     <div style={{ width: 268 }}>
@@ -722,14 +655,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: 10,
-                borderBottom:
-                  index < filters.length - 1
-                    ? `1px solid ${token.colorBorderSecondary}`
-                    : 'none',
-                background:
-                  editingId === item.id
-                    ? token.colorFillSecondary
-                    : 'transparent',
+                borderBottom: index < filters.length - 1 ? `1px solid ${token.colorBorderSecondary}` : 'none',
+                background: editingId === item.id ? token.colorFillSecondary : 'transparent',
                 borderRadius: token.borderRadiusSM,
               }}
             >
@@ -739,8 +666,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
               <Space size={2}>
                 <Tooltip title={t('commonActionsEdit')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     icon={<EditOutlined />}
                     onClick={() => item.id && handleEdit(item.id)}
                     style={{
@@ -751,8 +678,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
                 </Tooltip>
                 <Tooltip title={t('commonActionsDelete')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<DeleteOutlined />}
                     onClick={() => item.id && handleDelete(item.id)}
@@ -767,7 +694,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       {isAdding && renderHavingForm()}
     </div>
-  );
+  )
 
   const popoverContent = (
     <div ref={containerRef}>
@@ -787,8 +714,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             <>
               <Tooltip title={t('commonActionsAddCondition')}>
                 <Button
-                  type="text"
-                  size="small"
+                  type='text'
+                  size='small'
                   icon={<PlusOutlined />}
                   onClick={handleAddClick}
                   style={POPOVER_ICON_BUTTON_STYLE}
@@ -797,8 +724,8 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
               {filters.length > 0 && (
                 <Tooltip title={t('commonActionsClearAll')}>
                   <Button
-                    type="text"
-                    size="small"
+                    type='text'
+                    size='small'
                     danger
                     icon={<ClearOutlined />}
                     onClick={handleClearAll}
@@ -813,23 +740,23 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
 
       {renderHavingList()}
     </div>
-  );
+  )
 
   if (isSingleItemEdit) {
-    return <div ref={containerRef}>{renderHavingForm()}</div>;
+    return <div ref={containerRef}>{renderHavingForm()}</div>
   }
 
   if (embedded) {
-    return popoverContent;
+    return popoverContent
   }
 
   return (
     <Popover
       content={popoverContent}
-      trigger="click"
+      trigger='click'
       open={popoverOpen}
       onOpenChange={setPopoverOpen}
-      placement="left"
+      placement='left'
       styles={{
         root: { padding: 0 },
         container: {
@@ -838,11 +765,11 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
         },
       }}
     >
-      <Badge count={filters.length} size="small" offset={[8, 0]}>
-        <Button size="small" icon={<FilterOutlined />}>
+      <Badge count={filters.length} size='small' offset={[8, 0]}>
+        <Button size='small' icon={<FilterOutlined />}>
           {t('filtersButtonsHaving')}
         </Button>
       </Badge>
     </Popover>
-  );
-};
+  )
+}

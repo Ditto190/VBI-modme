@@ -7,24 +7,24 @@ import {
   SunOutlined,
   UndoOutlined,
   CloudUploadOutlined,
-} from '@ant-design/icons';
-import { Button, InputNumber, Segmented, Space, Tooltip, theme } from 'antd';
-import React, { useState } from 'react';
-import { ChartTypeSelector } from 'src/components/ChartType';
-import { CSVModal } from 'src/components/CSVModal';
-import type { DemoLocale, DemoTheme } from 'src/constants/builder';
-import { useVBIBuilder, useVBIUndoManager } from 'src/hooks';
-import { useTranslation } from 'src/i18n';
-import { useVBIStore } from 'src/model';
-import { CONNECTOR_ID } from 'src/utils/localConnector';
-import { formatDefaultLimit } from './config';
+} from '@ant-design/icons'
+import { Button, InputNumber, Segmented, Space, Tooltip, theme } from 'antd'
+import React, { useState } from 'react'
+import { ChartTypeSelector } from 'src/components/ChartType'
+import { CSVModal } from 'src/components/CSVModal'
+import type { DemoLocale, DemoTheme } from 'src/constants/builder'
+import { useVBIBuilder, useVBIUndoManager } from 'src/hooks'
+import { useTranslation } from 'src/i18n'
+import { useVBIStore, useVBIStoreConfig } from 'src/model'
+import { CONNECTOR_ID } from 'src/utils/localConnector'
+import { formatDefaultLimit } from './config'
 
 const normalizeLimitValue = (value: number) => {
-  return Math.max(1, Math.round(value));
-};
+  return Math.max(1, Math.round(value))
+}
 
 const ToolbarDivider = () => {
-  const { token } = theme.useToken();
+  const { token } = theme.useToken()
 
   return (
     <span
@@ -35,43 +35,36 @@ const ToolbarDivider = () => {
         flexShrink: 0,
       }}
     />
-  );
-};
+  )
+}
 
 export const Toolbar: React.FC<{
-  isFullscreen: boolean;
-  onToggleFullscreen: () => void | Promise<void>;
+  isFullscreen: boolean
+  onToggleFullscreen: () => void | Promise<void>
 }> = ({ isFullscreen, onToggleFullscreen }) => {
-  const [isCSVModalOpen, setIsCSVModalOpen] = useState(false);
-  const builder = useVBIStore((state) => state.builder);
-  const switchSource = useVBIStore((state) => state.switchSource);
-  const { token } = theme.useToken();
-  const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder);
-  const { t, locale, setLocale } = useTranslation();
-  const {
-    theme: themeMode,
-    limit,
-    setTheme,
-    setLimit,
-  } = useVBIBuilder(builder);
-  const defaultLimitText = formatDefaultLimit(locale);
+  const [isCSVModalOpen, setIsCSVModalOpen] = useState(false)
+  const builder = useVBIStore((state) => state.builder)
+  const switchSource = useVBIStore((state) => state.switchSource)
+  const { token } = theme.useToken()
+  const { hideLocale, hideTheme } = useVBIStoreConfig()
+  const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder)
+  const { t, locale, setLocale } = useTranslation()
+  const { theme: themeMode, limit, setTheme, setLimit } = useVBIBuilder(builder)
+  const defaultLimitText = formatDefaultLimit(locale)
 
   const formatNumber = (value: string | number | undefined | null) => {
     if (value === undefined || value === null || value === '') {
-      return '';
+      return ''
     }
 
-    const numericValue =
-      typeof value === 'number'
-        ? value
-        : Number(String(value).replace(/[^\d.-]/g, ''));
+    const numericValue = typeof value === 'number' ? value : Number(String(value).replace(/[^\d.-]/g, ''))
 
     if (!Number.isFinite(numericValue)) {
-      return '';
+      return ''
     }
 
-    return new Intl.NumberFormat(locale).format(numericValue);
-  };
+    return new Intl.NumberFormat(locale).format(numericValue)
+  }
 
   return (
     <div
@@ -108,29 +101,27 @@ export const Toolbar: React.FC<{
             <Button
               icon={<CloudUploadOutlined style={{ fontSize: 12 }} />}
               onClick={() => setIsCSVModalOpen(true)}
-              size="small"
+              size='small'
             />
           </Tooltip>
 
           <ToolbarDivider />
 
-          <Space.Compact size="small">
+          <Space.Compact size='small'>
             <Tooltip title={`${t('toolbarHistoryUndo')} (Ctrl/Cmd+Z)`}>
               <Button
                 icon={<UndoOutlined style={{ fontSize: 12 }} />}
                 onClick={undo}
                 disabled={!canUndo}
-                size="small"
+                size='small'
               />
             </Tooltip>
-            <Tooltip
-              title={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}
-            >
+            <Tooltip title={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
               <Button
                 icon={<RedoOutlined style={{ fontSize: 12 }} />}
                 onClick={redo}
                 disabled={!canRedo}
-                size="small"
+                size='small'
               />
             </Tooltip>
           </Space.Compact>
@@ -151,10 +142,10 @@ export const Toolbar: React.FC<{
             style={{ width: 96 }}
             onChange={(value) => {
               if (typeof value === 'number') {
-                setLimit(normalizeLimitValue(value));
+                setLimit(normalizeLimitValue(value))
               }
             }}
-            size="small"
+            size='small'
             placeholder={t('toolbarLimitPlaceholder', {
               defaultLimit: defaultLimitText,
             })}
@@ -175,51 +166,51 @@ export const Toolbar: React.FC<{
             />
           </Tooltip>
 
-          <ToolbarDivider />
+          {!hideLocale ? (
+            <>
+              <ToolbarDivider />
 
-          <Tooltip
-            title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}
-          >
-            <Segmented
-              size="small"
-              value={locale}
-              options={[
-                { label: t('toolbarLocaleSwitchZh'), value: 'zh-CN' },
-                { label: t('toolbarLocaleSwitchEn'), value: 'en-US' },
-              ]}
-              onChange={(value) => setLocale(value as DemoLocale)}
-            />
-          </Tooltip>
+              <Tooltip title={`${t('toolbarLocaleLabel')}: ${t('toolbarLocaleDescription')}`}>
+                <Segmented
+                  size='small'
+                  value={locale}
+                  options={[
+                    { label: t('toolbarLocaleSwitchZh'), value: 'zh-CN' },
+                    { label: t('toolbarLocaleSwitchEn'), value: 'en-US' },
+                  ]}
+                  onChange={(value) => setLocale(value as DemoLocale)}
+                />
+              </Tooltip>
+            </>
+          ) : null}
 
-          <ToolbarDivider />
+          {!hideTheme ? (
+            <>
+              <ToolbarDivider />
 
-          <Tooltip
-            title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}
-          >
-            <Segmented
-              size="small"
-              value={themeMode}
-              options={[
-                {
-                  label: <SunOutlined style={{ fontSize: 12 }} />,
-                  value: 'light',
-                },
-                {
-                  label: <MoonOutlined style={{ fontSize: 12 }} />,
-                  value: 'dark',
-                },
-              ]}
-              onChange={(value) => setTheme(value as DemoTheme)}
-            />
-          </Tooltip>
+              <Tooltip title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}>
+                <Segmented
+                  size='small'
+                  value={themeMode}
+                  options={[
+                    {
+                      label: <SunOutlined style={{ fontSize: 12 }} />,
+                      value: 'light',
+                    },
+                    {
+                      label: <MoonOutlined style={{ fontSize: 12 }} />,
+                      value: 'dark',
+                    },
+                  ]}
+                  onChange={(value) => setTheme(value as DemoTheme)}
+                />
+              </Tooltip>
 
-          <ToolbarDivider />
+              <ToolbarDivider />
+            </>
+          ) : null}
 
-          <Tooltip
-            title={t(
-              isFullscreen ? 'toolbarFullscreenExit' : 'toolbarFullscreenEnter',
-            )}
-          >
+          <Tooltip title={t(isFullscreen ? 'toolbarFullscreenExit' : 'toolbarFullscreenEnter')}>
             <Button
               icon={
                 isFullscreen ? (
@@ -229,9 +220,9 @@ export const Toolbar: React.FC<{
                 )
               }
               onClick={() => {
-                void onToggleFullscreen();
+                void onToggleFullscreen()
               }}
-              size="small"
+              size='small'
             />
           </Tooltip>
         </div>
@@ -240,10 +231,10 @@ export const Toolbar: React.FC<{
         open={isCSVModalOpen}
         onCancel={() => setIsCSVModalOpen(false)}
         onConfirm={async (data, schema) => {
-          await switchSource(CONNECTOR_ID, data, schema);
-          setIsCSVModalOpen(false);
+          await switchSource(CONNECTOR_ID, data, schema)
+          setIsCSVModalOpen(false)
         }}
       />
     </div>
-  );
-};
+  )
+}

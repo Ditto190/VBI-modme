@@ -1,4 +1,4 @@
-import { SelectItem } from 'src/types/dsl/Select'
+import { SelectItem } from '../../types/dsl/Select'
 import { isSelectItem } from '../utils'
 import { sql } from 'kysely'
 import type { SelectQueryBuilder } from 'kysely'
@@ -22,7 +22,6 @@ export const applySelect = <DB, TB extends keyof DB & string, O, T>(
       select.map((item) => {
         if (isSelectItem(item)) {
           const field = item.field as Extract<keyof T, string>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const expression = eb.ref(field as any)
           // 优先使用用户提供的 alias，其次使用 field，保证唯一性
           const alias = item.alias ?? field
@@ -60,7 +59,6 @@ export const applySelect = <DB, TB extends keyof DB & string, O, T>(
           // 优先使用用户提供的 alias，其次使用 field
           return expression.as(alias)
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return item as any
       }),
     )

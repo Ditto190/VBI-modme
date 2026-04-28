@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "trailingComma": "all",
+  "endOfLine": "lf",
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 120,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "node_modules/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "**/.turbo/**",
+    "apps/website/rspress.config.ts",
+    "apps/website/doc_build/**",
+    "apps/website/docs/**",
+    "packages/vseed/tests/**/*.ts"
+  ]
+}

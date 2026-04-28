@@ -1,12 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class ReportSnapshotEntity {
   @ApiProperty({ type: Object })
-  report: Record<string, unknown>;
+  report: Record<string, unknown>
 
   @ApiProperty({ type: Object })
-  charts: Record<string, unknown>;
+  charts: Record<string, unknown>
 
   @ApiProperty({ type: Object })
-  insights: Record<string, unknown>;
+  insights: Record<string, unknown>
 }

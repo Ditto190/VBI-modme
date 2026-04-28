@@ -1,4 +1,4 @@
-import { Flex, theme } from 'antd';
+import { Flex, theme } from 'antd'
 
 export const ShelfRow = ({
   label,
@@ -6,28 +6,26 @@ export const ShelfRow = ({
   borderBottom = true,
   operator,
 }: {
-  label: string;
-  shelf: React.ReactNode;
-  borderBottom?: boolean;
-  operator?: React.ReactNode;
+  label: string
+  shelf: React.ReactNode
+  borderBottom?: boolean
+  operator?: React.ReactNode
 }) => {
-  const { token } = theme.useToken();
+  const { token } = theme.useToken()
 
   return (
     <Flex
-      align="center"
-      justify="space-between"
+      align='center'
+      justify='space-between'
       style={{
         minHeight: 34,
         minWidth: 0,
         width: '100%',
-        borderBottom: borderBottom
-          ? `1px solid ${token.colorBorderSecondary}`
-          : 'none',
+        borderBottom: borderBottom ? `1px solid ${token.colorBorderSecondary}` : 'none',
       }}
     >
       <Flex
-        align="center"
+        align='center'
         justify={operator ? 'space-between' : 'flex-start'}
         style={{
           width: 88,
@@ -61,5 +59,5 @@ export const ShelfRow = ({
         {shelf}
       </Flex>
     </Flex>
-  );
-};
+  )
+}

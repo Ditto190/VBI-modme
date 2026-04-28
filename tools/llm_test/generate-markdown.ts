@@ -44,7 +44,7 @@ function generateChartTypeMarkdown() {
     let fileContentStr
     try {
       fileContentStr = fs.readFileSync(chartTypePath, 'utf-8')
-    } catch (e) {
+    } catch {
       console.log(`File not found for ${chartType}: ${chartTypePath}`)
       return
     }
@@ -682,28 +682,6 @@ function generateDimensionMarkdown() {
       '\n\n' +
       tableDimensionContent +
       '\n```',
-  )
-}
-
-function generateLinearColor() {
-  // LinearColor
-  const linearColorDir = path.resolve(__dirname, '../../packages/vseed/src/types/properties/config/color/color.ts')
-  const linearColorFileContent = fs.readFileSync(linearColorDir)
-  const linearColorFileContentStr = linearColorFileContent.toString()
-  const linearColorInterfaceSignature = `export type LinearColor`
-  const linearColorInterfaceIndex = linearColorFileContentStr.indexOf(linearColorInterfaceSignature)
-  const outputDir = path.resolve(__dirname, './new-type')
-
-  if (linearColorInterfaceIndex === -1) {
-    console.log(`Could not find interface definition export type LinearColor in linearColor.ts`)
-    return
-  }
-
-  const linearColorStartIndex = linearColorInterfaceIndex
-  const linearColorMeasureContent = linearColorFileContentStr.substring(linearColorStartIndex)
-  fs.writeFileSync(
-    path.resolve(outputDir, 'LinearColor.md'),
-    '### LinearColor\n```typescript\n' + linearColorMeasureContent + '\n```',
   )
 }
 

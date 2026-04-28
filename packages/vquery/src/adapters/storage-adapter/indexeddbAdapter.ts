@@ -1,4 +1,4 @@
-import { DatasetSource, StorageAdapter } from 'src/types'
+import { DatasetSource, StorageAdapter } from '../../types'
 import { DatasetSchema } from '../../types/DataSet'
 import { idbPut, idbGet, idbDelete, idbGetAll } from './idb-helpers'
 

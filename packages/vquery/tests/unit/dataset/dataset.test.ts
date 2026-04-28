@@ -1,7 +1,7 @@
 import { Dataset } from '@visactor/vquery'
 import { QueryAdapter, StorageAdapter, DatasetSource } from '@visactor/vquery'
-import { QueryResult } from 'src/types/DataSet'
-import { DatasetSchema } from 'src/types/DataSet'
+import { QueryResult } from '../../../src/types/DataSet'
+import { DatasetSchema } from '../../../src/types/DataSet'
 
 class MockQueryAdapter implements QueryAdapter {
   open = async () => {}
@@ -54,13 +54,11 @@ describe('Dataset', () => {
   })
 
   it('should handle unsupported data source type', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const source: DatasetSource = { type: 'unknown' as any, blob: new Blob([]) }
     await expect(dataset.createOrReplaceView([], source)).rejects.toThrow('Unsupported dataSource type: unknown')
   })
 
   it('should skip view creation if source is missing', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await expect(dataset.createOrReplaceView([], undefined as any)).resolves.not.toThrow()
   })
 })
