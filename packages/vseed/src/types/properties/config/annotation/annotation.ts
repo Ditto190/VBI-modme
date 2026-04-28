@@ -16,9 +16,14 @@ export type AnnotationPointConfig = Pick<
   | 'textBackgroundBorderRadius'
   | 'offsetX'
   | 'offsetY'
->
+> & {
+  /**
+   * 文本背景透明度
+   */
+  textBackgroundOpacity?: number | null
+}
 
-export interface AnnotationHorizontalLineConfig extends Pick<
+export type AnnotationHorizontalLineConfig = Pick<
   AnnotationHorizontalLine,
   | 'textFontSize'
   | 'lineColor'
@@ -33,7 +38,17 @@ export interface AnnotationHorizontalLineConfig extends Pick<
   | 'textBackgroundPadding'
   | 'textBackgroundVisible'
   | 'textFontWeight'
-> {
+> & {
+  /**
+   * 线条虚线配置
+   */
+  lineDash?: number[] | null
+
+  /**
+   * 文本背景透明度
+   */
+  textBackgroundOpacity?: number | null
+
   /**
    * 起点图标是否显示
    */
@@ -125,9 +140,24 @@ export type AnnotationAreaConfig = Pick<
   | 'textColor'
   | 'textFontSize'
   | 'textFontWeight'
->
+> & {
+  /**
+   * 文本背景透明度
+   */
+  textBackgroundOpacity?: number | null
+}
 
 export type AnnotationDifferenceLineConfig = Pick<
   AnnotationDifferenceLine,
-  'lineColor' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
->
+  'lineColor' | 'lineStyle' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
+> & {
+  /**
+   * 线条虚线配置
+   */
+  lineDash?: number[] | null
+
+  /**
+   * 文本背景透明度
+   */
+  textBackgroundOpacity?: number | null
+}

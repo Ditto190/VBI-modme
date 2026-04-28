@@ -20,6 +20,7 @@ describe('VSeedBuilder', () => {
       buildSpec = () => ({}) as any;
       getColorItems = () => [];
       getColorIdMap = () => ({});
+      getColorValueMap = () => undefined;
       prepare = async () => {};
       
       private _spec: any = null;

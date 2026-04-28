@@ -9,11 +9,13 @@ import {
 } from '../../../../../dataSelector'
 import { isEmpty } from 'remeda'
 import { ANNOTATION_Z_INDEX } from '../../../../utils/constant'
+import { getAnnotationLineDash } from './utils'
 import {
   buildDifferenceCoordinateDatum,
   buildDifferenceText,
   getDifferenceLineStackResolveMode,
   getRuntimeDifferenceValue,
+  inferDifferenceConnectDirection,
   type ResolvedDifferenceAnchor,
   usesDifferenceLineElementStackEnd,
   resolveDifferenceAnchor,
@@ -23,10 +25,10 @@ const DEFAULT_LINE_COLOR = '#BCC1CB'
 const DEFAULT_TEXT_COLOR = '#ffffff'
 const DEFAULT_TEXT_BACKGROUND_COLOR = '#BCC1CB'
 const DEFAULT_TEXT_FONT_SIZE = 12
-const DEFAULT_LINE_WIDTH = 2
-const DEFAULT_CORNER_RADIUS = 4
+const DEFAULT_LINE_WIDTH = 1
+const DEFAULT_CORNER_RADIUS = 3
 const DEFAULT_LABEL_PADDING = 4
-const DEFAULT_END_SYMBOL_SIZE = 12
+const DEFAULT_END_SYMBOL_SIZE = 6
 const DEFAULT_END_SYMBOL_REF_X = -4
 const DEFAULT_GUTTER_BASE_OFFSET = 20
 const DEFAULT_GUTTER_RIGHT_PADDING = 44
@@ -38,6 +40,10 @@ const DEFAULT_PERCENT_DIFFERENCE_FORMAT = {
 }
 
 type RegionPaddingObject = Required<Exclude<RegionPadding, number>>
+type DifferenceConnectDirection = 'top' | 'right' | 'bottom' | 'left'
+
+const shouldInferDifferenceConnectDirection = (chartType: string) =>
+  chartType === 'column' || chartType === 'bar' || chartType === 'columnParallel' || chartType === 'barParallel'
 
 const getDifferenceLinePath = (index: number, total: number) =>
   total === 1 ? 'annotationDifferenceLine' : `annotationDifferenceLine[${index}]`
@@ -108,7 +114,7 @@ const mergeDifferenceLineRegionPadding = (
   }
 }
 
-const buildFixedGutterExpandDistance = (isHorizontalChart: boolean) => {
+const buildFixedGutterExpandDistance = (connectDirection: DifferenceConnectDirection) => {
   return (_markerData: unknown, context: any) => {
     const region = context?.region
     const coordinatePoints = Array.isArray(context?.coordinatePoints) ? context.coordinatePoints : []
@@ -118,13 +124,27 @@ const buildFixedGutterExpandDistance = (isHorizontalChart: boolean) => {
     }
 
     const { x: regionStartX, y: regionStartY } = region.getLayoutStartPoint()
-    const { width } = region.getLayoutRect()
+    const { width, height } = region.getLayoutRect()
 
-    if (isHorizontalChart) {
+    if (connectDirection === 'top') {
       const targetY = regionStartY - DEFAULT_GUTTER_BASE_OFFSET
       const minY = Math.min(...coordinatePoints.map((point: { y: number }) => point.y))
 
       return Math.max(0, minY - targetY)
+    }
+
+    if (connectDirection === 'bottom') {
+      const targetY = regionStartY + height + DEFAULT_GUTTER_BASE_OFFSET
+      const maxY = Math.max(...coordinatePoints.map((point: { y: number }) => point.y))
+
+      return Math.max(0, targetY - maxY)
+    }
+
+    if (connectDirection === 'left') {
+      const targetX = regionStartX - DEFAULT_GUTTER_BASE_OFFSET
+      const minX = Math.min(...coordinatePoints.map((point: { x: number }) => point.x))
+
+      return Math.max(0, minX - targetX)
     }
 
     const targetX = regionStartX + width + DEFAULT_GUTTER_BASE_OFFSET
@@ -132,6 +152,22 @@ const buildFixedGutterExpandDistance = (isHorizontalChart: boolean) => {
 
     return Math.max(0, targetX - maxX)
   }
+}
+
+const getDifferenceLinePaddingPatch = (connectDirection: DifferenceConnectDirection): Partial<RegionPaddingObject> => {
+  if (connectDirection === 'top') {
+    return { top: DEFAULT_GUTTER_TOP_PADDING }
+  }
+
+  if (connectDirection === 'bottom') {
+    return { bottom: DEFAULT_GUTTER_TOP_PADDING }
+  }
+
+  if (connectDirection === 'left') {
+    return { left: DEFAULT_GUTTER_RIGHT_PADDING }
+  }
+
+  return { right: DEFAULT_GUTTER_RIGHT_PADDING }
 }
 
 const getAxisFormatter = (spec: IBarChartSpec | ILineChartSpec | IAreaChartSpec) => {
@@ -268,6 +304,13 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
   const percentFormatter = createFormatter(DEFAULT_PERCENT_DIFFERENCE_FORMAT)
   const isHorizontalChart = chartSpec.direction === 'horizontal'
 
+  const paddingPatch = {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  }
+
   const markLine = annotationDifferenceLineList.flatMap((annotationDifferenceLine, index) => {
     try {
       assertDifferenceLineConfig(
@@ -310,13 +353,29 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
         ((vseed.chartType === 'column' || vseed.chartType === 'bar') &&
           start.mode === 'element' &&
           stackResolveMode === 'auto')
-      const connectDirection = isHorizontalChart ? 'top' : 'right'
-      const expandDistance = buildFixedGutterExpandDistance(isHorizontalChart)
+      const connectDirection: DifferenceConnectDirection = shouldInferDifferenceConnectDirection(vseed.chartType)
+        ? inferDifferenceConnectDirection(vseed, [start.value, end.value])
+        : isHorizontalChart
+          ? 'top'
+          : 'right'
+      const expandDistance = buildFixedGutterExpandDistance(connectDirection)
+      const currentPaddingPatch = getDifferenceLinePaddingPatch(connectDirection)
+
+      paddingPatch.top = Math.max(paddingPatch.top, currentPaddingPatch.top ?? 0)
+      paddingPatch.right = Math.max(paddingPatch.right, currentPaddingPatch.right ?? 0)
+      paddingPatch.bottom = Math.max(paddingPatch.bottom, currentPaddingPatch.bottom ?? 0)
+      paddingPatch.left = Math.max(paddingPatch.left, currentPaddingPatch.left ?? 0)
 
       const lineColor = annotationDifferenceLine.lineColor ?? theme?.lineColor ?? DEFAULT_LINE_COLOR
+      const lineStyle = annotationDifferenceLine.lineStyle
+      const themeLineStyle = theme?.lineStyle
+      const configuredLineDash = lineStyle
+        ? getAnnotationLineDash(lineStyle)
+        : (theme?.lineDash ?? (themeLineStyle ? getAnnotationLineDash(themeLineStyle) : undefined))
       const textColor = annotationDifferenceLine.textColor ?? theme?.textColor ?? DEFAULT_TEXT_COLOR
       const textBackgroundColor =
         annotationDifferenceLine.textBackgroundColor ?? theme?.textBackgroundColor ?? DEFAULT_TEXT_BACKGROUND_COLOR
+      const textBackgroundOpacity = theme?.textBackgroundOpacity
       const textFontSize = annotationDifferenceLine.textFontSize ?? theme?.textFontSize ?? DEFAULT_TEXT_FONT_SIZE
       const differenceType = annotationDifferenceLine.differenceType ?? 'absolute'
       const startMeasureId = resolveDifferenceMeasureId(start, annotationDifferenceLine.start.selector, measureIds)
@@ -365,6 +424,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
               visible: true,
               padding: DEFAULT_LABEL_PADDING,
               style: {
+                opacity: textBackgroundOpacity ?? 0.95,
                 fill: textBackgroundColor,
                 fillOpacity: 1,
                 stroke: lineColor,
@@ -386,6 +446,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
               visible: true,
               padding: DEFAULT_LABEL_PADDING,
               style: {
+                opacity: textBackgroundOpacity ?? 0.95,
                 fill: textBackgroundColor,
                 fillOpacity: 1,
                 stroke: lineColor,
@@ -431,18 +492,19 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
                     visible: true,
                     stroke: lineColor,
                     lineWidth: DEFAULT_LINE_WIDTH,
-                    lineDash: DEFAULT_BRACKET_LINE_DASH,
+                    lineDash: configuredLineDash ?? DEFAULT_BRACKET_LINE_DASH,
                   },
                   {
                     visible: true,
                     stroke: lineColor,
                     lineWidth: DEFAULT_LINE_WIDTH,
+                    ...(configuredLineDash ? { lineDash: configuredLineDash } : {}),
                   },
                   {
                     visible: true,
                     stroke: lineColor,
                     lineWidth: DEFAULT_LINE_WIDTH,
-                    lineDash: DEFAULT_BRACKET_LINE_DASH,
+                    lineDash: configuredLineDash ?? DEFAULT_BRACKET_LINE_DASH,
                   },
                 ],
               }
@@ -451,7 +513,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
                   visible: true,
                   stroke: lineColor,
                   lineWidth: DEFAULT_LINE_WIDTH,
-                  lineDash: [0],
+                  lineDash: configuredLineDash ?? [0],
                   cornerRadius: DEFAULT_CORNER_RADIUS,
                 },
               },
@@ -484,8 +546,5 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
     return nextSpec
   }
 
-  return mergeDifferenceLineRegionPadding(
-    nextSpec as IBarChartSpec | ILineChartSpec | IAreaChartSpec,
-    isHorizontalChart ? { top: DEFAULT_GUTTER_TOP_PADDING } : { right: DEFAULT_GUTTER_RIGHT_PADDING },
-  )
+  return mergeDifferenceLineRegionPadding(nextSpec as IBarChartSpec | ILineChartSpec | IAreaChartSpec, paddingPatch)
 }

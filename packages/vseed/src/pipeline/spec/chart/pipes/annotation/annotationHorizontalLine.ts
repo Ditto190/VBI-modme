@@ -2,7 +2,7 @@ import type { ILineChartSpec, IMarkLineSpec } from '@visactor/vchart'
 import type { VChartSpecPipe } from 'src/types'
 import { isArray, isNumber, isString } from 'remeda'
 import { ANNOTATION_Z_INDEX } from '../../../../utils/constant'
-import { resolveAnnotationValue } from './utils'
+import { getAnnotationLineDash, resolveAnnotationValue } from './utils'
 
 export const annotationHorizontalLine: VChartSpecPipe = (spec, context) => {
   const { advancedVSeed, vseed } = context
@@ -39,7 +39,6 @@ export const annotationHorizontalLine: VChartSpecPipe = (spec, context) => {
       textBaseline = 'bottom',
 
       lineColor = theme?.lineColor ?? '#212121',
-      lineStyle = theme?.lineStyle ?? 'dashed',
       lineVisible = theme?.lineStyle ?? true,
       lineWidth = theme?.lineWidth ?? 1,
 
@@ -50,6 +49,9 @@ export const annotationHorizontalLine: VChartSpecPipe = (spec, context) => {
       textBackgroundBorderWidth = theme?.textBackgroundBorderWidth ?? 1,
       textBackgroundPadding = theme?.textBackgroundPadding ?? 2,
     } = annotationHorizontalLine
+    const lineStyle = annotationHorizontalLine.lineStyle ?? theme?.lineStyle ?? 'dashed'
+    const lineDash = getAnnotationLineDash(lineStyle, annotationHorizontalLine.lineStyle ? undefined : theme?.lineDash)
+    const textBackgroundOpacity = theme?.textBackgroundOpacity
 
     const generateOneMarkLine = (y: string | number) => {
       return {
@@ -61,7 +63,7 @@ export const annotationHorizontalLine: VChartSpecPipe = (spec, context) => {
             visible: lineVisible,
             stroke: lineColor,
             lineWidth: lineWidth,
-            lineDash: lineStyle === 'dashed' ? [5, 2] : lineStyle === 'dotted' ? [2, 5] : [0],
+            lineDash,
           },
         },
         label: {
@@ -69,7 +71,6 @@ export const annotationHorizontalLine: VChartSpecPipe = (spec, context) => {
           text: text,
           position: (positionMap as any)[textPosition || 'insideEnd'],
           style: {
-            opacity: 0.95,
             visible: true,
             dy: 4,
             stroke: textBackgroundColor,
@@ -84,7 +85,7 @@ export const annotationHorizontalLine: VChartSpecPipe = (spec, context) => {
             visible: textBackgroundVisible,
             padding: textBackgroundPadding,
             style: {
-              opacity: 0.95,
+              opacity: textBackgroundOpacity ?? 0.95,
               dy: 4,
               cornerRadius: textBackgroundBorderRadius,
               fill: textBackgroundColor,

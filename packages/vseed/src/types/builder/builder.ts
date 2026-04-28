@@ -17,6 +17,7 @@ export abstract class VSeedBuilder {
 
   abstract getColorItems: () => { id: string; alias: string }[]
   abstract getColorIdMap: () => Record<string, { id: string; alias: string }>
+  abstract getColorValueMap: () => Record<string, string> | undefined
 
   abstract get spec(): Spec | null
   abstract set spec(value: Spec | null)

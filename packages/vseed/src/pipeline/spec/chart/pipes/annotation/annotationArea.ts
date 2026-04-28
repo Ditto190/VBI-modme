@@ -56,6 +56,7 @@ export const annotationArea: VChartSpecPipe = (spec, context) => {
 
       outerPadding = theme?.outerPadding ?? 4,
     } = annotationArea
+    const textBackgroundOpacity = theme?.textBackgroundOpacity
 
     const dataset = advancedVSeed.dataset.flat()
     const selectedData = selectorPoint ? dataset.filter((datum) => selector(datum, selectorPoint)) : []
@@ -159,7 +160,6 @@ export const annotationArea: VChartSpecPipe = (spec, context) => {
         visible: true,
         text: text,
         style: {
-          opacity: 0.95,
           textAlign: textAlign,
           textBaseline: textBaseline,
           fill: textColor,
@@ -173,7 +173,7 @@ export const annotationArea: VChartSpecPipe = (spec, context) => {
           visible: textBackgroundVisible,
           padding: textBackgroundPadding,
           style: {
-            opacity: 0.95,
+            opacity: textBackgroundOpacity ?? 0.95,
             cornerRadius: textBackgroundBorderRadius ?? 4,
             fill: textBackgroundColor,
             stroke: textBackgroundBorderColor,

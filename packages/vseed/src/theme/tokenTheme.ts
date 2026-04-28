@@ -51,6 +51,12 @@ export type TokenThemeDefinition = {
   tableHoverHeaderInlineBackgroundColor?: string
   tableSelectedBorderColor?: string
   tableSelectedBackgroundColor?: string
+  annotationLineColor?: string
+  annotationLineStyle?: 'solid' | 'dashed' | 'dotted'
+  annotationLineDash?: number[]
+  annotationTextColor?: string
+  annotationTextBackgroundColor?: string
+  annotationTextBackgroundOpacity?: number
 }
 
 export type TokenThemeRegistry = Record<string, TokenThemeDefinition>
@@ -222,23 +228,55 @@ const getChartPatch = (tokens: TokenThemeDefinition) => ({
   },
 })
 
-const getAnnotationPatch = (tokens: TokenThemeDefinition) => ({
-  annotationPoint: {
-    textFontSize: tokens.labelFontSize,
-  },
-  annotationHorizontalLine: {
-    textFontSize: tokens.labelFontSize,
-  },
-  annotationVerticalLine: {
-    textFontSize: tokens.labelFontSize,
-  },
-  annotationDifferenceLine: {
-    textFontSize: tokens.labelFontSize,
-  },
-  annotationArea: {
-    textFontSize: tokens.labelFontSize,
-  },
+const getAnnotationLinePatch = (tokens: TokenThemeDefinition) => ({
+  lineColor: tokens.annotationLineColor,
+  lineStyle: tokens.annotationLineStyle,
+  lineDash: tokens.annotationLineDash,
+  textColor: tokens.annotationTextColor,
+  textBackgroundColor: tokens.annotationTextBackgroundColor,
+  textBackgroundBorderColor: tokens.annotationTextBackgroundColor,
+  textBackgroundOpacity: tokens.annotationTextBackgroundOpacity,
 })
+
+const getAnnotationTextPatch = (tokens: TokenThemeDefinition) => ({
+  textColor: tokens.annotationTextColor,
+  textBackgroundColor: tokens.annotationTextBackgroundColor,
+  textBackgroundBorderColor: tokens.annotationTextBackgroundColor,
+  textBackgroundOpacity: tokens.annotationTextBackgroundOpacity,
+})
+
+const getAnnotationPatch = (tokens: TokenThemeDefinition) => {
+  const annotationLinePatch = getAnnotationLinePatch(tokens)
+  const annotationTextPatch = getAnnotationTextPatch(tokens)
+
+  return {
+    annotationPoint: {
+      textFontSize: tokens.labelFontSize,
+      ...annotationTextPatch,
+    },
+    annotationHorizontalLine: {
+      textFontSize: tokens.labelFontSize,
+      ...annotationLinePatch,
+    },
+    annotationVerticalLine: {
+      textFontSize: tokens.labelFontSize,
+      ...annotationLinePatch,
+    },
+    annotationDifferenceLine: {
+      textFontSize: tokens.labelFontSize,
+      lineColor: tokens.annotationLineColor,
+      lineStyle: tokens.annotationLineStyle,
+      lineDash: tokens.annotationLineDash,
+      textColor: tokens.annotationTextColor,
+      textBackgroundColor: tokens.annotationTextBackgroundColor,
+      textBackgroundOpacity: tokens.annotationTextBackgroundOpacity,
+    },
+    annotationArea: {
+      textFontSize: tokens.labelFontSize,
+      ...annotationTextPatch,
+    },
+  }
+}
 
 const getRegressionLinePatch = (tokens: TokenThemeDefinition) => ({
   kdeRegressionLine: {

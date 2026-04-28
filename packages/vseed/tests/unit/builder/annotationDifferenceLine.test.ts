@@ -156,7 +156,7 @@ describe('annotationDifferenceLine', () => {
     })
   })
 
-  test('column compiles annotationDifferenceLine into a right-gutter step markLine', () => {
+  test('column compiles positive annotationDifferenceLine into a top-gutter step markLine', () => {
     const { spec } = buildSpec({
       chartType: 'column',
       dataset: baseDataset,
@@ -167,13 +167,13 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'right',
+      connectDirection: 'top',
       expandDistance: expect.any(Function),
       line: {
         style: {
           lineDash: [0],
-          lineWidth: 2,
-          cornerRadius: 4,
+          lineWidth: 1,
+          cornerRadius: 3,
           stroke: '#BCC1CB',
         },
       },
@@ -191,22 +191,22 @@ describe('annotationDifferenceLine', () => {
             fill: '#BCC1CB',
             stroke: '#BCC1CB',
             lineWidth: 1,
-            cornerRadius: 4,
+            cornerRadius: 3,
           }),
         },
       }),
       endSymbol: expect.objectContaining({
         visible: true,
-        size: 12,
+        size: 6,
         refX: -4,
       }),
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
     expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.endSymbol).not.toHaveProperty('symbolType')
-    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ top: 36 })
   })
 
-  test('bar compiles annotationDifferenceLine into a top-gutter step markLine', () => {
+  test('bar compiles positive annotationDifferenceLine into a right-gutter step markLine', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: baseDataset,
@@ -217,18 +217,56 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'top',
+      connectDirection: 'right',
       expandDistance: expect.any(Function),
       line: {
         style: {
           lineDash: [0],
-          lineWidth: 2,
-          cornerRadius: 4,
+          lineWidth: 1,
+          cornerRadius: 3,
         },
       },
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
-    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ top: 36 })
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
+  })
+
+  test('column applies annotationDifferenceLine lineStyle from DSL', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: {
+        ...annotationDifferenceLineWithDefaults,
+        lineStyle: 'dotted',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.line).toMatchObject({
+      style: expect.objectContaining({
+        lineDash: [2, 5],
+      }),
+    })
+  })
+
+  test('column maps dashed annotationDifferenceLine lineStyle to a compact dash pattern', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: {
+        ...annotationDifferenceLineWithDefaults,
+        lineStyle: 'dashed',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]?.line).toMatchObject({
+      style: expect.objectContaining({
+        lineDash: [2, 2],
+      }),
+    })
   })
 
   test('line compiles annotationDifferenceLine into a bracket step markLine', () => {
@@ -250,16 +288,16 @@ describe('annotationDifferenceLine', () => {
         style: [
           {
             lineDash: [2, 2],
-            lineWidth: 2,
+            lineWidth: 1,
             stroke: '#BCC1CB',
           },
           {
-            lineWidth: 2,
+            lineWidth: 1,
             stroke: '#BCC1CB',
           },
           {
             lineDash: [2, 2],
-            lineWidth: 2,
+            lineWidth: 1,
             stroke: '#BCC1CB',
           },
         ],
@@ -278,7 +316,7 @@ describe('annotationDifferenceLine', () => {
             fill: '#BCC1CB',
             stroke: '#BCC1CB',
             lineWidth: 1,
-            cornerRadius: 4,
+            cornerRadius: 3,
           }),
         },
       }),
@@ -306,16 +344,16 @@ describe('annotationDifferenceLine', () => {
         style: [
           {
             lineDash: [2, 2],
-            lineWidth: 2,
+            lineWidth: 1,
             stroke: '#BCC1CB',
           },
           {
-            lineWidth: 2,
+            lineWidth: 1,
             stroke: '#BCC1CB',
           },
           {
             lineDash: [2, 2],
-            lineWidth: 2,
+            lineWidth: 1,
             stroke: '#BCC1CB',
           },
         ],
@@ -329,7 +367,7 @@ describe('annotationDifferenceLine', () => {
     expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
   })
 
-  test('columnParallel compiles annotationDifferenceLine into a right-gutter step markLine', () => {
+  test('columnParallel compiles positive annotationDifferenceLine into a top-gutter step markLine', () => {
     const { spec } = buildSpec({
       chartType: 'columnParallel',
       dataset: baseDataset,
@@ -337,6 +375,27 @@ describe('annotationDifferenceLine', () => {
       measures: [
         { id: 'autocracies', encoding: 'yAxis' },
         { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine,
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'top',
+      expandDistance: expect.any(Function),
+    })
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ top: 36 })
+  })
+
+  test('barParallel compiles positive annotationDifferenceLine into a right-gutter step markLine', () => {
+    const { spec } = buildSpec({
+      chartType: 'barParallel',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'xAxis' },
+        { id: 'democracies', encoding: 'xAxis' },
       ],
       annotationDifferenceLine,
     })
@@ -378,7 +437,7 @@ describe('annotationDifferenceLine', () => {
     ).toBe(64)
   })
 
-  test('bar fixes bracket main segment to the region top edge via expandDistance callback', () => {
+  test('bar fixes bracket main segment to the region right edge via expandDistance callback', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: baseDataset,
@@ -403,10 +462,80 @@ describe('annotationDifferenceLine', () => {
           { x: 160, y: 96 },
         ],
       }),
-    ).toBe(68)
+    ).toBe(90)
   })
 
-  test('bar keeps multiple gutter annotations pinned to the same top edge', () => {
+  test('stacked negative column fixes the main segment to the region bottom edge via expandDistance callback', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: negativeStackDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const expandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+
+    expect(
+      expandDistance?.(undefined, {
+        region: {
+          getLayoutStartPoint: () => ({ x: 12, y: 8 }),
+          getLayoutRect: () => ({ width: 200, height: 120 }),
+        },
+        startRegion: undefined,
+        endRegion: undefined,
+        coordinatePoints: [
+          { x: 48, y: 36 },
+          { x: 168, y: 84 },
+        ],
+      }),
+    ).toBe(64)
+  })
+
+  test('stacked negative bar fixes the main segment to the region left edge via expandDistance callback', () => {
+    const { spec } = buildSpec({
+      chartType: 'bar',
+      dataset: negativeStackDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'xAxis' },
+        { id: 'democracies', encoding: 'xAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: -129 } },
+        end: { selector: { year: '2000', autocracies: -89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const expandDistance = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+      ?.expandDistance as ((markerData: unknown, context: any) => number) | undefined
+
+    expect(
+      expandDistance?.(undefined, {
+        region: {
+          getLayoutStartPoint: () => ({ x: 12, y: 8 }),
+          getLayoutRect: () => ({ width: 200, height: 120 }),
+        },
+        startRegion: undefined,
+        endRegion: undefined,
+        coordinatePoints: [
+          { x: 48, y: 36 },
+          { x: 168, y: 84 },
+        ],
+      }),
+    ).toBe(56)
+  })
+
+  test('bar keeps multiple gutter annotations pinned to the same right edge', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: baseDataset,
@@ -440,8 +569,8 @@ describe('annotationDifferenceLine', () => {
       ],
     }
 
-    expect(firstExpandDistance?.(undefined, callbackContext)).toBe(68)
-    expect(secondExpandDistance?.(undefined, callbackContext)).toBe(68)
+    expect(firstExpandDistance?.(undefined, callbackContext)).toBe(90)
+    expect(secondExpandDistance?.(undefined, callbackContext)).toBe(90)
   })
 
   test('line keeps multiple gutter annotations pinned to the same right edge', () => {
@@ -501,7 +630,7 @@ describe('annotationDifferenceLine', () => {
     })
   })
 
-  test('stacked column lifts anchors to stack totals for label calculation', () => {
+  test('stacked column places positive stack-total annotations above the chart', () => {
     const { spec } = buildSpec({
       chartType: 'column',
       dataset: baseDataset,
@@ -519,11 +648,39 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
+      connectDirection: 'top',
       label: expect.objectContaining({
         text: '24',
       }),
     })
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]?.coordinates).toEqual(expect.any(Function))
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ top: 36 })
+  })
+
+  test('stacked column places negative stack-total annotations below the chart', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: negativeStackDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000' } },
+        differenceType: 'absolute',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'bottom',
+      label: expect.objectContaining({
+        text: '56',
+      }),
+    })
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ bottom: 36 })
   })
 
   test('absolute difference uses the selected measure numFormat when both anchors resolve to the same measure', () => {
@@ -606,7 +763,7 @@ describe('annotationDifferenceLine', () => {
     })
   })
 
-  test('stacked column supports element-level bracket annotations using runtime stack-end values', () => {
+  test('stacked column keeps positive element-level brackets above the chart', () => {
     const { advanced, spec } = buildSpec({
       chartType: 'column',
       dataset: baseDataset,
@@ -614,6 +771,153 @@ describe('annotationDifferenceLine', () => {
       measures: [
         { id: 'autocracies', encoding: 'yAxis' },
         { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: 129 } },
+        end: { selector: { year: '2000', autocracies: 89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+
+    expect(markLine).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'top',
+      expandDistance: expect.any(Function),
+      line: expect.objectContaining({
+        multiSegment: true,
+        mainSegmentIndex: 1,
+      }),
+      label: expect.objectContaining({
+        position: 'middle',
+        refY: 0,
+        formatMethod: expect.any(Function),
+      }),
+    })
+    expect(markLine?.label).not.toHaveProperty('confine')
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ top: 36 })
+
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === 129) {
+        return { ...datum, __VCHART_STACK_END: 152 }
+      }
+
+      if (datum.year === '1930' && datum.democracies === 23) {
+        return { ...datum, __VCHART_STACK_END: 23 }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === 89) {
+        return { ...datum, __VCHART_STACK_END: 176 }
+      }
+
+      if (datum.year === '2000' && datum.democracies === 87) {
+        return { ...datum, __VCHART_STACK_END: 87 }
+      }
+
+      return datum
+    })
+
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(coordinateData).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          year: '1930',
+          __STACK_VALUE__: 152,
+        }),
+        expect.objectContaining({
+          year: '2000',
+          __STACK_VALUE__: 176,
+        }),
+      ]),
+    )
+
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('24')
+  })
+
+  test('stacked column keeps negative element-level brackets below the chart', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'column',
+      dataset: negativeStackDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: -129 } },
+        end: { selector: { year: '2000', autocracies: -89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+
+    expect(markLine).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'bottom',
+      expandDistance: expect.any(Function),
+    })
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ bottom: 36 })
+
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === -129) {
+        return { ...datum, __VCHART_STACK_END: -152 }
+      }
+
+      if (datum.year === '1930' && datum.democracies === -23) {
+        return { ...datum, __VCHART_STACK_END: -23 }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === -89) {
+        return { ...datum, __VCHART_STACK_END: -96 }
+      }
+
+      if (datum.year === '2000' && datum.democracies === -7) {
+        return { ...datum, __VCHART_STACK_END: -7 }
+      }
+
+      return datum
+    })
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('56')
+  })
+
+  test('stacked column skips mixed total and element-level selectors', () => {
+    const { spec } = buildSpec({
+      chartType: 'column',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'yAxis' },
+        { id: 'democracies', encoding: 'yAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930' } },
+        end: { selector: { year: '2000', autocracies: 89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine).toEqual([])
+  })
+
+  test('stacked bar keeps positive element-level brackets on the chart right side', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'bar',
+      dataset: baseDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'xAxis' },
+        { id: 'democracies', encoding: 'xAxis' },
       ],
       annotationDifferenceLine: {
         start: { selector: { year: '1930', autocracies: 129 } },
@@ -639,6 +943,7 @@ describe('annotationDifferenceLine', () => {
       }),
     })
     expect(markLine?.label).not.toHaveProperty('confine')
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ right: 44 })
 
     const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
     const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
@@ -681,101 +986,7 @@ describe('annotationDifferenceLine', () => {
     expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('24')
   })
 
-  test('stacked column skips mixed total and element-level selectors', () => {
-    const { spec } = buildSpec({
-      chartType: 'column',
-      dataset: baseDataset,
-      dimensions: [{ id: 'year', encoding: 'xAxis' }],
-      measures: [
-        { id: 'autocracies', encoding: 'yAxis' },
-        { id: 'democracies', encoding: 'yAxis' },
-      ],
-      annotationDifferenceLine: {
-        start: { selector: { year: '1930' } },
-        end: { selector: { year: '2000', autocracies: 89 } },
-        differenceType: 'absolute',
-      },
-    })
-
-    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine).toEqual([])
-  })
-
-  test('stacked bar supports element-level bracket annotations using runtime stack-end values', () => {
-    const { advanced, spec } = buildSpec({
-      chartType: 'bar',
-      dataset: baseDataset,
-      dimensions: [{ id: 'year', encoding: 'yAxis' }],
-      measures: [
-        { id: 'autocracies', encoding: 'xAxis' },
-        { id: 'democracies', encoding: 'xAxis' },
-      ],
-      annotationDifferenceLine: {
-        start: { selector: { year: '1930', autocracies: 129 } },
-        end: { selector: { year: '2000', autocracies: 89 } },
-        differenceType: 'absolute',
-      },
-    })
-
-    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
-
-    expect(markLine).toMatchObject({
-      type: 'type-step',
-      connectDirection: 'top',
-      expandDistance: expect.any(Function),
-      line: expect.objectContaining({
-        multiSegment: true,
-        mainSegmentIndex: 1,
-      }),
-      label: expect.objectContaining({
-        position: 'middle',
-        refY: 0,
-        formatMethod: expect.any(Function),
-      }),
-    })
-    expect(markLine?.label).not.toHaveProperty('confine')
-
-    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
-    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
-      if (datum.year === '1930' && datum.autocracies === 129) {
-        return { ...datum, __VCHART_STACK_END: 152 }
-      }
-
-      if (datum.year === '1930' && datum.democracies === 23) {
-        return { ...datum, __VCHART_STACK_END: 23 }
-      }
-
-      if (datum.year === '2000' && datum.autocracies === 89) {
-        return { ...datum, __VCHART_STACK_END: 176 }
-      }
-
-      if (datum.year === '2000' && datum.democracies === 87) {
-        return { ...datum, __VCHART_STACK_END: 87 }
-      }
-
-      return datum
-    })
-
-    const coordinateData = coordinates?.(runtimeSeriesData, {
-      getStackValueField: () => '__STACK_VALUE__',
-    })
-
-    expect(coordinateData).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          year: '1930',
-          __STACK_VALUE__: 152,
-        }),
-        expect.objectContaining({
-          year: '2000',
-          __STACK_VALUE__: 176,
-        }),
-      ]),
-    )
-
-    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('24')
-  })
-
-  test('stacked bar keeps reversed element-level brackets above the bars', () => {
+  test('stacked bar keeps reversed positive element-level brackets on the chart right side', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: baseDataset,
@@ -795,9 +1006,61 @@ describe('annotationDifferenceLine', () => {
 
     expect(markLine).toMatchObject({
       type: 'type-step',
-      connectDirection: 'top',
+      connectDirection: 'right',
       expandDistance: expect.any(Function),
     })
+  })
+
+  test('stacked bar keeps negative element-level brackets on the chart left side', () => {
+    const { advanced, spec } = buildSpec({
+      chartType: 'bar',
+      dataset: negativeStackDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [
+        { id: 'autocracies', encoding: 'xAxis' },
+        { id: 'democracies', encoding: 'xAxis' },
+      ],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: -129 } },
+        end: { selector: { year: '2000', autocracies: -89 } },
+        differenceType: 'absolute',
+      },
+    })
+
+    const markLine = (spec as { markLine?: Array<Record<string, any>> }).markLine?.[0]
+
+    expect(markLine).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'left',
+      expandDistance: expect.any(Function),
+    })
+    expect((spec as { region?: Array<Record<string, any>> }).region?.[0]?.padding).toMatchObject({ left: 44 })
+
+    const coordinates = markLine?.coordinates as DifferenceCoordinateCallback | undefined
+    const runtimeSeriesData = advanced.dataset.flat().map((datum) => {
+      if (datum.year === '1930' && datum.autocracies === -129) {
+        return { ...datum, __VCHART_STACK_END: -152 }
+      }
+
+      if (datum.year === '1930' && datum.democracies === -23) {
+        return { ...datum, __VCHART_STACK_END: -23 }
+      }
+
+      if (datum.year === '2000' && datum.autocracies === -89) {
+        return { ...datum, __VCHART_STACK_END: -96 }
+      }
+
+      if (datum.year === '2000' && datum.democracies === -7) {
+        return { ...datum, __VCHART_STACK_END: -7 }
+      }
+
+      return datum
+    })
+    const coordinateData = coordinates?.(runtimeSeriesData, {
+      getStackValueField: () => '__STACK_VALUE__',
+    })
+
+    expect(markLine?.label?.formatMethod?.(coordinateData ?? [], runtimeSeriesData)).toBe('56')
   })
 
   test('stacked bar skips mixed total and element-level selectors', () => {
@@ -1145,7 +1408,7 @@ describe('annotationDifferenceLine', () => {
     )
   })
 
-  test('column keeps percent difference calculation stable for negative values', () => {
+  test('column keeps negative values in the bottom gutter', () => {
     const { spec } = buildSpec({
       chartType: 'column',
       dataset: negativeValueDataset,
@@ -1160,14 +1423,36 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'right',
+      connectDirection: 'bottom',
       label: expect.objectContaining({
         text: '-50.00%',
       }),
     })
   })
 
-  test('bar keeps negative values in the top gutter', () => {
+  test('columnParallel keeps negative values in the bottom gutter', () => {
+    const { spec } = buildSpec({
+      chartType: 'columnParallel',
+      dataset: negativeValueDataset,
+      dimensions: [{ id: 'year', encoding: 'xAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'yAxis' }],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: -120 } },
+        end: { selector: { year: '2000', autocracies: -60 } },
+        differenceType: 'percent',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'bottom',
+      label: expect.objectContaining({
+        text: '-50.00%',
+      }),
+    })
+  })
+
+  test('bar keeps negative values in the left gutter', () => {
     const { spec } = buildSpec({
       chartType: 'bar',
       dataset: negativeValueDataset,
@@ -1182,7 +1467,29 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'top',
+      connectDirection: 'left',
+      label: expect.objectContaining({
+        text: '-50.00%',
+      }),
+    })
+  })
+
+  test('barParallel keeps negative values in the left gutter', () => {
+    const { spec } = buildSpec({
+      chartType: 'barParallel',
+      dataset: negativeValueDataset,
+      dimensions: [{ id: 'year', encoding: 'yAxis' }],
+      measures: [{ id: 'autocracies', encoding: 'xAxis' }],
+      annotationDifferenceLine: {
+        start: { selector: { year: '1930', autocracies: -120 } },
+        end: { selector: { year: '2000', autocracies: -60 } },
+        differenceType: 'percent',
+      },
+    })
+
+    expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
+      type: 'type-step',
+      connectDirection: 'left',
       label: expect.objectContaining({
         text: '-50.00%',
       }),
@@ -1207,7 +1514,7 @@ describe('annotationDifferenceLine', () => {
 
     expect((spec as { markLine?: Array<Record<string, unknown>> }).markLine?.[0]).toMatchObject({
       type: 'type-step',
-      connectDirection: 'right',
+      connectDirection: 'bottom',
       label: expect.objectContaining({
         text: '56',
       }),
@@ -1370,6 +1677,7 @@ describe('annotationDifferenceLine', () => {
 
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.textFontSize).toBeDefined()
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.lineColor).toBe('#BCC1CB')
+    expect(theme.config?.column?.annotation?.annotationDifferenceLine?.lineStyle).toBeUndefined()
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.textColor).toBe('#ffffff')
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.textBackgroundColor).toBe('#BCC1CB')
   })
@@ -1379,6 +1687,7 @@ describe('annotationDifferenceLine', () => {
 
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.textFontSize).toBeDefined()
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.lineColor).toBe('#55595F')
+    expect(theme.config?.column?.annotation?.annotationDifferenceLine?.lineStyle).toBeUndefined()
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.textColor).toBe('#E2E3E6')
     expect(theme.config?.column?.annotation?.annotationDifferenceLine?.textBackgroundColor).toBe('#55595F')
   })

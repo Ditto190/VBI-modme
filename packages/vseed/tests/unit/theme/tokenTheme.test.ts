@@ -10,6 +10,11 @@ const tooltipFontSize = 17
 const axisFontSize = 18
 const legendFontSize = 19
 const playerFontSize = 42
+const annotationLineColor = '#21252CB8'
+const annotationLineDash = [3, 1]
+const annotationTextColor = '#FFFFFF'
+const annotationTextBackgroundColor = '#21252CB8'
+const annotationTextBackgroundOpacity = 0.72
 
 const lineVSeed: VSeed = {
   chartType: 'line',
@@ -120,6 +125,12 @@ beforeAll(() => {
       tooltipBackgroundColor: 'rgba(255, 255, 255, 0.96)',
       tableHeaderBackgroundColor: '#F7FAFC',
       tableSelectedBorderColor: '#B83280',
+      annotationLineColor,
+      annotationLineStyle: 'dashed',
+      annotationLineDash,
+      annotationTextColor,
+      annotationTextBackgroundColor,
+      annotationTextBackgroundOpacity,
     },
     'unit-earth': {
       baseTheme: 'light',
@@ -177,7 +188,40 @@ describe('tokenTheme', () => {
     expect(lineConfig?.legend?.labelColor).toBe('#4A5568')
     expect(lineConfig?.xAxis?.label?.labelColor).toBe('#4A5568')
     expect(columnConfig?.annotation?.annotationPoint?.textFontSize).toBe(labelFontSize)
+    expect(columnConfig?.annotation?.annotationPoint?.textColor).toBe(annotationTextColor)
+    expect(columnConfig?.annotation?.annotationPoint?.textBackgroundColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationPoint?.textBackgroundBorderColor).toBe(
+      annotationTextBackgroundColor,
+    )
+    expect(columnConfig?.annotation?.annotationPoint?.textBackgroundOpacity).toBe(annotationTextBackgroundOpacity)
     expect(columnConfig?.annotation?.annotationDifferenceLine?.textFontSize).toBe(labelFontSize)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.lineColor).toBe(annotationLineColor)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.lineStyle).toBe('dashed')
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.lineDash).toEqual(annotationLineDash)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textColor).toBe(annotationTextColor)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundOpacity).toBe(
+      annotationTextBackgroundOpacity,
+    )
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.lineColor).toBe(annotationLineColor)
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.lineStyle).toBe('dashed')
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.lineDash).toEqual(annotationLineDash)
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textColor).toBe(annotationTextColor)
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundBorderColor).toBe(
+      annotationTextBackgroundColor,
+    )
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundOpacity).toBe(
+      annotationTextBackgroundOpacity,
+    )
+    expect(columnConfig?.annotation?.annotationVerticalLine?.lineColor).toBe(annotationLineColor)
+    expect(columnConfig?.annotation?.annotationVerticalLine?.lineStyle).toBe('dashed')
+    expect(columnConfig?.annotation?.annotationVerticalLine?.lineDash).toEqual(annotationLineDash)
+    expect(columnConfig?.annotation?.annotationArea?.textFontSize).toBe(labelFontSize)
+    expect(columnConfig?.annotation?.annotationArea?.textColor).toBe(annotationTextColor)
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundBorderColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundOpacity).toBe(annotationTextBackgroundOpacity)
     expect(columnConfig?.regressionLine?.linearRegressionLine?.textFontSize).toBe(labelFontSize)
   })
 
@@ -209,6 +253,56 @@ describe('tokenTheme', () => {
     expect(raceSpec?.theme?.fontFamily).toBe(fontFamily)
     expect(raceSpec?.customMark?.[0]?.style?.fontFamily).toBe(fontFamily)
     expect(raceSpec?.customMark?.[0]?.style?.fontSize).toBe(playerFontSize)
+  })
+
+  test('should apply annotation line tokens to final annotation specs', () => {
+    const pointSpec = Builder.from({
+      ...columnVSeed,
+      annotationPoint: {
+        selector: { date: '2020', sales: 60 },
+        text: 'point',
+      },
+    }).build() as any
+    const horizontalLineSpec = Builder.from({
+      ...columnVSeed,
+      annotationHorizontalLine: {
+        yValue: 40,
+        text: 'target',
+      },
+    }).build() as any
+    const differenceLineSpec = Builder.from({
+      ...columnVSeed,
+      annotationDifferenceLine: {
+        start: {
+          selector: { date: '2019', sales: 20 },
+        },
+        end: {
+          selector: { date: '2021', sales: 40 },
+        },
+      },
+    }).build() as any
+    const areaSpec = Builder.from({
+      ...columnVSeed,
+      annotationArea: {
+        selector: ['2020'],
+        text: 'area',
+      },
+    }).build() as any
+
+    expect(pointSpec?.markPoint?.[0]?.itemContent?.text?.labelBackground?.style?.opacity).toBe(
+      annotationTextBackgroundOpacity,
+    )
+    expect(horizontalLineSpec?.markLine?.[0]?.line?.style?.lineDash).toEqual(annotationLineDash)
+    expect(horizontalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.opacity).toBe(
+      annotationTextBackgroundOpacity,
+    )
+    expect(differenceLineSpec?.markLine?.[0]?.line?.style?.lineDash).toEqual(annotationLineDash)
+    expect(differenceLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.opacity).toBe(
+      annotationTextBackgroundOpacity,
+    )
+    expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.style?.opacity).toBe(
+      annotationTextBackgroundOpacity,
+    )
   })
 
   test('should apply fontFamily and fontSize to final table spec', () => {
