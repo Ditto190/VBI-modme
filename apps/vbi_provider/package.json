@@ -35,6 +35,7 @@
     "lint": "oxlint .",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
     "test": "rstest",
+    "test:update": "rstest --update",
     "test:coverage": "rstest --coverage"
   },
   "dependencies": {

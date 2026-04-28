@@ -19,6 +19,7 @@
     "format": "oxfmt .",
     "lint": "oxlint .",
     "test": "rstest",
+    "test:update": "rstest --update",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

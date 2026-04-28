@@ -7,11 +7,12 @@
     "vbi": "./dist/cli.js"
   },
   "scripts": {
-    "tui": "pnpm run build && node dist/cli.js",
+    "tui": "node dist/cli.js",
     "build": "rslib build",
     "format": "oxfmt .",
     "lint": "oxlint .",
     "test": "rstest",
+    "test:update": "rstest --update",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

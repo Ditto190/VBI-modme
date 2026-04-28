@@ -22,6 +22,7 @@
     "format": "oxfmt .",
     "lint": "oxlint .",
     "test": "rstest",
+    "test:update": "rstest --update",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
   },
   "dependencies": {

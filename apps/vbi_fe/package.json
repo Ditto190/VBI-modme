@@ -11,6 +11,7 @@
     "lint": "oxlint .",
     "preview": "rsbuild preview",
     "test": "rstest",
+    "test:update": "rstest --update",
     "test:watch": "rstest --watch",
     "typecheck": "tsc --noEmit"
   },

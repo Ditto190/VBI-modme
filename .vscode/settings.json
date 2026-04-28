@@ -29,6 +29,8 @@
     "indexeddb",
     "Introspector",
     "Kysely",
+    "oxfmt",
+    "oxlint",
     "permille",
     "preorder",
     "rsdoctor",
