@@ -1,0 +1,66 @@
+.pro-slot__body > span,
+.pro-chip {
+  background: color-mix(in srgb, var(--accent) 14%, var(--raised));
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 10px;
+  padding: 1px 5px;
+}
+
+.pro-slot-token,
+.pro-chip {
+  max-width: 112px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-slot-token {
+  align-items: center;
+  display: inline-flex;
+  gap: 3px;
+}
+
+.pro-slot-token__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pro-token-menu {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 14px;
+  padding: 0;
+}
+
+.pro-token-menu:hover {
+  color: var(--text);
+}
+
+.pro-slot-index {
+  align-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  color: var(--accent) !important;
+  display: flex;
+  flex: 1 0 100%;
+  font-weight: 700;
+  gap: 6px;
+  min-height: 16px;
+  pointer-events: none;
+}
+
+.pro-slot-index::before {
+  background: var(--accent);
+  content: '';
+  flex: 1;
+  height: 2px;
+}
+
+.pro-chip--measure {
+  background: color-mix(in srgb, var(--field-measure) 16%, var(--raised));
+}

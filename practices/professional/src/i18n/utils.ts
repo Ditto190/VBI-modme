@@ -3,6 +3,7 @@ import zhCN from './locales/zh-CN.json'
 import type { ProfessionalLocale } from 'src/constants/builder'
 
 type Messages = typeof zhCN
+export type MessageKey = keyof Messages
 
 const messages: Record<ProfessionalLocale, Messages> = {
   'zh-CN': zhCN,
@@ -10,5 +11,5 @@ const messages: Record<ProfessionalLocale, Messages> = {
 }
 
 export const createTranslator = (locale: ProfessionalLocale) => {
-  return (key: keyof Messages) => messages[locale][key] ?? key
+  return (key: MessageKey) => messages[locale][key] ?? key
 }

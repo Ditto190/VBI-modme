@@ -1,0 +1,18 @@
+.pro-app :where(.pro-field-scroll, .pro-filter-card .ant-list-items) {
+  scrollbar-color: color-mix(in srgb, var(--muted) 38%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.pro-app :where(.pro-field-scroll, .pro-filter-card .ant-list-items)::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.pro-app :where(.pro-field-scroll, .pro-filter-card .ant-list-items)::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted) 38%, transparent);
+  border-radius: 999px;
+}
+
+.pro-app :where(.pro-field-scroll, .pro-filter-card .ant-list-items)::-webkit-scrollbar-track {
+  background: transparent;
+}

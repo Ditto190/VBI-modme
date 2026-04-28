@@ -1,99 +1,76 @@
-import { VBI, type VBIChartBuilder, VBIChartDSL, isVBIFilter } from '@visactor/vbi'
+import { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { VSeed } from '@visactor/vseed'
-import { createLocalConnector } from 'src/utils/localConnector'
-import { create } from 'zustand'
+import { createStore, type StoreApi } from 'zustand/vanilla'
+import { createDefaultBuilder, initVBIConnector } from 'src/utils/localConnector'
 
 type DestroyCallback = () => void
+type SchemaColumn = { name: string; type: string }
 
-const CONNECTOR_ID = 'localDataConnector'
-
-// 初始化本地连接器
-createLocalConnector(CONNECTOR_ID)
-
-interface BearState {
-  loading: boolean
-  vseed: VSeed | null
+export interface VBIStoreState {
   builder: VBIChartBuilder
-  initialized: boolean
-
   dsl: VBIChartDSL
-
+  initialized: boolean
+  loading: boolean
+  schema: SchemaColumn[]
+  vseed: VSeed | null
   initialize: (builder?: VBIChartBuilder) => DestroyCallback
-  bindEvent: () => DestroyCallback
-
-  setDsl: (dsl: VBIChartDSL) => void
-  setLoading: (loading: boolean) => void
-  setVSeed: (vseed: VSeed | null) => void
 }
 
-const defaultBuilder: VBIChartBuilder = VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID))
+export type VBIStoreApi = StoreApi<VBIStoreState>
+type StoreGet = VBIStoreApi['getState']
+type StoreSet = VBIStoreApi['setState']
 
-export const useVBIStore = create<BearState>((set, get) => ({
-  loading: false,
-  vseed: null,
-  initialized: false,
-  builder: defaultBuilder,
-  dsl: defaultBuilder.dsl.toJSON() as VBIChartDSL,
+const readDsl = (builder: VBIChartBuilder) => builder.dsl.toJSON() as VBIChartDSL
 
-  setLoading: (loading: boolean) => set({ loading }),
-  setVSeed: (vseed: VSeed | null) => set({ vseed }),
-  setDsl: (dsl: VBIChartDSL) => set({ dsl }),
+const syncSchema = async (builder: VBIChartBuilder, set: StoreSet, get: StoreGet) => {
+  const schema = await builder.getSchema()
+  if (get().builder === builder) set({ schema })
+}
 
-  // 初始化
-  initialize: (builder?: ReturnType<typeof VBI.chart.create>) => {
-    if (builder) {
-      set({ builder })
+const bindBuilderEvents = (builder: VBIChartBuilder, set: StoreSet, get: StoreGet) => {
+  const updateAll = async () => {
+    if (get().builder !== builder) return
+    const dsl = readDsl(builder)
+    if (builder.isEmpty()) {
+      set({ dsl, loading: false, vseed: null })
+      return
     }
-    set({ initialized: true })
-
-    const callback = get().bindEvent()
-
-    return () => {
-      callback()
-      set({ loading: false, vseed: null, initialized: false })
+    set({ dsl, loading: true })
+    try {
+      set({ dsl: readDsl(builder), vseed: await builder.buildVSeed() })
+    } catch (error) {
+      console.error('VSeed Build Error:', error)
+    } finally {
+      if (get().builder === builder) set({ loading: false })
     }
-  },
+  }
 
-  bindEvent: () => {
-    const { builder, setLoading, setVSeed, setDsl } = get()
-    const updateAll = async () => {
-      if (builder.isEmpty()) {
-        setLoading(false)
-        setVSeed(null)
-        setDsl(builder.dsl.toJSON() as VBIChartDSL)
-        return
+  builder.doc.on('update', updateAll)
+  void updateAll()
+  return () => builder.doc.off('update', updateAll)
+}
+
+export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
+  const initialBuilder = builder ?? createDefaultBuilder()
+
+  return createStore<VBIStoreState>((set, get) => ({
+    builder: initialBuilder,
+    dsl: readDsl(initialBuilder),
+    initialized: false,
+    loading: false,
+    schema: [],
+    vseed: null,
+    initialize: (nextBuilder) => {
+      const activeBuilder = nextBuilder ?? get().builder
+      set({ builder: activeBuilder, dsl: readDsl(activeBuilder), initialized: true, loading: false, schema: [] })
+      void syncSchema(activeBuilder, set, get)
+      const dispose = bindBuilderEvents(activeBuilder, set, get)
+      return () => {
+        dispose()
+        set({ initialized: false, loading: false, schema: [], vseed: null })
       }
+    },
+  }))
+}
 
-      setLoading(true)
-      try {
-        const newVSeed = await builder.buildVSeed()
-        setVSeed(newVSeed)
-        setDsl(builder.dsl.toJSON() as VBIChartDSL)
-      } catch (e: any) {
-        console.error('VSeed Build Error:', e)
-        import('antd').then(({ message }) => {
-          message.error('筛选器配置有误导致数据构建失败，已为您自动移除无效筛选器，请重新配置。')
-        })
-
-        const filters = builder.whereFilter.toJSON().conditions
-        if (filters && filters.length > 0) {
-          const lastFilter = filters[filters.length - 1]
-          if (isVBIFilter(lastFilter)) {
-            builder.doc.transact(() => {
-              builder.whereFilter.remove(lastFilter.id)
-            })
-            // Avoid triggering immediately if possible, or let it trigger again and succeed
-            window.dispatchEvent(new CustomEvent('vbi-filter-error', { detail: lastFilter }))
-          }
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    builder.doc.on('update', updateAll)
-    return () => {
-      builder.doc.off('update', updateAll)
-    }
-  },
-}))
+export const prepareProfessionalVBI = initVBIConnector
