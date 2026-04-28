@@ -1,0 +1,89 @@
+.stream-token {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) auto 24px;
+  align-items: center;
+  gap: var(--stream-gap-md);
+  min-height: 34px;
+  padding: 4px 4px 4px 10px;
+  border-bottom: 1px solid var(--stream-border-soft);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--stream-accent) 8%, transparent), transparent 48%),
+    var(--stream-panel-strong);
+  transition:
+    background var(--stream-motion-fast),
+    transform var(--stream-motion-fast);
+}
+
+.stream-token:hover {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--stream-accent) 13%, transparent), transparent 58%),
+    var(--stream-panel-strong);
+  transform: translateX(1px);
+}
+
+.stream-token__mark {
+  width: 7px;
+  height: 18px;
+  border-radius: var(--stream-radius-pill);
+  background: var(--stream-dimension);
+}
+
+.stream-token--measure .stream-token__mark {
+  background: var(--stream-measure);
+}
+
+.stream-token__content {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.stream-token__label {
+  overflow: hidden;
+  color: var(--stream-text);
+  font-size: var(--stream-font-sm);
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stream-token__type {
+  color: var(--stream-muted);
+  font-size: var(--stream-font-xs);
+  line-height: 1;
+}
+
+.stream-token__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.stream-token__select {
+  min-width: 70px;
+}
+
+.stream-token__select .ant-select-selector {
+  padding: 0 2px !important;
+}
+
+.stream-token__remove {
+  display: grid;
+  width: var(--stream-token-action-size);
+  height: var(--stream-token-action-size);
+  border: 0;
+  border-radius: var(--stream-radius-sm);
+  background: transparent;
+  color: var(--stream-muted);
+  cursor: pointer;
+  place-items: center;
+  transition:
+    background var(--stream-motion-fast),
+    color var(--stream-motion-fast);
+}
+
+.stream-token__remove:hover {
+  background: color-mix(in srgb, var(--stream-danger) 12%, transparent);
+  color: var(--stream-danger);
+}

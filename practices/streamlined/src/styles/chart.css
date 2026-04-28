@@ -1,0 +1,49 @@
+.stream-chart-shell {
+  display: grid;
+  grid-template-rows: 42px minmax(0, 1fr);
+  min-height: 0;
+}
+
+.stream-chart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--stream-gap-lg);
+  padding: 0 12px 0 14px;
+  border-bottom: 1px solid var(--stream-border-soft);
+  background: var(--stream-panel-strong);
+}
+
+.stream-chart-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  gap: 6px;
+}
+
+.stream-chart-body {
+  display: grid;
+  min-height: 0;
+  padding: 12px;
+  place-items: stretch;
+}
+
+.stream-chart-body > div,
+.stream-vseed-render {
+  min-height: 0;
+}
+
+.stream-vseed-render {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.stream-loading {
+  display: grid;
+  align-content: center;
+  gap: var(--stream-gap-lg);
+  color: var(--stream-muted);
+  place-items: center;
+}
