@@ -3,44 +3,42 @@ import type { AnnotationDifferenceLine } from '../../annotation/annotationDiffer
 import type { AnnotationHorizontalLine } from '../../annotation/annotationHorizontalLine'
 import type { AnnotationPoint } from '../../annotation/annotationPoint'
 
-export interface AnnotationPointConfig
-  extends Pick<
-    AnnotationPoint,
-    | 'textColor'
-    | 'textFontSize'
-    | 'textFontWeight'
-    | 'textBackgroundVisible'
-    | 'textBackgroundColor'
-    | 'textBackgroundBorderColor'
-    | 'textBackgroundBorderWidth'
-    | 'textBackgroundPadding'
-    | 'textBackgroundBorderRadius'
-    | 'offsetX'
-    | 'offsetY'
-  > {
+export type AnnotationPointConfig = Pick<
+  AnnotationPoint,
+  | 'textColor'
+  | 'textFontSize'
+  | 'textFontWeight'
+  | 'textBackgroundVisible'
+  | 'textBackgroundColor'
+  | 'textBackgroundBorderColor'
+  | 'textBackgroundBorderWidth'
+  | 'textBackgroundPadding'
+  | 'textBackgroundBorderRadius'
+  | 'offsetX'
+  | 'offsetY'
+> & {
   /**
    * 文本背景透明度
    */
   textBackgroundOpacity?: number | null
 }
 
-export interface AnnotationHorizontalLineConfig
-  extends Pick<
-    AnnotationHorizontalLine,
-    | 'textFontSize'
-    | 'lineColor'
-    | 'lineStyle'
-    | 'lineVisible'
-    | 'lineWidth'
-    | 'textColor'
-    | 'textBackgroundBorderColor'
-    | 'textBackgroundBorderRadius'
-    | 'textBackgroundBorderWidth'
-    | 'textBackgroundColor'
-    | 'textBackgroundPadding'
-    | 'textBackgroundVisible'
-    | 'textFontWeight'
-  > {
+export type AnnotationHorizontalLineConfig = Pick<
+  AnnotationHorizontalLine,
+  | 'textFontSize'
+  | 'lineColor'
+  | 'lineStyle'
+  | 'lineVisible'
+  | 'lineWidth'
+  | 'textColor'
+  | 'textBackgroundBorderColor'
+  | 'textBackgroundBorderRadius'
+  | 'textBackgroundBorderWidth'
+  | 'textBackgroundColor'
+  | 'textBackgroundPadding'
+  | 'textBackgroundVisible'
+  | 'textFontWeight'
+> & {
   /**
    * 线条虚线配置
    */
@@ -124,37 +122,35 @@ export interface AnnotationHorizontalLineConfig
 
 export type AnnotationVerticalLineConfig = AnnotationHorizontalLineConfig
 
-export interface AnnotationAreaConfig
-  extends Pick<
-    AnnotationArea,
-    | 'areaBorderColor'
-    | 'areaBorderRadius'
-    | 'areaBorderWidth'
-    | 'areaColor'
-    | 'areaColorOpacity'
-    | 'areaLineDash'
-    | 'outerPadding'
-    | 'textBackgroundBorderColor'
-    | 'textBackgroundBorderRadius'
-    | 'textBackgroundBorderWidth'
-    | 'textBackgroundColor'
-    | 'textBackgroundPadding'
-    | 'textBackgroundVisible'
-    | 'textColor'
-    | 'textFontSize'
-    | 'textFontWeight'
-  > {
+export type AnnotationAreaConfig = Pick<
+  AnnotationArea,
+  | 'areaBorderColor'
+  | 'areaBorderRadius'
+  | 'areaBorderWidth'
+  | 'areaColor'
+  | 'areaColorOpacity'
+  | 'areaLineDash'
+  | 'outerPadding'
+  | 'textBackgroundBorderColor'
+  | 'textBackgroundBorderRadius'
+  | 'textBackgroundBorderWidth'
+  | 'textBackgroundColor'
+  | 'textBackgroundPadding'
+  | 'textBackgroundVisible'
+  | 'textColor'
+  | 'textFontSize'
+  | 'textFontWeight'
+> & {
   /**
    * 文本背景透明度
    */
   textBackgroundOpacity?: number | null
 }
 
-export interface AnnotationDifferenceLineConfig
-  extends Pick<
-    AnnotationDifferenceLine,
-    'lineColor' | 'lineStyle' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
-  > {
+export type AnnotationDifferenceLineConfig = Pick<
+  AnnotationDifferenceLine,
+  'lineColor' | 'lineStyle' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
+> & {
   /**
    * 线条虚线配置
    */
