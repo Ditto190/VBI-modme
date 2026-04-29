@@ -7,6 +7,7 @@ export const markStyle: AdvancedPipe = (advancedVSeed, context) => {
 
   const pickedMarkStyle = pick(vseed, [
     'barStyle',
+    'cellStyle',
     'pointStyle',
     'lineStyle',
     'areaStyle',

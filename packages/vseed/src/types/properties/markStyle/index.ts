@@ -1,4 +1,5 @@
 export * from './barStyle'
+export * from './heatmapCellStyle'
 export * from './pointStyle'
 export * from './lineStyle'
 export type * from './areaStyle'

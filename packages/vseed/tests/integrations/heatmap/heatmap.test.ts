@@ -9,6 +9,7 @@ import config_5 from './dataset/onlyMeasures.json'
 import config_6 from './feedback/heatmapEmpty.json'
 import config_7 from './pivotGrid/pivotBasic.json'
 import config_8 from './tooltip/heatmap.json'
+import config_9 from './markStyle/cellStyleSelector.json'
 
 const cases = [
   { name: 'chartType/simple', vseed: config_0 },
@@ -19,7 +20,8 @@ const cases = [
   { name: 'dataset/onlyMeasures', vseed: config_5 },
   { name: 'feedback/heatmapEmpty', vseed: config_6 },
   { name: 'pivotGrid/pivotBasic', vseed: config_7 },
-  { name: 'tooltip/heatmap', vseed: config_8 }
+  { name: 'tooltip/heatmap', vseed: config_8 },
+  { name: 'markStyle/cellStyleSelector', vseed: config_9 },
 ]
 
 describe('heatmap', () => {
@@ -45,6 +47,28 @@ describe('heatmap', () => {
       expect(Builder.getSpecPipeline(builder.vseed.chartType)).toBeDefined()
       expect(Builder.getTheme(builder.vseed.theme)).toBeDefined()
       expect(Builder.getThemeMap()).toBeDefined()
-    });
-  });
-});
+    })
+  })
+
+  test('markStyle/cellStyleSelector compiles selector styles into heatmap cell states', () => {
+    registerAll()
+    const { vseed: vseedConfig } = config_9 as { vseed: unknown }
+    const builder = Builder.from(vseedConfig as VSeed)
+    const advanced = builder.buildAdvanced()
+    const spec = builder.buildSpec(advanced!)
+
+    const customState = (spec as any).cell?.state?.custom1
+
+    expect(customState).toMatchObject({
+      level: 1,
+      style: {
+        fill: '#f97316',
+        fillOpacity: 0.72,
+        stroke: '#111827',
+        lineWidth: 2,
+      },
+    })
+    expect(customState?.filter({ date: '2020', type: 'B', sales: 610 })).toBe(true)
+    expect(customState?.filter({ date: '2019', type: 'B', sales: 60 })).toBe(false)
+  })
+})
