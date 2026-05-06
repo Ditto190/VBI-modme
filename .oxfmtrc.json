@@ -12,6 +12,7 @@
   "ignorePatterns": [
     "package-lock.json",
     "pnpm-lock.yaml",
+    "**/CHANGELOG.md",
     "AGENTS.md",
     "CLAUDE.md",
     "node_modules/**",
