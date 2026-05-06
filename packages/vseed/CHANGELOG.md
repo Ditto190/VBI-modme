@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.5.2
+
+### Patch Changes
+
+- 6bd030c: fix: vscreen animation bug
+
 ## 0.5.1
 
 ### Patch Changes
