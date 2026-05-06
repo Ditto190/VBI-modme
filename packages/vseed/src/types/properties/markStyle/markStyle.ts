@@ -4,12 +4,10 @@ import { zPointStyle } from './pointStyle'
 import { zLineStyle } from './lineStyle'
 import { zAreaStyle } from './zAreaStyle'
 import { zBoxPlotStyle } from './boxPlotStyle'
-import { zHeatmapCellStyle } from './heatmapCellStyle'
 import { zOutlierStyle } from './outlierStyle'
 
 export const zMarkStyle = z.object({
   barStyle: zBarStyle.or(z.array(zBarStyle)).nullish(),
-  cellStyle: zHeatmapCellStyle.or(z.array(zHeatmapCellStyle)).nullish(),
   pointStyle: zPointStyle.or(z.array(zPointStyle)).nullish(),
   lineStyle: zLineStyle.or(z.array(zLineStyle)).nullish(),
   areaStyle: zAreaStyle.or(z.array(zAreaStyle)).nullish(),

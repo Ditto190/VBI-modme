@@ -9,7 +9,6 @@ import {
   zDimensions,
   zLabel,
   zMeasures,
-  zHeatmapCellStyle,
   zTheme,
   zTooltip,
   zBrush,
@@ -29,7 +28,6 @@ export const zHeatmap = z.object({
   legend: zColorLegend.nullish(),
   tooltip: zTooltip.nullish(),
   brush: zBrush.nullish(),
-  cellStyle: zHeatmapCellStyle.or(z.array(zHeatmapCellStyle)).nullish(),
   theme: zTheme.nullish(),
   locale: zLocale.nullish(),
 })

@@ -3,7 +3,6 @@ import type {
   Color,
   ColorLegend,
   HeatmapDimension,
-  HeatmapCellStyle,
   HeatmapMeasure,
   BackgroundColor,
   Dataset,
@@ -109,14 +108,6 @@ export interface Heatmap {
    * @description 框选配置，用于开启/关闭 brush 框选能力
    */
   brush?: Brush
-
-  /**
-   * @description 热力图单元格样式配置, 支持全局样式或条件样式配置。
-   * 数据筛选器
-   * 若配置 selector, 提供数值 selector, 局部数据 selector, 条件维度 selector, 条件指标 selector 共四类数据匹配能力。
-   * 若未配置 selector, 则样式全局生效。
-   */
-  cellStyle?: HeatmapCellStyle | HeatmapCellStyle[]
 
   /**
    * 图表的主题, 主题是优先级较低的功能配置, 包含所有图表类型共用的通用配置, 与单类图表类型共用的图表配置
