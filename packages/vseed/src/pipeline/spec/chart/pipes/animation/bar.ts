@@ -88,7 +88,7 @@ export const barLoop = (
   if (loopEffect === VScreenAnimationType.highLight && loop) {
     const groupDuration = 0.7
     const stopDuration = 0.85
-    loopDuration = groupDuration * getGroupCountFromSpec(spec).groupCount + stopDuration
+    loopDuration = loop.duration ?? groupDuration * getGroupCountFromSpec(spec).groupCount + stopDuration
     result.push(
       ...groupHighLightBar(
         startTime,
