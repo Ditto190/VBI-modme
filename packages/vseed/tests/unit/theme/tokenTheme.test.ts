@@ -15,6 +15,8 @@ const annotationLineDash = [3, 1]
 const annotationTextColor = '#FFFFFF'
 const annotationTextBackgroundColor = '#21252CB8'
 const annotationTextBackgroundOpacity = 0.72
+const annotationAreaColor = '#F97316'
+const annotationAreaColorOpacity = 0.24
 
 const lineVSeed: VSeed = {
   chartType: 'line',
@@ -131,6 +133,8 @@ beforeAll(() => {
       annotationTextColor,
       annotationTextBackgroundColor,
       annotationTextBackgroundOpacity,
+      annotationAreaColor,
+      annotationAreaColorOpacity,
     },
     'unit-earth': {
       baseTheme: 'light',
@@ -222,6 +226,8 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationArea?.textBackgroundColor).toBe(annotationTextBackgroundColor)
     expect(columnConfig?.annotation?.annotationArea?.textBackgroundBorderColor).toBe(annotationTextBackgroundColor)
     expect(columnConfig?.annotation?.annotationArea?.textBackgroundOpacity).toBe(annotationTextBackgroundOpacity)
+    expect(columnConfig?.annotation?.annotationArea?.areaColor).toBe(annotationAreaColor)
+    expect(columnConfig?.annotation?.annotationArea?.areaColorOpacity).toBe(annotationAreaColorOpacity)
     expect(columnConfig?.regressionLine?.linearRegressionLine?.textFontSize).toBe(labelFontSize)
   })
 
@@ -303,6 +309,8 @@ describe('tokenTheme', () => {
     expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.style?.opacity).toBe(
       annotationTextBackgroundOpacity,
     )
+    expect(areaSpec?.markArea?.[0]?.area?.style?.fill).toBe(annotationAreaColor)
+    expect(areaSpec?.markArea?.[0]?.area?.style?.fillOpacity).toBe(annotationAreaColorOpacity)
   })
 
   test('should apply fontFamily and fontSize to final table spec', () => {
