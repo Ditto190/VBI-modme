@@ -1,7 +1,7 @@
 import { scatterLoop } from "src/pipeline/spec/chart/pipes/animation/scatter";
 
 describe("scatter animation", () => {
-  it("should use point size channel for breath atmosphere", () => {
+  it("should use scale channels for breath atmosphere", () => {
     const result = scatterLoop(
       {
         enable: true,
@@ -12,11 +12,7 @@ describe("scatter animation", () => {
     ) as any;
     const breath = result.point[0];
 
-    expect(breath.channel.scaleX).toBeUndefined();
-    expect(breath.channel.scaleY).toBeUndefined();
-    expect(breath.channel.size.from(null, { attribute: { size: 20 } })).toBe(
-      16,
-    );
-    expect(breath.channel.size.to(null, { attribute: { size: 20 } })).toBe(24);
+    expect(breath.channel.scaleX).toEqual({ from: 0.8, to: 2 });
+    expect(breath.channel.scaleY).toEqual({ from: 0.8, to: 2 });
   });
 });
