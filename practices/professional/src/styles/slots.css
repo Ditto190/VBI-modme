@@ -55,3 +55,22 @@
   overflow: auto;
   padding: 1px;
 }
+
+.pro-config__unmatched {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 6px;
+  padding-top: 7px;
+}
+
+.pro-config__unmatched-label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.pro-config__unmatched-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

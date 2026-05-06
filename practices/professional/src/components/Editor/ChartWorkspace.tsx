@@ -67,7 +67,6 @@ export const ChartWorkspace = (props: ChartWorkspaceProps) => {
             dsl={props.dsl}
             fields={props.fields}
             labels={props.labels}
-            showEditor={configOpen}
             slots={props.slots}
           />
         )}

@@ -27,6 +27,7 @@ test('APP accepts standard practice props and renders the empty config container
 
   expect(await screen.findByText('Fields')).toBeInTheDocument()
   expect(await screen.findByText('Config')).toBeInTheDocument()
+  expect(screen.queryByText('Configured fields')).not.toBeInTheDocument()
   expect(screen.queryByText('EN')).not.toBeInTheDocument()
 })
 

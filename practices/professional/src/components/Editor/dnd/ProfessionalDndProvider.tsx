@@ -1,17 +1,30 @@
-import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent, type DragStartEvent } from '@dnd-kit/core'
-import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react'
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+  type DragStartEvent,
+} from '@dnd-kit/core'
+import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
 import type { VBIChartBuilder } from '@visactor/vbi'
 import type { SchemaField } from 'src/types'
 import type { ProfessionalDragPayload, SlotDropPayload } from 'src/types/dnd'
 import { slotCollision } from './collision'
+import { keepDragOverlayNearPointer } from './dragOverlayPosition'
+import { getDragRole } from './dragPayload'
 import { DragGhost } from './DragGhost'
 import { applyDrop } from './dropAction'
-import { readLatestPointer, readStartPointer, trackWindowPointer, type DragPointer } from './dragPointer'
-import { resolveDropTarget } from './resolveDropTarget'
 
 type DndContextValue = {
   activeDrag: ProfessionalDragPayload | null
   activeRole: SchemaField['role'] | null
+}
+
+export type DragSourceRect = {
+  height: number
+  width: number
 }
 
 type ProfessionalDndProviderProps = {
@@ -23,36 +36,29 @@ const ProfessionalDndContext = createContext<DndContextValue | null>(null)
 
 export const ProfessionalDndProvider = (props: ProfessionalDndProviderProps) => {
   const [activeDrag, setActiveDrag] = useState<ProfessionalDragPayload | null>(null)
-  const [dragPointer, setDragPointer] = useState<DragPointer | null>(null)
-  const stopPointerTrackingRef = useRef<(() => void) | null>(null)
+  const [activeRect, setActiveRect] = useState<DragSourceRect | null>(null)
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }))
   const contextValue = useMemo(
     () => ({ activeDrag, activeRole: activeDrag ? getDragRole(activeDrag) : null }),
     [activeDrag],
   )
 
-  const handleDragStart = (event: DragStartEvent) => {
-    const pointer = readLatestPointer() ?? readStartPointer(event)
-    setActiveDrag(readDragPayload(event.active.data.current))
-    setDragPointer(pointer)
-    stopPointerTrackingRef.current?.()
-    stopPointerTrackingRef.current = trackWindowPointer(setDragPointer)
-  }
-
   const handleDragEnd = (event: DragEndEvent) => {
     const dragPayload = readDragPayload(event.active.data.current)
     const dropPayload = readDropPayload(event.over?.data.current)
-    const resolvedDrop = dropPayload ? resolveDropTarget(dropPayload, readLatestPointer()) : null
     clearDrag()
-    if (!dragPayload || !resolvedDrop) return
-    applyDrop(props.builder, dragPayload, resolvedDrop)
+    if (!dragPayload || !dropPayload) return
+    applyDrop(props.builder, dragPayload, dropPayload)
   }
 
   const clearDrag = () => {
-    stopPointerTrackingRef.current?.()
-    stopPointerTrackingRef.current = null
     setActiveDrag(null)
-    setDragPointer(null)
+    setActiveRect(null)
+  }
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveDrag(readDragPayload(event.active.data.current))
+    setActiveRect(readSourceRect(event.active.rect.current.initial))
   }
 
   return (
@@ -65,7 +71,9 @@ export const ProfessionalDndProvider = (props: ProfessionalDndProviderProps) => 
         onDragStart={handleDragStart}
       >
         {props.children}
-        {activeDrag && dragPointer && <DragGhost payload={activeDrag} position={dragPointer} />}
+        <DragOverlay adjustScale={false} dropAnimation={null} modifiers={[keepDragOverlayNearPointer]}>
+          {activeDrag ? <DragGhost payload={activeDrag} sourceRect={activeRect} /> : null}
+        </DragOverlay>
       </DndContext>
     </ProfessionalDndContext.Provider>
   )
@@ -77,10 +85,10 @@ export const useProfessionalDnd = () => {
   return context
 }
 
-const getDragRole = (payload: ProfessionalDragPayload) =>
-  payload.kind === 'schema-field' ? payload.field.role : payload.item.role
-
 const readDragPayload = (value: unknown) => (value ?? null) as ProfessionalDragPayload | null
+
+const readSourceRect = (rect: DragStartEvent['active']['rect']['current']['initial']) =>
+  rect ? { height: rect.height, width: rect.width } : null
 
 const readDropPayload = (value: unknown) => {
   const payload = value as SlotDropPayload | undefined

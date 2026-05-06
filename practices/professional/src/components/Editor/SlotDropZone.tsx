@@ -1,6 +1,4 @@
-import { Fragment } from 'react'
-import { useDroppable } from '@dnd-kit/core'
-import { FieldToken } from './FieldToken'
+import { SlotFieldToken } from './SlotFieldToken'
 import { SlotDropTarget } from './dnd/SlotDropTarget'
 import type { ProfessionalLabels } from 'src/config/labels'
 import type { FieldSlot, MappedField, SchemaField } from 'src/types'
@@ -21,11 +19,6 @@ export const SlotDropZone = (props: SlotDropZoneProps) => {
   const { activeRole, labels, slot, values } = props
   const isAvailable = acceptsRole(slot, activeRole ?? undefined)
   const isBlocked = Boolean(activeRole && !isAvailable)
-  const { isOver, setNodeRef } = useDroppable({
-    id: `slot-${props.slotIndex}-slot`,
-    data: { insertIndex: values.length, kind: 'slot-insert', slot, slotIndex: props.slotIndex, target: 'slot' },
-    disabled: !isAvailable,
-  })
 
   return (
     <div
@@ -34,10 +27,8 @@ export const SlotDropZone = (props: SlotDropZoneProps) => {
         isAvailable ? 'pro-slot--available' : '',
         isBlocked ? 'pro-slot--blocked' : '',
         activeRole ? 'pro-slot--dragging' : '',
-        isOver ? 'pro-slot--over' : '',
       ].join(' ')}
       data-slot-index={props.slotIndex}
-      ref={setNodeRef}
     >
       <div className='pro-slot__label'>
         <span>{slot.title}</span>
@@ -45,25 +36,30 @@ export const SlotDropZone = (props: SlotDropZoneProps) => {
       </div>
       <div className='pro-slot__body'>
         {values.length ? (
-          values.map((value, index) => (
-            <Fragment key={value.id}>
-              <SlotDropTarget
+          <>
+            {values.map((value, index) => (
+              <SlotFieldToken
                 activeRole={activeRole ?? null}
-                insertIndex={index}
+                index={index}
+                item={value}
+                itemCount={values.length}
+                key={value.id}
+                labels={labels}
                 slot={slot}
                 slotIndex={props.slotIndex}
+                onFieldAction={props.onFieldAction}
               />
-              <FieldToken
-                dragId={`slot-${props.slotIndex}-token-${value.id}`}
-                item={value}
-                labels={labels}
-                slotTokenIndex={index}
-                onAction={props.onFieldAction}
-              />
-            </Fragment>
-          ))
+            ))}
+          </>
         ) : (
-          <SlotDropTarget activeRole={activeRole ?? null} insertIndex={0} slot={slot} slotIndex={props.slotIndex}>
+          <SlotDropTarget
+            activeRole={activeRole ?? null}
+            insertIndex={0}
+            itemCount={0}
+            slot={slot}
+            slotIndex={props.slotIndex}
+            zone='empty'
+          >
             {labels.dropHere}
           </SlotDropTarget>
         )}
@@ -71,8 +67,10 @@ export const SlotDropZone = (props: SlotDropZoneProps) => {
           <SlotDropTarget
             activeRole={activeRole ?? null}
             insertIndex={values.length}
+            itemCount={values.length}
             slot={slot}
             slotIndex={props.slotIndex}
+            zone='tail'
           />
         )}
       </div>
