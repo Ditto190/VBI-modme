@@ -1,5 +1,11 @@
-import type { VBIChartBuilder } from '@visactor/vbi'
-import { toMeasureAggregate, toSort, type DimensionAggregate, type MeasureAggregate } from './fieldOptions'
+import type { VBIChartBuilder, VBIMeasure } from '@visactor/vbi'
+import {
+  getFormatPreset,
+  toMeasureAggregate,
+  toSort,
+  type DimensionAggregate,
+  type MeasureAggregate,
+} from './fieldOptions'
 import type { MappedField } from 'src/types'
 
 type NodeLike = {
@@ -8,7 +14,7 @@ type NodeLike = {
   clearSort: () => unknown
   setAggregate: (aggregate: DimensionAggregate | MeasureAggregate) => unknown
   setAlias: (alias: string) => unknown
-  setFormat?: (format: { autoFormat: true }) => unknown
+  setFormat?: (format: NonNullable<VBIMeasure['format']>) => unknown
   setSort: (sort: NonNullable<MappedField['sort']>) => unknown
 }
 
@@ -41,12 +47,15 @@ export const setMappedAggregate = (builder: VBIChartBuilder, item: MappedField, 
   })
 }
 
-export const setMeasureAutoFormat = (builder: VBIChartBuilder, item: MappedField, autoFormat: boolean) => {
+export const setMeasureFormat = (builder: VBIChartBuilder, item: MappedField, key: string) => {
   if (item.role !== 'measure') return
-  builder.doc.transact(() =>
-    updateNode(builder, item, (node) => (autoFormat ? node.setFormat?.({ autoFormat }) : node.clearFormat?.())),
-  )
+  const preset = getFormatPreset(key)
+  if (!preset) return
+  builder.doc.transact(() => updateNode(builder, item, (node) => applyMeasureFormat(node, preset.format)))
 }
+
+const applyMeasureFormat = (node: NodeLike, format: VBIMeasure['format']) =>
+  format ? node.setFormat?.(format) : node.clearFormat?.()
 
 const updateNode = (builder: VBIChartBuilder, item: MappedField, callback: (node: NodeLike) => void) => {
   const collection = (item.role === 'measure' ? builder.measures : builder.dimensions) as CollectionLike

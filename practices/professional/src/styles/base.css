@@ -19,9 +19,9 @@
   grid-template-columns: 210px 1fr;
   height: 700px !important;
   line-height: 1.35;
-  max-width: 700px;
+  max-width: 100%;
   overflow: hidden;
-  width: 700px !important;
+  width: min(700px, 100%) !important;
 }
 
 .pro-app--dark {

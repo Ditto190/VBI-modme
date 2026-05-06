@@ -1,31 +1,36 @@
 import { useDroppable } from '@dnd-kit/core'
 import type { ReactNode } from 'react'
 import type { FieldSlot, SchemaField } from 'src/types'
+import type { SlotDropZone } from 'src/types/dnd'
+import {
+  acceptsSlotDrop,
+  createSlotDropClassName,
+  createSlotDropPayload,
+  createSlotDropTargetId,
+} from './slotDropTargetModel'
 
 type SlotDropTargetProps = {
   activeRole: SchemaField['role'] | null
   children?: ReactNode
   insertIndex: number
+  itemCount: number
   slot: FieldSlot
   slotIndex: number
+  zone: SlotDropZone
 }
 
-export const SlotDropTarget = ({ activeRole, children, insertIndex, slot, slotIndex }: SlotDropTargetProps) => {
-  const accepts = Boolean(activeRole && slot.accepts.includes(activeRole))
+export const SlotDropTarget = (props: SlotDropTargetProps) => {
+  const { activeRole, children, insertIndex, itemCount, slot, slotIndex, zone } = props
+  const accepts = acceptsSlotDrop(slot, activeRole)
   const { isOver, setNodeRef } = useDroppable({
-    id: `slot-${slotIndex}-${insertIndex}`,
-    data: { insertIndex, kind: 'slot-insert', slot, slotIndex, target: 'index' },
+    id: createSlotDropTargetId({ insertIndex, slotIndex, zone }),
+    data: createSlotDropPayload({ insertIndex, itemCount, slot, slotIndex, zone }),
     disabled: !accepts,
   })
 
   return (
     <span
-      className={[
-        'pro-slot-drop',
-        children ? 'pro-slot-drop--empty' : '',
-        accepts ? 'pro-slot-drop--enabled' : '',
-        isOver ? 'pro-slot-drop--over' : '',
-      ].join(' ')}
+      className={createSlotDropClassName({ accepts, hasContent: Boolean(children), isOver, zone })}
       ref={setNodeRef}
     >
       {children}

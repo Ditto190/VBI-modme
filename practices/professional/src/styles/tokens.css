@@ -1,4 +1,5 @@
-.pro-slot__body > span,
+.pro-slot-drop--empty,
+.pro-slot-token,
 .pro-chip {
   background: color-mix(in srgb, var(--accent) 14%, var(--raised));
   border: 1px solid var(--line);
@@ -21,6 +22,8 @@
   cursor: grab;
   display: inline-flex;
   gap: 3px;
+  position: relative;
+  z-index: 1;
 }
 
 .pro-slot-token__label {

@@ -3,6 +3,7 @@ import { Button, Tooltip } from 'antd'
 import { useMemo, useState } from 'react'
 import type { ProfessionalLabels } from 'src/config/labels'
 import type { SchemaField } from 'src/types'
+import { createSchemaFieldDragPayload } from './dnd/dragPayload'
 import { useProfessionalDnd } from './dnd/ProfessionalDndProvider'
 import { useProfessionalDraggable } from './dnd/useProfessionalDraggable'
 
@@ -49,7 +50,7 @@ export const FieldGroup = ({ fields, labels, title, onAddField }: FieldGroupProp
 }
 
 const FieldButton = ({ field, onAddField }: { field: SchemaField; onAddField: (field: SchemaField) => void }) => {
-  const draggable = useProfessionalDraggable(`field-${field.role}-${field.name}`, { field, kind: 'schema-field' })
+  const draggable = useProfessionalDraggable(`field-${field.role}-${field.name}`, createSchemaFieldDragPayload(field))
   const { activeDrag } = useProfessionalDnd()
 
   return (
@@ -57,7 +58,6 @@ const FieldButton = ({ field, onAddField }: { field: SchemaField; onAddField: (f
       <button
         {...draggable.attributes}
         {...draggable.listeners}
-        {...draggable.pointerHandlers}
         className={`pro-field pro-field--${field.role}${draggable.isDragging ? ' pro-field--dragging' : ''}`}
         ref={draggable.setNodeRef}
         type='button'

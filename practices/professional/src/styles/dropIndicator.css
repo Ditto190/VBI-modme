@@ -1,0 +1,16 @@
+.pro-slot-drop--head::before,
+.pro-slot-drop--edge::before,
+.pro-slot-drop--tail::before {
+  background: transparent;
+  border-radius: 999px;
+  content: '';
+  height: 22px;
+  width: 3px;
+}
+
+.pro-slot-drop--head.pro-slot-drop--over::before,
+.pro-slot-drop--edge.pro-slot-drop--over::before,
+.pro-slot-drop--tail.pro-slot-drop--over::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}

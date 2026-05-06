@@ -5,7 +5,6 @@ const zh = {
   chartType: '图表类型',
   config: '配置',
   configPanel: '配置面板',
-  configuredFields: '已配置字段',
   dataSource: '数据字段',
   dimensions: '维度',
   dragHint: '拖到匹配的编码槽，蓝色插入线表示落点',
@@ -15,6 +14,11 @@ const zh = {
   exitFullscreen: '退出全屏',
   fieldCollapse: '收起',
   fieldExpand: '展开全部',
+  formatCnyWan: '¥符号(万)',
+  formatNumber2: '数值 (2)',
+  formatPercent1: '百分比 (1)',
+  formatScientific3: '科学计数 (3)',
+  formatUsdK: '$K (2)',
   fullscreen: '全屏',
   insertAt: '插入位置',
   languageChinese: '中',
@@ -37,6 +41,7 @@ const zh = {
   themeLight: '浅色',
   toolbarRedo: '重做',
   toolbarUndo: '撤销',
+  unmatchedFields: '未匹配字段',
 }
 
 const en: typeof zh = {
@@ -44,7 +49,6 @@ const en: typeof zh = {
   chartType: 'Chart type',
   config: 'Config',
   configPanel: 'Config panel',
-  configuredFields: 'Configured fields',
   dataSource: 'Fields',
   dimensions: 'Dimensions',
   dragHint: 'Drop on a matching encoding slot. The blue line marks the index.',
@@ -54,6 +58,11 @@ const en: typeof zh = {
   exitFullscreen: 'Exit fullscreen',
   fieldCollapse: 'Collapse',
   fieldExpand: 'Expand all',
+  formatCnyWan: '¥Symbol(万)',
+  formatNumber2: 'Number (2)',
+  formatPercent1: 'Percent (1)',
+  formatScientific3: 'Scientific (3)',
+  formatUsdK: '$K (2)',
   fullscreen: 'Fullscreen',
   insertAt: 'Insert at',
   languageChinese: '中',
@@ -76,6 +85,7 @@ const en: typeof zh = {
   themeLight: 'Light',
   toolbarRedo: 'Redo',
   toolbarUndo: 'Undo',
+  unmatchedFields: 'Unmatched fields',
 }
 
 export type ProfessionalLabels = ReturnType<typeof getLabels>
