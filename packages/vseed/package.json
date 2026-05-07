@@ -31,6 +31,9 @@
   "files": [
     "dist"
   ],
+  "unpkgFiles": [
+    "dist/umd/index.js"
+  ],
   "scripts": {
     "dev": "rslib build --watch --no-clean",
     "build": "rslib build",
