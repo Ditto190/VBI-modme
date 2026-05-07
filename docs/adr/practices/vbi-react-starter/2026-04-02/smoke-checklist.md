@@ -1,9 +1,9 @@
 # Smoke Checklist: vbi-react Starter Demo
 
-更新日期：2026-04-02  
-范围：`practices/vbi-react-starter/src/**`
+Updated: 2026-04-02
+Scope: `practices/vbi-react-starter/src/**`
 
-## 环境准备
+## Environment Setup
 
 ```bash
 pnpm --filter=vbi-react-starter run test
@@ -11,35 +11,35 @@ pnpm --filter=vbi-react-starter run lint
 pnpm --filter=website run build
 ```
 
-通过标准：
+Passing criteria:
 
-- 命令全部 exit code = 0。
-- website 构建产物包含 starter practice 页面。
+- All commands exit with code = 0.
+- The website build output includes the starter practice page.
 
-## 手动冒烟项
+## Manual Smoke Items
 
-### 1. 桌面视口（1440x900）
+### 1. Desktop Viewport (1440x900)
 
-- [ ] 打开 starter demo 页面。
-- [ ] 点击 `Load demo data` 后，状态区显示加载成功与行数。
-- [ ] 在字段面板添加维度和指标后，主区成功渲染图表。
-- [ ] 切换 `ChartTypeSelector` 不报错，图表正常更新。
+- [ ] Open the starter demo page.
+- [ ] After clicking `Load demo data`, the status area shows successful loading and row count.
+- [ ] After adding dimensions and measures in the field panel, the main area renders the chart successfully.
+- [ ] Switching `ChartTypeSelector` does not throw errors, and the chart updates correctly.
 
-### 2. 窄屏视口（390x844）
+### 2. Narrow Viewport (390x844)
 
-- [ ] 顶栏按钮不重叠，关键操作可点击。
-- [ ] `Show fields` / `Hide fields` 可切换左侧字段面板显隐。
-- [ ] 字段面板收起后，主图区域可正常查看和交互。
+- [ ] Top bar buttons do not overlap, and key actions are clickable.
+- [ ] `Show fields` / `Hide fields` toggles the left field panel visibility.
+- [ ] After the field panel is collapsed, the main chart area remains viewable and interactive.
 
-### 3. 异常路径
+### 3. Error Path
 
-- [ ] 上传非法 CSV，出现错误态提示。
-- [ ] 错误后仍可点击 `Load demo data` 恢复可用状态。
-- [ ] DSL 折叠面板可展开查看当前快照。
+- [ ] Uploading an invalid CSV shows an error-state message.
+- [ ] After the error, clicking `Load demo data` still restores the usable state.
+- [ ] The collapsed DSL panel can be expanded to inspect the current snapshot.
 
-## 记录模板
+## Record Template
 
-执行人：`<name>`  
-执行时间：`<YYYY-MM-DD HH:mm>`  
-结论：`<PASS / FAIL>`  
-备注：`<问题描述与复现步骤>`
+Executor: `<name>`
+Execution time: `<YYYY-MM-DD HH:mm>`
+Conclusion: `<PASS / FAIL>`
+Notes: `<issue description and reproduction steps>`

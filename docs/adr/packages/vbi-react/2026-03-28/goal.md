@@ -1,26 +1,26 @@
-# Goal: 在网站文档中新增 VBI React 专区（2026-03-28）
+# Goal: Add a VBI React Section to the Website Documentation (2026-03-28)
 
-## 目标陈述
+## Goal Statement
 
-在 VBI 官网文档站中新增 `VBI React` 页面体系，使用户在站点内即可完成 `@visactor/vbi-react` 的学习与接入（定位、安装、API、示例）。
+Add a `VBI React` page system to the VBI official documentation site so users can learn and adopt `@visactor/vbi-react` directly from the site, including positioning, installation, APIs, and examples.
 
-## 交付范围
+## Delivery Scope
 
-1. 顶部导航新增 `VBI React` 入口。
-2. 新建 `vbi-react` 文档分区并接入站点侧边栏。
-3. 提供 `VBI React` 首页（定位、安装、快速开始）。
-4. 提供 API 文档分组（覆盖核心 hooks/components）。
-5. 提供示例文档分组（含可复制代码与预期效果说明）。
+1. Add a `VBI React` entry to the top navigation.
+2. Create a new `vbi-react` documentation section and connect it to the site sidebar.
+3. Provide a `VBI React` landing page covering positioning, installation, and quick start.
+4. Provide grouped API documentation covering the core hooks/components.
+5. Provide grouped example documentation with copyable code and expected results.
 
-## 开工前输入（SSOT）
+## Pre-Start Inputs (SSOT)
 
-1. 运行时导出边界以 `packages/vbi-react/package.json` 的 `exports` 为准：
+1. Runtime export boundaries are defined by `exports` in `packages/vbi-react/package.json`:
    - `@visactor/vbi-react`
    - `@visactor/vbi-react/components`
-2. 文档能力清单以 `packages/vbi-react/src/hooks/index.ts` 与 `packages/vbi-react/src/components/index.ts` 为准。
-3. 文档落点固定为 `apps/website/docs/zh-CN/vbi-react/`。
+2. The documented capability list is defined by `packages/vbi-react/src/hooks/index.ts` and `packages/vbi-react/src/components/index.ts`.
+3. The documentation target path is fixed at `apps/website/docs/zh-CN/vbi-react/`.
 
-## API 对齐清单（必须逐项覆盖）
+## API Alignment Checklist (Required Coverage)
 
 1. `@visactor/vbi-react`
    - `useVBI`
@@ -36,17 +36,17 @@
    - `ChartTypeSelector`
    - `FieldPanel`
 
-## 不在本次范围
+## Out of Scope
 
-- 不改动 `packages/vbi-react/src` 运行时代码。
-- 不做功能开发，不改测试逻辑。
-- 不处理 npm 发布流程。
+- Do not change runtime code under `packages/vbi-react/src`.
+- Do not implement new features or change test logic.
+- Do not handle the npm release process.
 
-## 验收标准（DoD）
+## Acceptance Criteria (DoD)
 
-1. 导航中可见并可点击进入 `VBI React`。
-2. `apps/website/docs/zh-CN/vbi-react/` 目录结构完整（首页、API、示例、各自 `_meta.json`）。
-3. API 文档不少于 6 页，且均对应“API 对齐清单”中的真实导出能力。
-4. 示例文档不少于 3 页，且每页包含依赖说明、最小代码片段、预期效果说明。
-5. 页面链接与层级关系正确，无明显断链或空页面。
-6. 文案术语与现有 VBI 文档风格保持一致（中英文术语统一）。
+1. `VBI React` is visible in the navigation and can be clicked.
+2. `apps/website/docs/zh-CN/vbi-react/` has a complete directory structure: landing page, API, examples, and each `_meta.json`.
+3. API documentation includes at least 6 pages, all mapped to real exports in the "API Alignment Checklist".
+4. Example documentation includes at least 3 pages, each with dependency notes, a minimal code snippet, and expected results.
+5. Page links and hierarchy are correct, with no obvious broken links or empty pages.
+6. Copy and terminology remain consistent with the existing VBI documentation style, including consistent Chinese/English terminology.

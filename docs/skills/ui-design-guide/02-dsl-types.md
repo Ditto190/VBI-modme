@@ -1,35 +1,35 @@
-# 2. DSL 类型速查
+# 2. DSL Type Quick Reference
 
-类型从 `@visactor/vbi` 导入。
+Import types from `@visactor/vbi`.
 
 ---
 
-## 2.1 VBIChartDSL（根类型）
+## 2.1 VBIChartDSL (Root Type)
 
 ```ts
 interface VBIChartDSL {
-  connectorId: string // connector 标识符
-  chartType: string // 图表类型：'column' | 'bar' | 'line' | 'pie' | ...
-  dimensions: VBIDimension[] // 维度数组
-  measures: VBIMeasure[] // 度量数组
-  whereFilter: VBIWhereGroup // WHERE 过滤树
-  havingFilter: VBIHavingGroup // HAVING 过滤树
-  theme: 'light' | 'dark' // 主题
-  locale: 'zh-CN' | 'en-US' // 语言
-  limit?: number // 行数限制
+  connectorId: string // Connector identifier
+  chartType: string // Chart type: 'column' | 'bar' | 'line' | 'pie' | ...
+  dimensions: VBIDimension[] // Dimension array
+  measures: VBIMeasure[] // Measure array
+  whereFilter: VBIWhereGroup // WHERE filter tree
+  havingFilter: VBIHavingGroup // HAVING filter tree
+  theme: 'light' | 'dark' // Theme
+  locale: 'zh-CN' | 'en-US' // Locale
+  limit?: number // Row limit
   version: number
 }
 ```
 
 ---
 
-## 2.2 VBIDimension（维度）
+## 2.2 VBIDimension (Dimension)
 
 ```ts
 interface VBIDimension {
   id: string
-  field: string // 原始字段名
-  alias: string // 显示别名
+  field: string // Source field name
+  alias: string // Display alias
   encoding?:
     | 'xAxis'
     | 'yAxis'
@@ -43,7 +43,7 @@ interface VBIDimension {
     | 'player'
     | 'hierarchy'
   aggregate?: {
-    // 日期聚合
+    // Date aggregation
     func: 'toYear' | 'toQuarter' | 'toMonth' | 'toWeek' | 'toDay' | 'toHour' | 'toMinute' | 'toSecond'
   }
   sort?: { order: 'asc' | 'desc' }
@@ -52,7 +52,7 @@ interface VBIDimension {
 
 ---
 
-## 2.3 VBIMeasure（度量）
+## 2.3 VBIMeasure (Measure)
 
 ```ts
 interface VBIMeasure {
@@ -94,7 +94,7 @@ interface VBIMeasure {
       | 'stddev'
       | 'median'
       | 'quantile'
-    quantile?: number // 仅 func='quantile' 时有效，范围 0~1
+    quantile?: number // Valid only when func='quantile'; range 0-1
   }
   format?:
     | { autoFormat: true }
@@ -111,7 +111,7 @@ interface VBIMeasure {
 
 ---
 
-## 2.4 VBIWhereGroup（WHERE 过滤树）
+## 2.4 VBIWhereGroup (WHERE Filter Tree)
 
 ```ts
 interface VBIWhereGroup {
@@ -127,13 +127,13 @@ interface VBIWhereFilter {
   field: string
   op: '=' | '!=' | '>' | '<' | '>=' | '<=' | 'contains' | 'startsWith' | 'endsWith' | 'in' | 'not in' | 'date'
   value?: unknown
-  // op='date' 时使用日期范围结构
+  // Use a date range structure when op='date'
 }
 ```
 
 ---
 
-## 2.5 VBIHavingGroup（HAVING 过滤树）
+## 2.5 VBIHavingGroup (HAVING Filter Tree)
 
 ```ts
 interface VBIHavingGroup {
@@ -147,7 +147,7 @@ type VBIHavingClause = VBIHavingFilter | VBIHavingGroup
 interface VBIHavingFilter {
   id: string
   field: string
-  aggregate: VBIHavingAggregate // 必须指定聚合函数
+  aggregate: VBIHavingAggregate // An aggregate function is required
   op: '>' | '<' | '>=' | '<=' | '=' | '!='
   value?: unknown
 }
@@ -157,18 +157,18 @@ interface VBIHavingFilter {
 
 ---
 
-## 2.6 VBISchemaField（字段元信息）
+## 2.6 VBISchemaField (Field Metadata)
 
 ```ts
 interface VBISchemaField {
-  name: string // 字段名
+  name: string // Field name
   type: string // 'string' | 'number' | 'date' | 'datetime' | 'timestamp' | 'boolean'
-  role: 'dimension' | 'measure' // 根据 type 自动推断
-  isDate: boolean // 是否为日期类型
+  role: 'dimension' | 'measure' // Inferred automatically from type
+  isDate: boolean // Whether this is a date type
 }
 ```
 
-字段角色推断规则（`getFieldRoleBySchemaType`）：
+Field role inference rules (`getFieldRoleBySchemaType`):
 
 - `number` → `measure`
 - `string` → `dimension`
@@ -176,36 +176,36 @@ interface VBISchemaField {
 
 ---
 
-## 2.7 类型守卫
+## 2.7 Type Guards
 
-从 `@visactor/vbi` 导出的类型守卫（`filter-guards.ts`），用于判断 Where/Having 条件树中的节点类型：
+Type guards exported from `@visactor/vbi` (`filter-guards.ts`) identify node types in Where/Having condition trees:
 
 ```ts
 import { isVBIFilter, isVBIWhereGroup, isVBIHavingFilter } from '@visactor/vbi'
 
-// 判断 Where 条件节点
+// Check Where condition nodes
 if (isVBIFilter(item)) {
-  // item 是叶子过滤节点 VBIWhereFilter
+  // item is a leaf filter node: VBIWhereFilter
 } else if (isVBIWhereGroup(item)) {
-  // item 是嵌套组 VBIWhereGroup
+  // item is a nested group: VBIWhereGroup
 }
 
-// 判断 Having 条件节点
+// Check Having condition nodes
 if (isVBIHavingFilter(item)) {
-  // 是叶子节点，有 aggregate 属性
+  // This is a leaf node with an aggregate property
 }
 ```
 
 ---
 
-## 2.8 支持的图表类型
+## 2.8 Supported Chart Types
 
-| 组别     | 类型                                                                                        |
-| -------- | ------------------------------------------------------------------------------------------- |
-| 表格     | `table`, `pivotTable`                                                                       |
-| 比较     | `column`, `columnParallel`, `columnPercent`, `bar`, `barParallel`, `barPercent`, `dualAxis` |
-| 趋势     | `line`, `area`, `areaPercent`                                                               |
-| 占比     | `pie`, `donut`, `rose`, `roseParallel`, `funnel`                                            |
-| 分布     | `scatter`, `heatmap`, `boxPlot`, `histogram`, `radar`                                       |
-| 层级     | `treeMap`, `sunburst`, `circlePacking`                                                      |
-| 动态排名 | `raceBar`, `raceColumn`, `raceLine`, `raceScatter`, `racePie`, `raceDonut`                  |
+| Group            | Types                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------- |
+| Tables           | `table`, `pivotTable`                                                                       |
+| Comparison       | `column`, `columnParallel`, `columnPercent`, `bar`, `barParallel`, `barPercent`, `dualAxis` |
+| Trend            | `line`, `area`, `areaPercent`                                                               |
+| Proportion       | `pie`, `donut`, `rose`, `roseParallel`, `funnel`                                            |
+| Distribution     | `scatter`, `heatmap`, `boxPlot`, `histogram`, `radar`                                       |
+| Hierarchy        | `treeMap`, `sunburst`, `circlePacking`                                                      |
+| Animated ranking | `raceBar`, `raceColumn`, `raceLine`, `raceScatter`, `racePie`, `raceDonut`                  |

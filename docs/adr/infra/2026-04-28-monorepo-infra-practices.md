@@ -1,29 +1,29 @@
-# ADR: Monorepo 工程化实践基线
+# ADR: Monorepo Engineering Practice Baseline
 
-状态：Accepted；日期：2026-04-28
+Status: Accepted; Date: 2026-04-28
 
-## 背景
+## Context
 
-VBI 是 pnpm workspace + Turborepo 管理的 monorepo，仓库同时包含 `apps/`、`packages/`、`practices/`、`tools/` 和文档站。工程化配置如果分散，会带来几个直接问题：
+VBI is a monorepo managed by pnpm workspace and Turborepo. The repository contains `apps/`, `packages/`, `practices/`, `tools/`, and the documentation site. If engineering configuration is scattered, several direct problems appear:
 
-- 根脚本、Turbo 任务、CI 步骤三处语义漂移，导致本地和 CI 跑的不是同一套任务。
-- `build`、`typecheck`、`test`、`lint` 的产物语义混在一起，缓存命中后难以判断结果是否可信。
-- 多套 TS base config 让新增 package 时必须霰弹式复制 `target`、`lib`、`paths`、`references`、`noEmit`、`composite`。
-- workspace 范围如果同时由 `package.json.workspaces` 和 `pnpm-workspace.yaml` 描述，会产生两个 source of truth。
+- Root scripts, Turbo tasks, and CI steps drift semantically, causing local development and CI to run different task sets.
+- The artifact semantics of `build`, `typecheck`, `test`, and `lint` become mixed together, making it hard to decide whether a cached result is trustworthy.
+- Multiple TS base configs force every new package to copy `target`, `lib`, `paths`, `references`, `noEmit`, and `composite` in a shotgun pattern.
+- If the workspace scope is described by both `package.json.workspaces` and `pnpm-workspace.yaml`, the repository ends up with two sources of truth.
 
-本 ADR 沉淀当前仓库的工程化基线，后续新增任务、package、CI job 或 TS 配置时应优先遵循。
+This ADR records the current repository engineering baseline. Future tasks, packages, CI jobs, and TS configuration should follow it by default.
 
-## 决策
+## Decision
 
-### 根脚本只保留稳定入口
+### Keep Root Scripts To Stable Entry Points
 
-根 `package.json` 应作为开发者和 CI 的统一入口。适合放在根脚本里的命令必须满足以下条件：
+The root `package.json` should be the unified entry point for developers and CI. Commands that belong in root scripts must satisfy these conditions:
 
-- 仓库级行为清晰，例如 `build`、`typecheck`、`test`。
-- 本地与 CI 可以复用同一条命令。
-- 不隐藏副作用。会修改文件的命令用独立入口表达，例如 `lint` 执行 fix，`lint:check` 只检查。
+- The repository-level behavior is clear, such as `build`, `typecheck`, and `test`.
+- Local development and CI can reuse the same command.
+- Side effects are explicit. Commands that modify files use dedicated entry points, for example `lint` performs fixes while `lint:check` only checks.
 
-当前约定：
+Current convention:
 
 ```json
 {
@@ -38,9 +38,9 @@ VBI 是 pnpm workspace + Turborepo 管理的 monorepo，仓库同时包含 `apps
 }
 ```
 
-`dev` 不强行纳入 Turbo。交互式、本地长驻、只服务单个应用的入口可以直接 `pnpm --filter=<pkg> run dev`，避免 Turbo 任务图承担非缓存型流程。
+`dev` is not forced into Turbo. Interactive, long-running local entry points that serve only one application can use `pnpm --filter=<pkg> run dev` directly, so the Turbo task graph does not carry non-cacheable workflows.
 
-`tui` 可以先通过 Turbo 构建依赖，再进入 CLI 自身命令。这个模式适合“先保证依赖产物存在，再运行 app 壳”的场景：
+`tui` may first build dependencies through Turbo and then enter the CLI command itself. This pattern fits the case of "ensure dependency artifacts exist first, then run the app shell":
 
 ```json
 {
@@ -48,21 +48,21 @@ VBI 是 pnpm workspace + Turborepo 管理的 monorepo，仓库同时包含 `apps
 }
 ```
 
-### Turbo 只缓存真实产物
+### Turbo Caches Only Real Artifacts
 
-Turbo 任务必须区分“产生文件”和“只校验”：
+Turbo tasks must distinguish "produces files" from "only validates":
 
-- `build` 声明真实产物，默认 `outputs: ["dist/**"]`。
-- 特殊包单独覆盖产物，例如 `website#build` 使用 `outputs: ["doc_build/**"]`。
-- `typecheck`、`test` 只校验，不声明产物，使用 `outputs: []`。
-- `test:update` 会更新快照或 fixtures，必须关闭缓存。
-- 上游包的 `dist` 仍是当前 TS references 和 package `types` 的事实依赖，所以 `typecheck`、`test` 继续 `dependsOn: ["^build"]`。
+- `build` declares real artifacts, defaulting to `outputs: ["dist/**"]`.
+- Special packages override artifacts individually, for example `website#build` uses `outputs: ["doc_build/**"]`.
+- `typecheck` and `test` only validate and declare no artifacts, using `outputs: []`.
+- `test:update` updates snapshots or fixtures and must disable caching.
+- Upstream package `dist` output is still a real dependency for current TS references and package `types`, so `typecheck` and `test` continue to use `dependsOn: ["^build"]`.
 
-这条规则的核心是：缓存的是可复用产物，不是命令名称。校验类任务不能把 `dist/**` 或 `doc_build/**` 伪装成自己的输出，否则缓存命中会掩盖真实验证。
+The core rule is: cache reusable artifacts, not command names. Validation tasks must not pretend that `dist/**` or `doc_build/**` is their own output, because cache hits would then hide real verification.
 
-### 全局输入进入 `globalDependencies`
+### Put Global Inputs In `globalDependencies`
 
-会影响全仓库任务结果的文件必须放入 `turbo.json.globalDependencies`。当前应至少覆盖：
+Files that affect results for whole-repository tasks must be placed in `turbo.json.globalDependencies`. The current set should cover at least:
 
 - `pnpm-lock.yaml`
 - `pnpm-workspace.yaml`
@@ -71,20 +71,20 @@ Turbo 任务必须区分“产生文件”和“只校验”：
 - `.oxlintrc.json`
 - `.oxfmtrc.json`
 
-新增全局配置时，先判断它是否会影响 build/typecheck/test 的结果。会影响就加入 `globalDependencies`，否则不要扩大缓存失效面。
+When adding global configuration, first decide whether it affects build/typecheck/test results. If it does, add it to `globalDependencies`; otherwise, do not widen the cache invalidation surface.
 
-### CI 只做检查，不做修复
+### CI Checks Only, It Does Not Fix
 
-CI 不能运行会修改文件的命令。格式和 lint 在 CI 中必须使用 check 入口：
+CI must not run commands that modify files. Format and lint must use check entry points in CI:
 
 ```yaml
 - run: pnpm run format:check
 - run: pnpm run lint:check
 ```
 
-本地可以使用 `pnpm run lint` 做自动修复，但 CI 只能报告失败。这样可以避免 PR 在 CI 环境中产生未提交修改，也能让 lint 失败保持可复现。
+Locally, `pnpm run lint` can be used for automatic fixes, but CI should only report failures. This prevents CI from producing uncommitted changes in PRs and keeps lint failures reproducible.
 
-CI 中的 Turbo cache 先使用 GitHub Actions 本地 cache：
+Turbo cache in CI uses the GitHub Actions local cache first:
 
 ```yaml
 path: .turbo/cache
@@ -94,16 +94,16 @@ restore-keys: |
   turbo-${{ runner.os }}-
 ```
 
-这个方案优先服务 build/typecheck/test 的本地缓存复用。remote cache 是否接入，后续单独评估权限、隔离、成本和 cache poisoning 风险。
+This approach prioritizes local cache reuse for build/typecheck/test. Whether to introduce remote cache should be evaluated separately later, including permissions, isolation, cost, and cache poisoning risk.
 
-### TS 配置保持单一基线
+### Keep One TS Configuration Baseline
 
-根部只保留两个通用配置：
+The root keeps only two general-purpose configs:
 
-- `tsconfig.base.json`：生产和库构建的默认基线。
-- `tsconfig.test.json`：测试类型检查的覆盖层，只覆盖测试必须不同的选项。
+- `tsconfig.base.json`: Default baseline for production and library builds.
+- `tsconfig.test.json`: Overlay for test type checking, overriding only options that must differ for tests.
 
-`target` 和 `lib` 应全仓库统一，当前基线为：
+`target` and `lib` should be unified across the repository. The current baseline is:
 
 ```json
 {
@@ -112,42 +112,42 @@ restore-keys: |
 }
 ```
 
-除非有明确编译失败或运行时约束，否则 package、app、practice 不应重复声明 `target` 和 `lib`。继承 base 后，只保留局部真正需要的配置，例如：
+Unless there is a clear compile failure or runtime constraint, packages, apps, and practices should not redeclare `target` and `lib`. After extending the base, keep only locally necessary configuration, such as:
 
-- app 需要 `jsx`、`noEmit`、`composite: false`。
-- library 需要 `outDir`、`rootDir`、`paths`、`references`。
-- test config 需要 `noEmit: true`、`emitDeclarationOnly: false`。
-- NodeNext 或 CommonJS 工具如果暂不继承 base，也必须手动保持同一组 `target/lib`。
+- Apps need `jsx`, `noEmit`, and `composite: false`.
+- Libraries need `outDir`, `rootDir`, `paths`, and `references`.
+- Test configs need `noEmit: true` and `emitDeclarationOnly: false`.
+- NodeNext or CommonJS tools that cannot extend the base yet must still manually keep the same `target/lib` pair.
 
-不要重新拆出 `tsconfig.app.json`、`tsconfig.library.json` 这类中间层，除非出现多个无法用局部覆盖表达的稳定类型族。新增中间层前必须证明它减少了重复，而不是增加继承链。
+Do not split out intermediate layers such as `tsconfig.app.json` or `tsconfig.library.json` again unless several stable type families emerge that cannot be expressed with local overrides. Before adding an intermediate layer, prove that it reduces duplication rather than adding inheritance depth.
 
-### Workspace 只认 pnpm
+### Workspace Scope Belongs To pnpm
 
-workspace 范围只由 `pnpm-workspace.yaml` 管理。不要在根 `package.json` 中再添加 `workspaces` 字段。一个仓库只能有一个 workspace source of truth。
+The workspace scope is managed only by `pnpm-workspace.yaml`. Do not add a `workspaces` field to the root `package.json`. A repository should have only one workspace source of truth.
 
-### 测试脚本不要伪造
+### Do Not Fake Test Scripts
 
-有真实测试套件的 package 才添加 `test` 或 `test:update`。没有测试的 package 不要添加 no-op 脚本，否则 Turbo 会把“没有测试”伪装成“测试通过”。
+Only packages with real test suites should add `test` or `test:update`. Packages without tests should not add no-op scripts, because Turbo would make "no tests" look like "tests passed."
 
-已有测试但缺少更新入口时，按测试框架补对应命令：
+When tests exist but an update entry point is missing, add the command for the framework:
 
-- Rstest 使用 `rstest --update`。
-- Jest 使用 `jest --updateSnapshot`。
+- Rstest uses `rstest --update`.
+- Jest uses `jest --updateSnapshot`.
 
-## 维护规则
+## Maintenance Rules
 
-新增或调整工程化配置时，按以下顺序判断：
+When adding or adjusting engineering configuration, evaluate it in this order:
 
-1. 这个改动是否改变根入口、Turbo 任务图、CI 行为或 TS 全局基线。
-2. 如果会改变，先更新单一 source of truth，再删除重复局部配置。
-3. 如果新增缓存输出，确认它是真实产物。
-4. 如果新增校验任务，默认 `outputs: []`。
-5. 如果新增会修改文件的任务，不要在 CI 中直接运行。
-6. 如果新增 package，优先继承 `tsconfig.base.json`，只写局部差异。
+1. Does this change alter root entry points, the Turbo task graph, CI behavior, or the global TS baseline?
+2. If it does, update the single source of truth first, then remove duplicate local configuration.
+3. If it adds a cached output, confirm that the output is a real artifact.
+4. If it adds a validation task, default to `outputs: []`.
+5. If it adds a task that modifies files, do not run it directly in CI.
+6. If it adds a package, prefer extending `tsconfig.base.json` and write only local differences.
 
-## 验证清单
+## Validation Checklist
 
-工程化改动必须至少执行：
+Engineering changes must run at least:
 
 ```bash
 pnpm run format:check
@@ -157,14 +157,14 @@ pnpm run build
 pnpm run test
 ```
 
-涉及 TS 配置时，额外检查：
+For TS configuration changes, additionally check:
 
 ```bash
 rg '"target"|"lib"' --glob 'tsconfig*.json'
 rg 'tsconfig\.app|tsconfig\.library' --glob 'tsconfig*.json' --glob 'turbo.json'
 ```
 
-涉及 Turbo 配置时，额外检查：
+For Turbo configuration changes, additionally check:
 
 ```bash
 pnpm turbo build --dry
@@ -173,25 +173,25 @@ pnpm turbo test --dry
 pnpm turbo test:update --dry
 ```
 
-检查重点：
+Focus areas:
 
-- website 构建产物只声明 `doc_build/**`。
-- 其他 build 产物默认只声明 `dist/**`。
-- `typecheck`、`test` 的 `outputs` 为空。
-- `test:update` 不缓存。
-- `globalDependencies` 覆盖所有会影响全仓库结果的配置文件。
+- website build artifacts declare only `doc_build/**`.
+- Other build artifacts default to only `dist/**`.
+- `typecheck` and `test` have empty `outputs`.
+- `test:update` is not cached.
+- `globalDependencies` covers all configuration files that affect whole-repository results.
 
-## 后果
+## Consequences
 
-收益：
+Benefits:
 
-- 本地与 CI 使用同一套入口，验证路径更短。
-- Turbo cache 语义更可信，构建产物和校验任务边界清晰。
-- TS 配置更少，新增 package 不再复制大段 compiler options。
-- workspace、TS base、Turbo global input 都有单一事实源。
+- Local development and CI use the same entry points, shortening the validation path.
+- Turbo cache semantics are more trustworthy, with a clear boundary between build artifacts and validation tasks.
+- TS configuration is smaller, and new packages no longer copy large blocks of compiler options.
+- workspace, TS base, and Turbo global input each have a single source of truth.
 
-代价：
+Costs:
 
-- `typecheck` 和 `test` 仍依赖 `^build`，干净环境会先构建上游包。
-- app 需要显式覆盖 `noEmit`、`emitDeclarationOnly` 和 `composite`，避免继承 library 构建语义。
-- remote cache 暂未纳入，需要后续单独决策。
+- `typecheck` and `test` still depend on `^build`, so clean environments build upstream packages first.
+- Apps need to explicitly override `noEmit`, `emitDeclarationOnly`, and `composite` to avoid inheriting library build semantics.
+- remote cache is not included yet and needs a separate follow-up decision.

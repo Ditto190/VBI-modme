@@ -1,4 +1,4 @@
-# ADR-001: VQuery 自定义表达式字段
+# ADR-001: VQuery Custom Expression Fields
 
 ## Status
 
@@ -6,16 +6,16 @@ Proposed
 
 ## Context
 
-当前 `@visactor/vquery` 的 clause 都直接引用物理字段名，还没有“逻辑字段”这一层，所以有四个直接问题：
+The clauses in the current `@visactor/vquery` implementation all reference physical field names directly. There is no "logical field" layer yet, which creates four direct problems:
 
-1. `select` 里定义出的别名，不能稳定复用到 `where/groupBy/having`。
-2. `sales - profit as cost` 这类计算字段，无法像普通字段一样参与全部 clause。
-3. 如果给每个 clause 单独加 `expr`，表达式会重复，VBI 也无法做到 Single Source of Truth。
-4. `Where<T>` / `Having<T>` 依赖 `keyof T`，无法覆盖运行时新增的 expr 字段。
+1. Aliases defined in `select` cannot be reused reliably in `where/groupBy/having`.
+2. Calculated fields such as `sales - profit as cost` cannot participate in all clauses like ordinary fields.
+3. If each clause gets its own `expr`, expressions are duplicated and VBI cannot maintain a Single Source of Truth.
+4. `Where<T>` / `Having<T>` depend on `keyof T`, which cannot cover expr fields added at runtime.
 
 ## Decision
 
-### 1. 新增 `fields` 注册表，所有可引用字段都先定义在这里
+### 1. Add a `fields` registry and define every referenceable field there first
 
 ```ts
 type VQueryExpr =
@@ -37,32 +37,32 @@ type QueryDSL = {
 }
 ```
 
-语义约束：
+Semantic constraints:
 
-1. `fields` 是 SSOT。物理列也用 `expr` 表达，例如 `sales -> column(sales)`。
-2. 各 clause 只引用字段 `id`，不在 clause 内重复携带 `expr`。
-3. `select.aggr` / `having.aggr` 只保留真正聚合；`to_year/to_month/...` 这类字段变换收敛进 `expr`。
-4. `call.name` 和 `op` 只允许白名单值，不接受 raw SQL 片段。
+1. `fields` is the SSOT. Physical columns are also expressed through `expr`, for example `sales -> column(sales)`.
+2. Clauses only reference field `id` values and do not carry duplicated `expr` values inside clauses.
+3. `select.aggr` / `having.aggr` only keep true aggregations; field transformations such as `to_year/to_month/...` move into `expr`.
+4. `call.name` and `op` only allow whitelisted values. Raw SQL fragments are not accepted.
 
-### 2. `Where` / `Having` 收敛为运行时结构
+### 2. Collapse `Where` / `Having` into runtime structures
 
 ```ts
 type WhereLeaf = { field: string; op: Operator; value?: unknown }
 type HavingLeaf = { field: string; op: HavingOperator; aggr: HavingAggregation; value?: unknown }
 ```
 
-这里不再尝试用 `keyof T` 穷举所有字段。expr 字段本来就是运行时定义的，首期以 DSL 一致性和编译正确性优先。
+This no longer tries to enumerate all fields with `keyof T`. Expr fields are runtime definitions by nature, so the first phase prioritizes DSL consistency and correct compilation.
 
-### 3. SQL 编译改为“两层 lowering”
+### 3. Change SQL compilation to two-level lowering
 
-1. 入口先归一化 legacy DSL，把旧的 `field: 'sales'` 自动补成 `fields` 里的列定义。
-2. 递归展开 `expr` 中的 `{ type: 'field' }`，并检测循环依赖。
-3. 先生成内层投影：`from (select <expr as id>... from source) as __vquery_base`。
-4. 外层继续复用现有 `select/where/groupBy/having/orderBy/limit` builder，只是字段来源改为 `__vquery_base`。
+1. Normalize legacy DSL at the entry point, automatically filling old `field: 'sales'` references with column definitions in `fields`.
+2. Recursively expand `{ type: 'field' }` inside `expr` and detect circular dependencies.
+3. Generate the inner projection first: `from (select <expr as id>... from source) as __vquery_base`.
+4. Continue reusing the existing `select/where/groupBy/having/orderBy/limit` builders for the outer query, with fields sourced from `__vquery_base`.
 
-这样 `cost/profit_margin/rand` 等字段就能像普通列一样进入 `where`、`groupBy`、`having`、`orderBy` 和 `select`。
+This allows fields such as `cost/profit_margin/rand` to enter `where`, `groupBy`, `having`, `orderBy`, and `select` like ordinary columns.
 
-### 4. 示例
+### 4. Example
 
 ```ts
 {
@@ -73,17 +73,17 @@ type HavingLeaf = { field: string; op: HavingOperator; aggr: HavingAggregation; 
 }
 ```
 
-### 5. 非目标
+### 5. Non-Goals
 
-1. 不支持 raw SQL 字符串 `expr`。
-2. 不支持窗口函数 / `over` / `lag` / 真正跨行增长率。
-3. 不支持子查询表达式。
-4. 不在首期做跨方言函数映射，只做结构化 AST 到 SQL 的安全拼接。
+1. Do not support raw SQL string `expr`.
+2. Do not support window functions / `over` / `lag` / true cross-row growth rates.
+3. Do not support subquery expressions.
+4. Do not implement cross-dialect function mapping in the first phase; only safely concatenate structured AST into SQL.
 
 ## Consequences
 
-Positive: clause 结构基本不变，改动集中在 `types`、`expr builder`、`dslToSQL`；VBI 只需为每个字段产出 `id + expr`。
-Negative: `Where/Having` 的静态类型会比现在更宽；复杂同比/环比要第二阶段再加 `window` 节点。
+Positive: clause structures remain mostly unchanged, and the changes are concentrated in `types`, `expr builder`, and `dslToSQL`; VBI only needs to emit `id + expr` for each field.
+Negative: the static types for `Where/Having` become wider than they are today; complex year-over-year / period-over-period logic requires adding a `window` node in a second phase.
 
 ## Reference
 

@@ -2,29 +2,29 @@
 
 ## Summary
 
-本主题的主路径已经收敛到：
+The main path for this topic has converged to:
 
-- 页面通过 `@visactor/vbi-provider` 访问资源
-- CLI 通过 `@visactor/vbi-provider` 访问资源
-- Node.js 脚本可通过 `@visactor/vbi-provider` 直接打开 Builder
-- 后端显式分成 REST 管理面与 collaboration 数据面
+- Pages access resources through `@visactor/vbi-provider`.
+- CLI accesses resources through `@visactor/vbi-provider`.
+- Node.js scripts can open Builder directly through `@visactor/vbi-provider`.
+- The backend is explicitly split into a REST management plane and a collaboration data plane.
 
 ## Scenario Matrix
 
-1. 页面管理 chart：`apps/vbi_fe/src/services/chartApi.ts` 只通过 SDK 调用 `listCharts / chart(id)`
-2. 页面管理 insight：`apps/vbi_fe/src/services/insightApi.ts` 只通过 SDK 调用 `listInsights / insight(id)`
-3. 页面管理 report：`apps/vbi_fe/src/services/reportApi.ts` 只通过 SDK 调用 `listReports / report(id)`
-4. 页面打开 report / chart / insight builder：`apps/vbi_fe/src/hooks/useCollaborativeBuilder.ts`
-5. CLI 管理三类资源：`apps/vbi_cli/src/chart-command.ts`、`apps/vbi_cli/src/insight-command.ts`、`apps/vbi_cli/src/report-command.ts`
-6. CLI 编排 report page：`apps/vbi_cli/src/report-command.ts`
-7. Node.js 脚本通过 SDK 打开 Builder：`apps/packages/vbi-provider/README.md`
-8. Builder 协同链路：`apps/packages/vbi-provider/src/remote-collaboration.ts` 通过 session 元信息连接 Hocuspocus
-9. REST 不泄漏 `Bytes`：`apps/vbi_be/src/chart/chart.controller.ts`、`apps/vbi_be/src/insight/insight.controller.ts`、`apps/vbi_be/src/report/report.controller.ts`
-10. `report` 结构编排边界清晰：`apps/vbi_be/src/report/report.service.ts` 只编排 page 与引用，不吞并 chart / insight 内容
+1. Page manages chart: `apps/vbi_fe/src/services/chartApi.ts` calls only `listCharts / chart(id)` through the SDK.
+2. Page manages insight: `apps/vbi_fe/src/services/insightApi.ts` calls only `listInsights / insight(id)` through the SDK.
+3. Page manages report: `apps/vbi_fe/src/services/reportApi.ts` calls only `listReports / report(id)` through the SDK.
+4. Page opens report / chart / insight builder: `apps/vbi_fe/src/hooks/useCollaborativeBuilder.ts`.
+5. CLI manages three resource types: `apps/vbi_cli/src/chart-command.ts`, `apps/vbi_cli/src/insight-command.ts`, `apps/vbi_cli/src/report-command.ts`.
+6. CLI orchestrates report page: `apps/vbi_cli/src/report-command.ts`.
+7. Node.js script opens Builder through SDK: `apps/packages/vbi-provider/README.md`.
+8. Builder collaboration path: `apps/packages/vbi-provider/src/remote-collaboration.ts` connects to Hocuspocus through session metadata.
+9. REST does not leak `Bytes`: `apps/vbi_be/src/chart/chart.controller.ts`, `apps/vbi_be/src/insight/insight.controller.ts`, `apps/vbi_be/src/report/report.controller.ts`.
+10. `report` structural orchestration boundaries are clear: `apps/vbi_be/src/report/report.service.ts` only orchestrates pages and references; it does not absorb chart / insight content.
 
 ## Validation
 
-已通过的代码级验证：
+Code-level validation that passed:
 
 ```bash
 pnpm --filter=@visactor/vbi-provider run test
@@ -46,7 +46,7 @@ pnpm run lint
 pnpm run typecheck
 ```
 
-已通过的 docker 联调验证：
+Docker integration validation that passed:
 
 ```bash
 docker compose -f docker/docker-compose.dev.yml up --build -d
@@ -59,23 +59,23 @@ node apps/vbi_cli/dist/cli.js report get <reportId>
 node apps/vbi_cli/dist/cli.js report snapshot <reportId>
 ```
 
-已通过的 SDK runtime 实测：
+SDK runtime validation that passed:
 
-- Node.js 脚本通过远程 Provider 成功执行 `chart / insight / report create`
-- Node.js 脚本通过 `ReportProvider` 成功执行 `createPage / reorderPages / exportSnapshot`
-- Node.js 脚本通过 `ChartProvider.open()`、`InsightProvider.open()`、`ReportProvider.open()` 成功拿到 Builder
-- CLI 在 docker 后端上成功执行 `chart list / create / get` 与 `report create / get / snapshot`
-- 前端 dev 容器成功编译，`useCollaborativeBuilder` 对应的 SDK data-plane 路径已恢复可用
+- Node.js scripts successfully executed `chart / insight / report create` through the remote Provider.
+- Node.js scripts successfully executed `createPage / reorderPages / exportSnapshot` through `ReportProvider`.
+- Node.js scripts successfully obtained Builder through `ChartProvider.open()`, `InsightProvider.open()`, and `ReportProvider.open()`.
+- CLI successfully executed `chart list / create / get` and `report create / get / snapshot` against the docker backend.
+- The frontend dev container compiled successfully, and the SDK data-plane path corresponding to `useCollaborativeBuilder` is available again.
 
-联调中修复的真实问题：
+Real issues fixed during integration:
 
-- `docker-compose.dev.yml` 前端容器缺少 `apps/packages` 挂载，导致容器内找不到 `apps/packages/vbi-provider`
-- `remote-collaboration.ts` 在使用外部 `websocketProvider` 时未执行 `provider.attach()`，导致 websocket 已连接但 provider 永远不同步
-- `remote-collaboration.ts` 的 `waitForSync` 存在监听竞态，已补成无竞态实现
-- `remote-report-provider.ts` 对 report page 编排接口的 DTO 投影错误，后端返回 `pages`，SDK 之前错误地按 `dsl.pages` 读取
-- `vbi_cli` 在 Node 运行时显式加载 SDK CJS 入口，避免 ESM 依赖链干扰 CLI 管理面路径
+- `docker-compose.dev.yml` frontend container lacked the `apps/packages` mount, so the container could not find `apps/packages/vbi-provider`.
+- `remote-collaboration.ts` did not call `provider.attach()` when using an external `websocketProvider`, causing the websocket to connect while the provider never synchronized.
+- `remote-collaboration.ts` had a listener race in `waitForSync`; it has been replaced with a race-free implementation.
+- `remote-report-provider.ts` projected the DTO for report page orchestration incorrectly. The backend returned `pages`, while the SDK previously read `dsl.pages`.
+- `vbi_cli` explicitly loads the SDK CJS entry in the Node runtime to avoid ESM dependency-chain interference on the CLI management-plane path.
 
-建议联调顺序：
+Recommended integration order:
 
 ```bash
 pnpm --filter=vbi_be run start:dev
@@ -88,7 +88,7 @@ node apps/vbi_cli/dist/cli.js report page reorder <reportId> --page-ids <pageIds
 
 ## Exit Check
 
-- 页面、CLI、脚本三种入口都已通过 SDK 收口
-- Provider 已成为 Builder 生命周期唯一主入口
-- 管理面与数据面职责边界清晰
-- 页面私有主路径残留已删除
+- Pages, CLI, and scripts have all converged through SDK.
+- Provider is the only main entry point for the Builder lifecycle.
+- Management-plane and data-plane responsibility boundaries are clear.
+- Page-private main-path remnants have been removed.

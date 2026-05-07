@@ -1,18 +1,18 @@
-# 17. Demo Connector — 连接器注册与 Builder 工厂
+# 17. Demo Connector — Connector Registration and Builder Factory
 
-## 源码
+## Source
 
-- CSV URL 模式（推荐，最简洁）：`practices/streamlined/src/utils/demoConnector.ts`
-- LocalConnector 模式（支持本地数据 + 类型规范化）：`practices/professional/src/utils/localConnector.ts`
+- CSV URL pattern (recommended and most concise): `practices/streamlined/src/utils/demoConnector.ts`
+- LocalConnector pattern (supports local data + type normalization): `practices/professional/src/utils/localConnector.ts`
 
-## Connector 注册
+## Connector Registration
 
-每个 practice 需要独立实现自己的 Connector。Connector 提供：
+Each practice must implement its own Connector independently. A Connector provides:
 
-- `discoverSchema`：返回字段列表（name + type）
-- `query`：接收 VQueryDSL，执行查询，返回数据集
+- `discoverSchema`: returns a field list (name + type).
+- `query`: receives VQueryDSL, executes the query, and returns a dataset.
 
-### 模式一：CSV URL（最简洁，推荐）
+### Pattern 1: CSV URL (Most Concise, Recommended)
 
 ```ts
 import { VBI } from '@visactor/vbi'
@@ -30,7 +30,7 @@ export const registerDemoConnector = () => {
           { name: 'order_date', type: 'date' },
           { name: 'province', type: 'string' },
           { name: 'sales', type: 'number' },
-          // ...其他字段
+          // ...other fields
         ]
       },
       query: async ({ queryDSL, schema }) => {
@@ -49,53 +49,53 @@ export const registerDemoConnector = () => {
   return connectorId
 }
 
-registerDemoConnector() // 模块加载时自动注册
+registerDemoConnector() // Register automatically when the module loads
 ```
 
-## Builder 工厂
+## Builder Factory
 
 ```ts
 import { VBI } from '@visactor/vbi'
 
-// 创建 builder 实例（使用 connectorId 关联 Connector）
+// Create a builder instance (use connectorId to associate the Connector)
 export const createDefaultBuilder = () => {
   return VBI.chart.create(VBI.chart.createEmpty(connectorId))
 }
 
-// 预创建的默认 builder（单例，模块加载时创建）
+// Pre-created default builder (singleton, created when the module loads)
 export const defaultBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
 ```
 
-## VBI.createChart — 创建 Builder
+## VBI.createChart — Create Builder
 
 ```ts
 const builder = VBI.chart.create(dsl: VBIChartDSL): VBIChartBuilder
 ```
 
-参数是 VBIChartDSL 快照。`VBI.chart.createEmpty(connectorId)` 生成空配置的 DSL：
+The parameter is a VBIChartDSL snapshot. `VBI.chart.createEmpty(connectorId)` generates an empty-configuration DSL:
 
 ```ts
 const dsl = VBI.chart.createEmpty(connectorId)
 // dsl: { chartType: 'table', dimensions: [], measures: [], whereFilter: ..., connectorId: 'demo' }
 ```
 
-## 数据流中的 Connector
+## Connector in the Data Flow
 
 ```
-用户配置（维度/度量/过滤）
+User configuration (dimensions/measures/filters)
   ↓ builder.buildVQuery()
-  ↓ VQueryDSL（查询描述）
+  ↓ VQueryDSL (query description)
   ↓ Connector.query({ queryDSL, schema })
-  ↓ 执行 SQL / API 查询
-  ↓ 返回数据集
-  ↓ builder.buildVSeed()（合并 DSL + 数据集）
-  ↓ VSeed（渲染描述）
-  ↓ VSeedRender（渲染为图表）
+  ↓ Execute SQL / API query
+  ↓ Return dataset
+  ↓ builder.buildVSeed() (merge DSL + dataset)
+  ↓ VSeed (rendering description)
+  ↓ VSeedRender (render as chart)
 ```
 
-## 自定义 Connector
+## Custom Connector
 
-如需连接真实数据源，将 `discoverSchema` 和 `query` 实现替换为真实 API：
+To connect a real data source, replace the `discoverSchema` and `query` implementations with real APIs:
 
 ```ts
 VBI.registerConnector('my-api', async () => {
@@ -115,11 +115,11 @@ VBI.registerConnector('my-api', async () => {
 })
 ```
 
-## 注意事项
+## Notes
 
-- **每个 practice 独立实现**自己的 connector/bootstrap 模块（如 `demoConnector.ts` 或 `localConnector.ts`），不跨 practice 引用
-- 模块加载时自动调用 `registerXxxConnector()` 注册 Connector
-- `VBI.registerConnector` 在模块级别调用安全，内部有幂等保护
-- `connectorId` 需与 DSL 中的 `connectorId` 一致
-- `createDefaultBuilder()` 可在 `VBIStoreProvider` 中传入，支持多 builder 实例
-- **RawDatasetSource.rawDataset 类型约束**：当使用 `type: 'json'` 时，`rawDataset` 必须是 `TidyDatum[]`，即 `Record<string, number | string | null | boolean | undefined>[]`。不支持嵌套对象，需用 `toTidyDatum()` 转换。具体见 [19-ui-considerations.md](./19-ui-considerations.md) 第 5 节。
+- **Each practice implements** its own connector/bootstrap module independently, such as `demoConnector.ts` or `localConnector.ts`; do not import across practices.
+- `registerXxxConnector()` is called automatically when the module loads to register the Connector.
+- `VBI.registerConnector` is safe to call at module scope because it has internal idempotency protection.
+- `connectorId` must match the `connectorId` in the DSL.
+- `createDefaultBuilder()` can be passed into `VBIStoreProvider` and supports multiple builder instances.
+- **RawDatasetSource.rawDataset type constraint**: when using `type: 'json'`, `rawDataset` must be `TidyDatum[]`, namely `Record<string, number | string | null | boolean | undefined>[]`. Nested objects are not supported and must be converted with `toTidyDatum()`. See section 5 of [19-ui-considerations.md](./19-ui-considerations.md).

@@ -1,4 +1,4 @@
-# ADR-001: practices/standard Shelves 命名与二级交互收敛
+# ADR-001: practices/standard Shelves Naming and Secondary Interaction Alignment
 
 ## Status
 
@@ -6,14 +6,14 @@ Proposed
 
 ## Context
 
-`practices/standard` 当前的 shelf 相关实现已经有一套稳定骨架，但仍有 4 个明显不一致点需要收敛：
+The current shelf-related implementation in `practices/standard` already has a stable structure, but four clear inconsistencies still need to be aligned:
 
-1. 代码目录和 import 仍在使用错误复数 `Shelfs`，而 UI 文案和目标语义使用的是 `shelves`。
-2. measure 和 dimension 的二级菜单依赖 `children + popupOffset` 展开，当前偏移量是负值，二级菜单会向左回拉，与一级菜单发生重叠。
-3. 二级菜单容器存在额外 padding，导致 hover 到 `求和` 等菜单项时，背景无法贴齐容器左右边界。
-4. where 的日期筛选虽然已经有 `VBIWhereDatePredicate` 和 `DateFilterEditor`，但当前交互仍是顶部 `Select` 切换 4 种类型，没有沿用 shelves 体系更稳定的 popover 面板表达。
+1. Code directories and imports still use the incorrect plural `Shelfs`, while the UI copy and intended meaning use `shelves`.
+2. The measure and dimension submenus open through `children + popupOffset`. The current offset is negative, so the submenu is pulled back to the left and overlaps the first-level menu.
+3. The submenu container has extra padding, so when hovering items such as `Sum`, the background cannot reach the left and right edges of the container.
+4. The where date filter already has `VBIWhereDatePredicate` and `DateFilterEditor`, but the current interaction still uses a top `Select` to switch among four types instead of reusing the more stable popover panel pattern from the shelves system.
 
-当前相关代码位置：
+Current related code locations:
 
 - `practices/standard/src/components/Shelves/common/FieldShelf.tsx`
 - `practices/standard/src/components/Shelves/shelves/MeasureShelf.tsx`
@@ -23,112 +23,112 @@ Proposed
 - `practices/standard/src/components/Filter/FilterPanel.tsx`
 - `practices/standard/src/components/Filter/DateFilterEditor.tsx`
 
-这次改动的重点是 demo 交互与命名收敛，不是 DSL 重设计。`@visactor/vbi` 已经提供了 measure format、dimension aggregate、where date predicate 所需的核心表达能力，本 ADR 只决定 demo 侧如何组织它们。
+This change focuses on demo interaction and naming alignment, not a DSL redesign. `@visactor/vbi` already provides the core expression capabilities required for measure format, dimension aggregate, and where date predicate. This ADR only decides how the demo should organize them.
 
 ## Decision
 
-### 1. demo 代码中的复数命名统一为 `Shelves`
+### 1. Normalize plural naming in demo code to `Shelves`
 
-`practices/standard` 内所有错误命名 `Shelfs` / `shelfs` 统一改为 `Shelves` / `shelves`。
+Rename all incorrect `Shelfs` / `shelfs` names in `practices/standard` to `Shelves` / `shelves`.
 
-具体约束：
+Specific constraints:
 
-1. 目录 `practices/standard/src/components/Shelfs` 重命名为 `practices/standard/src/components/Shelves`
-2. 所有 import / export / test path 一次性切到 `Shelves`
-3. 保留单数 `Shelf` 相关命名，例如 `FieldShelf`、`FilterShelf`、`ShelfTrack`
-4. 已经正确的 i18n key `shelves*` 不做重命名
-5. 不保留长期兼容 alias，demo 内部直接完成原子迁移
+1. Rename the directory `practices/standard/src/components/Shelfs` to `practices/standard/src/components/Shelves`.
+2. Move all import / export / test paths to `Shelves` in one atomic change.
+3. Keep singular `Shelf` names, such as `FieldShelf`, `FilterShelf`, and `ShelfTrack`.
+4. Do not rename existing correct i18n keys such as `shelves*`.
+5. Do not keep long-term compatibility aliases; complete the atomic migration inside the demo.
 
-原因：
+Rationale:
 
-1. `Shelfs` 是错误复数，继续保留只会扩大认知噪音
-2. 这部分是 demo 内部模块，不值得为错误命名维护兼容层
-3. 命名统一后，后续文档、测试、组件目录、用户任务描述会回到同一语义
+1. `Shelfs` is an incorrect plural, and keeping it would only add cognitive noise.
+2. This is an internal demo module, so maintaining a compatibility layer for an incorrect name is not worthwhile.
+3. After naming is normalized, later documentation, tests, component directories, and user task descriptions will share the same meaning.
 
-### 2. 所有二级菜单统一贴在一级菜单右侧展开
+### 2. Open all submenus from the right side of the first-level menu
 
-measure 的 `Aggregate` / `Encoding` / `Format`，dimension 的 `Date Aggregate` / `Encoding`，统一视为二级交互面。
+Treat measure `Aggregate` / `Encoding` / `Format` and dimension `Date Aggregate` / `Encoding` as secondary interaction surfaces.
 
-布局规则：
+Layout rules:
 
-1. 一级菜单继续由 shelf tag 的 `Dropdown` 从 tag 下方展开
-2. 所有二级菜单统一从一级菜单项右侧展开
-3. 去掉当前负向 `popupOffset`
-4. 改为统一正向水平间距，基准取 `4px`
-5. 二级面板顶部与触发菜单项顶部对齐
+1. The first-level menu continues to open below the shelf tag through `Dropdown`.
+2. All submenus open from the right side of the first-level menu item.
+3. Remove the current negative `popupOffset`.
+4. Use one positive horizontal gap, with `4px` as the baseline.
+5. Align the top of the secondary panel with the top of the triggering menu item.
 
-实现约束：
+Implementation constraints:
 
-1. `menuItemUtils` 提供唯一的 submenu gap 常量
-2. 不允许在单个菜单项里私自覆盖一套新的 offset
-3. `MeasureFormatPanel` 虽然是自定义 panel，但交互层级上仍属于二级面，位置规则与普通 submenu 一致
+1. `menuItemUtils` provides the single submenu gap constant.
+2. Individual menu items must not override their own offset.
+3. Although `MeasureFormatPanel` is a custom panel, it still belongs to the secondary interaction level, so its placement rules match ordinary submenus.
 
-这样做的原因很直接：二级菜单的关系是“附着在右侧继续选择”，而不是“覆盖一级菜单重新选择”。
+The rationale is direct: a submenu means "continue choosing on the right", not "cover the first-level menu and choose again".
 
-### 3. 二级菜单的留白改为 item 负责，容器不再吃左右 padding
+### 3. Let items own submenu spacing; remove horizontal container padding
 
-二级菜单的 hover 背景必须完整覆盖菜单项所在行，不能被容器 padding 截断。
+The hover background of a submenu must cover the full row for the menu item and must not be clipped by container padding.
 
-因此统一采用以下规则：
+Use the following rules consistently:
 
-1. submenu 容器左右 padding 归零
-2. item 本身负责点击热区和文字留白
-3. hover / selected 背景贴齐 submenu 左右边界
-4. divider 不再制造额外横向留白
-5. item 保持整行可点击，不做局部热区
+1. Set horizontal padding on the submenu container to zero.
+2. Let each item own its click target and text spacing.
+3. Make hover / selected backgrounds reach the left and right edges of the submenu.
+4. Dividers must not create extra horizontal spacing.
+5. Keep the entire item row clickable; do not create a partial click target.
 
-对自定义 panel 的要求：
+Requirements for custom panels:
 
-1. panel 外层只保留边框、圆角、阴影
-2. 结构留白由 panel 内部字段行控制
-3. 不依赖外层壳子 padding 去模拟菜单边界
+1. The panel wrapper only keeps the border, radius, and shadow.
+2. Structural spacing is controlled by field rows inside the panel.
+3. Do not rely on wrapper padding to simulate menu boundaries.
 
-本决策优先保证交互反馈完整，再考虑视觉松弛感。
+This decision prioritizes complete interaction feedback before visual looseness.
 
-### 4. where 日期筛选改成单 Popover + Tabs，不引入第二层 overlay
+### 4. Change the where date filter to a single Popover + Tabs, without a second overlay layer
 
-where 日期筛选继续复用 `FilterShelf` / `FilterPanel` 现有的 item editor popover，不再额外开一层新的 popover、modal 或 drawer。
+The where date filter continues to reuse the existing item editor popover from `FilterShelf` / `FilterPanel`; it must not open an additional popover, modal, or drawer.
 
-UI 规则：
+UI rules:
 
-1. 日期筛选始终在同一个 popover 内编辑
-2. `DateFilterEditor` 顶部不再使用 `Select` 切类型
-3. 改为固定 4 个 tabs：`range`、`relative`、`current`、`period`
-4. 打开已有日期条件时，根据 `predicate.type` 回填当前 tab
-5. 新增日期条件时，默认进入 `range` tab
+1. Date filters are always edited in the same popover.
+2. `DateFilterEditor` no longer uses a top-level `Select` to switch types.
+3. Use four fixed tabs: `range`, `relative`, `current`, `period`.
+4. When opening an existing date condition, restore the current tab from `predicate.type`.
+5. When adding a new date condition, default to the `range` tab.
 
-状态规则：
+State rules:
 
-1. 底层数据仍然是 `VBIWhereDatePredicate`
-2. tab 切换只切换 `predicate.type`
-3. 每个 tab 直接编辑同一个 `datePredicate` 草稿
-4. 点击保存后，再统一写回 `builder.whereFilter.add(...)` / `update(...)`
+1. The underlying data remains `VBIWhereDatePredicate`.
+2. Tab switching only changes `predicate.type`.
+3. Each tab edits the same `datePredicate` draft directly.
+4. After Save is clicked, write back through `builder.whereFilter.add(...)` / `update(...)`.
 
-这次不新增 demo 专用 date DSL，也不改变 `setDate(...)` 的 builder 入口。
+This change does not add a demo-specific date DSL and does not change the `setDate(...)` builder entrypoint.
 
-### 5. 本次 ADR 只处理 demo 交互收敛，不修改核心 DSL 语义
+### 5. This ADR only aligns demo interactions and does not change core DSL semantics
 
-明确范围：
+Explicit scope:
 
-1. 不修改 `@visactor/vbi` 的 `VBIWhereDatePredicate`
-2. 不修改 measure format DSL
-3. 不修改 dimension aggregate DSL
-4. 不修改 chart pipeline 和 lowering 行为
-5. 不顺带改造 `HavingFilterPanel`
+1. Do not modify `VBIWhereDatePredicate` in `@visactor/vbi`.
+2. Do not modify the measure format DSL.
+3. Do not modify the dimension aggregate DSL.
+4. Do not modify the chart pipeline or lowering behavior.
+5. Do not opportunistically refactor `HavingFilterPanel`.
 
-原因是这些问题都不是表达层缺失，而是 demo 交互层组织方式不稳定。
+The reason is that these issues are not missing expression-layer capabilities; they come from unstable organization in the demo interaction layer.
 
-### 6. 验证范围
+### 6. Verification scope
 
-需要覆盖以下验证：
+The following checks must be covered:
 
-1. `practices/standard` 下不再出现 `Shelfs` / `shelfs` 路径引用
-2. measure / dimension 二级菜单和 format panel 都从一级菜单右侧展开
-3. 二级菜单不再与一级菜单重叠
-4. hover `求和` 等菜单项时，背景能贴齐二级菜单左右边界
-5. 日期筛选的 4 个 tabs 可切换、可回填、可保存
-6. 新增日期条件和编辑日期条件两条路径都能正确写回 `VBIWhereDatePredicate`
-7. 现有 `shelfMenus`、aggregate、date aggregate、drag/drop 相关测试随目录迁移同步更新
+1. No `Shelfs` / `shelfs` path references remain under `practices/standard`.
+2. Measure / dimension submenus and the format panel all open from the right side of the first-level menu.
+3. Submenus no longer overlap the first-level menu.
+4. When hovering items such as `Sum`, the background reaches the left and right edges of the submenu.
+5. The four date filter tabs can switch, restore state, and save.
+6. Both the add-date-condition and edit-date-condition paths correctly write back to `VBIWhereDatePredicate`.
+7. Existing tests for `shelfMenus`, aggregate, date aggregate, and drag/drop are updated along with the directory migration.
 
 ## Reference
 
@@ -141,12 +141,12 @@ UI 规则：
 - `practices/standard/src/components/Filter/DateFilterEditor.tsx`
 - Ant Design Dropdown / Popover / Tabs: https://ant.design/llms-full.txt
 
-## 淘汰内容概述
+## Rejected Items
 
-本方案明确不采用以下做法：
+This plan explicitly rejects the following approaches:
 
-- 不继续保留 `Shelfs` 目录作为兼容别名
-- 不再使用负向 `popupOffset` 把二级菜单拉回一级菜单上方
-- 不通过 submenu 容器左右 padding 营造留白
-- 不为日期 `range / relative / current / period` 各自创建独立 overlay
-- 不为了 demo 交互问题去修改 `@visactor/vbi` 的 DSL 结构
+- Do not keep the `Shelfs` directory as a compatibility alias.
+- Do not use negative `popupOffset` to pull submenus back over the first-level menu.
+- Do not create spacing through horizontal padding on the submenu container.
+- Do not create separate overlays for each date mode: `range / relative / current / period`.
+- Do not modify the DSL structure in `@visactor/vbi` to solve demo interaction issues.

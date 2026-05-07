@@ -1,57 +1,64 @@
-# 标准实践
+# Standard Practice
 
-`practices/standard` 的参考资料。它是 VBI UI 示例的标准结构模板；当任务需要
-可维护目录边界和最清晰的可复用实现模式时使用。
+Reference material for `practices/standard`. It is the standard structural
+template for VBI UI examples. Use it when a task needs maintainable directory
+boundaries and the clearest reusable implementation patterns.
 
-## 定位
+## Positioning
 
-Standard 是结构基线 APP：
+Standard is the structural baseline app:
 
-- 当前源码面最大：约 100 个源码文件和较完整测试。
-- `src/hooks/**` 下有完整 practice hook suite。
-- 使用 `@dnd-kit` 做 shelf drag/drop。
-- 通过 `localConnector.ts` 使用本地 JSON 数据，支持 CSV 上传和 schema 自定义。
-- 有完整 `src/i18n/**`，覆盖 `zh-CN` 和 `en-US`。
-- Store 提供 `switchSource`，用于替换当前 connector/data。
+- It currently has the largest source surface: about 100 source files and fairly
+  complete tests.
+- It has the full practice hook suite under `src/hooks/**`.
+- It uses `@dnd-kit` for shelf drag/drop.
+- It uses local JSON data through `localConnector.ts` and supports CSV upload and
+  schema customization.
+- It has complete `src/i18n/**` covering `zh-CN` and `en-US`.
+- The store provides `switchSource` for replacing the current connector/data.
 
-相比 `minimalist`，它展示同一组想法的可扩展版本。相比 `streamlined`，
-它偏显式分层而不是快速路径。相比 `professional`，它是模板基线；除非任务要求，
-不要加入 business-style overlay 或高密度交互 polish。
+Compared with `minimalist`, it shows a scalable version of the same ideas.
+Compared with `streamlined`, it favors explicit layering over the fast path.
+Compared with `professional`, it is the template baseline; do not add
+business-style overlays or high-density interaction polish unless the task asks
+for them.
 
-## 结构
+## Structure
 
-- 入口：`src/index.tsx`、`src/App/App.tsx`。
-- App shell：`src/App/**`。
-- 可复用 UI：`src/components/**`。
-- Shelves：`src/components/Shelves/**`。
-- Hooks：`src/hooks/**`，由 `src/hooks/index.ts` 导出。
-- Store：`src/model/VBIStore.ts`、`src/model/VBIStoreProvider.tsx`。
-- Connector/data：`src/utils/localConnector.ts`、`dataset.ts`、`parseCsv.ts`、
-  `supermarketSchema.ts`。
-- i18n：`src/i18n/**`。
+- Entry: `src/index.tsx`, `src/App/App.tsx`.
+- App shell: `src/App/**`.
+- Reusable UI: `src/components/**`.
+- Shelves: `src/components/Shelves/**`.
+- Hooks: `src/hooks/**`, exported from `src/hooks/index.ts`.
+- Store: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`.
+- Connector/data: `src/utils/localConnector.ts`, `dataset.ts`, `parseCsv.ts`,
+  `supermarketSchema.ts`.
+- i18n: `src/i18n/**`.
 
-## 差异点
+## Differences
 
-- App 初始化等待 `initVBIConnector()`，再调用 store `initialize(builder)`。
-- Store 按 builder 和 DSL snapshot 缓存构建后的 VSeed，暴露 `switchSource`，
-  并在 source 切换时保留 theme、locale、limit。
-- `CSVModal` 是用户 CSV 导入和 schema 编辑的标准参考。
-- `VSeedRender` 包含 pivot chart legend filtering helper，并用 console logging
-  捕获 render failure。
-- Date filter utility 使用 `dayjs`；日期行为必须有聚焦 utility 测试覆盖。
-- Toolbar、shelves、filter panels、chart type selector、store provider、i18n
-  是新增 practice UI 的优先结构参考。
+- App initialization waits for `initVBIConnector()`, then calls store
+  `initialize(builder)`.
+- The store caches built VSeed by builder and DSL snapshot, exposes
+  `switchSource`, and preserves theme, locale, and limit when switching sources.
+- `CSVModal` is the standard reference for user CSV import and schema editing.
+- `VSeedRender` includes a pivot chart legend filtering helper and uses console
+  logging to capture render failures.
+- Date filter utilities use `dayjs`; date behavior must be covered by focused
+  utility tests.
+- Toolbar, shelves, filter panels, chart type selector, store provider, and i18n
+  are the preferred structural references for new practice UI.
 
-## 开发规则
+## Development Rules
 
-- 不要从其他 practice import。
-- 保持 standard 作为标准示例；避免 professional-only 复杂度。
-- Builder mutation 放在 hook 或聚焦 utility 中。
-- 让 shelf 和 filter panel 保持轻薄；把纯 list、date、operator 逻辑抽到
-  utility 并补测试。
-- 可见文案必须同时更新 `zh-CN.json` 和 `en-US.json`。
+- Do not import from other practices.
+- Keep standard as the standard example; avoid professional-only complexity.
+- Put Builder mutation in hooks or focused utilities.
+- Keep shelf and filter panels thin; extract pure list, date, and operator logic
+  into utilities and add tests.
+- Visible copy must be updated in both `zh-CN.json` and `en-US.json`.
 
-## 验证
+## Validation
 
 ```bash
 pnpm --filter standard run test

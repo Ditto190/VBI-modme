@@ -1,13 +1,13 @@
-# 7. useVBIWhereFilter — WHERE 过滤
+# 7. useVBIWhereFilter — WHERE Filters
 
-WHERE 过滤是**聚合前**的数据过滤，在 SQL 中对应 WHERE 子句。
+WHERE filters are applied **before aggregation** and correspond to SQL WHERE clauses.
 
-## 签名
+## Signature
 
 ```ts
 const {
-  filters, // VBIWhereClause[]，原始嵌套条件树
-  flattenFilters, // () => VBIWhereFilter[]，扁平化所有叶子条件
+  filters, // VBIWhereClause[]; original nested condition tree
+  flattenFilters, // () => VBIWhereFilter[]; flattens all leaf conditions
   addFilter, // (field: string, operator?: string, value?: unknown) => void
   addGroup, // (op: 'and'|'or', callback?: (group) => void) => void
   removeFilter, // (id: string) => void
@@ -21,32 +21,32 @@ const {
 } = useVBIWhereFilter(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIWhereFilter.ts`
 
-## 用法示例
+## Usage Examples
 
-### 添加过滤条件
+### Add a Filter Condition
 
 ```ts
-// 等值过滤
-addFilter('region', '=', '华北')
+// Equality filter
+addFilter('region', '=', 'North China')
 
-// 模糊搜索
-addFilter('product_name', 'contains', '手机')
+// Fuzzy search
+addFilter('product_name', 'contains', 'phone')
 
-// 范围过滤
+// Range filter
 addFilter('sales', '>', 1000)
 
-// IN 列表
-addFilter('category', 'in', ['电子产品', '服装'])
+// IN list
+addFilter('category', 'in', ['Electronics', 'Apparel'])
 
-// 日期相对范围（最近 30 天）
-addFilter('order_date', 'date', undefined) // 日期需通过 builder API 设置复杂结构
+// Relative date range (last 30 days)
+addFilter('order_date', 'date', undefined) // Complex date structures must be set through the builder API
 ```
 
-### 添加嵌套组
+### Add a Nested Group
 
 ```ts
 addGroup('and', (group) => {
@@ -61,7 +61,7 @@ addGroup('and', (group) => {
 })
 ```
 
-### 更新过滤条件
+### Update a Filter Condition
 
 ```ts
 updateFilter(filterId, {
@@ -70,51 +70,51 @@ updateFilter(filterId, {
 })
 ```
 
-### 删除、清空
+### Remove and Clear
 
 ```ts
 removeFilter(filterId)
 clearFilters()
 ```
 
-### 向嵌套组添加条件
+### Add a Condition to a Nested Group
 
 ```ts
-addToGroup(groupId, 'region', '=', '华东')
+addToGroup(groupId, 'region', '=', 'East China')
 ```
 
-### 扁平化所有叶子条件
+### Flatten All Leaf Conditions
 
 ```ts
 const flat = flattenFilters()
-// flat: VBIWhereFilter[]，不含嵌套组
+// flat: VBIWhereFilter[]; excludes nested groups
 flat.forEach((f) => console.log(f.field, f.op, f.value))
 ```
 
 ---
 
-## 操作符一览
+## Operator Reference
 
-| 操作符       | 说明       | 示例值                        |
-| ------------ | ---------- | ----------------------------- |
-| `=`          | 等于       | `'华北'`                      |
-| `!=`         | 不等于     | `'华东'`                      |
-| `>`          | 大于       | `1000`                        |
-| `<`          | 小于       | `5000`                        |
-| `>=`         | 大于等于   | `0`                           |
-| `<=`         | 小于等于   | `10000`                       |
-| `contains`   | 包含       | `'手机'`                      |
-| `startsWith` | 开头匹配   | `'Apple'`                     |
-| `endsWith`   | 结尾匹配   | `'Pro'`                       |
-| `in`         | 在列表中   | `['A', 'B', 'C']`             |
-| `not in`     | 不在列表中 | `['X', 'Y']`                  |
-| `date`       | 日期范围   | 通过 `setDate()` 设置复杂结构 |
+| Operator     | Description           | Example Value                             |
+| ------------ | --------------------- | ----------------------------------------- |
+| `=`          | Equals                | `'North China'`                           |
+| `!=`         | Not equals            | `'East China'`                            |
+| `>`          | Greater than          | `1000`                                    |
+| `<`          | Less than             | `5000`                                    |
+| `>=`         | Greater than or equal | `0`                                       |
+| `<=`         | Less than or equal    | `10000`                                   |
+| `contains`   | Contains              | `'phone'`                                 |
+| `startsWith` | Starts with           | `'Apple'`                                 |
+| `endsWith`   | Ends with             | `'Pro'`                                   |
+| `in`         | In list               | `['A', 'B', 'C']`                         |
+| `not in`     | Not in list           | `['X', 'Y']`                              |
+| `date`       | Date range            | Complex structure set through `setDate()` |
 
 ---
 
-## 注意事项
+## Notes
 
-- WHERE 过滤在聚合**之前**执行
-- 日期过滤需通过 `builder.whereFilter.update(id, (node) => node.setDate(...))` 设置相对/绝对日期范围
-- `flattenFilters()` 返回扁平的叶子节点数组，适合列表展示
-- 嵌套组操作符（`and`/`or`）需使用 `updateGroup` 更新
+- WHERE filters run **before** aggregation.
+- Date filters must set relative/absolute date ranges through `builder.whereFilter.update(id, (node) => node.setDate(...))`.
+- `flattenFilters()` returns a flat array of leaf nodes, which is suitable for list rendering.
+- Nested group operators (`and`/`or`) must be updated with `updateGroup`.

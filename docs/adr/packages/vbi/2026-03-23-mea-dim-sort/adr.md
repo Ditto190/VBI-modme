@@ -1,33 +1,33 @@
-# ADR-004: VBI Measure / Dimension 排序 DSL 与 buildVQuery Lowering
+# ADR-004: VBI Measure / Dimension Sort DSL and `buildVQuery` Lowering
 
 ## Context
 
-`@visactor/vquery` 已支持 `orderBy?: Array<{ field: string; order?: 'asc' | 'desc' }>`，但当前 VBI 的 `buildVQuery()` 只构建了 `select`、`groupBy`、`where`、`having`、`limit`，还没有一等排序能力。
+`@visactor/vquery` already supports `orderBy?: Array<{ field: string; order?: 'asc' | 'desc' }>`, but VBI's current `buildVQuery()` only builds `select`, `groupBy`, `where`, `having`, and `limit`. Sorting is not yet a first-class capability.
 
-同时，`VBIDimension` 和 `VBIMeasure` 也还没有排序 DSL。这会带来三个直接问题：
+`VBIDimension` and `VBIMeasure` also do not have sort DSL fields. That creates three direct problems:
 
-1. 用户无法在 VBI 层显式表达“按某个维度升序”或“按某个指标降序”。
-2. `buildVQuery()` 无法为分组结果提供稳定默认顺序，查询结果顺序不可预期。
-3. 如果单独在根 DSL 再引入一套 `orderBy`，会和 measure / dimension 节点形成双写，不符合 Single Source of Truth。
+1. Users cannot explicitly express "sort by this dimension ascending" or "sort by this measure descending" in VBI.
+2. `buildVQuery()` cannot provide a stable default order for grouped results, so query result order is unpredictable.
+3. Adding a separate root-level `orderBy` to the DSL would duplicate state already owned by measure and dimension nodes, which violates Single Source of Truth.
 
-本 ADR 要解决的范围仅限 `packages/vbi`：
+This ADR is limited to `packages/vbi`:
 
-1. measure 和 dimension 都支持排序配置。
-2. 如果没有任何显式排序，`buildVQuery()` 默认按第一个 dimension 升序。
-3. 如果任一 measure 或 dimension 配置了排序，则完全按显式配置输出，忽略默认逻辑。
+1. Measures and dimensions both support sort configuration.
+2. If there is no explicit sort, `buildVQuery()` sorts by the first dimension ascending by default.
+3. If any measure or dimension has sort configured, output only the explicit sort configuration and ignore the default logic.
 
 ## Decision
 
-### 1. 排序配置挂在 measure / dimension 节点本身
+### 1. Store sort configuration on measure and dimension nodes
 
-VBI 新增共享排序类型：
+VBI adds shared sort types:
 
 ```typescript
 type VBISortOrder = 'asc' | 'desc'
 type VBISort = { order: VBISortOrder }
 ```
 
-并分别扩展：
+and extends both node types:
 
 ```typescript
 type VBIDimension = {
@@ -45,11 +45,11 @@ type VBIMeasure = {
 }
 ```
 
-不新增根级 `vbiDSL.orderBy`。排序语义属于字段节点本身，应随节点一起被创建、更新、删除和重排。
+Do not add root-level `vbiDSL.orderBy`. Sort semantics belong to the field node itself and should be created, updated, deleted, and reordered with that node.
 
-### 2. NodeBuilder 只新增 `get/set/clearSort`
+### 2. Node builders only add `get/set/clearSort`
 
-`DimensionNodeBuilder` 和 `MeasureNodeBuilder` 都新增：
+Both `DimensionNodeBuilder` and `MeasureNodeBuilder` add:
 
 ```typescript
 setSort(sort: VBISort): this
@@ -57,63 +57,63 @@ getSort(): VBISort | undefined
 clearSort(): this
 ```
 
-不新增 `sortAsc()`、`sortDesc()` 之类语法糖。Builder API 直接复用 DSL 结构，降低心智负担，也给后续扩展保留空间。
+Do not add sugar APIs such as `sortAsc()` or `sortDesc()`. The builder API directly follows the DSL shape, which keeps the mental model small and leaves room for later extension.
 
-### 3. `buildVQuery()` 新增独立 `buildOrderBy` pipe
+### 3. `buildVQuery()` adds an independent `buildOrderBy` pipe
 
-VBI 新增 `packages/vbi/src/pipeline/vqueryDSL/buildOrderBy.ts`，并接入主流水线：
+VBI adds `packages/vbi/src/pipeline/vqueryDSL/buildOrderBy.ts` and wires it into the main pipeline:
 
 ```typescript
 select -> groupBy -> where -> having -> orderBy -> limit
 ```
 
-`buildOrderBy` 的规则固定如下：
+`buildOrderBy` follows these rules:
 
-1. 先收集已配置 `sort` 的 dimension，保持 `dimensions` 数组中的当前顺序。
-2. 再收集已配置 `sort` 的 measure，保持 `measures` 数组中的当前顺序。
-3. 如果显式排序列表非空，则直接生成 `queryDSL.orderBy`，忽略默认排序。
-4. 如果显式排序列表为空且存在第一个 dimension，则生成 `[{ field: firstDimension.id, order: 'asc' }]`。
-5. 如果既没有显式排序，也没有 dimension，则不写入 `orderBy`。
+1. Collect dimensions with configured `sort`, preserving their current order in the `dimensions` array.
+2. Collect measures with configured `sort`, preserving their current order in the `measures` array.
+3. If the explicit sort list is not empty, write `queryDSL.orderBy` from that list and ignore the default sort.
+4. If the explicit sort list is empty and a first dimension exists, write `[{ field: firstDimension.id, order: 'asc' }]`.
+5. If there is neither explicit sort nor any dimension, do not write `orderBy`.
 
-当前阶段显式排序的总顺序定义为“dimension 在前，measure 在后”。这是一个确定性规则，也和“默认按第一个 dimension 排序”的回退逻辑保持一致。
+For this phase, the total explicit sort order is deterministic: dimensions first, then measures. This matches the fallback rule that defaults to the first dimension.
 
-### 4. `orderBy.field` 统一使用节点 `id`
+### 4. `orderBy.field` always uses the node `id`
 
-VBI 输出到 VQuery 的排序字段统一使用节点 `id`，而不是源字段名：
+VBI emits node IDs as VQuery sort fields instead of source field names:
 
 ```typescript
 { field: node.id, order: node.sort.order }
 ```
 
-原因：
+Reasons:
 
-1. `buildSelect()` 已经把每个 measure / dimension 都 alias 成自己的 `id`。
-2. measure 通常带聚合，直接按原始 `field` 排序不稳定，也可能不合法。
-3. date dimension 这类带 `aggregate` 的维度，本质上排序目标也是派生后的 select alias，而不是原始列。
+1. `buildSelect()` already aliases each measure and dimension to its own `id`.
+2. Measures usually include aggregation, so sorting by the raw `field` can be unstable or invalid.
+3. Date dimensions with `aggregate` also sort by the derived select alias, not by the raw column.
 
-统一按 `id` 排序，可以避免在 `buildOrderBy` 中重复判断 measure / dimension / aggregate 分支。
+Using `id` consistently avoids duplicating measure / dimension / aggregate branching inside `buildOrderBy`.
 
-### 5. 默认排序只体现在 `buildVQuery()`，不回写 DSL
+### 5. Default sorting only appears in `buildVQuery()`
 
-“默认按第一个 dimension 升序”只是 query lowering 期的回退规则，不写回 `VBIChartDSL`，也不在 builder 的 JSON 输出里补默认 `sort`。
+"Sort by the first dimension ascending" is only a query-lowering fallback. It is not written back to `VBIChartDSL`, and it does not appear in builder JSON output as a default `sort`.
 
-这意味着：
+This means:
 
-1. `builder.build()` 的 DSL 结构保持最小表达。
-2. `builder.buildVQuery()` 结果会因为新增默认排序而发生快照变化。
-3. 这类快照变化属于允许的 break change，可以通过 `pnpm --filter=@visactor/vbi run g` 更新生成物。
+1. `builder.build()` keeps the DSL minimal.
+2. `builder.buildVQuery()` snapshots may change because of the new default sort.
+3. This snapshot change is an allowed breaking change and generated artifacts can be updated with `pnpm --filter=@visactor/vbi run g`.
 
-### 6. 测试范围
+### 6. Test scope
 
-测试至少覆盖以下行为：
+Tests must cover at least:
 
-1. `zVBIDimensionSchema` / `zVBIMeasure` 正确接受和拒绝 `sort`。
-2. `DimensionNodeBuilder` / `MeasureNodeBuilder` 的 `setSort`、`getSort`、`clearSort`。
-3. 无显式排序时，`buildVQuery()` 默认按第一个 dimension 升序。
-4. 有 dimension 排序时，忽略默认逻辑并正确输出 `orderBy`。
-5. 有 measure 排序时，忽略默认逻辑并正确输出 `orderBy`。
-6. 同时存在多个 dimension / measure 排序时，输出顺序稳定且符合“dimension 在前，measure 在后”。
-7. 带聚合的 measure 和带日期聚合的 dimension，排序字段都使用节点 `id`。
+1. `zVBIDimensionSchema` / `zVBIMeasure` correctly accept and reject `sort`.
+2. `DimensionNodeBuilder` / `MeasureNodeBuilder` `setSort`, `getSort`, and `clearSort`.
+3. Without explicit sort, `buildVQuery()` sorts by the first dimension ascending.
+4. With dimension sort, default logic is ignored and `orderBy` is emitted correctly.
+5. With measure sort, default logic is ignored and `orderBy` is emitted correctly.
+6. With multiple sorted dimensions and measures, output order is stable and follows "dimensions first, then measures".
+7. Aggregated measures and date-aggregated dimensions both use node `id` as the sort field.
 
 ## Reference
 
@@ -125,10 +125,10 @@ VBI 输出到 VQuery 的排序字段统一使用节点 `id`，而不是源字段
 - `packages/vbi/src/pipeline/vqueryDSL/buildSelect.ts`
 - `packages/vquery/src/types/dsl/OrderBy.ts`
 
-## 淘汰内容概述
+## Rejected Designs
 
-- 不新增根级 `vbiDSL.orderBy`
-- 不把 `sort` 设计成平铺字符串字段 `sort: 'asc' | 'desc'`
-- 不新增 `sortAsc()` / `sortDesc()` 等 builder 语法糖
-- 不在首期引入跨 shelf 的独立排序优先级字段
-- 不把默认排序写回 DSL
+- Do not add root-level `vbiDSL.orderBy`.
+- Do not model `sort` as a flat string field such as `sort: 'asc' | 'desc'`.
+- Do not add builder sugar such as `sortAsc()` / `sortDesc()`.
+- Do not introduce an independent cross-shelf sort priority field in the first phase.
+- Do not write default sorting back to the DSL.

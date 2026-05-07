@@ -1,4 +1,4 @@
-# ADR-002: VBI 日期筛选 DSL 与 Demo UI 方案
+# ADR-002: VBI Date Filter DSL and Demo UI Design
 
 ## Status
 
@@ -6,26 +6,26 @@ Proposed
 
 ## Context
 
-当前 VBI 的 `whereFilter` 只支持通用比较操作，对日期字段缺少稳定的一等语义：
+The current VBI `whereFilter` only supports generic comparison operations. Date fields do not have stable first-class semantics:
 
-1. 无法直接表达“本月”“上季度”“最近 7 天”这类 BI 常用筛选。
-2. 无法稳定表达“2024 年”“2024-Q1”“2024-03”这类自然周期筛选。
-3. 旧草案中的 `dateOp`、`dateValue`、`granularity` 是平铺字段，容易产生非法组合，也会把日期语义拆散。
+1. Common BI filters such as "this month", "last quarter", and "last 7 days" cannot be expressed directly.
+2. Natural periods such as "2024", "2024-Q1", and "2024-03" cannot be expressed in a stable way.
+3. The older draft used flat fields such as `dateOp`, `dateValue`, and `granularity`, which can create invalid combinations and split date semantics across multiple fields.
 
-同时，`practices/standard` 当前的 `where` UI 仍然是纯标量表单：
+At the same time, the current `where` UI in `practices/standard` is still a scalar-only form:
 
-1. [`FilterPanel.tsx`](../../practices/standard/src/components/Filter/FilterPanel.tsx) 只支持通用比较表单、`range`、`tags` 这类输入策略。
-2. [`WhereShelf.tsx`](../../practices/standard/src/components/Shelves/shelves/WhereShelf.tsx) 和 [`useVBIWhereFilter.ts`](../../practices/standard/src/hooks/useVBIWhereFilter.ts) 只知道 `setOperator(...)` / `setValue(...)`。
-3. 日期维度虽然已有 `isDate` 标记，但还没有独立的日期筛选编辑器。
+1. [`FilterPanel.tsx`](../../practices/standard/src/components/Filter/FilterPanel.tsx) only supports generic comparison forms and input strategies such as `range` and `tags`.
+2. [`WhereShelf.tsx`](../../practices/standard/src/components/Shelves/shelves/WhereShelf.tsx) and [`useVBIWhereFilter.ts`](../../practices/standard/src/hooks/useVBIWhereFilter.ts) only know `setOperator(...)` / `setValue(...)`.
+3. Date dimensions already have an `isDate` marker, but there is no dedicated date filter editor.
 
-底层 `vquery` 已经补齐了当前阶段需要依赖的基础验证：
+The underlying `vquery` layer already has the base validation needed for this phase:
 
-1. `where` 单元测试已覆盖 date string 的 `=` / `>=` / `<` / `between`。
-2. `where` 单元测试已覆盖 timestamp 的 `Date` 输入比较与 `between`。
-3. example 测试已覆盖 date `between`、timestamp window、date `where` 与 date aggregate `select` 并存。
-4. example 输出已改为格式化日期别名，验证结果不再只显示 epoch 时间戳。
+1. `where` unit tests cover `=` / `>=` / `<` / `between` for date strings.
+2. `where` unit tests cover timestamp comparisons and `between` with `Date` input.
+3. Example tests cover date `between`, timestamp windows, date `where`, and date aggregate `select` together.
+4. Example output now uses formatted date aliases, so validation results no longer display only epoch timestamps.
 
-相关验证文件：
+Relevant validation files:
 
 - `packages/vquery/tests/unit/sql-builder/builders/where.test.ts`
 - `packages/vquery/tests/examples/where/date_between.json`
@@ -34,23 +34,23 @@ Proposed
 
 ## Decision
 
-### 1. 类型命名统一为 `VBIWhereFilter` / `zVBIWhereFilter`
+### 1. Align type names to `VBIWhereFilter` / `zVBIWhereFilter`
 
-`whereFilter` 模块内的过滤节点类型统一改名：
+Rename the filter node type inside the `whereFilter` module:
 
 - `VBIFilter` -> `VBIWhereFilter`
 - `zVBIFilter` -> `zVBIWhereFilter`
 
-对应的联合类型也统一为：
+The related union types are also aligned:
 
 - `VBIWhereClause = VBIWhereFilter | VBIWhereGroup`
 - `zVBIWhereClause = z.union([zVBIWhereFilter, zVBIWhereGroup])`
 
-这里的重点不是单纯重命名，而是把 `whereFilter` 体系内的命名收敛到同一风格，避免一个模块同时出现 `VBIWhereGroup` 和 `VBIFilter` 这种不对称命名。
+This is not just a rename. The point is to make naming inside the `whereFilter` system consistent, avoiding an asymmetric module where `VBIWhereGroup` and `VBIFilter` coexist.
 
-### 2. 日期筛选统一使用 `op: 'date' + DatePredicate`
+### 2. Date filters use `op: 'date' + DatePredicate`
 
-不再引入 `dateOp` / `dateValue` / `granularity` 这类平铺字段。
+Do not add flat fields such as `dateOp` / `dateValue` / `granularity`.
 
 ```typescript
 type DateInput = string | Date
@@ -104,18 +104,18 @@ type VBIWhereDateFilter = {
 type VBIWhereFilter = VBIWhereScalarFilter | VBIWhereDateFilter
 ```
 
-这个结构只保留一个日期入口，所有日期语义都收敛进 `DatePredicate`，不再把自然周期、滚动区间、绝对范围拆成多个顶层字段组合。
+This structure keeps a single date entry point. All date semantics are captured inside `DatePredicate`, instead of splitting natural periods, rolling windows, and absolute ranges across multiple top-level field combinations.
 
-### 3. `DatePredicate.type` 固定为 `range | relative | current | period`
+### 3. `DatePredicate.type` is fixed to `range | relative | current | period`
 
-四类语义分别承担明确职责：
+The four semantic modes have clear responsibilities:
 
-- `range`: 显式的绝对时间范围。
-- `relative`: 相对当前时间的滚动窗口。
-- `current`: 当前自然周期及其偏移周期。
-- `period`: 指定的自然周期。
+- `range`: An explicit absolute time range.
+- `relative`: A rolling window relative to the current time.
+- `current`: The current natural period, optionally offset.
+- `period`: A specified natural period.
 
-示例：
+Examples:
 
 ```typescript
 {
@@ -161,9 +161,9 @@ type VBIWhereFilter = VBIWhereScalarFilter | VBIWhereDateFilter
 }
 ```
 
-### 4. Builder API 只新增 `WhereFilterNodeBuilder.setDate(...)`
+### 4. Builder API only adds `WhereFilterNodeBuilder.setDate(...)`
 
-`WhereFilterBuilder` 保持现有 `add(field, callback)` 形态，不新增：
+`WhereFilterBuilder` keeps the existing `add(field, callback)` shape and does not add:
 
 - `addDate`
 - `addDateRange`
@@ -171,7 +171,7 @@ type VBIWhereFilter = VBIWhereScalarFilter | VBIWhereDateFilter
 - `addRelativeDate`
 - `addDatePeriod`
 
-新增入口只放在 `WhereFilterNodeBuilder`：
+Only `WhereFilterNodeBuilder` gets a date-specific entry point:
 
 ```typescript
 class WhereFilterNodeBuilder {
@@ -181,7 +181,7 @@ class WhereFilterNodeBuilder {
 }
 ```
 
-调用方式：
+Usage:
 
 ```typescript
 builder.whereFilter.add('order_date', (node) => {
@@ -189,11 +189,11 @@ builder.whereFilter.add('order_date', (node) => {
 })
 ```
 
-这个约束的目的很明确：DSL 的复杂度只保留在 `DatePredicate`，不把同一套复杂度复制成一串 builder sugar。
+This keeps the constraint explicit: DSL complexity stays inside `DatePredicate`; it is not copied into a chain of builder sugar methods.
 
-### 5. Lowering 只面向已验证的 `vquery` where 原子能力
+### 5. Lowering only targets validated `vquery` where atoms
 
-日期筛选在 VBI 的 `buildWhere` 阶段解析，最终只下沉到当前已经验证过的 `vquery` where 原子条件：
+VBI resolves date filters during the `buildWhere` phase and lowers them only to currently validated `vquery` where atoms:
 
 - `=`
 - `>`
@@ -204,30 +204,30 @@ builder.whereFilter.add('order_date', (node) => {
 - `and`
 - `or`
 
-约束如下：
+Constraints:
 
-1. `vquery` 不感知 `relative` / `current` / `period` 这类业务语义。
-2. VBI 负责把日期语义解析成普通 where 条件。
-3. `range` 可以直接 lowering 为范围比较或 `between`。
-4. `relative` / `current` / `period` 的边界解析必须先在 VBI 中完成，再进入 `vquery`。
+1. `vquery` does not know business semantics such as `relative`, `current`, or `period`.
+2. VBI is responsible for resolving date semantics into ordinary where conditions.
+3. `range` can lower directly to range comparisons or `between`.
+4. Boundaries for `relative` / `current` / `period` must be resolved in VBI before entering `vquery`.
 
-这里有一条额外约束必须写清楚：ADR 不把任何尚未被测试证明的边界公式当作既定事实。像 `period(year: 2024)` 最终如何展开，属于 VBI 实现责任，必须由专门测试锁定之后才算行为成立，不能靠文档拍定。
+One extra constraint must be explicit: this ADR does not treat untested boundary formulas as established behavior. For example, how `period(year: 2024)` expands is a VBI implementation responsibility. It must be locked by dedicated tests before it becomes stable behavior; the document alone is not enough.
 
-### 6. 时间解析依赖执行上下文
+### 6. Time resolution depends on execution context
 
-日期语义解析至少依赖：
+Date semantic resolution depends at least on:
 
 1. `now`
 2. timezone
 3. week rule
 
-当前 ADR 固定以下原则：
+This ADR establishes the following principles:
 
-1. `week` 按 ISO-8601 处理。
-2. `current` / `relative` / `period` 都必须在同一套时间上下文里解析。
-3. 任何跨日、跨周、跨月、跨季度、跨年的边界行为，都必须由测试覆盖后才可视为稳定语义。
+1. `week` uses ISO-8601.
+2. `current` / `relative` / `period` must be resolved in the same time context.
+3. Any boundary behavior across days, weeks, months, quarters, or years must be covered by tests before it is considered stable semantics.
 
-### 7. 运行时 Schema 使用判别联合，并统一命名
+### 7. Runtime schema uses discriminated unions and aligned names
 
 ```typescript
 const zDatePredicate = z.discriminatedUnion('type', [
@@ -296,20 +296,20 @@ const zVBIWhereScalarFilter = z.object({
 export const zVBIWhereFilter = z.union([zVBIWhereDateFilter, zVBIWhereScalarFilter])
 ```
 
-### 8. `practices/standard` UI 采用“同一入口、日期分流”的编辑方案
+### 8. `practices/standard` UI uses one entry point with date-specific branching
 
-UI 目标不是在现有标量表单里硬塞更多字段，而是在同一个 `where` 编辑入口里，对日期字段切换到独立的日期编辑模式。
+The UI goal is not to force more fields into the existing scalar form. Instead, the same `where` edit entry should switch date fields into a dedicated date edit mode.
 
-#### UI 原则
+#### UI principles
 
-1. `WhereShelf` 仍然只有一个编辑入口，不拆出第二套独立 shelf。
-2. 非日期字段继续使用现有标量 `op + value` 表单。
-3. 日期字段一旦进入编辑态，表单直接切换为 `DatePredicate` 编辑器，不再复用标量操作符下拉。
-4. 不把 `range` / `relative` / `current` / `period` 的所有输入项同时摊平展示，先选 `type`，再展示对应子表单。
+1. `WhereShelf` still has only one edit entry and does not split out a second shelf.
+2. Non-date fields continue to use the existing scalar `op + value` form.
+3. When a date field enters edit mode, the form switches directly to a `DatePredicate` editor and no longer reuses the scalar operator dropdown.
+4. Do not flatten all inputs for `range` / `relative` / `current` / `period` into one form. Select `type` first, then show the matching sub-form.
 
-#### 建议的表单模型
+#### Recommended form model
 
-`practices/standard` 内部可以继续复用现有 `FilterItem` 外形，但在类型上要把日期分支单独表达出来：
+`practices/standard` can keep reusing the existing `FilterItem` shape internally, but the date branch should be represented explicitly in types:
 
 ```typescript
 type DemoWhereScalarFilterItem = {
@@ -329,110 +329,110 @@ type DemoWhereDateFilterItem = {
 type DemoWhereFilterItem = DemoWhereScalarFilterItem | DemoWhereDateFilterItem
 ```
 
-也就是说，demo 不需要额外发明第二套持久化 DSL，只需要在 UI 层把 `op: 'date'` 作为明确的日期编辑分支。
+In other words, the demo does not need to invent a second persisted DSL. It only needs to treat `op: 'date'` as the explicit date-editing branch at the UI layer.
 
-#### 日期子表单结构
+#### Date sub-form structure
 
 - `range`
-  - 输入项：`start`、`end`、`bounds`
-  - 组件建议：`DatePicker` / `RangePicker` + 边界开关
+  - Inputs: `start`, `end`, `bounds`
+  - Suggested components: `DatePicker` / `RangePicker` + boundary switch
 - `relative`
-  - 输入项：`mode`、`amount`、`unit`、`complete`
-  - 组件建议：`Select` + `InputNumber` + `Switch`
+  - Inputs: `mode`, `amount`, `unit`, `complete`
+  - Suggested components: `Select` + `InputNumber` + `Switch`
 - `current`
-  - 输入项：`unit`、`offset`
-  - 组件建议：`Select` + `InputNumber`
+  - Inputs: `unit`, `offset`
+  - Suggested components: `Select` + `InputNumber`
 - `period`
-  - 先选 `unit`
-  - 再按 `unit` 渲染动态字段：
+  - Select `unit` first.
+  - Render dynamic fields by `unit`:
     - `year`: `year`
     - `quarter`: `year` + `quarter`
     - `month`: `year` + `month`
     - `week`: `year` + `week`
     - `day`: `date`
 
-#### 组件改造点
+#### Component changes
 
 - [`practices/standard/src/components/Filter/FilterPanel.tsx`](../../practices/standard/src/components/Filter/FilterPanel.tsx)
-  - 根据 `field.isDate` 分流为标量编辑器或日期编辑器。
-  - 日期编辑器使用 `type` 选择器驱动动态子表单。
-  - 提交时，如果是日期模式，输出 `{ op: 'date', value: DatePredicate }`。
+  - Branch by `field.isDate` into the scalar editor or date editor.
+  - Use `type` selection to drive the date editor's dynamic sub-form.
+  - On submit, output `{ op: 'date', value: DatePredicate }` when in date mode.
 
 - [`practices/standard/src/components/Filter/whereFilterUtils.ts`](../../practices/standard/src/components/Filter/whereFilterUtils.ts)
-  - 保留现有标量 operator/input strategy 工具函数。
-  - 新增日期表单的默认值、序列化、反序列化、展示文案生成工具。
-  - `getWhereDisplayText(...)` 需要支持 `op === 'date'` 的可读展示。
+  - Keep existing scalar operator/input strategy helpers.
+  - Add helpers for date form defaults, serialization, deserialization, and display text.
+  - `getWhereDisplayText(...)` must support readable display for `op === 'date'`.
 
 - [`practices/standard/src/components/Shelves/shelves/WhereShelf.tsx`](../../practices/standard/src/components/Shelves/shelves/WhereShelf.tsx)
-  - 新增 `item.op === 'date'` 分支。
-  - add/update 时，日期节点改用 `node.setDate(...)`，非日期节点继续用 `setOperator(...)` / `setValue(...)`。
+  - Add an `item.op === 'date'` branch.
+  - On add/update, date nodes use `node.setDate(...)`; non-date nodes continue to use `setOperator(...)` / `setValue(...)`.
 
 - [`practices/standard/src/hooks/useVBIWhereFilter.ts`](../../practices/standard/src/hooks/useVBIWhereFilter.ts)
-  - mutator typing 增加 `setDate(...)`。
-  - `VBIWhereFilter` 命名同步替代旧的 `VBIFilter`。
+  - Add `setDate(...)` to mutator typing.
+  - Sync names from old `VBIFilter` to `VBIWhereFilter`.
 
-#### i18n 要求
+#### i18n requirements
 
-需要在中英文 locale 中新增：
+Add the following to both Chinese and English locales:
 
-- 日期类型名称：`range` / `relative` / `current` / `period`
-- 日期单位名称：`year` / `quarter` / `month` / `week` / `day`
+- Date type names: `range` / `relative` / `current` / `period`
+- Date unit names: `year` / `quarter` / `month` / `week` / `day`
 - `last` / `next` / `complete`
 - `bounds`
-- `quarter`、`week`、`offset` 等字段标签
+- Field labels such as `quarter`, `week`, and `offset`
 
-#### UI 测试要求
+#### UI test requirements
 
-`practices/standard` 至少需要补：
+`practices/standard` needs at least:
 
-1. 日期 filter 从 builder 值回填到表单的测试。
-2. 日期表单序列化为 `{ op: 'date', value: DatePredicate }` 的测试。
-3. `range` / `relative` / `current` / `period` 四种模式的展示文案测试。
-4. 日期字段和非日期字段切换时，表单状态正确重置的测试。
+1. A test that fills a date filter form from the builder value.
+2. A test that serializes the date form to `{ op: 'date', value: DatePredicate }`.
+3. Display text tests for the four modes: `range`, `relative`, `current`, and `period`.
+4. A test that form state resets correctly when switching between date and non-date fields.
 
-### 9. 合入前测试要求
+### 9. Pre-merge test requirements
 
-#### 已完成的基础验证
+#### Completed base validation
 
 - `packages/vquery/tests/unit/sql-builder/builders/where.test.ts`
 - `packages/vquery/tests/examples/where/date_between.test.ts`
 - `packages/vquery/tests/examples/where/timestamp_window.test.ts`
 - `packages/vquery/tests/examples/select/date/toMonth_with_date_filter.test.ts`
 
-这些验证说明当前 `vquery` 已经可以承接日期筛选最终 lowering 后所需的基础 where 能力。
+These validations show that current `vquery` capabilities can support the base where conditions needed after date filters are lowered.
 
-#### VBI 必补测试
+#### Required VBI tests
 
-在 VBI 日期 DSL 合入前，必须新增并通过：
+Before the VBI date DSL is merged, add and pass:
 
-1. `VBIWhereFilter` / `zVBIWhereFilter` 的 schema 与序列化测试。
-2. `WhereFilterNodeBuilder.setDate(...)` 的 builder 测试。
-3. `buildWhere` 针对 `range` / `relative` / `current` / `period` 的 lowering 测试。
-4. timezone、ISO week、边界开闭规则的解析测试。
+1. Schema and serialization tests for `VBIWhereFilter` / `zVBIWhereFilter`.
+2. Builder tests for `WhereFilterNodeBuilder.setDate(...)`.
+3. `buildWhere` lowering tests for `range` / `relative` / `current` / `period`.
+4. Parsing tests for timezone, ISO week, and boundary inclusion rules.
 
-#### Demo 必补测试
+#### Required demo tests
 
-在 `practices/standard` UI 合入前，必须新增并通过：
+Before the `practices/standard` UI is merged, add and pass:
 
-1. `whereFilterUtils` 的日期序列化与展示文案测试。
-2. `FilterPanel` 的日期编辑模式测试。
-3. `WhereShelf` 的日期 add/update 测试。
+1. Date serialization and display text tests for `whereFilterUtils`.
+2. Date edit mode tests for `FilterPanel`.
+3. Date add/update tests for `WhereShelf`.
 
 ## Consequences
 
 ### Positive
 
-1. `whereFilter` 的类型命名与模块风格统一。
-2. 日期筛选 DSL 收敛为一个稳定入口，不再有平铺字段拼装。
-3. builder API 保持克制，复杂度集中在 `DatePredicate`。
-4. `practices/standard` 能在不复制 DSL 的前提下，支持四类日期筛选器。
-5. lowering 目标完全依赖已验证的 `vquery` 基础能力。
+1. `whereFilter` type names become consistent with the module style.
+2. Date filter DSL converges on one stable entry point instead of flat field composition.
+3. Builder API stays restrained, with complexity concentrated in `DatePredicate`.
+4. `practices/standard` can support four date filter categories without duplicating DSL.
+5. Lowering depends entirely on validated base capabilities in `vquery`.
 
 ### Negative
 
-1. VBI 需要承担日期语义解析和时间上下文管理职责。
-2. `practices/standard` 的表单状态会从单一路径变成标量模式和日期模式两条路径。
-3. 日期边界行为如果没有测试锁定，风险会直接体现在 query 结果上。
+1. VBI must own date semantic resolution and time context management.
+2. `practices/standard` form state changes from one path to two paths: scalar mode and date mode.
+3. If date boundary behavior is not locked by tests, risk will surface directly in query results.
 
 ## Implementation Impact
 
@@ -452,20 +452,20 @@ type DemoWhereFilterItem = DemoWhereScalarFilterItem | DemoWhereDateFilterItem
 
 ## Reference
 
-- VBI WhereFilter Types: `packages/vbi/src/types/dsl/whereFilter/filters.ts`
-- VBI WhereFilter Node Builder: `packages/vbi/src/builder/features/whereFilter/where-node-builder.ts`
+- VBI WhereFilter types: `packages/vbi/src/types/dsl/whereFilter/filters.ts`
+- VBI WhereFilter node builder: `packages/vbi/src/builder/features/whereFilter/where-node-builder.ts`
 - VBI buildWhere: `packages/vbi/src/pipeline/vqueryDSL/buildWhere.ts`
 - Demo Filter Panel: `practices/standard/src/components/Filter/FilterPanel.tsx`
 - Demo Where Utils: `practices/standard/src/components/Filter/whereFilterUtils.ts`
 - Demo Where Shelf: `practices/standard/src/components/Shelves/shelves/WhereShelf.tsx`
 - Demo Where Hook: `practices/standard/src/hooks/useVBIWhereFilter.ts`
-- VQuery Where Tests: `packages/vquery/tests/unit/sql-builder/builders/where.test.ts`
+- VQuery where tests: `packages/vquery/tests/unit/sql-builder/builders/where.test.ts`
 
-## 淘汰内容简述
+## Rejected Designs
 
-以下做法已明确淘汰：
+The following approaches are explicitly rejected:
 
-1. `dateOp` + `dateValue` + `granularity` 的平铺建模。
-2. `WhereFilterBuilder.addDate*` 一类便捷方法堆叠。
-3. 把所有日期类型塞回现有标量 `op + value` 表单。
-4. 在没有测试的前提下，直接把某种日期语义的边界展开当成既定事实写死。
+1. Flat modeling with `dateOp` + `dateValue` + `granularity`.
+2. Stacking convenience methods such as `WhereFilterBuilder.addDate*`.
+3. Forcing every date filter type back into the existing scalar `op + value` form.
+4. Hard-coding date semantic boundary expansion as fact without tests.

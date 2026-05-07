@@ -1,80 +1,92 @@
 ---
 name: development
 description: >
-  当任务涉及 VBI monorepo 开发时使用：apps、packages、practices、website
-  文档、仓库级工作流、生成物、验证命令、事实源决策、软件熵治理、
-  可维护性、重构、删除死代码，以及约束 LLM 生成的混乱代码。
+  Use for VBI monorepo development: apps, packages, practices, website
+  documentation, repository-level workflows, generated artifacts, validation
+  commands, source-of-truth decisions, software entropy control,
+  maintainability, refactoring, dead-code deletion, and constraining messy
+  LLM-generated code.
 ---
 
-# VBI 开发手册
+# VBI Development Handbook
 
-这是 VBI 仓库级开发手册。主文件只保留核心原则；只在改动对应包、实践
-或软件熵风险时加载相关参考资料。
+This is the repository-level development handbook for VBI. The main file keeps
+only the core principles; load the relevant references only when changing a
+specific package, practice, or software-entropy risk area.
 
-## 熵预算
+## Entropy Budget
 
-每次改动都必须降低或至少不增加维护成本。编辑前必须完成：
+Every change must reduce maintenance cost or at least avoid increasing it.
+Before editing, complete the following:
 
-1. 读取相关代码，确认责任归属。
-2. 明确列出发现的坏味道：重复代码、长函数、大文件、死导出、紧耦合、
-   过期注释、生成文件、历史兼容别名、霰弹式修改、临时字段。
-3. 选择最小的降熵动作：删除、简化、抽取、迁移责任归属，或修改
-   事实源后重新生成。
-4. 删除时同步清理下游引用：import、调用、类型、注释、测试、文档和生成物。
+1. Read the relevant code and confirm ownership.
+2. Explicitly list any code smells found: duplicated code, long functions, large
+   files, dead exports, tight coupling, stale comments, generated files, legacy
+   compatibility aliases, shotgun edits, and temporary fields.
+3. Choose the smallest entropy-reducing action: delete, simplify, extract, move
+   ownership, or update the source of truth and regenerate.
+4. When deleting, also clean downstream references: imports, calls, types,
+   comments, tests, documentation, and generated artifacts.
 
-优先删除未使用路径，而不是保留可选分支。不要留下注释掉的代码；不要新增
-没有明确迁移理由的兼容 alias。
+Prefer deleting unused paths over keeping optional branches. Do not leave
+commented-out code behind. Do not add compatibility aliases without a clear
+migration reason.
 
-## 仓库责任归属
+## Repository Ownership
 
-除非 package 脚本另有要求，命令都从仓库根目录执行。
+Unless a package script requires otherwise, run commands from the repository root.
 
-- `packages/vbi`：VBIChartDSL、Builder、协同状态。
-- `packages/vquery`：VQueryDSL 到 SQL 与查询执行。
-- `packages/vseed`：VSeedDSL 到 VChart/VTable spec。
-- `packages/vbi-agent`：Builder Agent runtime 与工具协议。
-- `packages/vbi-react`：React 集成包。
-- `apps/*`：产品应用、官网、后端、provider、CLI。
-- `practices/*`：独立实践示例应用。
+- `packages/vbi`: VBIChartDSL, Builder, and collaborative state.
+- `packages/vquery`: VQueryDSL-to-SQL and query execution.
+- `packages/vseed`: VSeedDSL-to-VChart/VTable specs.
+- `packages/vbi-agent`: Builder Agent runtime and tool protocol.
+- `packages/vbi-react`: React integration package.
+- `apps/*`: Product applications, official website, backend, provider, and CLI.
+- `practices/*`: Independent practice example applications.
 
-如果一次改动跨越多个责任归属，先判断边界是否错误。平台 app 消费 package
-公开 API；package 不应感知 app、provider、页面、CLI 的实现细节。
+If a change crosses multiple ownership boundaries, first decide whether the
+boundary is wrong. Platform apps consume public package APIs; packages should not
+know app, provider, page, or CLI implementation details.
 
-## 事实源
+## Sources of Truth
 
-- VBIChartDSL、VQueryDSL、VSeedDSL 驱动核心行为。
-- Provider 负责平台资源访问和 Builder 创建。
-- Builder 负责 DSL mutation；UI、CLI、agent 层应调用 Builder 或 package
-  公开 API，不要手写 DSL 内部变更逻辑。
-- 先修改源模块；派生文档、测试、构建产物必须通过责任归属方的生成器更新。
-- 不要把手改生成文件作为主要修复方式。
-- 每个 practice 保持独立：不要从另一个 practice import `src/*`。
-- 使用 package 公开 API 或本地抽象，不要越级依赖实现细节。
+- VBIChartDSL, VQueryDSL, and VSeedDSL drive core behavior.
+- Provider owns platform resource access and Builder creation.
+- Builder owns DSL mutation. UI, CLI, and agent layers should call Builder or
+  public package APIs instead of hand-writing internal DSL mutation logic.
+- Modify the source module first. Derived documentation, tests, and build
+  artifacts must be updated through the owning generator.
+- Do not use hand-edited generated files as the primary fix.
+- Keep each practice independent: do not import `src/*` from another practice.
+- Use public package APIs or local abstractions instead of reaching into
+  implementation details.
 
-## 参考资料
+## References
 
-只加载相关参考资料：
+Load only relevant references:
 
-- `references/software-entropy.md`：熵审计流程、VBI 专属坏味道、编辑前检查清单。
-- `references/vseed.md`：`packages/vseed`、VSeed 示例、生成的 VSeed 文档。
-- `references/practice-minimalist.md`：`practices/minimalist`。
-- `references/practice-standard.md`：`practices/standard`。
-- `references/practice-streamlined.md`：`practices/streamlined`。
-- `references/practice-professional.md`：`practices/professional`。
+- `references/software-entropy.md`: Entropy audit workflow, VBI-specific code
+  smells, and the pre-edit checklist.
+- `references/vseed.md`: `packages/vseed`, VSeed examples, and generated VSeed
+  documentation.
+- `references/practice-minimalist.md`: `practices/minimalist`.
+- `references/practice-standard.md`: `practices/standard`.
+- `references/practice-streamlined.md`: `practices/streamlined`.
+- `references/practice-professional.md`: `practices/professional`.
 
-`practices/vbi-react-starter` 是 `@visactor/vbi-react` package 集成 starter。
-它和四个自包含 practice app 分开处理。
+`practices/vbi-react-starter` is the `@visactor/vbi-react` package integration
+starter. Treat it separately from the four self-contained practice apps.
 
-## 验证
+## Validation
 
-代码改动后的仓库级门禁：
+Repository-level gates after code changes:
 
 ```bash
 pnpm run lint:check
 pnpm run typecheck
 ```
 
-有责任归属范围内的脚本时，同时执行聚焦验证：
+When scripts exist in the relevant ownership scope, also run focused validation:
 
 ```bash
 pnpm --filter <package-name> run test
@@ -82,5 +94,5 @@ pnpm --filter <package-name> run lint
 pnpm --filter <package-name> run typecheck
 ```
 
-如果改动涉及生成物，先运行生成器，再检查生成 diff。无法执行的必要验证
-必须明确报告。
+If a change touches generated artifacts, run the generator first, then inspect
+the generated diff. Clearly report any required validation that could not be run.

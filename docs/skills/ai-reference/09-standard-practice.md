@@ -1,82 +1,82 @@
-# 9. Standard Practice 面板组件速查（拓展了解）
+# 9. Standard Practice Panel Component Quick Reference (Further Reading)
 
-> 本节为拓展内容。Standard Practice 是基于 VBI + VBI-react 的完整 UI 实现，AI 了解其结构有助于理解如何操作前端面板。
+> This section is supplemental. Standard Practice is a complete UI implementation based on VBI + VBI-react. Understanding its structure helps AI understand how to operate the frontend panels.
 
-## 9.1 目录结构
+## 9.1 Directory Structure
 
 ```
 practices/standard/src/
 ├── App/
-│   ├── App.tsx           # 应用主入口，管理布局、主题、全屏
+│   ├── App.tsx           # Main app entry. Manages layout, theme, and fullscreen mode.
 │   └── components/
-│       ├── ShelfPanel.tsx     # 四行货架面板（维度/度量/Where/Having）
-│       ├── FilterRootOperatorToggle.tsx  # 过滤根操作符切换（and/or）
-│       └── ShelfRow.tsx       # 货架行组件
+│       ├── ShelfPanel.tsx     # Four-row shelf panel: Dimensions/Measures/Where/Having.
+│       ├── FilterRootOperatorToggle.tsx  # Filter root operator toggle: and/or.
+│       └── ShelfRow.tsx       # Shelf row component.
 ├── components/
 │   ├── Render/
-│   │   └── VSeedRender.tsx   # VSeed 渲染器（内部实现，AI 不可直接调用）
+│   │   └── VSeedRender.tsx   # VSeed renderer. Internal implementation; AI should not call it directly.
 │   ├── Fields/
-│   │   └── FieldList/index.tsx  # 左侧字段列表面板
+│   │   └── FieldList/index.tsx  # Left-side field list panel.
 │   ├── Shelves/
 │   │   ├── shelves/
-│   │   │   ├── DimensionShelf.tsx  # 维度货架（可拖拽标签）
-│   │   │   ├── MeasureShelf.tsx    # 度量货架
-│   │   │   ├── WhereShelf.tsx      # WHERE 过滤货架
-│   │   │   └── HavingShelf.tsx     # HAVING 过滤货架
-│   │   ├── dnd/                   # DnD Kit 拖拽上下文
+│   │   │   ├── DimensionShelf.tsx  # Dimension shelf with draggable tags.
+│   │   │   ├── MeasureShelf.tsx    # Measure shelf.
+│   │   │   ├── WhereShelf.tsx      # WHERE filter shelf.
+│   │   │   └── HavingShelf.tsx     # HAVING filter shelf.
+│   │   ├── dnd/                   # DnD Kit drag-and-drop context.
 │   │   │   ├── ShelfDndProvider.tsx
 │   │   │   └── types.ts
 │   │   ├── utils/
-│   │   │   └── dimensionDateAggregateUtils.ts  # 日期维度聚合工具
+│   │   │   └── dimensionDateAggregateUtils.ts  # Date dimension aggregation utilities.
 │   │   └── common/
-│   │       ├── FieldShelf.tsx      # 通用货架标签组件
-│   │       └── openShelfRenameModal.tsx  # 重命名弹窗
-│   └── Toolbar/               # 工具栏（undo/redo/主题切换/全屏）
+│   │       ├── FieldShelf.tsx      # Shared shelf tag component.
+│   │       └── openShelfRenameModal.tsx  # Rename modal.
+│   └── Toolbar/               # Toolbar: undo/redo/theme toggle/fullscreen.
 ├── model/
-│   ├── VBIStore.ts           # Zustand store（builder 状态 + VSeed 缓存）
-│   └── VBIStoreProvider.tsx  # React Context provider
-├── hooks/                    # React hooks（基于 vbi-react 封装的业务 hooks）
-│   ├── useVBIBuilder.ts      # 全局配置（locale/theme/limit）
-│   ├── useVBIDimensions.ts   # 维度操作
-│   ├── useVBIMeasures.ts     # 度量操作
-│   ├── useVBIWhereFilter.ts  # WHERE 过滤
-│   ├── useVBIHavingFilter.ts  # HAVING 过滤
-│   ├── useVBISchemaFields.ts # 字段列表（带 role/type）
-│   ├── useVBIUndoManager.ts  # Undo/Redo
-│   ├── useVBIStore.ts        # store hook
-│   └── useVBIChartType.ts    # 图表类型
+│   ├── VBIStore.ts           # Zustand store: builder state + VSeed cache.
+│   └── VBIStoreProvider.tsx  # React Context provider.
+├── hooks/                    # React hooks: business hooks wrapped around vbi-react.
+│   ├── useVBIBuilder.ts      # Global config: locale/theme/limit.
+│   ├── useVBIDimensions.ts   # Dimension operations.
+│   ├── useVBIMeasures.ts     # Measure operations.
+│   ├── useVBIWhereFilter.ts  # WHERE filter.
+│   ├── useVBIHavingFilter.ts  # HAVING filter.
+│   ├── useVBISchemaFields.ts # Field list with role/type.
+│   ├── useVBIUndoManager.ts  # Undo/Redo.
+│   ├── useVBIStore.ts        # Store hook.
+│   └── useVBIChartType.ts    # Chart type.
 └── utils/
-    ├── localConnector.ts      # Demo 数据源 Connector + builder 工厂
-    └── fieldRole.ts          # 字段角色映射
+    ├── localConnector.ts      # Demo data source Connector + builder factory.
+    └── fieldRole.ts          # Field role mapping.
 ```
 
-## 9.2 字段角色（FieldRole）
+## 9.2 Field Roles (`FieldRole`)
 
 ```ts
 // practices/standard/src/utils/fieldRole.ts
 type FieldRole = 'dimension' | 'measure'
 
-// 根据字段类型自动推断角色
-getFieldRoleBySchemaType('number') // → 'measure'
-getFieldRoleBySchemaType('string') // → 'dimension'
-getFieldRoleBySchemaType('date') // → 'dimension'
+// Infer role from field type automatically.
+getFieldRoleBySchemaType('number') // -> 'measure'
+getFieldRoleBySchemaType('string') // -> 'dimension'
+getFieldRoleBySchemaType('date') // -> 'dimension'
 ```
 
-## 9.3 拖拽字段添加到货架
+## 9.3 Drag Fields onto Shelves
 
-使用 `@dnd-kit/core` 实现字段到货架的拖拽：
+Field-to-shelf drag and drop is implemented with `@dnd-kit/core`:
 
 ```tsx
 import { useDraggable } from '@dnd-kit/core'
 import { createSchemaFieldDragId, type SchemaFieldDragData } from 'src/components/Shelves/dnd'
 
-// 创建拖拽 ID
+// Create a drag ID.
 const dragId = createSchemaFieldDragId({
   field: 'category',
   role: 'dimension',
 })
 
-// 拖拽数据格式
+// Drag data format.
 const dragData: SchemaFieldDragData = {
   kind: 'schema-field',
   payload: {
@@ -88,22 +88,22 @@ const dragData: SchemaFieldDragData = {
 }
 ```
 
-## 9.4 Schema 字段类型
+## 9.4 Schema Field Type
 
 ```ts
 // practices/standard/src/hooks/useVBISchemaFields.ts
 interface VBISchemaField {
-  name: string // 字段名
+  name: string // Field name.
   type: string // 'string' | 'number' | 'date' | 'datetime' | 'timestamp' | 'boolean'
   role: FieldRole // 'dimension' | 'measure'
-  isDate: boolean // 是否为日期类型
+  isDate: boolean // Whether this is a date-like type.
 }
 
-// 使用
+// Usage.
 const { schemaFields, fieldRoleMap, fieldTypeMap } = useVBISchemaFields(builder)
 ```
 
-## 9.5 日期维度聚合工具
+## 9.5 Date Dimension Aggregation Utilities
 
 ```ts
 // src/components/Shelves/utils/dimensionDateAggregateUtils.ts
@@ -115,46 +115,46 @@ import {
   normalizeDimensionDateAggregate,
 } from 'src/components/Shelves/utils/dimensionDateAggregateUtils'
 
-// 获取日期字段的默认聚合方式
+// Get the default aggregation for date fields.
 const defaultAgg = getDefaultDimensionDateAggregate()
-// → { func: 'toMonth' }
+// -> { func: 'toMonth' }
 
-// 获取所有可用的日期聚合选项
+// Get all available date aggregation options.
 const items = getDimensionDateAggregateItems()
-// → [{ func: 'toYear', label: '年' }, { func: 'toMonth', label: '月' }, ...]
+// -> [{ func: 'toYear', label: 'Year' }, { func: 'toMonth', label: 'Month' }, ...]
 
-// 格式化显示
-formatDimensionDateAggregate({ func: 'toQuarter' }) // → '季度'
+// Format display text.
+formatDimensionDateAggregate({ func: 'toQuarter' }) // -> 'Quarter'
 ```
 
-## 9.6 类型守卫
+## 9.6 Type Guards
 
-从 `@visactor/vbi` 导出的类型守卫（`filter-guards.ts`），用于判断 Where/Having 条件树中的节点类型：
+Type guards exported from `@visactor/vbi` (`filter-guards.ts`) are used to determine node types in Where/Having condition trees:
 
 ```ts
 import { isVBIFilter, isVBIWhereGroup, isVBIHavingFilter } from '@visactor/vbi';
 import type { VBIWhereClause, VBIHavingClause } from '@visactor/vbi';
 
-// 判断 Where 条件节点类型
+// Determine the type of a Where condition node.
 const item: VBIWhereClause = /* ... */;
 if (isVBIFilter(item)) {
-  // item 是叶子过滤节点 VBIWhereFilter
+  // item is a leaf filter node: VBIWhereFilter.
   console.log(item.field, item.op, item.value);
 } else if (isVBIWhereGroup(item)) {
-  // item 是嵌套组 VBIWhereGroup
+  // item is a nested group: VBIWhereGroup.
   console.log(item.op, item.conditions);
 }
 
-// 判断 Having 条件节点类型
+// Determine the type of a Having condition node.
 const havingItem: VBIHavingClause = /* ... */;
 if (isVBIHavingFilter(havingItem)) {
-  // 是叶子节点，有 aggregate 属性
+  // This is a leaf node with an aggregate property.
   console.log(havingItem.aggregate);
 }
 ```
 
-| 类型守卫                  | 说明                                          | 源码位置           |
-| ------------------------- | --------------------------------------------- | ------------------ |
-| `isVBIFilter(item)`       | 判断是否为叶子过滤节点（VBIWhereFilter）      | `filter-guards.ts` |
-| `isVBIWhereGroup(item)`   | 判断是否为 Where 嵌套组（VBIWhereGroup）      | `filter-guards.ts` |
-| `isVBIHavingFilter(item)` | 判断是否为 HAVING 叶子节点（VBIHavingFilter） | `filter-guards.ts` |
+| Type guard                | Description                                                    | Source location    |
+| ------------------------- | -------------------------------------------------------------- | ------------------ |
+| `isVBIFilter(item)`       | Checks whether the item is a leaf filter node: VBIWhereFilter  | `filter-guards.ts` |
+| `isVBIWhereGroup(item)`   | Checks whether the item is a nested Where group: VBIWhereGroup | `filter-guards.ts` |
+| `isVBIHavingFilter(item)` | Checks whether the item is a HAVING leaf node: VBIHavingFilter | `filter-guards.ts` |

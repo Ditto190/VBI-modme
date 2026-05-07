@@ -1,15 +1,15 @@
 # docs/adr/packages
 
-本目录集中存放各 package 的设计、ADR、计划与示例源文件。
+This directory centralizes package-level designs, ADRs, plans, and example source files.
 
-- `vbi/`: `@visactor/vbi` 相关文档
-- `vquery/`: `@visactor/vquery` 相关文档
-- `vseed/`: `@visactor/vseed` 相关文档
-- `vbi-react/`: `@visactor/vbi-react` 相关文档
-- `vbi-agent/`: `@visactor/vbi-agent` 相关文档
+- `vbi/`: documentation related to `@visactor/vbi`
+- `vquery/`: documentation related to `@visactor/vquery`
+- `vseed/`: documentation related to `@visactor/vseed`
+- `vbi-react/`: documentation related to `@visactor/vbi-react`
+- `vbi-agent/`: documentation related to `@visactor/vbi-agent`
 
-组织原则：
+Organization principles:
 
-- 按 package 分目录，避免与仓库级 `adr/`、`skills/`、`superpowers/` 混合
-- 每个 package 内继续保持原有主题目录结构
-- 示例正文源等 package 专属文档资源，也放在对应 package 目录下
+- Split directories by package to avoid mixing content with repository-level `adr/`, `skills/`, or `superpowers/`.
+- Keep the existing topic directory structure within each package.
+- Store package-specific documentation resources, such as example body sources, under the corresponding package directory.

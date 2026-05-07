@@ -1,33 +1,33 @@
-# ADR-005: VBI ChartBuilder 与 VBIChartDSL 命名收敛
+# ADR-005: VBI ChartBuilder and VBIChartDSL Naming Alignment
 
 ## Context
 
-当前 `@visactor/vbi` 对外只有单图表能力，但命名仍是泛化的：`VBI.from(...)`、`VBI.create(...)`、`VBIBuilder`、`VBIDSL`、`zVBIDSL`、`createEmptyChart`。
+`@visactor/vbi` currently exposes only single-chart capability, but its public naming is still generic: `VBI.from(...)`, `VBI.create(...)`, `VBIBuilder`, `VBIDSL`, `zVBIDSL`, and `createEmptyChart`.
 
-这在“只有 chart”阶段还能工作，但在准备引入 `VBI.report.create(...)` 后会立刻产生冲突：
+That can work while VBI only has charts, but it becomes confusing as soon as `VBI.report.create(...)` is introduced:
 
-1. `from` 暴露了“从 DSL 进入 builder”的实现细节，没有表达“创建 chart”这个意图。
-2. `VBIBuilder` / `VBIDSL` 看起来像整个 VBI 的顶层概念，实际却只描述单个 chart。
-3. 未来同时存在 `chartBuilder` 与 `reportBuilder` 时，泛化命名会让 API、类型、zod schema 和目录职责混在一起。
+1. `from` exposes the implementation detail that a builder is created from DSL; it does not express the intent to create a chart.
+2. `VBIBuilder` / `VBIDSL` look like top-level VBI concepts, but they actually describe a single chart.
+3. When `chartBuilder` and `reportBuilder` both exist, generic names will mix API, type, zod schema, and directory responsibilities.
 
-本 ADR 只解决命名和分层，不改变 chart DSL 的 JSON 结构，也不改变 `buildVQuery()` / `buildVSeed()` 的 lowering 行为。
+This ADR only addresses naming and layering. It does not change the chart DSL JSON structure or the `buildVQuery()` / `buildVSeed()` lowering behavior.
 
 ## Decision
 
-### 1. 根 API 统一为 `createChart(...)`
+### 1. Use `createChart(...)` as the root API
 
-新增并文档化唯一主入口：
+Add and document the primary entry point:
 
 ```ts
 VBI.chart.create(vbiChart, options)
 createVBI(...).chart.create(vbiChart, options)
 ```
 
-`from` 和 `create` 保留一个迁移窗口，但只作为 `VBI.chart.create` 的 deprecated alias，不再出现在示例、文档和新增测试里。
+Keep `from` and `create` for one migration window, but only as deprecated aliases of `VBI.chart.create`. They should no longer appear in examples, documentation, or new tests.
 
-### 2. 泛化 builder 统一归入 `chartBuilder` 语义
+### 2. Move generic builder names under chart semantics
 
-对外命名改为：
+Public names change to:
 
 ```ts
 VBIBuilder -> VBIChartBuilder
@@ -36,11 +36,11 @@ VBIBuilderOptions -> VBIChartBuilderOptions
 VBIBuilderAdapters -> VBIChartBuilderAdapters
 ```
 
-`MeasuresBuilder`、`DimensionsBuilder`、`ChartTypeBuilder` 等 feature builder 不额外加 `Chart` 前缀；它们已经明确归属于 `VBIChartBuilder`，继续保留短名可以减少机械重命名。
+Feature builders such as `MeasuresBuilder`, `DimensionsBuilder`, and `ChartTypeBuilder` do not get an extra `Chart` prefix. They already belong to `VBIChartBuilder`, and keeping the shorter names avoids mechanical churn.
 
-### 3. 根 DSL 统一为 `VBIChart*`
+### 3. Rename the root DSL to `VBIChart*`
 
-对外根 DSL 名称改为：
+Root DSL names change to:
 
 ```ts
 VBIDSL -> VBIChartDSL
@@ -51,35 +51,35 @@ buildVBIDSL -> buildVBIChartDSL
 isEmptyVBIDSL -> isEmptyVBIChartDSL
 ```
 
-任何仅服务于 chart 根 DSL 的 zod schema 和工具函数，也应同步采用 `VBIChart` 前缀。首期不强制把所有 leaf node 类型都机械改成 `VBIChart*`；优先收敛根对象、根 schema 和公共入口，避免无意义 churn。
+Any zod schema or helper that only serves the chart root DSL should also use the `VBIChart` prefix. The first phase does not force every leaf node type to be mechanically renamed to `VBIChart*`; focus on the root object, root schema, and public entry points to avoid unnecessary churn.
 
-### 4. 兼容策略
+### 4. Compatibility strategy
 
-首期保留旧名别名并加 `@deprecated`：
+Keep deprecated aliases in the first phase:
 
-1. `VBI.from` / `VBI.create` 委托到 `VBI.chart.create`
-2. `VBIBuilder` 委托到 `VBIChartBuilder`
-3. `VBIDSL` / `VBIDSLInput` / `zVBIDSL` 作为类型或 schema 别名保留
-4. 文档、示例、测试、导出顺序全部切到新名字
+1. `VBI.from` / `VBI.create` delegate to `VBI.chart.create`.
+2. `VBIBuilder` delegates to `VBIChartBuilder`.
+3. `VBIDSL` / `VBIDSLInput` / `zVBIDSL` remain as type or schema aliases.
+4. Documentation, examples, tests, and export ordering all move to the new names.
 
-兼容层的目标只是给下游一个迁移窗口，不再继续扩散旧命名。
+The compatibility layer only gives downstream users a migration window. Old names should not continue to spread.
 
-### 5. 目录与职责边界
+### 5. Directory and responsibility boundaries
 
-当前通用 `builder` / `types/builder` / `vbi/from` 下的 chart 实现，应按 chart 语义重组。原则如下：
+The current chart implementation under generic `builder` / `types/builder` / `vbi/from` paths should be reorganized around chart semantics. Principles:
 
-1. chart 专属实现放进 chart builder 命名空间，不再占用泛化顶层名字
-2. `VBI` 保持为产品级入口容器，负责组织 `chart.create`、后续的 `report.create`
-3. 真正跨 chart/report 复用的能力，才保留泛化命名
+1. Chart-specific implementation belongs in the chart builder namespace and should not occupy generic top-level names.
+2. `VBI` remains the product-level entry container that organizes `chart.create` and future `report.create`.
+3. Only capabilities truly shared across chart and report should keep generic naming.
 
-这保证未来 report 能和 chart 形成平级能力，而不是继续挤在旧的 `VBIBuilder` / `VBIDSL` 语义里。
+This lets report become a peer capability of chart instead of being squeezed into the old `VBIBuilder` / `VBIDSL` semantics.
 
-### 6. 非目标
+### 6. Non-goals
 
-1. 不修改 `VBIChartDSL` 的运行时字段结构
-2. 不重做 `buildVQuery()` / `buildVSeed()` pipeline
-3. 不在首期强制重命名所有 `VBIDimension` / `VBIMeasure` 等 leaf 类型
-4. 不把这次命名收敛扩展成 report DSL 设计
+1. Do not change the runtime field structure of `VBIChartDSL`.
+2. Do not redesign the `buildVQuery()` / `buildVSeed()` pipeline.
+3. Do not force all leaf types such as `VBIDimension` / `VBIMeasure` to be renamed in the first phase.
+4. Do not expand this naming pass into report DSL design.
 
 ## Reference
 
@@ -95,9 +95,9 @@ isEmptyVBIDSL -> isEmptyVBIChartDSL
 - `packages/vbi/src/index.ts`
 - `docs/adr/packages/vbi/2026-03-24-create-report/goal.md`
 
-## 淘汰内容概述
+## Rejected Designs
 
-- 不再把 `from(...)` 作为 chart 创建主入口
-- 不再把单图表 builder 命名成泛化的 `VBIBuilder`
-- 不再把单图表根 DSL 命名成泛化的 `VBIDSL`
-- 不再让 chart 专属 schema 和工具函数继续占用无 domain 的顶层名字
+- Do not keep `from(...)` as the primary chart creation API.
+- Do not name the single-chart builder with the generic `VBIBuilder`.
+- Do not name the single-chart root DSL with the generic `VBIDSL`.
+- Do not let chart-specific schemas and helpers keep occupying domainless top-level names.

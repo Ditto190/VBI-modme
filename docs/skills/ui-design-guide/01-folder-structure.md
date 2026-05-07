@@ -1,104 +1,104 @@
-# 1. 目录结构规范
+# 1. Folder Structure Conventions
 
-每个 practice 是完全独立的项目，有自己完整的目录结构。**不能跨 practice 引用组件或 hooks**。
+Each practice is a fully independent project with its own complete folder structure. **Do not import components or hooks across practices**.
 
 ---
 
-## 1.1 标准目录结构
+## 1.1 Standard Folder Structure
 
 ```
 practices/{name}/src/
 ├── App/
-│   └── App.tsx              # 应用主入口，管理布局
+│   └── App.tsx              # Main application entry; manages layout
 ├── components/
 │   ├── ChartType/
-│   │   └── Selector.tsx     # 图表类型选择器
+│   │   └── Selector.tsx     # Chart type selector
 │   ├── Fields/
-│   │   ├── FieldList/       # 字段列表面板（维度+度量合并）
-│   │   ├── DimensionsList/   # 可用维度列表
-│   │   └── MeasuresList/    # 可用度量列表
+│   │   ├── FieldList/       # Field list panel (dimensions + measures combined)
+│   │   ├── DimensionsList/  # Available dimension list
+│   │   └── MeasuresList/    # Available measure list
 │   ├── Filter/
-│   │   ├── FilterPanel.tsx      # WHERE 过滤面板
-│   │   └── HavingFilterPanel.tsx # HAVING 过滤面板
+│   │   ├── FilterPanel.tsx      # WHERE filter panel
+│   │   └── HavingFilterPanel.tsx # HAVING filter panel
 │   ├── Render/
-│   │   └── VSeedRender.tsx  # VSeed 渲染器（独立实现）
+│   │   └── VSeedRender.tsx  # VSeed renderer (independent implementation)
 │   └── Shelves/
-│       ├── DimensionShelf.tsx  # 维度货架
-│       ├── MeasureShelf.tsx     # 度量货架
-│       ├── WhereShelf.tsx       # WHERE 过滤货架
-│       ├── HavingShelf.tsx      # HAVING 过滤货架
-│       └── (dnd/ 拖拽相关)
-├── hooks/                    # React hooks（基于 VBI 封装）
-│   ├── index.ts             # 统一导出
-│   ├── useVBIBuilder.ts      # locale/theme/limit 配置
-│   ├── useVBIChartType.ts   # 图表类型
-│   ├── useVBIDimensions.ts  # 维度操作
-│   ├── useVBIMeasures.ts    # 度量操作
-│   ├── useVBIWhereFilter.ts # WHERE 过滤
-│   ├── useVBIHavingFilter.ts # HAVING 过滤
-│   ├── useVBISchemaFields.ts # 字段列表
+│       ├── DimensionShelf.tsx  # Dimension shelf
+│       ├── MeasureShelf.tsx    # Measure shelf
+│       ├── WhereShelf.tsx      # WHERE filter shelf
+│       ├── HavingShelf.tsx     # HAVING filter shelf
+│       └── (dnd/ drag-and-drop related)
+├── hooks/                    # React hooks (VBI wrappers)
+│   ├── index.ts              # Unified exports
+│   ├── useVBIBuilder.ts      # locale/theme/limit configuration
+│   ├── useVBIChartType.ts    # Chart type
+│   ├── useVBIDimensions.ts   # Dimension operations
+│   ├── useVBIMeasures.ts     # Measure operations
+│   ├── useVBIWhereFilter.ts  # WHERE filters
+│   ├── useVBIHavingFilter.ts # HAVING filters
+│   ├── useVBISchemaFields.ts # Field list
 │   ├── useVBIUndoManager.ts  # Undo/Redo
 │   ├── useVBIStore.ts        # store hook
-│   └── useBuilderDocState.ts  # 内部：Yjs 状态订阅
+│   └── useBuilderDocState.ts # Internal: Yjs state subscription
 ├── model/
-│   ├── VBIStore.ts          # Zustand store（builder 状态 + VSeed 缓存）
-│   └── VBIStoreProvider.tsx  # React Context provider + useVBIStore
+│   ├── VBIStore.ts          # Zustand store (builder state + VSeed cache)
+│   └── VBIStoreProvider.tsx # React Context provider + useVBIStore
 ├── utils/
-│   ├── {connector-bootstrap}.ts  # 数据源 Connector + builder 工厂（如 demoConnector/localConnector）
-│   └── fieldRole.ts        # 字段角色映射（getFieldRoleBySchemaType）
+│   ├── {connector-bootstrap}.ts # Data source Connector + builder factory (for example demoConnector/localConnector)
+│   └── fieldRole.ts        # Field role mapping (getFieldRoleBySchemaType)
 ├── constants/
-│   └── builder.ts           # 常量配置（limit 默认值、主题、语言默认值）
+│   └── builder.ts           # Constant configuration (default limit, theme, locale)
 ├── i18n/
-│   └── (国际化相关)
-└── index.tsx               # 应用入口
+│   └── (internationalization related)
+└── index.tsx               # Application entry
 ```
 
 ---
 
-## 1.2 关键约束
+## 1.2 Key Constraints
 
-| 约束                         | 说明                                                    |
-| ---------------------------- | ------------------------------------------------------- |
-| 不能跨 practice 引用         | `src/` 路径只在当前 practice 内有效                     |
-| VSeedRender 独立实现         | 每个 practice 必须自己实现，不能引用其他 practice 的    |
-| hooks 独立封装               | 每个 practice 有自己的 hooks 集                         |
-| model 独立管理               | 每个 practice 有自己的 Zustand store                    |
-| connector/bootstrap 独立实现 | 每个 practice 封装自己的 VBI 初始化代码（文件名可不同） |
+| Constraint                      | Description                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| No cross-practice imports       | `src/` paths are valid only inside the current practice                                  |
+| Independent VSeedRender         | Each practice must implement its own copy and must not import another practice's version |
+| Independent hook wrappers       | Each practice has its own hook set                                                       |
+| Independent model management    | Each practice has its own Zustand store                                                  |
+| Independent connector/bootstrap | Each practice wraps its own VBI initialization code (file names may differ)              |
 
 ---
 
-## 1.3 设计检查清单
+## 1.3 Design Checklist
 
-### 初始化
+### Initialization
 
-- [ ] connector/bootstrap 模块已实现（如 `demoConnector.ts`/`localConnector.ts`），包含 connector 注册与 builder 工厂
-- [ ] `VBIStore` 已实现，包含 `initialize`、`bindEvent` 方法
-- [ ] `VBIStoreProvider` 已实现，`useVBIStore` hook 可用
-- [ ] `App.tsx` 通过 `VBIStoreProvider` 包裹应用
-- [ ] 初始化时调用 `initialize(builder)` 绑定 Yjs 事件
+- [ ] The connector/bootstrap module is implemented (for example `demoConnector.ts`/`localConnector.ts`) and includes connector registration plus a builder factory.
+- [ ] `VBIStore` is implemented with `initialize` and `bindEvent` methods.
+- [ ] `VBIStoreProvider` is implemented, and the `useVBIStore` hook is available.
+- [ ] `App.tsx` wraps the application with `VBIStoreProvider`.
+- [ ] Initialization calls `initialize(builder)` to bind Yjs events.
 
 ### Hooks
 
-- [ ] `src/hooks/index.ts` 统一导出所有 hooks
-- [ ] `useVBIDimensions` 支持回调模式添加维度
-- [ ] `useVBIMeasures` 支持回调模式添加度量
-- [ ] hooks 不依赖 `@visactor/vbi-react` 包
+- [ ] `src/hooks/index.ts` exports all hooks from one place.
+- [ ] `useVBIDimensions` supports adding dimensions in callback mode.
+- [ ] `useVBIMeasures` supports adding measures in callback mode.
+- [ ] Hooks do not depend on the `@visactor/vbi-react` package.
 
-### 渲染
+### Rendering
 
-- [ ] `VSeedRender` 位于 `src/components/Render/VSeedRender.tsx`，独立实现
-- [ ] 从 `@visactor/vseed` 正确导入 `VSeedBuilder`、`VSeed` 和类型判断函数
-- [ ] 处理了 `isVChart`/`isPivotChart`/`isTable`/`isPivotTable` 四种渲染路径
-- [ ] `useEffect` cleanup 正确调用 `release()`
+- [ ] `VSeedRender` lives at `src/components/Render/VSeedRender.tsx` and is implemented independently.
+- [ ] `VSeedBuilder`, `VSeed`, and type guard functions are imported correctly from `@visactor/vseed`.
+- [ ] All four rendering paths are handled: `isVChart`/`isPivotChart`/`isTable`/`isPivotTable`.
+- [ ] `useEffect` cleanup calls `release()` correctly.
 
-### 数据流
+### Data Flow
 
-- [ ] 用户操作通过 Builder API 配置图表（不直接操作 DSL）
-- [ ] Yjs doc update 事件正确监听
-- [ ] `bindEvent` 在组件卸载时正确清理
+- [ ] User actions configure charts through the Builder API (no direct DSL mutation).
+- [ ] Yjs doc update events are listened to correctly.
+- [ ] `bindEvent` is cleaned up correctly when the component unmounts.
 
-### 独立性
+### Independence
 
-- [ ] 所有 `src/` 导入只在当前 practice 内有效
-- [ ] 不引用其他 practice 的组件或 hooks
-- [ ] `VSeedRender` 是当前 practice 自己的实现
+- [ ] All `src/` imports are valid only inside the current practice.
+- [ ] No components or hooks are imported from other practices.
+- [ ] `VSeedRender` is the current practice's own implementation.

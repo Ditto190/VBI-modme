@@ -1,4 +1,4 @@
-# ADR-003: VBI Measure 数值格式支持
+# ADR-003: VBI Measure Numeric Format Support
 
 ## Status
 
@@ -6,20 +6,20 @@ Proposed
 
 ## Context
 
-VSeed 的 `Measure` 已支持数值格式相关配置：
+VSeed `Measure` already supports numeric format configuration:
 
 - `autoFormat?: boolean`
 - `numFormat?: NumFormat`
 
-当前 VBI 还没有把这组能力完整接通到自己的 DSL、builder 和 `buildVSeed` 适配层；`practices/standard` 的 measure shelf 也还不能在 UI 上编辑格式配置。
+VBI does not yet fully connect this capability to its DSL, builder, and `buildVSeed` adapter. The `practices/standard` measure shelf also cannot edit format configuration in the UI.
 
-本 ADR 的目标是将 measure format 能力以单一接口接入 VBI，并补齐到 Demo UI。
+The goal of this ADR is to expose measure formatting through one VBI interface and wire it through to the demo UI.
 
 ## Decision
 
-### 1. VBI 对外统一为一个 `format` 接口
+### 1. VBI exposes a single `format` interface
 
-VBI 在 `VBIMeasure` 上新增：
+Add the following to `VBIMeasure`:
 
 ```typescript
 type VBIMeasureFormat = { autoFormat: true } | ({ autoFormat?: false } & NumFormat)
@@ -30,17 +30,17 @@ type VBIMeasure = {
 }
 ```
 
-含义约束：
+Semantic constraints:
 
-1. `format: { autoFormat: true }` 表示启用自动格式
-2. `format` 为其他对象时，表示自定义数值格式
-3. `format` 未设置时，表示不显式指定格式，交由 VSeed 默认行为处理
+1. `format: { autoFormat: true }` enables automatic formatting.
+2. Any other `format` object represents a custom numeric format.
+3. If `format` is unset, VBI does not explicitly specify formatting and VSeed default behavior applies.
 
-VBI 不直接暴露 `autoFormat` 和 `numFormat` 这两个顶层 DSL 字段。
+VBI does not directly expose `autoFormat` and `numFormat` as top-level DSL fields.
 
-### 2. `MeasureNodeBuilder` 只提供一组 format 方法
+### 2. `MeasureNodeBuilder` only provides one group of format methods
 
-`MeasureNodeBuilder` 新增：
+Add to `MeasureNodeBuilder`:
 
 ```typescript
 class MeasureNodeBuilder {
@@ -50,27 +50,27 @@ class MeasureNodeBuilder {
 }
 ```
 
-行为约束：
+Behavior:
 
-1. `setFormat({ autoFormat: true })` 表示切换到自动格式
-2. `setFormat(customFormat)` 表示切换到自定义格式
-3. `clearFormat()` 删除格式配置，回到“未显式设置”的默认状态
+1. `setFormat({ autoFormat: true })` switches to automatic formatting.
+2. `setFormat(customFormat)` switches to custom formatting.
+3. `clearFormat()` removes the format configuration and returns to the default "not explicitly set" state.
 
-推荐用法：
+Recommended usage:
 
 ```typescript
 builder.measures.add('sales', (node) => {
   node.setFormat({
     type: 'number',
     ratio: 10000,
-    symbol: '万',
+    symbol: 'wan',
     prefix: '¥',
     fractionDigits: 2,
   })
 })
 ```
 
-或：
+Or:
 
 ```typescript
 builder.measures.add('sales', (node) => {
@@ -78,11 +78,11 @@ builder.measures.add('sales', (node) => {
 })
 ```
 
-### 3. `MeasuresBuilder` 保持现状
+### 3. `MeasuresBuilder` stays unchanged
 
-`MeasuresBuilder` 不新增 format 专用便捷方法。
+Do not add format-specific convenience methods to `MeasuresBuilder`.
 
-继续使用现有入口：
+Continue using the existing entry:
 
 ```typescript
 builder.measures.add(field, (node) => {
@@ -90,86 +90,86 @@ builder.measures.add(field, (node) => {
 })
 ```
 
-原因：
+Reasons:
 
-1. `add(field, callback)` 已足够表达格式配置
-2. format 不是独立资源，不需要新的 `add*` 入口
-3. 保持 builder API 面稳定，避免快捷方法持续膨胀
+1. `add(field, callback)` is enough to express format configuration.
+2. Format is not an independent resource, so it does not need a new `add*` entry.
+3. Keeping the builder API surface stable avoids continuous growth of shortcut methods.
 
-### 4. `buildVSeed` 负责将 `format` 映射到 VSeed 字段
+### 4. `buildVSeed` maps `format` to VSeed fields
 
-VBI 到 VSeed 的适配规则如下：
+VBI adapts to VSeed as follows:
 
-1. `format` 为 `{ autoFormat: true }` 时，输出 `autoFormat: true`，不输出 `numFormat`
-2. `format` 为自定义格式对象时，输出 `autoFormat: false` 和 `numFormat`
-3. `format` 未设置时，不输出 `autoFormat` 和 `numFormat`
+1. If `format` is `{ autoFormat: true }`, output `autoFormat: true` and do not output `numFormat`.
+2. If `format` is a custom format object, output `autoFormat: false` and `numFormat`.
+3. If `format` is unset, do not output `autoFormat` or `numFormat`.
 
-VBI 不向 VSeed 透传 `format` 字段本身。
+VBI does not pass its own `format` field through to VSeed.
 
-VBI 的职责是表达统一配置，并在适配阶段映射为 VSeed 所需字段；VBI 不实现 formatter 创建逻辑，也不复制 VSeed 的格式化规则。
+VBI's responsibility is to express a unified configuration and map it to the fields VSeed expects during adaptation. VBI does not implement formatter creation logic or copy VSeed formatting rules.
 
-### 5. `practices/standard` 需要补齐格式设置 UI
+### 5. `practices/standard` needs a format settings UI
 
-Demo 需要把这组能力暴露到 measure shelf 的交互中。
+The demo should expose this capability in the measure shelf.
 
-接入方式：
+Integration approach:
 
-1. 在 `practices/standard/src/components/Shelves/shelves/MeasureShelf.tsx` 的 measure 菜单中新增 `Format` 入口
-2. `Format` 不做多级 submenu，改为打开独立弹窗
-3. 弹窗沿用当前 shelf 交互模式，建议新增一个与 `openShelfRenameModal` 同级的 `openMeasureFormatModal`
+1. Add a `Format` entry to the measure menu in `practices/standard/src/components/Shelves/shelves/MeasureShelf.tsx`.
+2. Do not make `Format` a nested submenu. Open a standalone modal instead.
+3. Reuse the current shelf interaction pattern. A peer helper such as `openMeasureFormatModal`, next to `openShelfRenameModal`, is recommended.
 
-UI 结构：
+UI structure:
 
-1. 顶部提供格式模式切换：`Auto` / `Custom`
-2. 选择 `Auto` 时，保存值为 `{ autoFormat: true }`
-3. 选择 `Custom` 时，编辑 `NumFormat` 表单
-4. 常用字段直接展示：`type`、`ratio`、`symbol`、`prefix`、`suffix`、`thousandSeparator`、`fractionDigits`
-5. 低频字段放入高级区域：`significantDigits`、`roundingPriority`、`roundingMode`
+1. Provide a format mode switch at the top: `Auto` / `Custom`.
+2. When `Auto` is selected, save `{ autoFormat: true }`.
+3. When `Custom` is selected, edit a `NumFormat` form.
+4. Show common fields directly: `type`, `ratio`, `symbol`, `prefix`, `suffix`, `thousandSeparator`, `fractionDigits`.
+5. Put less common fields in an advanced area: `significantDigits`, `roundingPriority`, `roundingMode`.
 
-保存和重置行为：
+Save and reset behavior:
 
-1. 保存自动格式：`setFormat({ autoFormat: true })`
-2. 保存自定义格式：`setFormat(customFormat)`
-3. 重置为默认行为：`clearFormat()`
+1. Save automatic format with `setFormat({ autoFormat: true })`.
+2. Save custom format with `setFormat(customFormat)`.
+3. Reset to default behavior with `clearFormat()`.
 
-对应配套改动：
+Related changes:
 
-1. `practices/standard/src/hooks/useVBIMeasures.ts` 中的 `MeasureNodeLike` 需要补上 `setFormat` / `getFormat` / `clearFormat`
-2. `practices/standard/src/i18n/locales/zh-CN.json` 和 `practices/standard/src/i18n/locales/en-US.json` 需要新增 format 相关文案
-3. 如需在列表中提示当前状态，可在 measure 标签上补一个轻量摘要，例如“自动”或“自定义”，但这不是首批必需项
+1. Add `setFormat` / `getFormat` / `clearFormat` to `MeasureNodeLike` in `practices/standard/src/hooks/useVBIMeasures.ts`.
+2. Add format-related text to `practices/standard/src/i18n/locales/zh-CN.json` and `practices/standard/src/i18n/locales/en-US.json`.
+3. If the list should indicate current state, add a lightweight summary to the measure label, such as "Auto" or "Custom". This is not required for the first batch.
 
-### 6. 测试范围
+### 6. Test scope
 
-VBI 核心测试覆盖以下内容：
+VBI core tests cover:
 
-1. `MeasureNodeBuilder` 可正确设置、读取和清空 `format`
-2. `setFormat({ autoFormat: true })` 会正确表达自动格式
-3. `setFormat(customFormat)` 会正确表达自定义格式
-4. `clearFormat()` 会清除格式配置
-5. `buildVSeed` 会正确完成 `format -> autoFormat / numFormat` 映射
-6. `format` 未设置时，不写入冗余默认值
+1. `MeasureNodeBuilder` can set, read, and clear `format`.
+2. `setFormat({ autoFormat: true })` correctly represents automatic format.
+3. `setFormat(customFormat)` correctly represents custom format.
+4. `clearFormat()` clears format configuration.
+5. `buildVSeed` correctly maps `format -> autoFormat / numFormat`.
+6. When `format` is unset, redundant default values are not written.
 
-Demo 测试覆盖以下内容：
+Demo tests cover:
 
-1. measure 菜单包含 `Format` 入口
-2. 打开弹窗后可回填当前 `format`
-3. 保存自动格式后能正确写回 builder
-4. 保存自定义格式后能正确写回 builder
-5. 重置后能调用 `clearFormat()`，回到默认行为
+1. The measure menu contains a `Format` entry.
+2. Opening the modal fills in the current `format`.
+3. Saving automatic format writes back to the builder correctly.
+4. Saving custom format writes back to the builder correctly.
+5. Reset calls `clearFormat()` and returns to default behavior.
 
-不在 VBI / Demo 中测试以下内容：
+Do not test the following in VBI / demo:
 
-1. 最终 tooltip / label 的格式化字符串
-2. VSeed formatter 的内部实现
-3. 各类格式化规则的渲染正确性穷举
+1. Final tooltip / label formatting strings.
+2. VSeed formatter internals.
+3. Exhaustive rendering correctness for each formatting rule.
 
-这些应由 VSeed 自身负责验证。
+Those should be validated by VSeed itself.
 
 ## Reference
 
 - VSeed `NumFormat`: `packages/vseed/src/types/properties/format/numFormat.ts`
 - VSeed `BaseMeasure`: `packages/vseed/src/types/properties/measures/baseMeasure.ts`
-- VSeed formatter 入口: `packages/vseed/src/pipeline/utils/format/createFormatterByMeasure.ts`
+- VSeed formatter entry: `packages/vseed/src/pipeline/utils/format/createFormatterByMeasure.ts`
 - VBI `VBIMeasure`: `packages/vbi/src/types/dsl/measures/measures.ts`
 - VBI `MeasureNodeBuilder`: `packages/vbi/src/builder/features/measures/mea-node-builder.ts`
 - VBI `MeasuresBuilder`: `packages/vbi/src/builder/features/measures/mea-builder.ts`
@@ -177,12 +177,12 @@ Demo 测试覆盖以下内容：
 - Demo measure shelf: `practices/standard/src/components/Shelves/shelves/MeasureShelf.tsx`
 - Demo measures hook: `practices/standard/src/hooks/useVBIMeasures.ts`
 
-## 淘汰内容概述
+## Rejected Designs
 
-本方案明确不采用以下设计：
+This plan explicitly excludes:
 
-- 不再对外暴露 `setAutoFormat` / `getAutoFormat` / `setNumFormat` / `getNumFormat`
-- 不新增 `addWithFormat`、`addCurrency`、`addPercent` 等 `MeasuresBuilder` 便捷入口
-- 不新增 `setCurrency`、`setWan`、`setK`、`setFractionDigits` 等大量语法糖方法
-- 不向 VSeed 透传 VBI 的 `format` 字段本身，而是在适配阶段映射为 `autoFormat` / `numFormat`
-- 不在 VBI / Demo 中承担 VSeed formatter 的实现和验证职责
+- Exposing `setAutoFormat` / `getAutoFormat` / `setNumFormat` / `getNumFormat`.
+- Adding `MeasuresBuilder` convenience entries such as `addWithFormat`, `addCurrency`, or `addPercent`.
+- Adding many sugar methods such as `setCurrency`, `setWan`, `setK`, or `setFractionDigits`.
+- Passing VBI's `format` field itself through to VSeed instead of mapping it to `autoFormat` / `numFormat` during adaptation.
+- Making VBI / demo responsible for implementing or validating VSeed formatter behavior.

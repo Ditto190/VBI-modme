@@ -1,8 +1,8 @@
-vbi_fe 前端的Report Detail页面, 进行一个大型重写
+Perform a major rewrite of the Report Detail page in the `vbi_fe` frontend.
 
-1. pages的每一页纵向排列, 滚动展示.
-2. 除了纵向外, 还要支持横向滚动模式.
-3. 滚动后, 激活左侧目录列表对应的page
-4. 每一页包含至多1个report, 1个insight. report固定高度, insight根据内容撑高.
-5. 左侧目录保持不变, 但点击后定位过去. 菜单功能保持不变.
-6. 右侧内容区域, hover到每一个report和insight, 在右上角展示一个toolbar, 提供编辑功能.
+1. Arrange every page vertically and display them through scrolling.
+2. In addition to vertical mode, also support a horizontal scrolling mode.
+3. After scrolling, activate the corresponding page in the left-side table of contents.
+4. Each page contains at most one report and one insight. The report has a fixed height, and the insight grows with its content.
+5. Keep the left-side table of contents unchanged, but clicking it should navigate to the target. Menu behavior remains unchanged.
+6. In the right content area, when hovering over each report and insight, show a toolbar in the upper-right corner that provides editing actions.

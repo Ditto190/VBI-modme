@@ -1,23 +1,23 @@
-# 2. VBI-react 与各 Practice 自有 Hooks 签名完全不同
+# 2. VBI-react and Practice-owned Hooks Have Completely Different Signatures
 
-## 问题描述
+## Problem Description
 
-两组 hooks 同名但**完全不可互换**，是最容易出错的地方：
+The two groups of hooks have similar names but are **not interchangeable at all**. This is one of the easiest places to make mistakes:
 
-| vbi-react hook                | 各 practice 自有 hook             | 核心差异         |
-| ----------------------------- | --------------------------------- | ---------------- |
-| `useDimensions(builder)` 必传 | `useVBIDimensions(builder?)` 可选 | builder 参数可选 |
-| `useMeasures(builder)` 必传   | `useVBIMeasures(builder?)` 可选   | builder 参数可选 |
-| `useWhereFilter(builder)`     | `useVBIWhereFilter(builder?)`     | 返回值完全不同   |
-| `useHavingFilter(builder)`    | `useVBIHavingFilter(builder?)`    | 返回值完全不同   |
-| `useChartType(builder)`       | `useVBIChartType(builder?)`       | 返回值略有不同   |
-| —                             | `useVBIBuilder(builder?)`         | 各 practice 独有 |
-| —                             | `useVBISchemaFields(builder?)`    | 各 practice 独有 |
-| —                             | `useVBIUndoManager(builder?)`     | 各 practice 独有 |
+| vbi-react hook                    | Practice-owned hook                   | Key difference                           |
+| --------------------------------- | ------------------------------------- | ---------------------------------------- |
+| `useDimensions(builder)` required | `useVBIDimensions(builder?)` optional | The builder parameter is optional        |
+| `useMeasures(builder)` required   | `useVBIMeasures(builder?)` optional   | The builder parameter is optional        |
+| `useWhereFilter(builder)`         | `useVBIWhereFilter(builder?)`         | The return value is completely different |
+| `useHavingFilter(builder)`        | `useVBIHavingFilter(builder?)`        | The return value is completely different |
+| `useChartType(builder)`           | `useVBIChartType(builder?)`           | The return value differs slightly        |
+| -                                 | `useVBIBuilder(builder?)`             | Practice-specific                        |
+| -                                 | `useVBISchemaFields(builder?)`        | Practice-specific                        |
+| -                                 | `useVBIUndoManager(builder?)`         | Practice-specific                        |
 
-## useWhereFilter 返回值对比
+## useWhereFilter Return Value Comparison
 
-**vbi-react 版本**：
+**vbi-react version**:
 
 ```ts
 {
@@ -25,12 +25,12 @@
 }
 ```
 
-**standard 版本**：
+**standard version**:
 
 ```ts
 {
-  filters,           // VBIWhereClause[]，原始嵌套条件树
-  flattenFilters,     // VBIWhereFilter[]，扁平化所有叶子条件
+  filters,           // VBIWhereClause[], the original nested condition tree.
+  flattenFilters,    // VBIWhereFilter[], all leaf conditions flattened.
   addFilter,         // (field, operator?, value?) => void
   addGroup,          // (op: 'and'|'or', callback?) => void
   removeFilter,      // (id) => void
@@ -44,15 +44,15 @@
 }
 ```
 
-## addDimension / addMeasure 方式对比
+## addDimension / addMeasure Style Comparison
 
-**vbi-react 版本**（config 对象）：
+**vbi-react version**, using a config object:
 
 ```ts
-addDimension('category', { alias: '产品类别' })
+addDimension('category', { alias: 'Product Category' })
 ```
 
-**standard 版本**（回调模式，支持任意 node 方法）：
+**standard version**, using callback mode with support for any node method:
 
 ```ts
 addDimension('category', (node) => {
@@ -61,16 +61,16 @@ addDimension('category', (node) => {
 })
 ```
 
-## 实际开发选择
+## Practical Development Choice
 
-大部分 practice（minimalist/streamlined/professional/standard）使用 **自己实现的 hooks**（`src/hooks/`），功能更完整。只有 `vbi-react-starter` 使用 `@visactor/vbi-react` 包中的 hooks。
+Most practices (minimalist/streamlined/professional/standard) use **their own hooks** from `src/hooks/`, which are more complete. Only `vbi-react-starter` uses hooks from the `@visactor/vbi-react` package.
 
-**这两套 hooks 完全不可互换**，是最容易出错的地方。每个 practice 只使用自己 `src/hooks/` 目录下的 hooks，从不引用 `@visactor/vbi-react`。
+**These two hook sets are completely non-interchangeable** and are an easy source of mistakes. Each practice should only use hooks from its own `src/hooks/` directory and should never import `@visactor/vbi-react`.
 
-## 源码位置
+## Source Locations
 
-| hook                            | 位置                                                                       |
-| ------------------------------- | -------------------------------------------------------------------------- |
-| vbi-react hooks                 | `packages/vbi-react/src/hooks/`                                            |
-| 各 practice 自有 hooks          | `practices/{name}/src/hooks/`（每个 practice 独立一套）                    |
-| useFilterRootOperator（未导出） | `practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts` |
+| hook                                | Location                                                                   |
+| ----------------------------------- | -------------------------------------------------------------------------- |
+| vbi-react hooks                     | `packages/vbi-react/src/hooks/`                                            |
+| Practice-owned hooks                | `practices/{name}/src/hooks/`, with an independent set for each practice   |
+| useFilterRootOperator, not exported | `practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts` |
