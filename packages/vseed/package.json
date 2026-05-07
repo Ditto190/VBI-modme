@@ -1,6 +1,6 @@
 {
   "name": "@visactor/vseed",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "license": "MIT",
   "homepage": "https://visactor.github.io/VBI",
   "bugs": "https://github.com/VisActor/VBI/issues",
@@ -30,6 +30,9 @@
   "types": "./dist/esm/index.d.ts",
   "files": [
     "dist"
+  ],
+  "unpkgFiles": [
+    "dist/umd/index.js"
   ],
   "scripts": {
     "dev": "rslib build --watch --no-clean",

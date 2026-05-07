@@ -1,5 +1,12 @@
 # @visactor/vbi
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [54b7f82]
+  - @visactor/vseed@0.5.3
+
 ## 0.5.2
 
 ### Patch Changes
