@@ -57,6 +57,8 @@ export type TokenThemeDefinition = {
   annotationTextColor?: string
   annotationTextBackgroundColor?: string
   annotationTextBackgroundOpacity?: number
+  annotationAreaColor?: string
+  annotationAreaColorOpacity?: number
 }
 
 export type TokenThemeRegistry = Record<string, TokenThemeDefinition>
@@ -273,6 +275,8 @@ const getAnnotationPatch = (tokens: TokenThemeDefinition) => {
     },
     annotationArea: {
       textFontSize: tokens.labelFontSize,
+      areaColor: tokens.annotationAreaColor,
+      areaColorOpacity: tokens.annotationAreaColorOpacity,
       ...annotationTextPatch,
     },
   }
