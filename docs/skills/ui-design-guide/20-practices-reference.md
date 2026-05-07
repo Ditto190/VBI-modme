@@ -45,16 +45,6 @@
 
 ---
 
-### standard-report
-
-- **位置**：`practices/standard-report/`
-- **参考价值**：报告类场景（非单图表工作台）布局与模块化组织参考
-- **涵盖内容**：
-  - `App/layout` / `App/hooks` 的页面化分层
-  - 报告场景下的状态与布局拆分
-
----
-
 ### vbi-react-starter
 
 - **位置**：`practices/vbi-react-starter/`

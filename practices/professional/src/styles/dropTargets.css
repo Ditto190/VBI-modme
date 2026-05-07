@@ -1,0 +1,86 @@
+.pro-slot-token-frame {
+  display: inline-flex;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.pro-slot-drop {
+  align-self: stretch;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 999px;
+  flex: 0 0 0;
+  margin: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 !important;
+  transition:
+    background 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.pro-slot-drop--edge {
+  align-items: center;
+  bottom: -4px;
+  display: flex;
+  min-height: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  top: -4px;
+  width: 50%;
+  z-index: 2;
+}
+
+.pro-slot-drop--head,
+.pro-slot-drop--before {
+  left: 0;
+}
+
+.pro-slot-drop--after {
+  right: 0;
+}
+
+.pro-slot-drop--edge::before {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.pro-slot-drop--head::before,
+.pro-slot-drop--before::before {
+  left: -6px;
+}
+
+.pro-slot-drop--after::before {
+  right: -6px;
+}
+
+.pro-slot-drop--tail {
+  display: inline-flex;
+  flex: 0 0 10px;
+  justify-content: center;
+  min-height: 24px;
+  position: relative;
+}
+
+.pro-slot-drop--empty {
+  align-items: center;
+  border-radius: 8px;
+  color: var(--muted);
+  display: inline-flex;
+  flex: 1 0 100%;
+  font-size: 11px;
+  justify-content: center;
+  min-height: 34px;
+}
+
+.pro-slot-drop--empty.pro-slot-drop--enabled {
+  background: color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+
+.pro-slot-drop--empty.pro-slot-drop--over {
+  background: var(--accent) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+  color: white;
+}

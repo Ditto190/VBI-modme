@@ -15,6 +15,11 @@
     "@visactor/headless-bi-fe",
     "@visactor/headless-bi-provider",
     "@internal/bugserver-trigger",
+    "professional",
+    "minimalist",
+    "standard",
+    "streamlined",
+    "vbi-react-starter",
     "vseed-llm-test",
     "website"
   ]

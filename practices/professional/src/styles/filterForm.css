@@ -1,0 +1,28 @@
+.pro-filter-range {
+  align-items: center;
+  display: grid;
+  gap: 6px;
+  grid-template-columns: 80px 60px minmax(54px, 1fr) 60px 80px;
+}
+
+.pro-filter-range__field {
+  text-align: center;
+}
+
+.pro-filter-full {
+  width: 100%;
+}
+
+.pro-having-range {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pro-root-operator {
+  width: 82px;
+}
+
+.pro-root-operator :where(.ant-segmented-item) {
+  min-width: 36px;
+}

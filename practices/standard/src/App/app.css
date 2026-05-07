@@ -61,11 +61,6 @@
   min-height: 0;
 }
 
-.demo-app-view-empty {
-  padding: 24px;
-}
-
 .demo-app-view-renderer {
-  padding: 12px;
   box-sizing: border-box;
 }

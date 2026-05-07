@@ -1,0 +1,86 @@
+.pro-app :where(.ant-btn-sm),
+.pro-app :where(.ant-btn) {
+  border-radius: 3px;
+  font-size: 12px;
+  height: 24px;
+  padding-inline: 6px;
+}
+
+.pro-app :where(.ant-input-affix-wrapper),
+.pro-app :where(.ant-input-number),
+.pro-app :where(.ant-select-selector) {
+  border-radius: 3px !important;
+  font-size: 12px;
+  min-height: 24px;
+}
+
+.pro-app :where(.ant-input-affix-wrapper-sm),
+.pro-app :where(.ant-select-single.ant-select-sm .ant-select-selector),
+.pro-app :where(.ant-input-number-sm) {
+  height: 24px;
+}
+
+.pro-app :where(.ant-input-number-input),
+.pro-app :where(.ant-select-selection-item),
+.pro-app :where(.ant-select-selection-placeholder) {
+  font-size: 12px;
+}
+
+.pro-app :where(.ant-segmented) {
+  border-radius: 3px;
+  font-size: 12px;
+  padding: 1px;
+}
+
+.pro-app :where(.ant-segmented-item-label) {
+  line-height: 22px;
+  min-height: 22px;
+  padding-inline: 6px;
+}
+
+.pro-app :where(.ant-card) {
+  background: var(--raised);
+  border-color: var(--line);
+  border-radius: 3px;
+  color: var(--text);
+}
+
+.pro-app :where(.ant-card-small > .ant-card-head) {
+  min-height: 30px;
+  padding: 0 8px;
+}
+
+.pro-app :where(.ant-card-head-title) {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 650;
+  padding: 6px 0;
+}
+
+.pro-app :where(.ant-card-extra) {
+  padding: 4px 0;
+}
+
+.pro-app :where(.ant-card-body) {
+  padding: 6px 8px !important;
+}
+
+.pro-app :where(.ant-list-small .ant-list-item) {
+  padding: 4px 0 !important;
+}
+
+.pro-app :where(.ant-typography) {
+  color: var(--text);
+  font-size: 12px !important;
+}
+
+.pro-app :where(.ant-empty-normal) {
+  margin-block: 6px;
+}
+
+.pro-app :where(.ant-radio-button-wrapper) {
+  font-size: 11px;
+  height: 22px;
+  line-height: 20px;
+  padding-inline: 6px;
+}

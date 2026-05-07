@@ -1,0 +1,12 @@
+.stream-config-head {
+  display: flex;
+  align-items: center;
+  height: var(--stream-header-height);
+  padding: 0 14px;
+  border-bottom: 1px solid var(--stream-border-soft);
+  background: var(--stream-panel-strong);
+}
+
+.stream-config-head strong {
+  font-size: var(--stream-font-md);
+}

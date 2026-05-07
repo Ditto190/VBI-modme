@@ -80,11 +80,6 @@ const DemoWorkbench = ({
         style={{
           height: '100%',
           gap: 10,
-          padding: isFullscreen ? 12 : 10,
-          background:
-            themeMode === 'dark'
-              ? 'radial-gradient(circle at top left, rgba(110, 168, 255, 0.14), transparent 30%), linear-gradient(180deg, #0b1220 0%, #111826 100%)'
-              : 'radial-gradient(circle at top left, rgba(22, 119, 255, 0.1), transparent 32%), linear-gradient(180deg, #f3f7fc 0%, #edf2f8 100%)',
         }}
       >
         <Card

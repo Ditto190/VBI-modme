@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import type { VBIChartBuilder } from '@visactor/vbi'
+import { useBuilderDocState } from './useBuilderDocState'
 
 const isEditableTarget = (target: EventTarget | null) => {
   if (!(target instanceof HTMLElement)) {
@@ -14,25 +15,14 @@ const isEditableTarget = (target: EventTarget | null) => {
 }
 
 export const useVBIUndoManager = (builder: VBIChartBuilder | undefined) => {
-  const [canUndo, setCanUndo] = useState(false)
-  const [canRedo, setCanRedo] = useState(false)
-
-  useEffect(() => {
-    if (!builder) {
-      return
-    }
-
-    const sync = () => {
-      setCanUndo(builder.undoManager.canUndo())
-      setCanRedo(builder.undoManager.canRedo())
-    }
-
-    sync()
-    builder.doc.on('update', sync)
-    return () => {
-      builder.doc.off('update', sync)
-    }
-  }, [builder])
+  const state = useBuilderDocState({
+    builder,
+    fallback: { canUndo: false, canRedo: false },
+    getSnapshot: (activeBuilder) => ({
+      canUndo: activeBuilder.undoManager.canUndo(),
+      canRedo: activeBuilder.undoManager.canRedo(),
+    }),
+  })
 
   useEffect(() => {
     if (!builder) {
@@ -65,8 +55,8 @@ export const useVBIUndoManager = (builder: VBIChartBuilder | undefined) => {
   }, [builder])
 
   return {
-    canUndo,
-    canRedo,
+    canUndo: state.canUndo,
+    canRedo: state.canRedo,
     undo: () => builder?.undoManager.undo(),
     redo: () => builder?.undoManager.redo(),
   }

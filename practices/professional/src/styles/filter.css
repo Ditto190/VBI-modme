@@ -1,0 +1,53 @@
+.pro-filter-card {
+  background: color-mix(in srgb, var(--raised) 92%, transparent) !important;
+  border-color: color-mix(in srgb, var(--line) 82%, transparent) !important;
+  box-shadow: none;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pro-filter-empty-row {
+  align-items: center;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  height: 30px;
+  justify-content: space-between;
+  padding: 0 8px;
+  text-align: left;
+}
+
+.pro-filter-empty-row:hover {
+  background: color-mix(in srgb, var(--accent) 7%, var(--raised));
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+}
+
+.pro-filter-card :where(.ant-card-head) {
+  border-bottom: 0 !important;
+  min-height: 25px !important;
+  padding: 0 6px !important;
+}
+
+.pro-filter-card :where(.ant-card-head-title) {
+  padding: 3px 0 !important;
+}
+
+.pro-filter-card :where(.ant-card-extra) {
+  padding: 2px 0 !important;
+}
+
+.pro-filter-card :where(.ant-card-body) {
+  align-items: center;
+  display: flex;
+  min-height: 34px;
+  overflow: hidden;
+  padding: 4px 6px 6px !important;
+}
+
+.pro-filter-field-active {
+  color: var(--accent);
+  font-weight: 700;
+}

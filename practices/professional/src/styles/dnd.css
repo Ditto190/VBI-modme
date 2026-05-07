@@ -1,0 +1,28 @@
+.pro-field--dragging,
+.pro-slot-token--dragging {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pro-drag-ghost {
+  align-items: center;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--text) 18%, transparent);
+  box-sizing: border-box;
+  color: var(--text);
+  display: inline-flex;
+  font-size: 12px;
+  overflow: hidden;
+  padding: 4px 9px;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-field-toggle {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 2px;
+}

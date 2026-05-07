@@ -1,0 +1,47 @@
+.stream-filter-section,
+.stream-filter-slot {
+  display: grid;
+  gap: var(--stream-gap-md);
+}
+
+.stream-filter-editor {
+  display: grid;
+  width: 230px;
+  gap: var(--stream-gap-md);
+}
+
+.stream-filter-editor__head {
+  display: grid;
+  gap: var(--stream-gap-xs);
+}
+
+.stream-filter-editor__head strong {
+  overflow: hidden;
+  color: var(--stream-text);
+  font-size: var(--stream-font-sm);
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stream-filter-editor__head span,
+.stream-filter-editor__hint {
+  color: var(--stream-muted);
+  font-size: var(--stream-font-xs);
+}
+
+.stream-filter-editor__range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--stream-gap-sm);
+}
+
+.stream-filter-editor__actions {
+  justify-content: flex-end;
+}
+
+.stream-filter-popover .ant-popover-inner {
+  border: 1px solid var(--stream-border-soft);
+  background: var(--stream-panel);
+  box-shadow: 0 12px 30px var(--stream-popover-shadow);
+}

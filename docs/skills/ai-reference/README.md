@@ -96,7 +96,7 @@ import { ChartRenderer, ChartTypeSelector, FieldPanel, BuilderLayout } from '@vi
 
 > **关于 @visactor/vbi 主入口**：当前 `@visactor/vbi` 包的主入口已经导出 `VBI`、`VBIChartBuilder`、`registerConnector`、`createEmptyChart` 等核心 API。即便如此，每个 practice 仍会**独立实现**自己的 connector/bootstrap 模块（例如 `demoConnector.ts` 或 `localConnector.ts`）来封装 connector 注册和默认 builder 初始化。AI 在操作具体某个 practice 时，仍应优先参考**该 practice 自身**的实现。详见 [10-feature-status.md](./10-feature-status.md)。
 
-> **关于 vbi-react 包**：只有 `vbi-react-starter` 使用 `@visactor/vbi-react` 包提供的 hooks 和组件。其他 practice（minimalist/streamlined/professional/standard/standard-report）都是**独立实现**自己的 hooks 和 model，不依赖 `@visactor/vbi-react` 包。
+> **关于 vbi-react 包**：只有 `vbi-react-starter` 使用 `@visactor/vbi-react` 包提供的 hooks 和组件。其他 practice（minimalist/streamlined/professional/standard）都是**独立实现**自己的 hooks 和 model，不依赖 `@visactor/vbi-react` 包。
 
 ---
 
