@@ -152,6 +152,26 @@ export type AnnotationDifferenceLineConfig = Pick<
   'lineColor' | 'lineStyle' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
 > & {
   /**
+   * 文本背景边框颜色
+   */
+  textBackgroundBorderColor?: string | null
+
+  /**
+   * 文本背景边框圆角
+   */
+  textBackgroundBorderRadius?: number | null
+
+  /**
+   * 文本背景边框宽度
+   */
+  textBackgroundBorderWidth?: number | null
+
+  /**
+   * 文本背景内边距
+   */
+  textBackgroundPadding?: number | null
+
+  /**
    * 线条虚线配置
    */
   lineDash?: number[] | null

@@ -375,6 +375,10 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
       const textColor = annotationDifferenceLine.textColor ?? theme?.textColor ?? DEFAULT_TEXT_COLOR
       const textBackgroundColor =
         annotationDifferenceLine.textBackgroundColor ?? theme?.textBackgroundColor ?? DEFAULT_TEXT_BACKGROUND_COLOR
+      const textBackgroundBorderColor = theme?.textBackgroundBorderColor ?? lineColor
+      const textBackgroundBorderRadius = theme?.textBackgroundBorderRadius ?? DEFAULT_CORNER_RADIUS
+      const textBackgroundBorderWidth = theme?.textBackgroundBorderWidth ?? 1
+      const textBackgroundPadding = theme?.textBackgroundPadding ?? DEFAULT_LABEL_PADDING
       const textBackgroundOpacity = theme?.textBackgroundOpacity
       const textFontSize = annotationDifferenceLine.textFontSize ?? theme?.textFontSize ?? DEFAULT_TEXT_FONT_SIZE
       const differenceType = annotationDifferenceLine.differenceType ?? 'absolute'
@@ -422,14 +426,14 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
             },
             labelBackground: {
               visible: true,
-              padding: DEFAULT_LABEL_PADDING,
+              padding: textBackgroundPadding,
               style: {
                 opacity: textBackgroundOpacity ?? 0.95,
                 fill: textBackgroundColor,
                 fillOpacity: 1,
-                stroke: lineColor,
-                lineWidth: 1,
-                cornerRadius: DEFAULT_CORNER_RADIUS,
+                stroke: textBackgroundBorderColor,
+                lineWidth: textBackgroundBorderWidth,
+                cornerRadius: textBackgroundBorderRadius,
               },
             },
           }
@@ -444,14 +448,14 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
             },
             labelBackground: {
               visible: true,
-              padding: DEFAULT_LABEL_PADDING,
+              padding: textBackgroundPadding,
               style: {
                 opacity: textBackgroundOpacity ?? 0.95,
                 fill: textBackgroundColor,
                 fillOpacity: 1,
-                stroke: lineColor,
-                lineWidth: 1,
-                cornerRadius: DEFAULT_CORNER_RADIUS,
+                stroke: textBackgroundBorderColor,
+                lineWidth: textBackgroundBorderWidth,
+                cornerRadius: textBackgroundBorderRadius,
               },
             },
           }

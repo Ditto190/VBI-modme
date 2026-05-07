@@ -56,6 +56,10 @@ export type TokenThemeDefinition = {
   annotationLineDash?: number[]
   annotationTextColor?: string
   annotationTextBackgroundColor?: string
+  annotationTextBackgroundBorderRadius?: number
+  annotationTextBackgroundBorderColor?: string
+  annotationTextBackgroundBorderWidth?: number
+  annotationTextBackgroundPadding?: number
   annotationTextBackgroundOpacity?: number
   annotationAreaColor?: string
   annotationAreaColorOpacity?: number
@@ -236,14 +240,20 @@ const getAnnotationLinePatch = (tokens: TokenThemeDefinition) => ({
   lineDash: tokens.annotationLineDash,
   textColor: tokens.annotationTextColor,
   textBackgroundColor: tokens.annotationTextBackgroundColor,
-  textBackgroundBorderColor: tokens.annotationTextBackgroundColor,
+  textBackgroundBorderColor: tokens.annotationTextBackgroundBorderColor ?? tokens.annotationTextBackgroundColor,
+  textBackgroundBorderRadius: tokens.annotationTextBackgroundBorderRadius,
+  textBackgroundBorderWidth: tokens.annotationTextBackgroundBorderWidth,
+  textBackgroundPadding: tokens.annotationTextBackgroundPadding,
   textBackgroundOpacity: tokens.annotationTextBackgroundOpacity,
 })
 
 const getAnnotationTextPatch = (tokens: TokenThemeDefinition) => ({
   textColor: tokens.annotationTextColor,
   textBackgroundColor: tokens.annotationTextBackgroundColor,
-  textBackgroundBorderColor: tokens.annotationTextBackgroundColor,
+  textBackgroundBorderColor: tokens.annotationTextBackgroundBorderColor ?? tokens.annotationTextBackgroundColor,
+  textBackgroundBorderRadius: tokens.annotationTextBackgroundBorderRadius,
+  textBackgroundBorderWidth: tokens.annotationTextBackgroundBorderWidth,
+  textBackgroundPadding: tokens.annotationTextBackgroundPadding,
   textBackgroundOpacity: tokens.annotationTextBackgroundOpacity,
 })
 
@@ -269,9 +279,7 @@ const getAnnotationPatch = (tokens: TokenThemeDefinition) => {
       lineColor: tokens.annotationLineColor,
       lineStyle: tokens.annotationLineStyle,
       lineDash: tokens.annotationLineDash,
-      textColor: tokens.annotationTextColor,
-      textBackgroundColor: tokens.annotationTextBackgroundColor,
-      textBackgroundOpacity: tokens.annotationTextBackgroundOpacity,
+      ...annotationTextPatch,
     },
     annotationArea: {
       textFontSize: tokens.labelFontSize,

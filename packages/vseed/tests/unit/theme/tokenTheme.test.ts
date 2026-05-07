@@ -14,6 +14,10 @@ const annotationLineColor = '#21252CB8'
 const annotationLineDash = [3, 1]
 const annotationTextColor = '#FFFFFF'
 const annotationTextBackgroundColor = '#21252CB8'
+const annotationTextBackgroundBorderRadius = 6
+const annotationTextBackgroundBorderColor = '#FACC15'
+const annotationTextBackgroundBorderWidth = 2
+const annotationTextBackgroundPadding = 8
 const annotationTextBackgroundOpacity = 0.72
 const annotationAreaColor = '#F97316'
 const annotationAreaColorOpacity = 0.24
@@ -132,6 +136,10 @@ beforeAll(() => {
       annotationLineDash,
       annotationTextColor,
       annotationTextBackgroundColor,
+      annotationTextBackgroundBorderRadius,
+      annotationTextBackgroundBorderColor,
+      annotationTextBackgroundBorderWidth,
+      annotationTextBackgroundPadding,
       annotationTextBackgroundOpacity,
       annotationAreaColor,
       annotationAreaColorOpacity,
@@ -195,8 +203,15 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationPoint?.textColor).toBe(annotationTextColor)
     expect(columnConfig?.annotation?.annotationPoint?.textBackgroundColor).toBe(annotationTextBackgroundColor)
     expect(columnConfig?.annotation?.annotationPoint?.textBackgroundBorderColor).toBe(
-      annotationTextBackgroundColor,
+      annotationTextBackgroundBorderColor,
     )
+    expect(columnConfig?.annotation?.annotationPoint?.textBackgroundBorderRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(columnConfig?.annotation?.annotationPoint?.textBackgroundBorderWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(columnConfig?.annotation?.annotationPoint?.textBackgroundPadding).toBe(annotationTextBackgroundPadding)
     expect(columnConfig?.annotation?.annotationPoint?.textBackgroundOpacity).toBe(annotationTextBackgroundOpacity)
     expect(columnConfig?.annotation?.annotationDifferenceLine?.textFontSize).toBe(labelFontSize)
     expect(columnConfig?.annotation?.annotationDifferenceLine?.lineColor).toBe(annotationLineColor)
@@ -204,6 +219,18 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationDifferenceLine?.lineDash).toEqual(annotationLineDash)
     expect(columnConfig?.annotation?.annotationDifferenceLine?.textColor).toBe(annotationTextColor)
     expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundBorderColor).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundBorderRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundBorderWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundPadding).toBe(
+      annotationTextBackgroundPadding,
+    )
     expect(columnConfig?.annotation?.annotationDifferenceLine?.textBackgroundOpacity).toBe(
       annotationTextBackgroundOpacity,
     )
@@ -213,7 +240,16 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationHorizontalLine?.textColor).toBe(annotationTextColor)
     expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundColor).toBe(annotationTextBackgroundColor)
     expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundBorderColor).toBe(
-      annotationTextBackgroundColor,
+      annotationTextBackgroundBorderColor,
+    )
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundBorderRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundBorderWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundPadding).toBe(
+      annotationTextBackgroundPadding,
     )
     expect(columnConfig?.annotation?.annotationHorizontalLine?.textBackgroundOpacity).toBe(
       annotationTextBackgroundOpacity,
@@ -221,10 +257,31 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationVerticalLine?.lineColor).toBe(annotationLineColor)
     expect(columnConfig?.annotation?.annotationVerticalLine?.lineStyle).toBe('dashed')
     expect(columnConfig?.annotation?.annotationVerticalLine?.lineDash).toEqual(annotationLineDash)
+    expect(columnConfig?.annotation?.annotationVerticalLine?.textBackgroundBorderColor).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(columnConfig?.annotation?.annotationVerticalLine?.textBackgroundBorderRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(columnConfig?.annotation?.annotationVerticalLine?.textBackgroundBorderWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(columnConfig?.annotation?.annotationVerticalLine?.textBackgroundPadding).toBe(
+      annotationTextBackgroundPadding,
+    )
     expect(columnConfig?.annotation?.annotationArea?.textFontSize).toBe(labelFontSize)
     expect(columnConfig?.annotation?.annotationArea?.textColor).toBe(annotationTextColor)
     expect(columnConfig?.annotation?.annotationArea?.textBackgroundColor).toBe(annotationTextBackgroundColor)
-    expect(columnConfig?.annotation?.annotationArea?.textBackgroundBorderColor).toBe(annotationTextBackgroundColor)
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundBorderColor).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundBorderRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundBorderWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(columnConfig?.annotation?.annotationArea?.textBackgroundPadding).toBe(annotationTextBackgroundPadding)
     expect(columnConfig?.annotation?.annotationArea?.textBackgroundOpacity).toBe(annotationTextBackgroundOpacity)
     expect(columnConfig?.annotation?.annotationArea?.areaColor).toBe(annotationAreaColor)
     expect(columnConfig?.annotation?.annotationArea?.areaColorOpacity).toBe(annotationAreaColorOpacity)
@@ -276,6 +333,13 @@ describe('tokenTheme', () => {
         text: 'target',
       },
     }).build() as any
+    const verticalLineSpec = Builder.from({
+      ...columnVSeed,
+      annotationVerticalLine: {
+        xValue: '2020',
+        text: 'target',
+      },
+    }).build() as any
     const differenceLineSpec = Builder.from({
       ...columnVSeed,
       annotationDifferenceLine: {
@@ -298,17 +362,71 @@ describe('tokenTheme', () => {
     expect(pointSpec?.markPoint?.[0]?.itemContent?.text?.labelBackground?.style?.opacity).toBe(
       annotationTextBackgroundOpacity,
     )
+    expect(pointSpec?.markPoint?.[0]?.itemContent?.text?.labelBackground?.style?.cornerRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(pointSpec?.markPoint?.[0]?.itemContent?.text?.labelBackground?.style?.stroke).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(pointSpec?.markPoint?.[0]?.itemContent?.text?.labelBackground?.style?.lineWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(pointSpec?.markPoint?.[0]?.itemContent?.text?.labelBackground?.padding).toBe(
+      annotationTextBackgroundPadding,
+    )
     expect(horizontalLineSpec?.markLine?.[0]?.line?.style?.lineDash).toEqual(annotationLineDash)
     expect(horizontalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.opacity).toBe(
       annotationTextBackgroundOpacity,
     )
+    expect(horizontalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.cornerRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(horizontalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.stroke).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(horizontalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.lineWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(horizontalLineSpec?.markLine?.[0]?.label?.labelBackground?.padding).toBe(annotationTextBackgroundPadding)
+    expect(verticalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.cornerRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(verticalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.stroke).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(verticalLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.lineWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(verticalLineSpec?.markLine?.[0]?.label?.labelBackground?.padding).toBe(annotationTextBackgroundPadding)
     expect(differenceLineSpec?.markLine?.[0]?.line?.style?.lineDash).toEqual(annotationLineDash)
     expect(differenceLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.opacity).toBe(
       annotationTextBackgroundOpacity,
     )
+    expect(differenceLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.cornerRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(differenceLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.stroke).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(differenceLineSpec?.markLine?.[0]?.label?.labelBackground?.style?.lineWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(differenceLineSpec?.markLine?.[0]?.label?.labelBackground?.padding).toBe(
+      annotationTextBackgroundPadding,
+    )
     expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.style?.opacity).toBe(
       annotationTextBackgroundOpacity,
     )
+    expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.style?.cornerRadius).toBe(
+      annotationTextBackgroundBorderRadius,
+    )
+    expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.style?.stroke).toBe(
+      annotationTextBackgroundBorderColor,
+    )
+    expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.style?.lineWidth).toBe(
+      annotationTextBackgroundBorderWidth,
+    )
+    expect(areaSpec?.markArea?.[0]?.label?.labelBackground?.padding).toBe(annotationTextBackgroundPadding)
     expect(areaSpec?.markArea?.[0]?.area?.style?.fill).toBe(annotationAreaColor)
     expect(areaSpec?.markArea?.[0]?.area?.style?.fillOpacity).toBe(annotationAreaColorOpacity)
   })

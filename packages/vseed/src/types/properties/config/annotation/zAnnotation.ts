@@ -83,6 +83,10 @@ export const zAnnotationDifferenceLineConfig = zAnnotationDifferenceLine
     textBackgroundColor: true,
   })
   .extend({
+    textBackgroundBorderColor: z.string().nullish(),
+    textBackgroundBorderRadius: z.number().nullish(),
+    textBackgroundBorderWidth: z.number().nullish(),
+    textBackgroundPadding: z.number().nullish(),
     lineDash: z.array(z.number()).nullish(),
     textBackgroundOpacity: z.number().nullish(),
   })
