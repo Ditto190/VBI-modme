@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.5.3
+
+### Patch Changes
+
+- 54b7f82: Add annotation area theme tokens for area color and opacity.
+
 ## 0.5.2
 
 ### Patch Changes
