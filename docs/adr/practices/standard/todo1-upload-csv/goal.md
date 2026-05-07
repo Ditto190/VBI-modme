@@ -4,11 +4,11 @@ status: done
 
 ---
 
-生成 architecture-decisions 文档, 命名为 ./adr.md
+Generate an architecture-decisions document named `./adr.md`.
 
-这里是 practices/standard 计划要完成的开发任务:
-[x] 顶部 Toolbar 增加 upload CSV的button, 点击button后弹出一个允许拖拽csv或者打开文件选择器, 选择csv
-[x] 用户上传完毕csv后, 需要让用户自定义每一个字段的名称、数据类型
+Planned development tasks for `practices/standard`:
+[x] Add an upload CSV button to the top Toolbar. After the button is clicked, show a dialog that allows dragging a CSV file or opening the file picker to select a CSV.
+[x] After the user uploads a CSV, allow the user to customize each field's name and data type.
 
-附录:
-AntDesign V6 组件库使用说明: https://ant.design/llms-full.txt
+Appendix:
+AntDesign V6 component library usage guide: https://ant.design/llms-full.txt

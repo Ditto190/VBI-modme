@@ -1,11 +1,11 @@
 ## status: in-progress
 
-生成 architecture-decisions 文档, 命名为 ./adr.md
+Generate an architecture decision record named `./adr.md`.
 
-这里是 packages/vbi 计划要完成的开发任务:
+Planned `packages/vbi` development tasks:
 
-[] vbi内新增全新功能, VBI.report.create, 负责创建一个报告容器, 用于组织多个 chart
-[] 一个report包含多个page, 一个page包含一个chart, 一个文本
-[] 设计一个合适的VBIReportDSL, 包括zod schema, 与当前的 VBIChartDSL 保持一致风格.
-[] 一个VBIReportDSL应该包含多个page, 每个page包含一个VBIChartDSL, 一个文本.
-[] 需要设计好 reportBuilder, 使用风格、API风格、实现风格应该和chartBuilder是一致的.(vbi)
+[] Add a new VBI feature, `VBI.report.create`, that creates a report container for organizing multiple charts.
+[] A report contains multiple pages. Each page contains one chart and one text block.
+[] Design an appropriate `VBIReportDSL`, including zod schema, with a style consistent with the current `VBIChartDSL`.
+[] A `VBIReportDSL` should contain multiple pages. Each page should contain one `VBIChartDSL` and one text block.
+[] Design `reportBuilder` so its usage style, API style, and implementation style are consistent with `chartBuilder` in VBI.

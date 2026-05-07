@@ -1,67 +1,67 @@
-# 3. 易遗漏的 API
+# 3. Easy-to-miss APIs
 
-## Y.Map / Yjs 原生方法
+## Native Y.Map / Yjs Methods
 
-`builder.dsl` 是 `Y.Map<any>`，`builder.doc` 是 `Y.Doc`。虽然 docs/ai-reference/03-vbi-api.md 中已记录，但以下方法容易被忽略：
+`builder.dsl` is a `Y.Map<any>` and `builder.doc` is a `Y.Doc`. Although these are documented in docs/ai-reference/03-vbi-api.md, the following methods are easy to overlook:
 
 ```ts
-// Y.Map 读取
-builder.dsl.get(path) // 例: builder.dsl.get('chartType') → 'bar'
+// Y.Map read.
+builder.dsl.get(path) // Example: builder.dsl.get('chartType') -> 'bar'
 
-// Y.Map 写入（嵌套结构）
-builder.dsl.get(path).set(k, v) // 例: builder.dsl.get('chartType').set('alias', '柱状图')
+// Y.Map write for nested structures.
+builder.dsl.get(path).set(k, v) // Example: builder.dsl.get('chartType').set('alias', 'Column Chart')
 
-// Y.Doc 事务操作（多个变更合并为一次 undo/redo）
+// Y.Doc transaction. Multiple changes are merged into one undo/redo step.
 builder.doc.transact(() => {
   builder.dimensions.add('category')
   builder.measures.add('sales', { aggregate: 'sum' })
 })
 
-// Y.Doc 事件监听
+// Y.Doc event listener.
 builder.doc.on('update', (update, origin) => {
-  // 任意 Yjs 变更都会触发
+  // Any Yjs change triggers this.
 })
 builder.dsl.observe((event) => {
-  /* Y.Map 变更事件 */
+  /* Y.Map change event */
 })
 ```
 
-所有 standard hooks 内部都使用 `builder.doc.transact()` 封装操作，保证 undo/redo 正确性。AI 操作用 builder API 足够了，一般不需要直接用 transact。
+All standard hooks wrap operations with `builder.doc.transact()` internally to ensure correct undo/redo behavior. Builder APIs are enough for AI operations; direct transact usage is usually unnecessary.
 
-## ChartType 编码查询
+## ChartType Encoding Queries
 
-`chartType` 子 builder 提供查询方法，但这些方法**不在 Builder API 章节列出**：
+The `chartType` sub-builder provides query methods, but they are **not listed in the Builder API section**:
 
 ```ts
-// 查询当前图表类型支持的度量编码
+// Query measure encodings supported by the current chart type.
 builder.chartType.getSupportedMeasureEncodings(): Encoding[]
 
-// 查询当前图表类型支持的维度编码
+// Query dimension encodings supported by the current chart type.
 builder.chartType.getSupportedDimensionEncodings(): Encoding[]
 ```
 
-## Node get 方法返回 undefined
+## Node get Methods Return undefined
 
-在 DSL 查询和 node 回调中，以下方法当未设置时**返回 undefined**，而非空值：
+During DSL queries and node callbacks, the following methods **return undefined** when values are unset, not empty values:
 
 ```ts
-// 获取节点编码配置（未设置时返回 undefined）
+// Get node encoding config. Returns undefined when unset.
 node.getEncoding(): Record<string, any> | undefined
 
-// 获取节点排序配置（未设置时返回 undefined）
+// Get node sort config. Returns undefined when unset.
 node.getSort(): VBISortSpec | undefined
 
-// 获取节点格式化配置（未设置时返回 undefined）
+// Get node format config. Returns undefined when unset.
 node.getFormat(): VBIFormatSpec | undefined
 ```
 
-## useFilterRootOperator 未导出
+## useFilterRootOperator Is Not Exported
 
-切换过滤根操作符（AND/OR）的 hook 位于 standard 组件目录，未对外导出：
+The hook for switching the filter root operator (AND/OR) lives in the standard component directory and is not exported publicly:
 
 ```ts
-// 位置：practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts
-// 未在 practices/standard/src/hooks/index.ts 中导出
-// 需要直接 import 该文件使用
+// Location: practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts
+// Not exported from practices/standard/src/hooks/index.ts.
+// Import this file directly when needed.
 import { useFilterRootOperator } from 'practices/standard/src/components/Shelves/hooks/useFilterRootOperator'
 ```

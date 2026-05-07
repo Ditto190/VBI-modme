@@ -1,10 +1,10 @@
 # 16. VBIStoreProvider — Context Provider
 
-## 源码
+## Source
 
 `practices/standard/src/model/VBIStoreProvider.tsx`
 
-## 签名
+## Signature
 
 ```tsx
 // Provider
@@ -14,7 +14,7 @@
 const storeState = useVBIStore((state) => state)
 ```
 
-## 完整实现
+## Complete Implementation
 
 ```tsx
 const VBIStoreContext = createContext<VBIStoreApi | null>(null)
@@ -22,7 +22,7 @@ const VBIStoreContext = createContext<VBIStoreApi | null>(null)
 export const VBIStoreProvider = ({ builder, children }: VBIStoreProviderProps) => {
   const storeRef = useRef<VBIStoreApi | null>(null)
 
-  // 仅首次创建 store（SSR 安全 + 热更新安全）
+  // Create the store only once (SSR-safe and hot-reload-safe)
   if (!storeRef.current) {
     storeRef.current = createVBIStore(builder)
   }
@@ -41,22 +41,22 @@ export const useVBIStore = <T,>(selector: (state: VBIStoreState) => T) => {
 }
 ```
 
-## 层级结构
+## Hierarchy
 
 ```
 VBIStoreProvider
-  ├── 创建 / 持有 VBIStoreApi（Zustand store 实例）
+  ├── Create / hold VBIStoreApi (Zustand store instance)
   └── Context.Provider
         └── App
-              ├── Toolbar（useVBIStore → builder / locale / theme / limit）
-              ├── FieldsPanel（useVBIStore → builder / schemaFields）
-              ├── ShelfPanel（useVBIStore → builder / dimensions / measures）
-              └── ChartPanel（useVBIStore → vseed / loading）
+              ├── Toolbar (useVBIStore -> builder / locale / theme / limit)
+              ├── FieldsPanel (useVBIStore -> builder / schemaFields)
+              ├── ShelfPanel (useVBIStore -> builder / dimensions / measures)
+              └── ChartPanel (useVBIStore -> vseed / loading)
 ```
 
-## 使用方式
+## Usage
 
-### 在 App 入口包装
+### Wrap at the App Entry
 
 ```tsx
 // App.tsx
@@ -72,7 +72,7 @@ export const App = () => {
 }
 ```
 
-### 在组件内获取状态
+### Get State Inside Components
 
 ```tsx
 // ChartPanel.tsx
@@ -86,9 +86,9 @@ export const ChartPanel = () => {
 }
 ```
 
-## 注意事项
+## Notes
 
-- `storeRef` 使用 `useRef` 确保 store 实例在 SSR 和 React 热更新中保持稳定
-- `VBIStoreProvider` 仅创建一次 store，后续渲染不会重新创建
-- `useVBIStore` 在 Context 外调用会抛出异常，确保使用安全
-- `useVBIStore` 使用 Zustand 的 `useStore(store, selector)` 而非 `useStore(selector)`，以支持多 store 场景
+- `storeRef` uses `useRef` to keep the store instance stable across SSR and React hot reload.
+- `VBIStoreProvider` creates the store only once and does not recreate it on later renders.
+- `useVBIStore` throws outside Context to make usage safe.
+- `useVBIStore` uses Zustand's `useStore(store, selector)` instead of `useStore(selector)` to support multiple store instances.

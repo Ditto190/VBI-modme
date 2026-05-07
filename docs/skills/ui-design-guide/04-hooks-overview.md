@@ -1,15 +1,15 @@
-# 4. Hooks 总览与导入规范
+# 4. Hooks Overview and Import Rules
 
-每个 practice 有自己独立的 hooks 集，通过 `src/hooks/index.ts` 统一导出。
+Each practice has its own independent hook set, exported from `src/hooks/index.ts`.
 
 ---
 
-## 4.1 导入规范
+## 4.1 Import Rules
 
-**来自目标 practice 的 `src/hooks/`，不是 `@visactor/vbi-react`**：
+**Import from the target practice's `src/hooks/`, not from `@visactor/vbi-react`**:
 
 ```ts
-// ✅ 正确：从当前 practice 的 hooks 目录导入
+// Correct: import from the current practice's hooks directory
 import {
   useVBIDimensions,
   useVBIMeasures,
@@ -22,51 +22,51 @@ import {
   useVBIStore,
 } from 'src/hooks'
 
-// ❌ 错误：不能从 @visactor/vbi-react 导入这些 hooks
+// Incorrect: do not import these hooks from @visactor/vbi-react
 import { useDimensions, useMeasures } from '@visactor/vbi-react'
-// 上面这两套 hooks 签名完全不同，会导致 builder 参数类型不匹配
+// These two hook sets have completely different signatures and will cause builder parameter type mismatches.
 ```
 
-**vbi-react-starter 是唯一例外**，它使用 `@visactor/vbi-react` 包：
+**vbi-react-starter is the only exception**. It uses the `@visactor/vbi-react` package:
 
 ```ts
-// vbi-react-starter 使用这个导入方式
+// vbi-react-starter uses this import style.
 import { useVBI, useDimensions, useMeasures } from '@visactor/vbi-react'
 ```
 
 ---
 
-## 4.2 Hooks 清单
+## 4.2 Hook List
 
-| Hook                 | 职责                                         | 源码位置                          |
-| -------------------- | -------------------------------------------- | --------------------------------- |
-| `useVBIDimensions`   | 维度状态订阅 + add/update/remove（回调模式） | `src/hooks/useVBIDimensions.ts`   |
-| `useVBIMeasures`     | 度量状态订阅 + add/update/remove（回调模式） | `src/hooks/useVBIMeasures.ts`     |
-| `useVBIWhereFilter`  | WHERE 过滤状态订阅 + 完整操作集              | `src/hooks/useVBIWhereFilter.ts`  |
-| `useVBIHavingFilter` | HAVING 过滤状态订阅 + 完整操作集             | `src/hooks/useVBIHavingFilter.ts` |
-| `useVBIChartType`    | 图表类型状态订阅 + changeChartType           | `src/hooks/useVBIChartType.ts`    |
-| `useVBIBuilder`      | locale/theme/limit 全局配置                  | `src/hooks/useVBIBuilder.ts`      |
-| `useVBISchemaFields` | 字段列表（带 role/type 分类）                | `src/hooks/useVBISchemaFields.ts` |
-| `useVBIUndoManager`  | Undo/Redo 状态订阅                           | `src/hooks/useVBIUndoManager.ts`  |
-| `useVBIStore`        | 获取 store 实例                              | `src/hooks/useVBIStore.ts`        |
+| Hook                 | Responsibility                                                   | Source Location                   |
+| -------------------- | ---------------------------------------------------------------- | --------------------------------- |
+| `useVBIDimensions`   | Dimension state subscription + add/update/remove (callback mode) | `src/hooks/useVBIDimensions.ts`   |
+| `useVBIMeasures`     | Measure state subscription + add/update/remove (callback mode)   | `src/hooks/useVBIMeasures.ts`     |
+| `useVBIWhereFilter`  | WHERE filter state subscription + complete operation set         | `src/hooks/useVBIWhereFilter.ts`  |
+| `useVBIHavingFilter` | HAVING filter state subscription + complete operation set        | `src/hooks/useVBIHavingFilter.ts` |
+| `useVBIChartType`    | Chart type state subscription + changeChartType                  | `src/hooks/useVBIChartType.ts`    |
+| `useVBIBuilder`      | Global locale/theme/limit configuration                          | `src/hooks/useVBIBuilder.ts`      |
+| `useVBISchemaFields` | Field list (with role/type classification)                       | `src/hooks/useVBISchemaFields.ts` |
+| `useVBIUndoManager`  | Undo/Redo state subscription                                     | `src/hooks/useVBIUndoManager.ts`  |
+| `useVBIStore`        | Get the store instance                                           | `src/hooks/useVBIStore.ts`        |
 
 ---
 
-## 4.3 Hooks 与 Builder API 的关系
+## 4.3 Relationship Between Hooks and the Builder API
 
-所有 hooks 本质是对 Builder API 的 React 封装：
+All hooks are React wrappers around the Builder API:
 
 ```
-Builder API（同步）
-  ↓ useBuilderDocState（Yjs → React 状态桥接）
-  ↓ 包装成 React Hook
-React Component（useVBIDimensions 等）
+Builder API (synchronous)
+  ↓ useBuilderDocState (Yjs -> React state bridge)
+  ↓ Wrapped as a React Hook
+React Component (useVBIDimensions, etc.)
 ```
 
-**所有 mutations（add/update/remove）通过 `builder.doc.transact()` 封装**，保证 undo/redo 正确性：
+**All mutations (add/update/remove) are wrapped with `builder.doc.transact()`** to preserve correct undo/redo behavior:
 
 ```ts
-// hooks 内部实现示意
+// Sketch of a hook implementation
 const addDimension = (field, callback) => {
   builder.doc.transact(() => {
     builder.dimensions.add(field, callback)
@@ -76,17 +76,17 @@ const addDimension = (field, callback) => {
 
 ---
 
-## 4.4 builder 参数说明
+## 4.4 builder Parameter Notes
 
-除 `useVBIStore` 外，所有 hooks 都接受 `builder: VBIChartBuilder | undefined`：
+Except for `useVBIStore`, all hooks accept `builder: VBIChartBuilder | undefined`:
 
 ```ts
-// builder 参数是可选的，当传入 undefined 时 hook 无操作
-const { dimensions, addDimension } = useVBIDimensions(builder) // builder 可为 undefined
-const { schemaFields } = useVBISchemaFields(undefined) // 安全，不报错
+// The builder parameter is optional. When undefined is passed, the hook is a no-op.
+const { dimensions, addDimension } = useVBIDimensions(builder) // builder may be undefined
+const { schemaFields } = useVBISchemaFields(undefined) // Safe; does not throw
 ```
 
-通常从 `useVBIStore` 获取 builder：
+Usually, get the builder from `useVBIStore`:
 
 ```ts
 const builder = useVBIStore((s) => s.builder)

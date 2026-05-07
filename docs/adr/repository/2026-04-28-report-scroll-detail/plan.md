@@ -1,140 +1,140 @@
-# Plan: Report Detail 页面滚动式改造执行计划
+# Plan: Report Detail Page Scroll Refactor Execution Plan
 
-> 基于 [`./adr.md`](./adr.md)
-> 本文件用于指导 `vbi_fe` Report Detail 页的落地执行。
+> Based on [`./adr.md`](./adr.md)
+> This file guides the implementation of the `vbi_fe` Report Detail page.
 
-## 目标
+## Goals
 
-1. 将 Report Detail 页面改造为纵向滚动展示主线，并保留横向滚动切换。
-2. 实现滚动驱动目录联动：滚动时高亮左侧目录，目录跳转可精确定位目标 page。
-3. 强化页面结构约束：每页最多 1 个 report 与 1 个 insight，report 固定高度，insight 依据内容自适应。
-4. 保持左侧目录功能不变，只增强“点击定位”能力。
-5. 在 report / insight hover 时显示右上角 toolbar，并提供编辑入口。
+1. Refactor the Report Detail page to use vertical scrolling as the main display path while retaining a horizontal scrolling switch.
+2. Implement scroll-driven table-of-contents synchronization: scrolling highlights the left table of contents, and table-of-contents jumps precisely locate the target page.
+3. Strengthen page structure constraints: each page has at most one report and one insight, report uses fixed height, and insight adapts to content.
+4. Keep left table-of-contents features unchanged, only enhancing click positioning.
+5. Show an upper-right toolbar on report / insight hover and provide an editing entry point.
 
-## 范围
+## Scope
 
-包含：`apps/vbi_fe` Report Detail 页、相关目录与滚动交互、report/insight hover toolbar。
+Includes: `apps/vbi_fe` Report Detail page, related table-of-contents and scroll interactions, and report/insight hover toolbar.
 
-不包含：
+Does not include:
 
-- `apps/vbi_be` 数据模型与 API 改造（本计划不修改持久化语义）。
-- insight 编辑器本体重构（仅复用现有编辑逻辑）。
-- 与 report 根因模型相关的后端资源关系重构。
+- `apps/vbi_be` data model or API changes; this plan does not change persistence semantics.
+- Refactoring the insight editor itself; it only reuses existing editing logic.
+- Backend resource relationship refactors related to the report root-cause model.
 
-## 坏味道扫描
+## Smell Scan
 
-1. 左右区域耦合：当前目录与内容定位边界模糊，滚动与点击同步逻辑散落在多个 handler。
-2. 页面结构无统一约束：不同页面对 report / insight 的组合规则不一致，排版容易漂移。
-3. hover 编辑入口分散：编辑入口依赖全局菜单，内容内缺少就近操作。
-4. 滚动模式切换可配置性不足：纵向与横向没有共享状态与入口。
+1. Left/right area coupling: the current boundary between table-of-contents positioning and content is unclear, and scroll/click sync logic is scattered across multiple handlers.
+2. No unified page structure constraint: different pages use inconsistent report / insight composition rules, so layout easily drifts.
+3. Scattered hover editing entry points: editing depends on a global menu, and local content operations are missing.
+4. Insufficient configurability for scroll mode switching: vertical and horizontal modes do not share state and entry points.
 
-## 开发原则
+## Development Principles
 
-### 单一滚动源
+### Single Scroll Source
 
-所有导航与定位行为以统一的 page 列表 state 驱动，避免每个组件维护独立活动索引。
+All navigation and positioning behavior is driven by a unified page-list state, avoiding each component maintaining its own active index.
 
-### 可达性优先
+### Accessibility First
 
-目录点击与滚动同步均有明确可回退行为：点击后可定位 page，滚动后可更新目录。
+Table-of-contents clicks and scroll synchronization both have clear fallback behavior: a click can locate a page, and scrolling can update the table of contents.
 
-### 局部编辑入口就近化
+### Local Editing Entry Points
 
-report 与 insight 的 toolbar 均以内嵌 hover 机制呈现，编辑动作与当前内容区域语义一致。
+Both report and insight toolbars are presented through embedded hover behavior, and editing actions match the semantics of the current content area.
 
-### 回退友好
+### Fallback Friendly
 
-横向模式作为布局变体，不影响纵向主流程；切换后保持 active page 的一致性。
+Horizontal mode is a layout variant and does not affect the vertical main flow; after switching, active page consistency is preserved.
 
-## 执行顺序
+## Execution Order
 
-1. 内容模型整理：定义 page 数据模型、report/insight 容器约束与 page id。
-2. 纵向滚动容器落地：先完成主要展示流（默认纵向）。
-3. 横向模式接入：复用同一 page 索引与目录映射。
-4. 目录联动：接入 `IntersectionObserver` + 点击定位。
-5. hover toolbar：在 report/insight 卡片上补齐编辑入口。
-6. 兼容回归与验收。
+1. Organize the content model: define page data model, report/insight container constraints, and page id.
+2. Implement the vertical scroll container first for the main display flow.
+3. Add horizontal mode, reusing the same page index and table-of-contents mapping.
+4. Add table-of-contents linkage with `IntersectionObserver` + click positioning.
+5. Add hover toolbar editing entry points on report/insight cards.
+6. Run compatibility regression and acceptance.
 
-## 执行清单
+## Execution Checklist
 
-### Step 1: 建立页面骨架与状态模型
+### Step 1: Establish Page Skeleton And State Model
 
-完成定义：
+Definition of done:
 
-- 定义 page 列表 model（包含 `id/title/reportId/insightId`）。
-- 确定 `activePageId` / `activePageIndex` 及 `viewMode`（`vertical | horizontal`）的 source of truth。
-- 拆分目录组件与内容容器组件，建立稳定 prop 和回调接口。
+- Define the page list model, including `id/title/reportId/insightId`.
+- Determine the source of truth for `activePageId` / `activePageIndex` and `viewMode` (`vertical | horizontal`).
+- Split the table-of-contents component and content container component, establishing stable props and callback interfaces.
 
-阻塞项：无
+Blockers: none
 
-### Step 2: 实现纵向滚动主流程
+### Step 2: Implement The Vertical Scroll Main Flow
 
-完成定义：
+Definition of done:
 
-- 内容区域改为纵向分页容器，支持整页顺序渲染。
-- 每页渲染约束：`
-  - report 容器固定高度（与页面视觉基准一致）；
-  - insight 容器按内容高度增长；
-  - 单页最多 1 个 report 与 1 个 insight。
-- 提供 page 锚点能力（`ref` + `dataset` + pageId）。
+- The content area becomes a vertical paginated container and supports ordered full-page rendering.
+- Per-page rendering constraints:
+  - the report container has fixed height matching the page visual baseline;
+  - the insight container grows with content height;
+  - a single page has at most one report and one insight.
+- Provide page anchor capability (`ref` + `dataset` + pageId).
 
-阻塞项：Step 1
+Blockers: Step 1
 
-### Step 3: 实现横向模式
+### Step 3: Implement Horizontal Mode
 
-完成定义：
+Definition of done:
 
-- 增加视图模式开关，横向时改为行向排列并保留滑动体验。
-- 复用同一 page 渲染组件和 anchor 映射。
-- 目录 active 仍基于统一 `activePage` 状态。
+- Add a view-mode switch. In horizontal mode, change to row direction while preserving sliding behavior.
+- Reuse the same page rendering component and anchor mapping.
+- Table-of-contents active state remains based on the unified `activePage` state.
 
-阻塞项：Step 2
+Blockers: Step 2
 
-### Step 4: 实现目录联动
+### Step 4: Implement Table-Of-Contents Linkage
 
-完成定义：
+Definition of done:
 
-- 滚动监听：使用 `IntersectionObserver` 更新可见优先 page。
-- 目录点击：`scrollIntoView` 精确滚到目标 page，并回填 active。
-- 解决边界竞态：滚动动画中的点击高亮与 observer 频繁更新冲突，保证最终一致。
+- Scroll listener: use `IntersectionObserver` to update the preferred visible page.
+- Table-of-contents click: use `scrollIntoView` to scroll precisely to the target page and backfill active state.
+- Resolve boundary races: click highlight during scroll animation and frequent observer updates converge to final consistency.
 
-阻塞项：Step 2
+Blockers: Step 2
 
-### Step 5: 上线 hover toolbar 与编辑入口
+### Step 5: Launch Hover Toolbar And Editing Entry Point
 
-完成定义：
+Definition of done:
 
-- report 卡片 hover 时在右上角显示 toolbar。
-- insight 卡片 hover 时在右上角显示 toolbar。
-- toolbar 动作复用现有 edit/open 逻辑，不新增独立编辑协议。
+- A toolbar appears in the upper-right corner when hovering a report card.
+- A toolbar appears in the upper-right corner when hovering an insight card.
+- Toolbar actions reuse existing edit/open logic and do not add a separate editing protocol.
 
-阻塞项：Step 2
+Blockers: Step 2
 
-### Step 6: 验收与收尾
+### Step 6: Acceptance And Wrap-Up
 
-完成定义：
+Definition of done:
 
-- 目录点击与滚动联动覆盖核心路径。
-- 横向/纵向切换不会重置 active page（保留语义一致）。
-- report/insight 栏位未超限（1+1）规则。
-- 老菜单能力不回退：目录筛选、展开、跳转仍可用。
-- 与已有样式系统兼容，hover 工具栏不影响滚动手势。
+- Table-of-contents click and scroll linkage cover the core path.
+- Switching between horizontal/vertical modes does not reset active page and preserves semantic consistency.
+- report/insight slots do not exceed the 1+1 rule.
+- Old menu capabilities do not regress: table-of-contents filtering, expansion, and jumping remain available.
+- Compatible with the existing style system, and hover toolbar does not interfere with scroll gestures.
 
-## 验收场景
+## Acceptance Scenarios
 
-1. 默认进入 report detail，页面按纵向展示，滚轮可顺序切页。
-2. 滚动过程中，左侧目录自动高亮当前 page。
-3. 点击左侧目录，右侧内容定位到对应 page。
-4. 横向模式下可按页水平滚动，左侧目录仍正常高亮。
-5. report 或 insight 被 hover 时，右上角出现 toolbar。
-6. 点击 toolbar 可打开对应编辑入口，编辑流程与现有行为一致。
-7. 单个 page 不出现两个 report 或两个 insight。
+1. Enter report detail by default; pages display vertically and the mouse wheel can move through pages in order.
+2. During scrolling, the left table of contents automatically highlights the current page.
+3. Clicking the left table of contents positions the right content to the corresponding page.
+4. In horizontal mode, the user can scroll page-by-page horizontally while the left table of contents still highlights correctly.
+5. When report or insight is hovered, a toolbar appears in the upper-right corner.
+6. Clicking the toolbar opens the corresponding editing entry point, and the editing flow matches existing behavior.
+7. A single page never contains two reports or two insights.
 
-## 风险与对策
+## Risks And Mitigations
 
-- 风险：长列表页面可能出现 observer 回调抖动。
-  - 对策：提升阈值策略，减少高频状态更新。
-- 风险：横向模式下 page 高度/宽度 mismatch。
-  - 对策：固定容器基线尺寸与溢出策略。
-- 风险：toolbar 与 page hover 发生事件冒泡冲突。
-  - 对策：统一事件命名空间和阻断无关点击传播。
+- Risk: long-list pages may cause observer callback jitter.
+  - Mitigation: improve the threshold strategy and reduce high-frequency state updates.
+- Risk: page height/width mismatch in horizontal mode.
+  - Mitigation: fix the container baseline dimensions and overflow strategy.
+- Risk: event bubbling conflicts between toolbar and page hover.
+  - Mitigation: use a unified event namespace and block unrelated click propagation.

@@ -6,62 +6,62 @@ Proposed
 
 ## Context
 
-VSeed 的指标（Measure）和维度（Dimension）支持 encoding 设计，允许用户将数据字段映射到不同的视觉通道。VBI 需要在 builder 层支持这一功能，使用户能够：
+VSeed measures and dimensions support an encoding design that maps data fields to visual channels. VBI needs to support this at the builder layer so users can:
 
-1. 根据图表类型获取支持的 encoding 类型
-2. 在添加维度/指标时自动设置默认 encoding
-3. 动态修改维度/指标的 encoding
-4. 在 buildVSeed 时正确应用 encoding
+1. Get the supported encoding types for a chart type.
+2. Automatically set default encoding when adding dimensions or measures.
+3. Dynamically update dimension or measure encoding.
+4. Apply encoding correctly during `buildVSeed`.
 
-### VSeed Encoding 类型定义
+### VSeed Encoding Type Definitions
 
 **Dimension Encoding:**
 
 ```typescript
 type DimensionEncoding =
-  | 'xAxis' // X轴
-  | 'yAxis' // Y轴
-  | 'angle' // 角度通道
-  | 'color' // 颜色通道
-  | 'detail' // 详情通道
-  | 'tooltip' // 提示通道
-  | 'label' // 标签通道
-  | 'row' // 行通道
-  | 'column' // 列通道
-  | 'player' // 播放轴通道
-  | 'hierarchy' // 层级通道
+  | 'xAxis' // X axis
+  | 'yAxis' // Y axis
+  | 'angle' // angle channel
+  | 'color' // color channel
+  | 'detail' // detail channel
+  | 'tooltip' // tooltip channel
+  | 'label' // label channel
+  | 'row' // row channel
+  | 'column' // column channel
+  | 'player' // player axis channel
+  | 'hierarchy' // hierarchy channel
 ```
 
 **Measure Encoding:**
 
 ```typescript
 type MeasureEncoding =
-  | 'primaryYAxis' // 主Y轴
-  | 'secondaryYAxis' // 副Y轴
-  | 'xAxis' // X轴
-  | 'yAxis' // Y轴
-  | 'angle' // 角度通道
-  | 'radius' // 半径通道
-  | 'size' // 大小通道
-  | 'color' // 颜色通道
-  | 'detail' // 详情通道
-  | 'column' // 列通道
-  | 'label' // 标签通道
-  | 'tooltip' // 提示通道
-  | 'value' // 值通道
+  | 'primaryYAxis' // primary Y axis
+  | 'secondaryYAxis' // secondary Y axis
+  | 'xAxis' // X axis
+  | 'yAxis' // Y axis
+  | 'angle' // angle channel
+  | 'radius' // radius channel
+  | 'size' // size channel
+  | 'color' // color channel
+  | 'detail' // detail channel
+  | 'column' // column channel
+  | 'label' // label channel
+  | 'tooltip' // tooltip channel
+  | 'value' // value channel
   | 'q1'
   | 'median'
-  | 'q3' // 箱线图四分位
+  | 'q3' // box plot quartile
   | 'min'
-  | 'max' // 箱线图极值
-  | 'outliers' // 箱线图异常值
+  | 'max' // box plot extreme value
+  | 'outliers' // box plot outliers
   | 'x0'
-  | 'x1' // 箱线图范围
+  | 'x1' // box plot range
 ```
 
-### 各图表类型支持的 Dimension Encoding
+### Dimension Encoding Supported by Chart Type
 
-| 图表类型    | 支持的 Dimension Encoding                                       |
+| Chart Type  | Supported Dimension Encoding                                    |
 | ----------- | --------------------------------------------------------------- |
 | PivotTable  | `row`, `column`                                                 |
 | Table       | `column`                                                        |
@@ -86,9 +86,9 @@ type MeasureEncoding =
 | RaceDonut   | `player`, `color`, `detail`, `tooltip`, `label`                 |
 | RaceScatter | `player`, `color`, `detail`, `tooltip`, `label`                 |
 
-### 各图表类型支持的 Measure Encoding
+### Measure Encoding Supported by Chart Type
 
-| 图表类型                      | 支持的 Measure Encoding                                            |
+| Chart Type                    | Supported Measure Encoding                                         |
 | ----------------------------- | ------------------------------------------------------------------ |
 | PivotTable                    | `detail`                                                           |
 | Table                         | `column`                                                           |
@@ -112,17 +112,17 @@ type MeasureEncoding =
 
 ## Decision
 
-### 1. builder.chartType 增加获取支持 encoding 的方法
+### 1. `builder.chartType` exposes supported encoding methods
 
 ```typescript
-// 获取支持的维度 encoding 类型
+// Get supported dimension encoding types.
 builder.chartType.getSupportedDimensionEncodings(): DimensionEncoding[]
 
-// 获取支持的指标 encoding 类型
+// Get supported measure encoding types.
 builder.chartType.getSupportedMeasureEncodings(): MeasureEncoding[]
 ```
 
-### 2. Dimension Node 增加 getEncoding / setEncoding 方法
+### 2. Dimension nodes add `getEncoding` / `setEncoding`
 
 ```typescript
 interface DimensionNode {
@@ -131,7 +131,7 @@ interface DimensionNode {
 }
 ```
 
-### 3. Measure Node 增加 getEncoding / setEncoding 方法
+### 3. Measure nodes add `getEncoding` / `setEncoding`
 
 ```typescript
 interface MeasureNode {
@@ -140,45 +140,45 @@ interface MeasureNode {
 }
 ```
 
-### 4. buildVSeed 时正确应用 encoding
+### 4. `buildVSeed` applies encoding correctly
 
-VSeed 的 encoding pipe 已经实现了根据 dimension.encoding / measure.encoding 生成正确的 Encoding 对象。VBI 需要确保：
+VSeed's encoding pipe already creates the correct `Encoding` object from `dimension.encoding` / `measure.encoding`. VBI needs to ensure:
 
-1. 当用户设置 encoding 时，传递到 VSeed 的 dimension/measure 对象包含 encoding 属性
-2. VSeed 的 `encodingFor*` 函数会自动处理用户自定义 encoding
+1. When users set encoding, the dimension/measure object passed to VSeed includes the `encoding` property.
+2. VSeed's `encodingFor*` functions handle user-defined encoding automatically.
 
-### 5. builder.dimensions.addDimension / builder.measures.add 自动设置默认 encoding
+### 5. `builder.dimensions.addDimension` / `builder.measures.add` set default encoding automatically
 
 ```typescript
-// 根据图表类型获取建议的默认维度 encoding
+// Get the suggested default dimension encoding by chart type.
 builder.chartType.getDefaultDimensionEncoding(): DimensionEncoding
 
-// 根据图表类型获取建议的默认指标 encoding
+// Get the suggested default measure encoding by chart type.
 builder.chartType.getDefaultMeasureEncoding(): MeasureEncoding
 ```
 
-添加维度/指标时，自动调用此方法设置默认 encoding。
+When adding a dimension or measure, call the relevant method automatically to set default encoding.
 
-### 6. Demo 项目 shelf 组件增加 encoding 下拉菜单
+### 6. Demo shelf components add encoding dropdowns
 
-在 dimensions 和 measures 的 shelf item 上增加 encoding 下拉选择器。
+Add encoding dropdown selectors to dimension and measure shelf items in the demo project.
 
 ## Consequences
 
 ### Positive
 
-- 用户可以为维度/指标选择不同的视觉通道映射
-- 自动设置默认 encoding，简化用户操作
-- 与 VSeed 的 encoding 设计保持一致
+- Users can choose different visual channel mappings for dimensions and measures.
+- Default encoding is set automatically, simplifying user operations.
+- VBI stays consistent with VSeed's encoding design.
 
 ### Negative
 
-- 需要在多个地方添加 encoding 相关逻辑
-- 需要更新 Demo 项目的 UI
+- Encoding logic needs to be added in several places.
+- The demo UI needs to be updated.
 
 ## Reference
 
-- VSeed Encoding 实现: `packages/vseed/src/pipeline/advanced/chart/pipes/encoding/`
-- VSeed Table Encoding 实现: `packages/vseed/src/pipeline/advanced/table/pipes/encoding/`
-- VSeed Dimension 类型: `packages/vseed/src/types/properties/dimensions/`
-- VSeed Encoding 类型: `packages/vseed/src/types/properties/encoding/`
+- VSeed encoding implementation: `packages/vseed/src/pipeline/advanced/chart/pipes/encoding/`
+- VSeed table encoding implementation: `packages/vseed/src/pipeline/advanced/table/pipes/encoding/`
+- VSeed dimension types: `packages/vseed/src/types/properties/dimensions/`
+- VSeed encoding types: `packages/vseed/src/types/properties/encoding/`

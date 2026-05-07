@@ -1,176 +1,176 @@
-# ADR: 面向 Provider 的平台级 Headless BI 架构
+# ADR: Provider-Oriented Platform-Level Headless BI Architecture
 
 ## Summary
 
-VBI 的下一阶段目标，不再只是提供 `packages/` 下的原子能力，也不只是完成 `vbi_fe` 和 `vbi_be` 这套验证型应用，而是要演进为一个真正的平台级 Headless BI 系统。
+VBI's next-stage goal is no longer only to provide atomic capabilities under `packages/`, nor only to finish the validation applications `vbi_fe` and `vbi_be`. It is to evolve into a real platform-level Headless BI system.
 
-为达到这个目标，系统必须从“页面驱动资源”升级为“由 `@visactor/vbi-provider` 承载的 Provider 驱动资源”：
+To reach this goal, the system must move from "page-driven resources" to "Provider-driven resources hosted by `@visactor/vbi-provider`":
 
-- `chart`、`insight`、`report` 是三个独立资源
-- `@visactor/vbi-provider` 是平台级应用 SDK
-- `ChartProvider`、`InsightProvider`、`ReportProvider` 是 SDK 中的三个一等入口
-- 页面、CLI、任意 JS 运行时都通过 Provider 获取资源能力
-- Provider 可以直接返回对应 Builder
-- 资源的编辑本体建立在协同文档之上，而不是建立在 REST detail DTO 之上
+- `chart`, `insight`, and `report` are three independent resources.
+- `@visactor/vbi-provider` is the platform-level application SDK.
+- `ChartProvider`, `InsightProvider`, and `ReportProvider` are the three first-class SDK entry points.
+- Pages, CLI, and any JS runtime obtain resource capabilities through Provider.
+- Provider can directly return the corresponding Builder.
+- The editable body of a resource is built on collaborative documents, not REST detail DTOs.
 
-这份 ADR 的核心决策是：
+The core decisions in this ADR are:
 
-- 平台对外统一通过 `@visactor/vbi-provider` 暴露 Provider 语义，而不是 UI 语义
-- Builder 的创建权属于 Provider
-- REST 是管理面，协同协议是数据面
-- `Bytes` 留在持久化和协同链路内部，业务层统一暴露 JSON 与 Builder
+- The platform exposes Provider semantics through `@visactor/vbi-provider`, not UI semantics.
+- Provider owns Builder creation.
+- REST is the management plane, and the collaboration protocol is the data plane.
+- `Bytes` stays inside persistence and collaboration paths; the business layer uniformly exposes JSON and Builder.
 
 ## Context
 
-当前系统已经具备以下基础：
+The current system already has this foundation:
 
-- `@visactor/vbi` 负责配置 DSL 与 Builder
-- `@visactor/vquery` 负责查询 DSL 与 SQL 执行
-- `@visactor/vseed` 负责渲染 DSL 与 Spec 生成
-- `apps/vbi_be` 已具备 `chart / insight / report` 三类资源的基础后端能力
-- `apps/vbi_fe` 已具备管理页与协同编辑页的基础能力
+- `@visactor/vbi` owns configuration DSL and Builder.
+- `@visactor/vquery` owns query DSL and SQL execution.
+- `@visactor/vseed` owns rendering DSL and Spec generation.
+- `apps/vbi_be` has basic backend capabilities for the three resource types: `chart / insight / report`.
+- `apps/vbi_fe` has basic management pages and collaborative editing pages.
 
-但当前模型仍然存在以下问题：
+But the current model still has these problems:
 
-### 1. 调用入口分散
+### 1. Scattered Call Entry Points
 
-资源能力目前主要通过页面交互暴露，未来再引入 CLI，容易继续分裂出第二套调用方式。再往后如果还要支持 Node.js 脚本、嵌入式应用或其他宿主，很可能出现第三套调用方式。
+Resource capabilities are currently exposed mainly through page interactions. If CLI is introduced later, it can easily split off a second call path. Later support for Node.js scripts, embedded applications, or other hosts could introduce a third path.
 
-这会导致：
+This causes:
 
-- 能力语义不统一
-- Builder 初始化逻辑分散
-- 不同运行时对同一资源的操作方式不一致
+- Inconsistent capability semantics.
+- Scattered Builder initialization logic.
+- Different runtimes operating the same resource differently.
 
-### 2. 资源本体与业务接口边界不稳定
+### 2. Unstable Boundary Between Resource Body And Business Interfaces
 
-资源本体在底层其实是协同文档，但业务接口很容易退化为“把数据库里的内容投影给页面”，从而出现：
+The resource body is actually a collaborative document at the lower layer, but business interfaces can easily degrade into "project database content to pages," resulting in:
 
-- 协同连接由页面自己拼装
-- Builder 由消费端自己构造
-- 存储细节容易泄漏到业务层
+- Pages assembling collaboration connections themselves.
+- Consumers constructing Builder themselves.
+- Storage details leaking into the business layer.
 
-### 3. Headless BI 平台能力尚未收敛
+### 3. Headless BI Platform Capability Has Not Converged
 
-如果一个能力只能被页面调用，而不能被 CLI 或任意 JS 运行时调用，那么它仍然只是应用能力，不是平台能力。
+If a capability can only be called by pages, but not by CLI or any JS runtime, it is still an application capability rather than a platform capability.
 
-因此，必须把资源能力收敛到统一的 SDK 抽象上，而这个 SDK 就是 `@visactor/vbi-provider`。
+Therefore, resource capabilities must converge into a unified SDK abstraction, and that SDK is `@visactor/vbi-provider`.
 
 ## Decision
 
-### 1. 平台采用由 `@visactor/vbi-provider` 承载的 Provider First 架构
+### 1. Adopt Provider First Architecture Hosted By `@visactor/vbi-provider`
 
-VBI 平台对外通过 `@visactor/vbi-provider` 暴露一等 Provider，而不是以页面组件、页面服务或特定应用 API 为入口。
+The VBI platform exposes first-class Providers through `@visactor/vbi-provider`, instead of using page components, page services, or specific application APIs as entry points.
 
-Provider 是资源运行时入口，直接承担：
+Provider is the runtime entry point for resources and directly owns:
 
-- 建立后端连接
-- 打开协同文档
-- 获取 Builder
-- 提供资源 CRUD
-- 提供资源详情、快照与导出能力
-- 提供资源特定的业务动作
+- Establishing backend connections.
+- Opening collaborative documents.
+- Obtaining Builder.
+- Providing resource CRUD.
+- Providing resource detail, snapshot, and export capabilities.
+- Providing resource-specific business actions.
 
-### 2. 只存在三种一等 Provider
+### 2. Only Three First-Class Providers Exist
 
-平台只定义以下三种一等 Provider：
+The platform defines only these three first-class Providers:
 
 - `ChartProvider`
 - `InsightProvider`
 - `ReportProvider`
 
-不把一个过于泛化的 `ResourceProvider<T>` 作为主要对外模型。内部允许复用，但对外语义必须明确区分三类资源。
+Do not expose an overly generic `ResourceProvider<T>` as the main public model. Internal reuse is allowed, but public semantics must clearly distinguish the three resource types.
 
-原因：
+Reasons:
 
-- `report` 是结构编排资源
-- `chart` 是配置、查询、渲染相关资源
-- `insight` 是语义内容资源
+- `report` is a structural orchestration resource.
+- `chart` is a configuration, query, and rendering resource.
+- `insight` is a semantic content resource.
 
-三者共享一部分资源生命周期语义，但不共享完整操作集。
+They share part of the resource lifecycle semantics, but not the complete operation set.
 
-### 3. Provider 可以直接返回对应 Builder
+### 3. Provider Can Directly Return The Corresponding Builder
 
-Provider 必须支持直接返回对应 Builder：
+Provider must support directly returning the corresponding Builder:
 
 - `ChartProvider -> VBIChartBuilder`
 - `InsightProvider -> VBIInsightBuilder`
 - `ReportProvider -> VBIReportBuilder`
 
-这意味着：
+This means:
 
-- Builder 的创建权属于 Provider
-- 页面、CLI、脚本都不应自行 new Builder 并自行恢复文档
-- 消费端只关心拿到一个可操作 Builder，而不关心底层 YDoc 如何恢复
+- Provider owns Builder creation.
+- Pages, CLI, and scripts should not instantiate Builder themselves and restore documents themselves.
+- Consumers only care about obtaining an operable Builder; they do not care how the underlying YDoc is restored.
 
-### 4. 所有资源操作都可在任意 JS 运行时执行
+### 4. All Resource Operations Can Run In Any JS Runtime
 
-Provider 设计必须是纯 TypeScript / JavaScript 运行时对象，可被以下环境统一消费：
+Provider design must be pure TypeScript / JavaScript runtime objects consumable by:
 
 - `apps/vbi_fe`
 - `apps/vbi_cli`
-- Node.js 脚本
-- 浏览器普通 JS 运行时
-- 未来其他宿主应用
+- Node.js scripts
+- regular browser JS runtimes
+- future host applications
 
-这意味着 Provider 不得绑定：
+This means Provider must not bind to:
 
 - React
 - DOM
-- 某个具体页面状态管理方案
+- a specific page state-management solution
 
-页面只是 Provider 的消费者，而不是 Provider 的定义场所。
+Pages are Provider consumers, not where Provider is defined.
 
-### 5. 资源编辑以协同连接为核心
+### 5. Resource Editing Centers On Collaboration Connections
 
-资源的编辑本体是协同文档，不是 REST detail。
+The editable body of a resource is a collaborative document, not REST detail.
 
-因此：
+Therefore:
 
-- Provider 打开资源时，以协同连接为主
-- Builder 绑定在协同文档上
-- 持续编辑与状态同步通过协同链路完成
+- When Provider opens a resource, the collaboration connection is primary.
+- Builder is bound to the collaborative document.
+- Continuous editing and state synchronization happen through the collaboration path.
 
-REST 继续存在，但职责收敛为：
+REST continues to exist, but its responsibilities converge to:
 
-- 创建 / 删除资源
-- 资源 summary 查询
-- 资源元信息查询
-- 引用关系检查
-- 结构编排命令
-- 快照导出等命令式能力
+- Creating / deleting resources.
+- Resource summary queries.
+- Resource metadata queries.
+- Reference checks.
+- Structural orchestration commands.
+- Command-style capabilities such as snapshot export.
 
-### 6. 后端分为管理面和数据面
+### 6. The Backend Splits Into Management Plane And Data Plane
 
-后端必须显式分成两面：
+The backend must explicitly split into two planes:
 
-- 管理面：REST 或等价命令接口
-- 数据面：协同协议接口
+- Management plane: REST or equivalent command interface.
+- Data plane: collaboration protocol interface.
 
-其中：
+Where:
 
-- 管理面负责元信息、命令和查询
-- 数据面负责文档打开、快照恢复和增量同步
+- The management plane owns metadata, commands, and queries.
+- The data plane owns document opening, snapshot restoration, and incremental synchronization.
 
-Provider 是同时消费这两面能力的客户端抽象。
+Provider is the client abstraction that consumes both planes.
 
-### 7. `Bytes` 只留在持久化与协同链路中
+### 7. `Bytes` Stays Only In Persistence And Collaboration Paths
 
-数据库中使用 `Bytes` 保存 Yjs 快照与增量，是合理的。
+Using `Bytes` in the database to store Yjs snapshots and increments is reasonable.
 
-但业务层必须保持边界清晰：
+But the business layer must keep boundaries clear:
 
-- `Bytes` 属于持久化与协同协议
-- JSON 属于业务语义投影
-- Builder 属于可操作运行时视图
+- `Bytes` belongs to persistence and collaboration protocols.
+- JSON belongs to business semantic projection.
+- Builder belongs to the operable runtime view.
 
-REST 业务接口不应直接暴露原始 `Bytes`。
+REST business interfaces should not directly expose raw `Bytes`.
 
 ## Detailed Decisions
 
-### A. 平台对象模型
+### A. Platform Object Model
 
-`@visactor/vbi-provider` 提供顶层平台客户端：
+`@visactor/vbi-provider` provides the top-level platform client:
 
 ```ts
 const client = await createVBIProviderClient(config)
@@ -180,19 +180,19 @@ const insightProvider = client.insight(insightId)
 const reportProvider = client.report(reportId)
 ```
 
-三层关系固定为：
+The three-layer relationship is fixed:
 
 `client -> provider -> builder`
 
-职责分层：
+Responsibility layers:
 
-- `client`: 认证、配置、transport 组装
-- `provider`: 资源级能力
-- `builder`: DSL 级操作
+- `client`: authentication, configuration, transport assembly.
+- `provider`: resource-level capabilities.
+- `builder`: DSL-level operations.
 
-### B. 三种 Provider 的最小能力集合
+### B. Minimum Capability Set For The Three Providers
 
-所有 Provider 应共享最小资源语义：
+All Providers should share minimum resource semantics:
 
 - `create`
 - `remove`
@@ -204,208 +204,208 @@ const reportProvider = client.report(reportId)
 - `getDetail`
 - `snapshot`
 
-然后按资源类型扩展。
+Then each resource type extends them.
 
 #### ChartProvider
 
-额外职责：
+Additional responsibilities:
 
-- 返回 `VBIChartBuilder`
-- 暴露与 `VQuery` / `VSeed` 相关的派生能力
+- Return `VBIChartBuilder`.
+- Expose derived capabilities related to `VQuery` / `VSeed`.
 
 #### InsightProvider
 
-额外职责：
+Additional responsibilities:
 
-- 返回 `VBIInsightBuilder`
-- 处理 insight 内容投影
+- Return `VBIInsightBuilder`.
+- Handle insight content projection.
 
 #### ReportProvider
 
-额外职责：
+Additional responsibilities:
 
-- 返回 `VBIReportBuilder`
-- 管理 page 结构
-- 管理 `chartId / insightId` 引用绑定
-- 提供 report snapshot / export 能力
+- Return `VBIReportBuilder`.
+- Manage page structure.
+- Manage `chartId / insightId` reference bindings.
+- Provide report snapshot / export capabilities.
 
-### C. `report` 的边界
+### C. `report` Boundary
 
-即使在 Provider First 模型下，也必须坚持：
+Even under the Provider First model, the following must hold:
 
-- `report` 是结构资源
-- `chart`、`insight` 是内容资源
+- `report` is a structural resource.
+- `chart` and `insight` are content resources.
 
-因此：
+Therefore:
 
-- `ReportProvider` 管理结构和引用
-- `ChartProvider` 管理 chart 内容
-- `InsightProvider` 管理 insight 内容
-- `ReportProvider` 不吞掉另外两个 Provider 的职责
+- `ReportProvider` manages structure and references.
+- `ChartProvider` manages chart content.
+- `InsightProvider` manages insight content.
+- `ReportProvider` does not absorb the responsibilities of the other two Providers.
 
-### D. 页面、CLI、脚本的关系
+### D. Relationship Between Pages, CLI, And Scripts
 
-#### 页面
+#### Pages
 
-页面只负责：
+Pages are only responsible for:
 
-- 展示
-- 交互
-- 生命周期管理
-- 把用户动作翻译成 Provider 调用
+- Display.
+- Interaction.
+- Lifecycle management.
+- Translating user actions into Provider calls.
 
 #### CLI
 
-CLI 只负责：
+CLI is only responsible for:
 
-- 解析命令
-- 调用 Provider
-- 输出结果
+- Parsing commands.
+- Calling Provider.
+- Outputting results.
 
-CLI 不应绕过 Provider 直接实现第二套资源语义。
+CLI should not bypass Provider to implement a second set of resource semantics.
 
-#### 普通脚本 / 外部运行时
+#### Regular Scripts / External Runtimes
 
-脚本只负责：
+Scripts are only responsible for:
 
-- 初始化平台客户端
-- 获取 Provider
-- 调用 Provider 或 Builder
+- Initializing the platform client.
+- Obtaining Provider.
+- Calling Provider or Builder.
 
-如果一个能力只能在页面里做，不能在脚本里做，它就还不是平台能力。
+If a capability can only be done in pages and not in scripts, it is not yet a platform capability.
 
 ## Consequences
 
-### 正向影响
+### Positive Impact
 
-#### 1. 统一能力入口
+#### 1. Unified Capability Entry Point
 
-页面、CLI、脚本、宿主应用都通过 Provider 访问同一套能力，平台语义稳定。
+Pages, CLI, scripts, and host applications all access the same capabilities through Provider, stabilizing platform semantics.
 
-#### 2. Builder 生命周期统一
+#### 2. Unified Builder Lifecycle
 
-Builder 的创建、恢复和连接统一由 Provider 管理，避免不同运行时行为不一致。
+Builder creation, restoration, and connection are managed uniformly by Provider, avoiding inconsistent behavior across runtimes.
 
-#### 3. 更符合 Headless BI 定位
+#### 3. Better Fit For Headless BI
 
-系统真正从“前端应用驱动”转向“资源运行时驱动”，更适合嵌入和自动化。
+The system truly moves from "frontend application driven" to "resource runtime driven," making it more suitable for embedding and automation.
 
-#### 4. 更利于 SDK 化
+#### 4. Easier SDK Productization
 
-一旦 Provider 接口稳定，`vbi_cli` 与外部 SDK 都可以建立在同一套模型上。
+Once the Provider interface is stable, `vbi_cli` and external SDKs can be built on the same model.
 
-### 成本与风险
+### Costs And Risks
 
-#### 1. 当前前端调用方式需要迁移
+#### 1. Current Frontend Calls Need Migration
 
-现有 `vbi_fe` 中直接调用 API 和直接拼协同连接的逻辑，需要逐步迁移到 Provider。
+Existing direct API calls and direct collaboration connection assembly in `vbi_fe` must be gradually migrated to Provider.
 
-#### 2. 后端接口需要重新分层
+#### 2. Backend Interfaces Need Re-Layering
 
-后端必须更清晰地区分管理面与数据面，避免继续混用“业务 detail”与“协同资源本体”。
+The backend must more clearly distinguish the management plane and data plane, avoiding continued mixing of "business detail" and "collaborative resource body."
 
-#### 3. Provider 设计必须克制
+#### 3. Provider Design Must Stay Restrained
 
-Provider 是一等入口，但不能演变成新的“万能对象”。三种 Provider 的职责边界必须保持清晰。
+Provider is a first-class entry point, but it must not become a new "god object." The responsibility boundaries of the three Providers must remain clear.
 
 ## Alternatives Considered
 
-### 方案一：继续以页面服务为主
+### Option 1: Continue With Page Services As The Main Path
 
-做法：
+Approach:
 
-- 前端页面继续直接调用 API
-- CLI 再单独封一层 service
-- Builder 由各端自行构造
+- Frontend pages continue calling APIs directly.
+- CLI wraps another service layer.
+- Each side constructs Builder itself.
 
-不采用原因：
+Rejected because:
 
-- 能力入口持续分裂
-- Builder 生命周期分散
-- 不利于平台化和 Headless 化
+- Capability entry points keep splitting.
+- Builder lifecycle remains scattered.
+- It does not support platformization or Headless direction well.
 
-### 方案二：对外只暴露泛型 `ResourceProvider<T>`
+### Option 2: Expose Only Generic `ResourceProvider<T>`
 
-做法：
+Approach:
 
-- 把三类资源都统一成一个抽象 provider
+- Unify all three resource types into one abstract provider.
 
-不采用原因：
+Rejected because:
 
-- `report / chart / insight` 的能力差异明显
-- 抽象过度会降低可读性和平台语义清晰度
+- The capabilities of `report / chart / insight` differ significantly.
+- Over-abstraction reduces readability and platform semantic clarity.
 
-### 方案三：完全以 REST 为主，协同只做页面增强
+### Option 3: Make REST Primary And Collaboration Only A Page Enhancement
 
-做法：
+Approach:
 
-- 资源 detail 主要依赖 REST
-- 协同只在少数页面场景生效
+- Resource detail mainly relies on REST.
+- Collaboration is only enabled in a few page scenarios.
 
-不采用原因：
+Rejected because:
 
-- 资源编辑本体会退化成 DTO 驱动
-- Provider 无法真正统一页面、CLI 和脚本
-- 不符合“资源以协同文档为本体”的目标
+- The editable resource body would degrade into DTO-driven behavior.
+- Provider could not truly unify pages, CLI, and scripts.
+- It conflicts with the goal that "the resource body is a collaborative document."
 
 ## Package Placement
 
-`@visactor/vbi-provider` 作为新的子包，放置在：
+`@visactor/vbi-provider` is a new subpackage placed under:
 
 - `apps/packages/vbi-provider`
 
-原因：
+Reasons:
 
-- 该包不属于底层 DSL 原子能力本身
-- 该包面向应用运行时与平台接入
-- 它天然更靠近 `apps/` 一侧，而不是纯 `packages/` 内核能力一侧
+- This package is not part of the low-level DSL atomic capabilities themselves.
+- This package targets application runtime and platform integration.
+- It naturally sits closer to the `apps/` side than to the pure `packages/` kernel capability side.
 
-这个包应遵循现有 monorepo 规范：
+This package should follow existing monorepo conventions:
 
-- 使用 `rslib` 构建
-- 使用与现有包一致的 `eslint` / `prettier` / `typescript` 约定
-- 作为纯 TypeScript SDK 提供稳定导出
+- Build with `rslib`.
+- Use conventions consistent with existing packages for `eslint` / `prettier` / `typescript`.
+- Provide stable exports as a pure TypeScript SDK.
 
 ## Scope
 
-本次 ADR 包含：
+This ADR includes:
 
-- `@visactor/vbi-provider` 的定位
-- Provider First 平台方向
-- 三种一等 Provider 的边界
-- 平台客户端对象模型
-- 管理面 / 数据面分层原则
-- Builder 归属与获取方式
+- Positioning of `@visactor/vbi-provider`.
+- Provider First platform direction.
+- Boundaries of the three first-class Providers.
+- Platform client object model.
+- Management-plane / data-plane layering principles.
+- Builder ownership and acquisition model.
 
-本次 ADR 不包含：
+This ADR does not include:
 
-- 具体 TypeScript 接口签名细节
-- 鉴权模型
-- 多租户模型
-- Provider 的缓存策略与连接复用细节
-- CLI 子命令清单
+- Concrete TypeScript interface signature details.
+- Authorization model.
+- Multi-tenancy model.
+- Provider cache strategy and connection reuse details.
+- CLI subcommand list.
 
 ## Follow-up
 
-基于本 ADR，后续应继续产出：
+Based on this ADR, the following should be produced next:
 
 1. `plan.md`
-   - 明确 Provider First 的执行顺序
-2. `@visactor/vbi-provider` 接口设计稿
-   - 明确 `VBIProviderClient` 与三个 Provider 的接口细化
-3. `vbi_cli` 目标命令集
-   - 明确 CLI 如何映射 Provider
-4. 前后端迁移计划
-   - 页面从直接 API / hook 调用迁移到 Provider 调用
+   - Clarify the execution order for Provider First.
+2. `@visactor/vbi-provider` interface design draft
+   - Clarify `VBIProviderClient` and the refined interfaces for the three Providers.
+3. `vbi_cli` target command set
+   - Clarify how CLI maps to Provider.
+4. Frontend/backend migration plan
+   - Migrate pages from direct API / hook calls to Provider calls.
 
 ## Final Position
 
-VBI 平台后续演进的核心方向，确定为：
+The core direction for the next evolution of the VBI platform is:
 
-- 用 `@visactor/vbi-provider`，而不是页面服务，作为平台一等能力入口
-- 用三个 Provider，而不是一个模糊泛型抽象，承载资源语义
-- 用协同文档，而不是 REST detail，作为资源编辑本体
-- 用 Builder，作为资源操作面
-- 用页面、CLI、脚本，作为 Provider 的不同消费者
+- Use `@visactor/vbi-provider`, not page services, as the first-class platform capability entry point.
+- Use three Providers, not a vague generic abstraction, to carry resource semantics.
+- Use collaborative documents, not REST detail, as the editable resource body.
+- Use Builder as the resource operation surface.
+- Use pages, CLI, and scripts as different consumers of Provider.
 
-这是 VBI 从“能力集合”走向“平台级 Headless BI”的核心架构决策。
+This is the core architecture decision that moves VBI from a "capability collection" to "platform-level Headless BI."

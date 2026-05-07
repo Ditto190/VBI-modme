@@ -1,60 +1,69 @@
-# 专业实践
+# Professional Practice
 
-`practices/professional` 的参考资料。它是最完整的业务化 practice，也是
-真实 hook signature、edge case、drag/drop、生产级交互行为的主要参考。
+Reference material for `practices/professional`. It is the most complete
+business-oriented practice and the main reference for real hook signatures, edge
+cases, drag/drop, and production-grade interaction behavior.
 
-## 定位
+## Positioning
 
-Professional 是高保真 APP：
+Professional is a high-fidelity app:
 
-- 源码面较广：约 110 个源码文件，包含 drag/drop model、field token menu、
-  overlay、slot 行为等聚焦测试。
-- 完整 hook suite，并额外提供 `useInitializeProfessional` 和
-  `useProfessionalFields`。
-- 使用 `@dnd-kit/core` 做自定义 drag/drop、overlay positioning、slot drop target。
-- 通过 `professionalLocalData` 使用本地 JSON 数据。
-- 有完整 `src/i18n/**`、theme config、slot config 和分段样式文件。
-- 依赖 `@visactor/vbi-react`，但 practice 行为仍通过本地 hooks 和 model 实现。
+- It has a broad source surface: about 110 source files, with focused tests for
+  the drag/drop model, field token menu, overlay, slot behavior, and more.
+- It has the full hook suite, plus `useInitializeProfessional` and
+  `useProfessionalFields`.
+- It uses `@dnd-kit/core` for custom drag/drop, overlay positioning, and slot
+  drop targets.
+- It uses local JSON data through `professionalLocalData`.
+- It has complete `src/i18n/**`, theme config, slot config, and segmented style
+  files.
+- It depends on `@visactor/vbi-react`, but practice behavior is still
+  implemented through local hooks and models.
 
-相比 `standard`，它是更丰富的行为参考，不是更简单的模板。相比 `streamlined`，
-它用有测试的 drag/drop model 和 editor model 替代直接 slot 逻辑。相比
-`minimalist`，它位于复杂度阶梯的另一端。
+Compared with `standard`, it is a richer behavior reference rather than a simpler
+template. Compared with `streamlined`, it replaces direct slot logic with tested
+drag/drop and editor models. Compared with `minimalist`, it sits at the other end
+of the complexity ladder.
 
-## 结构
+## Structure
 
-- 入口：`src/index.tsx`、`src/App.tsx`。
-- Editor shell：`src/components/Editor/**`。
-- Filters：`src/components/Filter/**`。
-- Drag/drop：`src/components/Editor/dnd/**`。
-- Hooks：`src/hooks/**`，由 `src/hooks/index.ts` 导出。
-- Store：`src/model/VBIStore.ts`、`src/model/VBIStoreProvider.tsx`。
-- Connector/data：`src/utils/localConnector.ts`、`localDataset.ts`、
-  `parseCsv.ts`、`supermarketSchema.ts`。
-- 样式：`src/App.css` import `src/styles/**`。
+- Entry: `src/index.tsx`, `src/App.tsx`.
+- Editor shell: `src/components/Editor/**`.
+- Filters: `src/components/Filter/**`.
+- Drag/drop: `src/components/Editor/dnd/**`.
+- Hooks: `src/hooks/**`, exported from `src/hooks/index.ts`.
+- Store: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`.
+- Connector/data: `src/utils/localConnector.ts`, `localDataset.ts`,
+  `parseCsv.ts`, `supermarketSchema.ts`.
+- Styles: `src/App.css` imports `src/styles/**`.
 
-## 差异点
+## Differences
 
-- `createDefaultBuilder()` 注册 connector，并立即设置默认 locale/theme/limit。
-- 初始化委托给 `useInitializeProfessional`，它会先调用
-  `prepareProfessionalVBI()`，再执行 store `initialize`。
-- Editor state 通过 `useProfessionalEditorModel` 组装；shell 组件保持组合职责。
-- Drag/drop 行为拆成 payload、target model、drop logic、overlay position、
-  provider 文件，并为纯 decision logic 写测试。
-- Filter 和 having filter UI 使用 modal/model 组合，不使用 standard 的 shelf panel
-  风格。
-- `VSeedRender` 委托给 `renderVSeed`，并通过 Ant Design `message.error` 报告
-  render failure。
+- `createDefaultBuilder()` registers the connector and immediately sets the
+  default locale, theme, and limit.
+- Initialization is delegated to `useInitializeProfessional`, which calls
+  `prepareProfessionalVBI()` before running store `initialize`.
+- Editor state is assembled through `useProfessionalEditorModel`; shell
+  components keep composition responsibility.
+- Drag/drop behavior is split into payload, target model, drop logic, overlay
+  position, and provider files, with tests for pure decision logic.
+- Filter and having-filter UI use modal/model composition instead of the standard
+  shelf-panel style.
+- `VSeedRender` delegates to `renderVSeed` and reports render failures through
+  Ant Design `message.error`.
 
-## 开发规则
+## Development Rules
 
-- 不要从其他 practice import。
-- 行为放在 hooks、models 或 utils；组件专注 view 和 interaction composition。
-- 保留完整 hook signature 和 edge-case handling。
-- Drag/drop model logic 尽量在 React 之外可测试。
-- 可见文案同步更新两个 locale。
-- 使用 `localConnector.ts` 作为本地数据和 schema normalization 边界。
+- Do not import from other practices.
+- Put behavior in hooks, models, or utils; components should focus on view and
+  interaction composition.
+- Preserve full hook signatures and edge-case handling.
+- Keep drag/drop model logic testable outside React where possible.
+- Update visible copy in both locales.
+- Use `localConnector.ts` as the boundary for local data and schema
+  normalization.
 
-## 验证
+## Validation
 
 ```bash
 pnpm --filter professional run test

@@ -1,10 +1,10 @@
-# 5. useVBIDimensions — 维度管理
+# 5. useVBIDimensions — Dimension Management
 
-## 签名
+## Signature
 
 ```ts
 const {
-  dimensions, // VBIDimension[]，当前维度列表
+  dimensions, // VBIDimension[]; current dimension list
   addDimension, // (field: string, callback?: (node) => void) => void
   updateDimension, // (id: string, callback: (node) => void) => void
   removeDimension, // (id: string) => void
@@ -12,45 +12,45 @@ const {
 } = useVBIDimensions(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIDimensions.ts`
 
-## 用法示例
+## Usage Examples
 
-### 添加维度
+### Add a Dimension
 
 ```ts
-// 简单添加（自动推断编码和别名）
+// Simple add (encoding and alias are inferred automatically)
 addDimension('category')
 
-// 添加时配置别名、编码、排序
+// Configure alias, encoding, and sort when adding
 addDimension('order_date', (node) => {
-  node.setAlias('订单日期')
+  node.setAlias('Order Date')
   node.setEncoding('xAxis')
-  node.setAggregate({ func: 'toMonth' }) // 日期维度用 toMonth 聚合
+  node.setAggregate({ func: 'toMonth' }) // Aggregate date dimensions with toMonth
   node.setSort({ order: 'desc' })
 })
 ```
 
-### 更新维度
+### Update a Dimension
 
 ```ts
 updateDimension(dimId, (node) => {
-  node.setAlias('新别名')
+  node.setAlias('New Alias')
   node.setEncoding('color')
   node.setAggregate({ func: 'toQuarter' })
   node.setSort({ order: 'asc' })
 })
 ```
 
-### 删除维度
+### Remove a Dimension
 
 ```ts
 removeDimension(dimId)
 ```
 
-### 查找维度节点
+### Find a Dimension Node
 
 ```ts
 const node = findDimension(dimId)
@@ -61,23 +61,23 @@ if (node) {
 
 ---
 
-## Node 可用方法（回调中）
+## Available Node Methods (Inside Callbacks)
 
-| 方法                          | 说明                                                                                             |
-| ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| `node.setAlias(alias)`        | 设置显示别名                                                                                     |
-| `node.setEncoding(enc)`       | 设置编码：`xAxis`/`yAxis`/`color`/`detail`/`tooltip`/`label`/`row`/`column`/`player`/`hierarchy` |
-| `node.setAggregate({ func })` | 设置日期聚合：`toYear`/`toQuarter`/`toMonth`/`toWeek`/`toDay` 等                                 |
-| `node.setSort({ order })`     | 设置排序：`asc`/`desc`                                                                           |
-| `node.clearAggregate()`       | 清除日期聚合                                                                                     |
-| `node.clearSort()`            | 清除排序                                                                                         |
-| `node.getId()`                | 获取维度 ID                                                                                      |
-| `node.getField()`             | 获取字段名                                                                                       |
+| Method                        | Description                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `node.setAlias(alias)`        | Sets the display alias                                                                                |
+| `node.setEncoding(enc)`       | Sets encoding: `xAxis`/`yAxis`/`color`/`detail`/`tooltip`/`label`/`row`/`column`/`player`/`hierarchy` |
+| `node.setAggregate({ func })` | Sets date aggregation: `toYear`/`toQuarter`/`toMonth`/`toWeek`/`toDay`, etc.                          |
+| `node.setSort({ order })`     | Sets sorting: `asc`/`desc`                                                                            |
+| `node.clearAggregate()`       | Clears date aggregation                                                                               |
+| `node.clearSort()`            | Clears sorting                                                                                        |
+| `node.getId()`                | Gets the dimension ID                                                                                 |
+| `node.getField()`             | Gets the field name                                                                                   |
 
 ---
 
-## 注意事项
+## Notes
 
-- 所有操作通过 `builder.doc.transact()` 封装，自动支持 undo/redo
-- 日期维度添加时，建议设置日期聚合（`toMonth`/`toYear` 等），否则默认不聚合
-- `dimensions` 数组中每个元素的 `id` 用于 update/remove/delete 操作
+- All operations are wrapped with `builder.doc.transact()` and support undo/redo automatically.
+- When adding date dimensions, set date aggregation (`toMonth`/`toYear`, etc.) unless no aggregation is intended.
+- The `id` of each item in the `dimensions` array is used for update/remove/delete operations.

@@ -1,13 +1,13 @@
-# 7. Connector 系统（拓展了解）
+# 7. Connector System (Further Reading)
 
-> 本节为拓展内容。Connector 是 VBI 取数的底层机制，AI 通常不需要直接操作，了解即可。
+> This section is supplemental. Connector is the lower-level mechanism VBI uses to fetch data. AI usually does not need to operate on it directly; understanding the concept is enough.
 
-## 7.1 注册 Connector
+## 7.1 Register a Connector
 
-> `VBI.registerConnector()` 已在 `@visactor/vbi` 主入口可用。实际项目中仍建议优先参考目标 practice 的 connector/bootstrap 模块（例如 standard 的 `practices/standard/src/utils/localConnector.ts`）。
+> `VBI.registerConnector()` is available from the `@visactor/vbi` main entry. In real projects, still prefer the target practice's connector/bootstrap module, such as standard's `practices/standard/src/utils/localConnector.ts`.
 
 ```ts
-// ✅ 可以直接从主入口使用
+// ✅ Can be used directly from the main entry.
 import { VBI } from '@visactor/vbi';
 
 VBI.registerConnector('my-connector-id', async () => {
@@ -20,28 +20,28 @@ VBI.registerConnector('my-connector-id', async () => {
 });
 ```
 
-## 7.2 VBIConnector 接口
+## 7.2 VBIConnector Interface
 
 ```ts
 interface VBIConnector {
-  // 返回数据源的字段列表（name + type）
+  // Return the data source field list: name + type.
   discoverSchema(): Promise<Array<{ name: string; type: string }>>
 
-  // 执行查询，返回数据集
+  // Execute the query and return the dataset.
   query(props: {
-    queryDSL: VQueryDSL // 生成的 SQL DSL
-    schema: SchemaField[] // discoverSchema 返回的结构
+    queryDSL: VQueryDSL // Generated SQL DSL.
+    schema: SchemaField[] // Structure returned by discoverSchema.
     connectorId: string
-    signal?: AbortSignal // 可选的中断信号
+    signal?: AbortSignal // Optional abort signal.
   }): Promise<{
     dataset: Array<Record<string, number | string | boolean | null>>
   }>
 }
 ```
 
-## 7.3 标准 Connector 示例
+## 7.3 Standard Connector Example
 
-参考 `practices/standard/src/utils/localConnector.ts`：
+Reference: `practices/standard/src/utils/localConnector.ts`.
 
 ```ts
 import { VBI } from '@visactor/vbi'

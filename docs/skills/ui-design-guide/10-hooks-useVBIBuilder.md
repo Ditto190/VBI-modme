@@ -1,49 +1,49 @@
-# 10. useVBIBuilder — 全局配置（locale / theme / limit）
+# 10. useVBIBuilder — Global Configuration (locale / theme / limit)
 
-## 签名
+## Signature
 
 ```ts
 const {
-  locale, // DemoLocale，当前语言 ('zh-CN' | 'en-US')
-  theme, // DemoTheme，当前主题 ('light' | 'dark')
-  limit, // number，数据行数限制
-  connectorId, // string，当前 Connector ID
+  locale, // DemoLocale; current locale ('zh-CN' | 'en-US')
+  theme, // DemoTheme; current theme ('light' | 'dark')
+  limit, // number; data row limit
+  connectorId, // string; current Connector ID
   setLocale, // (locale: DemoLocale) => void
   setTheme, // (theme: DemoTheme) => void
   setLimit, // (limit: number) => void
 } = useVBIBuilder(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIBuilder.ts`
 
-## 用法示例
+## Usage Examples
 
-### 切换语言
+### Change Locale
 
 ```ts
-setLocale('zh-CN') // 中文
-setLocale('en-US') // 英文
+setLocale('zh-CN') // Chinese
+setLocale('en-US') // English
 ```
 
-### 切换主题
+### Change Theme
 
 ```ts
-setTheme('light') // 浅色主题
-setTheme('dark') // 深色主题
+setTheme('light') // Light theme
+setTheme('dark') // Dark theme
 ```
 
-### 设置数据限制
+### Set Data Limit
 
 ```ts
-setLimit(500) // 仅返回 500 行数据
-setLimit(1000) // 默认限制
+setLimit(500) // Return only 500 data rows
+setLimit(1000) // Default limit
 ```
 
 ---
 
-## 常量定义
+## Constant Definitions
 
 `practices/standard/src/constants/builder.ts`
 
@@ -62,17 +62,17 @@ export type DemoTheme = 'light' | 'dark'
 
 ---
 
-## 实现细节
+## Implementation Details
 
-- 状态订阅使用 `builder.doc.on('update', ...)`，通过 `builder.dsl.toJSON()` 同步 DSL 中的 `locale`/`theme`/`limit` 值
-- `setLimit` 内部调用 `normalizeLimit()`，自动将值四舍五入并限制最小为 1
-- `setLocale` / `setTheme` / `setLimit` 分别调用 `builder.locale.setLocale()` / `builder.theme.setTheme()` / `builder.limit.setLimit()`
-- 初始值从 DSL JSON 快照同步，无默认值时回退到常量默认值
+- State subscription uses `builder.doc.on('update', ...)` and synchronizes `locale`/`theme`/`limit` from the DSL via `builder.dsl.toJSON()`.
+- `setLimit` calls `normalizeLimit()` internally, automatically rounding the value and enforcing a minimum of 1.
+- `setLocale` / `setTheme` / `setLimit` call `builder.locale.setLocale()` / `builder.theme.setTheme()` / `builder.limit.setLimit()` respectively.
+- Initial values are synchronized from the DSL JSON snapshot and fall back to constant defaults when no defaults exist.
 
 ---
 
-## 注意事项
+## Notes
 
-- `limit` 影响的是 SQL 查询返回的行数，不是渲染的行数
-- 主题切换会同时影响 Toolbar 和 VSeed 渲染结果
-- 语言切换影响数字格式化（如千分位分隔符）等国际化显示
+- `limit` affects the number of rows returned by the SQL query, not the number of rendered rows.
+- Theme changes affect both the Toolbar and VSeed rendering output.
+- Locale changes affect internationalized display such as number formatting and thousands separators.

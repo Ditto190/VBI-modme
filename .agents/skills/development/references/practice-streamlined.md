@@ -1,55 +1,61 @@
-# 精简实践
+# Streamlined Practice
 
-`practices/streamlined` 的参考资料。它是 connector bootstrap、CSV URL 数据流
-和轻量 workbench 行为的快速路径；当任务需要主 VBI pipeline，但不需要 standard
-app 的完整框架时使用。
+Reference material for `practices/streamlined`. It is the fast path for
+connector bootstrap, CSV URL data flow, and lightweight workbench behavior. Use
+it when a task needs the main VBI pipeline but not the full standard app
+framework.
 
-## 定位
+## Positioning
 
-Streamlined 是轻量 workflow APP：
+Streamlined is a lightweight workflow app:
 
-- 中等源码面：约 57 个源码文件和一个聚焦测试文件。
-- 像 `minimalist` 一样使用远程 CSV demo connector。
-- 通过 `useInitializeVBI` 增加显式初始化。
-- 使用三列 workbench：fields、config、chart workspace。
-- `src/styles/**` 下有模块化样式。
-- Hooks 保持最少：初始化和 fullscreen。
+- It has a medium source surface: about 57 source files and one focused test
+  file.
+- Like `minimalist`, it uses a remote CSV demo connector.
+- It adds explicit initialization through `useInitializeVBI`.
+- It uses a three-column workbench: fields, config, and chart workspace.
+- It has modular styles under `src/styles/**`.
+- Hooks stay minimal: initialization and fullscreen.
 
-相比 `minimalist`，它有更清晰的 workflow panel 和更多可复用 action utility。
-相比 `standard`，它有意省略 i18n 文件、CSV 上传、source switching 和完整 hook
-suite。相比 `professional`，它是 slot/config 行为的简单实现，不是 business UI。
+Compared with `minimalist`, it has clearer workflow panels and more reusable
+action utilities. Compared with `standard`, it intentionally omits i18n files,
+CSV upload, source switching, and the full hook suite. Compared with
+`professional`, it is a simple implementation of slot/config behavior rather than
+a business UI.
 
-## 结构
+## Structure
 
-- 入口：`src/index.tsx`、`src/App/App.tsx`。
-- Workbench：`src/components/Workbench/EditorWorkbench.tsx`。
-- 图表区：`src/components/Chart/**`。
-- Config 和 fields：`src/components/Config/**`、`src/components/Fields/**`。
-- Store：`src/model/VBIStore.ts`、`src/model/VBIStoreProvider.tsx`。
-- Connector：`src/utils/demoConnector.ts`。
-- 功能逻辑：`src/utils/*Actions.ts`、`dragDrop.ts`、`filterInput.ts`。
-- 样式：`src/styles/app.css` import feature CSS files。
+- Entry: `src/index.tsx`, `src/App/App.tsx`.
+- Workbench: `src/components/Workbench/EditorWorkbench.tsx`.
+- Chart area: `src/components/Chart/**`.
+- Config and fields: `src/components/Config/**`, `src/components/Fields/**`.
+- Store: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`.
+- Connector: `src/utils/demoConnector.ts`.
+- Feature logic: `src/utils/*Actions.ts`, `dragDrop.ts`, `filterInput.ts`.
+- Styles: `src/styles/app.css` imports feature CSS files.
 
-## 差异点
+## Differences
 
-- Connector 注册 `demo`，并直接从公开 supermarket URL 创建 VQuery CSV dataset。
-- Store 有显式 `initialize`、`initialized`、`schema`、`loading`、`vseed`，
-  但没有缓存，也没有 source switching。
-- `useFullscreen` 在浏览器 fullscreen 失败时包含 fallback fullscreen state。
-- Config slots 由 `slotConfig.ts` 驱动；Builder mutation 位于
-  `mappingActions.ts`、`fieldActions.ts`、`filterActions.ts`。
-- `VSeedRender` 像 standard 一样包含 pivot chart legend filtering helper，
-  但保持 rendering code 紧凑。
+- The connector registers `demo` and directly creates a VQuery CSV dataset from
+  the public supermarket URL.
+- The store has explicit `initialize`, `initialized`, `schema`, `loading`, and
+  `vseed`, but no cache and no source switching.
+- `useFullscreen` includes fallback fullscreen state when browser fullscreen
+  fails.
+- Config slots are driven by `slotConfig.ts`; Builder mutation lives in
+  `mappingActions.ts`, `fieldActions.ts`, and `filterActions.ts`.
+- `VSeedRender` includes a pivot chart legend filtering helper like standard, but
+  keeps rendering code compact.
 
-## 开发规则
+## Development Rules
 
-- 不要从其他 practice import。
-- Connector 行为集中在 `demoConnector.ts`。
-- 保留 CSV URL 路径：`type: 'csv'`、`rawDataset: url`。
-- 保持 `VBIStore` 简单：订阅 doc changes 并重建 VSeed。
-- Mapping、filtering、drag/drop mutation 使用聚焦 utility。
+- Do not import from other practices.
+- Keep connector behavior centralized in `demoConnector.ts`.
+- Preserve the CSV URL path: `type: 'csv'`, `rawDataset: url`.
+- Keep `VBIStore` simple: subscribe to doc changes and rebuild VSeed.
+- Use focused utilities for mapping, filtering, and drag/drop mutation.
 
-## 验证
+## Validation
 
 ```bash
 pnpm --filter streamlined run test

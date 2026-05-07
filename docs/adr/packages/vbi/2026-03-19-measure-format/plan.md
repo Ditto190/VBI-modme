@@ -1,80 +1,80 @@
-# 执行计划: VBI Measure 数值格式支持
+# Implementation Plan: VBI Measure Numeric Format Support
 
-> 基于 ADR: `./adr.md`
-> TDD 驱动: 先写测试 → 再实现 → 全部测试通过
+> Based on ADR: `./adr.md`
+> TDD-driven: write tests first, then implement until all tests pass.
 
-## 范围
+## Scope
 
-本计划聚焦 VBI 核心包（`packages/vbi`），不含 `practices/standard` UI 改造。
+This plan focuses on the VBI core package (`packages/vbi`) and does not include `practices/standard` UI changes.
 
-## Phase 1: 类型定义
+## Phase 1: Type Definitions
 
-### 1.1 新增 VBIMeasureFormat 类型
+### 1.1 Add `VBIMeasureFormat`
 
-**改动文件**: `packages/vbi/src/types/dsl/measures/measures.ts`
+**Changed file**: `packages/vbi/src/types/dsl/measures/measures.ts`
 
-改动内容:
+Changes:
 
-1. 从 `@visactor/vseed` 引入 `NumFormat`
-2. 新增类型: `VBIMeasureFormat = { autoFormat: true } | ({ autoFormat?: false } & NumFormat)`
-3. 在 `zVBIMeasure` 中新增可选字段 `format`
-4. 对应 Zod schema: `zVBIMeasureFormat`
+1. Import `NumFormat` from `@visactor/vseed`.
+2. Add `VBIMeasureFormat = { autoFormat: true } | ({ autoFormat?: false } & NumFormat)`.
+3. Add optional `format` to `zVBIMeasure`.
+4. Add the corresponding zod schema: `zVBIMeasureFormat`.
 
-### 1.2 导出类型
+### 1.2 Export the type
 
-**改动文件**: `packages/vbi/src/types/dsl/index.ts`
+**Changed file**: `packages/vbi/src/types/dsl/index.ts`
 
-改动内容:
+Changes:
 
-- 新增导出 `VBIMeasureFormat`
+- Export `VBIMeasureFormat`.
 
-## Phase 2: Builder 扩展（先写测试）
+## Phase 2: Builder Extension
 
-### 2.1 先写测试
+### 2.1 Write tests first
 
-**测试文件**: `packages/vbi/tests/builder/features/measures.test.ts`（追加）
+**Test file**: `packages/vbi/tests/builder/features/measures.test.ts` (append cases)
 
-测试内容:
+Test coverage:
 
-1. `MeasureNodeBuilder.setFormat({ autoFormat: true })` 正确存储
-2. `MeasureNodeBuilder.setFormat(customFormat)` 正确存储自定义格式
-3. `MeasureNodeBuilder.getFormat()` 返回当前 format 或 undefined
-4. `MeasureNodeBuilder.clearFormat()` 清除格式配置
-5. `setFormat` 后 `toJSON()` 包含 `format` 字段
-6. `clearFormat` 后 `toJSON()` 不含 `format` 字段
-7. 未设置 format 时，`getFormat()` 返回 undefined
+1. `MeasureNodeBuilder.setFormat({ autoFormat: true })` stores the value correctly.
+2. `MeasureNodeBuilder.setFormat(customFormat)` stores custom format correctly.
+3. `MeasureNodeBuilder.getFormat()` returns the current format or `undefined`.
+4. `MeasureNodeBuilder.clearFormat()` clears format configuration.
+5. After `setFormat`, `toJSON()` includes the `format` field.
+6. After `clearFormat`, `toJSON()` omits the `format` field.
+7. When format has not been set, `getFormat()` returns `undefined`.
 
-### 2.2 实现 Builder
+### 2.2 Implement builder methods
 
-**改动文件**: `packages/vbi/src/builder/features/measures/mea-node-builder.ts`
+**Changed file**: `packages/vbi/src/builder/features/measures/mea-node-builder.ts`
 
-改动内容:
+Changes:
 
-- 新增 `setFormat(format: VBIMeasureFormat): this`
-- 新增 `getFormat(): VBIMeasureFormat | undefined`
-- 新增 `clearFormat(): this`
+- Add `setFormat(format: VBIMeasureFormat): this`.
+- Add `getFormat(): VBIMeasureFormat | undefined`.
+- Add `clearFormat(): this`.
 
-## Phase 3: buildVSeed 适配（先写测试）
+## Phase 3: `buildVSeed` Adaptation
 
-### 3.1 先写测试
+### 3.1 Write tests first
 
-**测试文件**: `packages/vbi/tests/builder/features/measures.test.ts`（追加 buildVSeed 测试）
+**Test file**: `packages/vbi/tests/builder/features/measures.test.ts` (append `buildVSeed` cases)
 
-测试内容:
+Test coverage:
 
-1. `format: { autoFormat: true }` → VSeed measure 含 `autoFormat: true`，不含 `numFormat`
-2. `format: customFormat` → VSeed measure 含 `autoFormat: false` + `numFormat: customFormat`
-3. `format` 未设置 → VSeed measure 不含 `autoFormat`，不含 `numFormat`
+1. `format: { autoFormat: true }` produces a VSeed measure with `autoFormat: true` and without `numFormat`.
+2. `format: customFormat` produces a VSeed measure with `autoFormat: false` and `numFormat: customFormat`.
+3. Without `format`, the VSeed measure omits both `autoFormat` and `numFormat`.
 
-### 3.2 实现适配
+### 3.2 Implement adaptation
 
-**改动文件**: `packages/vbi/src/builder/adapters/vquery-vseed/build-vseed.ts`
+**Changed file**: `packages/vbi/src/builder/adapters/vquery-vseed/build-vseed.ts`
 
-改动内容:
+Changes:
 
-- 在 measure 映射中增加 format → autoFormat / numFormat 的转换逻辑
+- Add the measure mapping logic from `format` to `autoFormat` / `numFormat`.
 
-## Phase 4: 验证
+## Phase 4: Verification
 
 ```bash
 pnpm --filter=@visactor/vbi run test
@@ -82,18 +82,18 @@ pnpm run lint
 pnpm run typecheck
 ```
 
-全部通过才算完成。
+All commands must pass before the task is complete.
 
-## 执行顺序
+## Execution Order
 
-| 步骤 | 动作                                | 文件                                                |
-| ---- | ----------------------------------- | --------------------------------------------------- |
-| 1    | 实现 VBIMeasureFormat 类型 + schema | `src/types/dsl/measures/measures.ts`                |
-| 2    | 更新类型导出                        | `src/types/dsl/index.ts`                            |
-| 3    | 写 builder 测试                     | `tests/builder/features/measures.test.ts`           |
-| 4    | 实现 builder 方法                   | `src/builder/features/measures/mea-node-builder.ts` |
-| 5    | 运行 builder 测试                   | 验证通过                                            |
-| 6    | 写 buildVSeed 测试                  | `tests/builder/features/measures.test.ts`           |
-| 7    | 实现 buildVSeed 适配                | `src/builder/adapters/vquery-vseed/build-vseed.ts`  |
-| 8    | 运行 buildVSeed 测试                | 验证通过                                            |
-| 9    | 全量验证                            | `test + lint + typecheck`                           |
+| Step | Action                                       | File                                                |
+| ---- | -------------------------------------------- | --------------------------------------------------- |
+| 1    | Implement `VBIMeasureFormat` type and schema | `src/types/dsl/measures/measures.ts`                |
+| 2    | Update type exports                          | `src/types/dsl/index.ts`                            |
+| 3    | Write builder tests                          | `tests/builder/features/measures.test.ts`           |
+| 4    | Implement builder methods                    | `src/builder/features/measures/mea-node-builder.ts` |
+| 5    | Run builder tests                            | Verification passes                                 |
+| 6    | Write `buildVSeed` tests                     | `tests/builder/features/measures.test.ts`           |
+| 7    | Implement `buildVSeed` adaptation            | `src/builder/adapters/vquery-vseed/build-vseed.ts`  |
+| 8    | Run `buildVSeed` tests                       | Verification passes                                 |
+| 9    | Full verification                            | `test + lint + typecheck`                           |

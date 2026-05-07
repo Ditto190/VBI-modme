@@ -1,79 +1,79 @@
-# 18. 组件设计模式
+# 18. Component Design Patterns
 
-## 目录结构
+## Directory Structure
 
-每个 practice 独立实现完整的组件集，典型结构：
+Each practice independently implements a complete component set. A typical structure:
 
 ```
 src/components/
-├── Toolbar/           # 工具栏：图表类型选择器、撤销/重做、语言、主题、数据限制
-│   ├── index.tsx      # Toolbar 主组件
-│   └── config.tsx      # 图表类型元数据（groups + metas）
-├── ChartType/         # 图表类型选择器
-│   └── Selector.tsx   # Popover 内嵌 Grid
-├── Fields/            # 字段列表
+├── Toolbar/           # Toolbar: chart type selector, undo/redo, locale, theme, data limit
+│   ├── index.tsx      # Main Toolbar component
+│   └── config.tsx      # Chart type metadata (groups + metas)
+├── ChartType/         # Chart type selector
+│   └── Selector.tsx   # Popover-embedded Grid
+├── Fields/            # Field list
 │   └── FieldList/
-│       └── index.tsx  # 搜索 + 角色过滤 + 字段项
-├── Shelves/            # 配置货架
+│       └── index.tsx  # Search + role filter + field item
+├── Shelves/            # Configuration shelves
 │   └── shelves/
-│       ├── DimensionShelf.tsx   # 维度货架行 + 右键菜单（aggregate/encoding/sort/delete）
-│       └── MeasureShelf.tsx      # 度量货架行 + 右键菜单（aggregate/encoding/format/sort/delete）
+│       ├── DimensionShelf.tsx   # Dimension shelf row + context menu (aggregate/encoding/sort/delete)
+│       └── MeasureShelf.tsx      # Measure shelf row + context menu (aggregate/encoding/format/sort/delete)
 └── Render/
-    └── VSeedRender.tsx           # VSeed → 图表/表格渲染
+    └── VSeedRender.tsx           # VSeed -> chart/table rendering
 ```
 
 ---
 
-## Toolbar — 工具栏
+## Toolbar
 
-**职责**：全局配置入口（图表类型、撤销/重做、行数限制、语言、主题、全屏）。
+**Responsibility**: global configuration entry point (chart type, undo/redo, row limit, locale, theme, fullscreen).
 
-**子组件拆分原则**：
+**Subcomponent split principle**:
 
-| 组件                | 职责                            |
-| ------------------- | ------------------------------- |
-| `ChartTypeSelector` | 图表类型 Popover 选择器         |
-| `Toolbar`           | 布局容器（Flex + Divider 分隔） |
+| Component           | Responsibility                               |
+| ------------------- | -------------------------------------------- |
+| `ChartTypeSelector` | Chart type Popover selector                  |
+| `Toolbar`           | Layout container (Flex + Divider separation) |
 
-**Toolbar 内部模式**：
+**Internal Toolbar pattern**:
 
 ```tsx
-// 使用 useVBIStore 获取 builder
+// Get builder with useVBIStore.
 const builder = useVBIStore((state) => state.builder)
 
-// 组合多个 hooks
+// Compose multiple hooks.
 const { canUndo, canRedo, undo, redo } = useVBIUndoManager(builder)
 const { locale, theme, limit, setLocale, setTheme, setLimit } = useVBIBuilder(builder)
 ```
 
-**样式约定**：使用 `theme.useToken()` 获取 Antd Design token，保持深/浅主题一致。
+**Styling convention**: use `theme.useToken()` to get Ant Design tokens and keep dark/light themes consistent.
 
 ---
 
-## ChartTypeSelector — 图表类型选择器
+## ChartTypeSelector — Chart Type Selector
 
-**职责**：Popover 内展示图表类型分组网格，支持搜索和图标展示。
+**Responsibility**: display a grouped chart-type grid inside a Popover, with search and icons.
 
-**调用链**：
+**Call chain**:
 
 ```
-用户点击图表类型
+User clicks a chart type
   → useVBIChartType(builder).changeChartType(type)
   → builder.chartType.changeChartType(type)
-  → Yjs doc 更新
-  → VSeedStore 自动重新构建 VSeed
-  → VSeedRender 重新渲染
+  → Yjs doc updates
+  → VSeedStore automatically rebuilds VSeed
+  → VSeedRender re-renders
 ```
 
-**配置元数据（config.tsx）**：
+**Configuration metadata (`config.tsx`)**:
 
 ```ts
 export interface ChartTypeMeta {
-  type: string;           // 'column'、'pie' 等
-  group: ChartGroupKey;    // 'comparison'、'proportion' 等
+  type: string;           // 'column', 'pie', etc.
+  group: ChartGroupKey;    // 'comparison', 'proportion', etc.
   labelKey: string;        // i18n key
   descriptionKey: string;  // i18n key
-  icon: ReactNode;         // @ant-design/icons 组件
+  icon: ReactNode;         // @ant-design/icons component
 }
 
 export const CHART_TYPE_METAS: ChartTypeMeta[] = [
@@ -84,21 +84,21 @@ export const CHART_TYPE_METAS: ChartTypeMeta[] = [
 
 ---
 
-## FieldsPanel — 字段面板
+## FieldsPanel — Field Panel
 
-**职责**：展示可用字段列表，支持按角色/类型筛选、搜索、点击添加。
+**Responsibility**: show available fields and support role/type filtering, search, and click-to-add.
 
-**组合**：`FieldsPanel` → `FieldList` → `useVBISchemaFields(builder)` → `builder.getSchema()`
+**Composition**: `FieldsPanel` → `FieldList` → `useVBISchemaFields(builder)` → `builder.getSchema()`
 
 ```tsx
 const { schemaFields } = useVBISchemaFields(builder)
 
-// 角色分组
+// Group by role.
 const dimensionFields = schemaFields.filter((f) => f.role === 'dimension')
 const measureFields = schemaFields.filter((f) => f.role === 'measure')
 ```
 
-**点击字段添加到货架**：
+**Click a field to add it to a shelf**:
 
 ```tsx
 // FieldList/index.tsx
@@ -113,62 +113,62 @@ onClick={() => {
 
 ---
 
-## ShelfPanel — 配置货架面板
+## ShelfPanel — Configuration Shelf Panel
 
-**职责**：展示和管理已添加的维度/度量/过滤条件行（ShelfRow）。
+**Responsibility**: display and manage added dimension/measure/filter rows (ShelfRow).
 
-**四行结构**：
+**Four-row structure**:
 
-| 行        | 组件                    | 数据                                   |
-| --------- | ----------------------- | -------------------------------------- |
-| 维度行    | `DimensionShelf`        | `useVBIDimensions(builder).dimensions` |
-| 度量行    | `MeasureShelf`          | `useVBIMeasures(builder).measures`     |
-| WHERE 行  | `WhereShelf`（如实现）  | `useVBIWhereFilter(builder).filters`   |
-| HAVING 行 | `HavingShelf`（如实现） | `useVBIHavingFilter(builder).filters`  |
+| Row           | Component                      | Data                                   |
+| ------------- | ------------------------------ | -------------------------------------- |
+| Dimension row | `DimensionShelf`               | `useVBIDimensions(builder).dimensions` |
+| Measure row   | `MeasureShelf`                 | `useVBIMeasures(builder).measures`     |
+| WHERE row     | `WhereShelf` (if implemented)  | `useVBIWhereFilter(builder).filters`   |
+| HAVING row    | `HavingShelf` (if implemented) | `useVBIHavingFilter(builder).filters`  |
 
 ---
 
-## ShelfRow — 单行货架
+## ShelfRow — Single Shelf Row
 
-**职责**：展示单个已添加字段，支持右键菜单操作（aggregate/encoding/format/sort/delete）。
+**Responsibility**: display one added field and support context-menu operations (aggregate/encoding/format/sort/delete).
 
-**右键菜单示例（DimensionShelf）**：
+**Context menu example (DimensionShelf)**:
 
 ```tsx
 const items = [
-  { key: 'encoding', label: '设置编码' },
-  { key: 'aggregate', label: '日期聚合' },
-  { key: 'sort', label: '排序' },
-  { key: 'delete', danger: true, label: '删除' },
+  { key: 'encoding', label: 'Set encoding' },
+  { key: 'aggregate', label: 'Date aggregation' },
+  { key: 'sort', label: 'Sort' },
+  { key: 'delete', danger: true, label: 'Delete' },
 ]
 
 onClick: ({ key }) => {
   if (key === 'delete') {
     removeDimension(item.id)
   } else if (key === 'encoding') {
-    // 打开编码选择 Popover
+    // Open the encoding selection Popover.
   }
 }
 ```
 
 ---
 
-## ChartPanel — 图表展示面板
+## ChartPanel — Chart Display Panel
 
-**职责**：包装 VSeedRender，处理加载/空状态。
+**Responsibility**: wrap VSeedRender and handle loading/empty states.
 
 ```tsx
 const vseed = useVBIStore((s) => s.vseed)
 const loading = useVBIStore((s) => s.loading)
 
 if (loading) return <Spin />
-if (!vseed) return <Empty description='请添加维度和度量' />
+if (!vseed) return <Empty description='Add dimensions and measures' />
 return <VSeedRender vseed={vseed} />
 ```
 
 ---
 
-## 组件间数据流
+## Data Flow Between Components
 
 ```
 VBIStoreProvider
@@ -182,10 +182,10 @@ VBIStoreProvider
 
 ---
 
-## 注意事项
+## Notes
 
-- **每个 practice 独立实现**所有组件，不引用其他 practice 的组件
-- 组件中获取 builder 的标准方式：`const builder = useVBIStore((s) => s.builder);`
-- Hooks 回调中的 `builder` 参数可以是 `undefined`，内部已有防护
-- 右键菜单使用 Antd `Dropdown` + `Menu`，items 配置对象驱动
-- 组件样式优先使用 Antd Design token（`theme.useToken()`），确保主题一致性
+- **Each practice implements** all components independently and does not import components from other practices.
+- Standard way to get builder in components: `const builder = useVBIStore((s) => s.builder);`
+- The `builder` parameter in hook callbacks can be `undefined`; hooks already guard this internally.
+- Context menus use Antd `Dropdown` + `Menu` and are driven by the `items` configuration object.
+- Component styles should prefer Ant Design tokens (`theme.useToken()`) to ensure theme consistency.

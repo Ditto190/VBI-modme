@@ -1,10 +1,10 @@
-# 6. useVBIMeasures — 度量管理
+# 6. useVBIMeasures — Measure Management
 
-## 签名
+## Signature
 
 ```ts
 const {
-  measures, // VBIMeasure[]，当前度量列表
+  measures, // VBIMeasure[]; current measure list
   addMeasure, // (field: string, callback?: (node) => void) => void
   updateMeasure, // (id: string, callback: (node) => void) => void
   removeMeasure, // (id: string) => void
@@ -12,21 +12,21 @@ const {
 } = useVBIMeasures(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIMeasures.ts`
 
-## 用法示例
+## Usage Examples
 
-### 添加度量
+### Add a Measure
 
 ```ts
-// 简单添加（默认 sum 聚合）
+// Simple add (default sum aggregation)
 addMeasure('sales')
 
-// 添加时配置别名、聚合、编码、格式
+// Configure alias, aggregation, encoding, and format when adding
 addMeasure('profit', (node) => {
-  node.setAlias('利润')
+  node.setAlias('Profit')
   node.setAggregate({ func: 'avg' })
   node.setEncoding('yAxis')
   node.setFormat({ autoFormat: false, prefix: '$', decimalCount: 2 })
@@ -34,25 +34,25 @@ addMeasure('profit', (node) => {
 })
 ```
 
-### 更新度量
+### Update a Measure
 
 ```ts
 updateMeasure(meaId, (node) => {
-  node.setAlias('新别名')
-  node.setEncoding('size') // 改为 size 编码
+  node.setAlias('New Alias')
+  node.setEncoding('size') // Change to size encoding
   node.setAggregate({ func: 'median' })
-  node.setFormat({ autoFormat: false, suffix: '元', decimalCount: 0 })
+  node.setFormat({ autoFormat: false, suffix: 'USD', decimalCount: 0 })
   node.setSort({ order: 'desc' })
 })
 ```
 
-### 删除度量
+### Remove a Measure
 
 ```ts
 removeMeasure(meaId)
 ```
 
-### 查找度量节点
+### Find a Measure Node
 
 ```ts
 const node = findMeasure(meaId)
@@ -63,30 +63,30 @@ if (node) {
 
 ---
 
-## Node 可用方法（回调中）
+## Available Node Methods (Inside Callbacks)
 
-| 方法                                     | 说明                                                                                                                                                                                      |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `node.setAlias(alias)`                   | 设置显示别名                                                                                                                                                                              |
-| `node.setEncoding(enc)`                  | 设置编码：`yAxis`/`xAxis`/`primaryYAxis`/`secondaryYAxis`/`angle`/`radius`/`size`/`color`/`detail`/`column`/`label`/`tooltip`/`value`/`q1`/`q3`/`min`/`max`/`median`/`outliers`/`x0`/`x1` |
-| `node.setAggregate({ func, quantile? })` | 设置聚合：`sum`/`avg`/`count`/`countDistinct`/`min`/`max`/`median`/`stddev`/`variance`/`quantile`                                                                                         |
-| `node.setFormat(cfg)`                    | 设置格式：`{ autoFormat: true }` 或 `{ autoFormat: false, prefix, suffix, decimalCount, thousandsSeparator }`                                                                             |
-| `node.setSort({ order })`                | 设置排序：`asc`/`desc`                                                                                                                                                                    |
-| `node.clearFormat()`                     | 清除格式                                                                                                                                                                                  |
-| `node.clearSort()`                       | 清除排序                                                                                                                                                                                  |
-| `node.clearAggregate()`                  | 清除聚合（不推荐）                                                                                                                                                                        |
-| `node.getId()`                           | 获取度量 ID                                                                                                                                                                               |
-| `node.getField()`                        | 获取字段名                                                                                                                                                                                |
+| Method                                   | Description                                                                                                                                                                                    |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `node.setAlias(alias)`                   | Sets the display alias                                                                                                                                                                         |
+| `node.setEncoding(enc)`                  | Sets encoding: `yAxis`/`xAxis`/`primaryYAxis`/`secondaryYAxis`/`angle`/`radius`/`size`/`color`/`detail`/`column`/`label`/`tooltip`/`value`/`q1`/`q3`/`min`/`max`/`median`/`outliers`/`x0`/`x1` |
+| `node.setAggregate({ func, quantile? })` | Sets aggregation: `sum`/`avg`/`count`/`countDistinct`/`min`/`max`/`median`/`stddev`/`variance`/`quantile`                                                                                      |
+| `node.setFormat(cfg)`                    | Sets format: `{ autoFormat: true }` or `{ autoFormat: false, prefix, suffix, decimalCount, thousandsSeparator }`                                                                               |
+| `node.setSort({ order })`                | Sets sorting: `asc`/`desc`                                                                                                                                                                     |
+| `node.clearFormat()`                     | Clears format                                                                                                                                                                                  |
+| `node.clearSort()`                       | Clears sorting                                                                                                                                                                                 |
+| `node.clearAggregate()`                  | Clears aggregation (not recommended)                                                                                                                                                           |
+| `node.getId()`                           | Gets the measure ID                                                                                                                                                                            |
+| `node.getField()`                        | Gets the field name                                                                                                                                                                            |
 
 ---
 
-## 常用编码组合
+## Common Encoding Combinations
 
-| 图表类型      | 常用编码                                                     |
-| ------------- | ------------------------------------------------------------ |
-| 柱状图/条形图 | `yAxis`（主度量）、`xAxis`（维度）                           |
-| 散点图        | `size`（度量）、`color`（维度）                              |
-| 双轴图        | `primaryYAxis`（第一个度量）、`secondaryYAxis`（第二个度量） |
-| 饼图          | `angle`（度量）、`color`（维度）                             |
-| 雷达图        | `size`（多个度量）                                           |
-| 箱线图        | `q1`/`q3`/`min`/`max`/`median`/`outliers`                    |
+| Chart Type       | Common Encodings                                                  |
+| ---------------- | ----------------------------------------------------------------- |
+| Column/bar chart | `yAxis` (primary measure), `xAxis` (dimension)                    |
+| Scatter chart    | `size` (measure), `color` (dimension)                             |
+| Dual-axis chart  | `primaryYAxis` (first measure), `secondaryYAxis` (second measure) |
+| Pie chart        | `angle` (measure), `color` (dimension)                            |
+| Radar chart      | `size` (multiple measures)                                        |
+| Box plot         | `q1`/`q3`/`min`/`max`/`median`/`outliers`                         |

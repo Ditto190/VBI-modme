@@ -1,65 +1,65 @@
-# 5. React 集成模式
+# 5. React Integration Patterns
 
-> ⚠️ **重要区分**：每个 practice 自己实现的 hooks（`useVBIDimensions` / `useVBIWhereFilter` 等）与 `@visactor/vbi-react` 包中的 hooks（`useDimensions` / `useWhereFilter` 等）**签名完全不同**，不可混用。**大部分 practice 使用各自独立的 hooks，只有 vbi-react-starter 使用 @visactor/vbi-react**。详见 [09-standard-practice.md](./09-standard-practice.md)。
+> ⚠️ **Important distinction**: Hooks implemented by each practice, such as `useVBIDimensions` and `useVBIWhereFilter`, have **completely different signatures** from hooks in the `@visactor/vbi-react` package, such as `useDimensions` and `useWhereFilter`. They must not be mixed. **Most practices use their own independent hooks; only vbi-react-starter uses @visactor/vbi-react**. See [09-standard-practice.md](./09-standard-practice.md).
 
-## 5.1 两套 Hooks 对比
+## 5.1 Two Hook Sets Compared
 
-| vbi-react hook                  | 各 practice 自有 hook               | 核心区别                             |
-| ------------------------------- | ----------------------------------- | ------------------------------------ |
-| `useDimensions(builder)` 必传   | `useVBIDimensions(builder?)` 可选   | builder 参数可选                     |
-| `useMeasures(builder)` 必传     | `useVBIMeasures(builder?)` 可选     | builder 参数可选                     |
-| `useWhereFilter(builder)` 必传  | `useVBIWhereFilter(builder?)` 可选  | 返回值完全不同                       |
-| `useHavingFilter(builder)` 必传 | `useVBIHavingFilter(builder?)` 可选 | 返回值完全不同                       |
-| `useChartType(builder)` 必传    | `useVBIChartType(builder?)` 可选    | 返回值略有不同                       |
-| —                               | `useVBIBuilder(builder?)`           | 各 practice 独有：locale/theme/limit |
-| —                               | `useVBISchemaFields(builder?)`      | 各 practice 独有：字段列表           |
-| —                               | `useVBIUndoManager(builder?)`       | 各 practice 独有：undo/redo          |
+| vbi-react hook                      | Practice-owned hook                     | Key difference                        |
+| ----------------------------------- | --------------------------------------- | ------------------------------------- |
+| `useDimensions(builder)` required   | `useVBIDimensions(builder?)` optional   | The builder parameter is optional     |
+| `useMeasures(builder)` required     | `useVBIMeasures(builder?)` optional     | The builder parameter is optional     |
+| `useWhereFilter(builder)` required  | `useVBIWhereFilter(builder?)` optional  | Return value is completely different  |
+| `useHavingFilter(builder)` required | `useVBIHavingFilter(builder?)` optional | Return value is completely different  |
+| `useChartType(builder)` required    | `useVBIChartType(builder?)` optional    | Return value differs slightly         |
+| -                                   | `useVBIBuilder(builder?)`               | Practice-specific: locale/theme/limit |
+| -                                   | `useVBISchemaFields(builder?)`          | Practice-specific: field list         |
+| -                                   | `useVBIUndoManager(builder?)`           | Practice-specific: undo/redo          |
 
-## 5.2 VBI-react 包提供的内容（仅 vbi-react-starter 使用）
+## 5.2 What the VBI-react Package Provides (Only Used by vbi-react-starter)
 
-VBI-react 包位于 `packages/vbi-react/`，包含 **7 个 hooks** 和 **4 个组件**。只有 `vbi-react-starter` 使用这个包。其他 practice（minimalist/streamlined/professional/standard）都使用各自独立的实现。
+The VBI-react package lives in `packages/vbi-react/` and contains **7 hooks** and **4 components**. Only `vbi-react-starter` uses this package. Other practices (minimalist/streamlined/professional/standard) use their own independent implementations.
 
 ### Hooks
 
-| Hook              | 作用                         | 关键返回值                                                                   |
-| ----------------- | ---------------------------- | ---------------------------------------------------------------------------- |
-| `useVBI`          | 获取 builder + 完整 DSL 快照 | `{ builder, dsl }`                                                           |
-| `useVSeed`        | 执行 buildVSeed 流水线       | `{ vseed, loading, error, refetch }`                                         |
-| `useDimensions`   | 维度状态订阅                 | `{ dimensions, addDimension, removeDimension, updateDimension }`             |
-| `useMeasures`     | 度量状态订阅                 | `{ measures, addMeasure, removeMeasure, updateMeasure }`                     |
-| `useWhereFilter`  | WHERE 过滤状态订阅           | `{ whereFilter, mutateWhereFilter, clearWhereFilter, removeWhereEntry }`     |
-| `useHavingFilter` | HAVING 过滤状态订阅          | `{ havingFilter, mutateHavingFilter, clearHavingFilter, removeHavingEntry }` |
-| `useChartType`    | 图表类型状态订阅             | `{ chartType, availableChartTypes, setChartType }`                           |
+| Hook              | Purpose                              | Key return value                                                             |
+| ----------------- | ------------------------------------ | ---------------------------------------------------------------------------- |
+| `useVBI`          | Gets builder + complete DSL snapshot | `{ builder, dsl }`                                                           |
+| `useVSeed`        | Runs the buildVSeed pipeline         | `{ vseed, loading, error, refetch }`                                         |
+| `useDimensions`   | Subscribes to dimension state        | `{ dimensions, addDimension, removeDimension, updateDimension }`             |
+| `useMeasures`     | Subscribes to measure state          | `{ measures, addMeasure, removeMeasure, updateMeasure }`                     |
+| `useWhereFilter`  | Subscribes to WHERE filter state     | `{ whereFilter, mutateWhereFilter, clearWhereFilter, removeWhereEntry }`     |
+| `useHavingFilter` | Subscribes to HAVING filter state    | `{ havingFilter, mutateHavingFilter, clearHavingFilter, removeHavingEntry }` |
+| `useChartType`    | Subscribes to chart type state       | `{ chartType, availableChartTypes, setChartType }`                           |
 
-### 组件
+### Components
 
-| 组件                | 作用                                           |
-| ------------------- | ---------------------------------------------- |
-| `ChartRenderer`     | 图表渲染容器（需传入 `renderVSeed` prop 渲染） |
-| `ChartTypeSelector` | 图表类型选择下拉框                             |
-| `FieldPanel`        | 字段管理面板（维度/度量列表）                  |
-| `BuilderLayout`     | 布局容器（leftPanel/main/rightPanel）          |
+| Component           | Purpose                                                                   |
+| ------------------- | ------------------------------------------------------------------------- |
+| `ChartRenderer`     | Chart rendering container. Requires the `renderVSeed` prop for rendering. |
+| `ChartTypeSelector` | Chart type selector dropdown                                              |
+| `FieldPanel`        | Field management panel for dimension/measure lists                        |
+| `BuilderLayout`     | Layout container: leftPanel/main/rightPanel                               |
 
-### 内部机制
+### Internal Mechanism
 
-所有 hooks 底层依赖 `useBuilderObserver`（`src/internal/useBuilderObserver.ts`），其本质是 React 18 的 `useSyncExternalStore`，订阅 Yjs `doc` 的 `'update'` 事件。这保证了 **Yjs 文档变更 → React 自动重新渲染** 的链路是全自动的。
+All hooks depend on `useBuilderObserver` (`src/internal/useBuilderObserver.ts`) internally. It is essentially React 18's `useSyncExternalStore`, subscribing to the Yjs `doc` `'update'` event. This guarantees that the **Yjs document change -> automatic React re-render** flow is fully automatic.
 
 ---
 
-## 5.3 AI 触发 UI 更新的方式
+## 5.3 How AI Triggers UI Updates
 
-AI 生成图表配置后，Yjs 变更自动触发重渲染，无需手动刷新页面。
+After AI generates chart configuration, Yjs changes automatically trigger re-rendering. No manual page refresh is needed.
 
-### 方式 1：直接调用 Builder API（推荐）
+### Method 1: Call Builder APIs Directly (Recommended)
 
-AI 直接操作 builder，Yjs 变更自动触发重渲染：
+AI operates on the builder directly, and Yjs changes automatically trigger re-rendering:
 
 ```tsx
 function ChartConfig() {
   const { builder } = useVBI(builder)
 
-  // AI 调用 Builder API → Yjs doc 更新 → doc 触发 'update' 事件
-  // → useVSeed 监听到变化 → 自动调用 buildVSeed → 图表重新渲染
+  // AI calls Builder APIs -> Yjs doc updates -> doc emits the 'update' event
+  // -> useVSeed observes the change -> buildVSeed runs automatically -> chart re-renders.
   const configureChart = () => {
     builder.chartType.changeChartType('column')
     builder.dimensions.add('category')
@@ -68,13 +68,13 @@ function ChartConfig() {
     })
   }
 
-  return <button onClick={configureChart}>生成柱状图</button>
+  return <button onClick={configureChart}>Generate column chart</button>
 }
 ```
 
-**关键点**：AI 只需要调用 Builder API，后续的重渲染全部由 VBI-react 自动处理。
+**Key point**: AI only needs to call Builder APIs. All later re-rendering is handled automatically by VBI-react.
 
-### 方式 2：通过 React hooks 操作（命令式）
+### Method 2: Operate Through React Hooks Imperatively
 
 ```tsx
 function ChartConfig() {
@@ -85,14 +85,14 @@ function ChartConfig() {
   const configureBarChart = () => {
     setChartType('column')
     addDimension('category')
-    addMeasure('sales', { aggregate: { func: 'sum' }, alias: '销售额' })
+    addMeasure('sales', { aggregate: { func: 'sum' }, alias: 'Sales' })
   }
 
-  return <button onClick={configureBarChart}>生成柱状图</button>
+  return <button onClick={configureBarChart}>Generate column chart</button>
 }
 ```
 
-### 方式 3：通过 filter mutation 操作
+### Method 3: Operate Through Filter Mutation
 
 ```tsx
 function FilterPanel() {
@@ -102,18 +102,18 @@ function FilterPanel() {
     mutateWhereFilter((f) => {
       f.add('region', (node) => {
         node.setOperator('=')
-        node.setValue('华北')
+        node.setValue('North China')
       })
     })
   }
 
-  return <button onClick={addRegionFilter}>添加地区过滤</button>
+  return <button onClick={addRegionFilter}>Add region filter</button>
 }
 ```
 
 ---
 
-## 5.4 useVBI — 获取完整状态
+## 5.4 useVBI: Get Full State
 
 ```tsx
 import { useVBI } from '@visactor/vbi-react'
@@ -123,9 +123,9 @@ function ChartConfig() {
 
   return (
     <div>
-      <div>当前图表类型：{dsl.chartType}</div>
-      <div>维度数量：{dsl.dimensions.length}</div>
-      <div>度量数量：{dsl.measures.length}</div>
+      <div>Current chart type: {dsl.chartType}</div>
+      <div>Dimension count: {dsl.dimensions.length}</div>
+      <div>Measure count: {dsl.measures.length}</div>
     </div>
   )
 }
@@ -133,27 +133,27 @@ function ChartConfig() {
 
 ---
 
-## 5.5 useVSeed — 执行渲染流水线
+## 5.5 useVSeed: Run the Rendering Pipeline
 
 ```tsx
 import { useVSeed } from '@visactor/vbi-react'
 
 function ChartView() {
   const { vseed, loading, error, refetch } = useVSeed(builder, {
-    debounce: 300, // 防抖延迟，默认 300ms
+    debounce: 300, // Debounce delay. Default: 300ms.
     onError: (e) => console.error(e),
   })
 
   if (error) {
     return (
       <div>
-        渲染失败: {error.message} <button onClick={refetch}>重试</button>
+        Render failed: {error.message} <button onClick={refetch}>Retry</button>
       </div>
     )
   }
 
   if (loading && !vseed) {
-    return <div>加载中...</div>
+    return <div>Loading...</div>
   }
 
   return vseed ? <VSeedRender vseed={vseed} /> : null
@@ -162,7 +162,7 @@ function ChartView() {
 
 ---
 
-## 5.6 useDimensions — 维度管理
+## 5.6 useDimensions: Dimension Management
 
 ```tsx
 import { useDimensions } from '@visactor/vbi-react'
@@ -175,33 +175,33 @@ function DimensionPanel() {
       {dimensions.map((dim) => (
         <div key={dim.id}>
           {dim.alias || dim.field}
-          <button onClick={() => removeDimension(dim.id)}>删除</button>
+          <button onClick={() => removeDimension(dim.id)}>Delete</button>
         </div>
       ))}
-      <button onClick={() => addDimension('category')}>+ 添加类别维度</button>
+      <button onClick={() => addDimension('category')}>+ Add category dimension</button>
     </div>
   )
 }
 ```
 
-`VBIDimension` 结构：
+`VBIDimension` structure:
 
 ```ts
 {
   id: string;
-  field: string;        // 原始字段名
-  alias: string;        // 显示别名
+  field: string;        // Original field name.
+  alias: string;        // Display alias.
   encoding?: 'xAxis' | 'yAxis' | 'color' | 'detail' | 'tooltip' | 'label' | 'row' | 'column' | 'angle' | 'hierarchy' | 'player';
   aggregate?: { func: 'toYear' | 'toQuarter' | 'toMonth' | 'toWeek' | 'toDay' | 'toHour' | 'toMinute' | 'toSecond' };
   sort?: { order: 'asc' | 'desc' };
 }
 ```
 
-> ⚠️ `useDimensions.updateDimension` 目前只支持更新 `alias`。如需更新 `aggregate`/`encoding`/`sort`，请直接使用 `builder.dimensions.update(id, callback)`。
+> ⚠️ `useDimensions.updateDimension` currently only supports updating `alias`. To update `aggregate`/`encoding`/`sort`, use `builder.dimensions.update(id, callback)` directly.
 
 ---
 
-## 5.7 useMeasures — 度量管理
+## 5.7 useMeasures: Measure Management
 
 ```tsx
 import { useMeasures } from '@visactor/vbi-react'
@@ -213,17 +213,17 @@ function MeasurePanel() {
     <div>
       {measures.map((m) => (
         <div key={m.id}>
-          {m.alias || m.field} [{m.aggregate?.func}] → {m.encoding}
-          <button onClick={() => removeMeasure(m.id)}>删除</button>
+          {m.alias || m.field} [{m.aggregate?.func}] -> {m.encoding}
+          <button onClick={() => removeMeasure(m.id)}>Delete</button>
         </div>
       ))}
-      <button onClick={() => addMeasure('sales', { aggregate: { func: 'sum' } })}>+ 添加销售度量</button>
+      <button onClick={() => addMeasure('sales', { aggregate: { func: 'sum' } })}>+ Add sales measure</button>
     </div>
   )
 }
 ```
 
-`VBIMeasure` 结构：
+`VBIMeasure` structure:
 
 ```ts
 {
@@ -237,11 +237,11 @@ function MeasurePanel() {
 }
 ```
 
-> ⚠️ `useMeasures.updateMeasure` 目前只支持更新 `alias`、`aggregate`、`encoding`。如需更新 `format`/`sort`，请直接使用 `builder.measures.update(id, callback)`。
+> ⚠️ `useMeasures.updateMeasure` currently only supports updating `alias`, `aggregate`, and `encoding`. To update `format`/`sort`, use `builder.measures.update(id, callback)` directly.
 
 ---
 
-## 5.8 useWhereFilter — WHERE 过滤
+## 5.8 useWhereFilter: WHERE Filters
 
 ```tsx
 import { useWhereFilter } from '@visactor/vbi-react'
@@ -254,7 +254,7 @@ function WherePanel() {
       {whereFilter.conditions.map((cond) => (
         <div key={cond.id}>
           {cond.field} {cond.op} {JSON.stringify(cond.value)}
-          <button onClick={() => removeWhereEntry(cond.id)}>删除</button>
+          <button onClick={() => removeWhereEntry(cond.id)}>Delete</button>
         </div>
       ))}
       <button
@@ -262,12 +262,12 @@ function WherePanel() {
           mutateWhereFilter((f) =>
             f.add('region', (n) => {
               n.setOperator('=')
-              n.setValue('华北')
+              n.setValue('North China')
             }),
           )
         }}
       >
-        + 添加过滤
+        + Add filter
       </button>
     </div>
   )
@@ -276,7 +276,7 @@ function WherePanel() {
 
 ---
 
-## 5.9 useHavingFilter — HAVING 过滤
+## 5.9 useHavingFilter: HAVING Filters
 
 ```tsx
 import { useHavingFilter } from '@visactor/vbi-react'
@@ -289,7 +289,7 @@ function HavingPanel() {
       {havingFilter.conditions.map((cond) => (
         <div key={cond.id}>
           {cond.field} {cond.aggregate?.func}({cond.op} {cond.value})
-          <button onClick={() => removeHavingEntry(cond.id)}>删除</button>
+          <button onClick={() => removeHavingEntry(cond.id)}>Delete</button>
         </div>
       ))}
     </div>
@@ -299,7 +299,7 @@ function HavingPanel() {
 
 ---
 
-## 5.10 useChartType — 图表类型
+## 5.10 useChartType: Chart Type
 
 ```tsx
 import { useChartType } from '@visactor/vbi-react'
@@ -321,7 +321,7 @@ function ChartTypeSelector() {
 
 ---
 
-## 5.11 ChartRenderer 组件
+## 5.11 ChartRenderer Component
 
 ```tsx
 import { ChartRenderer } from '@visactor/vbi-react'
@@ -329,11 +329,11 @@ import { ChartRenderer } from '@visactor/vbi-react'
   builder={builder}
   debounce={300}
   renderVSeed={(vseed) => <VSeedRender vseed={vseed} />}
-  emptyFallback={<div>请配置图表</div>}
+  emptyFallback={<div>Please configure a chart</div>}
   renderError={(error, refetch) => (
     <div>
-      错误：{error.message}
-      <button onClick={refetch}>重试</button>
+      Error: {error.message}
+      <button onClick={refetch}>Retry</button>
     </div>
   )}
 />
@@ -341,19 +341,19 @@ import { ChartRenderer } from '@visactor/vbi-react'
 
 ---
 
-## 5.12 ChartTypeSelector 组件
+## 5.12 ChartTypeSelector Component
 
 ```tsx
 import { ChartTypeSelector } from '@visactor/vbi-react'
 ;<ChartTypeSelector
   builder={builder}
-  label='图表类型'
+  label='Chart type'
   getOptionLabel={(type) =>
     ({
-      column: '柱状图',
-      bar: '条形图',
-      line: '折线图',
-      pie: '饼图',
+      column: 'Column Chart',
+      bar: 'Bar Chart',
+      line: 'Line Chart',
+      pie: 'Pie Chart',
     })[type] ?? type
   }
 />
@@ -361,44 +361,44 @@ import { ChartTypeSelector } from '@visactor/vbi-react'
 
 ---
 
-## 5.13 FieldPanel 组件
+## 5.13 FieldPanel Component
 
-> ⚠️ 注意：`FieldPanel` 的 API 与文档旧版描述不同。
+> ⚠️ Note: The `FieldPanel` API differs from older documentation.
 
-实际 `FieldPanel` 接受以下 props：
+The actual `FieldPanel` accepts these props:
 
 ```tsx
 import { FieldPanel } from '@visactor/vbi-react'
 ;<FieldPanel
   builder={builder}
   dimensionOptions={[
-    { label: '产品类别', value: 'category' },
-    { label: '地区', value: 'region' },
-  ]} // 可选的维度下拉选项
+    { label: 'Product Category', value: 'category' },
+    { label: 'Region', value: 'region' },
+  ]} // Optional dimension dropdown options.
   measureOptions={[
-    { label: '销售额', value: 'sales' },
-    { label: '利润', value: 'profit' },
-  ]} // 可选的度量下拉选项
+    { label: 'Sales', value: 'sales' },
+    { label: 'Profit', value: 'profit' },
+  ]} // Optional measure dropdown options.
   measureAggregateOptions={[
-    // 可选，自定义聚合函数选项
+    // Optional custom aggregate function options.
     { label: 'Sum', value: 'sum' },
     { label: 'Average', value: 'avg' },
   ]}
   measureEncodingOptions={[
-    // 可选，自定义编码选项
+    // Optional custom encoding options.
     { label: 'Y Axis', value: 'yAxis' },
     { label: 'Color', value: 'color' },
   ]}
-  dimensionsTitle='维度'
-  measuresTitle='度量'
+  dimensionsTitle='Dimensions'
+  measuresTitle='Measures'
 />
 ```
 
-> ⚠️ `FieldPanel` **不接受** `onAddDimension` / `onAddMeasure` prop。添加和删除维度/度量通过组件内部的按钮操作完成。
+> ⚠️ `FieldPanel` **does not accept** `onAddDimension` / `onAddMeasure` props. Dimension/measure addition and deletion are handled through buttons inside the component.
 
 ---
 
-## 5.14 BuilderLayout 组件
+## 5.14 BuilderLayout Component
 
 ```tsx
 import { BuilderLayout } from '@visactor/vbi-react'
@@ -415,9 +415,9 @@ import { BuilderLayout } from '@visactor/vbi-react'
 
 ---
 
-## 5.15 各 Practice 自有 Hooks 完整签名
+## 5.15 Complete Signatures for Practice-owned Hooks
 
-> 以下 hooks 来自**各 practice 自己的** `src/hooks/` 目录。AI 在操作具体某个 practice 时，从该 practice 的 `src/hooks/` 导入，不跨 practice 引用。每个 practice 的 hooks 签名和功能基本一致。
+> The hooks below come from each practice's own `src/hooks/` directory. When AI operates on a specific practice, import from that practice's `src/hooks/`; do not reference hooks across practices. Each practice's hooks have mostly the same signatures and behavior.
 
 ### useVBIWhereFilter
 
@@ -425,8 +425,8 @@ import { BuilderLayout } from '@visactor/vbi-react'
 import { useVBIWhereFilter } from 'src/hooks'
 
 const {
-  filters, // VBIWhereClause[]，原始嵌套条件树
-  flattenFilters, // VBIWhereFilter[]，扁平化所有叶子条件
+  filters, // VBIWhereClause[], the original nested condition tree.
+  flattenFilters, // VBIWhereFilter[], all leaf conditions flattened.
   addFilter, // (field: string, operator?: string, value?: unknown) => void
   addGroup, // (op: 'and'|'or', callback?: (group) => void) => void
   removeFilter, // (id: string) => void
@@ -439,10 +439,10 @@ const {
   findGroup, // (id: string) => node | undefined
 } = useVBIWhereFilter(builder)
 
-// 添加过滤条件（直接传参，无需回调）
-addFilter('region', '=', '华北')
+// Add a filter condition with direct parameters. No callback is needed.
+addFilter('region', '=', 'North China')
 
-// 添加嵌套组
+// Add a nested group.
 addGroup('and', (group) => {
   group.add('sales', (node) => {
     node.setOperator('>')
@@ -450,16 +450,16 @@ addGroup('and', (group) => {
   })
 })
 
-// 向嵌套组添加条件
+// Add a condition to a nested group.
 addToGroup(groupId, 'profit', '<', 0)
 
-// 扁平化所有叶子条件
+// Flatten all leaf conditions.
 const flat = flattenFilters()
 
-// 更新条件
+// Update a condition.
 updateFilter(filterId, { operator: '>=', value: 5000 })
 
-// 更新嵌套组操作符
+// Update a nested group's operator.
 updateGroup(groupId, { operator: 'or' })
 ```
 
@@ -478,19 +478,19 @@ const {
   findFilter, // (id: string) => node | undefined
 } = useVBIHavingFilter(builder)
 
-// 添加 HAVING 条件
+// Add a HAVING condition.
 addFilter('sales', { func: 'sum' }, '>', 5000)
 
-// 更新
+// Update.
 updateFilter(filterId, { operator: '>=', value: 10000 })
 ```
 
-### useVBIDimensions / useVBIMeasures（回调模式）
+### useVBIDimensions / useVBIMeasures (Callback Mode)
 
 ```tsx
 import { useVBIDimensions, useVBIMeasures } from 'src/hooks'
 
-// 回调模式 — 支持任意 node 方法
+// Callback mode supports any node method.
 const { dimensions, addDimension, removeDimension, updateDimension, findDimension } = useVBIDimensions(builder)
 const { measures, addMeasure, removeMeasure, updateMeasure, findMeasure } = useVBIMeasures(builder)
 
@@ -504,7 +504,7 @@ updateDimension(dimId, (node) => {
   node.clearAggregate()
 })
 
-findDimension(dimId) // 返回 node 或 undefined
+findDimension(dimId) // Returns node or undefined.
 
 addMeasure('sales', (node) => {
   node.setAggregate({ func: 'sum' })
@@ -517,7 +517,7 @@ updateMeasure(meaId, (node) => {
 })
 ```
 
-### useVBIBuilder（locale / theme / limit）
+### useVBIBuilder (locale / theme / limit)
 
 ```tsx
 import { useVBIBuilder } from 'src/hooks'
@@ -540,7 +540,7 @@ changeChartType('column')
 const types = getAvailableChartTypes()
 ```
 
-### useVBISchemaFields（字段列表）
+### useVBISchemaFields (Field List)
 
 ```tsx
 import { useVBISchemaFields } from 'src/hooks'
@@ -558,22 +558,22 @@ import { useVBIUndoManager } from 'src/hooks'
 
 const { canUndo, canRedo, undo, redo, clear } = useVBIUndoManager(builder)
 
-undo() // 撤销
-redo() // 重做
-clear() // 清空历史
-clear(true, false) // 只清空 undo 栈
+undo() // Undo.
+redo() // Redo.
+clear() // Clear history.
+clear(true, false) // Clear only the undo stack.
 ```
 
-### useFilterRootOperator（切换 and/or 根操作符）
+### useFilterRootOperator (Switch the and/or Root Operator)
 
-位置：`practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts`（未从 `src/hooks` 导出，需单独导入）
+Location: `practices/standard/src/components/Shelves/hooks/useFilterRootOperator.ts`. It is not exported from `src/hooks`; import it separately when needed.
 
 ```tsx
 import { useFilterRootOperator } from 'src/components/Shelves/hooks'
 
 const { operator, setOperator } = useFilterRootOperator({
   builder,
-  type: 'where', // 或 'having'
+  type: 'where', // Or 'having'.
 })
 // operator: 'and' | 'or'
 // setOperator('or');

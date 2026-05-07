@@ -1,36 +1,38 @@
-# 执行计划: VBI createChart 与 Chart 命名收敛
+# Implementation Plan: VBI `createChart` and Chart Naming Alignment
 
-> 基于 ADR: `./adr.md`
-> 策略: 先写测试锁定新 API，再做兼容式重命名；首期优先改 symbol 和 export，不做大规模目录搬迁
+> Based on ADR: `./adr.md`
+> Strategy: write tests to lock the new API first, then perform compatibility-preserving renames. In the first phase, prioritize symbols and exports over large directory moves.
 
-## 范围
+## Scope
 
-本计划只覆盖 `packages/vbi`，包含 `createChart` 主入口、`VBIChartBuilder` / `VBIChartDSL` 命名统一、deprecated alias、测试与生成物更新；不包含 `createReport` 实现、不改变 chart DSL 运行时字段结构，也不重命名 `MeasuresBuilder` / `DimensionsBuilder` 等 feature builder。
+This plan only covers `packages/vbi`: the `createChart` root entry point, unified `VBIChartBuilder` / `VBIChartDSL` naming, deprecated aliases, tests, and generated artifact updates. It does not implement `createReport`, change the runtime field structure of chart DSL, or rename feature builders such as `MeasuresBuilder` / `DimensionsBuilder`.
 
-## Phase 1: 先锁定对外 API 行为
+## Phase 1: Lock Public API Behavior First
 
-### 1.1 补 public API 测试
+### 1.1 Add public API tests
 
-**改动文件**: `packages/vbi/tests/builder/builder.test.ts`
-测试内容:
+**Changed file**: `packages/vbi/tests/builder/builder.test.ts`
 
-1. `VBI.chart.create(vbiChart)` 的行为与当前 `VBI.from(vbi)` 一致
-2. `createVBI(...).chart.create(...)` 正确继承和覆盖默认 `builderOptions`
-3. `VBI.from(...)` / `VBI.create(...)` 仍可用，但只是 `VBI.chart.create(...)` 的 alias
-4. `VBI.chart.createEmpty(...)` 与 `createEmptyChart(...)` 产物一致
+Test coverage:
 
-### 1.2 补 root schema 测试
+1. `VBI.chart.create(vbiChart)` behaves the same as the current `VBI.from(vbi)`.
+2. `createVBI(...).chart.create(...)` correctly inherits and overrides default `builderOptions`.
+3. `VBI.from(...)` / `VBI.create(...)` remain available, but only as aliases of `VBI.chart.create(...)`.
+4. `VBI.chart.createEmpty(...)` produces the same output as `createEmptyChart(...)`.
 
-**改动文件**: `packages/vbi/tests/types/runtimeSchemas.test.ts`
-测试内容:
+### 1.2 Add root schema tests
 
-1. `zVBIChartDSL` 能正确 parse 完整 chart DSL
-2. `zVBIDSL` 作为 alias 仍可 parse 相同输入
-3. 运行时测试和示例代码默认改用新名字
+**Changed file**: `packages/vbi/tests/types/runtimeSchemas.test.ts`
 
-## Phase 2: 根 DSL 命名收敛
+Test coverage:
 
-**改动文件**:
+1. `zVBIChartDSL` correctly parses a complete chart DSL.
+2. `zVBIDSL` remains an alias that can parse the same input.
+3. Runtime tests and example code use the new names by default.
+
+## Phase 2: Root DSL Naming Alignment
+
+**Changed files**:
 
 - `packages/vbi/src/types/dsl/vbi/vbi.ts`
 - `packages/vbi/src/types/dsl/index.ts`
@@ -39,16 +41,17 @@
 - `packages/vbi/src/builder/modules/build.ts`
 - `packages/vbi/src/builder/modules/is-empty.ts`
 - `packages/vbi/src/builder/modules/index.ts`
-  改动内容:
 
-1. 导出 `VBIChartDSL`、`VBIChartDSLInput`、`zVBIChartDSL`
-2. 保留 `VBIDSL`、`VBIDSLInput`、`zVBIDSL` 作为 deprecated alias
-3. 新增 `createEmptyChart`、`buildVBIChartDSL`、`isEmptyVBIChartDSL`
-4. 内部实现优先切到新名字，旧名字只保留在兼容层
+Changes:
 
-## Phase 3: Builder 与 adapter 类型收敛
+1. Export `VBIChartDSL`, `VBIChartDSLInput`, and `zVBIChartDSL`.
+2. Keep `VBIDSL`, `VBIDSLInput`, and `zVBIDSL` as deprecated aliases.
+3. Add `createEmptyChart`, `buildVBIChartDSL`, and `isEmptyVBIChartDSL`.
+4. Prefer new names internally; keep old names only in compatibility layers.
 
-**改动文件**:
+## Phase 3: Builder and Adapter Type Alignment
+
+**Changed files**:
 
 - `packages/vbi/src/builder/builder.ts`
 - `packages/vbi/src/builder/index.ts`
@@ -57,49 +60,52 @@
 - `packages/vbi/src/types/builder/index.ts`
 - `packages/vbi/src/pipeline/vqueryDSL/index.ts`
 - `packages/vbi/src/pipeline/vqueryDSL/types.ts`
-  改动内容:
 
-1. `VBIBuilder` 改为 `VBIChartBuilder`
-2. `VBIBuilderInterface` / `VBIBuilderOptions` / `VBIBuilderAdapters` 改为 `VBIChart*`
-3. `VBIBuildVQueryContext` / `VBIBuildVSeedContext` / `VBIQueryBuilder` / `VBISeedBuilder` 同步改为 `VBIChart*`
-4. 旧 builder 类型名保留 deprecated alias
-5. `MeasuresBuilder`、`DimensionsBuilder`、`ChartTypeBuilder` 等 feature builder 名称保持不变
+Changes:
 
-## Phase 4: 根入口切到 `createChart`
+1. Rename `VBIBuilder` to `VBIChartBuilder`.
+2. Rename `VBIBuilderInterface` / `VBIBuilderOptions` / `VBIBuilderAdapters` to `VBIChart*`.
+3. Rename `VBIBuildVQueryContext` / `VBIBuildVSeedContext` / `VBIQueryBuilder` / `VBISeedBuilder` to the corresponding `VBIChart*` names.
+4. Keep old builder type names as deprecated aliases.
+5. Keep feature builder names such as `MeasuresBuilder`, `DimensionsBuilder`, and `ChartTypeBuilder` unchanged.
 
-**改动文件**:
+## Phase 4: Move Root Entry to `createChart`
+
+**Changed files**:
 
 - `packages/vbi/src/vbi/create-vbi.ts`
 - `packages/vbi/src/vbi/from/from-vbi-dsl-input.ts`
 - `packages/vbi/src/vbi.ts`
 - `packages/vbi/src/index.ts`
-  改动内容:
 
-1. `createVBI()` 返回的实例接口新增 `chart.create(...)`
-2. `from(...)` / `create(...)` 统一委托到 `chart.create(...)`
-3. `createEmptyChart` 对外收敛为 `chart.createEmpty(...)`
-4. `src/index.ts` 对外导出顺序改为“新名字在前，旧 alias 在后”
+Changes:
 
-## Phase 5: 包内消费方迁移
+1. Add `chart.create(...)` to the object returned by `createVBI()`.
+2. Make `from(...)` / `create(...)` delegate to `chart.create(...)`.
+3. Expose `createEmptyChart` as `chart.createEmpty(...)`.
+4. Reorder `src/index.ts` exports so new names come before old aliases.
 
-**改动范围**:
+## Phase 5: Migrate Internal Consumers
+
+**Changed scope**:
 
 - `packages/vbi/tests/**/*.ts`
 - `packages/vbi/tests/examples/**/*.ts`
 - `packages/vbi/tests/examples/**/*.json`
 - `packages/vbi/src/**/*.ts`
-  改动内容:
 
-1. 包内源码默认改用 `VBIChartDSL`、`VBIChartBuilder`、`VBI.chart.create(...)`
-2. 单测默认改用新 API，只保留少量兼容用例覆盖旧 alias
-3. examples 里的 `VBIBuilder` 代码片段统一改为 `VBIChartBuilder`
-4. 检查是否有遗漏的 `VBIDSL` / `VBI.from` / `createEmptyChart` 直接引用
-   说明:
-   首期不做 `builder/`、`types/builder/`、`vbi/from/` 的物理目录大搬迁；先完成 symbol 收敛和兼容层，等 `reportBuilder` 落地时再评估目录重组，避免无意义 churn。
+Changes:
 
-## Phase 6: 生成物与验证
+1. Default package source to `VBIChartDSL`, `VBIChartBuilder`, and `VBI.chart.create(...)`.
+2. Default tests to the new API, while keeping a small set of compatibility cases for old aliases.
+3. Update `VBIBuilder` snippets in examples to `VBIChartBuilder`.
+4. Check for missed direct references to `VBIDSL` / `VBI.from` / `createEmptyChart`.
 
-**命令**:
+Note: the first phase does not physically move the `builder/`, `types/builder/`, or `vbi/from/` directories. Complete symbol alignment and compatibility layers first, then reassess directory restructuring when `reportBuilder` lands to avoid meaningless churn.
+
+## Phase 6: Generated Artifacts and Verification
+
+**Commands**:
 
 ```bash
 pnpm --filter=@visactor/vbi run g
@@ -108,21 +114,21 @@ pnpm run lint
 pnpm run typecheck
 ```
 
-验收标准:
+Acceptance criteria:
 
-1. 新文档、测试、examples 默认只展示 `VBI.chart.create` / `VBIChartBuilder` / `VBIChartDSL`
-2. 旧 alias 仍能通过编译和关键兼容测试
-3. 生成物 diff 只反映命名收敛，不引入额外运行时行为变化
+1. New documentation, tests, and examples default to `VBI.chart.create` / `VBIChartBuilder` / `VBIChartDSL`.
+2. Old aliases still compile and pass key compatibility tests.
+3. Generated diffs only reflect naming alignment and do not introduce unrelated runtime behavior changes.
 
-## 执行顺序
+## Execution Order
 
-| 步骤 | 动作                                     | 文件                                             |
-| ---- | ---------------------------------------- | ------------------------------------------------ |
-| 1    | 写 `chart.create` / alias 测试           | `tests/builder/builder.test.ts`                  |
-| 2    | 写 `zVBIChartDSL` / alias 测试           | `tests/types/runtimeSchemas.test.ts`             |
-| 3    | 实现根 DSL 新名字 + alias                | `src/types/dsl/vbi/vbi.ts` 等                    |
-| 4    | 实现 `VBIChartBuilder` 系列类型          | `src/builder/builder.ts` + `src/types/builder/*` |
-| 5    | 实现 `chart.create` 根入口               | `src/vbi/create-vbi.ts` + `src/index.ts`         |
-| 6    | 包内源码与测试切换到新名字               | `src/**` + `tests/**`                            |
-| 7    | 运行 `pnpm --filter=@visactor/vbi run g` | 更新 examples / API / 快照                       |
-| 8    | 全量验证                                 | `test + lint + typecheck`                        |
+| Step | Action                                       | File                                             |
+| ---- | -------------------------------------------- | ------------------------------------------------ |
+| 1    | Write `chart.create` / alias tests           | `tests/builder/builder.test.ts`                  |
+| 2    | Write `zVBIChartDSL` / alias tests           | `tests/types/runtimeSchemas.test.ts`             |
+| 3    | Implement new root DSL names and aliases     | `src/types/dsl/vbi/vbi.ts` and related files     |
+| 4    | Implement `VBIChartBuilder` type family      | `src/builder/builder.ts` + `src/types/builder/*` |
+| 5    | Implement the `chart.create` root entry      | `src/vbi/create-vbi.ts` + `src/index.ts`         |
+| 6    | Switch package source and tests to new names | `src/**` + `tests/**`                            |
+| 7    | Run `pnpm --filter=@visactor/vbi run g`      | Update examples / API / snapshots                |
+| 8    | Full verification                            | `test + lint + typecheck`                        |

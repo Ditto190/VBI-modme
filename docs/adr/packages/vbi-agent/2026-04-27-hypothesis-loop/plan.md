@@ -1,44 +1,44 @@
-# Plan: `@visactor/vbi-agent` 的假设-实验-验证循环
+# Plan: Hypothesis-Experiment-Validation Loop for `@visactor/vbi-agent`
 
-> 基于 [`./adr.md`](./adr.md)
+> Based on [`./adr.md`](./adr.md)
 
-## 目标
+## Goal
 
-为 `@visactor/vbi-agent` 增加稳定的分析方法论和批量实验能力，让数据分析任务默认走“提出多个假设 -> 批量实验 -> 查看 DSL 验证 -> 继续迭代”。
+Add a stable analysis methodology and batch experiment capability to `@visactor/vbi-agent`, so data analysis tasks default to "propose multiple hypotheses -> run batch experiments -> inspect DSL for validation -> continue iterating".
 
-## 范围
+## Scope
 
-包含：
+Includes:
 
-- 新增内建 skill `hypothesis-loop`
-- 新增 tool `vbi_experiment`
-- 更新 skill registry 与 history 提示
-- 补充测试
-- 新增 package 级 ADR
+- Add the built-in skill `hypothesis-loop`.
+- Add the tool `vbi_experiment`.
+- Update the skill registry and history prompt.
+- Add tests.
+- Add a package-level ADR.
 
-不包含：
+Does not include:
 
-- 自动生成实验脚本的高阶 planner
-- 并行执行沙箱
-- 持久化实验历史
+- A higher-level planner that automatically generates experiment scripts.
+- A parallel execution sandbox.
+- Persisted experiment history.
 
-## 坏味道扫描
+## Smell Scan
 
-1. 只有 builder skill，没有分析 loop skill，职责缺口明显。
-2. 只有单脚本工具，没有批量实验工具，分析任务存在重复操作。
-3. 验证口径分散，容易把自然语言判断当作证据。
+1. There is a builder skill but no analysis loop skill, leaving a clear responsibility gap.
+2. There is only a single-script tool and no batch experiment tool, so analysis tasks require repeated operations.
+3. Validation standards are scattered, making it easy to treat natural-language judgment as evidence.
 
-## 执行顺序
+## Execution Order
 
-1. 新增 `hypothesis-loop` skill
-2. 新增 `vbi_experiment` tool
-3. 更新 registry / history / tests
-4. 补齐 `docs/adr/packages/vbi-agent`
-5. 执行仓库级验证
+1. Add the `hypothesis-loop` skill.
+2. Add the `vbi_experiment` tool.
+3. Update registry / history / tests.
+4. Complete `docs/adr/packages/vbi-agent`.
+5. Run repository-level verification.
 
-## 验收
+## Acceptance
 
-1. Agent 能通过 `read_skill` 读取 `hypothesis-loop`
-2. Agent 能通过 `vbi_experiment` 一次处理多个假设
-3. 结论格式包含 `supported` / `rejected` / `inconclusive`
-4. `pnpm lint` 与 `pnpm typecheck` 通过
+1. The Agent can read `hypothesis-loop` through `read_skill`.
+2. The Agent can process multiple hypotheses in one pass through `vbi_experiment`.
+3. The conclusion format includes `supported` / `rejected` / `inconclusive`.
+4. `pnpm lint` and `pnpm typecheck` pass.

@@ -1,102 +1,102 @@
-# Plan: `vbi_agent` 拆分为 CLI 壳与 Builder Agent 包
+# Plan: Split `vbi_agent` Into A CLI Shell And Builder Agent Package
 
-> 基于 [`./adr.md`](./adr.md)
-> 本文件用于指导 `apps/vbi_agent` 到 `apps/vbi_cli` + `packages/vbi-agent` 的迁移顺序。
+> Based on [`./adr.md`](./adr.md)
+> This file guides the migration order from `apps/vbi_agent` to `apps/vbi_cli` + `packages/vbi-agent`.
 
-## 目标
+## Goal
 
-把当前混在应用目录里的 agent runtime、模型接入、TUI、平台 provider、资源 CRUD 和 builder 工具拆开：
+Separate the agent runtime, model integration, TUI, platform provider, resource CRUD, and builder tools currently mixed inside the application directory:
 
-- `packages/vbi-agent` 成为只操作 Builder 的通用 Agent 包
-- `apps/vbi_cli` 成为连接 provider、模型 provider、资源工具和 TUI 的应用壳
-- `packages/vbi`、`packages/vquery`、`packages/vseed` 继续保持平台无关
-- 资源 CRUD 通过 CLI 注入通用 tool，不进入 Agent 包和 Builder 工作区抽象
+- `packages/vbi-agent` becomes a general Agent package that only operates Builder.
+- `apps/vbi_cli` becomes the application shell that connects provider, model provider, resource tools, and TUI.
+- `packages/vbi`, `packages/vquery`, and `packages/vseed` remain platform-agnostic.
+- Resource CRUD is injected into generic tools through the CLI and does not enter the Agent package or Builder workspace abstraction.
 
-## 范围
+## Scope
 
-包含：`apps/vbi_agent` 重命名与收敛、`packages/vbi-agent` 新包、runtime / history / activity-log / types / builder tools 迁移、CLI provider 适配层、ResourceToolset、旧引用清理。
+Includes: renaming and narrowing `apps/vbi_agent`, the new `packages/vbi-agent` package, migration of runtime / history / activity-log / types / builder tools, CLI provider adapter layer, ResourceToolset, and old reference cleanup.
 
-不包含：权限系统、多租户、资源版本历史、新模型 provider 产品化、`packages/vbi` / `vquery` / `vseed` 业务语义改造。
+Does not include: permission system, multi-tenancy, resource version history, productizing new model providers, or business semantic changes in `packages/vbi` / `vquery` / `vseed`.
 
-## 坏味道扫描
+## Smell Scan
 
-1. `apps/vbi_agent` 同时承担 runtime、TUI、模型 provider、provider 接入、资源能力和 builder 工具，职责过大。
-2. package 名称是 `@visactor/vbi-agent`，但 README 和使用示例已出现 `vbi_cli` 语义，命名事实不一致。
-3. builder 工具位于应用目录内，阻碍 `packages` 级复用。
-4. CLI 构建脚本直接依赖 provider 构建，应用壳与平台接入存在强耦合。
+1. `apps/vbi_agent` owns runtime, TUI, model provider, provider integration, resource capabilities, and builder tools at the same time, so its responsibility is too broad.
+2. The package name is `@visactor/vbi-agent`, but README and usage examples already show `vbi_cli` semantics, so naming facts are inconsistent.
+3. Builder tools live inside an application directory, blocking package-level reuse.
+4. The CLI build script directly depends on the provider build, creating tight coupling between the application shell and platform integration.
 
-## 开发原则
+## Development Principles
 
 ### Builder First
 
-`packages/vbi-agent` 只接收调用方注入的 `VBIAgentWorkspace`，只围绕 Builder 持有的 VBIChartDSL、VBIReportDSL、VQueryDSL、VSeedDSL 工作。
+`packages/vbi-agent` only receives caller-injected `VBIAgentWorkspace` and only works around VBIChartDSL, VBIReportDSL, VQueryDSL, and VSeedDSL held by Builder.
 
-禁止：在 Agent 包中创建平台 client、读取环境变量、感知 `resourceId` / HTTP / Hocuspocus / 鉴权 / 资源列表，或把 ResourceToolset 定义进 `VBIAgentWorkspace`。
+Forbidden: creating platform clients, reading environment variables, knowing about `resourceId` / HTTP / Hocuspocus / authorization / resource lists, or defining ResourceToolset inside `VBIAgentWorkspace` in the Agent package.
 
 ### CLI Composition
 
-`apps/vbi_cli` 负责组合 provider workspace 适配层、BuilderToolset、ResourceToolset、模型 provider、TUI、命令解析和具体应用流程。
+`apps/vbi_cli` composes the provider workspace adapter layer, BuilderToolset, ResourceToolset, model provider, TUI, command parsing, and concrete application flow.
 
-### 质量约束
+### Quality Constraints
 
-1. 所有迁移行为必须有对应单元测试或最小可执行验证。
-2. 每个阶段结束必须执行该模块最小验证命令。
-3. 合并前必须通过仓库级 `lint` 和 `typecheck`。
-4. 不允许保留旧 `apps/vbi_agent` 死路径、死导入、死脚本或死文档。
-5. `packages/vbi-agent` 不允许依赖 `@visactor/vbi-provider`、React、Ink、dotenv 或具体模型 SDK。
+1. Every migration behavior must have corresponding unit tests or a minimal executable validation.
+2. At the end of each phase, run that module's smallest validation command.
+3. Before merge, repository-level `lint` and `typecheck` must pass.
+4. Old dead paths, dead imports, dead scripts, or dead docs for `apps/vbi_agent` are not allowed.
+5. `packages/vbi-agent` must not depend on `@visactor/vbi-provider`, React, Ink, dotenv, or concrete model SDKs.
 
-## 执行顺序
+## Execution Order
 
-1. 定义 `packages/vbi-agent` 公共接口
-2. 抽出 BuilderToolset 与 Agent runtime
-3. 重命名并收敛 `apps/vbi_cli`
-4. 在 CLI 中实现 provider workspace 适配层与 ResourceToolset
-5. 补齐测试与边界验证
-6. 清理旧引用并完成仓库级验证
+1. Define the public interface for `packages/vbi-agent`.
+2. Extract BuilderToolset and Agent runtime.
+3. Rename and narrow `apps/vbi_cli`.
+4. Implement the provider workspace adapter layer and ResourceToolset in CLI.
+5. Complete tests and boundary validation.
+6. Clean up old references and complete repository-level validation.
 
-原因：先稳定 Agent 包契约，CLI 才能按契约组合平台能力；先抽 Builder 工具，才能阻断资源 CRUD 对 Agent 核心的污染；最后清理旧路径，避免迁移中断导致命令不可运行。
+Reason: stabilize the Agent package contract first so CLI can compose platform capabilities against that contract; extract Builder tools first to stop resource CRUD from polluting the Agent core; clean old paths last so migration interruptions do not leave commands unrunnable.
 
-## 执行清单
+## Execution Checklist
 
-### Step 1: 建立 `packages/vbi-agent`
+### Step 1: Establish `packages/vbi-agent`
 
-完成定义：新增包名 `@visactor/vbi-agent`；导出 `VBITool`、`VBIAgentWorkspace`、`VBIBuilderAgentInput`；导出 runtime、history、activity-log、agent types 最小公共入口；依赖只包含通用 runtime 需要的依赖与 `@visactor/vbi`；包级 typecheck 通过。使用一致的rslib, 提供node和浏览器环境的运行时agent.
+Definition of done: add package name `@visactor/vbi-agent`; export `VBITool`, `VBIAgentWorkspace`, and `VBIBuilderAgentInput`; export the minimal public entry points for runtime, history, activity-log, and agent types; dependencies include only what the generic runtime needs plus `@visactor/vbi`; package-level typecheck passes. Use consistent rslib and provide runtime agent support for Node and browser environments.
 
-阻塞项：无
+Blockers: none
 
-### Step 2: 迁移 BuilderToolset
+### Step 2: Migrate BuilderToolset
 
-完成定义：`createBuilderTools(workspace)` 不依赖 CLI、provider、环境变量或资源 ID；chart builder 与 report builder 的读取、修改、生成、检查工具迁入包内；测试使用本地夹具或 mock workspace；应用目录不保留重复 builder 工具。
+Definition of done: `createBuilderTools(workspace)` does not depend on CLI, provider, environment variables, or resource ID; chart builder and report builder read, modify, generate, and check tools are moved into the package; tests use local fixtures or mock workspace; the application directory does not keep duplicate builder tools.
 
-阻塞项：依赖 Step 1
+Blockers: depends on Step 1
 
-### Step 3: 迁移通用 Agent runtime
+### Step 3: Migrate Generic Agent runtime
 
-完成定义：runtime、history、activity-log、tool 协议和上下文构建迁入 `packages/vbi-agent`；runtime 接收调用方注入的模型 provider 与 tools；provider-script 通用执行器进入包内，CLI 专属加载逻辑留在应用壳；原 runtime 测试迁移到包内。
+Definition of done: runtime, history, activity-log, tool protocol, and context building move into `packages/vbi-agent`; runtime receives caller-injected model provider and tools; the generic provider-script executor enters the package, while CLI-specific loading logic stays in the application shell; original runtime tests move into the package.
 
-阻塞项：依赖 Step 1
+Blockers: depends on Step 1
 
-### Step 4: 收敛 `apps/vbi_cli`
+### Step 4: Narrow `apps/vbi_cli`
 
-完成定义：`apps/vbi_agent` 重命名为 `apps/vbi_cli`；CLI 应用不再占用 `@visactor/vbi-agent` 包名；保留 `cli.ts`、`parse.ts`、`tui/*`、模型 provider、平台 provider 接入；CLI 从 `@visactor/vbi-agent` 导入 runtime 与 BuilderToolset；README、bin、脚本、测试路径全部改为 `apps/vbi_cli`。
+Definition of done: `apps/vbi_agent` is renamed to `apps/vbi_cli`; the CLI application no longer occupies the `@visactor/vbi-agent` package name; `cli.ts`, `parse.ts`, `tui/*`, model provider, and platform provider integration are retained; CLI imports runtime and BuilderToolset from `@visactor/vbi-agent`; README, bin, scripts, and test paths all change to `apps/vbi_cli`.
 
-阻塞项：依赖 Step 2 和 Step 3
+Blockers: depends on Step 2 and Step 3
 
-### Step 5: 实现 workspace 适配层与 ResourceToolset
+### Step 5: Implement Workspace Adapter Layer And ResourceToolset
 
-完成定义：CLI 基于 `@visactor/vbi-provider` 或 `apps/vbi_provider` 打开资源；provider 被适配成 `VBIAgentWorkspace`；ResourceToolset 只在 CLI 中定义；agent 入口注入 `[...createBuilderTools(workspace), ...createResourceTools(client)]`；Agent 包源码不出现 provider、HTTP、Hocuspocus、鉴权和资源列表类型。
+Definition of done: CLI opens resources through `@visactor/vbi-provider` or `apps/vbi_provider`; provider is adapted into `VBIAgentWorkspace`; ResourceToolset is defined only in CLI; the agent entry point injects `[...createBuilderTools(workspace), ...createResourceTools(client)]`; Agent package source does not contain provider, HTTP, Hocuspocus, authorization, or resource list types.
 
-阻塞项：依赖 Step 4
+Blockers: depends on Step 4
 
-### Step 6: 清理、验证与验收
+### Step 6: Cleanup, Validation, And Acceptance
 
-完成定义：旧 `apps/vbi_agent` 路径、导入、脚本、文档、测试引用全部清理；`packages/vbi-agent` 单测不依赖平台 provider；`apps/vbi_cli` 单测覆盖命令解析、模型配置、workspace 适配和 ResourceToolset；仓库级 `pnpm run lint` 与 `pnpm run typecheck` 通过。
+Definition of done: old `apps/vbi_agent` paths, imports, scripts, docs, and test references are all cleaned up; `packages/vbi-agent` unit tests do not depend on platform provider; `apps/vbi_cli` unit tests cover command parsing, model configuration, workspace adapter, and ResourceToolset; repository-level `pnpm run lint` and `pnpm run typecheck` pass.
 
-## 验收场景
+## Acceptance Scenarios
 
-1. 本地测试夹具可以直接运行 `@visactor/vbi-agent` 并操作 chart builder。
-2. CLI 可以通过 provider 打开远端 chart 并把 builder 注入 Agent。
-3. CLI 可以同时注入 ResourceToolset 与 BuilderToolset。
-4. Agent 包源码中搜不到平台 provider、`resourceId`、HTTP、Hocuspocus、dotenv、Ink、React。
-5. 仓库中搜不到旧 `apps/vbi_agent` 主路径引用。
-6. 验证VBI Docker的配置, 正确COPY资源
+1. Local test fixtures can run `@visactor/vbi-agent` directly and operate chart builder.
+2. CLI can open a remote chart through provider and inject builder into Agent.
+3. CLI can inject ResourceToolset and BuilderToolset at the same time.
+4. Agent package source does not contain platform provider, `resourceId`, HTTP, Hocuspocus, dotenv, Ink, or React.
+5. The repository has no old main-path references to `apps/vbi_agent`.
+6. Validate VBI Docker configuration and ensure resources are copied correctly.

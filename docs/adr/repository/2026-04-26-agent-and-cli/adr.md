@@ -1,49 +1,49 @@
-# ADR-001: CLI 组合工具集，Agent 核心只操作 Builder
+# ADR-001: CLI Composes Toolsets, Agent Core Only Operates Builder
 
-状态：Accepted；日期：2026-04-26
+Status: Accepted; Date: 2026-04-26
 
-## 背景
+## Context
 
-- `packages/vbi` 负责 VBIChartDSL、VBIReportDSL、Builder 与 DSL 转换；`packages/vquery` 负责 QueryDSL 到 SQL；`packages/vseed` 负责 VSeedDSL 到 VChart/VTable Spec。
-- `apps/vbi_provider`、`apps/vbi_fe`、`apps/vbi_be` 负责平台资源、远端协同、鉴权与具体业务流程。
-- `apps/vbi_agent` 当前同时包含 agent runtime、模型 provider、TUI、平台 provider 接入、资源 CRUD 和 builder 操作工具。
+- `packages/vbi` owns VBIChartDSL, VBIReportDSL, Builder, and DSL transformation; `packages/vquery` owns QueryDSL to SQL; `packages/vseed` owns VSeedDSL to VChart/VTable Spec.
+- `apps/vbi_provider`, `apps/vbi_fe`, and `apps/vbi_be` own platform resources, remote collaboration, authorization, and concrete business flows.
+- `apps/vbi_agent` currently contains agent runtime, model provider, TUI, platform provider integration, resource CRUD, and builder operation tools at the same time.
 
-LLM 需要同时使用 Builder 能力和平台资源能力。问题不是 agent 是否存在，而是 agent、CLI、provider、资源 CRUD 混在同一个应用目录里，导致 `packages` 中的原子能力反向感知平台实现，影响独立开源与复用。
+LLMs need both Builder capabilities and platform resource capabilities. The issue is not whether an agent should exist, but that agent, CLI, provider, and resource CRUD are mixed in the same application directory. That makes atomic capabilities in `packages` reverse-depend on platform implementation details, which hurts independent open sourcing and reuse.
 
-## 决策
+## Decision
 
-将现有 `apps/vbi_agent` 重命名并收敛为 `apps/vbi_cli`。CLI 是应用壳，只负责连接 provider、处理平台资源和承载具体交互流程。
+Rename and narrow the existing `apps/vbi_agent` into `apps/vbi_cli`. CLI is an application shell: it only connects providers, handles platform resources, and hosts concrete interaction flows.
 
-新增 `packages/vbi-agent`。Agent 包提供通用 runtime/tool 抽象和 BuilderToolset；资源 CRUD 由 CLI 基于 provider 创建 ResourceToolset 后注入 runtime。依赖倒置发生在通用 tool 层，不发生在 resource domain 层。
+Add `packages/vbi-agent`. The Agent package provides general runtime/tool abstractions and BuilderToolset. Resource CRUD is created by the CLI as ResourceToolset from provider and then injected into runtime. Dependency inversion happens at the general tool layer, not in the resource domain layer.
 
-### 职责边界
+### Responsibility Boundaries
 
-`apps/vbi_cli`：
+`apps/vbi_cli`:
 
-- 对接 `apps/vbi_provider`、`@visactor/vbi-provider` 或其他平台 provider。
-- 打开远端资源，取得 `VBIChartBuilder`、`VBIReportBuilder` 或其他 Builder。
-- 将 Builder 适配为 `packages/vbi-agent` 需要的工作区。
-- 创建受控 ResourceToolset，并和 BuilderToolset 一起注入 LLM runtime。
-- 对接模型 provider，承载资源 CRUD、权限鉴权、TUI、命令解析和 app 业务流程。
+- Integrates with `apps/vbi_provider`, `@visactor/vbi-provider`, or other platform providers.
+- Opens remote resources and obtains `VBIChartBuilder`, `VBIReportBuilder`, or other Builder instances.
+- Adapts Builder into the workspace required by `packages/vbi-agent`.
+- Creates a controlled ResourceToolset and injects it into LLM runtime together with BuilderToolset.
+- Integrates with model providers and hosts resource CRUD, authorization, TUI, command parsing, and app business flows.
 
-`packages/vbi-agent`：
+`packages/vbi-agent`:
 
-- 接收调用方注入的 Builder 工作区。
-- 读取、修改、生成和检查 Builder 持有的 VBIChartDSL、VQueryDSL、VSeedDSL。
-- 提供 BuilderToolset、上下文说明、agent runtime 抽象，并运行调用方注入的通用 tools。
-- 不创建平台 client，不定义 ResourceToolset，不读取环境变量，不感知 `resourceId`、HTTP、Hocuspocus、鉴权或资源列表。
+- Receives a caller-injected Builder workspace.
+- Reads, modifies, generates, and checks VBIChartDSL, VQueryDSL, and VSeedDSL held by Builder.
+- Provides BuilderToolset, context descriptions, agent runtime abstractions, and runs caller-injected generic tools.
+- Does not create platform clients, define ResourceToolset, read environment variables, or know about `resourceId`, HTTP, Hocuspocus, authorization, or resource lists.
 
 ```text
 apps/vbi_cli -> packages/vbi-agent
-apps/vbi_cli -> @visactor/vbi-provider 或 apps/vbi_provider
-apps/vbi_cli -> 模型 provider SDK
+apps/vbi_cli -> @visactor/vbi-provider or apps/vbi_provider
+apps/vbi_cli -> model provider SDK
 packages/vbi-agent -> @visactor/vbi
 @visactor/vbi -> @visactor/vquery -> @visactor/vseed
 ```
 
-## 核心接口
+## Core Interfaces
 
-Agent 通过抽象工作区获取 Builder。工作区由 CLI 创建，Agent 不知道 Builder 来自本地文件、远端协同还是测试夹具。资源能力通过通用 tool 注入，不进入 `VBIAgentWorkspace`。
+Agent obtains Builder through an abstract workspace. The workspace is created by the CLI, and Agent does not know whether Builder comes from a local file, remote collaboration, or a test fixture. Resource capabilities are injected through generic tools and do not enter `VBIAgentWorkspace`.
 
 ```ts
 export type VBITool = {
@@ -61,7 +61,7 @@ export interface VBIAgentWorkspace {
 export type VBIBuilderAgentInput = { workspace: VBIAgentWorkspace; tools?: VBITool[] }
 ```
 
-CLI 负责组合 BuilderToolset 和 ResourceToolset：
+CLI composes BuilderToolset and ResourceToolset:
 
 ```ts
 const provider = client.chart(resourceId)
@@ -77,26 +77,26 @@ await runAgent({
 })
 ```
 
-## 后果
+## Consequences
 
-正向影响：
+Positive impact:
 
-- `packages/vbi`、`packages/vquery`、`packages/vseed` 保持平台无关，便于独立开源。
-- `packages/vbi-agent` 作为 Builder 智能操作层独立复用。
-- `apps/vbi_cli` 可以按不同平台 provider、模型 provider、权限系统和资源工具组合。
-- 平台资源逻辑不会污染 Builder 与 Agent；新增模式时只需要新增 CLI 适配器。
+- `packages/vbi`, `packages/vquery`, and `packages/vseed` remain platform-agnostic and easier to open source independently.
+- `packages/vbi-agent` can be reused independently as the Builder intelligence layer.
+- `apps/vbi_cli` can compose different platform providers, model providers, permission systems, and resource tools.
+- Platform resource logic does not pollute Builder and Agent; adding a new mode only requires a new CLI adapter.
 
-代价：
+Costs:
 
-- CLI 需要显式实现 provider 到 Builder 的适配层和 ResourceToolset。
-- Agent runtime 需要稳定的通用 tool 协议。
-- 需要把现有 `apps/vbi_agent` 拆分为 `apps/vbi_cli` 和 `packages/vbi-agent`。
+- CLI must explicitly implement the provider-to-Builder adapter layer and ResourceToolset.
+- Agent runtime needs a stable generic tool protocol.
+- The existing `apps/vbi_agent` must be split into `apps/vbi_cli` and `packages/vbi-agent`.
 
-## 迁移计划
+## Migration Plan
 
-1. 从 `apps/vbi_agent` 抽出 `VBIAgentWorkspace` 与 builder 操作工具，让工具只依赖 Builder。
-2. 创建 `packages/vbi-agent`，迁入 runtime、history、activity-log、agent 类型、上下文构建和 builder 工具。
-3. 将 `apps/vbi_agent` 重命名为 `apps/vbi_cli`，保留 `cli.ts`、`parse.ts`、`tui/*`、模型 provider 和平台 provider 接入。
-4. 在 `apps/vbi_cli` 中实现 provider 到 `VBIAgentWorkspace` 的适配层和 ResourceToolset。
-5. 为 `packages/vbi-agent` 增加不依赖平台 provider 的单元测试。
-6. 清理旧 `apps/vbi_agent` 路径、package 名称、脚本、导入、文档和测试引用。
+1. Extract `VBIAgentWorkspace` and builder operation tools from `apps/vbi_agent`, making the tools depend only on Builder.
+2. Create `packages/vbi-agent` and move runtime, history, activity-log, agent types, context building, and builder tools into it.
+3. Rename `apps/vbi_agent` to `apps/vbi_cli`, keeping `cli.ts`, `parse.ts`, `tui/*`, model provider, and platform provider integration.
+4. Implement the provider-to-`VBIAgentWorkspace` adapter layer and ResourceToolset in `apps/vbi_cli`.
+5. Add unit tests for `packages/vbi-agent` that do not depend on platform provider.
+6. Clean up old `apps/vbi_agent` paths, package names, scripts, imports, docs, and test references.

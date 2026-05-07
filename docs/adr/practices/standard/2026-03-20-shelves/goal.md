@@ -4,13 +4,13 @@ status: in-progress
 
 ---
 
-生成 architecture-decisions 文档, 命名为 ./adr.md
+Generate an architecture-decisions document named `./adr.md`.
 
-这里是 practices/standard 计划要完成的开发任务:
-[x] 所有的shelfs错误命名改为shelves
-[x] measure和dimension shelves, 聚合、编码、数值格式的二级菜单, 需要贴在一级菜单的右侧, 目前它们有重叠, 需要优化.
-[x] 二级菜单内有 padding, 导致hover到"求和"时, 背景无法紧贴二级菜单容器的左右侧边界, 需要优化.
-[] where的日期筛选面板, 将四种面板放到一个Popover内, 使用Tabs切换.
+Planned development tasks for `practices/standard`:
+[x] Rename all incorrect `shelfs` names to `shelves`.
+[x] In the measure and dimension shelves, the aggregate, encoding, and number-format submenus should be attached to the right side of the first-level menu. They currently overlap and need to be improved.
+[x] The submenu has padding that prevents the hover background for items such as "Sum" from reaching the left and right edges of the submenu container. This needs to be improved.
+[] In the where date filter panel, place the four panels in a single Popover and switch between them with Tabs.
 
-附录:
-AntDesign V6 组件库使用说明: https://ant.design/llms-full.txt
+Appendix:
+AntDesign V6 component library usage guide: https://ant.design/llms-full.txt

@@ -1,81 +1,81 @@
-# ADR: 为 `@visactor/vbi-agent` 增加“假设-实验-验证”循环
+# ADR: Add a Hypothesis-Experiment-Validation Loop to `@visactor/vbi-agent`
 
-状态：Accepted；日期：2026-04-27
+Status: Accepted; Date: 2026-04-27
 
-## 背景
+## Context
 
-`@visactor/vbi-agent` 当前已经有 Builder 操作能力，但缺少分析方法论。面对“为什么这个图表结果不对”“字段为什么没有生效”“哪个 DSL 改动更合理”这类问题时，Agent 容易一次性押注单个解释，直接修改 DSL 或给出口头答案。
+`@visactor/vbi-agent` already has Builder operation capabilities, but it lacks an analysis methodology. When facing questions such as "why is this chart result wrong", "why did this field not take effect", or "which DSL change is more reasonable", the Agent can easily bet on a single explanation, directly modify the DSL, or give a verbal answer.
 
-这有三个问题：
+This creates three problems:
 
-1. 没有显式假设列表，思考过程不可验证。
-2. 没有批量实验工具，多个假设只能零散手工执行。
-3. 没有统一的验证口径，容易把感觉当成结论。
+1. There is no explicit hypothesis list, so the reasoning process cannot be verified.
+2. There is no batch experiment tool, so multiple hypotheses can only be executed manually and piecemeal.
+3. There is no unified validation standard, making it easy to mistake intuition for a conclusion.
 
-## 决策
+## Decision
 
-在 `@visactor/vbi-agent` 内新增一个内建 skill 和一个批量实验 tool，形成稳定的分析闭环。
+Add one built-in skill and one batch experiment tool inside `@visactor/vbi-agent` to form a stable analysis loop.
 
 ### Skill
 
-新增内建 skill `hypothesis-loop`，职责只有一个：把分析任务收敛为“假设-实验-验证”的循环。
+Add a built-in skill, `hypothesis-loop`, with one responsibility: converge analysis tasks into a "hypothesis-experiment-validation" loop.
 
-它要求 Agent：
+It requires the Agent to:
 
-- 默认提出 2-4 个可区分的假设
-- 按信息价值和成本排序
-- 每个实验只测试一个假设
-- 通过 `build()`、`buildVQuery()`、`buildVSeed()` 或结构化结果验证
-- 用 `supported` / `rejected` / `inconclusive` 标记结论
+- Propose 2-4 distinguishable hypotheses by default.
+- Sort them by information value and cost.
+- Test only one hypothesis per experiment.
+- Validate through `build()`, `buildVQuery()`, `buildVSeed()`, or structured results.
+- Mark conclusions with `supported` / `rejected` / `inconclusive`.
 
 ### Tool
 
-新增 tool `vbi_experiment`。
+Add the tool `vbi_experiment`.
 
-输入是实验数组，每个实验至少包含：
+The input is an array of experiments. Each experiment contains at least:
 
 - `hypothesis`
 - `code`
-- `goal`（可选）
+- `goal` (optional)
 
-执行方式：
+Execution behavior:
 
-- 顺序执行每个实验脚本
-- 为每个实验注入 `workspace`、`chart`、`report`、`experiment`
-- 捕获日志、结果和错误
-- 单个实验失败不终止整批
+- Execute each experiment script sequentially.
+- Inject `workspace`, `chart`, `report`, and `experiment` into each experiment.
+- Capture logs, results, and errors.
+- Do not stop the whole batch when a single experiment fails.
 
-输出方式：
+Output behavior:
 
-- 返回每个实验的 `status`
-- 返回结构化 `result` 或 `error`
-- 汇总成功 / 失败数量
+- Return the `status` of each experiment.
+- Return a structured `result` or `error`.
+- Summarize success / failure counts.
 
-## 边界
+## Boundaries
 
-1. `vbi_experiment` 负责批量执行，不负责替模型自动裁决业务真相。
-2. 实验结论仍然必须基于 DSL 或工具输出中的结构化证据。
-3. 打开 Builder 资源不等于保存资源；默认验证发生在查看 DSL 阶段，而不是写回阶段。
-4. Skill 负责方法论约束，Tool 负责执行载体，二者分离。
+1. `vbi_experiment` is responsible for batch execution, not for automatically deciding business truth on behalf of the model.
+2. Experiment conclusions must still be based on structured evidence from DSL or tool output.
+3. Opening a Builder resource does not mean saving the resource; by default, validation happens when inspecting DSL, not when writing back.
+4. The skill owns methodology constraints, and the tool owns the execution vehicle. The two remain separate.
 
-## 后果
+## Consequences
 
-正向影响：
+Positive impacts:
 
-- Agent 在分析类任务中不再只有单路径推断。
-- 多个假设可以在一次工具调用里完成对照实验。
-- 结论能回溯到具体 DSL、QueryDSL、VSeedDSL 或实验产物。
+- The Agent is no longer limited to single-path inference in analysis tasks.
+- Multiple hypotheses can be compared in one tool call.
+- Conclusions can be traced back to concrete DSL, QueryDSL, VSeedDSL, or experiment artifacts.
 
-代价：
+Costs:
 
-- 工具调用输入更长，需要模型遵守结构化实验格式。
-- 如果实验脚本写得过宽，仍可能得到混杂证据，因此 skill 必须限制实验粒度。
+- Tool-call input becomes longer, and the model must follow the structured experiment format.
+- If experiment scripts are too broad, they may still produce mixed evidence, so the skill must constrain experiment granularity.
 
-## 验证要求
+## Verification Requirements
 
-至少覆盖以下验证：
+At minimum, cover the following validation:
 
-1. `read_skill` 能列出并读取 `hypothesis-loop`
-2. `vbi_experiment` 能批量执行实验
-3. 单个实验失败时，其他实验结果仍然返回
-4. 仓库级 `lint` 和 `typecheck` 通过
+1. `read_skill` can list and read `hypothesis-loop`.
+2. `vbi_experiment` can execute experiments in batches.
+3. When a single experiment fails, results from other experiments are still returned.
+4. Repository-level `lint` and `typecheck` pass.
