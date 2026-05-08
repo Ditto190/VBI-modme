@@ -21,6 +21,7 @@ let whereFilterCount = 0
 let whereGroupCount = 0
 let havingFilterCount = 0
 let havingGroupCount = 0
+let themeCount = 0
 
 type UpdateListener = () => void
 
@@ -700,6 +701,35 @@ function createHavingFilterFeature(state: TestBuilderState, notify: () => void) 
   }
 }
 
+function createThemeFeature(state: TestBuilderState, notify: () => void) {
+  const listeners = new Set<UpdateListener>()
+
+  const emit = () => {
+    listeners.forEach((listener) => listener())
+    notify()
+  }
+
+  return {
+    getTheme: () => state.theme,
+    observe: (callback: UpdateListener) => {
+      listeners.add(callback)
+      return () => {
+        listeners.delete(callback)
+      }
+    },
+    setTheme: (theme: string) => {
+      if (state.theme === theme) {
+        return
+      }
+
+      state.theme = theme
+      themeCount++
+      emit()
+    },
+    toJSON: () => state.theme,
+  }
+}
+
 export function createTestBuilder(connectorOverrides: Partial<VBIConnector> = {}): VBIChartBuilder {
   const connectorId = `vbi-react-test-${builderCount++}`
 
@@ -773,6 +803,7 @@ export function createTestBuilder(connectorOverrides: Partial<VBIConnector> = {}
     doc,
     havingFilter: undefined as unknown,
     measures: undefined as unknown,
+    theme: undefined as unknown,
     whereFilter: undefined as unknown,
   } as {
     build: () => TestBuilderState
@@ -782,6 +813,7 @@ export function createTestBuilder(connectorOverrides: Partial<VBIConnector> = {}
     doc: ReturnType<typeof createObservableDoc>
     havingFilter: ReturnType<typeof createHavingFilterFeature>
     measures: ReturnType<typeof createMeasuresFeature>
+    theme: ReturnType<typeof createThemeFeature>
     whereFilter: ReturnType<typeof createWhereFilterFeature>
   }
 
@@ -790,6 +822,7 @@ export function createTestBuilder(connectorOverrides: Partial<VBIConnector> = {}
   builder.dimensions = createDimensionsFeature(state, notify)
   builder.whereFilter = createWhereFilterFeature(state, notify)
   builder.havingFilter = createHavingFilterFeature(state, notify)
+  builder.theme = createThemeFeature(state, notify)
 
   return builder as unknown as VBIChartBuilder
 }

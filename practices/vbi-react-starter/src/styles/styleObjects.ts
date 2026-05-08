@@ -15,6 +15,27 @@ export const fieldPanelStyle: CSSProperties = {
   overflow: 'hidden',
 }
 
+export const filterPanelStyle: CSSProperties = {
+  ...baseCardStyle,
+  color: 'var(--starter-text-primary)',
+  height: '100%',
+  minHeight: 0,
+  overflow: 'hidden',
+}
+
+export const sidebarStackStyle: CSSProperties = {
+  display: 'grid',
+  gap: 12,
+  gridTemplateRows: 'minmax(0, 1.1fr) minmax(0, 1fr)',
+  height: '100%',
+  minHeight: 0,
+}
+
+export const themeSelectorStyle: CSSProperties = {
+  color: 'var(--starter-text-primary)',
+  minWidth: 120,
+}
+
 export const chartRendererStyle: CSSProperties = {
   ...baseCardStyle,
   height: '100%',
