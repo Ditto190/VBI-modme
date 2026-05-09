@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { VBI } from '@visactor/vbi'
 import { useVBI } from '@visactor/vbi-react'
-import { BuilderLayout } from '@visactor/vbi-react/components'
+import { BuilderLayout, FilterPanel } from '@visactor/vbi-react/components'
 import type { DatasetColumn } from '@visactor/vquery'
 
 import './App.css'
@@ -9,7 +9,7 @@ import { CompactFieldPanel } from './components/CompactFieldPanel'
 import { StarterFooter, type StarterFooterProps } from './components/StarterFooter'
 import { StarterMainPanel } from './components/StarterMainPanel'
 import { StarterTopBar } from './components/StarterTopBar'
-import { fieldPanelStyle, layoutStyle } from './styles/styleObjects'
+import { fieldPanelStyle, filterPanelStyle, layoutStyle, sidebarStackStyle } from './styles/styleObjects'
 import './styles/tokens.css'
 import { createLocalConnector, setLocalDataWithSchema, type LocalRow } from './utils/localConnector'
 import { clearBuilderSelections, inferSchema, rowsToDataset } from './utils/dataset'
@@ -103,6 +103,19 @@ export function APP() {
     () => availableMeasures.map((field) => ({ label: field, value: field })),
     [availableMeasures],
   )
+
+  const filterFieldOptions = useMemo(() => {
+    const fields = new Set<string>()
+
+    return [...dimensionOptions, ...measureOptions].filter((option) => {
+      if (fields.has(option.value)) {
+        return false
+      }
+
+      fields.add(option.value)
+      return true
+    })
+  }, [dimensionOptions, measureOptions])
 
   const hasAvailableFields = availableDimensions.length > 0 || availableMeasures.length > 0
   const hasConfiguredFields = (dsl.dimensions?.length ?? 0) > 0 || (dsl.measures?.length ?? 0) > 0
@@ -210,13 +223,31 @@ export function APP() {
         }
         leftPanel={
           !isCompactLayout || isFieldPanelVisible ? (
-            <CompactFieldPanel
-              builder={builder}
-              dimensionOptions={dimensionOptions}
-              measureOptions={measureOptions}
-              style={fieldPanelStyle}
-              title='Starter Fields'
-            />
+            <div style={sidebarStackStyle}>
+              <CompactFieldPanel
+                builder={builder}
+                dimensionOptions={dimensionOptions}
+                measureOptions={measureOptions}
+                style={fieldPanelStyle}
+                title='Starter Fields'
+              />
+              <FilterPanel
+                aggregateOptions={[
+                  { label: 'Sum', value: 'sum' },
+                  { label: 'Average', value: 'avg' },
+                  { label: 'Count', value: 'count' },
+                  { label: 'Max', value: 'max' },
+                  { label: 'Min', value: 'min' },
+                ]}
+                builder={builder}
+                fieldOptions={filterFieldOptions}
+                havingFieldOptions={measureOptions}
+                havingTitle='Having'
+                style={filterPanelStyle}
+                title='Starter Filters'
+                whereTitle='Where'
+              />
+            </div>
           ) : undefined
         }
         leftPanelWidth={leftPanelWidth}

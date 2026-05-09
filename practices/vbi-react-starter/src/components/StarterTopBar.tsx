@@ -1,8 +1,9 @@
 import type { CSSProperties } from 'react'
 import type { VBIChartBuilder } from '@visactor/vbi'
-import { ChartTypeSelector } from '@visactor/vbi-react/components'
+import { ChartTypeSelector, ThemeSelector } from '@visactor/vbi-react/components'
 
 import { cn } from '../utils/cn'
+import { themeSelectorStyle } from '../styles/styleObjects'
 
 type StarterTopBarProps = {
   builder: VBIChartBuilder
@@ -26,13 +27,14 @@ export function StarterTopBar(props: StarterTopBarProps) {
       <div className='starter-top-intro'>
         <strong className='starter-top-title'>vbi-react Starter</strong>
         <div className='starter-top-subtitle'>
-          `FieldPanel`、`ChartTypeSelector`、`ChartRenderer` 和 `BuilderLayout`
+          `FieldPanel`、`FilterPanel`、`ThemeSelector`、`ChartTypeSelector`、`ChartRenderer` 和 `BuilderLayout`
           直接拼出一个可用的低门槛搭建器；需要深度自定义时，再下钻到 hooks。
         </div>
       </div>
 
       <div className='starter-top-actions'>
         <ChartTypeSelector builder={builder} style={chartTypeSelectorStyle} />
+        <ThemeSelector builder={builder} style={themeSelectorStyle} />
         {isToggleVisible ? (
           <button
             className={cn('starter-button', 'starter-button-secondary')}
