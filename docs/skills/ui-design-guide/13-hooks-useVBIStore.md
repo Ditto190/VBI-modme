@@ -1,25 +1,25 @@
 # 13. useVBIStore — Store Hook
 
-## 签名
+## Signature
 
 ```ts
 const storeState = useVBIStore(selector)
 ```
 
-等价于：
+Equivalent to:
 
 ```ts
-const storeState = useVBIStore((state) => state) // 获取全部状态
-const builder = useVBIStore((state) => state.builder) // 仅取 builder
-const vseed = useVBIStore((state) => state.vseed) // 仅取 vseed
-const loading = useVBIStore((state) => state.loading) // 仅取 loading
+const storeState = useVBIStore((state) => state) // Gets all state
+const builder = useVBIStore((state) => state.builder) // Gets only builder
+const vseed = useVBIStore((state) => state.vseed) // Gets only vseed
+const loading = useVBIStore((state) => state.loading) // Gets only loading
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIStore.ts`
 
-实际实现（thin wrapper）：
+Actual implementation (thin wrapper):
 
 ```ts
 export const useVBIStoreHook = (): VBIStoreState => {
@@ -27,19 +27,19 @@ export const useVBIStoreHook = (): VBIStoreState => {
 }
 ```
 
-`useVBIStore` 来自 `VBIStoreProvider` 的 Context，**必须在 `VBIStoreProvider` 内使用**。
+`useVBIStore` comes from the `VBIStoreProvider` Context and **must be used inside `VBIStoreProvider`**.
 
 ---
 
-## VBIStoreState 完整类型
+## Complete VBIStoreState Type
 
 ```ts
 export interface VBIStoreState {
-  loading: boolean // VSeed 构建中标志
-  vseed: VSeed | null // 当前 VSeed 实例（渲染数据）
-  builder: VBIChartBuilder // VBI 构建器（配置层）
-  initialized: boolean // 是否已初始化
-  dsl: VBIChartDSL // 当前 DSL 快照
+  loading: boolean // Whether VSeed is currently building
+  vseed: VSeed | null // Current VSeed instance (rendering data)
+  builder: VBIChartBuilder // VBI builder (configuration layer)
+  initialized: boolean // Whether initialization has completed
+  dsl: VBIChartDSL // Current DSL snapshot
 
   initialize: (builder?: VBIChartBuilder) => DestroyCallback
   bindEvent: () => DestroyCallback
@@ -51,50 +51,50 @@ export interface VBIStoreState {
 }
 ```
 
-## 用法示例
+## Usage Examples
 
-### 获取 builder（最常用）
+### Get builder (Most Common)
 
 ```ts
 const builder = useVBIStore((state) => state.builder)
-// 然后传递给其他 hooks
+// Then pass it to other hooks.
 const { dimensions } = useVBIDimensions(builder)
 const { measures } = useVBIMeasures(builder)
 ```
 
-### 获取 VSeed（用于渲染）
+### Get VSeed (For Rendering)
 
 ```ts
 const vseed = useVBIStore((state) => state.vseed)
 if (vseed) {
-  // 传给 VSeedRender 组件
+  // Pass it to the VSeedRender component.
 }
 ```
 
-### 获取加载状态
+### Get Loading State
 
 ```ts
 const loading = useVBIStore((state) => state.loading);
 if (loading) {
-  return <Spin>图表加载中...</Spin>;
+  return <Spin>Chart loading...</Spin>;
 }
 ```
 
-### 打印调试信息
+### Print Debug Information
 
 ```ts
 const { logState } = useVBIStore((state) => ({
   logState: state.logState,
 }))
 await logState()
-// 控制台输出 builder、vbi dsl、vquery dsl、vseed
+// Prints builder, vbi dsl, vquery dsl, and vseed to the console.
 ```
 
 ---
 
-## 注意事项
+## Notes
 
-- **必须在 `VBIStoreProvider` 内部调用**，否则抛出 `Error: useVBIStore must be used within VBIStoreProvider`
-- `builder` 是最常消费的字段，其他 hooks 都需要它作为参数
-- `vseed` 为 `null` 时（初始状态或加载中）不应传给 `VSeedRender`
-- `logState()` 异步调用，在控制台输出完整调试信息
+- **Must be called inside `VBIStoreProvider`**, otherwise it throws `Error: useVBIStore must be used within VBIStoreProvider`.
+- `builder` is the most commonly consumed field; other hooks need it as a parameter.
+- When `vseed` is `null` (initial state or loading), do not pass it to `VSeedRender`.
+- `logState()` is async and prints complete debug information to the console.

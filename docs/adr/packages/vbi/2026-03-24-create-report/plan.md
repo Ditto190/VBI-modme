@@ -1,100 +1,100 @@
-# 执行计划: VBI createReport 与 ReportBuilder
+# Implementation Plan: VBI `createReport` and ReportBuilder
 
-> 基于 ADR: `./adr.md`
-> TDD 驱动: 先锁定 schema 和 API，再做目录重组与实现
+> Based on ADR: `./adr.md`
+> TDD-driven: lock schema and API first, then reorganize directories and implement.
 
-## 范围
+## Scope
 
-本计划只覆盖 `packages/vbi`，包含 `createReport` 根入口、`types/dsl -> types/chartDSL` 重命名、`types/reportDSL` 新增、`VBIReportDSL` / `VBIReportBuilder` / `reportBuilder.page.*` 落地，以及相关测试与生成物更新；不包含 report 级 `buildVQuery()` / `buildVSeed()`、多 chart page、rich-text 系统。
+This plan only covers `packages/vbi`: the `createReport` root entry point, renaming `types/dsl -> types/chartDSL`, adding `types/reportDSL`, implementing `VBIReportDSL` / `VBIReportBuilder` / `reportBuilder.page.*`, and updating related tests and generated artifacts. It does not include report-level `buildVQuery()` / `buildVSeed()`, multi-chart pages, or a rich-text system.
 
-## Phase 1: 先锁定对外行为
+## Phase 1: Lock Public Behavior First
 
-### 1.1 Schema 测试
+### 1.1 Schema tests
 
-**测试文件**: `packages/vbi/tests/types/reportSchemas.test.ts`（新增）
+**Test file**: `packages/vbi/tests/types/reportSchemas.test.ts` (new)
 
-测试内容:
+Test coverage:
 
-1. `zVBIReportDSL` 正确 parse 最小 report DSL。
-2. `page.title` / `page.chart` / `page.text` 缺失时被 reject。
-3. `page.chart` 继续复用 `zVBIChartDSL` 的校验结果。
-4. `createEmptyReport()` 与 `createEmptyReportPage(connectorId)` 的默认值稳定。
+1. `zVBIReportDSL` correctly parses the minimal report DSL.
+2. Missing `page.title` / `page.chart` / `page.text` is rejected.
+3. `page.chart` continues to reuse `zVBIChartDSL` validation.
+4. Defaults for `createEmptyReport()` and `createEmptyReportPage(connectorId)` are stable.
 
-### 1.2 Builder API 测试
+### 1.2 Builder API tests
 
-**测试文件**: `packages/vbi/tests/builder/reportBuilder.test.ts`（新增）
+**Test file**: `packages/vbi/tests/builder/reportBuilder.test.ts` (new)
 
-测试内容:
+Test coverage:
 
-1. `VBI.report.create(report)` 与 `createVBI(...).report.create(report)` 可正常创建 builder。
-2. `reportBuilder.page.add('Story One', page => page.setChart(chartBuilder).setText('hello world'))` 输出正确 DSL。
-3. `reportBuilder.page.remove(id)` / `update(id, callback)` 行为正确。
-4. `setChart(chartBuilder)` 复制 `chartBuilder.build()` 结果，而不是共享 builder 实例。
-5. `build()` / `isEmpty()` / `applyUpdate()` / `encodeStateAsUpdate()` 行为稳定。
+1. `VBI.report.create(report)` and `createVBI(...).report.create(report)` can create builders.
+2. `reportBuilder.page.add('Story One', page => page.setChart(chartBuilder).setText('hello world'))` outputs the correct DSL.
+3. `reportBuilder.page.remove(id)` / `update(id, callback)` behave correctly.
+4. `setChart(chartBuilder)` copies the result of `chartBuilder.build()` instead of sharing a builder instance.
+5. `build()` / `isEmpty()` / `applyUpdate()` / `encodeStateAsUpdate()` behavior is stable.
 
-## Phase 2: ChartDSL 目录重命名与 ReportDSL 类型落地
+## Phase 2: Rename ChartDSL Directory and Add ReportDSL Types
 
-**改动范围**:
+**Changed scope**:
 
 - `packages/vbi/src/types/dsl/**` -> `packages/vbi/src/types/chartDSL/**`
-- `packages/vbi/src/types/reportDSL/**`（新增）
+- `packages/vbi/src/types/reportDSL/**` (new)
 - `packages/vbi/src/types/index.ts`
 
-改动内容:
+Changes:
 
-1. 将现有 chart schema、类型、导出整体迁移到 `types/chartDSL`。
-2. 新增 `report.ts` / `page.ts` / `text.ts`，定义 `VBIReportDSL`、`VBIReportPageDSL`、`VBIReportTextDSL` 与 zod schema。
-3. 更新所有 `src/**`、`tests/**` 内部 import，消除对旧 `types/dsl` 路径的直接依赖。
+1. Move existing chart schemas, types, and exports to `types/chartDSL`.
+2. Add `report.ts` / `page.ts` / `text.ts` defining `VBIReportDSL`, `VBIReportPageDSL`, `VBIReportTextDSL`, and zod schemas.
+3. Update all internal imports in `src/**` and `tests/**` to remove direct dependencies on the old `types/dsl` path.
 
-## Phase 3: 空 DSL helper 与 Builder 内核准备
+## Phase 3: Empty DSL Helpers and Builder Core Preparation
 
-**改动文件**:
+**Changed files**:
 
-- `packages/vbi/src/vbi/create-empty-report.ts`（新增）
-- `packages/vbi/src/vbi/create-empty-report-page.ts`（新增）
+- `packages/vbi/src/vbi/create-empty-report.ts` (new)
+- `packages/vbi/src/vbi/create-empty-report-page.ts` (new)
 - `packages/vbi/src/builder/builder.ts`
 - `packages/vbi/src/builder/modules/**`
 - `packages/vbi/src/types/builder/**`
 
-改动内容:
+Changes:
 
-1. 新增 `createEmptyReport()` 与 `createEmptyReportPage(connectorId)`。
-2. 将 `VBIChartBuilder` 的内部实现抽成“可绑定任意 DSL map”的模式，支持 page.chart 复用。
-3. 保持根 `createChart(...)` 行为不变，只把“绑定根 map”变成特例。
+1. Add `createEmptyReport()` and `createEmptyReportPage(connectorId)`.
+2. Extract `VBIChartBuilder` internals into a mode that can bind to any DSL map, so `page.chart` can reuse it.
+3. Preserve root `createChart(...)` behavior; make "bind root map" just one special case.
 
-## Phase 4: ReportBuilder 与 page API
+## Phase 4: ReportBuilder and Page API
 
-**改动文件**:
+**Changed files**:
 
-- `packages/vbi/src/builder/report-builder.ts`（新增）
-- `packages/vbi/src/builder/features/report-page/page-collection-builder.ts`（新增）
-- `packages/vbi/src/builder/features/report-page/page-builder.ts`（新增）
+- `packages/vbi/src/builder/report-builder.ts` (new)
+- `packages/vbi/src/builder/features/report-page/page-collection-builder.ts` (new)
+- `packages/vbi/src/builder/features/report-page/page-builder.ts` (new)
 - `packages/vbi/src/builder/index.ts`
 - `packages/vbi/src/types/builder/VBIInterface.ts`
 
-改动内容:
+Changes:
 
-1. 新增 `VBIReportBuilder` 与 `VBIReportBuilderInterface`。
-2. 提供 `reportBuilder.page.add/remove/update/get` 主入口。
-3. `page.add(title, callback)` 把第一个参数写入 `page.title`。
-4. `ReportPageBuilder` 提供 `setChart(chartBuilder)` 与 `setText(content)` 链式 API。
+1. Add `VBIReportBuilder` and `VBIReportBuilderInterface`.
+2. Provide the main `reportBuilder.page.add/remove/update/get` entry points.
+3. `page.add(title, callback)` writes the first argument to `page.title`.
+4. `ReportPageBuilder` provides chainable `setChart(chartBuilder)` and `setText(content)` APIs.
 
-## Phase 5: 根入口、导出与包内迁移
+## Phase 5: Root Entry, Exports, and Internal Migration
 
-**改动文件**:
+**Changed files**:
 
 - `packages/vbi/src/vbi/create-vbi.ts`
-- `packages/vbi/src/vbi/from/from-vbi-report-dsl-input.ts`（新增）
+- `packages/vbi/src/vbi/from/from-vbi-report-dsl-input.ts` (new)
 - `packages/vbi/src/index.ts`
 - `packages/vbi/src/vbi.ts`
 
-改动内容:
+Changes:
 
-1. `createVBI()` 返回实例新增 `report.create(...)`。
-2. `VBI` 对外导出 `report.create`、`report.createEmpty`、`report.createEmptyPage`。
-3. 包内源码和测试默认切到 `types/chartDSL` / `types/reportDSL` 与 report 新 API。
+1. Add `report.create(...)` to the instance returned by `createVBI()`.
+2. Export `report.create`, `report.createEmpty`, and `report.createEmptyPage` from `VBI`.
+3. Default internal source and tests to `types/chartDSL` / `types/reportDSL` and the new report API.
 
-## Phase 6: 生成物与验证
+## Phase 6: Generated Artifacts and Verification
 
 ```bash
 pnpm --filter=@visactor/vbi run g
@@ -103,8 +103,8 @@ pnpm run lint
 pnpm run typecheck
 ```
 
-验收标准:
+Acceptance criteria:
 
-1. `createReport`、`VBIReportDSL`、`reportBuilder.page.*` 通过测试并可稳定构建 DSL。
-2. `types/chartDSL` / `types/reportDSL` 路径清晰，包内无旧 `types/dsl` 残留引用。
-3. 生成物 diff 只反映 report 能力与目录命名收敛，不引入无关行为变化。
+1. `createReport`, `VBIReportDSL`, and `reportBuilder.page.*` pass tests and can build DSL reliably.
+2. `types/chartDSL` / `types/reportDSL` paths are clear, with no old `types/dsl` references left inside the package.
+3. Generated diffs only reflect report capability and directory naming alignment, with no unrelated behavior changes.

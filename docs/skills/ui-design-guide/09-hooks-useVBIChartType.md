@@ -1,67 +1,67 @@
-# 9. useVBIChartType — 图表类型管理
+# 9. useVBIChartType — Chart Type Management
 
-## 签名
+## Signature
 
 ```ts
 const {
-  chartType, // string，当前图表类型
+  chartType, // string; current chart type
   changeChartType, // (type: string) => void
-  getAvailableChartTypes, // () => string[]，获取所有可用类型
+  getAvailableChartTypes, // () => string[]; gets all available types
 } = useVBIChartType(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIChartType.ts`
 
-## 用法示例
+## Usage Examples
 
-### 切换图表类型
+### Change Chart Type
 
 ```ts
-// 切换到柱状图
+// Change to a column chart
 changeChartType('column')
 
-// 切换到饼图
+// Change to a pie chart
 changeChartType('pie')
 
-// 切换到数据表格
+// Change to a data table
 changeChartType('table')
 ```
 
-### 获取可用类型列表
+### Get the Available Type List
 
 ```ts
 const types = getAvailableChartTypes()
-console.log('支持的图表类型:', types)
+console.log('Supported chart types:', types)
 ```
 
 ---
 
-## 图表类型分类
+## Chart Type Categories
 
-| 分类 | 类型                                                                                        |
-| ---- | ------------------------------------------------------------------------------------------- |
-| 表格 | `table`、`pivotTable`                                                                       |
-| 对比 | `column`、`columnParallel`、`columnPercent`、`bar`、`barParallel`、`barPercent`、`dualAxis` |
-| 趋势 | `line`、`area`、`areaPercent`                                                               |
-| 占比 | `pie`、`donut`、`rose`、`roseParallel`、`funnel`                                            |
-| 分布 | `scatter`、`heatmap`、`boxPlot`、`histogram`、`radar`                                       |
-| 层级 | `treeMap`、`sunburst`、`circlePacking`                                                      |
-| 动态 | `raceBar`、`raceColumn`、`raceLine`、`raceScatter`、`racePie`、`raceDonut`                  |
-
----
-
-## 实现细节
-
-- 状态订阅使用 `builder.dsl.observe()`，监听 `chartType` 字段变化
-- `changeChartType` 直接调用 `builder.chartType.changeChartType(type)`，无需事务封装
-- 初始值从 `builder.chartType.getChartType()` 同步
+| Category     | Types                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------- |
+| Tables       | `table`, `pivotTable`                                                                       |
+| Comparison   | `column`, `columnParallel`, `columnPercent`, `bar`, `barParallel`, `barPercent`, `dualAxis` |
+| Trend        | `line`, `area`, `areaPercent`                                                               |
+| Proportion   | `pie`, `donut`, `rose`, `roseParallel`, `funnel`                                            |
+| Distribution | `scatter`, `heatmap`, `boxPlot`, `histogram`, `radar`                                       |
+| Hierarchy    | `treeMap`, `sunburst`, `circlePacking`                                                      |
+| Dynamic      | `raceBar`, `raceColumn`, `raceLine`, `raceScatter`, `racePie`, `raceDonut`                  |
 
 ---
 
-## 注意事项
+## Implementation Details
 
-- 切换图表类型后，VSeed 会自动重新构建并触发图表渲染更新
-- 部分图表类型对编码有要求（如 boxPlot 需要 q1/q3/min/max/median），VSeed 会自动补全
-- 推荐使用 `ChartTypeSelector` 组件（见 component-patterns）进行类型选择，而非直接调用此 hook
+- State subscription uses `builder.dsl.observe()` and listens for changes to the `chartType` field.
+- `changeChartType` calls `builder.chartType.changeChartType(type)` directly; no transaction wrapper is required.
+- The initial value is synchronized from `builder.chartType.getChartType()`.
+
+---
+
+## Notes
+
+- After changing the chart type, VSeed rebuilds automatically and triggers a chart rendering update.
+- Some chart types require specific encodings, such as `boxPlot` requiring q1/q3/min/max/median. VSeed fills these automatically.
+- Prefer the `ChartTypeSelector` component (see component-patterns) for type selection instead of calling this hook directly.

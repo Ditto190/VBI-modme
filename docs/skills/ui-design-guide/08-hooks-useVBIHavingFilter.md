@@ -1,12 +1,12 @@
-# 8. useVBIHavingFilter — HAVING 过滤
+# 8. useVBIHavingFilter — HAVING Filters
 
-HAVING 过滤是**聚合后**的数据过滤，在 SQL 中对应 HAVING 子句。用于筛选已聚合的计算结果（如总销售额 > 5000 的地区）。
+HAVING filters are applied **after aggregation** and correspond to SQL HAVING clauses. They filter aggregated results, such as regions where total sales are greater than 5000.
 
-## 签名
+## Signature
 
 ```ts
 const {
-  filters, // VBIHavingClause[]，嵌套条件树
+  filters, // VBIHavingClause[]; nested condition tree
   addFilter, // (field: string, aggregate?: VBIHavingAggregate, operator?: string, value?: unknown) => void
   addGroup, // (op: 'and'|'or', callback?: (group) => void) => void
   removeFilter, // (id: string) => void
@@ -16,34 +16,34 @@ const {
 } = useVBIHavingFilter(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBIHavingFilter.ts`
 
-## 用法示例
+## Usage Examples
 
-### 添加 HAVING 条件
+### Add a HAVING Condition
 
 ```ts
-// 简单添加（默认 operator 和 aggregate）
+// Simple add (default operator and aggregate)
 addFilter('sales', { func: 'sum' }, '>', 5000)
 
-// 指定聚合函数
+// Specify the aggregate function
 addFilter('profit', { func: 'avg' }, '>=', 0)
 
-// 仅指定聚合（默认 > 0）
+// Specify only aggregation (defaults to > 0)
 addFilter('order_count', { func: 'count' })
 ```
 
-### 添加嵌套组
+### Add a Nested Group
 
 ```ts
 addGroup('and', (group) => {
-  // group 中可以继续调用 builder.havingFilter.add(...)
+  // You can continue calling builder.havingFilter.add(...) inside group
 })
 ```
 
-### 更新过滤条件
+### Update a Filter Condition
 
 ```ts
 updateFilter(filterId, {
@@ -53,14 +53,14 @@ updateFilter(filterId, {
 })
 ```
 
-### 删除、清空
+### Remove and Clear
 
 ```ts
 removeFilter(filterId)
 clearFilters()
 ```
 
-### 查找过滤节点
+### Find a Filter Node
 
 ```ts
 const node = findFilter(filterId)
@@ -71,31 +71,31 @@ if (node) {
 
 ---
 
-## HAVING vs WHERE 区别
+## HAVING vs WHERE
 
-| 特性     | WHERE          | HAVING              |
-| -------- | -------------- | ------------------- |
-| 执行时机 | 聚合**之前**   | 聚合**之后**        |
-| 可用字段 | 任意原始字段   | 需配合聚合函数使用  |
-| 典型场景 | 筛选地区为华北 | 筛选总销售额 > 5000 |
-
----
-
-## 操作符一览
-
-| 操作符 | 说明     | 示例值  |
-| ------ | -------- | ------- |
-| `>`    | 大于     | `5000`  |
-| `<`    | 小于     | `1000`  |
-| `>=`   | 大于等于 | `0`     |
-| `<=`   | 小于等于 | `10000` |
-| `=`    | 等于     | `100`   |
-| `!=`   | 不等于   | `50`    |
+| Feature          | WHERE                        | HAVING                                  |
+| ---------------- | ---------------------------- | --------------------------------------- |
+| Execution timing | **Before** aggregation       | **After** aggregation                   |
+| Available fields | Any source field             | Must be used with an aggregate function |
+| Typical use case | Filter region to North China | Filter total sales > 5000               |
 
 ---
 
-## 注意事项
+## Operator Reference
 
-- HAVING 过滤在聚合**之后**执行，用于筛选聚合结果
-- `aggregate` 参数为 `{ func: string; quantile?: number }`，常用值：`sum`/`avg`/`count`/`countDistinct`/`min`/`max`/`median`
-- 所有操作通过 `builder.doc.transact()` 封装，自动支持 undo/redo
+| Operator | Description           | Example Value |
+| -------- | --------------------- | ------------- |
+| `>`      | Greater than          | `5000`        |
+| `<`      | Less than             | `1000`        |
+| `>=`     | Greater than or equal | `0`           |
+| `<=`     | Less than or equal    | `10000`       |
+| `=`      | Equals                | `100`         |
+| `!=`     | Not equals            | `50`          |
+
+---
+
+## Notes
+
+- HAVING filters run **after** aggregation and are used to filter aggregated results.
+- The `aggregate` parameter is `{ func: string; quantile?: number }`; common values include `sum`/`avg`/`count`/`countDistinct`/`min`/`max`/`median`.
+- All operations are wrapped with `builder.doc.transact()` and support undo/redo automatically.

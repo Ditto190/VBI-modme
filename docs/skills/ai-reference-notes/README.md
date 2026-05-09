@@ -1,34 +1,34 @@
-# AI Reference 编写说明
+# AI Reference Authoring Notes
 
-> 本目录记录 AI Reference 编写过程中的关键发现、核查结论和设计决策，供后续维护参考。
-
----
-
-## 目录
-
-| 文件                                                         | 内容                                             |
-| ------------------------------------------------------------ | ------------------------------------------------ |
-| [README.md](./README.md)                                     | 本文档，总览所有重点                             |
-| [01-main-entry-issue.md](./01-main-entry-issue.md)           | @visactor/vbi 主入口导出问题                     |
-| [02-hooks-signature-issue.md](./02-hooks-signature-issue.md) | VBI-react 与 Standard Hooks 签名完全不同         |
-| [03-hidden-apis.md](./03-hidden-apis.md)                     | 易遗漏的 API：Y.Map/Yjs、编码查询、Node get 方法 |
-| [04-dataflow.md](./04-dataflow.md)                           | 数据流与 AI 使用边界                             |
+> This directory records key findings, verification conclusions, and design decisions from the AI Reference authoring process for future maintenance.
 
 ---
 
-## 快速索引
+## Table of Contents
 
-### 最容易出错的地方
+| File                                                         | Content                                                              |
+| ------------------------------------------------------------ | -------------------------------------------------------------------- |
+| [README.md](./README.md)                                     | This document, with an overview of key points                        |
+| [01-main-entry-issue.md](./01-main-entry-issue.md)           | @visactor/vbi main entry export notes                                |
+| [02-hooks-signature-issue.md](./02-hooks-signature-issue.md) | VBI-react and Standard hooks have completely different signatures    |
+| [03-hidden-apis.md](./03-hidden-apis.md)                     | Easy-to-miss APIs: Y.Map/Yjs, encoding queries, and node get methods |
+| [04-dataflow.md](./04-dataflow.md)                           | Data flow and AI usage boundaries                                    |
 
-1. **优先参考目标 practice 的 connector/bootstrap 模块** — 虽然 `VBI` 已在主入口导出，但每个 practice 的初始化接线（connector、默认 builder、数据源）仍独立实现
-2. **vbi-react hooks 和各 practice 自有的 hooks 同名但完全不同** — 用混了会导致 builder 参数类型不匹配。每个 practice 只用自己的 hooks（`src/hooks/`），不用 `@visactor/vbi-react` 包
-3. **VSeedRender 是每个 practice 独立实现的** — 不在任何 npm 包中，不能跨 practice 引用
+---
 
-### 源码核查记录
+## Quick Index
 
-- `VBIChartBuilder` → `packages/vbi/src/chart-builder/builder.ts`
-- `filter-guards` → `packages/vbi/src/utils/filter-guards.ts`（主入口有导出）
-- `vbi-react hooks` → `packages/vbi-react/src/hooks/`
-- 各 practice 自有 hooks → `practices/{name}/src/hooks/`（每个 practice 独立一套）
-- `VSeedRender` → `practices/{name}/src/components/Render/VSeedRender.tsx`（每个 practice 独立实现）
-- connector/bootstrap 模块 → `practices/{name}/src/utils/{demoConnector|localConnector}.ts`（每个 practice 独立实现）
+### Most Error-prone Areas
+
+1. **Prefer the target practice's connector/bootstrap module**. Although `VBI` is exported from the main entry, each practice still implements its own initialization wiring: connector, default builder, and data source.
+2. **vbi-react hooks and each practice's own hooks have the same names but are completely different**. Mixing them causes builder parameter type mismatches. Each practice should only use its own hooks from `src/hooks/`, not the `@visactor/vbi-react` package.
+3. **VSeedRender is implemented independently by each practice**. It is not provided by any npm package and must not be referenced across practices.
+
+### Source Verification Notes
+
+- `VBIChartBuilder` -> `packages/vbi/src/chart-builder/builder.ts`
+- `filter-guards` -> `packages/vbi/src/utils/filter-guards.ts`, exported from the main entry
+- `vbi-react hooks` -> `packages/vbi-react/src/hooks/`
+- Each practice's own hooks -> `practices/{name}/src/hooks/`, with an independent set for each practice
+- `VSeedRender` -> `practices/{name}/src/components/Render/VSeedRender.tsx`, implemented independently by each practice
+- connector/bootstrap module -> `practices/{name}/src/utils/{demoConnector|localConnector}.ts`, implemented independently by each practice

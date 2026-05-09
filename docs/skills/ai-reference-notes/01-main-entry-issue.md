@@ -1,28 +1,28 @@
-# 1. @visactor/vbi 主入口导出说明
+# 1. @visactor/vbi Main Entry Export Notes
 
-## 重要说明
+## Important Note
 
-**每个 practice 都是独立项目**，有自己的 connector/bootstrap 模块（如 `demoConnector.ts` 或 `localConnector.ts`）。下面的说明是通用方法，适用于所有 practice。
+**Each practice is an independent project** with its own connector/bootstrap module, such as `demoConnector.ts` or `localConnector.ts`. The notes below describe the general approach and apply to all practices.
 
-## 当前状态
+## Current Status
 
-`@visactor/vbi` 的主入口现在已经导出核心运行时 API，包括 `VBI`、`createVBI`、`VBIChartBuilder`、`registerConnector`、`createEmptyChart` 等。
+The `@visactor/vbi` main entry now exports core runtime APIs, including `VBI`, `createVBI`, `VBIChartBuilder`, `registerConnector`, and `createEmptyChart`.
 
-以下能力可以直接通过主入口访问：
+The following capabilities can be accessed directly through the main entry:
 
-| 功能                                 | 实际位置                         | 说明            |
-| ------------------------------------ | -------------------------------- | --------------- |
-| `VBI` / `VBI.chart.create()`         | `src/vbi/create-vbi.ts`          | ✅ 主入口已导出 |
-| `VBIChartBuilder`                    | `src/chart-builder/builder.ts`   | ✅ 主入口已导出 |
-| `registerConnector` / `getConnector` | `src/chart-builder/connector.ts` | ✅ 主入口已导出 |
-| `createEmptyChart`                   | `src/vbi/create-empty-chart.ts`  | ✅ 主入口已导出 |
-| 所有 DSL 类型（`VBIChartDSL` 等）    | `src/types/chartDSL/`            | ✅ 主入口已导出 |
-| 所有 Builder 类型                    | `src/types/builder/`             | ✅ 主入口已导出 |
-| 类型守卫 `isVBIFilter` 等            | `src/utils/filter-guards.ts`     | ✅ 主入口已导出 |
+| Feature                              | Actual location                  | Notes                           |
+| ------------------------------------ | -------------------------------- | ------------------------------- |
+| `VBI` / `VBI.chart.create()`         | `src/vbi/create-vbi.ts`          | ✅ Exported from the main entry |
+| `VBIChartBuilder`                    | `src/chart-builder/builder.ts`   | ✅ Exported from the main entry |
+| `registerConnector` / `getConnector` | `src/chart-builder/connector.ts` | ✅ Exported from the main entry |
+| `createEmptyChart`                   | `src/vbi/create-empty-chart.ts`  | ✅ Exported from the main entry |
+| All DSL types, such as `VBIChartDSL` | `src/types/chartDSL/`            | ✅ Exported from the main entry |
+| All Builder types                    | `src/types/builder/`             | ✅ Exported from the main entry |
+| Type guards such as `isVBIFilter`    | `src/utils/filter-guards.ts`     | ✅ Exported from the main entry |
 
-## 为什么仍推荐参考 practice
+## Why Practice Code Is Still the Recommended Reference
 
-每个 practice 的 `tsconfig.json` 配置了：
+Each practice's `tsconfig.json` configures:
 
 ```json
 {
@@ -31,39 +31,39 @@
 }
 ```
 
-每个 practice 仍然会实现自己的 connector/bootstrap 模块、默认 builder 和页面初始化逻辑。即使主入口已可直接导入，AI 在修改具体 practice 时仍应优先参考该 practice 内部封装，而不是假设所有应用共享同一套接线方式。
+Each practice still implements its own connector/bootstrap module, default builder, and page initialization logic. Even when the main entry can be imported directly, AI should prefer the internal wrapper of the specific practice being edited instead of assuming every app shares the same wiring.
 
-## @visactor/vseed 主入口现状
+## Current @visactor/vseed Main Entry Status
 
-`@visactor/vseed` 的主入口（`src/index.ts`）已经导出 `Builder`，并通过 `pipeline/types` 暴露 `isVChart` / `isPivotChart` / `isTable` / `isPivotTable` 与 `VSeed` 相关类型。
+The `@visactor/vseed` main entry (`src/index.ts`) already exports `Builder`, and exposes `isVChart` / `isPivotChart` / `isTable` / `isPivotTable` plus `VSeed`-related types through `pipeline/types`.
 
 ```ts
 import { Builder, isVChart, isPivotChart, isTable, isPivotTable, type VSeed } from '@visactor/vseed'
 ```
 
-## 正确参考方式
+## Correct Reference Pattern
 
-直接使用**目标 practice** 自己的 connector/bootstrap 模块：
+Use the **target practice's** own connector/bootstrap module directly:
 
 ```ts
-// 推荐：优先参考目标 practice 自己的 bootstrap 模块
+// Recommended: prefer the target practice's own bootstrap module.
 import { createDefaultBuilder } from 'src/utils/localConnector'
 const builder = createDefaultBuilder()
 
-// 也可直接使用主入口 API
+// The main entry API can also be used directly.
 import { VBI } from '@visactor/vbi'
 ```
 
-## 源码位置
+## Source Locations
 
-| 功能                      | 源码位置                                        |
-| ------------------------- | ----------------------------------------------- |
-| 主入口                    | `packages/vbi/src/index.ts`                     |
-| VBI.chart.create          | `packages/vbi/src/vbi/create-vbi.ts`            |
-| VBIChartBuilder           | `packages/vbi/src/chart-builder/builder.ts`     |
-| registerConnector         | `packages/vbi/src/chart-builder/connector.ts`   |
-| createEmptyChart          | `packages/vbi/src/vbi/create-empty-chart.ts`    |
-| filter-guards（主入口有） | `packages/vbi/src/utils/filter-guards.ts`       |
-| vseed 主入口              | `packages/vseed/src/index.ts`                   |
-| VSeedBuilder              | `packages/vseed/src/builder/builder/builder.ts` |
-| isVChart 等               | `packages/vseed/src/pipeline/utils/chatType.ts` |
+| Feature                               | Source location                                 |
+| ------------------------------------- | ----------------------------------------------- |
+| Main entry                            | `packages/vbi/src/index.ts`                     |
+| VBI.chart.create                      | `packages/vbi/src/vbi/create-vbi.ts`            |
+| VBIChartBuilder                       | `packages/vbi/src/chart-builder/builder.ts`     |
+| registerConnector                     | `packages/vbi/src/chart-builder/connector.ts`   |
+| createEmptyChart                      | `packages/vbi/src/vbi/create-empty-chart.ts`    |
+| filter-guards, exported by main entry | `packages/vbi/src/utils/filter-guards.ts`       |
+| vseed main entry                      | `packages/vseed/src/index.ts`                   |
+| VSeedBuilder                          | `packages/vseed/src/builder/builder/builder.ts` |
+| isVChart and related helpers          | `packages/vseed/src/pipeline/utils/chatType.ts` |

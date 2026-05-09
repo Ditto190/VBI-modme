@@ -1,63 +1,63 @@
-# VBI AI 使用参考文档
+# VBI AI Reference Documentation
 
-> 本文档面向 AI Agent，帮助你在看到用户图表相关需求时，能快速写出正确的 VBI 代码。
-> 文档以"用户意图 → 代码模式"为核心，涵盖从初始化到渲染的完整流程。
-
----
-
-## 文档结构
-
-| 文件                                                               | 内容                                     | AI 是否使用 |
-| ------------------------------------------------------------------ | ---------------------------------------- | ----------- |
-| [01-core-concepts.md](./01-core-concepts.md)                       | 核心概念、数据流、Yjs Doc 结构           | ✅ 使用     |
-| [02-quick-start.md](./02-quick-start.md)                           | 最小可运行示例（基于 standard 实际代码） | ✅ 使用     |
-| [03-vbi-api.md](./03-vbi-api.md)                                   | VBIChartBuilder 完整 API                 | ✅ 使用     |
-| [04-common-patterns.md](./04-common-patterns.md)                   | 常见意图 → 代码模式（Builder API 层）    | ✅ 使用     |
-| [05-react-integration.md](./05-react-integration.md)               | VBI-react hooks、AI 触发 UI 更新方式     | ✅ 使用     |
-| [07-connector.md](./07-connector.md)                               | Connector 系统（参考）                   | 📖 拓展了解 |
-| [08-dsl-types.md](./08-dsl-types.md)                               | DSL 类型速查                             | ✅ 使用     |
-| [09-standard-practice.md](./09-standard-practice.md)               | Standard Practice 面板组件速查（参考）   | 📖 拓展了解 |
-| [10-feature-status.md](./10-feature-status.md)                     | 功能状态表（哪些能用/不能用了）          | ✅ 使用     |
-| [../ai-reference-notes/README.md](../ai-reference-notes/README.md) | 关键发现与维护注意事项                   | 📖 维护参考 |
+> This documentation is written for AI agents. It helps you quickly write correct VBI code when users ask for chart-related changes.
+> The core organization is "user intent -> code pattern", covering the full flow from initialization to rendering.
 
 ---
 
-## 核心数据流
+## Document Structure
+
+| File                                                               | Content                                                    | Should AI use it?        |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- | ------------------------ |
+| [01-core-concepts.md](./01-core-concepts.md)                       | Core concepts, data flow, and Yjs Doc structure            | ✅ Use                   |
+| [02-quick-start.md](./02-quick-start.md)                           | Minimal runnable example based on the actual standard code | ✅ Use                   |
+| [03-vbi-api.md](./03-vbi-api.md)                                   | Complete VBIChartBuilder API                               | ✅ Use                   |
+| [04-common-patterns.md](./04-common-patterns.md)                   | Common intents -> code patterns at the Builder API layer   | ✅ Use                   |
+| [05-react-integration.md](./05-react-integration.md)               | VBI-react hooks and how AI-triggered UI updates work       | ✅ Use                   |
+| [07-connector.md](./07-connector.md)                               | Connector system reference                                 | 📖 Further reading       |
+| [08-dsl-types.md](./08-dsl-types.md)                               | DSL type quick reference                                   | ✅ Use                   |
+| [09-standard-practice.md](./09-standard-practice.md)               | Standard Practice panel component quick reference          | 📖 Further reading       |
+| [10-feature-status.md](./10-feature-status.md)                     | Feature status table: what can and cannot be used          | ✅ Use                   |
+| [../ai-reference-notes/README.md](../ai-reference-notes/README.md) | Key findings and maintenance notes                         | 📖 Maintenance reference |
+
+---
+
+## Core Data Flow
 
 ```
-用户交互（拖拽/输入）
-  → VBIChartBuilder（VBI spec，AI 操作这层）
-      │ buildVSeed() 内部自动执行
-      ├→ buildVQuery()（生成查询 DSL）
-      ├→ connector.query()（执行 SQL 取数）
-      └→ buildVSeedDSL()（组装中间产物 VSeed）
-  → VSeed（内部中间产物）
-  → VSeedRender（每个 practice 独立实现）
-      │ VSeedBuilder.from(vseed).build()
-      ↓
-  → VChart / VTable Spec
-  → 浏览器渲染
+User interaction (drag/input)
+  -> VBIChartBuilder (VBI spec; AI operates at this layer)
+      | buildVSeed() runs internally
+      |-> buildVQuery() (generates query DSL)
+      |-> connector.query() (runs SQL and fetches data)
+      `-> buildVSeedDSL() (assembles the intermediate VSeed artifact)
+  -> VSeed (internal intermediate artifact)
+  -> VSeedRender (implemented separately by each practice)
+      | VSeedBuilder.from(vseed).build()
+      v
+  -> VChart / VTable Spec
+  -> Browser rendering
 ```
 
-**AI 只需操作 VBIChartBuilder**，后续取数、渲染全部由框架自动处理。VSeed、VSeedBuilder、VChart、VTable 对 AI 不可见，无需了解。VSeedRender 由**每个 practice 独立实现**，不在任何 npm 包中。
+**AI only needs to operate on VBIChartBuilder**. Data fetching and rendering after that are handled automatically by the framework. VSeed, VSeedBuilder, VChart, and VTable are invisible to AI and do not need to be understood. **Each practice implements VSeedRender independently**; it is not provided by any npm package.
 
 ---
 
-## AI 生成图表流程
+## AI Chart Generation Flow
 
-1. 通过 `builder.dimensions.add()` / `builder.measures.add()` 等 Builder API 配置图表
-2. Yjs 文档自动变更，触发 `doc.on('update')` 事件
-3. 目标 practice 自己的 VBIStore 监听到变化，调用 `builder.buildVSeed()` 重建渲染数据
-4. 目标 practice 自己的 `VSeedRender` 组件自动渲染新图表
+1. Configure the chart through Builder APIs such as `builder.dimensions.add()` and `builder.measures.add()`.
+2. The Yjs document changes automatically and triggers the `doc.on('update')` event.
+3. The target practice's own VBIStore listens for the change and calls `builder.buildVSeed()` to rebuild rendering data.
+4. The target practice's own `VSeedRender` component automatically renders the new chart.
 
-详见 [05-react-integration.md](./05-react-integration.md#ai-触发-ui-更新的方式)。
+See [05-react-integration.md](./05-react-integration.md#how-ai-triggers-ui-updates).
 
 ---
 
-## 导入速查
+## Import Quick Reference
 
 ```ts
-// VBI 类型（@visactor/vbi）
+// VBI types (@visactor/vbi)
 import type {
   VBIChartBuilder,
   VBIChartDSL,
@@ -67,7 +67,8 @@ import type {
   VBIHavingGroup,
 } from '@visactor/vbi'
 
-// standard/minimalist/streamlined/professional 使用的 hooks（来自各 practice 自己的 hooks 目录）
+// Hooks used by standard/minimalist/streamlined/professional.
+// They come from each practice's own hooks directory.
 import {
   useVBIBuilder,
   useVBIChartType,
@@ -77,9 +78,9 @@ import {
   useVBIHavingFilter,
   useVBISchemaFields,
   useVBIUndoManager,
-} from 'src/hooks' // ← 在目标 practice 内导入，不是 @visactor/vbi-react
+} from 'src/hooks' // Import inside the target practice, not from @visactor/vbi-react.
 
-// vbi-react-starter 使用的 hooks（来自 @visactor/vbi-react 包）
+// Hooks used by vbi-react-starter, from the @visactor/vbi-react package.
 import {
   useVBI,
   useVSeed,
@@ -90,21 +91,21 @@ import {
   useChartType,
 } from '@visactor/vbi-react'
 
-// vbi-react-starter 使用的组件
+// Components used by vbi-react-starter.
 import { ChartRenderer, ChartTypeSelector, FieldPanel, BuilderLayout } from '@visactor/vbi-react'
 ```
 
-> **关于 @visactor/vbi 主入口**：当前 `@visactor/vbi` 包的主入口已经导出 `VBI`、`VBIChartBuilder`、`registerConnector`、`createEmptyChart` 等核心 API。即便如此，每个 practice 仍会**独立实现**自己的 connector/bootstrap 模块（例如 `demoConnector.ts` 或 `localConnector.ts`）来封装 connector 注册和默认 builder 初始化。AI 在操作具体某个 practice 时，仍应优先参考**该 practice 自身**的实现。详见 [10-feature-status.md](./10-feature-status.md)。
+> **About the @visactor/vbi main entry**: The current `@visactor/vbi` package main entry already exports core APIs such as `VBI`, `VBIChartBuilder`, `registerConnector`, and `createEmptyChart`. Even so, each practice still **implements its own** connector/bootstrap module, such as `demoConnector.ts` or `localConnector.ts`, to wrap connector registration and default builder initialization. When AI operates on a specific practice, it should still prefer that practice's own implementation. See [10-feature-status.md](./10-feature-status.md).
 
-> **关于 vbi-react 包**：只有 `vbi-react-starter` 使用 `@visactor/vbi-react` 包提供的 hooks 和组件。其他 practice（minimalist/streamlined/professional/standard）都是**独立实现**自己的 hooks 和 model，不依赖 `@visactor/vbi-react` 包。
+> **About the vbi-react package**: Only `vbi-react-starter` uses the hooks and components provided by `@visactor/vbi-react`. Other practices (minimalist/streamlined/professional/standard) **independently implement** their own hooks and model, and do not depend on `@visactor/vbi-react`.
 
 ---
 
-## 文档约定
+## Documentation Conventions
 
-- 所有 **Builder API** 示例基于 `builder` 实例（`VBIChartBuilder` 类型）
-- **AI 操作某个 practice 时**，只使用该 practice 内部的 `src/` 路径导入，不跨 practice 引用组件
-- **VSeedRender** 由每个 practice **独立实现**，不在任何 npm 包中
-- "✅ 可用" 表示功能已在源码中实现且通过测试
-- "⚠️ 有替代方案" 表示功能存在但需通过其他方式访问
-- "🔧 可添加到 vbi-react" 表示功能已在某个 practice 中实现，可移到 vbi-react 包
+- All **Builder API** examples are based on a `builder` instance of type `VBIChartBuilder`.
+- **When AI operates on a practice**, import only from that practice's internal `src/` paths. Do not reference components across practices.
+- **VSeedRender** is **implemented independently** by each practice and is not provided by any npm package.
+- "✅ Available" means the feature is implemented in source code and covered by tests.
+- "⚠️ Alternative available" means the feature exists but must be accessed through another path.
+- "🔧 Can be added to vbi-react" means the feature has been implemented in a practice and can be moved into the vbi-react package.

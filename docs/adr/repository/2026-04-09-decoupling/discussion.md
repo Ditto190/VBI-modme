@@ -1,143 +1,143 @@
-# Discussion: 面向 Provider 的平台级 Headless BI 解耦
+# Discussion: Provider-Oriented Platform-Level Headless BI Decoupling
 
-## 目标重述
+## Restating The Goal
 
-这次解耦的目标，不只是把 `chart / insight / report` 从页面逻辑里拆出来，也不只是让 REST 接口更干净。
+The goal of this decoupling is not only to extract `chart / insight / report` from page logic, and not only to make REST interfaces cleaner.
 
-真正的目标应该是：
+The real goal should be:
 
-1. 所有 `Report / Insight / Chart` 操作，本质上都建立在协同文档之上
-2. 所有资源操作，既能被页面调用，也能被 CLI 调用，还能被任意 JS 运行时调用
-3. 调用入口不应直接依赖页面或具体后端接口细节，而应依赖统一的 Provider 抽象
-4. Provider 不只是“连接器”，而是资源能力入口，可以直接返回 `ReportBuilder`、`ChartBuilder`、`InsightBuilder`
-5. 全平台只有 3 种一等 Provider：`ReportProvider`、`ChartProvider`、`InsightProvider`
+1. All `Report / Insight / Chart` operations are essentially built on collaborative documents.
+2. All resource operations can be called by pages, CLI, and any JS runtime.
+3. Call entry points should not directly depend on pages or concrete backend interface details; they should depend on a unified Provider abstraction.
+4. Provider is not merely a "connector." It is the resource capability entry point and can directly return `ReportBuilder`, `ChartBuilder`, and `InsightBuilder`.
+5. The whole platform has only three first-class Providers: `ReportProvider`, `ChartProvider`, and `InsightProvider`.
 
-这里的核心变化是：
+The core change is:
 
-- 过去是“页面驱动资源”
-- 现在应该变成“Provider 驱动资源”
+- Previously, resources were "page driven."
+- Now, resources should become "Provider driven."
 
-页面、CLI、Node 脚本、浏览器沙箱、服务端渲染环境，都只是 Provider 的消费者。
+Pages, CLI, Node scripts, browser sandboxes, and server-rendering environments are all only Provider consumers.
 
-## 为什么之前的讨论还不够
+## Why The Previous Discussion Was Not Enough
 
-前一版讨论强调了：
+The previous discussion emphasized:
 
-- 资源独立
-- `report` 只负责编排
-- 存储层与业务层分离
+- Independent resources.
+- `report` only owns orchestration.
+- Separation between storage layer and business layer.
 
-这些都对，但还不够，因为它没有把“统一接入点”收敛出来。
+All of that is correct, but still not enough, because it did not converge on a unified access point.
 
-如果只有：
+If the system only has:
 
-- 后端 REST API
-- 前端页面 hook
-- 未来 CLI 命令
+- backend REST API
+- frontend page hooks
+- future CLI commands
 
-那系统仍然可能继续分裂成三套调用方式：
+then it can still split into three call paths:
 
-- 页面一套
-- CLI 一套
-- 业务脚本一套
+- one for pages
+- one for CLI
+- one for business scripts
 
-这样最终会出现“能力一样，入口三套，语义三套”的问题。
+The eventual problem becomes "same capability, three entry points, three semantics."
 
-要避免这种分裂，就必须把平台能力收敛到 Provider。
+To avoid this split, platform capabilities must converge on Provider.
 
-## 新的核心判断
+## New Core Judgment
 
-未来判断一个能力是否已经平台化，只问两个问题：
+In the future, decide whether a capability is platformized by asking only two questions:
 
-1. 它是否可以通过某个 Provider 在任意 JS 运行时被调用？
-2. 它是否返回 Builder / 业务语义，而不是暴露底层存储和传输细节？
+1. Can it be called through a Provider in any JS runtime?
+2. Does it return Builder / business semantics instead of exposing low-level storage and transport details?
 
-如果不能，说明这个能力还只是应用层能力，不是平台能力。
+If not, the capability is still an application-layer capability, not a platform capability.
 
-## Provider First 的架构方向
+## Provider First Architecture Direction
 
-### 1. Provider 是平台能力入口，不是 UI 辅助对象
+### 1. Provider Is The Platform Capability Entry Point, Not A UI Helper
 
-Provider 不是 React hook 的替代品，也不是简单 API client。
+Provider is not a replacement for React hooks, and it is not a simple API client.
 
-Provider 应该直接承担这些职责：
+Provider should directly own these responsibilities:
 
-- 与后端建立连接
-- 打开协同文档
-- 提供资源 CRUD
-- 提供资源详情读取
-- 提供 Builder 获取
-- 提供结构编排操作
-- 提供快照、导出、引用检查等能力
+- Establish backend connections.
+- Open collaborative documents.
+- Provide resource CRUD.
+- Read resource detail.
+- Obtain Builder.
+- Perform structural orchestration operations.
+- Provide snapshots, export, reference checks, and other capabilities.
 
-也就是说，Provider 是“资源运行时入口”。
+In other words, Provider is the "resource runtime entry point."
 
-### 2. Provider 应该统一页面、CLI、任意 JS 运行时
+### 2. Provider Should Unify Pages, CLI, And Any JS Runtime
 
-同一套 Provider，应该能被这些入口消费：
+The same Provider should be consumable by these entry points:
 
 - `apps/vbi_fe`
 - `apps/vbi_cli`
-- Node.js 脚本
-- 浏览器中的普通 JS
-- 未来其他宿主应用
+- Node.js scripts
+- regular browser JS
+- future host applications
 
-这意味着 Provider 设计时就不能绑定 React、不能绑定 DOM、不能绑定某个具体页面状态管理方案。
+This means Provider must not bind to React, DOM, or any concrete page state-management solution.
 
-Provider 必须是纯 JavaScript / TypeScript 运行时对象。
+Provider must be a pure JavaScript / TypeScript runtime object.
 
-### 3. Provider 的底层是协同，不是 REST DTO
+### 3. Provider Is Backed By Collaboration, Not REST DTO
 
-资源的本体是协同文档，而不是 REST 返回的 JSON。
+The resource body is a collaborative document, not JSON returned by REST.
 
-更准确地说：
+More precisely:
 
-- `Bytes` / Yjs update 是资源事实源的底层编码
-- Builder 是资源事实源的可操作形态
-- JSON 是资源事实源的业务投影
+- `Bytes` / Yjs update is the low-level encoding of the resource source of truth.
+- Builder is the operable form of the resource source of truth.
+- JSON is the business projection of the resource source of truth.
 
-所以 Provider 需要以协同连接为核心，而不是以 REST 拉取 detail 为核心。
+So Provider needs to center on collaboration connections rather than REST detail fetching.
 
-REST 仍然需要存在，但职责要收敛：
+REST is still needed, but its responsibilities should converge:
 
-- 列表查询
-- 元信息查询
-- 创建和删除这类命令式操作
-- 引用关系检查
-- 非协同业务动作
+- list queries
+- metadata queries
+- command-style operations such as create and delete
+- reference checks
+- non-collaborative business actions
 
-真正的资源编辑和持续状态同步，应通过 Provider 持有的协同文档完成。
+Real resource editing and continuous state synchronization should happen through the collaborative document held by Provider.
 
-## 三种一等 Provider
+## Three First-Class Providers
 
-这里建议明确只有 3 种一等 Provider：
+This discussion recommends explicitly having only three first-class Providers:
 
 - `ChartProvider`
 - `InsightProvider`
 - `ReportProvider`
 
-不要继续抽象成一个过于泛化的 `ResourceProvider<T>` 作为对外主模型。内部可以复用，但对外语义应保持清晰。
+Do not keep abstracting them into an overly generic `ResourceProvider<T>` as the main public model. Internal reuse is fine, but public semantics should remain clear.
 
-原因很简单：
+The reason is simple:
 
-- `chart`、`insight`、`report` 的操作集并不相同
-- `report` 有结构编排职责
-- `chart` 有查询和渲染相关能力
-- `insight` 是文本或语义内容资源
+- `chart`, `insight`, and `report` do not share the same operation set.
+- `report` has structural orchestration responsibilities.
+- `chart` has query and rendering-related capabilities.
+- `insight` is a text or semantic content resource.
 
-如果对外强行统一，很容易得到一个“看起来复用，实际上模糊”的抽象。
+Forcing public unification easily produces an abstraction that appears reusable but is actually vague.
 
 ### 1. ChartProvider
 
-职责：
+Responsibilities:
 
-- 创建 / 删除 / 重命名 chart
-- 连接 chart 协同文档
-- 返回 `VBIChartBuilder`
-- 提供 chart 的 summary / detail / snapshot
-- 提供与 `VQuery`、`VSeed` 相关的派生能力
+- Create / delete / rename chart.
+- Connect the chart collaborative document.
+- Return `VBIChartBuilder`.
+- Provide chart summary / detail / snapshot.
+- Provide derived capabilities related to `VQuery` and `VSeed`.
 
-示意：
+Example:
 
 ```ts
 const chartProvider = await platform.getChartProvider(chartId)
@@ -147,14 +147,14 @@ chartBuilder.chartType.changeChartType('bar')
 
 ### 2. InsightProvider
 
-职责：
+Responsibilities:
 
-- 创建 / 删除 / 重命名 insight
-- 连接 insight 协同文档
-- 返回 `VBIInsightBuilder`
-- 提供 insight 的 summary / detail / snapshot
+- Create / delete / rename insight.
+- Connect the insight collaborative document.
+- Return `VBIInsightBuilder`.
+- Provide insight summary / detail / snapshot.
 
-示意：
+Example:
 
 ```ts
 const insightProvider = await platform.getInsightProvider(insightId)
@@ -164,16 +164,16 @@ insightBuilder.setContent('Monthly overview')
 
 ### 3. ReportProvider
 
-职责：
+Responsibilities:
 
-- 创建 / 删除 / 重命名 report
-- 连接 report 协同文档
-- 返回 `VBIReportBuilder`
-- 提供 page 结构编排能力
-- 提供对子资源引用的绑定能力
-- 提供 snapshot / export 能力
+- Create / delete / rename report.
+- Connect the report collaborative document.
+- Return `VBIReportBuilder`.
+- Provide page structural orchestration.
+- Provide binding capabilities for child resource references.
+- Provide snapshot / export capabilities.
 
-示意：
+Example:
 
 ```ts
 const reportProvider = await platform.getReportProvider(reportId)
@@ -185,11 +185,11 @@ await reportProvider.addPage({
 })
 ```
 
-## Provider 提供什么能力
+## What Provider Provides
 
-Provider 至少应该提供两类能力。
+Provider should at least provide two kinds of capabilities.
 
-### 1. 资源连接能力
+### 1. Resource Connection Capabilities
 
 - `open()`
 - `connect()`
@@ -197,9 +197,9 @@ Provider 至少应该提供两类能力。
 - `getBuilder()`
 - `getSnapshot()`
 
-这一层解决“如何连上资源”。
+This layer answers "how to connect to a resource."
 
-### 2. 资源操作能力
+### 2. Resource Operation Capabilities
 
 - `create()`
 - `delete()`
@@ -207,7 +207,7 @@ Provider 至少应该提供两类能力。
 - `getSummary()`
 - `getDetail()`
 
-以及资源特定操作：
+And resource-specific operations:
 
 - `ReportProvider.addPage()`
 - `ReportProvider.removePage()`
@@ -215,101 +215,101 @@ Provider 至少应该提供两类能力。
 - `ReportProvider.bindChart()`
 - `ReportProvider.bindInsight()`
 
-这一层解决“连上以后能做什么”。
+This layer answers "what can be done after connecting."
 
-## 为什么 Builder 必须从 Provider 拿
+## Why Builder Must Come From Provider
 
-如果 Builder 仍然由页面自己 new，或者由不同入口各自构造，会出现三个问题：
+If Builder is still instantiated by pages themselves, or constructed independently by different entry points, three problems appear:
 
-1. 文档初始化逻辑分散
-2. 协同连接状态分散
-3. CLI / 页面 / 脚本环境拿到的 Builder 行为可能不一致
+1. Document initialization logic is scattered.
+2. Collaboration connection state is scattered.
+3. Builder behavior may differ between CLI / page / script environments.
 
-因此更合理的方向是：
+Therefore, the better direction is:
 
-- Builder 的创建权属于 Provider
-- Consumer 不关心底层如何恢复 YDoc
-- Consumer 只关心拿到一个可操作的 Builder
+- Provider owns Builder creation.
+- Consumers do not care how the underlying YDoc is restored.
+- Consumers only care about obtaining an operable Builder.
 
-也就是：
+That is:
 
-- 页面拿 `builder`
-- CLI 拿 `builder`
-- 普通脚本也拿 `builder`
+- Pages obtain `builder`.
+- CLI obtains `builder`.
+- Regular scripts also obtain `builder`.
 
-Builder 是统一操作面，Provider 是统一接入面。
+Builder is the unified operation surface, and Provider is the unified access surface.
 
-## 页面、CLI、任意 JS 运行时之间的关系
+## Relationship Between Pages, CLI, And Any JS Runtime
 
-### 页面
+### Pages
 
-页面只负责：
+Pages are only responsible for:
 
-- 展示
-- 交互
-- 生命周期管理
-- 把用户动作翻译成 Provider 调用
+- Display.
+- Interaction.
+- Lifecycle management.
+- Translating user actions into Provider calls.
 
-页面不负责定义资源协议。
+Pages do not define resource protocols.
 
 ### CLI
 
-CLI 只负责：
+CLI is only responsible for:
 
-- 解析命令
-- 调用 Provider
-- 输出结果
+- Parsing commands.
+- Calling Provider.
+- Outputting results.
 
-CLI 不应该直接绕开 Provider 去调一套私有 service。
+CLI should not bypass Provider directly to call a private service.
 
-### 任意 JS 运行时
+### Any JS Runtime
 
-普通脚本或外部应用只负责：
+Regular scripts or external applications are only responsible for:
 
-- 初始化平台客户端
-- 获取对应 Provider
-- 调用 Provider 或 Builder
+- Initializing the platform client.
+- Obtaining the corresponding Provider.
+- Calling Provider or Builder.
 
-这才是 Headless BI 真正成立的标志。
+This is what makes Headless BI real.
 
-## 后端应该如何配合这种模型
+## How The Backend Should Support This Model
 
-后端要从“页面后端”演进成“Provider 后端”。
+The backend needs to evolve from a "page backend" into a "Provider backend."
 
-这意味着后端至少要同时提供两类能力：
+This means the backend should provide at least two types of capabilities:
 
-### 1. 命令与查询能力
+### 1. Command And Query Capabilities
 
-例如：
+For example:
 
-- 创建 / 删除资源
-- 获取资源 summary
-- 获取元信息
-- 引用关系检查
-- 导出快照
+- Create / delete resources.
+- Get resource summary.
+- Get metadata.
+- Check reference relationships.
+- Export snapshots.
 
-这类能力适合走 REST 或等价命令接口。
+These capabilities fit REST or equivalent command interfaces.
 
-### 2. 协同连接能力
+### 2. Collaboration Connection Capabilities
 
-例如：
+For example:
 
-- 打开资源文档
-- 同步资源状态
-- 恢复快照与增量
+- Open resource documents.
+- Synchronize resource state.
+- Restore snapshots and increments.
 
-这类能力适合走 Hocuspocus / Yjs Provider 协议。
+These capabilities fit Hocuspocus / Yjs Provider protocols.
 
-因此可以把后端理解成：
+So the backend can be understood as:
 
-- REST 是管理面
-- 协同连接是数据面
+- REST is the management plane.
+- Collaboration connection is the data plane.
 
-Provider 就是同时消费这两面能力的客户端抽象。
+Provider is the client abstraction that consumes both planes.
 
-## 资源操作的统一语义
+## Unified Semantics For Resource Operations
 
-为了让三种 Provider 真正可复用，建议统一一组最小语义：
+To make the three Providers truly reusable, define a unified minimum semantic set:
 
 - `create`
 - `remove`
@@ -321,33 +321,33 @@ Provider 就是同时消费这两面能力的客户端抽象。
 - `getDetail`
 - `snapshot`
 
-再在各 Provider 上增加自己的专属动作。
+Then add provider-specific actions on each Provider.
 
-这样做的意义是：
+The value of doing this:
 
-- 页面团队理解一致
-- CLI 命令映射自然
-- 文档和 SDK 稳定
+- Page teams have a consistent mental model.
+- CLI commands map naturally.
+- Documentation and SDK remain stable.
 
-## 对 `report` 的特殊处理
+## Special Treatment For `report`
 
-即使采用 Provider First，仍要坚持一个边界：
+Even when adopting Provider First, one boundary must remain:
 
-- `report` 是结构编排资源
-- `chart`、`insight` 是内容资源
+- `report` is a structural orchestration resource.
+- `chart` and `insight` are content resources.
 
-所以 `ReportProvider` 虽然能管理 page 和引用，但不应该直接吞掉 `ChartProvider` 和 `InsightProvider` 的职责。
+So although `ReportProvider` can manage pages and references, it should not absorb the responsibilities of `ChartProvider` and `InsightProvider`.
 
-更合理的模式是：
+A better pattern:
 
-- `ReportProvider` 管结构
-- `ChartProvider` 管 chart 内容
-- `InsightProvider` 管 insight 内容
-- `ReportProvider` 通过 `chartId / insightId` 组织它们
+- `ReportProvider` manages structure.
+- `ChartProvider` manages chart content.
+- `InsightProvider` manages insight content.
+- `ReportProvider` organizes them through `chartId / insightId`.
 
-## 推荐的平台对象模型
+## Recommended Platform Object Model
 
-可以考虑增加一个更上层的 `VBIProviderClient`：
+Consider adding a higher-level `VBIProviderClient`:
 
 ```ts
 const client = await createVBIProviderClient(config)
@@ -357,55 +357,55 @@ const chartProvider = client.chart(chartId)
 const insightProvider = client.insight(insightId)
 ```
 
-其中：
+Where:
 
-- `client` 负责认证、连接配置、transport 组装
-- `provider` 负责资源级能力
-- `builder` 负责 DSL 级操作
+- `client` handles authentication, connection configuration, and transport assembly.
+- `provider` handles resource-level capabilities.
+- `builder` handles DSL-level operations.
 
-三层关系应稳定为：
+The three-layer relationship should stabilize as:
 
 `client -> provider -> builder`
 
-而不是：
+Instead of:
 
 `page -> api -> service -> builder`
 
-## 推荐落地顺序
+## Recommended Implementation Order
 
-### 阶段 1：先把 Provider 概念立起来
+### Phase 1: Establish The Provider Concept First
 
-- 明确 `ChartProvider / InsightProvider / ReportProvider`
-- 定义统一接口和最小方法集
-- 明确 Builder 从 Provider 获取
+- Clarify `ChartProvider / InsightProvider / ReportProvider`.
+- Define the unified interface and minimum method set.
+- Clarify that Builder is obtained from Provider.
 
-### 阶段 2：把现有前端调用改成 Provider 消费
+### Phase 2: Change Existing Frontend Calls To Consume Provider
 
-- 页面不再直接拼 REST 调用和协同 hook
-- 页面通过 Provider 拿 builder 和执行操作
+- Pages no longer assemble REST calls and collaboration hooks directly.
+- Pages obtain builder and execute operations through Provider.
 
-### 阶段 3：实现 `vbi_cli`
+### Phase 3: Implement `vbi_cli`
 
-- CLI 只做 Provider 的薄封装
-- 不再设计第二套业务语义
+- CLI is only a thin wrapper around Provider.
+- Do not design a second set of business semantics.
 
-### 阶段 4：开放给任意 JS 运行时
+### Phase 4: Open To Any JS Runtime
 
-- 提供纯 TS SDK
-- 文档示例覆盖 Node / Browser 两种运行时
+- Provide a pure TS SDK.
+- Documentation examples cover both Node / Browser runtimes.
 
-## 结论
+## Conclusion
 
-这次解耦应该再往前走一步，从“资源服务解耦”升级为“Provider 优先的平台架构”。
+This decoupling should go one step further, from "resource service decoupling" to a "Provider-first platform architecture."
 
-最终应形成下面这个稳定模型：
+The final stable model should be:
 
-- `chart / insight / report` 是三个独立资源
-- `ChartProvider / InsightProvider / ReportProvider` 是三个一等入口
-- Provider 可以在任何 JS 运行时连接后端并操作资源
-- Provider 可以直接返回对应 Builder
-- 页面、CLI、脚本只是 Provider 的不同消费者
-- REST 负责管理面，协同协议负责数据面
-- `Bytes` 留在持久化与协同协议内部，业务层统一暴露 JSON 与 Builder 语义
+- `chart / insight / report` are three independent resources.
+- `ChartProvider / InsightProvider / ReportProvider` are three first-class entry points.
+- Provider can connect to the backend and operate resources in any JS runtime.
+- Provider can directly return the corresponding Builder.
+- Pages, CLI, and scripts are only different consumers of Provider.
+- REST owns the management plane, and the collaboration protocol owns the data plane.
+- `Bytes` stays inside persistence and collaboration protocols, while the business layer uniformly exposes JSON and Builder semantics.
 
-只有这样，VBI 才真正从“可嵌入的能力集合”走向“平台级 Headless BI”。
+Only this lets VBI truly move from an "embeddable capability collection" to "platform-level Headless BI."

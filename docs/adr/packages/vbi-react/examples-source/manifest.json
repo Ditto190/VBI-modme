@@ -1,14 +1,14 @@
 [
   {
     "slug": "basicHooks",
-    "label": "基础 Hooks"
+    "label": "Basic Hooks"
   },
   {
     "slug": "layoutWithComponents",
-    "label": "组件化布局"
+    "label": "Componentized Layout"
   },
   {
     "slug": "filterMutations",
-    "label": "过滤条件编辑"
+    "label": "Filter Mutations"
   }
 ]

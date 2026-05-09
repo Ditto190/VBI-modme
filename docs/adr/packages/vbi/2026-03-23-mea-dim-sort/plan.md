@@ -1,136 +1,136 @@
-# 执行计划: VBI Measure / Dimension 排序支持
+# Implementation Plan: VBI Measure / Dimension Sort Support
 
-> 基于 ADR: `./adr.md`
-> TDD 驱动: 先写测试 → 再实现 → 生成产物 → 全部验证通过
+> Based on ADR: `./adr.md`
+> TDD-driven: write tests first, then implement, regenerate artifacts, and pass all verification.
 
-## 范围
+## Scope
 
-本计划聚焦 VBI 核心包（`packages/vbi`），只处理排序 DSL、builder、`buildVQuery().orderBy` lowering，以及由默认排序引起的生成物和快照更新；不包含 `practices/standard` UI 改造。
+This plan focuses on the VBI core package (`packages/vbi`). It only covers sort DSL, builders, `buildVQuery().orderBy` lowering, and generated artifacts or snapshot updates caused by default sorting. It does not include `practices/standard` UI changes.
 
-## Phase 1: 排序类型与 Schema
+## Phase 1: Sort Types and Schema
 
-### 1.1 先写 schema 测试
+### 1.1 Write schema tests first
 
-**测试文件**: `packages/vbi/tests/types/sortSchemas.test.ts`（新增）
+**Test file**: `packages/vbi/tests/types/sortSchemas.test.ts` (new)
 
-测试内容:
+Test coverage:
 
-1. `zVBISort` 正确接受 `{ order: 'asc' }` 和 `{ order: 'desc' }`
-2. 非法 `order` 值被 reject
-3. `zVBIDimensionSchema` 正确接受带 `sort` 的 dimension
-4. `zVBIMeasure` 正确接受带 `sort` 的 measure
-5. `zVBIChartDSL` 正确接受包含排序节点的完整 DSL
+1. `zVBISort` accepts `{ order: 'asc' }` and `{ order: 'desc' }`.
+2. Invalid `order` values are rejected.
+3. `zVBIDimensionSchema` accepts dimensions with `sort`.
+4. `zVBIMeasure` accepts measures with `sort`.
+5. `zVBIChartDSL` accepts a complete DSL that contains sorted nodes.
 
-### 1.2 实现共享排序类型
+### 1.2 Implement shared sort types
 
-**新增文件**: `packages/vbi/src/types/dsl/sort.ts`
+**New file**: `packages/vbi/src/types/dsl/sort.ts`
 
-改动内容:
+Changes:
 
-1. 新增 `VBISortOrder = 'asc' | 'desc'`
-2. 新增 `VBISort = { order: VBISortOrder }`
-3. 新增 `zVBISortOrder` 与 `zVBISort`
+1. Add `VBISortOrder = 'asc' | 'desc'`.
+2. Add `VBISort = { order: VBISortOrder }`.
+3. Add `zVBISortOrder` and `zVBISort`.
 
-**改动文件**:
+**Changed files**:
 
 - `packages/vbi/src/types/dsl/dimensions/dimensions.ts`
 - `packages/vbi/src/types/dsl/measures/measures.ts`
 - `packages/vbi/src/types/dsl/index.ts`
 
-改动内容:
+Changes:
 
-1. dimension / measure schema 增加可选 `sort`
-2. dimension / measure 类型接入 `sort?: VBISort`
-3. `types/dsl/index.ts` 导出 `VBISort` / `VBISortOrder`
+1. Add optional `sort` to dimension / measure schemas.
+2. Add `sort?: VBISort` to dimension / measure types.
+3. Export `VBISort` / `VBISortOrder` from `types/dsl/index.ts`.
 
-## Phase 2: Builder 扩展
+## Phase 2: Builder Extension
 
-### 2.1 先写 builder 测试
+### 2.1 Write builder tests first
 
-**测试文件**: `packages/vbi/tests/builder/features/sort.test.ts`（新增）
+**Test file**: `packages/vbi/tests/builder/features/sort.test.ts` (new)
 
-测试内容:
+Test coverage:
 
-1. `DimensionNodeBuilder.setSort()` 正确存储排序配置
-2. `DimensionNodeBuilder.getSort()` 返回当前 `sort` 或 `undefined`
-3. `DimensionNodeBuilder.clearSort()` 清除排序配置
-4. `MeasureNodeBuilder.setSort()` / `getSort()` / `clearSort()` 行为正确
-5. `setSort()` 支持链式调用
-6. `toJSON()` 在设置和清除排序后输出正确
+1. `DimensionNodeBuilder.setSort()` stores sort configuration correctly.
+2. `DimensionNodeBuilder.getSort()` returns the current `sort` or `undefined`.
+3. `DimensionNodeBuilder.clearSort()` clears sort configuration.
+4. `MeasureNodeBuilder.setSort()` / `getSort()` / `clearSort()` behave correctly.
+5. `setSort()` supports chaining.
+6. `toJSON()` output is correct after setting and clearing sort.
 
-### 2.2 实现 NodeBuilder
+### 2.2 Implement node builders
 
-**改动文件**:
+**Changed files**:
 
 - `packages/vbi/src/builder/features/dimensions/dim-node-builder.ts`
 - `packages/vbi/src/builder/features/measures/mea-node-builder.ts`
 
-改动内容:
+Changes:
 
-1. 新增 `setSort(sort: VBISort): this`
-2. 新增 `getSort(): VBISort | undefined`
-3. 新增 `clearSort(): this`
+1. Add `setSort(sort: VBISort): this`.
+2. Add `getSort(): VBISort | undefined`.
+3. Add `clearSort(): this`.
 
-## Phase 3: buildVQuery 排序 Lowering
+## Phase 3: `buildVQuery` Sort Lowering
 
-### 3.1 先写 query 测试
+### 3.1 Write query tests first
 
-**测试文件**: `packages/vbi/tests/query/orderBy.test.ts`（新增）
+**Test file**: `packages/vbi/tests/query/orderBy.test.ts` (new)
 
-测试内容:
+Test coverage:
 
-1. 无显式排序时，`buildVQuery()` 默认按第一个 dimension 升序
-2. 无显式排序且没有 dimension 时，不输出 `orderBy`
-3. dimension 显式排序时，忽略默认逻辑
-4. measure 显式排序时，忽略默认逻辑
-5. 多个 dimension 同时排序时，保持 `dimensions` 当前顺序
-6. 多个 measure 同时排序时，保持 `measures` 当前顺序
-7. dimension 与 measure 同时排序时，输出顺序固定为“dimension 在前，measure 在后”
-8. 带聚合的 measure 排序使用节点 `id`
-9. 带日期聚合的 dimension 排序使用节点 `id`
+1. Without explicit sort, `buildVQuery()` sorts by the first dimension ascending by default.
+2. Without explicit sort and without dimensions, `orderBy` is omitted.
+3. Explicit dimension sort ignores the default logic.
+4. Explicit measure sort ignores the default logic.
+5. Multiple sorted dimensions preserve the current `dimensions` order.
+6. Multiple sorted measures preserve the current `measures` order.
+7. When dimensions and measures are both sorted, output order is fixed as dimensions first, then measures.
+8. Aggregated measure sorting uses node `id`.
+9. Date-aggregated dimension sorting uses node `id`.
 
-### 3.2 实现 `buildOrderBy`
+### 3.2 Implement `buildOrderBy`
 
-**新增文件**: `packages/vbi/src/pipeline/vqueryDSL/buildOrderBy.ts`
+**New file**: `packages/vbi/src/pipeline/vqueryDSL/buildOrderBy.ts`
 
-职责:
+Responsibilities:
 
-1. 收集已配置 `sort` 的 dimension / measure 节点
-2. 将排序节点映射为 `VQueryDSL.orderBy`
-3. 在无显式排序时应用“第一个 dimension 升序”的默认规则
+1. Collect dimension / measure nodes with configured `sort`.
+2. Map sorted nodes to `VQueryDSL.orderBy`.
+3. Apply the "first dimension ascending" default when there is no explicit sort.
 
-**改动文件**: `packages/vbi/src/pipeline/vqueryDSL/index.ts`
+**Changed file**: `packages/vbi/src/pipeline/vqueryDSL/index.ts`
 
-改动内容:
+Changes:
 
-1. 接入 `buildOrderBy`
-2. 调整流水线顺序为 `select -> groupBy -> where -> having -> orderBy -> limit`
+1. Wire in `buildOrderBy`.
+2. Update the pipeline order to `select -> groupBy -> where -> having -> orderBy -> limit`.
 
-## Phase 4: 生成物与快照更新
+## Phase 4: Generated Artifacts and Snapshot Updates
 
-### 4.1 重新生成测试、示例与 API
+### 4.1 Regenerate tests, examples, and API artifacts
 
-**命令**:
+**Command**:
 
 ```bash
 pnpm --filter=@visactor/vbi run g
 ```
 
-目的:
+Purpose:
 
-1. 更新因默认排序新增而变化的单测和快照
-2. 更新 examples 生成物
-3. 更新 API 生成物
+1. Update tests and snapshots changed by the new default sort.
+2. Update generated examples.
+3. Update generated API artifacts.
 
-### 4.2 检查生成结果
+### 4.2 Inspect generated results
 
-重点关注:
+Focus areas:
 
-1. 现有 examples 的 `buildVQuery()` 输出是否新增了默认 `orderBy`
-2. 生成测试是否与 ADR 中的排序规则一致
-3. 是否出现与排序无关的意外 diff
+1. Whether existing examples' `buildVQuery()` output now includes default `orderBy`.
+2. Whether generated tests match the ADR's sort rules.
+3. Whether there are unexpected diffs unrelated to sorting.
 
-## Phase 5: 验证
+## Phase 5: Verification
 
 ```bash
 pnpm --filter=@visactor/vbi run test
@@ -138,17 +138,17 @@ pnpm run lint
 pnpm run typecheck
 ```
 
-全部通过才算完成。
+All commands must pass before the task is complete.
 
-## 执行顺序
+## Execution Order
 
-| 步骤 | 动作                                     | 文件                                                                |
-| ---- | ---------------------------------------- | ------------------------------------------------------------------- |
-| 1    | 写 schema 测试                           | `tests/types/sortSchemas.test.ts`                                   |
-| 2    | 实现共享排序类型与导出                   | `src/types/dsl/sort.ts` + `src/types/dsl/{dimensions,measures}/...` |
-| 3    | 写 builder 测试                          | `tests/builder/features/sort.test.ts`                               |
-| 4    | 实现 builder 方法                        | `src/builder/features/{dimensions,measures}/*-node-builder.ts`      |
-| 5    | 写 query 排序测试                        | `tests/query/orderBy.test.ts`                                       |
-| 6    | 实现 `buildOrderBy` 与接线               | `src/pipeline/vqueryDSL/buildOrderBy.ts` + `index.ts`               |
-| 7    | 运行 `pnpm --filter=@visactor/vbi run g` | 更新生成物与快照                                                    |
-| 8    | 全量验证                                 | `test + lint + typecheck`                                           |
+| Step | Action                                  | File                                                                |
+| ---- | --------------------------------------- | ------------------------------------------------------------------- |
+| 1    | Write schema tests                      | `tests/types/sortSchemas.test.ts`                                   |
+| 2    | Implement shared sort types and exports | `src/types/dsl/sort.ts` + `src/types/dsl/{dimensions,measures}/...` |
+| 3    | Write builder tests                     | `tests/builder/features/sort.test.ts`                               |
+| 4    | Implement builder methods               | `src/builder/features/{dimensions,measures}/*-node-builder.ts`      |
+| 5    | Write query sort tests                  | `tests/query/orderBy.test.ts`                                       |
+| 6    | Implement `buildOrderBy` and wiring     | `src/pipeline/vqueryDSL/buildOrderBy.ts` + `index.ts`               |
+| 7    | Run `pnpm --filter=@visactor/vbi run g` | Update generated artifacts and snapshots                            |
+| 8    | Full verification                       | `test + lint + typecheck`                                           |

@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.5.4
+
+### Patch Changes
+
+- 54b7f82: Add annotation text background theme tokens for padding, border radius, border color, and border width.
+
 ## 0.5.3
 
 ### Patch Changes

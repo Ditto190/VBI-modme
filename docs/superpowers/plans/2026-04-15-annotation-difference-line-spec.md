@@ -4,7 +4,7 @@
 
 **Goal:** Compile `annotationDifferenceLine` into VChart `markLine` step annotations for `column`, `bar`, `columnParallel`, and `barParallel`, with stacked `column`/`bar` anchors lifted to stack totals and fail-fast selector validation.
 
-**Architecture:** Add a dedicated `annotationDifferenceLine` spec pipe that resolves logical anchors from `advancedVSeed.dataset`, then emits a `type-step` `markLine` whose `coordinates` callback returns runtime datum-like items for VChart to map through the current series fields. Keep style sourcing in `config.[chartType].annotation.annotationDifferenceLine`; do not bind v1 to VChart’s raw `markLineStrokeColor` token because existing annotation primitives are not token-colorized that way.
+**Architecture:** Add a dedicated `annotationDifferenceLine` spec pipe that resolves logical anchors from `advancedVSeed.dataset`, then emits a `type-step` `markLine` whose `coordinates` callback returns runtime datum-like items for VChart to map through the current series fields. Keep style sourcing in `config.[chartType].annotation.annotationDifferenceLine`; do not bind v1 to VChart's raw `markLineStrokeColor` token because existing annotation primitives are not token-colorized that way.
 
 **Tech Stack:** TypeScript, VChart marker APIs, Vitest, VSeed chart spec pipeline.
 
@@ -575,7 +575,7 @@ git commit -m "feat(chart): wire difference line annotations into supported bar 
 ## Self-Review
 
 - **Spec coverage:** This plan covers selector resolution, stacked-total lifting, label computation, direction inference, pipeline wiring, and verification.
-- **Placeholder scan:** No `TODO`, `TBD`, or “appropriate handling” placeholders remain.
+- **Placeholder scan:** No `TODO`, `TBD`, or "appropriate handling" placeholders remain.
 - **Type consistency:** The plan consistently uses `annotationDifferenceLine`, `ResolvedDifferenceAnchor`, `buildDifferenceText`, and `inferDifferenceConnectDirection`.
 
 ## Recommended Execution Mode

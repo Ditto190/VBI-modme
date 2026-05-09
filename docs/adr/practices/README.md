@@ -1,6 +1,6 @@
 # docs/adr/practices
 
-本目录存放 practices 示例的设计与演进记录。
+This directory stores design notes and evolution records for the practice examples.
 
-- `standard/`: `practices/standard` 相关历史
-- `vbi-react-starter/`: `practices/vbi-react-starter` 相关历史
+- `standard/`: history for `practices/standard`
+- `vbi-react-starter/`: history for `practices/vbi-react-starter`

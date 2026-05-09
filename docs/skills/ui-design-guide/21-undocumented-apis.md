@@ -1,66 +1,66 @@
-# 21. 通过 Practices 才发现的 API 使用方式
+# 21. API Usage Found Only Through Practices
 
-> 以下内容在 skills 文档中未说明或说明不清晰，通过阅读 practices 源码才发现的正确用法。
+> The following content was missing or unclear in the skills documentation and was identified as the correct usage by reading practice source code.
 
 ---
 
-## 1. WHERE 过滤：`op` 与 `value` 的组合规则
+## 1. WHERE Filters: `op` and `value` Combination Rules
 
-### 文档现状
+### Current Documentation State
 
-`03-builder-api-summary.md` 中 `WhereNodeBuilder.setOperator` 列出了可用操作符，`setValue` 只写了传入值。
+`WhereNodeBuilder.setOperator` in `03-builder-api-summary.md` lists the available operators, and `setValue` only states that a value is passed in.
 
-### 实际情况
+### Actual Behavior
 
-**关键规则**：`buildWhere.ts` 会自动转换操作符：
+**Key rule**: `buildWhere.ts` automatically converts operators:
 
-| 传入 `op` | 传入 `value`                        | buildWhere 实际转换                         |
-| --------- | ----------------------------------- | ------------------------------------------- |
-| `'='`     | `string`（如 `'上海'`）             | `=`（单值精确匹配）                         |
-| `'!='`    | `string`                            | `!=`                                        |
-| `'='`     | `string[]`（如 `['上海', '东丰']`） | `'in'`                                      |
-| `'!='`    | `string[]`                          | `'not in'`                                  |
-| `'in'`    | `string[]`                          | `'in'`（但会导致 SQL 语法错误，**不要用**） |
+| Input `op` | Input `value`                                       | Actual buildWhere Conversion                                  |
+| ---------- | --------------------------------------------------- | ------------------------------------------------------------- |
+| `'='`      | `string` (for example `'Shanghai'`)                 | `=` (single-value exact match)                                |
+| `'!='`     | `string`                                            | `!=`                                                          |
+| `'='`      | `string[]` (for example `['Shanghai', 'Dongfeng']`) | `'in'`                                                        |
+| `'!='`     | `string[]`                                          | `'not in'`                                                    |
+| `'in'`     | `string[]`                                          | `'in'` (but this causes SQL syntax errors; **do not use it**) |
 
-### 正确用法
+### Correct Usage
 
 ```ts
-// 多值筛选：op='=' + 数组值
+// Multi-value filtering: op='=' + array value
 builder.whereFilter.add('city', (n) => {
-  n.setOperator('=') // 注意是 '=' 不是 'in'
-  n.setValue(['上海', '东丰']) // 数组！
+  n.setOperator('=') // Note that this is '=' rather than 'in'
+  n.setValue(['Shanghai', 'Dongfeng']) // Array!
 })
 
-// 单值筛选：op='=' + 字符串
+// Single-value filtering: op='=' + string
 builder.whereFilter.add('city', (n) => {
   n.setOperator('=')
-  n.setValue('上海')
+  n.setValue('Shanghai')
 })
 ```
 
-### 文档缺失
+### Documentation Gap
 
-- `buildWhere` 的自动转换逻辑未在任何 skills 文档中说明
-- 误用 `op: 'in'` 会导致 SQL 语法错误，需要实际运行才发现
+- The automatic conversion logic in `buildWhere` is not described in any skills document.
+- Misusing `op: 'in'` causes SQL syntax errors, which only become apparent when running it.
 
 ---
 
-## 2. `RawDatasetSource.rawDataset` 必须用 `TidyDatum[]`
+## 2. `RawDatasetSource.rawDataset` Must Use `TidyDatum[]`
 
-### 文档现状
+### Current Documentation State
 
-`17-demo-connector.md` 中的示例直接写 `{ type: 'json', rawDataset: localData }`，`localData` 是 `unknown[]`。
+The example in `17-demo-connector.md` directly uses `{ type: 'json', rawDataset: localData }`, where `localData` is `unknown[]`.
 
-### 实际情况
+### Actual Behavior
 
 `TidyDatum = Record<string, number | string | null | boolean | undefined>`
 
-`rawDataset` 的类型是 `string | ArrayBuffer | Blob | TidyDatum[]`。如果传入 `unknown[]`：
+The type of `rawDataset` is `string | ArrayBuffer | Blob | TidyDatum[]`. If `unknown[]` is passed:
 
-- TypeScript 报错：`Type 'unknown[]' is not assignable to parameter of type 'TidyDatum[]'`
-- 即使类型断言通过，嵌套对象会在 DuckDB 查询时报错
+- TypeScript error: `Type 'unknown[]' is not assignable to parameter of type 'TidyDatum[]'`
+- Even if it passes via type assertion, nested objects cause errors during DuckDB queries.
 
-### 正确用法
+### Correct Usage
 
 ```ts
 import { type TidyDatum } from '@visactor/vquery'
@@ -72,7 +72,7 @@ const toTidyDatum = (row: unknown): TidyDatum | null => {
     if (typeof v === 'number' || typeof v === 'string' || v === null || typeof v === 'boolean' || v === undefined) {
       result[k] = v as number | string | null | boolean | undefined
     } else {
-      return null // 嵌套对象不支持
+      return null // Nested objects are not supported
     }
   }
   return result
@@ -88,23 +88,23 @@ const ds: RawDatasetSource = { type: 'json', rawDataset: tidyData }
 await vquery.createDataset(connectorId, schema, ds)
 ```
 
-### 文档缺失
+### Documentation Gap
 
-- `TidyDatum` 类型定义未在任何 skills 文档中出现
-- `{ type: 'json', rawDataset: url }` 和 `{ type: 'csv', rawDataset: url }` 的区别未说明（前者需要 TidyDatum[]，后者直接传 URL 字符串）
-- `CSV URL` 方式（`type: 'csv'` + url string）更简单，不需要类型转换，未被推荐
+- The `TidyDatum` type definition does not appear in any skills document.
+- The difference between `{ type: 'json', rawDataset: url }` and `{ type: 'csv', rawDataset: url }` is not explained. The former requires `TidyDatum[]`, while the latter can pass a URL string directly.
+- The `CSV URL` approach (`type: 'csv'` + url string) is simpler, needs no type conversion, and had not been recommended.
 
 ---
 
-## 3. `useVBISchemaFields` 返回 `fieldRoleMap` 和 `fieldTypeMap`
+## 3. `useVBISchemaFields` Returns `fieldRoleMap` and `fieldTypeMap`
 
-### 文档现状
+### Current Documentation State
 
-`11-hooks-useVBISchemaFields.md` 中只说明了返回 `schemaFields`。
+`11-hooks-useVBISchemaFields.md` only documents the returned `schemaFields`.
 
-### 实际情况
+### Actual Behavior
 
-professional 的实现返回三个字段：
+The professional implementation returns three fields:
 
 ```ts
 const { schemaFields, fieldRoleMap, fieldTypeMap } = useVBISchemaFields(builder, schemaKey)
@@ -113,22 +113,22 @@ const { schemaFields, fieldRoleMap, fieldTypeMap } = useVBISchemaFields(builder,
 // fieldTypeMap: Record<string, string>
 ```
 
-其中 `fieldRoleMap` 用于快速判断字段是维度还是指标，`fieldTypeMap` 用于判断字段类型（date/string/number），在 ConfigPanel 中判断是否显示日期聚合选项时非常有用。
+`fieldRoleMap` is used to quickly determine whether a field is a dimension or a measure. `fieldTypeMap` is used to determine the field type (date/string/number), which is very useful in ConfigPanel for deciding whether to show date aggregation options.
 
-### 文档缺失
+### Documentation Gap
 
-- `fieldRoleMap` 和 `fieldTypeMap` 未在任何 skills 文档中说明
-- `useVBISchemaFields` 的第二个参数 `schemaRefreshKey` 作用未说明（刷新 schema 时递增）
+- `fieldRoleMap` and `fieldTypeMap` are not described in any skills document.
+- The purpose of the second `useVBISchemaFields` parameter, `schemaRefreshKey`, is not described. It is incremented when refreshing schema.
 
 ---
 
-## 4. `useVBIChartType` 返回 `availableChartTypes`
+## 4. `useVBIChartType` Returns `availableChartTypes`
 
-### 文档现状
+### Current Documentation State
 
-`09-hooks-useVBIChartType.md` 只说明了 `chartType` 和 `changeChartType`。
+`09-hooks-useVBIChartType.md` only documents `chartType` and `changeChartType`.
 
-### 实际情况
+### Actual Behavior
 
 ```ts
 const { chartType, changeChartType, availableChartTypes } = useVBIChartType(builder)
@@ -137,17 +137,17 @@ const { chartType, changeChartType, availableChartTypes } = useVBIChartType(buil
 // availableChartTypes: string[]
 ```
 
-`availableChartTypes` 用于渲染 ChartTypeSelector 的可选列表。
+`availableChartTypes` is used to render the option list in ChartTypeSelector.
 
 ---
 
-## 5. `useVBIBuilder` 返回完整的 theme/limit 状态
+## 5. `useVBIBuilder` Returns Complete theme/limit State
 
-### 文档现状
+### Current Documentation State
 
-`10-hooks-useVBIBuilder.md` 只提到了 `locale`。
+`10-hooks-useVBIBuilder.md` only mentioned `locale`.
 
-### 实际情况
+### Actual Behavior
 
 ```ts
 const { theme, setTheme, limit, setLimit, locale, setLocale } = useVBIBuilder(builder)
@@ -159,26 +159,26 @@ const { theme, setTheme, limit, setLimit, locale, setLocale } = useVBIBuilder(bu
 
 ---
 
-## 6. `replaceFilters` vs 增量增删：WHERE 过滤的两种模式
+## 6. `replaceFilters` vs Incremental Add/Remove: Two WHERE Filter Patterns
 
-### 文档现状
+### Current Documentation State
 
-`07-hooks-useVBIWhereFilter.md` 只说明了增量添加，没有说明替换模式。
+`07-hooks-useVBIWhereFilter.md` only documents incremental adding and does not describe replacement mode.
 
-### 实际情况
+### Actual Behavior
 
-有两种使用方式：
+There are two usage patterns:
 
-**模式一：增量添加（每次加一个过滤条件）**
+**Pattern 1: Incremental add (add one filter condition at a time)**
 
 ```ts
 builder.whereFilter.add('city', (n) => {
   n.setOperator('=')
-  n.setValue('上海')
+  n.setValue('Shanghai')
 })
 ```
 
-**模式二：全量替换（适合 UI 面板管理所有过滤条件）**
+**Pattern 2: Full replacement (suitable for UI panels that manage all filter conditions)**
 
 ```ts
 const replaceFilters = (next: FilterItem[]) => {
@@ -194,25 +194,25 @@ const replaceFilters = (next: FilterItem[]) => {
 }
 ```
 
-推荐 UI 面板使用模式二，因为面板需要展示当前所有过滤条件，替换比增量更易管理。
+UI panels should prefer pattern 2 because panels need to display all current filter conditions, and replacement is easier to manage than incremental changes.
 
 ---
 
-## 7. FilterPanel 的 `onChange` 传完整数组
+## 7. FilterPanel `onChange` Passes the Complete Array
 
-### 文档现状
+### Current Documentation State
 
-未说明 FilterPanel 组件如何与 `replaceFilters` 配合。
+There was no explanation of how the FilterPanel component works with `replaceFilters`.
 
-### 实际情况
+### Actual Behavior
 
-FilterPanel 组件 `onChange` 传入的是**所有过滤条件的新数组**，UI 层用 `replaceFilters` 全量替换：
+The FilterPanel component passes **the new array of all filter conditions** to `onChange`, and the UI layer uses `replaceFilters` for full replacement:
 
 ```tsx
-// FilterPanel 组件内部：用户添加/编辑/删除时
-onChange([...filters, newItem]) // 传完整数组
+// Inside FilterPanel: when users add/edit/delete
+onChange([...filters, newItem]) // Pass the complete array
 
-// App 组件：接收完整数组，用 replaceFilters 全量替换
+// App component: receive the complete array and fully replace with replaceFilters
 <FilterPanel
   filters={filterItems}
   onChange={(next) => replaceWhereFilters(
@@ -223,22 +223,22 @@ onChange([...filters, newItem]) // 传完整数组
 
 ---
 
-## 8. `window.dispatchEvent('vbi-filter-error')` 用于 UI 层同步
+## 8. `window.dispatchEvent('vbi-filter-error')` Synchronizes the UI Layer
 
-### 文档现状
+### Current Documentation State
 
-未提及。
+Not mentioned.
 
-### 实际情况
+### Actual Behavior
 
-当 `bindEvent` 中的 `buildVSeed()` 报错了，会自动移除最后一个坏的过滤条件，然后派发自定义事件：
+When `buildVSeed()` inside `bindEvent` throws, the last bad filter condition is automatically removed and a custom event is dispatched:
 
 ```ts
-// VBIStore 的 bindEvent 中
+// Inside VBIStore bindEvent
 window.dispatchEvent(new CustomEvent('vbi-filter-error', { detail: lastFilter }))
 ```
 
-UI 层的 App 组件监听这个事件，同步更新本地的 filter 状态（移除最后一个）：
+The App component in the UI layer listens for this event and synchronizes local filter state by removing the last item:
 
 ```ts
 useEffect(() => {
@@ -252,15 +252,15 @@ useEffect(() => {
 
 ---
 
-## 9. `VSeedBuilder.from()` 需要显式传 `theme`
+## 9. `VSeedBuilder.from()` Needs an Explicit `theme`
 
-### 文档现状
+### Current Documentation State
 
-`14-vseed-render.md` 中 VSeedBuilder.from 的调用未说明 `theme` 参数。
+The `VSeedBuilder.from` call in `14-vseed-render.md` does not describe the `theme` parameter.
 
-### 实际情况
+### Actual Behavior
 
-VSeedRender 需要把 Builder 的 theme 传给 VSeedBuilder：
+VSeedRender needs to pass the Builder theme to VSeedBuilder:
 
 ```tsx
 const VSeedRender = ({ vseed, themeMode = 'dark' }) => {
@@ -272,19 +272,19 @@ const VSeedRender = ({ vseed, themeMode = 'dark' }) => {
 }
 ```
 
-如果漏传 `theme`，图表主题可能不正确。
+If `theme` is omitted, the chart theme may be incorrect.
 
 ---
 
-## 10. Antd ConfigProvider 的 `algorithm` 设置
+## 10. Antd ConfigProvider `algorithm` Setting
 
-### 文档现状
+### Current Documentation State
 
-未提及。
+Not mentioned.
 
-### 实际情况
+### Actual Behavior
 
-浅色/深色主题通过 Antd 的 ConfigProvider 控制：
+Light/dark themes are controlled through Antd ConfigProvider:
 
 ```tsx
 import { theme } from 'antd'
@@ -300,19 +300,19 @@ const createThemeConfig = (themeMode: 'dark' | 'light') => ({
 ;<ConfigProvider theme={createThemeConfig(themeMode)}>{/* ... */}</ConfigProvider>
 ```
 
-但 VChart/VTable 自身的主题由 `VSeedBuilder.from({ ...vseed, theme: themeMode })` 控制，两者需要保持一致。
+VChart/VTable's own theme is controlled by `VSeedBuilder.from({ ...vseed, theme: themeMode })`, so the two need to stay consistent.
 
 ---
 
-## 11. `clearBuilderState` — 重置所有配置的辅助函数
+## 11. `clearBuilderState` — Helper for Resetting All Configuration
 
-### 文档现状
+### Current Documentation State
 
-未提及。
+Not mentioned.
 
-### 实际情况
+### Actual Behavior
 
-加载新数据或重置时，需要清理维度、度量、过滤、图表类型、行数限制：
+When loading new data or resetting, dimensions, measures, filters, chart type, and row limit need to be cleared:
 
 ```ts
 const clearBuilderState = (builder: VBIChartBuilder) => {
@@ -337,31 +337,31 @@ const clearBuilderState = (builder: VBIChartBuilder) => {
 }
 ```
 
-注意 `reverse()` 是必要的，因为 Yjs 的 `remove` 操作会影响后续索引。
+`reverse()` is necessary because Yjs `remove` operations affect subsequent indexes.
 
 ---
 
-## 12. `setLocalDataWithSchema` — 带 schema 的数据设置方法
+## 12. `setLocalDataWithSchema` — Data Setter with Schema
 
-### 文档现状
+### Current Documentation State
 
-`17-demo-connector.md` 中 `registerDemoConnector` 示例没有展示本地数据注入方法。
+The `registerDemoConnector` example in `17-demo-connector.md` does not show a local data injection method.
 
-### 实际情况
+### Actual Behavior
 
-提供显式 schema 的初始化函数（来自 professional）：
+It provides an initialization function with an explicit schema (from professional):
 
 ```ts
 // demoConnector.ts
 export const setLocalDataWithSchema = (data: unknown[], schema: DatasetColumn[] | null) => {
   localData = data
-  localSchema = schema // 覆盖自动推断
+  localSchema = schema // Override automatic inference
   datasetNeedsRefresh = true
 }
 
-// 使用
+// Usage
 import { supermarketSchema } from './utils/supermarketSchema'
 setLocalDataWithSchema(data, supermarketSchema)
 ```
 
-当已有明确 schema（如 demo 数据有固定结构）时，传入 schema 可以避免自动推断错误。
+When an explicit schema is already available, such as demo data with a fixed structure, passing schema can avoid automatic inference errors.

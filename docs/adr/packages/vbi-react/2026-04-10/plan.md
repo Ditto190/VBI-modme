@@ -1,27 +1,27 @@
-# Plan: vbi-react-starter Demo 组件扩展（2026-04-10）
+# Plan: vbi-react-starter Demo Component Expansion (2026-04-10)
 
-- 目标：在不回归现有 demo 功能的前提下，把 UI 从页面级实现升级为可复用组件层，并为后续向 package 级组件沉淀打基础。
-- 范围：本期仅改造 `practices/vbi-react-starter`（demo-first），不新增 `packages/vbi-react` 对外导出，不触达 `packages/vbi`、`packages/vquery`、`packages/vseed`。
+- Goal: Upgrade the UI from a page-level implementation to a reusable component layer without regressing existing demo functionality, and lay the groundwork for later package-level component extraction.
+- Scope: This phase only refactors `practices/vbi-react-starter` (demo-first). It does not add public exports from `packages/vbi-react` and does not touch `packages/vbi`, `packages/vquery`, or `packages/vseed`.
 
-## Start Gate（开工前冻结）
+## Start Gate
 
-1. 本期仅做组件边界收敛与样式系统化，不做 DSL 逻辑重写。
-2. 现有功能行为作为基线，以下路径必须保持可用：
-   - 加载 demo 数据 -> 字段面板出现可选维度/指标
-   - 上传 CSV -> 数据源与行数更新，字段可选
-   - 选择维度/指标 -> 主区出图或可见可操作的占位提示
-   - 切换图表类型 -> 渲染区和 DSL 快照联动更新
-3. 所有 UI 变更必须可在桌面与窄屏下操作（最小 375px 宽）。
+1. This phase only consolidates component boundaries and systematizes styling; it does not rewrite DSL logic.
+2. Existing functional behavior is the baseline, and the following paths must remain usable:
+   - Load demo data -> field panel shows selectable dimensions/measures.
+   - Upload CSV -> data source and row count update, and fields become selectable.
+   - Select dimensions/measures -> the main area renders a chart or shows a visible, actionable placeholder.
+   - Switch chart type -> the render area and DSL snapshot update together.
+3. All UI changes must be operable on desktop and narrow screens, with a minimum width of 375px.
 
-## 执行计划
+## Execution Plan
 
-## Phase 1：收敛 UI Token 与基础样式层
+## Phase 1: Consolidate UI Tokens and Base Styling
 
-1. 固化统一 token（颜色、间距、圆角、阴影、字号）与全局样式入口。
-2. 消减 `App.tsx` 的大块 inline style，迁移到样式层。
-3. 统一主题变量使用（避免深浅主题混用）。
+1. Stabilize shared tokens for colors, spacing, radius, shadow, and font sizes, plus a global style entry.
+2. Reduce large inline style blocks in `App.tsx` and move them into the style layer.
+3. Standardize theme variable usage and avoid mixing light/dark theme values.
 
-产物清单：
+Deliverables:
 
 - `practices/vbi-react-starter/src/styles/tokens.css`
 - `practices/vbi-react-starter/src/styles/styleObjects.ts`
@@ -29,18 +29,18 @@
 
 Exit Criteria:
 
-1. `App.tsx` 中页面级 inline 样式对象数量收敛到 `<= 3`（其余迁移到样式层）。
-2. 页面主要区域（顶部、侧栏、内容区）使用同一套主题变量。
-3. 构建通过：`pnpm --filter=vbi-react-starter run build`。
+1. Page-level inline style objects in `App.tsx` are reduced to `<= 3`; the rest move to the style layer.
+2. Main page regions, including top bar, sidebar, and content area, use the same theme variables.
+3. Build passes: `pnpm --filter=vbi-react-starter run build`.
 
-## Phase 2：组件边界收敛（核心区块）
+## Phase 2: Consolidate Component Boundaries (Core Blocks)
 
-1. 收敛 `StarterTopBar`（标题、图表类型切换、操作按钮）边界。
-2. 收敛 `FieldPanel` 集成边界（仅通过显式 props 传入可选字段与 builder）。
-3. 收敛 `StarterFooter`（状态汇总 + DSL 快照）职责。
-4. 收敛主区空态/渲染态边界（`StarterEmptyState`、`StarterLoadingSkeleton`、`StarterRenderError`）。
+1. Consolidate the `StarterTopBar` boundary, including title, chart type switching, and action buttons.
+2. Consolidate the `FieldPanel` integration boundary, passing selectable fields and builder only through explicit props.
+3. Consolidate `StarterFooter` responsibilities, including status summary and DSL snapshot.
+4. Consolidate main-area empty/render state boundaries with `StarterEmptyState`, `StarterLoadingSkeleton`, and `StarterRenderError`.
 
-产物清单：
+Deliverables:
 
 - `practices/vbi-react-starter/src/App.tsx`
 - `practices/vbi-react-starter/src/components/StarterTopBar.tsx`
@@ -51,37 +51,37 @@ Exit Criteria:
 
 Exit Criteria:
 
-1. `App.tsx` 仅保留编排与状态流转逻辑，文件行数收敛到 `<= 260` 行。
-2. 各组件 props 边界清晰，不依赖隐式全局变量。
-3. 字段区在默认视口下可见且可操作（不再出现“高度过小无法选”问题）。
+1. `App.tsx` keeps only orchestration and state flow logic, with file length reduced to `<= 260` lines.
+2. Component prop boundaries are clear and do not depend on implicit globals.
+3. The field area is visible and operable in the default viewport, with no recurring "too little height to select" issue.
 
-## Phase 3：状态体验与响应式补齐
+## Phase 3: Complete State Experience and Responsiveness
 
-1. 为关键区块补充 loading/empty/error 的可识别状态和触达路径。
-2. 补齐 375px~768px 的响应式规则（面板可折叠或重排）。
-3. 优化 DSL 展示可读性（保留结构化展示，不出现不可读的大段堆叠）。
-4. 增加稳定的错误态触发机制（开发态开关），例如 `?debugState=error` 或显式调试按钮，避免依赖偶发数据条件。
+1. Add recognizable loading/empty/error states and reachable paths for key blocks.
+2. Complete responsive rules for 375px to 768px, including panel collapse or reflow.
+3. Improve DSL display readability, preserving structured display and avoiding unreadable large blocks.
+4. Add a stable trigger for the error state, such as a development switch via `?debugState=error` or an explicit debug button, instead of relying on incidental data conditions.
 
-验收证据（截图 + 操作说明）：
+Acceptance evidence (screenshots + operation notes):
 
-1. 空态：未加载数据时主区提示。
-2. 加载态：触发渲染时 skeleton 可见。
-3. 错误态：通过固定触发机制进入错误态，错误卡片可见。
-4. 375px 关键路径：选图表 -> 选字段 -> 查看配置可完整走通。
+1. Empty state: the main area shows a prompt before data is loaded.
+2. Loading state: the skeleton is visible when rendering is triggered.
+3. Error state: the fixed trigger enters the error state and the error card is visible.
+4. 375px critical path: select chart type -> select fields -> view configuration can be completed.
 
 Exit Criteria:
 
-1. 三类状态都可通过本地操作触达并可截图验收。
-2. 375px 宽下关键路径可完整走通。
-3. 页面不存在内容被压扁导致不可点击的区域。
+1. All three state categories are reachable through local operations and can be captured for acceptance.
+2. The critical path can be completed at 375px width.
+3. The page has no areas where content is compressed until it becomes unclickable.
 
-## Phase 4：回归验证与提交策略
+## Phase 4: Regression Verification and Commit Strategy
 
-1. 功能回归：图表类型切换、字段增删、配置区联动、上传 CSV/加载 demo。
-2. 质量校验：test + lint + typecheck + build。
-3. 采用小步提交（每一阶段至少一个独立 commit）。
+1. Functional regression: chart type switching, field add/remove, configuration area synchronization, CSV upload, and demo loading.
+2. Quality checks: test + lint + typecheck + build.
+3. Use small commits, with at least one independent commit per phase.
 
-验证命令：
+Verification commands:
 
 ```bash
 pnpm --filter=vbi-react-starter run test
@@ -92,23 +92,23 @@ pnpm --filter=vbi-react-starter run build
 
 Exit Criteria:
 
-1. 上述命令全通过。
-2. 无跨包污染改动（特别是 `packages/vbi`、`packages/vquery`、`packages/vseed`）。
-3. PR 描述可对应每个阶段的产出、命令结果与截图证据。
+1. All commands above pass.
+2. No cross-package pollution, especially in `packages/vbi`, `packages/vquery`, or `packages/vseed`.
+3. The PR description maps each phase to its outputs, command results, and screenshot evidence.
 
-## 风险与回滚
+## Risks and Rollback
 
-1. 风险：窄屏下字段面板折叠后，关键操作路径中断。
-2. 回滚策略：默认展开字段面板，并优先保留“选字段 -> 出图”路径；次要信息区（如 footer 扩展内容）可延后折叠。
+1. Risk: After the field panel collapses on narrow screens, the critical operation path is interrupted.
+2. Rollback strategy: Keep the field panel expanded by default and prioritize the "select fields -> render chart" path; secondary information areas, such as footer extensions, can be collapsed later.
 
-## DoD（完成定义）
+## DoD
 
-1. demo 关键功能完整可用。
-2. UI 样式统一且组件化边界清晰。
-3. `App.tsx` 行数与 inline 样式均达到量化门槛，组件职责可独立演进。
-4. 验证命令与人工验收（桌面/移动）均通过，且有对应证据可复核。
-5. 改动仅限 `practices/vbi-react-starter`，不引入跨包副作用。
+1. Core demo functionality is fully usable.
+2. UI styling is unified and component boundaries are clear.
+3. `App.tsx` line count and inline styles both meet the quantitative thresholds, and component responsibilities can evolve independently.
+4. Verification commands and manual acceptance on desktop/mobile both pass, with reviewable evidence.
+5. Changes are limited to `practices/vbi-react-starter` and introduce no cross-package side effects.
 
-## 备注
+## Notes
 
-- 当前验证命令沿用包名过滤：`--filter=vbi-react-starter`。若后续统一为 scope 命名，再同步调整。
+- Current verification commands continue to use package-name filtering: `--filter=vbi-react-starter`. If the package is later standardized to scoped naming, update the commands accordingly.

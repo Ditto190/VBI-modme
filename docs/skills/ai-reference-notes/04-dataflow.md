@@ -1,70 +1,70 @@
-# 4. 数据流与 AI 使用边界
+# 4. Data Flow and AI Usage Boundaries
 
-## 完整数据流
+## Complete Data Flow
 
 ```
-用户交互（拖拽/输入）
-  → VBIChartBuilder（VBI spec，AI 操作这层）
-      ├→ buildVQuery()（生成查询 DSL）
-      ├→ connector.query()（执行 SQL 取数）
-      └→ buildVSeedDSL()（组装中间产物 VSeed）
-  → VSeed（内部中间产物）
-  → VSeedBuilder.from(vseed).build()（由 VSeedBuilder 处理）
-  → VChart / VTable Spec
-  → 浏览器渲染
+User interaction (drag/input)
+  -> VBIChartBuilder (VBI spec; AI operates at this layer)
+      |-> buildVQuery() (generates query DSL)
+      |-> connector.query() (runs SQL and fetches data)
+      `-> buildVSeedDSL() (assembles the intermediate VSeed artifact)
+  -> VSeed (internal intermediate artifact)
+  -> VSeedBuilder.from(vseed).build() (handled by VSeedBuilder)
+  -> VChart / VTable Spec
+  -> Browser rendering
 ```
 
-## AI 使用边界
+## AI Usage Boundaries
 
-AI **只需操作 VBI + VBI-react 层**。以下层级对 AI 不可见，无需了解：
+AI **only needs to operate on the VBI + VBI-react layers**. The following layers are invisible to AI and do not need to be understood:
 
-| 层级         | 包                                | 说明                                   |
-| ------------ | --------------------------------- | -------------------------------------- |
-| 查询层       | `@visactor/vquery`                | VBI 内部自动调用，AI 无需操作          |
-| 渲染层       | `@visactor/vseed`                 | VBI 内部自动调用，AI 无需操作          |
-| VSeedBuilder | `@visactor/vseed`                 | VSeed → VChart Spec 转换，框架内部处理 |
-| 渲染器       | practices/standard 的 VSeedRender | standard 自实现，AI 无需操作           |
+| Layer        | Package                          | Description                                                         |
+| ------------ | -------------------------------- | ------------------------------------------------------------------- |
+| Query layer  | `@visactor/vquery`               | Called automatically inside VBI; AI does not operate on it.         |
+| Render layer | `@visactor/vseed`                | Called automatically inside VBI; AI does not operate on it.         |
+| VSeedBuilder | `@visactor/vseed`                | Converts VSeed -> VChart Spec; handled internally by the framework. |
+| Renderer     | practices/standard's VSeedRender | Implemented by standard itself; AI does not operate on it.          |
 
-## 各层责任说明
+## Layer Responsibilities
 
-### VBI 层（AI 操作）
+### VBI Layer (AI Operates Here)
 
-用户配置图表类型、维度、度量、过滤条件等。VBI 负责：
+The user configures chart type, dimensions, measures, filters, and related chart settings. VBI is responsible for:
 
-- 维护图表配置 DSL（Yjs 协同文档）
-- 生成查询 DSL（`buildVQuery`）
-- 调用 connector 取数
-- 组装 VSeed DSL
+- Maintaining the chart configuration DSL as a Yjs collaborative document
+- Generating the query DSL with `buildVQuery`
+- Calling the connector to fetch data
+- Assembling the VSeed DSL
 
-### VQuery 层（内部自动）
+### VQuery Layer (Automatic Internals)
 
-JSON DSL → SQL 查询，由 `connector.query()` 驱动。AI 不可见。
+JSON DSL -> SQL query, driven by `connector.query()`. This is invisible to AI.
 
-### VSeed 层（内部自动）
+### VSeed Layer (Automatic Internals)
 
-接收 VBI spec + 数据集，生成 VChart/VTable 渲染配置。AI 不可见。
+Receives the VBI spec and dataset, then generates the VChart/VTable rendering configuration. This is invisible to AI.
 
-### VSeedRender（每个 practice 独立实现）
+### VSeedRender (Implemented Separately by Each Practice)
 
-每个 practice 都自行实现 `VSeedRender` 组件，读取 VSeed 并渲染。**对 AI 不可见，不属于任何 npm 包**。
+Each practice implements its own `VSeedRender` component, which reads VSeed and renders it. **It is invisible to AI and does not belong to any npm package**.
 
-- 位置：`practices/{name}/src/components/Render/VSeedRender.tsx`
-- 不在 `@visactor/vbi-react` 包中
+- Location: `practices/{name}/src/components/Render/VSeedRender.tsx`
+- Not in the `@visactor/vbi-react` package
 
-## VSeedRender 位置
+## VSeedRender Location
 
-VSeed 渲染不在任何 npm 包中，由**每个 practice 独立实现**：
+VSeed rendering is not provided by any npm package. It is **implemented independently by each practice**:
 
-- 位置：`practices/{name}/src/components/Render/VSeedRender.tsx`
-- 接收 `vseed: VSeed` 作为 props
-- 不在 `@visactor/vbi-react` 包中
-- 不能跨 practice 引用——minimalist 的 VSeedRender 不能被 professional 使用
+- Location: `practices/{name}/src/components/Render/VSeedRender.tsx`
+- Receives `vseed: VSeed` as props
+- Not in the `@visactor/vbi-react` package
+- Must not be referenced across practices. For example, minimalist's VSeedRender must not be used by professional.
 
-## AI 生成图表的完整流程
+## Complete AI Chart Generation Flow
 
-1. AI 通过 `builder.dimensions.add()` / `builder.measures.add()` 等 Builder API 配置图表
-2. Yjs 文档自动变更，触发 `doc.on('update')` 事件
-3. 目标 practice 自己的 VBIStore 监听到变化，调用 `builder.buildVSeed()` 重建渲染数据
-4. 目标 practice 自己的 `VSeedRender` 组件自动渲染新图表
+1. AI configures the chart through Builder APIs such as `builder.dimensions.add()` and `builder.measures.add()`.
+2. The Yjs document changes automatically and triggers the `doc.on('update')` event.
+3. The target practice's own VBIStore listens for the change and calls `builder.buildVSeed()` to rebuild rendering data.
+4. The target practice's own `VSeedRender` component automatically renders the new chart.
 
-AI 只参与第 1 步，后续全部由框架自动处理。
+AI only participates in step 1; everything after that is handled automatically by the framework.

@@ -1,53 +1,53 @@
-# 11. useVBISchemaFields — 字段列表
+# 11. useVBISchemaFields — Field List
 
-## 签名
+## Signature
 
 ```ts
 const {
-  schemaFields, // VBISchemaField[]，字段列表（带 role/type 分类）
-  fieldRoleMap, // Record<string, FieldRole>，字段名→角色映射
-  fieldTypeMap, // Record<string, string>，字段名→类型映射
+  schemaFields, // VBISchemaField[]; field list with role/type classification
+  fieldRoleMap, // Record<string, FieldRole>; field name -> role mapping
+  fieldTypeMap, // Record<string, string>; field name -> type mapping
 } = useVBISchemaFields(builder)
 ```
 
-## 源码
+## Source
 
 `practices/standard/src/hooks/useVBISchemaFields.ts`
 
-## VBISchemaField 类型
+## VBISchemaField Type
 
 ```ts
 export interface VBISchemaField {
-  name: string // 字段名，如 'sales'
-  type: string // 字段类型，如 'number'、'string'、'date'
-  role: FieldRole // 字段角色：'dimension' | 'measure' | 'unknown'
-  isDate: boolean // 是否为日期类型
+  name: string // Field name, such as 'sales'
+  type: string // Field type, such as 'number', 'string', or 'date'
+  role: FieldRole // Field role: 'dimension' | 'measure' | 'unknown'
+  isDate: boolean // Whether this is a date type
 }
 ```
 
-## 用法示例
+## Usage Examples
 
-### 获取字段列表并展示
+### Get and Render the Field List
 
 ```ts
 const { schemaFields } = useVBISchemaFields(builder)
 
-// 按角色分组展示
+// Group by role for rendering
 const dimensions = schemaFields.filter((f) => f.role === 'dimension')
 const measures = schemaFields.filter((f) => f.role === 'measure')
 ```
 
-### 快速查找字段角色
+### Quickly Look Up Field Roles
 
 ```ts
 const { fieldRoleMap } = useVBISchemaFields(builder)
 
 if (fieldRoleMap['sales'] === 'measure') {
-  // sales 是度量字段
+  // sales is a measure field
 }
 ```
 
-### 快速查找字段类型
+### Quickly Look Up Field Types
 
 ```ts
 const { fieldTypeMap } = useVBISchemaFields(builder)
@@ -59,28 +59,28 @@ console.log(fieldTypeMap['sales']) // 'number'
 
 ---
 
-## 实现细节
+## Implementation Details
 
-- 字段数据通过 `builder.getSchema()` 异步获取，返回 `DatasetColumn[]`
-- 字段角色由 `getFieldRoleBySchemaType(type)` 从 `src/utils/fieldRole.ts` 推导
-- 日期类型由 `isDateSchemaType(type)` 判断，类型名包含 'date' 即为日期
-- 异步 effect 带 `destroyed` 标志，防止组件卸载后状态更新
-
----
-
-## 字段角色推导规则
-
-| 字段类型 | 角色        | 示例                               |
-| -------- | ----------- | ---------------------------------- |
-| `number` | `measure`   | `sales`、`profit`、`amount`        |
-| `string` | `dimension` | `category`、`city`、`product_name` |
-| `date`   | `dimension` | `order_date`、`delivery_date`      |
+- Field data is fetched asynchronously through `builder.getSchema()`, which returns `DatasetColumn[]`.
+- Field roles are inferred by `getFieldRoleBySchemaType(type)` from `src/utils/fieldRole.ts`.
+- Date types are detected by `isDateSchemaType(type)`; a type name containing `date` is treated as a date.
+- The async effect uses a `destroyed` flag to prevent state updates after component unmount.
 
 ---
 
-## 注意事项
+## Field Role Inference Rules
 
-- `schemaFields` 是异步获取的，首次渲染可能为空数组
-- `fieldRoleMap` 和 `fieldTypeMap` 由 `schemaFields` 派生，用于 O(1) 查找
-- 字段角色仅用于 UI 分组展示，不限制实际使用方式
-- 建议在 FieldsPanel 组件中展示，配合搜索和角色过滤功能
+| Field Type | Role        | Examples                           |
+| ---------- | ----------- | ---------------------------------- |
+| `number`   | `measure`   | `sales`, `profit`, `amount`        |
+| `string`   | `dimension` | `category`, `city`, `product_name` |
+| `date`     | `dimension` | `order_date`, `delivery_date`      |
+
+---
+
+## Notes
+
+- `schemaFields` is fetched asynchronously and may be an empty array on the first render.
+- `fieldRoleMap` and `fieldTypeMap` are derived from `schemaFields` for O(1) lookups.
+- Field roles are only for UI grouping and do not constrain actual usage.
+- Render this in the FieldsPanel component, paired with search and role filtering.

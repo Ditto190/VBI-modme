@@ -1,18 +1,18 @@
-# 2. 快速上手
+# 2. Quick Start
 
-> 每个 practice 都有自己独立的 connector/bootstrap 模块（文件名可能不同，如 `demoConnector.ts` 或 `localConnector.ts`）。本节以 standard 为例说明模式，其他 practice 结构相同，只是 UI 风格不同。
+> Each practice has its own connector/bootstrap module. File names may differ, such as `demoConnector.ts` or `localConnector.ts`. This section uses standard as the example. Other practices follow the same pattern, with different UI styles.
 
-## 2.1 说明：VBI 核心 API 已在主入口导出
+## 2.1 Note: Core VBI APIs Are Exported from the Main Entry
 
-`@visactor/vbi` 现在已经从主入口导出 `VBI`、`createVBI`、`VBIChartBuilder`、`VBI.registerConnector()`、`VBI.chart.create()`、`VBI.chart.createEmpty()` 等核心 API。
+`@visactor/vbi` now exports core APIs from the main entry, including `VBI`, `createVBI`, `VBIChartBuilder`, `VBI.registerConnector()`, `VBI.chart.create()`, and `VBI.chart.createEmpty()`.
 
-**实际使用方式**：即便主入口可直接使用，仍建议优先参考目标 practice 自己的 connector/bootstrap 模块，因为 connector 注册、默认 builder 和本地数据接线通常都封装在那里。
+**Recommended usage**: Even though the main entry can be used directly, prefer the target practice's own connector/bootstrap module. Connector registration, the default builder, and local data wiring are usually wrapped there.
 
 ---
 
-## 2.2 步骤 1：注册数据源 Connector
+## 2.2 Step 1: Register a Data Source Connector
 
-参考 `practices/standard/src/utils/localConnector.ts`：
+Reference: `practices/standard/src/utils/localConnector.ts`.
 
 ```ts
 import { VBI } from '@visactor/vbi'
@@ -20,12 +20,12 @@ import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } fro
 
 const connectorId = 'demo'
 
-// 注册 Connector（在模块初始化时执行一次）
+// Register the Connector once during module initialization.
 VBI.registerConnector(connectorId, async () => {
   const vquery = new VQuery()
 
   return {
-    // 返回表结构：字段名 + 类型
+    // Return table schema: field name + type.
     discoverSchema: async () => [
       { name: 'order_date', type: 'date' },
       { name: 'category', type: 'string' },
@@ -34,7 +34,7 @@ VBI.registerConnector(connectorId, async () => {
       { name: 'profit', type: 'number' },
     ],
 
-    // 执行查询
+    // Execute the query.
     query: async ({ queryDSL, schema }) => {
       if (!(await vquery.hasDataset(connectorId))) {
         await vquery.createDataset(
@@ -53,7 +53,7 @@ VBI.registerConnector(connectorId, async () => {
 
 ---
 
-## 2.3 步骤 2：创建 Builder
+## 2.3 Step 2: Create a Builder
 
 ```ts
 import { VBI } from '@visactor/vbi'
@@ -61,7 +61,7 @@ import { VBI } from '@visactor/vbi'
 const builder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
 ```
 
-**更推荐的方式**：直接使用 standard 封装好的 builder：
+**More recommended**: Use the builder wrapper provided by standard:
 
 ```ts
 import { createDefaultBuilder } from 'practices/standard/src/utils/localConnector'
@@ -70,32 +70,32 @@ const builder = createDefaultBuilder()
 
 ---
 
-## 2.4 步骤 3：配置图表（Builder API）
+## 2.4 Step 3: Configure the Chart with Builder APIs
 
 ```ts
-// 添加维度（X 轴）
+// Add a dimension for the X axis.
 builder.dimensions.add('category', (node) => {
-  node.setAlias('产品类别')
+  node.setAlias('Product Category')
 })
 
-// 添加度量（Y 轴，默认 sum 聚合）
+// Add a measure for the Y axis. The default aggregate is sum.
 builder.measures.add('sales', (node) => {
   node.setAggregate({ func: 'sum' })
-  node.setAlias('销售额')
+  node.setAlias('Sales')
 })
 
-// 切换图表类型为柱状图
+// Switch the chart type to a column chart.
 builder.chartType.changeChartType('column')
 ```
 
 ---
 
-## 2.5 步骤 4：React 应用结构
+## 2.5 Step 4: React App Structure
 
-参考 `practices/standard/src/App/App.tsx`：
+Reference: `practices/standard/src/App/App.tsx`.
 
 ```tsx
-// 入口文件
+// Entry file.
 import { VBIChartBuilder } from '@visactor/vbi'
 import { VBIStoreProvider, useVBIStore } from 'src/model'
 import { APP } from 'src/App/App'
@@ -103,7 +103,7 @@ import { createDefaultBuilder } from 'src/utils/localConnector'
 
 const builder = createDefaultBuilder()
 
-// 渲染应用
+// Render the app.
 render(
   <VBIStoreProvider builder={builder}>
     <APP builder={builder} mode='edit' />
@@ -112,43 +112,44 @@ render(
 )
 ```
 
-标准应用面板布局：
+Standard app panel layout:
 
 ```
 ┌─────────────┬──────────────────────────────────────┐
-│ FieldsPanel │  ShelfPanel (维度/度量/Where/Having)  │
-│ (字段列表)  ├──────────────────────────────────────┤
-│             │  ChartPanel (VSeedRender 渲染区域)   │
+│ FieldsPanel │  ShelfPanel (Dimensions/Measures/    │
+│ (field list)│  Where/Having)                       │
+│             ├──────────────────────────────────────┤
+│             │  ChartPanel (VSeedRender area)       │
 └─────────────┴──────────────────────────────────────┘
 ```
 
 ---
 
-## 2.6 VBIStore 状态管理
+## 2.6 VBIStore State Management
 
-`practices/standard/src/model/VBIStore.ts` 中的 Zustand store：
+Zustand store in `practices/standard/src/model/VBIStore.ts`:
 
 ```ts
 import { createVBIStore } from 'src/model'
 
 const store = createVBIStore(builder)
 
-// 监听 Yjs 更新 → 触发 VSeed 重建（自动）
+// Listen to Yjs updates -> trigger VSeed rebuild automatically.
 store.getState().bindEvent()
 
-// 获取当前状态
+// Get current state.
 const { dsl, vseed, loading } = store.getState()
 ```
 
-VBIStore 内部逻辑（参考）：
+Internal VBIStore logic, for reference:
 
 ```ts
-// 1. Yjs doc 触发 update 事件
+// 1. The Yjs doc emits an update event.
 builder.doc.on('update', updateAll)
 
-// 2. updateAll 中调用 buildVSeed
+// 2. updateAll calls buildVSeed.
 const newVSeed = await builder.buildVSeed()
 
-// 3. 更新 store 状态，触发 React 重渲染
+// 3. Update store state and trigger React re-rendering.
 set({ dsl, vseed: newVSeed, loading: false })
 ```

@@ -1,4 +1,4 @@
-1. 现在packages下有BI的三大原子能力, 是原子化BI和HeadlessBI组件, 他们可以嵌入到各种应用程序中, 但我终究需要自建一个BI平台, 来验证他们的能力, 现在我已经完成 vbi_be和vbi_fe的搭建, 一个BI平台的雏形已经完成
-2. 我下一个阶段的目标是创建一个vbi_cli的应用程序，通过 cli 来控制资源交互, 做到真正的平台级别的HeadlessBI
-3. 目前对于 chart、insight、report 的增删改查都是深度耦合的, 应该如何设计, 解除该耦合关系?
-4. 生成一个 discussion.md 文件
+1. The three core BI capabilities now live under packages. They are atomic BI and Headless BI components that can be embedded into many applications, but I ultimately need to build my own BI platform to validate their capabilities. I have now finished setting up `vbi_be` and `vbi_fe`, so the prototype of a BI platform is already in place.
+2. My next-stage goal is to create a `vbi_cli` application and use the CLI to control resource interactions, achieving true platform-level Headless BI.
+3. CRUD for chart, insight, and report is currently deeply coupled. How should we design it to remove that coupling?
+4. Generate a `discussion.md` file.

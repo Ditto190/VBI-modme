@@ -1,46 +1,46 @@
-# ADR-006: VBI Report DSL 与 ReportBuilder
+# ADR-006: VBI Report DSL and ReportBuilder
 
 ## Context
 
-`ADR-005` 已把单图表能力收敛为 `createChart`、`VBIChartBuilder`、`VBIChartDSL`，现在可以在不混淆命名的前提下引入 report。
+`ADR-005` aligned the single-chart capability around `createChart`, `VBIChartBuilder`, and `VBIChartDSL`. With those names clarified, VBI can introduce reports without overloading chart terminology.
 
-本任务只解决 `packages/vbi` 内的 report 建模与 builder 设计：
+This task only covers report modeling and builder design inside `packages/vbi`:
 
-1. 新增 `VBI.report.create(...)`，让 report 成为和 chart 平级的一等入口。
-2. 一个 `report` 包含多个 `page`，一个 `page` 固定包含一个 `chart` 和一个 `text`。
-3. `VBIReportDSL`、zod schema、空 DSL helper 的风格与 `VBIChartDSL` 保持一致。
-4. `reportBuilder` 的使用、实现、协同编辑方式尽量复用 `chartBuilder`。
+1. Add `VBI.report.create(...)` so report becomes a first-class entry point alongside chart.
+2. A `report` contains multiple `page` nodes. Each `page` contains exactly one `chart` and one `text` block.
+3. `VBIReportDSL`, its zod schema, and empty DSL helpers should follow the same style as `VBIChartDSL`.
+4. `reportBuilder` should reuse `chartBuilder` usage patterns, implementation patterns, and collaborative editing behavior as much as possible.
 
-这里有三个直接风险：
+There are three immediate risks:
 
-1. report 根节点重复定义 chart 字段，会破坏 Single Source of Truth。
-2. 一开始就抽象成通用 widgets/layout system，会明显超出当前需求。
-3. report 另起一套 chart 编辑逻辑，chart/report 很快会发生行为漂移。
+1. Repeating chart fields at the report root would break Single Source of Truth.
+2. Starting with a generic widgets/layout system would exceed current requirements.
+3. Building a separate chart editing implementation for report would quickly cause behavior drift between chart and report.
 
 ## Decision
 
-### 1. 根入口统一为 `createReport(...)`
+### 1. Use `createReport(...)` as the root entry
 
-新增并文档化以下入口：
+Add and document:
 
 ```ts
 VBI.report.create(vbiReport, options)
 createVBI(...).report.create(vbiReport, options)
 ```
 
-对外命名统一为 `VBIReportDSL` / `VBIReportDSLInput` / `zVBIReportDSL` / `createEmptyReport` / `createEmptyReportPage` / `VBIReportBuilder` / `VBIReportBuilderInterface` / `VBIReportBuilderOptions`。`chart` 和 `report` 是 `VBI` 下的两个平级能力。
+Public names are unified as `VBIReportDSL` / `VBIReportDSLInput` / `zVBIReportDSL` / `createEmptyReport` / `createEmptyReportPage` / `VBIReportBuilder` / `VBIReportBuilderInterface` / `VBIReportBuilderOptions`. `chart` and `report` are peer capabilities under `VBI`.
 
-### 2. `types/dsl` 改名为 `types/chartDSL`，并与 `types/reportDSL` 平级
+### 2. Rename `types/dsl` to `types/chartDSL`, next to `types/reportDSL`
 
-当前 `types/dsl` 实际承载的是 chart 领域模型，不适合在引入 report 后继续占用泛化名字。目录应调整为：
+The current `types/dsl` directory actually contains the chart domain model. After report is introduced, it should not keep occupying a generic name. The directory layout should become:
 
-1. `types/chartDSL/*`：现有 `VBIChartDSL` 及其子节点 schema。
-2. `types/reportDSL/*`：新增 `VBIReportDSL`、`VBIReportPageDSL`、`VBIReportTextDSL`。
-3. `types/index.ts` 只负责聚合导出，不再让 `chart` 和 `report` 共用 `dsl` 这个模糊目录名。
+1. `types/chartDSL/*`: existing `VBIChartDSL` and child node schemas.
+2. `types/reportDSL/*`: new `VBIReportDSL`, `VBIReportPageDSL`, and `VBIReportTextDSL`.
+3. `types/index.ts`: aggregate exports only; chart and report should not share the vague `dsl` directory name.
 
-### 3. Report DSL 采用固定 page 结构，不做通用 block union
+### 3. Report DSL uses a fixed page structure, not a generic block union
 
-首期 DSL 固定为：
+Initial DSL:
 
 ```ts
 type VBIReportTextDSL = { content: string }
@@ -48,28 +48,28 @@ type VBIReportPageDSL = { id: string; title: string; chart: VBIChartDSL; text: V
 type VBIReportDSL = { pages: VBIReportPageDSL[]; version: number }
 ```
 
-约束如下：
+Constraints:
 
-1. `pages` 必须是数组，因为页面顺序本身就是业务语义。
-2. `page.title` 是 page 的显示名，`page.add('Story One', ...)` 的第一个参数直接写入这里。
-3. `page.chart` 直接内嵌 `VBIChartDSL`，它是图表配置的唯一事实来源。
-4. `page.text` 先保持极简对象 `{ content }`，不在首期引入 rich-text schema。
-5. `report` 根节点不新增 `connectorId`，避免和 `page.chart.connectorId` 双写。
+1. `pages` must be an array because page order is business semantics.
+2. `page.title` is the page display name. The first argument of `page.add('Story One', ...)` is written here directly.
+3. `page.chart` embeds `VBIChartDSL` directly and is the single source of truth for chart configuration.
+4. `page.text` stays minimal as `{ content }`; do not introduce rich-text schema in the first phase.
+5. The `report` root does not add `connectorId`, avoiding double writes with `page.chart.connectorId`.
 
-### 4. 默认值与空 DSL helper 保持 chart 风格
+### 4. Defaults and empty DSL helpers follow chart style
 
-首期 helper 约定如下：
+Initial helper contract:
 
 ```ts
 createEmptyReport() => { pages: [], version: 0 }
 createEmptyReportPage(connectorId) => ({ id, title: '', chart: createEmptyChart(connectorId), text: { content: '' } })
 ```
 
-`zVBIReportDSL` 与 `zVBIReportPageDSL` 也应使用同风格默认值，让 `build()` 产物保持稳定、最小、可预测。
+`zVBIReportDSL` and `zVBIReportPageDSL` should use defaults in the same style, so `build()` output stays stable, minimal, and predictable.
 
-### 5. `VBIReportBuilder` 提供 `reportBuilder.page.*`；图表 lowering 仍由 page.chart 负责
+### 5. `VBIReportBuilder` provides `reportBuilder.page.*`; chart lowering remains under `page.chart`
 
-首期 builder 结构固定为：
+Initial builder shape:
 
 ```ts
 class VBIReportBuilder {
@@ -85,32 +85,37 @@ class ReportPageBuilder {
 }
 ```
 
-其中：
+Rules:
 
-1. `reportBuilder.page.add(title, callback)` / `remove(id)` / `update(id, callback)` 是主入口，`add` 与 `update` 都返回 reportBuilder 以便链式调用。
-2. 推荐用法固定为 `reportBuilder.page.add('Story One', page => page.setChart(chartBuilder).setText('hello world'))`。
-3. `setChart(chartBuilder)` 会把传入 `chartBuilder.build()` 的结果复制到当前 page 的 `chart` 子树，而不是共享同一个 builder 实例。
-4. `VBIReportBuilder` 不提供 report 级 `buildVQuery()` / `buildVSeed()`；这些能力仍属于 `page.chart`。
+1. `reportBuilder.page.add(title, callback)` / `remove(id)` / `update(id, callback)` are the main entries. `add` and `update` both return `reportBuilder` for chaining.
+2. Recommended usage is `reportBuilder.page.add('Story One', page => page.setChart(chartBuilder).setText('hello world'))`.
+3. `setChart(chartBuilder)` copies the result of `chartBuilder.build()` into the current page's `chart` subtree; it does not share the same builder instance.
+4. `VBIReportBuilder` does not provide report-level `buildVQuery()` / `buildVSeed()`. Those capabilities still belong to `page.chart`.
 
-### 6. 实现上复用同一套 chart builder 内核
+### 6. Reuse the same chart builder core in implementation
 
-内部实现采用“同一套 chart builder 绑定不同 DSL map”的策略：
+Use one chart builder core bound to different DSL maps:
 
-1. report 的每个 `page.chart` 在 Yjs 中保存为独立 `Y.Map`。
-2. `ReportPageBuilder.chart` 直接复用 `VBIChartBuilder`，但绑定到 `page.chart` 子树，而不是根 `doc.getMap('dsl')`。
-3. `VBI.chart.create(...)` 只是“chart builder 绑定根 DSL map”的特例；report page 内则绑定子 map。
-4. `VBIReportBuilderOptions` 只负责把 chart 相关 adapters/options 透传给每个 `page.chart` builder。
+1. Each report `page.chart` is stored as an independent `Y.Map` in Yjs.
+2. `ReportPageBuilder.chart` directly reuses `VBIChartBuilder`, but binds it to the `page.chart` subtree instead of the root `doc.getMap('dsl')`.
+3. `VBI.chart.create(...)` is the special case where the chart builder binds to the root DSL map; inside a report page, it binds to a child map.
+4. `VBIReportBuilderOptions` only passes chart-related adapters/options through to each `page.chart` builder.
 
 ## Reference
 
-`docs/adr/packages/vbi/2026-03-23-create-chart/adr.md`, `packages/vbi/src/vbi/create-vbi.ts`, `packages/vbi/src/vbi/create-empty-chart.ts`, `packages/vbi/src/builder/builder.ts`
-`packages/vbi/src/types/builder/VBIInterface.ts`, `packages/vbi/src/types/dsl/vbi/vbi.ts`, `docs/adr/packages/vbi/2026-03-24-create-report/goal.md`
+- `docs/adr/packages/vbi/2026-03-23-create-chart/adr.md`
+- `packages/vbi/src/vbi/create-vbi.ts`
+- `packages/vbi/src/vbi/create-empty-chart.ts`
+- `packages/vbi/src/builder/builder.ts`
+- `packages/vbi/src/types/builder/VBIInterface.ts`
+- `packages/vbi/src/types/dsl/vbi/vbi.ts`
+- `docs/adr/packages/vbi/2026-03-24-create-report/goal.md`
 
-## 淘汰内容概述
+## Rejected Designs
 
-- 不把 page 设计成通用 `blocks: Array<Widget>`
-- 不继续保留泛化的 `types/dsl` 目录名
-- 不在 report 根节点重复保存 chart 的 `connectorId` 等字段
-- 不新增 report 级 `buildVQuery()` / `buildVSeed()`
-- 不为 report 另写一套独立 chart 编辑与 lowering 逻辑
-- 不在首期支持“一个 page 多个 chart”或富文本样式系统
+- Do not design pages as generic `blocks: Array<Widget>`.
+- Do not keep the generic `types/dsl` directory name.
+- Do not duplicate chart fields such as `connectorId` at the report root.
+- Do not add report-level `buildVQuery()` / `buildVSeed()`.
+- Do not write a separate chart editing and lowering implementation for report.
+- Do not support multiple charts per page or a rich-text style system in the first phase.

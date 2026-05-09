@@ -1,7 +1,7 @@
 # docs/adr/practices/standard
 
-本目录存放 `practices/standard` 的目标、ADR 与执行计划。
+This directory stores goals, ADRs, and execution plans for `practices/standard`.
 
-- 一个主题一个目录：`YYYY-MM-DD-topic/`
-- 文件按需创建：`goal.md`、`adr.md`、`plan.md`
-- `src/` 放示例实现，`docs/` 放设计与演进记录
+- Use one directory per topic: `YYYY-MM-DD-topic/`
+- Create files as needed: `goal.md`, `adr.md`, `plan.md`
+- Put example implementations in `src/`, and design and evolution records in `docs/`
