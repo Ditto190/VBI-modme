@@ -72,4 +72,46 @@ describe('annotationPoint', () => {
       [MeasureId]: 'sales',
     })
   })
+
+  test('dualAxis annotationPoint only targets the series matching measureId', () => {
+    const { spec } = buildSpec({
+      chartType: 'dualAxis',
+      dataset: [
+        { date_label: '11-17', event_revenue_m: 8, social_mentions_k: 12 },
+        { date_label: '11-18', event_revenue_m: 10, social_mentions_k: 20 },
+      ],
+      dimensions: [{ id: 'date_label', encoding: 'xAxis', alias: '日期' }],
+      measures: [
+        {
+          id: 'event_revenue_m',
+          encoding: 'primaryYAxis',
+          chartType: 'line',
+          alias: '事件收入（百万美元）',
+        },
+        {
+          id: 'social_mentions_k',
+          encoding: 'secondaryYAxis',
+          chartType: 'line',
+          alias: '社交提及（千次）',
+        },
+      ],
+      annotationPoint: [
+        {
+          selector: { field: 'date_label', operator: '=', value: '11-18' },
+          measureId: 'event_revenue_m',
+          text: '收入峰值',
+        },
+        {
+          selector: { field: 'date_label', operator: '=', value: '11-18' },
+          measureId: 'social_mentions_k',
+          text: '声量峰值',
+        },
+      ],
+    } satisfies VSeed)
+
+    const markPoint = (spec as { markPoint?: Array<{ relativeSeriesIndex?: number }> }).markPoint
+
+    expect(markPoint).toHaveLength(2)
+    expect(markPoint?.map((point) => point.relativeSeriesIndex)).toEqual([0, 1])
+  })
 })

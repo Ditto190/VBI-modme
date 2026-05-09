@@ -7,6 +7,11 @@ import { flatReshapeMeasures } from 'src/pipeline/utils'
 import { pickWithout } from '@visactor/vutils'
 import { generateAnnotationPointPipe } from './annotationPointCommon'
 
+const getSeriesMeasureIds = (context: SpecPipelineContext, seriesIndex: number) => {
+  const foldInfo = context.advancedVSeed.datasetReshapeInfo?.[0]?.foldInfoList?.[seriesIndex]
+  return Object.keys(foldInfo?.foldMap ?? {})
+}
+
 export const annotationPointOfDualAxis: VChartSpecPipe = generateAnnotationPointPipe({
   findSelectedDatas: (options) => {
     const { dataset, selector: s, measureId, dynamicFilter, context } = options
@@ -32,7 +37,13 @@ export const annotationPointOfDualAxis: VChartSpecPipe = generateAnnotationPoint
   generateMarkPoint: (datum: Datum, spec: ISpec, context: SpecPipelineContext) => {
     const { advancedVSeed } = context
     const allMeasureIds = flatReshapeMeasures(advancedVSeed.reshapeMeasures ?? []).map((m) => m.id)
-    return spec.series?.map((s: any, index: number) => {
+    const selectedMeasureId = datum[MeasureId]
+    return spec.series?.flatMap((_series: any, index: number) => {
+      const seriesMeasureIds = getSeriesMeasureIds(context, index)
+      if (selectedMeasureId && seriesMeasureIds.length && !seriesMeasureIds.includes(String(selectedMeasureId))) {
+        return []
+      }
+
       return {
         relativeSeriesIndex: index,
         coordinate: (data: Datum[]) => {
