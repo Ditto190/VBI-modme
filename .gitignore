@@ -25,11 +25,10 @@ coverage/
 tools/llm_test/top-key
 tools/llm_test/new-type
 
-
-# Claude
+# AI Tools 
 .claude
-
-# Trae
 .trae
+.codex
 
+# Git
 .worktrees
