@@ -31,6 +31,7 @@ export * from './radar'
 export * from './treeMap'
 export * from './sunburst'
 export * from './circlePacking'
+export * from './hierarchySankey'
 
 // race
 export * from './raceLine'

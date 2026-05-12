@@ -30,6 +30,7 @@ import type {
   TreeMap,
   Sunburst,
   CirclePacking,
+  HierarchySankey,
 } from './chartType'
 
 export type VSeed =
@@ -69,6 +70,7 @@ export type VSeed =
   | TreeMap
   | Sunburst
   | CirclePacking
+  | HierarchySankey
 
   // other
   | Funnel

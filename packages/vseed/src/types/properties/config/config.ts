@@ -24,6 +24,7 @@ import {
 import { zTreeMapConfig } from './treeMap'
 import { zSunburstConfig } from './sunburst'
 import { zCirclePackingConfig } from './circlePacking'
+import { zHierarchySankeyConfig } from './hierarchySankey'
 
 export type Config = z.infer<typeof zConfig>
 export const zConfig = z.object({
@@ -63,6 +64,7 @@ export const zConfig = z.object({
   treeMap: zTreeMapConfig.nullish(),
   sunburst: zSunburstConfig.nullish(),
   circlePacking: zCirclePackingConfig.nullish(),
+  hierarchySankey: zHierarchySankeyConfig.nullish(),
 
   // other
   funnel: zFunnelConfig.nullish(),
