@@ -134,15 +134,24 @@ export const buildLabel = (
     formatMethod: (_: unknown, datum: Datum) => {
       const result = []
 
-      const dimLabels = labelDims.map((item: Dimension) => {
+      const dimLabels = labelDims.flatMap((item: Dimension) => {
         const id = item.id
+        const rawValue = datum[id]
+        if (rawValue === undefined || rawValue === null || rawValue === '') {
+          return []
+        }
         const formatter = createFormatterByDimension(item, locale)
-        return formatter(datum[id] as number | string)
+        return [formatter(rawValue as number | string)]
       })
 
-      const meaLabels = labelMeas.map((item: Measure) =>
-        generateMeasureValue(datum[item.id] as number | string, item, autoFormat, numFormat),
-      )
+      const meaLabels = labelMeas.flatMap((item: Measure) => {
+        const rawValue = datum[item.id]
+        if (rawValue === undefined || rawValue === null || rawValue === '') {
+          return []
+        }
+
+        return [generateMeasureValue(rawValue as number | string, item, autoFormat, numFormat)]
+      })
 
       result.push(...dimLabels)
 

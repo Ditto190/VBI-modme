@@ -207,6 +207,7 @@ function generateMeta() {
         'treeMap',
         'sunburst',
         'circlePacking',
+        'hierarchySankey',
         'heatmap',
         'funnel',
         'boxPlot',

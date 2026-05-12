@@ -1,4 +1,5 @@
 import type { Datum, FoldInfo, UnfoldInfo } from 'src/types'
+import { Separator } from './constant'
 
 /**
  * 将按 hierarchy encoding reshape 后的平铺数据构造成递归树结构。
@@ -42,7 +43,14 @@ export const buildHierarchyTree = (
       let child = currentNode.children.find((c: Datum) => c.name === value)
 
       if (!child) {
-        child = { name: value, children: [] }
+        const pathValues = hierarchyFields.slice(0, i + 1).map((key) => String(datum[key]))
+        child = {
+          name: value,
+          key: pathValues.join(Separator),
+          group: field,
+          color: value,
+          children: [],
+        }
         for (let j = 0; j <= i; j++) {
           child[hierarchyFields[j]] = datum[hierarchyFields[j]]
         }
