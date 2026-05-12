@@ -1,4 +1,5 @@
 export * from './constant'
+export { buildHierarchyTree } from './buildHierarchyTree'
 export { foldMeasures } from './foldMeasures'
 export { unfoldDimensions } from './unfoldDimensions'
 export { dataReshapeByEncoding } from './dataReshapeByEncoding'

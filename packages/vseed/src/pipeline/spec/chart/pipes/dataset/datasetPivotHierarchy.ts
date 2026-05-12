@@ -1,6 +1,6 @@
 import { findAllMeasures } from 'src/pipeline/utils'
 import type { PivotChartSpecPipe, Datum } from 'src/types'
-import { buildTree } from './datasetHierarchy'
+import { buildHierarchyTree } from 'src/dataReshape'
 import { omit } from 'remeda'
 
 export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
@@ -23,7 +23,7 @@ export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
         pre[id] = groupedDataset.flatMap((data) => {
           const root = {
             ...data,
-            children: buildTree(data.children as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys),
+            children: buildHierarchyTree(data.children as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys),
           }
           const rootProps = omit(root, ['children'])
           const rootTree = root.children.map((child: Datum) => ({
@@ -33,7 +33,7 @@ export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
           return rootTree
         })
       } else {
-        const tree = buildTree(cur as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys)
+        const tree = buildHierarchyTree(cur as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys)
         pre[id] = tree
       }
 

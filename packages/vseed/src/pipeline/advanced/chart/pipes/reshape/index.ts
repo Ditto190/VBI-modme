@@ -8,3 +8,4 @@ export { pivotReshapeWithHistogramEncoding } from './pivotReshapeWithHistogramEn
 export { pivotReshapeWithBoxplotEncoding } from './pivotReshapeWithBoxplotEncoding'
 export { reshapeWithScatterEncoding } from './reshapeWithScatterEncoding'
 export { pivotReshapeWithScatterEncoding } from './pivotReshapeWithScatterEncoding'
+export { reshapeWithHierarchySankeyEncoding } from './reshapeWithHierarchySankeyEncoding'

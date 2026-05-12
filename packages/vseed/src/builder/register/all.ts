@@ -30,6 +30,7 @@ import {
   registerTreeMap,
   registerSunburst,
   registerCirclePacking,
+  registerHierarchySankey,
 } from './chartType'
 import { registerDarkTheme, registerLightTheme } from './theme'
 /**
@@ -74,6 +75,7 @@ export const registerAll = () => {
   registerTreeMap()
   registerSunburst()
   registerCirclePacking()
+  registerHierarchySankey()
   // theme
   registerLightTheme()
   registerDarkTheme()
