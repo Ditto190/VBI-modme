@@ -71,6 +71,11 @@
   },
   {
     "type": "file",
+    "name": "hierarchySankey",
+    "label": "hierarchySankey"
+  },
+  {
+    "type": "file",
     "name": "histogram",
     "label": "histogram"
   },

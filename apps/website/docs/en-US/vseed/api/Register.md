@@ -204,6 +204,16 @@ Once registered, Builder supports building Heatmap Chart Spec and Advanced Confi
 function registerHeatmap(): void
 ```
 
+### registerHierarchySankey
+
+:::note{title=Description}
+Register the HierarchySankey Chart build pipeline.
+:::
+
+```ts
+function registerHierarchySankey(): void
+```
+
 ### registerHistogram
 
 :::note{title=Description}
@@ -390,4 +400,3 @@ Once registered, Builder supports building TreeMap Chart Spec and Advanced Confi
 ```ts
 function registerTreeMap(): void
 ```
-
