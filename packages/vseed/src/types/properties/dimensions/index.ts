@@ -31,3 +31,4 @@ export type { TableDimension, DimensionGroup, DimensionTree } from './tableDimen
 
 // hierarchy
 export type { HierarchyDimension } from './hierarchyDimension'
+export type { GraphSankeyDimension } from './graphSankeyDimension'

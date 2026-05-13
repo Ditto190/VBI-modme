@@ -22,6 +22,7 @@ export const zMeasure = z.object({
       'tooltip',
       'detail',
       'column',
+      'target',
       'value',
       'q1',
       'q3',

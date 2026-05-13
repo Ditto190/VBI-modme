@@ -12,6 +12,8 @@ export const zDimensionEncoding = z.enum([
   'column',
   'player',
   'hierarchy',
+  'source',
+  'target',
 ])
 
 export const DimensionEncodingEnum = {
@@ -26,4 +28,6 @@ export const DimensionEncodingEnum = {
   column: 'column',
   player: 'player',
   hierarchy: 'hierarchy',
+  source: 'source',
+  target: 'target',
 } as const

@@ -33,6 +33,7 @@ export type ChartType =
   | 'sunburst'
   | 'circlePacking'
   | 'hierarchySankey'
+  | 'graphSankey'
   // other
   | 'heatmap'
   | 'funnel'
@@ -73,6 +74,7 @@ export const zChartType = z.enum([
   'sunburst',
   'circlePacking',
   'hierarchySankey',
+  'graphSankey',
   // other
   'funnel',
   'heatmap',
