@@ -61,11 +61,13 @@ export const buildTree = (
     for (let i = 0; i < hierarchyFields.length; i++) {
       const field = hierarchyFields[i]
       const value = String(datum[field])
+      const nodeName =
+        field === measureId && measureName && datum[measureName] !== undefined ? String(datum[measureName]) : value
 
-      let child = currentNode.children.find((c: Datum) => c.name === value)
+      let child = currentNode.children.find((c: Datum) => String(c[field]) === value)
 
       if (!child) {
-        child = { name: value, children: [] }
+        child = { name: nodeName, key: value, field, children: [] }
         for (let j = 0; j <= i; j++) {
           child[hierarchyFields[j]] = datum[hierarchyFields[j]]
         }

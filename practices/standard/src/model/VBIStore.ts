@@ -1,6 +1,6 @@
 import { VBI, VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { type DatasetColumn } from '@visactor/vquery'
-import { VSeed } from '@visactor/vseed'
+import { Builder as VSeedBuilder, type VSeed } from '@visactor/vseed'
 import { createDefaultBuilder, setLocalDataWithSchema } from 'src/utils/localConnector'
 import { createStore, type StoreApi } from 'zustand/vanilla'
 
@@ -77,6 +77,22 @@ const loadVSeed = async (builder: VBIChartBuilder, dslSnapshot: string): Promise
   return pending
 }
 
+const buildSelectedVSeedArtifacts = (vseed: VSeed | null) => {
+  if (!vseed) {
+    return {
+      advancedVSeed: null,
+      spec: null,
+    }
+  }
+
+  const builder = VSeedBuilder.from(vseed)
+  const spec = builder.build()
+  return {
+    advancedVSeed: builder.advancedVSeed,
+    spec,
+  }
+}
+
 export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
   const initialBuilder = getInitialBuilder(builder)
 
@@ -92,6 +108,7 @@ export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
     setDsl: (dsl) => set({ dsl }),
     logState: async () => {
       const { builder, vseed } = get()
+      const { advancedVSeed, spec } = buildSelectedVSeedArtifacts(vseed)
 
       console.group('selected builder')
 
@@ -99,6 +116,8 @@ export const createVBIStore = (builder?: VBIChartBuilder): VBIStoreApi => {
       console.info('vbi', builder.build())
       console.info('vquery', builder.buildVQuery())
       console.info('vseed', vseed)
+      console.info('advancedVSeed', advancedVSeed)
+      console.info('spec', spec)
 
       console.groupEnd()
     },

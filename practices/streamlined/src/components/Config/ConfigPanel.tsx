@@ -2,6 +2,7 @@ import {
   BarChartOutlined,
   DotChartOutlined,
   LineChartOutlined,
+  NodeIndexOutlined,
   PieChartOutlined,
   TableOutlined,
 } from '@ant-design/icons'
@@ -28,6 +29,9 @@ const chartIconByType = (type: string) => {
   if (type.includes('pie') || type.includes('donut')) return <PieChartOutlined />
   if (type.includes('line') || type.includes('area')) return <LineChartOutlined />
   if (type.includes('scatter')) return <DotChartOutlined />
+  if (type.toLowerCase().includes('sankey') || type.includes('tree') || type.includes('sunburst')) {
+    return <NodeIndexOutlined />
+  }
   return <BarChartOutlined />
 }
 

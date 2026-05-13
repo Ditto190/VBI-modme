@@ -48,7 +48,7 @@ export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
   }
 }
 
-function groupByDimensions<T extends Record<string, any>>(data: T[], dimKeys: string[]): any[] {
+export function groupByDimensions<T extends Record<string, any>>(data: T[], dimKeys: string[]): any[] {
   if (dimKeys.length === 0) {
     return data
   }

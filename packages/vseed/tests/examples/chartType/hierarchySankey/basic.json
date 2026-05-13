@@ -1,0 +1,33 @@
+{
+  "name": "区域销售层次桑基图",
+  "description": "展示销售额从区域流向国家再流向城市的层次桑基图。",
+  "vseed": {
+    "chartType": "hierarchySankey",
+    "dataset": [
+      { "region": "Asia", "country": "China", "city": "Beijing", "sales": 30 },
+      { "region": "Asia", "country": "China", "city": "Shanghai", "sales": 20 },
+      { "region": "Asia", "country": "Japan", "city": "Tokyo", "sales": 10 },
+      { "region": "Europe", "country": "Germany", "city": "Berlin", "sales": 18 },
+      { "region": "Europe", "country": "Germany", "city": "Munich", "sales": 12 },
+      { "region": "Europe", "country": "France", "city": "Paris", "sales": 16 }
+    ],
+    "dimensions": [
+      { "id": "region", "alias": "Region" },
+      { "id": "country", "alias": "Country" },
+      { "id": "city", "alias": "City" }
+    ],
+    "measures": [{ "id": "sales", "alias": "Sales" }],
+    "legend": {
+      "enable": true,
+      "position": "top"
+    },
+    "label": {
+      "enable": true,
+      "showDimension": true,
+      "showValue": true
+    },
+    "tooltip": {
+      "enable": true
+    }
+  }
+}

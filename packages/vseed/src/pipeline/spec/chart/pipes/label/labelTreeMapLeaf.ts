@@ -50,8 +50,7 @@ export const labelTreeMapLeaf: VChartSpecPipe = (spec, context) => {
       // However, VChart's TreeMap datum structure is a bit complex.
       // Based on the user provided example:
       // datum: { name: "Stapler", datum: [...], ... }
-
-      const nodeName = datum.name
+      const nodeName = datum.value
       const dataArray = datum.datum as any[]
 
       if (!dataArray || !Array.isArray(dataArray)) {
@@ -59,13 +58,13 @@ export const labelTreeMapLeaf: VChartSpecPipe = (spec, context) => {
       }
 
       // Helper to find the matching data node recursively
-      const findDataNode = (nodes: any[], name: string): any => {
+      const findDataNode = (nodes: any[], value: string): any => {
         for (const node of nodes) {
-          if (node.name === name) {
+          if (node.value === value) {
             return node
           }
           if (node.children) {
-            const found = findDataNode(node.children, name)
+            const found = findDataNode(node.children, value)
             if (found) return found
           }
         }

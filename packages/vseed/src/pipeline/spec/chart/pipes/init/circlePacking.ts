@@ -8,7 +8,7 @@ export const initCirclePacking: VChartSpecPipe = (spec, context) => {
   const { foldInfo } = datasetReshapeInfo[0]
 
   result.type = 'circlePacking'
-  result.categoryField = 'name'
+  result.categoryField = 'key'
   result.valueField = foldInfo.measureValue
   // Style configuration
   result.circlePacking = {

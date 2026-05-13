@@ -8,7 +8,7 @@ export const initSunburst: VChartSpecPipe = (spec, context) => {
   const { foldInfo } = datasetReshapeInfo[0]
 
   result.type = 'sunburst'
-  result.categoryField = 'name'
+  result.categoryField = 'key'
   result.valueField = foldInfo.measureValue
   result.outerRadius = 1
   result.innerRadius = 0

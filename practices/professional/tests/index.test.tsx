@@ -80,3 +80,13 @@ test('all supported encodings have professional config slots', () => {
     )
   }
 })
+
+test('hierarchy sankey exposes hierarchy and size config slots', () => {
+  const builder = createBuilder()
+  builder.chartType.changeChartType('hierarchySankey')
+  const slots = getFieldSlots(builder)
+
+  expect(builder.chartType.getAvailableChartTypes()).toContain('hierarchySankey')
+  expect(slots.find((slot) => slot.dimensionEncoding === 'hierarchy')?.accepts).toContain('dimension')
+  expect(slots.find((slot) => slot.measureEncoding === 'size')?.accepts).toContain('measure')
+})

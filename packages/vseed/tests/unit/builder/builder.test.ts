@@ -250,6 +250,42 @@ describe('Builder - Core Methods', () => {
     })
   })
 
+  test('should build pivot hierarchy sankey spec', () => {
+    const vseed: VSeed = {
+      chartType: 'hierarchySankey',
+      dataset: [
+        { channel: 'Online', region: 'Asia', country: 'China', city: 'Beijing', sales: 10, profit: 3 },
+        { channel: 'Online', region: 'Asia', country: 'China', city: 'Shanghai', sales: 6, profit: 2 },
+        { channel: 'Retail', region: 'Europe', country: 'France', city: 'Paris', sales: 8, profit: 2 },
+      ],
+      dimensions: [
+        { id: 'channel', encoding: 'column' },
+        { id: 'region', encoding: 'hierarchy' },
+        { id: 'country', encoding: 'hierarchy' },
+        { id: 'city', encoding: 'hierarchy' },
+      ],
+      measures: [
+        { id: 'sales', encoding: 'size' },
+        { id: 'profit', encoding: 'size' },
+      ],
+    }
+
+    const spec = Builder.from(vseed).build() as any
+    const chartSpec = spec.indicators[0].chartSpec
+    const nodes = chartSpec.data[0].values[0].nodes
+    const records = spec.records[spec.indicators[0].indicatorKey]
+
+    expect(spec.indicatorsAsCol).toBe(true)
+    expect(spec.columns).toEqual([{ dimensionKey: 'channel', title: 'channel' }])
+    expect(spec.indicators).toHaveLength(1)
+    expect(records[0].key).toBe('Asia')
+    expect(records[0].inDegree).toBe(0)
+    expect(records[0].outDegree).toBe(1)
+    expect(chartSpec.type).toBe('sankey')
+    expect(nodes[0].key).toBe('Asia')
+    expect(nodes[0].children[0].key).toBe('China')
+  })
+
   test('should get advanced pipeline for chart type', () => {
     const pipeline = Builder.getAdvancedPipeline('bar')
     expect(pipeline).toBeDefined()

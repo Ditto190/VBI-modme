@@ -25,6 +25,7 @@ export {
   registerBoxPlot,
   registerHistogram,
   registerDualAxis,
+  registerHierarchySankey,
 } from './builder/register/chartType'
 
 export * from './pipeline'

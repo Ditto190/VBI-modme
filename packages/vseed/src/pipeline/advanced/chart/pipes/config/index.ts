@@ -21,6 +21,7 @@ export {
 export { treeMapConfig } from './treeMap'
 export { sunburstConfig } from './sunburst'
 export { circlePackingConfig } from './circlePacking'
+export { hierarchySankeyConfig } from './hierarchySankey'
 
 // area
 export const areaConfig = lineConfig

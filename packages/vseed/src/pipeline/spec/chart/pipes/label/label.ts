@@ -143,7 +143,6 @@ export const buildLabel = (
       const meaLabels = labelMeas.map((item: Measure) =>
         generateMeasureValue(datum[item.id] as number | string, item, autoFormat, numFormat),
       )
-
       result.push(...dimLabels)
 
       foldInfoList.forEach((foldInfo) => {

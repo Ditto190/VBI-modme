@@ -8,7 +8,7 @@ export const initTreeMap: VChartSpecPipe = (spec, context) => {
   const { foldInfo } = datasetReshapeInfo[0]
 
   result.type = 'treemap'
-  result.categoryField = 'name'
+  result.categoryField = 'key'
   result.valueField = foldInfo.measureValue
   result.padding = 0
   result.animationEnter = {

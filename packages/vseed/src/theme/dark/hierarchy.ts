@@ -24,3 +24,7 @@ export const getSunburstTheme = () => {
 export const getCirclePackingTheme = () => {
   return getTreeMapTheme()
 }
+
+export const getHierarchySankeyTheme = () => {
+  return getTreeMapTheme()
+}

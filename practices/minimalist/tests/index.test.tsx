@@ -35,3 +35,15 @@ test('shelf tokens can be reordered by insert index', () => {
 
   expect(builder.build().measures.map((item) => ('field' in item ? item.field : ''))).toEqual(['amount', 'sales'])
 })
+
+test('hierarchy sankey fields use recommended encodings', () => {
+  const builder = createBuilder()
+  builder.chartType.changeChartType('hierarchySankey')
+
+  addField(builder, builder.build(), dimension('region'))
+  addField(builder, builder.build(), measure('sales'))
+
+  expect(builder.chartType.getAvailableChartTypes()).toContain('hierarchySankey')
+  expect(builder.build().dimensions[0]).toMatchObject({ encoding: 'hierarchy', field: 'region' })
+  expect(builder.build().measures[0]).toMatchObject({ encoding: 'size', field: 'sales' })
+})
