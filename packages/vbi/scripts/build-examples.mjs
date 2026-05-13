@@ -66,7 +66,7 @@ function generateDirDocs(dirName, locale = DEFAULT_LOCALE, title = dirName) {
   }
 
   let md = `# ${title}\n\n`
-  md += `import { registerDemoConnector } from '@components'\n\n`
+  md += `import { registerDemoConnector } from '@components/demoConnector'\n\n`
   md += `{registerDemoConnector()}\n\n`
 
   for (const file of jsonFiles) {

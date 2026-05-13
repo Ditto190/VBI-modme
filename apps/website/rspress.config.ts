@@ -9,7 +9,7 @@ export default defineConfig({
   root: './docs',
   base: '/VBI/',
   globalStyles: path.join(__dirname, 'components/styles/index.css'),
-  llms: true,
+  llms: false,
   plugins: [
     pluginPreview(),
     pluginPlayground({
@@ -46,16 +46,6 @@ export default defineConfig({
         icon: 'github',
         mode: 'link',
         content: 'https://github.com/visactor/vbi',
-      },
-    ],
-    locales: [
-      {
-        lang: 'zh-CN',
-        label: '简体中文',
-      },
-      {
-        lang: 'en-US',
-        label: 'English',
       },
     ],
   },

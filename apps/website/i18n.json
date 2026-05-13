@@ -94,5 +94,21 @@
   "takeMeHomeText": {
     "zh-CN": "返回首页",
     "en-US": "Take me home"
+  },
+  "promptCopyText": {
+    "zh-CN": "复制 Prompt",
+    "en-US": "Copy Prompt"
+  },
+  "promptCopiedText": {
+    "zh-CN": "已复制",
+    "en-US": "Copied"
+  },
+  "promptExpandText": {
+    "zh-CN": "展开",
+    "en-US": "Expand"
+  },
+  "promptCollapseText": {
+    "zh-CN": "折叠",
+    "en-US": "Collapse"
   }
 }
