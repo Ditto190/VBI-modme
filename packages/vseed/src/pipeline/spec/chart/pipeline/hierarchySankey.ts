@@ -11,7 +11,7 @@ import {
   hierarchySankeyInteractive,
   initHierarchySankey,
   initPivot,
-  label,
+  labelHierarchySankey,
   linearColor,
   pivotAdapter,
   pivotColorLegend,
@@ -34,7 +34,7 @@ const hierarchySankey: VChartSpecPipeline = [
   backgroundColor,
   colorAdapter(discreteLegend, colorLegend),
   tooltipHierarchySankey,
-  label,
+  labelHierarchySankey,
   hierarchySankeyInteractive,
 ]
 
@@ -51,7 +51,7 @@ const pivotHierarchySankey: PivotChartSpecPipeline = [
     colorAdapter(color, linearColor),
     backgroundColor,
     tooltipHierarchySankey,
-    label,
+    labelHierarchySankey,
     hierarchySankeyInteractive,
   ]),
   pivotRowDimensions,

@@ -1,18 +1,11 @@
 import type { ILineChartSpec } from '@visactor/vchart'
-import {
-  createFormatter,
-  createFormatterByDimension,
-  createFormatterByMeasure,
-  DATUM_HIDE_KEY,
-  findMeasureById,
-} from '../../../../utils'
+import { createFormatter, createFormatterByDimension, DATUM_HIDE_KEY, findMeasureById } from '../../../../utils'
 import type {
   Datum,
   Dimension,
   Dimensions,
   Encoding,
   FoldInfo,
-  Formatter,
   Label,
   Locale,
   Measure,
@@ -23,8 +16,9 @@ import type {
 import { isNumber, merge, uniqueBy } from 'remeda'
 import { selector, selectorWithDynamicFilter } from 'src/dataSelector'
 import { MeasureId } from 'src/dataReshape/constant'
+import { generateMeasurePercent, generateMeasureValue } from './label'
 
-export const label: VChartSpecPipe = (spec, context) => {
+export const labelHierarchySankey: VChartSpecPipe = (spec, context) => {
   const result = { ...spec } as ILineChartSpec
   const { advancedVSeed, vseed } = context
   const { datasetReshapeInfo } = advancedVSeed
@@ -44,28 +38,6 @@ export const label: VChartSpecPipe = (spec, context) => {
   ) as unknown as ILineChartSpec['label']
 
   return result
-}
-
-export const generateMeasureValue = (
-  value: number | string,
-  measure: Measure,
-  labelAutoFormat?: boolean,
-  numFormat: NumFormat = {},
-) => {
-  const format = merge(numFormat, measure.numFormat || measure.format)
-  const mergedMeasure = { ...measure, numFormat: format, autoFormat: labelAutoFormat || measure.autoFormat }
-
-  const formatter = createFormatterByMeasure(mergedMeasure)
-  return formatter(value)
-}
-
-export const generateMeasurePercent = (value: number | string, sum: number, formatter: Formatter) => {
-  if (value === undefined || value === null) return String(value)
-  const num = Number(value)
-  if (Number.isNaN(num)) return String(value)
-
-  const percentValue = num / sum
-  return formatter(percentValue)
 }
 
 export const buildLabel = (
@@ -134,15 +106,25 @@ export const buildLabel = (
     formatMethod: (_: unknown, datum: Datum) => {
       const result = []
 
-      const dimLabels = labelDims.map((item: Dimension) => {
+      const dimLabels = labelDims.flatMap((item: Dimension) => {
         const id = item.id
+        const rawValue = datum[id]
+        if (rawValue === undefined || rawValue === null || rawValue === '') {
+          return []
+        }
         const formatter = createFormatterByDimension(item, locale)
-        return formatter(datum[id] as number | string)
+        return [formatter(rawValue as number | string)]
       })
 
-      const meaLabels = labelMeas.map((item: Measure) =>
-        generateMeasureValue(datum[item.id] as number | string, item, autoFormat, numFormat),
-      )
+      const meaLabels = labelMeas.flatMap((item: Measure) => {
+        const rawValue = datum[item.id]
+        if (rawValue === undefined || rawValue === null || rawValue === '') {
+          return []
+        }
+
+        return [generateMeasureValue(rawValue as number | string, item, autoFormat, numFormat)]
+      })
+
       result.push(...dimLabels)
 
       foldInfoList.forEach((foldInfo) => {
