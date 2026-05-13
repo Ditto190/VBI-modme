@@ -250,6 +250,13 @@ export const CHART_TYPE_METAS: ChartTypeMeta[] = [
     icon: <NodeIndexOutlined />,
   },
   {
+    type: 'graphSankey',
+    group: 'hierarchy',
+    labelKey: 'toolbarChartTypeItemsGraphSankeyLabel',
+    descriptionKey: 'toolbarChartTypeItemsGraphSankeyDescription',
+    icon: <NodeIndexOutlined />,
+  },
+  {
     type: 'hierarchySankey',
     group: 'hierarchy',
     labelKey: 'toolbarChartTypeItemsHierarchySankeyLabel',

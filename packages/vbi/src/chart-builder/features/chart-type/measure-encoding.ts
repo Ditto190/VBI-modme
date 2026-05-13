@@ -34,6 +34,7 @@ const MEASURE_ENCODING_SUPPORT = {
   treeMap: ['size', 'detail', 'color', 'label', 'tooltip'],
   sunburst: ['size', 'detail', 'color', 'label', 'tooltip'],
   circlePacking: ['size', 'detail', 'color', 'label', 'tooltip'],
+  graphSankey: ['size', 'detail', 'label', 'tooltip'],
   hierarchySankey: ['size', 'detail', 'label', 'tooltip'],
   raceBar: ['xAxis', 'detail', 'color', 'label', 'tooltip'],
   raceColumn: ['yAxis', 'detail', 'color', 'label', 'tooltip'],
@@ -147,6 +148,10 @@ const STRATEGY_BY_CHART_TYPE: Record<string, MeasureEncodingStrategy> = {
   },
   [ChartTypeEnum.CirclePacking]: {
     supported: MEASURE_ENCODING_SUPPORT.circlePacking,
+    recommend: repeatEncoding('size'),
+  },
+  [ChartTypeEnum.GraphSankey]: {
+    supported: MEASURE_ENCODING_SUPPORT.graphSankey,
     recommend: repeatEncoding('size'),
   },
   [ChartTypeEnum.HierarchySankey]: {

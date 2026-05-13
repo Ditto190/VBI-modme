@@ -21,6 +21,8 @@ export const isPositionMeasure = (measure: Measure, chartType: ChartType): boole
   if (
     ChartTypeEnum.Funnel === chartType ||
     ChartTypeEnum.CirclePacking === chartType ||
+    ChartTypeEnum.GraphSankey === chartType ||
+    ChartTypeEnum.HierarchySankey === chartType ||
     ChartTypeEnum.Sunburst === chartType ||
     ChartTypeEnum.TreeMap === chartType
   ) {

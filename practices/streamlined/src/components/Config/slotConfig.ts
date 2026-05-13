@@ -30,6 +30,8 @@ const slotDefinitions: SlotDefinition[] = [
   { measureEncoding: 'x0' },
   { measureEncoding: 'x1' },
   { dimensionEncoding: 'color', measureEncoding: 'color' },
+  { dimensionEncoding: 'source' },
+  { dimensionEncoding: 'target' },
   { dimensionEncoding: 'tooltip', measureEncoding: 'tooltip' },
   { dimensionEncoding: 'label', measureEncoding: 'label' },
   { dimensionEncoding: 'player' },

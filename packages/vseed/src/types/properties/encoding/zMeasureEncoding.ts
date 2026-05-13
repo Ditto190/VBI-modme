@@ -13,7 +13,6 @@ export const zMeasureEncoding = z.enum([
   'column',
   'label',
   'tooltip',
-  'target',
 ])
 
 export const MeasureEncodingEnum = {
@@ -29,5 +28,4 @@ export const MeasureEncodingEnum = {
   column: 'column',
   label: 'label',
   tooltip: 'tooltip',
-  target: 'target',
 } as const

@@ -17,7 +17,7 @@ const zGraphSankeyMeasure = z.object({
   autoFormat: z.boolean().optional(),
   numFormat: zNumFormat.optional(),
   format: zNumFormat.optional(),
-  encoding: z.enum(['size', 'target', 'label', 'tooltip']).optional(),
+  encoding: z.enum(['size', 'label', 'tooltip']).optional(),
   parentId: z.string().optional(),
 })
 

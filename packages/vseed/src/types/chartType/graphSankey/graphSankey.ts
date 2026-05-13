@@ -16,7 +16,6 @@ import type {
  * 适用场景:
  * - 展示普通 node-link 结构的流向关系
  * - 展示多个 source 维度、多 target 维度拼接后的路径流转
- * - 多指标场景下，advanced pipeline 可将指标名称转为 target 节点，再使用单个数值指标控制流量大小
  * @encoding
  * 桑基图支持以下视觉通道:
  * `source`: 起点通道, 支持`多个维度`
@@ -29,7 +28,6 @@ import type {
  * - 至少1个 source 维度或默认维度可映射为 source
  * - 至少1个 target 维度
  * - 至少1个数值字段（度量）用于映射流量大小
- * - 多指标场景下，若需要“指标名称作为 target”，由 advanced pipeline 在 reshape 阶段完成转换
  * - advanced pipeline 需要将 tidyData 转换为普通 sankey 可消费的 source / target / value 结构
  */
 export interface GraphSankey {
@@ -58,7 +56,7 @@ export interface GraphSankey {
 
   /**
    * 指标
-   * @description 指标配置，用于定义流量大小，支持 size / target / label / tooltip 通道
+   * @description 指标配置，用于定义流量大小，支持 size / label / tooltip 通道
    * @example [{id: 'sales', alias: '销售额'}]
    */
   measures?: GraphSankeyMeasure[]

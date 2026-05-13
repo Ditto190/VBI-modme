@@ -18,6 +18,7 @@ const titleByEncoding: Record<string, string> = {
   row: 'Row',
   secondaryYAxis: 'Secondary Y',
   size: 'Size',
+  source: 'Source',
   tooltip: 'Tooltip',
   value: 'Value',
   x0: 'X0',

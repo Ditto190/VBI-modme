@@ -6,7 +6,6 @@ export type MeasureEncoding =
   | 'angle'
   | 'radius'
   | 'size'
-  | 'target'
   | 'color'
   | 'detail'
   | 'column'
