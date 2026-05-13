@@ -9,3 +9,4 @@ export { pivotReshapeWithBoxplotEncoding } from './pivotReshapeWithBoxplotEncodi
 export { reshapeWithScatterEncoding } from './reshapeWithScatterEncoding'
 export { pivotReshapeWithScatterEncoding } from './pivotReshapeWithScatterEncoding'
 export { reshapeWithGraphSankeyEncoding } from './reshapeWithGraphSankeyEncoding'
+export { pivotReshapeWithGraphSankeyEncoding } from './reshapeWithGraphSankeyEncoding'

@@ -28,6 +28,8 @@ export const PlayerEncoding = '__Dim_Player__'
 export const ColorEncoding = '__Dim_Color__'
 export const ColorIdEncoding = '__Dim_ColorId__'
 export const HierarchyEncoding = '__Dim_Hierarchy__'
+export const SourceEncoding = '__Dim_Source__'
+export const TargetEncoding = '__Dim_Target__'
 
 // Measures For boxPlot
 export const BoxPlotPivotIndicator = '__BoxPlot_Pivot_Indicator__'

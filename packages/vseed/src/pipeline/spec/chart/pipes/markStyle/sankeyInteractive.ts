@@ -1,6 +1,6 @@
 import type { VChartSpecPipe } from 'src/types'
 
-export const hierarchySankeyInteractive: VChartSpecPipe = (spec) => {
+export const sankeyInteractive: VChartSpecPipe = (spec) => {
   const result = { ...spec } as Record<string, any>
 
   result.emphasis = {

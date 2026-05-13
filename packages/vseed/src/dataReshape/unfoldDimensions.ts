@@ -10,6 +10,8 @@ import {
   MeasureName,
   PlayerEncoding,
   HierarchyEncoding,
+  SourceEncoding,
+  TargetEncoding,
 } from './constant'
 
 /**
@@ -45,13 +47,15 @@ export const unfoldDimensions = (
     encodingColorId: ColorIdEncoding,
     encodingPlayer: PlayerEncoding,
     encodingHierarchy: HierarchyEncoding,
+    encodingSource: SourceEncoding,
+    encodingTarget: TargetEncoding,
 
     colorItems: [],
     colorIdMap: {},
   }
 
   // 每个通道对应的维度
-  const { color, x, y, detail, angle, player, hierarchy } = encoding
+  const { color, x, y, detail, angle, player, hierarchy, source, target } = encoding
   const angleDimensions = angle ? dimensions.filter((dim) => angle.includes(dim.id)) : []
   const xDimensions = x ? dimensions.filter((dim) => x.includes(dim.id)) : []
   const yDimensions = y ? dimensions.filter((dim) => y.includes(dim.id)) : []
@@ -59,6 +63,8 @@ export const unfoldDimensions = (
   const detailDimensions = detail ? dimensions.filter((dim) => detail.includes(dim.id)) : []
   const playerDimensions = player ? dimensions.filter((dim) => player.includes(dim.id)) : []
   const hierarchyDimensions = hierarchy ? dimensions.filter((dim) => hierarchy.includes(dim.id)) : []
+  const sourceDimensions = source ? dimensions.filter((dim) => source.includes(dim.id)) : []
+  const targetDimensions = target ? dimensions.filter((dim) => target.includes(dim.id)) : []
 
   // 离散图例项
   const colorItems = new Set<string>()
@@ -84,6 +90,8 @@ export const unfoldDimensions = (
     applyEncoding(DetailEncoding, detailDimensions, datum, separator)
     applyEncoding(PlayerEncoding, playerDimensions, datum, separator)
     applyEncoding(HierarchyEncoding, hierarchyDimensions, datum, separator)
+    applyEncoding(SourceEncoding, sourceDimensions, datum, separator)
+    applyEncoding(TargetEncoding, targetDimensions, datum, separator)
 
     // 处理离散的颜色图例
     if (!colorDimensions.length || !datum[ColorEncoding]) {

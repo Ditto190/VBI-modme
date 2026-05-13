@@ -29,6 +29,7 @@ const generateDefaultDimensionEncoding = (dimensions: Dimensions, encoding: Enco
   const uniqueDimIds = unique(dimensions.map((d) => d.id))
   encoding.source = uniqueDimIds.slice(0, 1)
   encoding.target = uniqueDimIds.slice(1)
+  encoding.color = []
   encoding.tooltip = uniqueDimIds.slice(0)
   encoding.label = []
   encoding.detail = []
@@ -39,6 +40,7 @@ const generateDefaultDimensionEncoding = (dimensions: Dimensions, encoding: Enco
 const generateDimensionEncoding = (dimensions: Dimensions, encoding: Encoding) => {
   encoding.source = unique(dimensions.filter((item) => item.encoding === 'source').map((item) => item.id))
   encoding.target = unique(dimensions.filter((item) => item.encoding === 'target').map((item) => item.id))
+  encoding.color = unique(dimensions.filter((item) => item.encoding === 'color').map((item) => item.id))
 
   if (encoding.source.length === 0 && dimensions[0]) {
     encoding.source = [dimensions[0].id]
@@ -49,9 +51,9 @@ const generateDimensionEncoding = (dimensions: Dimensions, encoding: Encoding) =
 
   encoding.tooltip = unique(dimensions.map((item) => item.id))
   encoding.label = unique(dimensions.filter((item) => item.encoding === 'label').map((item) => item.id))
-  encoding.detail = []
-  encoding.row = []
-  encoding.column = []
+  encoding.detail = unique(dimensions.filter((item) => item.encoding === 'detail').map((item) => item.id))
+  encoding.row = unique(dimensions.filter((item) => item.encoding === 'row').map((item) => item.id))
+  encoding.column = unique(dimensions.filter((item) => item.encoding === 'column').map((item) => item.id))
 }
 
 const generateMeasureEncoding = (measures: Measures, encoding: Encoding) => {
@@ -62,4 +64,7 @@ const generateMeasureEncoding = (measures: Measures, encoding: Encoding) => {
 
   const tooltip = unique(measures.filter((item) => item.encoding === 'tooltip').map((item) => item.id))
   encoding.tooltip = unique([...(encoding.tooltip || []), ...label, ...tooltip, ...encoding.size])
+
+  const detail = unique(measures.filter((item) => item.encoding === 'detail').map((item) => item.id))
+  encoding.detail = unique([...(encoding.detail || []), ...detail])
 }

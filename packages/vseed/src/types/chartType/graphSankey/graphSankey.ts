@@ -6,6 +6,7 @@ import type {
   GraphSankeyDimension,
   GraphSankeyMeasure,
   Label,
+  Legend,
   Page,
   Theme,
   Tooltip,
@@ -20,6 +21,7 @@ import type {
  * 桑基图支持以下视觉通道:
  * `source`: 起点通道, 支持`多个维度`
  * `target`: 终点通道, 支持`多个维度`
+ * `color`: 颜色通道, 支持`多个维度`
  * `size`: 大小通道, 支持`一个指标`
  * `label`: 标签通道, 支持`多个维度`与 `多个指标`
  * `tooltip`: 提示通道, 支持`多个维度`与 `多个指标`
@@ -49,14 +51,14 @@ export interface GraphSankey {
 
   /**
    * 维度
-   * @description 维度配置，用于定义 source / target 节点结构，支持 source / target / label / tooltip 通道
+   * @description 维度配置，用于定义 source / target 节点结构，支持 source / target / color / detail / label / tooltip / row / column 通道
    * @example [{id: 'fromRegion', alias: '来源区域'}, {id: 'toRegion', alias: '去向区域', encoding: 'target'}]
    */
   dimensions?: GraphSankeyDimension[]
 
   /**
    * 指标
-   * @description 指标配置，用于定义流量大小，支持 size / label / tooltip 通道
+   * @description 指标配置，用于定义流量大小，支持 size / detail / label / tooltip 通道
    * @example [{id: 'sales', alias: '销售额'}]
    */
   measures?: GraphSankeyMeasure[]
@@ -84,6 +86,12 @@ export interface GraphSankey {
    * @description 标签配置, 用于定义图表的数据标签
    */
   label?: Label
+
+  /**
+   * 图例
+   * @description 图例配置, 用于定义图形桑基图颜色图例的显示、位置与样式
+   */
+  legend?: Legend
 
   /**
    * 提示信息

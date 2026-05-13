@@ -1,87 +1,56 @@
-import { Separator } from 'src/dataReshape'
-import type { AdvancedPipe, AdvancedVSeed, Datum, Dimension, GraphSankey } from 'src/types'
+import { ColorEncoding, SourceEncoding, TargetEncoding } from 'src/dataReshape'
+import type { AdvancedPipe, AdvancedVSeed } from 'src/types'
+import { pivotReshapeWithEncoding } from './pivotReshapeWithEncoding'
+import { reshapeWithEncoding } from './reshapeWithEncoding'
 
-const SourceField = '__Dim_Source__'
-const TargetField = '__Dim_Target__'
+const applyGraphSankeyReshapeMeta = (advancedVSeed: Partial<AdvancedVSeed>) => {
+  const result = { ...advancedVSeed } as AdvancedVSeed
+  const { dataset = [], datasetReshapeInfo = [] } = result
 
-const mergeDimensionValues = (datum: Datum, dimensions: Dimension[]) => {
-  return dimensions
-    .map((dimension) => datum[dimension.id])
-    .filter((value) => value !== undefined && value !== null && value !== '')
-    .map((value) => String(value))
-    .join(Separator)
-}
+  datasetReshapeInfo.forEach((reshapeInfo, index) => {
+    const currentDataset =
+      datasetReshapeInfo.length > 1 || Array.isArray((dataset as Array<unknown>)[0])
+        ? (((dataset as Array<unknown>)[index] || []) as Array<Record<string, unknown>>)
+        : (dataset as Array<Record<string, unknown>>)
 
-const createStatistics = (values: number[]) => {
-  if (values.length === 0) {
-    return {
-      min: 0,
-      max: 0,
-      sum: 0,
-      count: 0,
-      colorMin: 0,
-      colorMax: 0,
+    const hasColorEncoding = (result.encoding?.color?.length || 0) > 0
+    const colorItems = Array.from(
+      new Set(
+        hasColorEncoding
+          ? currentDataset.map((datum) => String(datum[ColorEncoding] ?? '')).filter(Boolean)
+          : currentDataset
+              .flatMap((datum) => [String(datum[SourceEncoding] ?? ''), String(datum[TargetEncoding] ?? '')])
+              .filter(Boolean),
+      ),
+    )
+    const colorIdMap = colorItems.reduce(
+      (prev, item) => {
+        prev[item] = { id: item, alias: item }
+        return prev
+      },
+      {} as Record<string, { id: string; alias: string }>,
+    )
+
+    reshapeInfo.unfoldInfo = {
+      ...reshapeInfo.unfoldInfo,
+      encodingColor: ColorEncoding,
+      encodingColorId: ColorEncoding,
+      encodingSource: SourceEncoding,
+      encodingTarget: TargetEncoding,
+      colorItems,
+      colorIdMap,
     }
-  }
+  })
 
-  return {
-    min: Math.min(...values),
-    max: Math.max(...values),
-    sum: values.reduce((sum, value) => sum + value, 0),
-    count: values.length,
-    colorMin: 0,
-    colorMax: 0,
-  }
+  return result
 }
 
 export const reshapeWithGraphSankeyEncoding: AdvancedPipe = (advancedVSeed, context) => {
-  const result = { ...advancedVSeed }
-  const { vseed } = context
-  const { dataset, chartType } = vseed as GraphSankey
-  const { dimensions = [], measures = [], encoding = {} } = advancedVSeed
+  const result = reshapeWithEncoding(advancedVSeed, context)
+  return applyGraphSankeyReshapeMeta(result)
+}
 
-  const sourceDimensions = dimensions.filter((dimension) => (encoding.source || []).includes(dimension.id))
-  const targetDimensions = dimensions.filter((dimension) => (encoding.target || []).includes(dimension.id))
-  const sizeField = encoding.size?.[0] || measures[0]?.id || ''
-  const sizeMeasure = measures.find((measure) => measure.id === sizeField)
-
-  const mergedDataset: Datum[] = (dataset || []).map((datum) => ({
-    ...datum,
-    [SourceField]: mergeDimensionValues(datum, sourceDimensions),
-    [TargetField]: mergeDimensionValues(datum, targetDimensions),
-  }))
-
-  const values = mergedDataset.map((datum) => Number(datum[sizeField] ?? 0)).filter((value) => !Number.isNaN(value))
-
-  return {
-    ...result,
-    dataset: mergedDataset,
-    datasetReshapeInfo: [
-      {
-        id: String(chartType),
-        index: 0,
-        foldInfo: {
-          foldMap: sizeField ? { [sizeField]: sizeMeasure?.alias ?? sizeField } : {},
-          statistics: createStatistics(values),
-          measureId: sizeField || '__MeaId__',
-          measureName: sizeMeasure?.alias ?? (sizeField || '__MeaName__'),
-          measureValue: sizeField || '__MeaValue__',
-        },
-        unfoldInfo: {
-          encodingX: '',
-          encodingY: '',
-          encodingColor: '',
-          encodingColorId: '',
-          encodingDetail: '',
-          encodingAngle: '',
-          encodingPlayer: '',
-          encodingHierarchy: '',
-          encodingSource: SourceField,
-          encodingTarget: TargetField,
-          colorItems: [],
-          colorIdMap: {},
-        },
-      },
-    ],
-  } as unknown as AdvancedVSeed
+export const pivotReshapeWithGraphSankeyEncoding: AdvancedPipe = (advancedVSeed, context) => {
+  const result = pivotReshapeWithEncoding(advancedVSeed, context)
+  return applyGraphSankeyReshapeMeta(result)
 }

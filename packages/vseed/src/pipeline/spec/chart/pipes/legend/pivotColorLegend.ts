@@ -5,9 +5,9 @@ export const pivotColorLegend: PivotChartSpecPipe = (spec, context) => {
   const result = { ...spec } as PivotChartConstructorOptions
   const { advancedVSeed } = context
   const { chartType } = advancedVSeed
-  const baseConfig = advancedVSeed.config[chartType] as { legend: Legend; color: Color }
+  const baseConfig = advancedVSeed.config[chartType] as { legend?: Legend; color?: Color }
 
-  if (!baseConfig || !baseConfig.legend) {
+  if (!baseConfig || !baseConfig.legend || !baseConfig.color) {
     return result
   }
 

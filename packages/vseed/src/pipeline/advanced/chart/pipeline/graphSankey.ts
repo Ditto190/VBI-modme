@@ -10,6 +10,8 @@ import {
   graphSankeyConfig,
   initAdvancedVSeed,
   page,
+  pivotAdapter,
+  pivotReshapeWithGraphSankeyEncoding,
   reshapeWithGraphSankeyEncoding,
   theme,
   annotation,
@@ -26,7 +28,7 @@ export const graphSankeyAdvancedPipeline: AdvancedPipeline = [
     [buildMeasures(['size', 'detail']), defaultEncodingForGraphSankey],
     [buildMeasures(['size', 'detail']), encodingForGraphSankey],
   ),
-  reshapeWithGraphSankeyEncoding,
+  pivotAdapter([reshapeWithGraphSankeyEncoding], [pivotReshapeWithGraphSankeyEncoding]),
 
   graphSankeyConfig,
   theme,
