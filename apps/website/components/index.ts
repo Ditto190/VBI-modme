@@ -1,3 +1,5 @@
 export * from './render'
 export * from './guide'
 export * from './vseed'
+export * from './vquery'
+export { DEMO_CONNECTOR_ID } from './demoConnector'

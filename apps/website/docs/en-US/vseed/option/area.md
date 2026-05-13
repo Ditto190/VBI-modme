@@ -5345,6 +5345,16 @@ Margin for the mark area region
 
 
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style.
+
+:::
+
+
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
@@ -5397,4 +5407,3 @@ Language
 Chart language configuration; supports 'zh-CN' and 'en-US' language; alternatively, call the intl.setLocale('zh-CN') method to set the language.
 
 :::
-

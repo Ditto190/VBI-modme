@@ -50,6 +50,14 @@ getColorIdMap(): Record
 
 Gets a detailed mapping table for color fields. Key is the color ID, Value is the detailed information.
 
+### getColorValueMap
+
+```ts
+getColorValueMap(): undefined | Record
+```
+
+Gets the mapping from `colorId` to the final color value in a discrete color map.
+
 ## Static Methods
 
 ### getAdvancedPipeline
@@ -221,4 +229,3 @@ set performance(value)
 ```
 
 Sets the performance statistics.
-
