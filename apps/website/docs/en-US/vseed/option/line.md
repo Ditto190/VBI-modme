@@ -4251,6 +4251,16 @@ Outer padding for the annotation area.
 :::
 
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style.
+
+:::
+
+
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`

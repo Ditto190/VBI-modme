@@ -4697,6 +4697,16 @@ Margin of the annotation area.
 
 
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style.
+
+:::
+
+
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
@@ -4747,4 +4757,3 @@ Whether to show labels corresponding to the crosshair.
 Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, the `intl.setLocale('zh-CN')` method can be used to set the language.
 
 :::
-

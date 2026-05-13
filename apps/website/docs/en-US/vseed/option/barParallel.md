@@ -4305,6 +4305,16 @@ Padding for the annotation area.
 
 
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style.
+
+:::
+
+
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
@@ -4348,4 +4358,3 @@ Whether to show the crosshair label.
 :::note{title=Description}
 Chart language configuration. Supports 'zh-CN' and 'en-US' languages. Additionally, the `intl.setLocale('zh-CN')` method can be called to set the language.
 :::
-

@@ -1,6 +1,11 @@
 [
   {
     "type": "file",
+    "name": "animation",
+    "label": "Animation"
+  },
+  {
+    "type": "file",
     "name": "annotationArea",
     "label": "AnnotationArea"
   },

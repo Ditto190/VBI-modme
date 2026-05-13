@@ -4977,6 +4977,16 @@ Confidence interval opacity
 
 
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style.
+
+:::
+
+
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
@@ -5029,4 +5039,3 @@ Whether to display the label corresponding to the crosshair.
 Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to set the language globally.
 
 :::
-

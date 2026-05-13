@@ -6,30 +6,22 @@
   },
   {
     "text": "VQuery",
-    "link": "/vquery",
+    "link": "/vquery/",
     "activeMatch": "/vquery/"
   },
   {
     "text": "VBI",
     "link": "/vbi/",
-    "activeMatch": "^/vbi(?:/|$)"
+    "activeMatch": "/vbi/"
   },
   {
     "text": "VBI React",
     "link": "/vbi-react/",
-    "activeMatch": "^/vbi-react(?:/|$)"
+    "activeMatch": "/vbi-react/"
   },
   {
     "text": "Playground",
     "link": "/playground/vseed",
     "activeMatch": "/playground/"
-  },
-  {
-    "text": "了解VChart",
-    "link": "https://visactor.com/vchart"
-  },
-  {
-    "text": "了解VTable",
-    "link": "https://visactor.com/vtable"
   }
 ]
