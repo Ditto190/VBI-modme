@@ -46,6 +46,16 @@ test('bar chart exposes categorical Y axis and metric X axis', () => {
   expect(xAxis?.accepts).toContain('measure')
 })
 
+test('hierarchy sankey exposes hierarchy and size slots', () => {
+  const builder = createBuilder()
+  builder.chartType.changeChartType('hierarchySankey')
+  const slots = getVisibleSlots(builder, getLabels('zh-CN'))
+
+  expect(builder.chartType.getAvailableChartTypes()).toContain('hierarchySankey')
+  expect(slots.find((slot) => slot.dimensionEncoding === 'hierarchy')?.accepts).toContain('dimension')
+  expect(slots.find((slot) => slot.measureEncoding === 'size')?.accepts).toContain('measure')
+})
+
 test('table chart keeps column mapping in encodings', () => {
   const builder = createBuilder()
   const slots = getEncodingSlots(builder, getLabels('zh-CN'))

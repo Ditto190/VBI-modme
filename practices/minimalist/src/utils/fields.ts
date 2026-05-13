@@ -60,16 +60,20 @@ export const addField = (
 
   let id = ''
   if (role === 'measure') {
+    const [encoding] = builder.chartType.getRecommendedMeasureEncodings(dsl.measures.length + 1).slice(-1)
     builder.measures.add(field.name, (node) => {
       node.setAlias(field.name).setAggregate({ func: 'sum' })
+      if (encoding) node.setEncoding(encoding)
       id = node.getId()
     })
     reorderField(builder, role, id, targetIndex ?? Number.MAX_SAFE_INTEGER)
     return
   }
 
+  const [encoding] = builder.chartType.getRecommendedDimensionEncodings(dsl.dimensions.length + 1).slice(-1)
   builder.dimensions.add(field.name, (node) => {
     node.setAlias(field.name)
+    if (encoding) node.setEncoding(encoding)
     id = node.getId()
     if (field.isDate) node.setAggregate({ func: 'toDay' })
   })

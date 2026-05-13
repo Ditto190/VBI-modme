@@ -71,6 +71,8 @@
   "toolbarChartTypeItemsSunburstDescription": "放射状层级关系",
   "toolbarChartTypeItemsCirclePackingLabel": "圆形闭包图",
   "toolbarChartTypeItemsCirclePackingDescription": "强调包含关系",
+  "toolbarChartTypeItemsHierarchySankeyLabel": "层级桑基图",
+  "toolbarChartTypeItemsHierarchySankeyDescription": "展示层级流向分配",
   "toolbarChartTypeItemsRaceBarLabel": "动态条形图",
   "toolbarChartTypeItemsRaceBarDescription": "排名随时间变化",
   "toolbarChartTypeItemsRaceColumnLabel": "动态柱状图",

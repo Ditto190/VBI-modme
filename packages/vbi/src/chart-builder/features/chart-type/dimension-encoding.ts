@@ -34,6 +34,7 @@ const DIMENSION_ENCODING_SUPPORT = {
   treeMap: ['hierarchy', 'detail', 'tooltip', 'label', 'row', 'column'],
   sunburst: ['hierarchy', 'detail', 'tooltip', 'label', 'row', 'column'],
   circlePacking: ['hierarchy', 'detail', 'tooltip', 'label', 'row', 'column'],
+  hierarchySankey: ['hierarchy', 'color', 'detail', 'tooltip', 'label', 'row', 'column'],
   raceBar: ['player', 'yAxis', 'color', 'detail', 'tooltip', 'label', 'row', 'column'],
   raceColumn: ['player', 'xAxis', 'color', 'detail', 'tooltip', 'label', 'row', 'column'],
   raceLine: ['player', 'xAxis', 'color', 'detail', 'tooltip', 'label', 'row', 'column'],
@@ -149,6 +150,10 @@ const STRATEGY_BY_CHART_TYPE: Record<string, DimensionEncodingStrategy> = {
   },
   [ChartTypeEnum.CirclePacking]: {
     supported: DIMENSION_ENCODING_SUPPORT.circlePacking,
+    recommend: repeatEncoding('hierarchy'),
+  },
+  [ChartTypeEnum.HierarchySankey]: {
+    supported: DIMENSION_ENCODING_SUPPORT.hierarchySankey,
     recommend: repeatEncoding('hierarchy'),
   },
   [ChartTypeEnum.RaceBar]: {
