@@ -1,0 +1,33 @@
+{
+  "name": "多层级维度 + 单指标",
+  "description": "展示从大区到国家、再到渠道的层级流向，并通过单个指标控制流量大小。",
+  "vseed": {
+    "chartType": "hierarchySankey",
+    "dataset": [
+      { "region": "华北", "country": "中国", "channel": "直营", "revenue": 42 },
+      { "region": "华北", "country": "中国", "channel": "代理", "revenue": 18 },
+      { "region": "华东", "country": "中国", "channel": "直营", "revenue": 36 },
+      { "region": "华东", "country": "中国", "channel": "电商", "revenue": 22 },
+      { "region": "东南亚", "country": "新加坡", "channel": "直营", "revenue": 15 },
+      { "region": "东南亚", "country": "马来西亚", "channel": "代理", "revenue": 12 }
+    ],
+    "dimensions": [
+      { "id": "region", "alias": "大区" },
+      { "id": "country", "alias": "国家" },
+      { "id": "channel", "alias": "渠道" }
+    ],
+    "measures": [{ "id": "revenue", "alias": "营收" }],
+    "legend": {
+      "enable": true,
+      "position": "top"
+    },
+    "label": {
+      "enable": true,
+      "showDimension": true,
+      "showValue": true
+    },
+    "tooltip": {
+      "enable": true
+    }
+  }
+}

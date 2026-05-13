@@ -1,0 +1,32 @@
+{
+  "name": "指标名称作为层级维度 + 单指标",
+  "description": "将“指标名称”本身放进层级路径中，展示每个大区下不同业务指标的流向，并通过单个数值指标控制大小。",
+  "vseed": {
+    "chartType": "hierarchySankey",
+    "dataset": [
+      { "region": "华北", "metricName": "销售额", "value": 42 },
+      { "region": "华北", "metricName": "利润", "value": 12 },
+      { "region": "华东", "metricName": "销售额", "value": 36 },
+      { "region": "华东", "metricName": "利润", "value": 10 },
+      { "region": "华南", "metricName": "销售额", "value": 28 },
+      { "region": "华南", "metricName": "利润", "value": 8 }
+    ],
+    "dimensions": [
+      { "id": "region", "alias": "大区" },
+      { "id": "metricName", "alias": "指标名称" }
+    ],
+    "measures": [{ "id": "value", "alias": "指标值" }],
+    "legend": {
+      "enable": true,
+      "position": "top"
+    },
+    "label": {
+      "enable": true,
+      "showDimension": true,
+      "showValue": true
+    },
+    "tooltip": {
+      "enable": true
+    }
+  }
+}
