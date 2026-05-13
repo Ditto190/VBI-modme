@@ -71,31 +71,34 @@ const dataset: Datum[] = [
 ]
 
 describe('datasetHierarchy buildTree', () => {
-  it('builds ordinary hierarchy tree without sankey-only fields', () => {
+  it('builds ordinary hierarchy tree with hierarchy metadata', () => {
     const tree = buildTree(dataset, ['continent', 'country', 'city'], foldInfo, unfoldInfo, ['revenue'])
 
     expect(tree).toHaveLength(1)
     expect(tree[0].name).toBe('Asia')
+    expect(tree[0].key).toBe('Asia')
+    expect(tree[0].field).toBe('continent')
     expect(tree[0].value).toBe(60)
     expect(tree[0].revenue).toBe(60)
-    expect(tree[0]).not.toHaveProperty('key')
     expect(tree[0]).not.toHaveProperty('group')
     expect(tree[0]).not.toHaveProperty('inDegree')
     expect(tree[0]).not.toHaveProperty('outDegree')
 
     const china = tree[0].children?.find((node: Datum) => node.name === 'China')
+    expect(china?.key).toBe('China')
+    expect(china?.field).toBe('country')
     expect(china?.value).toBe(50)
     expect(china?.revenue).toBe(50)
-    expect(china).not.toHaveProperty('key')
     expect(china).not.toHaveProperty('group')
     expect(china).not.toHaveProperty('inDegree')
     expect(china).not.toHaveProperty('outDegree')
 
     const beijing = china?.children?.find((node: Datum) => node.name === 'Beijing')
+    expect(beijing?.key).toBe('Beijing')
+    expect(beijing?.field).toBe('city')
     expect(beijing?.color).toBe('Asia')
     expect(beijing?.value).toBe(30)
     expect(beijing?.revenue).toBe(30)
-    expect(beijing).not.toHaveProperty('key')
     expect(beijing).not.toHaveProperty('group')
     expect(beijing).not.toHaveProperty('inDegree')
     expect(beijing).not.toHaveProperty('outDegree')
@@ -113,19 +116,19 @@ describe('datasetHierarchy buildTree', () => {
 })
 
 describe('buildHierarchySankeyNodes', () => {
-  it('builds sankey nodes with sankey-only fields', () => {
+  it('builds sankey nodes with hierarchy metadata and degrees', () => {
     const tree = buildHierarchySankeyNodes(dataset, ['continent', 'country', 'city'], foldInfo, unfoldInfo, ['revenue'])
 
     const asia = tree[0]
     expect(asia.key).toBe('Asia')
-    expect(asia.group).toBe('continent')
+    expect(asia.field).toBe('continent')
     expect(asia.inDegree).toBe(0)
     expect(asia.outDegree).toBe(2)
     expect(asia.value).toBe(60)
 
     const china = asia.children?.find((node: Datum) => node.name === 'China')
-    expect(china?.key).toBe('Asia-China')
-    expect(china?.group).toBe('country')
+    expect(china?.key).toBe('China')
+    expect(china?.field).toBe('country')
     expect(china?.inDegree).toBe(1)
     expect(china?.outDegree).toBe(2)
     expect(china?.value).toBe(50)
@@ -147,9 +150,9 @@ describe('buildHierarchySankeyNodes', () => {
     const asia = tree[0]
     const revenue = asia.children?.find((node: Datum) => node.name === 'Revenue')
 
-    expect(revenue?.key).toBe('Asia-Revenue')
-    expect(revenue?.path).toBe('Asia-Revenue')
-    expect(revenue?.group).toBe('__measureId__')
+    expect(revenue?.key).toBe('Revenue')
+    expect(revenue?.path).toBe('Asia-revenue')
+    expect(revenue?.field).toBe('__measureId__')
     expect(revenue?.__measureId__).toBe('revenue')
     expect(revenue?.__measureName__).toBe('Revenue')
     expect(revenue?.value).toBe(60)

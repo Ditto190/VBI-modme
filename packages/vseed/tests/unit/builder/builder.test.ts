@@ -283,7 +283,7 @@ describe('Builder - Core Methods', () => {
     expect(records[0].outDegree).toBe(1)
     expect(chartSpec.type).toBe('sankey')
     expect(nodes[0].key).toBe('Asia')
-    expect(nodes[0].children[0].key).toBe('Asia-China')
+    expect(nodes[0].children[0].key).toBe('China')
   })
 
   test('should get advanced pipeline for chart type', () => {
