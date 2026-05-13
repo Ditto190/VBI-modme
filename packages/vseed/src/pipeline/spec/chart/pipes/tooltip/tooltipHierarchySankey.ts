@@ -10,25 +10,27 @@ import type {
   VChartSpecPipe,
 } from 'src/types'
 import { tooltip as commonTooltip } from './tooltip'
+import { getHierarchySankeyNodesFromSpec } from '../dataset/datasetHierarchySankey'
 
 export const tooltipHierarchySankey: VChartSpecPipe = (spec, context) => {
   const result = commonTooltip()(spec, context)
   const { advancedVSeed, vseed } = context
   const { datasetReshapeInfo, dimensions = [], encoding, dataset = [] } = advancedVSeed
   const { foldInfo, unfoldInfo } = datasetReshapeInfo[0]
+  const hierarchyDataset = getHierarchySankeyNodesFromSpec(result as Record<string, any>, dataset as Datum[])
 
   if (result.tooltip) {
     result.tooltip.mark = {
       title: {
         visible: true,
         value: (value: unknown) =>
-          createTitle(value, dimensions as HierarchyDimension[], dataset as Datum[], advancedVSeed.locale),
+          createTitle(value, dimensions as HierarchyDimension[], hierarchyDataset, advancedVSeed.locale),
       },
       content: createMarkContent(
         encoding.tooltip || [],
         dimensions as HierarchyDimension[],
         vseed.measures as HierarchyMeasure[],
-        dataset as Datum[],
+        hierarchyDataset,
         foldInfo,
         unfoldInfo,
         advancedVSeed.locale,

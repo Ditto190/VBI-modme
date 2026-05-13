@@ -34,7 +34,7 @@ const MEASURE_ENCODING_SUPPORT = {
   treeMap: ['size', 'detail', 'color', 'label', 'tooltip'],
   sunburst: ['size', 'detail', 'color', 'label', 'tooltip'],
   circlePacking: ['size', 'detail', 'color', 'label', 'tooltip'],
-  hierarchySankey: ['size', 'detail', 'color', 'label', 'tooltip'],
+  hierarchySankey: ['size', 'detail', 'label', 'tooltip'],
   raceBar: ['xAxis', 'detail', 'color', 'label', 'tooltip'],
   raceColumn: ['yAxis', 'detail', 'color', 'label', 'tooltip'],
   raceLine: ['yAxis', 'detail', 'color', 'label', 'tooltip'],

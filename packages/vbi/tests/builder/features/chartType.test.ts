@@ -61,7 +61,6 @@ describe('ChartTypeBuilder', () => {
 
     expect(builder.chartType.getSupportedDimensionEncodings()).toEqual([
       'hierarchy',
-      'color',
       'detail',
       'tooltip',
       'label',
@@ -69,7 +68,7 @@ describe('ChartTypeBuilder', () => {
       'column',
     ])
     expect(builder.chartType.getRecommendedDimensionEncodings(3)).toEqual(['hierarchy', 'hierarchy', 'hierarchy'])
-    expect(builder.chartType.getSupportedMeasureEncodings()).toEqual(['size', 'detail', 'color', 'label', 'tooltip'])
+    expect(builder.chartType.getSupportedMeasureEncodings()).toEqual(['size', 'detail', 'label', 'tooltip'])
     expect(builder.chartType.getRecommendedMeasureEncodings(2)).toEqual(['size', 'size'])
   })
 

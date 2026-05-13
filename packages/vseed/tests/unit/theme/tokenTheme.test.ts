@@ -66,6 +66,22 @@ const raceBarVSeed: VSeed = {
   } as any,
 }
 
+const hierarchySankeyVSeed: VSeed = {
+  chartType: 'hierarchySankey',
+  theme: 'unit-light',
+  dimensions: [
+    { id: 'continent', alias: '洲' },
+    { id: 'country', alias: '国家' },
+    { id: 'city', alias: '城市' },
+  ],
+  measures: [{ id: 'sales', alias: '销售额', autoFormat: true }],
+  dataset: [
+    { continent: 'Asia', country: 'China', city: 'Beijing', sales: 30 },
+    { continent: 'Asia', country: 'China', city: 'Shanghai', sales: 20 },
+    { continent: 'Asia', country: 'Japan', city: 'Tokyo', sales: 10 },
+  ],
+}
+
 const tableVSeed: VSeed = {
   chartType: 'table',
   theme: 'unit-earth',
@@ -286,6 +302,23 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationArea?.areaColor).toBe(annotationAreaColor)
     expect(columnConfig?.annotation?.annotationArea?.areaColorOpacity).toBe(annotationAreaColorOpacity)
     expect(columnConfig?.regressionLine?.linearRegressionLine?.textFontSize).toBe(labelFontSize)
+  })
+
+  test('should apply token theme to hierarchy sankey config and spec', () => {
+    const builder = Builder.from(hierarchySankeyVSeed)
+    const advanced = builder.buildAdvanced()
+    const config = advanced?.config?.hierarchySankey as any
+    const spec = builder.buildSpec(advanced!) as any
+
+    expect(Builder.getTheme('light')?.config?.hierarchySankey).toBeDefined()
+    expect(config?.color?.colorScheme).toEqual(['#B83280', '#3182CE', '#38A169'])
+    expect(config?.fontFamily).toBe(fontFamily)
+    expect(config?.label?.labelFontSize).toBe(labelFontSize)
+    expect(config?.tooltip?.fontSize).toBe(tooltipFontSize)
+    expect(config?.legend?.labelFontSize).toBe(legendFontSize)
+    expect(spec?.theme?.fontFamily).toBe(fontFamily)
+    expect(spec?.color?.range).toEqual(['#B83280', '#3182CE', '#38A169'])
+    expect(spec?.legends?.item?.label?.style?.fontSize).toBe(legendFontSize)
   })
 
   test('should apply token theme to table config', () => {

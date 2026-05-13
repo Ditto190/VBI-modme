@@ -7,9 +7,6 @@
   "files.exclude": {
     "**/.git": false
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
-  },
   "[typescriptreact]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },

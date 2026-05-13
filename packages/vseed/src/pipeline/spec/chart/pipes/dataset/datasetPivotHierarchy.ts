@@ -1,6 +1,6 @@
 import { findAllMeasures } from 'src/pipeline/utils'
 import type { PivotChartSpecPipe, Datum } from 'src/types'
-import { buildHierarchyTree } from 'src/dataReshape'
+import { buildTree } from './datasetHierarchy'
 import { omit } from 'remeda'
 
 export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
@@ -23,7 +23,7 @@ export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
         pre[id] = groupedDataset.flatMap((data) => {
           const root = {
             ...data,
-            children: buildHierarchyTree(data.children as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys),
+            children: buildTree(data.children as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys),
           }
           const rootProps = omit(root, ['children'])
           const rootTree = root.children.map((child: Datum) => ({
@@ -33,7 +33,7 @@ export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
           return rootTree
         })
       } else {
-        const tree = buildHierarchyTree(cur as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys)
+        const tree = buildTree(cur as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys)
         pre[id] = tree
       }
 
@@ -48,7 +48,7 @@ export const datasetPivotHierarchy: PivotChartSpecPipe = (spec, context) => {
   }
 }
 
-function groupByDimensions<T extends Record<string, any>>(data: T[], dimKeys: string[]): any[] {
+export function groupByDimensions<T extends Record<string, any>>(data: T[], dimKeys: string[]): any[] {
   if (dimKeys.length === 0) {
     return data
   }

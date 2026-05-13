@@ -6,6 +6,7 @@ import type {
   HierarchyDimension,
   HierarchyMeasure,
   Label,
+  Legend,
   Page,
   Theme,
   Tooltip,
@@ -84,6 +85,12 @@ export interface HierarchySankey {
    * @description 标签配置, 用于定义图表的数据标签, 包括位置, 格式, 样式等
    */
   label?: Label
+
+  /**
+   * 图例
+   * @description 图例配置, 用于定义层级桑基图颜色图例的显示、位置与样式
+   */
+  legend?: Legend
 
   /**
    * 提示信息

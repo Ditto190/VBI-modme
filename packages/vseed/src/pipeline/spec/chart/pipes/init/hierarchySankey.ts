@@ -19,7 +19,6 @@ export const initHierarchySankey: VChartSpecPipe = (spec, context) => {
   }
   result.nodeKey = (datum: any) => datum?.key
   result.categoryField = 'key'
-  result.seriesField = 'color'
   result.valueField = foldInfo.measureValue
   result.link = {
     style: {

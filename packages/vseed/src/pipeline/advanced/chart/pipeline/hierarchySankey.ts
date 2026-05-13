@@ -13,7 +13,9 @@ import {
   pickDimensionsForReshape,
   page,
   hierarchySankeyConfig,
-  reshapeWithHierarchySankeyEncoding,
+  pivotAdapter,
+  reshapeWithEncoding,
+  pivotReshapeWithEncoding,
 } from '../pipes'
 
 export const hierarchySankeyAdvancedPipeline: AdvancedPipeline = [
@@ -27,7 +29,7 @@ export const hierarchySankeyAdvancedPipeline: AdvancedPipeline = [
     [buildMeasures(['size', 'detail']), defaultEncodingForHierarchy],
     [buildMeasures(['size', 'detail']), encodingForHierarchy, pickDimensionsForReshape],
   ),
-  reshapeWithHierarchySankeyEncoding,
+  pivotAdapter([reshapeWithEncoding], [pivotReshapeWithEncoding]),
 
   hierarchySankeyConfig,
   theme,
