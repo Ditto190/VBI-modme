@@ -57,10 +57,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('sales', (node) => {
-          node.setOperator('between').setValue({ min: 1000, max: 10000 })
-        })
-      }
+  builder.whereFilter.add('sales', node => {
+    node.setOperator('between').setValue({ min: 1000, max: 10000 });
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -139,15 +139,15 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter
-          .clear()
-          .add('profit', (node) => node.setOperator('>').setValue(0))
-          .addGroup('or', (group) => {
-            group
-              .add('area', (n) => n.setOperator('eq').setValue('East China'))
-              .add('area', (n) => n.setOperator('eq').setValue('North China'))
-          })
-      }
+  builder.whereFilter
+    .clear()
+    .add('profit', node => node.setOperator('>').setValue(0))
+    .addGroup('or', group => {
+      group
+        .add('area', n => n.setOperator('eq').setValue('East China'))
+        .add('area', n => n.setOperator('eq').setValue('North China'));
+    });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -186,7 +186,7 @@ export default () => {
             },
             {
               "field": "delivery_method",
-              "alias": "Shipping Mode"
+              "alias": "Delivery Method"
             }
           ],
           "measures": [
@@ -200,7 +200,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit Rate",
+              "alias": "Profit Ratio",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "avg"
@@ -225,15 +225,15 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter
-          .add('order_date', (node) => {
-            node.setDate({ type: 'period', unit: 'quarter', year: 2024, quarter: 1 })
-          })
-          .add('profit', (node) => {
-            node.setOperator('between').setValue({ min: 0, max: 5000, leftOp: '<=', rightOp: '<' })
-          })
-          .add('sales', (node) => node.setOperator('>=').setValue(100))
-      }
+  builder.whereFilter
+    .add('order_date', node => {
+      node.setDate({ type: 'period', unit: 'quarter', year: 2024, quarter: 1 });
+    })
+    .add('profit', node => {
+      node.setOperator('between').setValue({ min: 0, max: 5000, leftOp: '<=', rightOp: '<' });
+    })
+    .add('sales', node => node.setOperator('>=').setValue(100));
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -307,17 +307,17 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter
-          .add('order_date', (node) => {
-            node.setDate({ type: 'relative', mode: 'last', amount: 30, unit: 'day' })
-          })
-          .add('sales', (node) => node.setOperator('>').setValue(500))
-          .addGroup('or', (group) => {
-            group
-              .add('customer_type', (n) => n.setOperator('eq').setValue('Consumer'))
-              .add('customer_type', (n) => n.setOperator('in').setValue(['Corporate', 'Small Business']))
-          })
-      }
+  builder.whereFilter
+    .add('order_date', node => {
+      node.setDate({ type: 'relative', mode: 'last', amount: 30, unit: 'day' });
+    })
+    .add('sales', node => node.setOperator('>').setValue(500))
+    .addGroup('or', group => {
+      group
+        .add('customer_type', n => n.setOperator('eq').setValue('Consumer'))
+        .add('customer_type', n => n.setOperator('in').setValue(['Corporate', 'Small Business']));
+    });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -383,23 +383,20 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter
-          .add('sales', (node) => node.setOperator('>').setValue(500))
-          .addGroup('or', (outerGroup) => {
-            outerGroup
-              .addGroup('and', (g1) => {
-                g1.add('customer_type', (n) => n.setOperator('eq').setValue('Consumer')).add('delivery_method', (n) =>
-                  n.setOperator('eq').setValue('Same Day'),
-                )
-              })
-              .addGroup('and', (g2) => {
-                g2.add('customer_type', (n) => n.setOperator('in').setValue(['Corporate', 'Small Business'])).add(
-                  'delivery_method',
-                  (n) => n.setOperator('eq').setValue('First Class'),
-                )
-              })
-          })
-      }
+  builder.whereFilter
+    .add('sales', node => node.setOperator('>').setValue(500))
+    .addGroup('or', outerGroup => {
+      outerGroup
+        .addGroup('and', g1 => {
+          g1.add('customer_type', n => n.setOperator('eq').setValue('Consumer'))
+            .add('delivery_method', n => n.setOperator('eq').setValue('Same Day'));
+        })
+        .addGroup('and', g2 => {
+          g2.add('customer_type', n => n.setOperator('in').setValue(['Corporate', 'Small Business']))
+            .add('delivery_method', n => n.setOperator('eq').setValue('First Class'));
+        });
+    });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -465,10 +462,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter
-          .add('product_type', (node) => node.setOperator('eq').setValue('Technology'))
-          .add('discount', (node) => node.setOperator('>').setValue(0.5))
-      }
+  builder.whereFilter
+    .add('product_type', node => node.setOperator('eq').setValue('Technology'))
+    .add('discount', node => node.setOperator('>').setValue(0.5));
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -503,7 +500,7 @@ export default () => {
           "dimensions": [
             {
               "field": "delivery_method",
-              "alias": "Shipping Mode"
+              "alias": "Delivery Method"
             }
           ],
           "measures": [
@@ -534,10 +531,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('area', (node) => {
-          node.setOperator('in').setValue(['East China', 'North China', 'Central South'])
-        })
-      }
+  builder.whereFilter.add('area', node => {
+    node.setOperator('in').setValue(['East China', 'North China', 'Central South']);
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -603,14 +600,14 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter
-          .add('area', (node) => node.setOperator('eq').setValue('East China'))
-          .addGroup('or', (group) => {
-            group
-              .add('product_type', (node) => node.setOperator('eq').setValue('Office Supplies'))
-              .add('product_type', (node) => node.setOperator('eq').setValue('Furniture'))
-          })
-      }
+  builder.whereFilter
+    .add('area', node => node.setOperator('eq').setValue('East China'))
+    .addGroup('or', group => {
+      group
+        .add('product_type', node => node.setOperator('eq').setValue('Office Supplies'))
+        .add('product_type', node => node.setOperator('eq').setValue('Furniture'));
+    });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -676,10 +673,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('sales', (node) => {
-          node.setOperator('not between').setValue({ min: 1000, max: 10000 })
-        })
-      }
+  builder.whereFilter.add('sales', node => {
+    node.setOperator('not between').setValue({ min: 1000, max: 10000 });
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -745,10 +742,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('sales', (node) => {
-          node.setOperator('not between').setValue({ min: 1000, max: 10000, leftOp: '<', rightOp: '<' })
-        })
-      }
+  builder.whereFilter.add('sales', node => {
+    node.setOperator('not between').setValue({ min: 1000, max: 10000, leftOp: '<', rightOp: '<' });
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -814,10 +811,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('product_type', (node) => {
-          node.setOperator('eq').setValue('Office Supplies')
-        })
-      }
+  builder.whereFilter.add('product_type', node => {
+    node.setOperator('eq').setValue('Office Supplies');
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -883,12 +880,12 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.addGroup('or', (group) => {
-          group
-            .add('product_type', (node) => node.setOperator('eq').setValue('Office Supplies'))
-            .add('product_type', (node) => node.setOperator('eq').setValue('Technology'))
-        })
-      }
+  builder.whereFilter.addGroup('or', group => {
+    group
+      .add('product_type', node => node.setOperator('eq').setValue('Office Supplies'))
+      .add('product_type', node => node.setOperator('eq').setValue('Technology'));
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -979,10 +976,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.updateGroup('g-products', (group) => {
-          group.remove('f-furniture')
-        })
-      }
+  builder.whereFilter.updateGroup('g-products', group => {
+    group.remove('f-furniture');
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -1065,8 +1062,8 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.remove(0)
-      }
+  builder.whereFilter.remove(0);
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -1145,10 +1142,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.update('f-province', (node) => {
-          node.setValue('Guangdong')
-        })
-      }
+  builder.whereFilter.update('f-province', node => {
+    node.setValue('Guangdong');
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -1233,10 +1230,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.updateGroup('g-customer', (group) => {
-          group.setOperator('and')
-        })
-      }
+  builder.whereFilter.updateGroup('g-customer', group => {
+    group.setOperator('and');
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -1302,10 +1299,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('area', (node) => {
-          node.setOperator('=').setValue(['East China', 'North China'])
-        })
-      }
+  builder.whereFilter.add('area', node => {
+    node.setOperator('=').setValue(['East China', 'North China']);
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -1371,10 +1368,10 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.whereFilter.add('area', (node) => {
-          node.setOperator('!=').setValue(['East China', 'North China'])
-        })
-      }
+  builder.whereFilter.add('area', node => {
+    node.setOperator('!=').setValue(['East China', 'North China']);
+  });
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }

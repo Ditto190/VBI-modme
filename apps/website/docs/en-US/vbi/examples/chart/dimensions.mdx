@@ -52,16 +52,16 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.dimensions.add('order_date', (node) => {
-          node.setAlias('Order Date')
-        })
-        const dimensionId = builder.dimensions.find((node) => node.getField() === 'order_date')?.getId()
-        if (dimensionId) {
-          builder.dimensions.update(dimensionId, (node) => {
-            node.setAlias('Year').setAggregate({ func: 'toYear' })
-          })
-        }
-      }
+  builder.dimensions.add('order_date', node => {
+    node.setAlias('Order Date')
+  })
+  const dimensionId = builder.dimensions.find(node => node.getField() === 'order_date')?.getId()
+  if (dimensionId) {
+    builder.dimensions.update(dimensionId, node => {
+      node.setAlias('Year').setAggregate({ func: 'toYear' })
+    })
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -113,16 +113,16 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.dimensions.add('product_type', (node) => {
-          node.setAlias('Category')
-        })
-        const dimensionId = builder.dimensions.find((node) => node.getField() === 'product_type')?.getId()
-        if (dimensionId) {
-          builder.dimensions.update(dimensionId, (node) => {
-            node.setAlias('Product Type')
-          })
-        }
-      }
+  builder.dimensions.add('product_type', node => {
+    node.setAlias('Item Type')
+  })
+  const dimensionId = builder.dimensions.find(node => node.getField() === 'product_type')?.getId()
+  if (dimensionId) {
+    builder.dimensions.update(dimensionId, node => {
+      node.setAlias('Product Type')
+    })
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -173,11 +173,7 @@ export default () => {
         },
         connectorId: DEMO_CONNECTOR_ID,
       })
-      const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.dimensions
-          .add('product_type', (n) => n.setAlias('Product Type'))
-          .add('province', (n) => n.setAlias('Province'))
-      }
+      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('Product Type')).add('province', n => n.setAlias('Province')); }
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -238,14 +234,14 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.dimensions
-          .add('area', (node) => {
-            node.setAlias('Region')
-          })
-          .add('order_date', (node) => {
-            node.setAlias('Quarter').setAggregate({ func: 'toQuarter' })
-          })
-      }
+  builder.dimensions
+    .add('area', node => {
+      node.setAlias('Region')
+    })
+    .add('order_date', node => {
+      node.setAlias('Quarter').setAggregate({ func: 'toQuarter' })
+    })
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -306,14 +302,14 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        const dimensionId = builder.dimensions.toJSON().find((item) => item.field === 'product_type')?.id
-        if (dimensionId) {
-          builder.dimensions.update(dimensionId, (node) => {
-            node.setAlias('Product Type to Remove')
-          })
-          builder.dimensions.remove(dimensionId)
-        }
-      }
+  const dimensionId = builder.dimensions.toJSON().find(item => item.field === 'product_type')?.id
+  if (dimensionId) {
+    builder.dimensions.update(dimensionId, node => {
+      node.setAlias('Product Type to Remove')
+    })
+    builder.dimensions.remove(dimensionId)
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -379,17 +375,17 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        const dimensionId = builder.dimensions.toJSON().find((item) => item.field === 'order_date')?.id
-        if (dimensionId) {
-          const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
-          if (dimension) {
-            dimension.setAlias('Order Date to Update')
-          }
-          builder.dimensions.update(dimensionId, (node) => {
-            node.setAlias('Month').setAggregate({ func: 'toMonth' })
-          })
-        }
-      }
+  const dimensionId = builder.dimensions.toJSON().find(item => item.field === 'order_date')?.id
+  if (dimensionId) {
+    const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
+    if (dimension) {
+      dimension.setAlias('Order Date to Update')
+    }
+    builder.dimensions.update(dimensionId, node => {
+      node.setAlias('Month').setAggregate({ func: 'toMonth' })
+    })
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -446,15 +442,15 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        const dimensionId = builder.dimensions.toJSON().find((item) => item.field === 'product_type')?.id
-        if (dimensionId) {
-          const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
-          if (dimension) {
-            dimension.setAlias('Product Type to Update')
-          }
-          builder.dimensions.update(dimensionId, (n) => n.setAlias('New Product Type'))
-        }
-      }
+  const dimensionId = builder.dimensions.toJSON().find(item => item.field === 'product_type')?.id
+  if (dimensionId) {
+    const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
+    if (dimension) {
+      dimension.setAlias('Product Type to Update')
+    }
+    builder.dimensions.update(dimensionId, n => n.setAlias('New Product Type'))
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }

@@ -1,0 +1,23 @@
+[
+  {
+    "type": "dir",
+    "name": "chart",
+    "label": "チャート",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "insight",
+    "label": "インサイト",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "report",
+    "label": "レポート",
+    "collapsible": true,
+    "collapsed": false
+  }
+]

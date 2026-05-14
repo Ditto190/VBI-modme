@@ -1,0 +1,110 @@
+# chart
+
+Halaman ini menampilkan contoh chart builder.
+
+## ChartType
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [area-by-order-date](./chartType#area-by-order-date) | Area chart - tren penjualan menurut tanggal | - |
+| [bar-by-product-type](./chartType#bar-by-product-type) | Bar chart - penjualan menurut tipe produk | - |
+| [chart-type-switching](./chartType#chart-type-switching) | Beralih antara tipe line chart dan bar chart | - |
+| [column-by-area](./chartType#column-by-area) | Column chart - penjualan menurut wilayah | - |
+| [donut-by-customer-type](./chartType#donut-by-customer-type) | Donut chart - pangsa penjualan menurut tipe pelanggan | - |
+| [line-by-province](./chartType#line-by-province) | Line chart - tren penjualan menurut provinsi | - |
+| [line-chart](./chartType#line-chart) | Line chart - tren penjualan menurut provinsi | - |
+| [pie-by-area](./chartType#pie-by-area) | Pie chart - pangsa penjualan menurut wilayah | - |
+| [pie-chart-measure-encoding](./chartType#pie-chart-measure-encoding) | Encoding measure pie chart - menguji tipe chart Pie di measure-encoding.ts | - |
+| [rose-by-city](./chartType#rose-by-city) | Rose chart - penjualan menurut kota | - |
+| [scatter-chart-measure-encoding](./chartType#scatter-chart-measure-encoding) | Encoding measure scatter chart - menguji tipe chart Scatter di measure-encoding.ts | - |
+| [scatter-sales-profit](./chartType#scatter-sales-profit) | Scatter chart - hubungan penjualan dan laba | - |
+
+## Dimensions
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [add-date-dimension-year](./dimensions#add-date-dimension-year) | Tambahkan dimensi tanggal dengan agregasi tahunan | - |
+| [add-dimension](./dimensions#add-dimension) | Tambahkan dimensi | - |
+| [add-multiple-dimensions](./dimensions#add-multiple-dimensions) | Tambahkan beberapa dimensi (pemanggilan berantai) | - |
+| [mixed-date-and-normal-dimensions](./dimensions#mixed-date-and-normal-dimensions) | Pengelompokan campuran dengan dimensi reguler dan dimensi tanggal agregasi kuartalan | - |
+| [remove-dimension](./dimensions#remove-dimension) | Hapus dimensi | - |
+| [update-date-dimension-month](./dimensions#update-date-dimension-month) | Perbarui dimensi tanggal yang ada menjadi agregasi bulanan | - |
+| [update-dimension](./dimensions#update-dimension) | Perbarui dimensi | - |
+
+## HavingFilter
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [add-having-filter](./havingFilter#add-having-filter) | Kelompokkan menurut wilayah lalu filter wilayah berkinerja tinggi dengan penjualan di atas satu juta | - |
+| [add-multiple-having-filter](./havingFilter#add-multiple-having-filter) | Tambahkan beberapa kondisi Having secara berantai untuk memfilter wilayah dengan penjualan dan laba tinggi | - |
+| [clear-having-filter](./havingFilter#clear-having-filter) | Kosongkan semua kondisi filter Having dan tampilkan hasil agregasi grup penuh | - |
+| [having-array-value-with-in-operator](./havingFilter#having-array-value-with-in-operator) | Having filter with array value that triggers 'in' operator conversion | - |
+| [having-array-value-with-not-in-operator](./havingFilter#having-array-value-with-not-in-operator) | Having filter with array value that triggers 'not in' operator conversion | - |
+| [having-clear-and-rebuild](./havingFilter#having-clear-and-rebuild) | Clear existing having conditions and rebuild new grouped filters, simulating a user resetting and reconfiguring the filter panel | - |
+| [having-deeply-nested-groups](./havingFilter#having-deeply-nested-groups) | Three-level nested grouping: OR(AND(sales > 500K, profit > 50K), AND(quantity > 100, average discount < 0.3)), simulating complex business filtering | - |
+| [having-empty-dsl-compose-target](./havingFilter#having-empty-dsl-compose-target) | Start from an empty DSL and use builder to assemble where, having, measures, and dimensions, including a having condition combination with sum and countDistinct aggregations | - |
+| [having-field-not-in-measures-and-dimensions](./havingFilter#having-field-not-in-measures-and-dimensions) | Inisialisasi DSL kosong, hanya tambahkan dimensi area dan measure sales melalui builder, lalu gunakan field profit di having yang tidak ada di measures/dimensions (SUM(profit) > 100000) | - |
+| [having-find-and-update](./havingFilter#having-find-and-update) | Add having conditions first, then locate them with find and dynamically update thresholds and operators to simulate interactive filter adjustment | - |
+| [having-group-add-to-existing](./havingFilter#having-group-add-to-existing) | Append a new condition to an existing having group, simulating progressive filter refinement | - |
+| [having-group-remove-condition](./havingFilter#having-group-remove-condition) | Remove a specific condition from an existing having group, simulating a user canceling a filter item | - |
+| [having-mix-filters-and-groups](./havingFilter#having-mix-filters-and-groups) | Mix standalone filter conditions and an OR group: sales > 500K AND (profit > 100K OR quantity >= 30) | - |
+| [having-multi-dimension-aggregate](./havingFilter#having-multi-dimension-aggregate) | Group by category and region, filter combinations with average discount below 20% and total sales over 100K, and analyze high-value low-discount business | - |
+| [having-nested-groups](./havingFilter#having-nested-groups) | Nested grouping: AND(sales > 1M, OR(profit > 200K, quantity >= 50)) | - |
+| [having-or-group](./havingFilter#having-or-group) | Use an OR group to filter regions with high sales or high profit | - |
+| [having-scatter-profit-analysis](./havingFilter#having-scatter-profit-analysis) | Scatter chart analysis: group by category and filter categories with high profit ratio and more than 20 transactions to identify high-quality business | - |
+| [having-update-group-operator](./havingFilter#having-update-group-operator) | Update an existing Having group operator from AND to OR | - |
+| [having-with-where-combined](./havingFilter#having-with-where-combined) | Combined where and having filtering: first use where to filter Office Supplies, then use having to filter provinces with sales over 50K or profit over 10K | - |
+| [remove-having-filter](./havingFilter#remove-having-filter) | Remove redundant Having filters and keep only the profit filter | - |
+
+## Locale
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [en-US-locale](./locale#en-US-locale) | Uji locale bahasa Inggris | - |
+| [zh-CN-locale](./locale#zh-CN-locale) | Uji locale bahasa Tionghoa | - |
+
+## Measures
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [add-measure](./measures#add-measure) | Tambahkan measure | - |
+| [add-measure-encoding](./measures#add-measure-encoding) | Tambahkan measure dan atur encoding | - |
+| [measure-with-custom-and-auto-format](./measures#measure-with-custom-and-auto-format) | Format measure: penjualan memakai format kustom satuan 10 ribu (prefiks ¥, 2 desimal), rasio laba memakai format otomatis, dan diskon memakai format persen | - |
+| [remove-measure](./measures#remove-measure) | Hapus measure | - |
+| [update-measure](./measures#update-measure) | Perbarui measure | - |
+
+## Theme
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [dark-theme](./theme#dark-theme) | Chart tema gelap | - |
+| [light-theme](./theme#light-theme) | Chart tema terang | - |
+
+## UndoManager
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [undo-redo](./undoManager#undo-redo) | Uji undo/redo | - |
+
+## WhereFilter
+
+| Contoh | Deskripsi | Label |
+| --- | --- | --- |
+| [between-sales-range-analysis](./whereFilter#between-sales-range-analysis) | Sales range analysis: use between to filter orders from 1000 to 10000 and summarize profit by category | - |
+| [clear-and-rebuild-filters](./whereFilter#clear-and-rebuild-filters) | Clear and rebuild filters: clear old simple filters and rebuild complex grouped conditions | - |
+| [date-filter-period-and-range-combo](./whereFilter#date-filter-period-and-range-combo) | Date-period and range filtering: use period to filter 2024 Q1 data while range limits the profit interval, then cross-analyze by category and ship mode | - |
+| [date-filter-relative-with-nested-conditions](./whereFilter#date-filter-relative-with-nested-conditions) | Date filtering with nested conditions: filter high-value orders from Consumer or Corporate customers in the last 30 days and summarize sales and profit by province | - |
+| [deeply-nested-or-and-groups](./whereFilter#deeply-nested-or-and-groups) | Multi-level nested grouping: high-value orders with Same Day shipping for Consumer customers or First Class shipping for Corporate customers, using three levels of AND/OR nesting | - |
+| [high-discount-tech-profit-analysis](./whereFilter#high-discount-tech-profit-analysis) | High-discount Technology product profit analysis: filter Technology orders with discount greater than 0.5 and compare profit by region | - |
+| [in-operator-multi-area-delivery](./whereFilter#in-operator-multi-area-delivery) | Multi-region delivery efficiency comparison: use in to filter East China, North China, and Central South, then count orders by ship mode | - |
+| [nested-group-region-product-filter](./whereFilter#nested-group-region-product-filter) | Office Supplies or Furniture sales in East China: use nested grouping with AND connecting the region condition and OR category conditions | - |
+| [not-between-sales-range](./whereFilter#not-between-sales-range) | Not between filter: exclude sales between 1000~10000 | - |
+| [not-between-with-explicit-operators](./whereFilter#not-between-with-explicit-operators) | Not between filter with explicit leftOp/rightOp to test invert functions | - |
+| [office-supplies-sales-by-province](./whereFilter#office-supplies-sales-by-province) | Office Supplies sales ranking by province: filter the Office Supplies category and summarize sales by province | - |
+| [or-group-product-category-comparison](./whereFilter#or-group-product-category-comparison) | Office Supplies versus Technology category comparison: use an OR group to filter two categories and compare sales by region | - |
+| [remove-condition-from-group](./whereFilter#remove-condition-from-group) | Remove a condition from a group: the preset OR group contains three categories, and updateGroup removes one of them | - |
+| [remove-filter-by-index](./whereFilter#remove-filter-by-index) | Remove a filter by index: remove the first category filter and keep only the region condition | - |
+| [update-filter-switch-province](./whereFilter#update-filter-switch-province) | Dynamically modify a filter: update the province filter from Zhejiang to Guangdong and observe sales changes | - |
+| [update-group-or-to-and](./whereFilter#update-group-or-to-and) | Modify group logic: switch the preset OR category group to AND to narrow the filter scope | - |
+| [where-filter-array-value-converts-to-in](./whereFilter#where-filter-array-value-converts-to-in) | Where filter with array value using '=' operator should convert to 'in' | - |
+| [where-filter-array-value-converts-to-not-in](./whereFilter#where-filter-array-value-converts-to-not-in) | Where filter with array value using '!=' operator should convert to 'not in' | - |

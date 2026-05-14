@@ -1,0 +1,32 @@
+[
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Handbuch",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "examples",
+    "label": "Beispiele",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "option",
+    "label": "Optionen",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "Mitwirken",
+    "collapsed": true
+  }
+]

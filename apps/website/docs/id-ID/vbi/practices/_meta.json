@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "standard",
+    "label": "Standar"
+  },
+  {
+    "type": "file",
+    "name": "minimalist",
+    "label": "Minimalis"
+  },
+  {
+    "type": "file",
+    "name": "streamlined",
+    "label": "Ringkas"
+  },
+  {
+    "type": "file",
+    "name": "professional",
+    "label": "Profesional"
+  }
+]

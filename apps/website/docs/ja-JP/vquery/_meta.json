@@ -1,0 +1,16 @@
+[
+  "index",
+  {
+    "type": "dir",
+    "name": "examples",
+    "label": "例",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "コントリビューション",
+    "collapsed": true
+  },
+  "playground"
+]

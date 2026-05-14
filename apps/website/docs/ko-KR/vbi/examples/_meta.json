@@ -1,0 +1,23 @@
+[
+  {
+    "type": "dir",
+    "name": "chart",
+    "label": "차트",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "insight",
+    "label": "인사이트",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "report",
+    "label": "리포트",
+    "collapsible": true,
+    "collapsed": false
+  }
+]

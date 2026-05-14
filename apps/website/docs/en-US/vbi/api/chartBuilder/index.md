@@ -69,6 +69,16 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
 | --- | --- | --- |
 | `targetStateVector` | Uint8Array | - |
 
+### getUUID
+
+**Definition**:
+
+```typescript
+getUUID(): string
+```
+
+**Returns**: `string`
+
 ### buildVSeed
 
 **Definition**:

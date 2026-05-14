@@ -1,0 +1,16 @@
+[
+  "index",
+  {
+    "type": "dir",
+    "name": "examples",
+    "label": "Ví dụ",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "Đóng góp",
+    "collapsed": true
+  },
+  "playground"
+]

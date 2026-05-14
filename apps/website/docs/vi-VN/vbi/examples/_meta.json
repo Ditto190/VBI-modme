@@ -1,0 +1,23 @@
+[
+  {
+    "type": "dir",
+    "name": "chart",
+    "label": "Biểu đồ",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "insight",
+    "label": "Insight",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "report",
+    "label": "Báo cáo",
+    "collapsible": true,
+    "collapsed": false
+  }
+]

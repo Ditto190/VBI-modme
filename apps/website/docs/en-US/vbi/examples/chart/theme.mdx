@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## dark-theme
 
-Dark theme charts
+Dark theme chart
 
 
 ```tsx preview
@@ -57,11 +57,11 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        const nextTheme = 'dark'
-        if (builder.theme.getTheme() !== nextTheme) {
-          builder.theme.setTheme(nextTheme)
-        }
-      }
+  const nextTheme = 'dark'
+  if (builder.theme.getTheme() !== nextTheme) {
+    builder.theme.setTheme(nextTheme)
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -76,7 +76,7 @@ export default () => {
 
 ## light-theme
 
-Light theme charts
+Light theme chart
 
 
 ```tsx preview
@@ -127,11 +127,11 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        const nextTheme = 'light'
-        if (builder.theme.getTheme() !== nextTheme) {
-          builder.theme.setTheme(nextTheme)
-        }
-      }
+  const nextTheme = 'light'
+  if (builder.theme.getTheme() !== nextTheme) {
+    builder.theme.setTheme(nextTheme)
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }

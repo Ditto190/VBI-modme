@@ -1,0 +1,14 @@
+[
+  "vseed",
+  "dslDesign",
+  {
+    "type": "dir",
+    "name": "dataReshape",
+    "label": "データ整形"
+  },
+  {
+    "type": "dir",
+    "name": "pipeline",
+    "label": "Pipeline"
+  }
+]
