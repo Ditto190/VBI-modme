@@ -39,6 +39,7 @@ export const ChartTypeEnum = {
   Radar: 'radar',
   // hierarchical
   CirclePacking: 'circlePacking',
+  Sankey: 'sankey',
   HierarchySankey: 'hierarchySankey',
   Sunburst: 'sunburst',
   TreeMap: 'treeMap',

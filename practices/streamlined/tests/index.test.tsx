@@ -56,6 +56,17 @@ test('hierarchy sankey exposes hierarchy and size slots', () => {
   expect(slots.find((slot) => slot.measureEncoding === 'size')?.accepts).toContain('measure')
 })
 
+test('sankey exposes source, target and size slots', () => {
+  const builder = createBuilder()
+  builder.chartType.changeChartType('sankey')
+  const slots = getVisibleSlots(builder, getLabels('zh-CN'))
+
+  expect(builder.chartType.getAvailableChartTypes()).toContain('sankey')
+  expect(slots.find((slot) => slot.dimensionEncoding === 'source')?.accepts).toContain('dimension')
+  expect(slots.find((slot) => slot.dimensionEncoding === 'target')?.accepts).toContain('dimension')
+  expect(slots.find((slot) => slot.measureEncoding === 'size')?.accepts).toContain('measure')
+})
+
 test('table chart keeps column mapping in encodings', () => {
   const builder = createBuilder()
   const slots = getEncodingSlots(builder, getLabels('zh-CN'))

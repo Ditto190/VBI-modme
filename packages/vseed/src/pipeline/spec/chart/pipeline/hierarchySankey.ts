@@ -8,7 +8,6 @@ import {
   datasetPivotHierarchySankey,
   discreteLegend,
   fontFamilyTheme,
-  hierarchySankeyInteractive,
   initHierarchySankey,
   initPivot,
   labelHierarchySankey,
@@ -23,6 +22,7 @@ import {
   pivotIndicatorsAsCol,
   pivotRowDimensions,
   pivotTitle,
+  sankeyInteractive,
   tooltipHierarchySankey,
 } from '../pipes'
 
@@ -35,7 +35,7 @@ const hierarchySankey: VChartSpecPipeline = [
   colorAdapter(discreteLegend, colorLegend),
   tooltipHierarchySankey,
   labelHierarchySankey,
-  hierarchySankeyInteractive,
+  sankeyInteractive,
 ]
 
 const pivotHierarchySankey: PivotChartSpecPipeline = [
@@ -52,7 +52,7 @@ const pivotHierarchySankey: PivotChartSpecPipeline = [
     backgroundColor,
     tooltipHierarchySankey,
     labelHierarchySankey,
-    hierarchySankeyInteractive,
+    sankeyInteractive,
   ]),
   pivotRowDimensions,
   pivotColumnDimensions,

@@ -26,6 +26,7 @@ export {
   registerHistogram,
   registerDualAxis,
   registerHierarchySankey,
+  registerSankey,
 } from './builder/register/chartType'
 
 export * from './pipeline'

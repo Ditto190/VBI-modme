@@ -5,7 +5,7 @@ import { WorkerMock } from './tests/__mocks__/worker.mock'
 beforeAll(async () => {
   await import('@visactor/vchart')
   await import('@visactor/vtable')
-})
+}, 30000)
 
 // Mock Web Worker
 beforeAll(() => {

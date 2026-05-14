@@ -82,6 +82,20 @@ const hierarchySankeyVSeed: VSeed = {
   ],
 }
 
+const sankeyVSeed: VSeed = {
+  chartType: 'sankey',
+  theme: 'unit-light',
+  dimensions: [
+    { id: 'source', alias: '来源', encoding: 'source' },
+    { id: 'target', alias: '去向', encoding: 'target' },
+  ],
+  measures: [{ id: 'value', alias: '流量', autoFormat: true }],
+  dataset: [
+    { source: 'A', target: 'B', value: 30 },
+    { source: 'B', target: 'C', value: 20 },
+  ],
+}
+
 const tableVSeed: VSeed = {
   chartType: 'table',
   theme: 'unit-earth',
@@ -311,6 +325,23 @@ describe('tokenTheme', () => {
     const spec = builder.buildSpec(advanced!) as any
 
     expect(Builder.getTheme('light')?.config?.hierarchySankey).toBeDefined()
+    expect(config?.color?.colorScheme).toEqual(['#B83280', '#3182CE', '#38A169'])
+    expect(config?.fontFamily).toBe(fontFamily)
+    expect(config?.label?.labelFontSize).toBe(labelFontSize)
+    expect(config?.tooltip?.fontSize).toBe(tooltipFontSize)
+    expect(config?.legend?.labelFontSize).toBe(legendFontSize)
+    expect(spec?.theme?.fontFamily).toBe(fontFamily)
+    expect(spec?.color?.range).toEqual(['#B83280', '#3182CE', '#38A169'])
+    expect(spec?.legends?.item?.label?.style?.fontSize).toBe(legendFontSize)
+  })
+
+  test('should apply token theme to sankey config and spec', () => {
+    const builder = Builder.from(sankeyVSeed)
+    const advanced = builder.buildAdvanced()
+    const config = advanced?.config?.sankey as any
+    const spec = builder.buildSpec(advanced!) as any
+
+    expect(Builder.getTheme('light')?.config?.sankey).toBeDefined()
     expect(config?.color?.colorScheme).toEqual(['#B83280', '#3182CE', '#38A169'])
     expect(config?.fontFamily).toBe(fontFamily)
     expect(config?.label?.labelFontSize).toBe(labelFontSize)

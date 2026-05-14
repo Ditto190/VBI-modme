@@ -16,6 +16,8 @@ export const zEncoding = z.object({
   column: z.array(z.string()).nullish(),
   player: z.array(z.string()).nullish(),
   hierarchy: z.array(z.string()).nullish(),
+  source: z.array(z.string()).nullish(),
+  target: z.array(z.string()).nullish(),
 
   value: z.array(z.string()).nullish(),
   q1: z.array(z.string()).nullish(),
@@ -49,4 +51,6 @@ export const EncodingEnum = {
 
   player: 'player',
   hierarchy: 'hierarchy',
+  source: 'source',
+  target: 'target',
 } as const

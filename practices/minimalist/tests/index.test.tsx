@@ -47,3 +47,17 @@ test('hierarchy sankey fields use recommended encodings', () => {
   expect(builder.build().dimensions[0]).toMatchObject({ encoding: 'hierarchy', field: 'region' })
   expect(builder.build().measures[0]).toMatchObject({ encoding: 'size', field: 'sales' })
 })
+
+test('sankey fields use recommended encodings', () => {
+  const builder = createBuilder()
+  builder.chartType.changeChartType('sankey')
+
+  addField(builder, builder.build(), dimension('source_region'))
+  addField(builder, builder.build(), dimension('target_region'))
+  addField(builder, builder.build(), measure('sales'))
+
+  expect(builder.chartType.getAvailableChartTypes()).toContain('sankey')
+  expect(builder.build().dimensions[0]).toMatchObject({ encoding: 'source', field: 'source_region' })
+  expect(builder.build().dimensions[1]).toMatchObject({ encoding: 'target', field: 'target_region' })
+  expect(builder.build().measures[0]).toMatchObject({ encoding: 'size', field: 'sales' })
+})

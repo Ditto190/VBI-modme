@@ -95,8 +95,7 @@ Before changing code, briefly write down these conclusions:
 - Do not use indecisive language such as "could keep it," "depends," or "for
   compatibility" without a concrete migration reason.
 
-Remember: excellent code is not only written; it is also carved down. Extreme
-simplicity is the highest standard.
+Remember: Excellent code is not merely written; it is carved down. Be brave enough to delete code. Extreme simplicity is the highest standard.
 
 ## Validation
 

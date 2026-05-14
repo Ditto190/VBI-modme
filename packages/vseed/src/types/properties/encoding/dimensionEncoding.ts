@@ -9,6 +9,8 @@
  * - label: 支持将多个维度映射到标签通道, 支持所有图表类型
  * - row: 支持将多个维度映射到行通道, 支持所有图表类型
  * - column: 支持将多个维度映射到列通道, 支持所有图表类型
+ * - source: 支持将多个维度映射到桑基图的 source 通道
+ * - target: 支持将多个维度映射到桑基图的 target 通道
  */
 export type DimensionEncoding =
   | 'xAxis'
@@ -22,3 +24,5 @@ export type DimensionEncoding =
   | 'column'
   | 'player'
   | 'hierarchy'
+  | 'source'
+  | 'target'

@@ -1,4 +1,5 @@
 import { createDimensionContent, tooltip } from 'src/pipeline/spec/chart/pipes/tooltip/tooltip'
+import { tooltipSankey } from 'src/pipeline/spec/chart/pipes/tooltip/tooltipSankey'
 import type { FoldInfo, UnfoldInfo, Measures, AdvancedVSeed, VSeed } from 'src/types'
 
 describe('tooltip pipe', () => {
@@ -75,5 +76,93 @@ describe('createDimensionContent', () => {
       // hasMeasureIdInColor is false (c1 is not in measures)
       // should return colorAlias-meaAlias
       expect(keyFn({ colorId: 'c1', '__MeaName__': 'MName' })).toBe('Color 1-MName')
+  })
+})
+
+describe('tooltipSankey', () => {
+  const context = {
+    advancedVSeed: {
+      chartType: 'sankey',
+      config: { sankey: { tooltip: { enable: true } } },
+      datasetReshapeInfo: [{
+        foldInfo: {
+          measureId: '__MeaId__',
+          measureValue: '__MeaValue__',
+          measureName: '__MeaName__',
+        },
+        unfoldInfo: {},
+      }],
+      encoding: {
+        source: ['area'],
+        target: ['__MeaId__'],
+      },
+      dimensions: [
+        { id: 'area', alias: 'area' },
+        { id: '__MeaId__', alias: '指标Id' },
+      ],
+      measures: [{ id: 'sales', alias: 'sales' }],
+      reshapeMeasures: [{ id: 'sales', alias: 'sales' }],
+    } as unknown as AdvancedVSeed,
+    vseed: {
+      measures: [{ id: 'sales', alias: 'sales' }],
+    } as unknown as VSeed,
+  } as any
+
+  const spec = {
+    data: [{
+      values: [{
+        nodes: [
+          { id: '东北', nodeName: '东北' },
+          { id: 'sales', nodeName: 'sales' },
+        ],
+      }],
+    }],
+  }
+
+  it('should not expose measure id alias in link tooltip', () => {
+    const result = tooltipSankey(spec, context) as any
+    const content = result.tooltip.mark.content
+    const linkDatum = {
+      source: 0,
+      target: 1,
+      sourceNodeName: '东北',
+      targetNodeName: 'sales',
+      __MeaId__: 'sales',
+      __MeaValue__: 2681600,
+    }
+    const visibleKeys = content
+      .filter((item: any) => item.visible(linkDatum))
+      .map((item: any) => item.key)
+
+    expect(visibleKeys).toEqual(['area', 'sales'])
+  })
+
+  it('should show node name as title instead of a Node content row', () => {
+    const result = tooltipSankey(spec, context) as any
+    const nodeDatum = {
+      nodeName: 'sales',
+      value: 16069000,
+      __MeaId__: 'sales',
+    }
+    const title = result.tooltip.mark.title.value(nodeDatum)
+    const visibleKeys = result.tooltip.mark.content
+      .filter((item: any) => item.visible(nodeDatum))
+      .map((item: any) => item.key)
+
+    expect(title).toBe('sales')
+    expect(visibleKeys).toEqual(['sales'])
+  })
+
+  it('should show title for wrapped node datum from VChart sankey', () => {
+    const result = tooltipSankey(spec, context) as any
+    const nodeDatum = {
+      datum: {
+        nodeName: 'sales',
+      },
+      value: 16069000,
+      __MeaId__: 'sales',
+    }
+
+    expect(result.tooltip.mark.title.value(nodeDatum)).toBe('sales')
   })
 })

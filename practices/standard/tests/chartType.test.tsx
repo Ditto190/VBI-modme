@@ -16,3 +16,15 @@ test('standard chart gallery has hierarchy sankey metadata', () => {
     type: 'hierarchySankey',
   })
 })
+
+test('standard chart gallery has sankey metadata', () => {
+  const builder = createBuilder()
+  const meta = getChartTypeMeta('sankey', t)
+
+  expect(builder.chartType.getAvailableChartTypes()).toContain('sankey')
+  expect(meta).toMatchObject({
+    group: 'hierarchy',
+    labelKey: 'toolbarChartTypeItemsSankeyLabel',
+    type: 'sankey',
+  })
+})

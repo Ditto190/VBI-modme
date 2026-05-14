@@ -4,6 +4,7 @@ import {
   buildHierarchySankeyNodes,
   datasetHierarchySankey,
 } from 'src/pipeline/spec/chart/pipes/dataset/datasetHierarchySankey'
+import { buildSankeyData } from 'src/pipeline/spec/chart/pipes/dataset/datasetSankey'
 import type { Datum, FoldInfo, UnfoldInfo } from 'src/types'
 
 const foldInfo: FoldInfo = {
@@ -156,6 +157,63 @@ describe('buildHierarchySankeyNodes', () => {
     expect(revenue?.__measureId__).toBe('revenue')
     expect(revenue?.__measureName__).toBe('Revenue')
     expect(revenue?.value).toBe(60)
+  })
+})
+
+describe('buildSankeyData', () => {
+  it('uses measure name as sankey node display name when source or target contains measure id', () => {
+    const graphData = buildSankeyData(
+      [
+        {
+          category: 'Furniture',
+          subCategory: 'Bookcases',
+          __measureId__: 'revenue',
+          __measureName__: 'Revenue',
+          __Dim_Source__: 'Bookcases',
+          __Dim_Target__: 'Furniture-revenue',
+          value: 30,
+        },
+        {
+          category: 'Furniture',
+          subCategory: 'Bookcases',
+          __measureId__: 'profit',
+          __measureName__: 'Profit',
+          __Dim_Source__: 'Bookcases',
+          __Dim_Target__: 'Furniture-profit',
+          value: 10,
+        },
+      ],
+      '__Dim_Source__',
+      '__Dim_Target__',
+      'value',
+      {
+        foldInfo,
+        sourceFields: ['subCategory'],
+        targetFields: ['category', '__measureId__'],
+      },
+    )
+
+    expect(graphData.nodes).toEqual([
+      { id: 'Bookcases', nodeName: 'Bookcases' },
+      { id: 'Furniture-revenue', nodeName: 'Furniture-Revenue' },
+      { id: 'Furniture-profit', nodeName: 'Furniture-Profit' },
+    ])
+    expect(graphData.links).toEqual([
+      {
+        source: 0,
+        target: 1,
+        value: 30,
+        sourceNodeName: 'Bookcases',
+        targetNodeName: 'Furniture-Revenue',
+      },
+      {
+        source: 0,
+        target: 2,
+        value: 10,
+        sourceNodeName: 'Bookcases',
+        targetNodeName: 'Furniture-Profit',
+      },
+    ])
   })
 })
 

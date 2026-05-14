@@ -29,6 +29,7 @@ import {
   zTreeMap,
   zSunburst,
   zCirclePacking,
+  zSankey,
   zHierarchySankey,
   zRaceLine,
   zRacePie,
@@ -65,6 +66,7 @@ export const zVSeed: z.ZodTypeAny = z.discriminatedUnion('chartType', [
   zSunburst,
   zCirclePacking,
   zHierarchySankey,
+  zSankey,
 
   // race
   zRaceBar,

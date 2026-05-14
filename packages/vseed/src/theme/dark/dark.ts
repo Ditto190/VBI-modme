@@ -14,7 +14,13 @@ import { getFunnelTheme } from './funnel'
 import { getHeatmapTheme } from './heatmap'
 import { getHistogramTheme } from './histogram'
 import { getBoxPlotTheme } from './boxPlot'
-import { getTreeMapTheme, getSunburstTheme, getCirclePackingTheme, getHierarchySankeyTheme } from './hierarchy'
+import {
+  getTreeMapTheme,
+  getSunburstTheme,
+  getCirclePackingTheme,
+  getHierarchySankeyTheme,
+  getSankeyTheme,
+} from './hierarchy'
 import { getRaceBarTheme, getRaceColumnTheme, getRaceScatterTheme } from './race'
 import { getRaceLineTheme } from './raceLine'
 import { getRacePieTheme, getRaceDonutTheme } from './racePie'
@@ -52,6 +58,7 @@ export const darkTheme = (): CustomThemeConfig => {
       sunburst: getSunburstTheme(),
       circlePacking: getCirclePackingTheme(),
       hierarchySankey: getHierarchySankeyTheme(),
+      sankey: getSankeyTheme(),
 
       // race
       raceBar: getRaceBarTheme(),

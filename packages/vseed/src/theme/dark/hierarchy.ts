@@ -28,3 +28,7 @@ export const getCirclePackingTheme = () => {
 export const getHierarchySankeyTheme = () => {
   return getTreeMapTheme()
 }
+
+export const getSankeyTheme = () => {
+  return getTreeMapTheme()
+}

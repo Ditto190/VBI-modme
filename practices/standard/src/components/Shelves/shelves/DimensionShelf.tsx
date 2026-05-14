@@ -31,6 +31,8 @@ const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIDimension['encodin
   angle: 'shelvesDimensionEncodingAngle',
   color: 'shelvesDimensionEncodingColor',
   detail: 'shelvesDimensionEncodingDetail',
+  source: 'shelvesDimensionEncodingSource',
+  target: 'shelvesDimensionEncodingTarget',
   tooltip: 'shelvesDimensionEncodingTooltip',
   label: 'shelvesDimensionEncodingLabel',
   row: 'shelvesDimensionEncodingRow',

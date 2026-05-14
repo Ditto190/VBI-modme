@@ -1,6 +1,5 @@
 import { findAllMeasures } from 'src/pipeline/utils'
 import type { Datum, PivotChartSpecPipe } from 'src/types'
-import { omit } from 'remeda'
 import { buildHierarchySankeyNodes } from './datasetHierarchySankey'
 import { groupByDimensions } from './datasetPivotHierarchy'
 
@@ -21,27 +20,22 @@ export const datasetPivotHierarchySankey: PivotChartSpecPipe = (spec, context) =
 
       if (pivotDims.length > 0) {
         const groupedDataset = groupByDimensions(cur as Datum[], pivotDims) as Datum[]
-        pre[id] = groupedDataset.flatMap((data) => {
-          const root = {
-            ...data,
-            children: buildHierarchySankeyNodes(
-              data.children as Datum[],
-              hierarchyFields,
-              foldInfo,
-              unfoldInfo,
-              measureKeys,
-            ),
-          }
-          const rootProps = omit(root, ['children'])
-          const rootTree = root.children.map((child: Datum) => ({
-            ...child,
-            ...rootProps,
-          }))
-          return rootTree
-        })
+        pre[id] = groupedDataset.map((data) => ({
+          ...Object.fromEntries(pivotDims.map((dim) => [dim, data[dim]])),
+          nodes: buildHierarchySankeyNodes(
+            data.children as Datum[],
+            hierarchyFields,
+            foldInfo,
+            unfoldInfo,
+            measureKeys,
+          ),
+        }))
       } else {
-        const nodes = buildHierarchySankeyNodes(cur as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys)
-        pre[id] = nodes
+        pre[id] = [
+          {
+            nodes: buildHierarchySankeyNodes(cur as Datum[], hierarchyFields, foldInfo, unfoldInfo, measureKeys),
+          },
+        ]
       }
 
       return pre
