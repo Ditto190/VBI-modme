@@ -1,5 +1,11 @@
 # @visactor/vseed
 
+## 0.5.6
+
+### Patch Changes
+
+- 70d97e5: feat: add sankey and hierarchySankey
+
 ## 0.5.5
 
 ### Patch Changes
