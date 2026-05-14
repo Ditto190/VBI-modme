@@ -26,7 +26,7 @@ describe('encodingForSankey', () => {
     expect(result.encoding.target).toEqual([MeasureId])
   })
 
-  it('should infer target only from dimensions not already used by source', () => {
+  it('should not infer target from unencoded dimensions when source is explicit', () => {
     const advancedVSeed = {
       dimensions: [
         { id: 'area', alias: 'area', encoding: 'source' },
@@ -39,6 +39,6 @@ describe('encodingForSankey', () => {
     const result = encodingForSankey(advancedVSeed, {} as any)
 
     expect(result.encoding.source).toEqual(['area'])
-    expect(result.encoding.target).toEqual(['product_type'])
+    expect(result.encoding.target).toEqual([])
   })
 })
