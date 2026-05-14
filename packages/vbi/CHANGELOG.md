@@ -1,5 +1,13 @@
 # @visactor/vbi
 
+## 0.5.6
+
+### Patch Changes
+
+- 70d97e5: feat: add sankey and hierarchySankey
+- Updated dependencies [70d97e5]
+  - @visactor/vseed@0.5.6
+
 ## 0.5.5
 
 ### Patch Changes
