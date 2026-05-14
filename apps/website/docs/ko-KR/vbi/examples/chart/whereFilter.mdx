@@ -1,0 +1,1385 @@
+# whereFilter
+
+import { registerDemoConnector } from '@components/demoConnector'
+
+{registerDemoConnector()}
+
+## between-sales-range-analysis
+
+매출 구간 분석: between으로 1000~10000 주문을 필터링하고 카테고리별 이익 집계
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "product_type",
+              "alias": "Category"
+            }
+          ],
+          "measures": [
+            {
+              "field": "profit",
+              "alias": "Profit",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('sales', node => {
+    node.setOperator('between').setValue({ min: 1000, max: 10000 });
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## clear-and-rebuild-filters
+
+필터 비우기 및 재구성: 기존 단순 필터를 지우고 그룹이 포함된 복잡 조건 재구성
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "province",
+              "alias": "Province"
+            }
+          ],
+          "measures": [
+            {
+              "field": "profit",
+              "alias": "Profit",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": [
+              {
+                "id": "f-old1",
+                "field": "product_type",
+                "op": "eq",
+                "value": "Office Supplies"
+              },
+              {
+                "id": "f-old2",
+                "field": "area",
+                "op": "eq",
+                "value": "East China"
+              }
+            ]
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter
+    .clear()
+    .add('profit', node => node.setOperator('>').setValue(0))
+    .addGroup('or', group => {
+      group
+        .add('area', n => n.setOperator('eq').setValue('East China'))
+        .add('area', n => n.setOperator('eq').setValue('North China'));
+    });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## date-filter-period-and-range-combo
+
+날짜 기간과 범위 조합: period로 2024년 Q1을 필터링하고 range로 이익 범위를 제한해 카테고리와 배송 방식별 교차 분석
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "bar",
+          "dimensions": [
+            {
+              "field": "product_type",
+              "alias": "Category"
+            },
+            {
+              "field": "delivery_method",
+              "alias": "Delivery Method"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            },
+            {
+              "field": "profit",
+              "alias": "Profit Ratio",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "avg"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 50
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter
+    .add('order_date', node => {
+      node.setDate({ type: 'period', unit: 'quarter', year: 2024, quarter: 1 });
+    })
+    .add('profit', node => {
+      node.setOperator('between').setValue({ min: 0, max: 5000, leftOp: '<=', rightOp: '<' });
+    })
+    .add('sales', node => node.setOperator('>=').setValue(100));
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## date-filter-relative-with-nested-conditions
+
+날짜 필터와 중첩 조건: 최근 30일 내 Consumer 또는 Corporate 고객의 고액 주문을 필터링하고 시/도별 매출과 이익 집계
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "province",
+              "alias": "Province"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            },
+            {
+              "field": "profit",
+              "alias": "Profit",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter
+    .add('order_date', node => {
+      node.setDate({ type: 'relative', mode: 'last', amount: 30, unit: 'day' });
+    })
+    .add('sales', node => node.setOperator('>').setValue(500))
+    .addGroup('or', group => {
+      group
+        .add('customer_type', n => n.setOperator('eq').setValue('Consumer'))
+        .add('customer_type', n => n.setOperator('in').setValue(['Corporate', 'Small Business']));
+    });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## deeply-nested-or-and-groups
+
+다단계 중첩 그룹: Consumer의 Same Day 또는 Corporate의 First Class 고액 주문을 3단계 AND/OR로 표현
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "province",
+              "alias": "Province"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter
+    .add('sales', node => node.setOperator('>').setValue(500))
+    .addGroup('or', outerGroup => {
+      outerGroup
+        .addGroup('and', g1 => {
+          g1.add('customer_type', n => n.setOperator('eq').setValue('Consumer'))
+            .add('delivery_method', n => n.setOperator('eq').setValue('Same Day'));
+        })
+        .addGroup('and', g2 => {
+          g2.add('customer_type', n => n.setOperator('in').setValue(['Corporate', 'Small Business']))
+            .add('delivery_method', n => n.setOperator('eq').setValue('First Class'));
+        });
+    });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## high-discount-tech-profit-analysis
+
+고할인 Technology 제품 이익 분석: Technology 카테고리와 할인 > 0.5 주문을 필터링하고 지역별 이익 비교
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "area",
+              "alias": "Region"
+            }
+          ],
+          "measures": [
+            {
+              "field": "profit",
+              "alias": "Profit",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter
+    .add('product_type', node => node.setOperator('eq').setValue('Technology'))
+    .add('discount', node => node.setOperator('>').setValue(0.5));
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## in-operator-multi-area-delivery
+
+다지역 배송 효율 비교: in으로 East China, North China, Central South를 필터링하고 배송 방식별 주문 수 집계
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "bar",
+          "dimensions": [
+            {
+              "field": "delivery_method",
+              "alias": "Delivery Method"
+            }
+          ],
+          "measures": [
+            {
+              "field": "amount",
+              "alias": "Order Count",
+              "encoding": "xAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('area', node => {
+    node.setOperator('in').setValue(['East China', 'North China', 'Central South']);
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## nested-group-region-product-filter
+
+East China 지역의 Office Supplies 또는 Furniture 매출: 중첩 그룹으로 지역 조건과 카테고리 OR 조건을 AND 연결
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "city",
+              "alias": "City"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 10
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter
+    .add('area', node => node.setOperator('eq').setValue('East China'))
+    .addGroup('or', group => {
+      group
+        .add('product_type', node => node.setOperator('eq').setValue('Office Supplies'))
+        .add('product_type', node => node.setOperator('eq').setValue('Furniture'));
+    });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## not-between-sales-range
+
+Not between filter: 1000~10000 매출 제외
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "product_type",
+              "alias": "Category"
+            }
+          ],
+          "measures": [
+            {
+              "field": "profit",
+              "alias": "Profit",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('sales', node => {
+    node.setOperator('not between').setValue({ min: 1000, max: 10000 });
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## not-between-with-explicit-operators
+
+명시적 leftOp/rightOp가 있는 not between filter로 invert 함수 테스트
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "product_type",
+              "alias": "Category"
+            }
+          ],
+          "measures": [
+            {
+              "field": "profit",
+              "alias": "Profit",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('sales', node => {
+    node.setOperator('not between').setValue({ min: 1000, max: 10000, leftOp: '<', rightOp: '<' });
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## office-supplies-sales-by-province
+
+시/도별 Office Supplies 매출 순위: 카테고리를 필터링하고 시/도별 매출 집계
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "bar",
+          "dimensions": [
+            {
+              "field": "province",
+              "alias": "Province"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "xAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('product_type', node => {
+    node.setOperator('eq').setValue('Office Supplies');
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## or-group-product-category-comparison
+
+Office Supplies와 Technology 비교: OR 그룹으로 두 카테고리를 필터링하고 지역별 매출 비교
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "area",
+              "alias": "Region"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.addGroup('or', group => {
+    group
+      .add('product_type', node => node.setOperator('eq').setValue('Office Supplies'))
+      .add('product_type', node => node.setOperator('eq').setValue('Technology'));
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## remove-condition-from-group
+
+그룹에서 조건 제거: 세 카테고리가 있는 OR 그룹에서 updateGroup으로 하나 제거
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "area",
+              "alias": "Region"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": [
+              {
+                "id": "g-products",
+                "op": "or",
+                "conditions": [
+                  {
+                    "id": "f-office",
+                    "field": "product_type",
+                    "op": "eq",
+                    "value": "Office Supplies"
+                  },
+                  {
+                    "id": "f-tech",
+                    "field": "product_type",
+                    "op": "eq",
+                    "value": "Technology"
+                  },
+                  {
+                    "id": "f-furniture",
+                    "field": "product_type",
+                    "op": "eq",
+                    "value": "Furniture"
+                  }
+                ]
+              }
+            ]
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.updateGroup('g-products', group => {
+    group.remove('f-furniture');
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## remove-filter-by-index
+
+인덱스로 필터 제거: 첫 번째 카테고리 필터를 제거하고 지역 조건만 유지
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "province",
+              "alias": "Province"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": [
+              {
+                "id": "f-product",
+                "field": "product_type",
+                "op": "eq",
+                "value": "Office Supplies"
+              },
+              {
+                "id": "f-area",
+                "field": "area",
+                "op": "in",
+                "value": [
+                  "East China",
+                  "North China",
+                  "Central South"
+                ]
+              }
+            ]
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.remove(0);
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## update-filter-switch-province
+
+필터 동적 수정: 시/도 필터를 Zhejiang에서 Guangdong으로 업데이트하고 매출 변화 확인
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "bar",
+          "dimensions": [
+            {
+              "field": "city",
+              "alias": "City"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "xAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": [
+              {
+                "id": "f-province",
+                "field": "province",
+                "op": "eq",
+                "value": "Zhejiang"
+              },
+              {
+                "id": "f-product",
+                "field": "product_type",
+                "op": "eq",
+                "value": "Technology"
+              }
+            ]
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.update('f-province', node => {
+    node.setValue('Guangdong');
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## update-group-or-to-and
+
+그룹 로직 수정: 사전 설정된 OR 카테고리 그룹을 AND로 전환해 범위 축소
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "area",
+              "alias": "Region"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": [
+              {
+                "id": "g-customer",
+                "op": "or",
+                "conditions": [
+                  {
+                    "id": "f-ct1",
+                    "field": "customer_type",
+                    "op": "eq",
+                    "value": "Corporate"
+                  },
+                  {
+                    "id": "f-ct2",
+                    "field": "customer_type",
+                    "op": "eq",
+                    "value": "Consumer"
+                  }
+                ]
+              }
+            ]
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.updateGroup('g-customer', group => {
+    group.setOperator('and');
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## where-filter-array-value-converts-to-in
+
+배열 값과 '=' 연산자를 가진 Where filter가 'in'으로 변환되는 예제
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "area",
+              "alias": "Region"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('area', node => {
+    node.setOperator('=').setValue(['East China', 'North China']);
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```
+
+## where-filter-array-value-converts-to-not-in
+
+배열 값과 '!=' 연산자를 가진 Where filter가 'not in'으로 변환되는 예제
+
+
+```tsx preview
+import { VBI, VBIChartBuilder } from '@visactor/vbi'
+import { DEMO_CONNECTOR_ID, VSeedRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+
+  useEffect(() => {
+    const run = async () => {
+      const builder = VBI.chart.create({
+        ...{
+          "connectorId": "demoSupermarket",
+          "chartType": "column",
+          "dimensions": [
+            {
+              "field": "area",
+              "alias": "Region"
+            }
+          ],
+          "measures": [
+            {
+              "field": "sales",
+              "alias": "Sales",
+              "encoding": "yAxis",
+              "aggregate": {
+                "func": "sum"
+              }
+            }
+          ],
+          "whereFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "havingFilter": {
+            "id": "root",
+            "op": "and",
+            "conditions": []
+          },
+          "theme": "light",
+          "locale": "en-US",
+          "version": 1,
+          "limit": 20
+        },
+        connectorId: DEMO_CONNECTOR_ID,
+      })
+      const applyBuilder = (builder: VBIChartBuilder) => {
+  builder.whereFilter.add('area', node => {
+    node.setOperator('!=').setValue(['East China', 'North China']);
+  });
+}
+      applyBuilder(builder)
+      setResult(await builder.buildVSeed())
+    }
+    run()
+  }, [])
+
+  if (!result) return <div>Loading...</div>
+
+  return <VSeedRender vseed={result} />
+}
+```

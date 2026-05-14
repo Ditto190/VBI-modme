@@ -1,0 +1,32 @@
+[
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "ガイド",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "examples",
+    "label": "例",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "option",
+    "label": "オプション",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "コントリビューション",
+    "collapsed": true
+  }
+]

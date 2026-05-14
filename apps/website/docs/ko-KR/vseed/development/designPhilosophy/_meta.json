@@ -1,0 +1,14 @@
+[
+  "vseed",
+  "dslDesign",
+  {
+    "type": "dir",
+    "name": "dataReshape",
+    "label": "데이터 재구성"
+  },
+  {
+    "type": "dir",
+    "name": "pipeline",
+    "label": "Pipeline"
+  }
+]

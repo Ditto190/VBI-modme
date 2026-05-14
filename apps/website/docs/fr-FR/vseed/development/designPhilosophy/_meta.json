@@ -1,0 +1,14 @@
+[
+  "vseed",
+  "dslDesign",
+  {
+    "type": "dir",
+    "name": "dataReshape",
+    "label": "Restructuration des données"
+  },
+  {
+    "type": "dir",
+    "name": "pipeline",
+    "label": "Pipeline"
+  }
+]

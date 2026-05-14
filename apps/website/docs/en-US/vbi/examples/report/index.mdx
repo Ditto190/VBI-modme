@@ -72,11 +72,11 @@ export default () => {
           "version": 0
         })
       const applyBuilder = (builder: VBIReportBuilder, resources: any) => {
-        builder.page.add('Sales Overview', (page) => {
-          page.setChartId(resources.charts.salesChart)
-          page.setInsightId(resources.insights.salesInsight)
-        })
-      }
+  builder.page.add('Sales Overview', page => {
+    page.setChartId(resources.charts.salesChart)
+    page.setInsightId(resources.insights.salesInsight)
+  })
+}
       applyBuilder(builder, resources)
       setResult(builder.snapshot())
     } catch (err) {
