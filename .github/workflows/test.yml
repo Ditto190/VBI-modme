@@ -110,7 +110,7 @@ jobs:
             turbo-${{ runner.os }}-${{ github.job }}-
             turbo-${{ runner.os }}-
 
-      - name: Build
+      - name: Build packages and apps
         run: pnpm run build
 
       - name: Run tests
