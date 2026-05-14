@@ -3,19 +3,15 @@ import {
   backgroundColor,
   color,
   colorAdapter,
-  colorLegend,
-  datasetGraphSankey,
-  datasetPivotGraphSankey,
-  discreteLegend,
+  datasetSankey,
+  datasetPivotSankey,
   fontFamilyTheme,
-  initGraphSankey,
+  initSankey,
   initPivot,
-  labelGraphSankey,
+  labelSankey,
   linearColor,
   pivotAdapter,
-  pivotColorLegend,
   pivotColumnDimensions,
-  pivotDiscreteLegend,
   pivotGridStyle,
   pivotHideIndicatorName,
   pivotIndicators,
@@ -23,41 +19,39 @@ import {
   pivotRowDimensions,
   pivotTitle,
   sankeyInteractive,
-  tooltipGraphSankey,
+  tooltipSankey,
 } from '../pipes'
 
-const graphSankey: VChartSpecPipeline = [
+const sankey: VChartSpecPipeline = [
   fontFamilyTheme,
-  initGraphSankey,
-  datasetGraphSankey,
+  initSankey,
+  datasetSankey,
   colorAdapter(color, linearColor),
   backgroundColor,
-  colorAdapter(discreteLegend, colorLegend),
-  tooltipGraphSankey,
-  labelGraphSankey,
+  tooltipSankey,
+  labelSankey,
   sankeyInteractive,
 ]
 
-const pivotGraphSankey: PivotChartSpecPipeline = [
+const pivotSankey: PivotChartSpecPipeline = [
   initPivot,
   pivotGridStyle,
   pivotIndicatorsAsCol,
   pivotHideIndicatorName,
-  datasetPivotGraphSankey,
+  datasetPivotSankey,
   pivotIndicators([
     fontFamilyTheme,
-    initGraphSankey,
-    datasetGraphSankey,
+    initSankey,
+    datasetSankey,
     colorAdapter(color, linearColor),
     backgroundColor,
-    tooltipGraphSankey,
-    labelGraphSankey,
+    tooltipSankey,
+    labelSankey,
     sankeyInteractive,
   ]),
   pivotRowDimensions,
   pivotColumnDimensions,
   pivotTitle,
-  colorAdapter(pivotDiscreteLegend, pivotColorLegend),
 ]
 
-export const graphSankeySpecPipeline = [pivotAdapter(graphSankey, pivotGraphSankey)]
+export const sankeySpecPipeline = [pivotAdapter(sankey, pivotSankey)]

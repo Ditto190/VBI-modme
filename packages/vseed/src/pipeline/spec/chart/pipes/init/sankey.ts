@@ -1,7 +1,7 @@
 import { ColorEncoding } from 'src/dataReshape'
 import type { VChartSpecPipe } from 'src/types'
 
-export const initGraphSankey: VChartSpecPipe = (spec, context) => {
+export const initSankey: VChartSpecPipe = (spec, context) => {
   const result = { ...spec } as Record<string, any>
   const { advancedVSeed } = context
   const hasColorEncoding = (advancedVSeed.encoding?.color?.length || 0) > 0
@@ -14,7 +14,7 @@ export const initGraphSankey: VChartSpecPipe = (spec, context) => {
 
   result.nodeAlign = 'justify'
   result.nodeGap = 8
-  result.nodeWidth = 10
+  result.nodeWidth = 12
   result.minNodeHeight = 4
   result.iterations = 0
   result.padding = {

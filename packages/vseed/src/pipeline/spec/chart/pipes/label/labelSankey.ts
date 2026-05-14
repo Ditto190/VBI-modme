@@ -2,10 +2,10 @@ import type { ILineChartSpec } from '@visactor/vchart'
 import { isNumber, merge } from 'remeda'
 import { selector, selectorWithDynamicFilter } from 'src/dataSelector'
 import { DATUM_HIDE_KEY, createFormatter, findMeasureById } from 'src/pipeline/utils'
-import type { Datum, FoldInfo, GraphSankeyMeasure, Label, NumFormat, VChartSpecPipe } from 'src/types'
+import type { Datum, FoldInfo, SankeyMeasure, Label, NumFormat, VChartSpecPipe } from 'src/types'
 import { generateMeasurePercent, generateMeasureValue } from './label'
 
-export const labelGraphSankey: VChartSpecPipe = (spec, context) => {
+export const labelSankey: VChartSpecPipe = (spec, context) => {
   const result = { ...spec } as ILineChartSpec
   const { advancedVSeed, vseed } = context
   const { datasetReshapeInfo, chartType, encoding } = advancedVSeed
@@ -19,8 +19,8 @@ export const labelGraphSankey: VChartSpecPipe = (spec, context) => {
 
   result.label = buildLabel(
     label,
-    (vseed.measures || advancedVSeed.measures || []) as GraphSankeyMeasure[],
-    (advancedVSeed.measures || []) as GraphSankeyMeasure[],
+    (vseed.measures || advancedVSeed.measures || []) as SankeyMeasure[],
+    (advancedVSeed.measures || []) as SankeyMeasure[],
     (encoding.label || []) as string[],
     foldInfo,
   ) as unknown as ILineChartSpec['label']
@@ -30,8 +30,8 @@ export const labelGraphSankey: VChartSpecPipe = (spec, context) => {
 
 const buildLabel = (
   label: Label,
-  vseedMeasures: GraphSankeyMeasure[],
-  advancedVSeedMeasures: GraphSankeyMeasure[],
+  vseedMeasures: SankeyMeasure[],
+  advancedVSeedMeasures: SankeyMeasure[],
   labelEncodingIds: string[],
   foldInfo: Pick<FoldInfo, 'measureId' | 'measureValue'> & Partial<Pick<FoldInfo, 'statistics'>>,
 ) => {

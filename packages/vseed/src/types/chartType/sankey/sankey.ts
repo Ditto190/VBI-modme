@@ -3,8 +3,8 @@ import type {
   BackgroundColor,
   Color,
   Dataset,
-  GraphSankeyDimension,
-  GraphSankeyMeasure,
+  SankeyDimension,
+  SankeyMeasure,
   Label,
   Legend,
   Page,
@@ -32,14 +32,14 @@ import type {
  * - 至少1个数值字段（度量）用于映射流量大小
  * - advanced pipeline 需要将 tidyData 转换为普通 sankey 可消费的 source / target / value 结构
  */
-export interface GraphSankey {
+export interface Sankey {
   /**
    * 桑基图
    * @description 桑基图，展示普通 source-target 流向关系和流量大小
-   * @type {'graphSankey'}
-   * @example 'graphSankey'
+   * @type {'sankey'}
+   * @example 'sankey'
    */
-  chartType: 'graphSankey'
+  chartType: 'sankey'
 
   /**
    * 数据集
@@ -54,14 +54,14 @@ export interface GraphSankey {
    * @description 维度配置，用于定义 source / target 节点结构，支持 source / target / color / detail / label / tooltip / row / column 通道
    * @example [{id: 'fromRegion', alias: '来源区域'}, {id: 'toRegion', alias: '去向区域', encoding: 'target'}]
    */
-  dimensions?: GraphSankeyDimension[]
+  dimensions?: SankeyDimension[]
 
   /**
    * 指标
    * @description 指标配置，用于定义流量大小，支持 size / detail / label / tooltip 通道
    * @example [{id: 'sales', alias: '销售额'}]
    */
-  measures?: GraphSankeyMeasure[]
+  measures?: SankeyMeasure[]
 
   /**
    * 分页配置

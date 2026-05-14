@@ -141,8 +141,8 @@
   },
   {
     "type": "file",
-    "name": "graphSankey",
-    "label": "GraphSankey"
+    "name": "sankey",
+    "label": "Sankey"
   },
   {
     "type": "file",

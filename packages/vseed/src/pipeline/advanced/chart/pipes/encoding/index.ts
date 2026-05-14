@@ -21,4 +21,4 @@ export { encodingForRaceDonut, defaultEncodingForRaceDonut } from './raceDonut'
 
 // hierarchy
 export { encodingForHierarchy, defaultEncodingForHierarchy } from './hierarchy'
-export { encodingForGraphSankey, defaultEncodingForGraphSankey } from './graphSankey'
+export { encodingForSankey, defaultEncodingForSankey } from './sankey'

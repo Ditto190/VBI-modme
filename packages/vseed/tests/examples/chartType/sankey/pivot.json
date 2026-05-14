@@ -2,7 +2,7 @@
   "name": "透视图形桑基图",
   "description": "按区域与年份透视后的图形桑基图。区域映射到行，年份映射到列，每个透视单元内展示一张独立的 source-target 流向图。",
   "vseed": {
-    "chartType": "graphSankey",
+    "chartType": "sankey",
     "dataset": [
       { "region": "East", "year": "2023", "sourceNode": "Coal", "targetNode": "Power", "value": 120 },
       { "region": "East", "year": "2023", "sourceNode": "Solar", "targetNode": "Power", "value": 80 },

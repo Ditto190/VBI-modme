@@ -208,7 +208,7 @@ function generateMeta() {
         'sunburst',
         'circlePacking',
         'hierarchySankey',
-        'graphSankey',
+        'sankey',
         'heatmap',
         'funnel',
         'boxPlot',

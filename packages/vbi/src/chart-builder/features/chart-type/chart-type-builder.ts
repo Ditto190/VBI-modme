@@ -136,7 +136,7 @@ export class ChartTypeBuilder {
       ChartTypeEnum.TreeMap,
       ChartTypeEnum.Sunburst,
       ChartTypeEnum.CirclePacking,
-      ChartTypeEnum.GraphSankey,
+      ChartTypeEnum.Sankey,
       ChartTypeEnum.HierarchySankey,
       ChartTypeEnum.RaceBar,
       ChartTypeEnum.RaceColumn,

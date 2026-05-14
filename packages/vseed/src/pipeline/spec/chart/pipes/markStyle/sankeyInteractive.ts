@@ -1,11 +1,12 @@
+import { isSankey } from 'src/pipeline/utils'
 import type { VChartSpecPipe } from 'src/types'
 
-export const sankeyInteractive: VChartSpecPipe = (spec) => {
+export const sankeyInteractive: VChartSpecPipe = (spec, context) => {
   const result = { ...spec } as Record<string, any>
-
+  const { vseed } = context
   result.emphasis = {
     enable: true,
-    effect: 'related',
+    effect: isSankey(vseed) ? 'adjacency' : 'related',
   }
 
   result.node = {

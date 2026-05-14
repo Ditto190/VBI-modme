@@ -23,6 +23,12 @@ export const isColumnPercent = (vseed: VSeed) => {
 export const isBarPercent = (vseed: VSeed) => {
   return vseed.chartType === ChartTypeEnum.BarPercent
 }
+export const isSankey = (vseed: VSeed) => {
+  return vseed.chartType === ChartTypeEnum.Sankey
+}
+export const isHierarchySankey = (vseed: VSeed) => {
+  return vseed.chartType === ChartTypeEnum.HierarchySankey
+}
 
 export const isBarLikeChart = (vseed: VSeed) => {
   return (

@@ -1,4 +1,4 @@
-# GraphSankey
+# Sankey
 
 ## 能源流向图形桑基图
 
@@ -9,7 +9,7 @@ import { VSeedRender } from '@components'
 
 export default () => {
   const vseedConfig = {
-  "chartType": "graphSankey",
+  "chartType": "sankey",
   "dataset": [
     {
       "sourceNode": "Agricultural 'waste'",
@@ -409,56 +409,181 @@ export default () => {
 
 按区域与年份透视后的图形桑基图。区域映射到行，年份映射到列，每个透视单元内展示一张独立的 source-target 流向图。
 
-```tsx preview
+```tsx preview 
 import { VSeedRender } from '@components'
 
 export default () => {
   const vseedConfig = {
-    chartType: 'graphSankey',
-    dataset: [
-      { region: 'East', year: '2023', sourceNode: 'Coal', targetNode: 'Power', value: 120 },
-      { region: 'East', year: '2023', sourceNode: 'Solar', targetNode: 'Power', value: 80 },
-      { region: 'East', year: '2023', sourceNode: 'Power', targetNode: 'Industry', value: 90 },
-      { region: 'East', year: '2023', sourceNode: 'Power', targetNode: 'Homes', value: 70 },
-      { region: 'East', year: '2024', sourceNode: 'Coal', targetNode: 'Power', value: 90 },
-      { region: 'East', year: '2024', sourceNode: 'Wind', targetNode: 'Power', value: 110 },
-      { region: 'East', year: '2024', sourceNode: 'Power', targetNode: 'Industry', value: 85 },
-      { region: 'East', year: '2024', sourceNode: 'Power', targetNode: 'Homes', value: 95 },
-      { region: 'West', year: '2023', sourceNode: 'Gas', targetNode: 'Power', value: 100 },
-      { region: 'West', year: '2023', sourceNode: 'Hydro', targetNode: 'Power', value: 70 },
-      { region: 'West', year: '2023', sourceNode: 'Power', targetNode: 'Industry', value: 80 },
-      { region: 'West', year: '2023', sourceNode: 'Power', targetNode: 'Transport', value: 60 },
-      { region: 'West', year: '2024', sourceNode: 'Gas', targetNode: 'Power', value: 85 },
-      { region: 'West', year: '2024', sourceNode: 'Hydro', targetNode: 'Power', value: 95 },
-      { region: 'West', year: '2024', sourceNode: 'Power', targetNode: 'Industry', value: 75 },
-      { region: 'West', year: '2024', sourceNode: 'Power', targetNode: 'Transport', value: 88 },
-    ],
-    dimensions: [
-      { id: 'sourceNode', alias: 'Source', encoding: 'source' },
-      { id: 'targetNode', alias: 'Target', encoding: 'target' },
-      { id: 'region', alias: 'Region', encoding: 'row' },
-      { id: 'year', alias: 'Year', encoding: 'column' },
-    ],
-    measures: [
-      { id: 'value', alias: 'Flow' },
-    ],
-    color: {
-      colorScheme: ['#0B6CFF', '#3B8BFF', '#00A6A6', '#4DC3B2', '#FF8A00', '#FFB347', '#7B61FF', '#B39DFF'],
+  "chartType": "sankey",
+  "dataset": [
+    {
+      "region": "East",
+      "year": "2023",
+      "sourceNode": "Coal",
+      "targetNode": "Power",
+      "value": 120
     },
-    label: {
-      enable: true,
-      showDimension: true,
-      showValue: true,
+    {
+      "region": "East",
+      "year": "2023",
+      "sourceNode": "Solar",
+      "targetNode": "Power",
+      "value": 80
     },
-    tooltip: {
-      enable: true,
+    {
+      "region": "East",
+      "year": "2023",
+      "sourceNode": "Power",
+      "targetNode": "Industry",
+      "value": 90
     },
-    legend: {
-      enable: true,
-      position: 'top',
+    {
+      "region": "East",
+      "year": "2023",
+      "sourceNode": "Power",
+      "targetNode": "Homes",
+      "value": 70
     },
+    {
+      "region": "East",
+      "year": "2024",
+      "sourceNode": "Coal",
+      "targetNode": "Power",
+      "value": 90
+    },
+    {
+      "region": "East",
+      "year": "2024",
+      "sourceNode": "Wind",
+      "targetNode": "Power",
+      "value": 110
+    },
+    {
+      "region": "East",
+      "year": "2024",
+      "sourceNode": "Power",
+      "targetNode": "Industry",
+      "value": 85
+    },
+    {
+      "region": "East",
+      "year": "2024",
+      "sourceNode": "Power",
+      "targetNode": "Homes",
+      "value": 95
+    },
+    {
+      "region": "West",
+      "year": "2023",
+      "sourceNode": "Gas",
+      "targetNode": "Power",
+      "value": 100
+    },
+    {
+      "region": "West",
+      "year": "2023",
+      "sourceNode": "Hydro",
+      "targetNode": "Power",
+      "value": 70
+    },
+    {
+      "region": "West",
+      "year": "2023",
+      "sourceNode": "Power",
+      "targetNode": "Industry",
+      "value": 80
+    },
+    {
+      "region": "West",
+      "year": "2023",
+      "sourceNode": "Power",
+      "targetNode": "Transport",
+      "value": 60
+    },
+    {
+      "region": "West",
+      "year": "2024",
+      "sourceNode": "Gas",
+      "targetNode": "Power",
+      "value": 85
+    },
+    {
+      "region": "West",
+      "year": "2024",
+      "sourceNode": "Hydro",
+      "targetNode": "Power",
+      "value": 95
+    },
+    {
+      "region": "West",
+      "year": "2024",
+      "sourceNode": "Power",
+      "targetNode": "Industry",
+      "value": 75
+    },
+    {
+      "region": "West",
+      "year": "2024",
+      "sourceNode": "Power",
+      "targetNode": "Transport",
+      "value": 88
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "sourceNode",
+      "alias": "Source",
+      "encoding": "source"
+    },
+    {
+      "id": "targetNode",
+      "alias": "Target",
+      "encoding": "target"
+    },
+    {
+      "id": "region",
+      "alias": "Region",
+      "encoding": "row"
+    },
+    {
+      "id": "year",
+      "alias": "Year",
+      "encoding": "column"
+    }
+  ],
+  "measures": [
+    {
+      "id": "value",
+      "alias": "Flow"
+    }
+  ],
+  "color": {
+    "colorScheme": [
+      "#0B6CFF",
+      "#3B8BFF",
+      "#00A6A6",
+      "#4DC3B2",
+      "#FF8A00",
+      "#FFB347",
+      "#7B61FF",
+      "#B39DFF"
+    ]
+  },
+  "label": {
+    "enable": true,
+    "showDimension": true,
+    "showValue": true
+  },
+  "tooltip": {
+    "enable": true
+  },
+  "legend": {
+    "enable": true,
+    "position": "top"
   }
+}
 
   return <VSeedRender vseed={vseedConfig} />
 }
 ```
+

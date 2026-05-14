@@ -91,12 +91,12 @@ test('hierarchy sankey exposes hierarchy and size config slots', () => {
   expect(slots.find((slot) => slot.measureEncoding === 'size')?.accepts).toContain('measure')
 })
 
-test('graph sankey exposes source, target and size config slots', () => {
+test('sankey exposes source, target and size config slots', () => {
   const builder = createBuilder()
-  builder.chartType.changeChartType('graphSankey')
+  builder.chartType.changeChartType('sankey')
   const slots = getFieldSlots(builder)
 
-  expect(builder.chartType.getAvailableChartTypes()).toContain('graphSankey')
+  expect(builder.chartType.getAvailableChartTypes()).toContain('sankey')
   expect(slots.find((slot) => slot.dimensionEncoding === 'source')?.accepts).toContain('dimension')
   expect(slots.find((slot) => slot.dimensionEncoding === 'target')?.accepts).toContain('dimension')
   expect(slots.find((slot) => slot.measureEncoding === 'size')?.accepts).toContain('measure')

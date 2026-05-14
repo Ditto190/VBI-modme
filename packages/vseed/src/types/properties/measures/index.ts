@@ -24,4 +24,4 @@ export type { RacePieMeasure } from './racePieMeasure'
 export type { RaceDonutMeasure } from './raceDonutMeasure'
 // hierarchy
 export type { HierarchyMeasure } from './hierarchyMeasure'
-export type { GraphSankeyMeasure } from './graphSankeyMeasure'
+export type { SankeyMeasure } from './sankeyMeasure'

@@ -136,6 +136,11 @@
   },
   {
     "type": "file",
+    "name": "sankey",
+    "label": "sankey "
+  },
+  {
+    "type": "file",
     "name": "scatter",
     "label": "scatter "
   },

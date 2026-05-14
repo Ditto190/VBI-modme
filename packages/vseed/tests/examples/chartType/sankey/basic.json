@@ -2,7 +2,7 @@
   "name": "能源流向图形桑基图",
   "description": "由 Sankey spec 反推得到的 VSeed 示例。每条链路被还原为一行 tidyData，source 和 target 使用节点名称，value 表示流量大小。示例同时开启 tooltip 与图例，支持 hover 高亮和图例筛选交互。",
   "vseed": {
-    "chartType": "graphSankey",
+    "chartType": "sankey",
     "dataset": [
       { "sourceNode": "Agricultural 'waste'", "targetNode": "Bio-conversion", "value": 124.729 },
       { "sourceNode": "Bio-conversion", "targetNode": "Liquid", "value": 0.597 },

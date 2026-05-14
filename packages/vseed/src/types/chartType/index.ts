@@ -32,7 +32,7 @@ export * from './treeMap'
 export * from './sunburst'
 export * from './circlePacking'
 export * from './hierarchySankey'
-export * from './graphSankey'
+export * from './sankey'
 
 // race
 export * from './raceLine'

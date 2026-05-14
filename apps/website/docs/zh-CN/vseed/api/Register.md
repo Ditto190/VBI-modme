@@ -204,6 +204,16 @@ function registerFunnel(): void
 function registerHeatmap(): void
 ```
 
+### registerHierarchySankey
+
+:::note{title=描述}
+注册 HierarchySankey Chart 的构建管线。
+:::
+
+```ts
+function registerHierarchySankey(): void
+```
+
 ### registerHistogram
 
 :::note{title=描述}
@@ -345,6 +355,12 @@ function registerRose(): void
 
 ```ts
 function registerRoseParallel(): void
+```
+
+### registerSankey
+
+```ts
+function registerSankey(): void
 ```
 
 ### registerScatter

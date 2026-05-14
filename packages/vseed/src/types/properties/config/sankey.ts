@@ -6,7 +6,7 @@ import { zLegend } from './legend/legend'
 import { zTooltip } from './tooltip/tooltip'
 import { zPivotChartGridConfig } from './pivotGrid'
 
-export const zGraphSankeyConfig = z.object({
+export const zSankeyConfig = z.object({
   backgroundColor: zBackgroundColor.nullish(),
   label: zLabel.nullish(),
   color: zColor.nullish(),
@@ -15,4 +15,4 @@ export const zGraphSankeyConfig = z.object({
   pivotGrid: zPivotChartGridConfig.nullish(),
 })
 
-export type GraphSankeyConfig = z.infer<typeof zGraphSankeyConfig>
+export type SankeyConfig = z.infer<typeof zSankeyConfig>

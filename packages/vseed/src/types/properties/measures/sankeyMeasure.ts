@@ -1,6 +1,6 @@
 import type { BaseMeasure } from './baseMeasure'
 
-export type GraphSankeyMeasure = BaseMeasure & {
+export type SankeyMeasure = BaseMeasure & {
   /**
    * @description 指标映射的通道
    * - size: 指标映射到边宽/流量大小通道

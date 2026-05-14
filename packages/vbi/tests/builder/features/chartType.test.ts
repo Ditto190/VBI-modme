@@ -51,14 +51,14 @@ describe('ChartTypeBuilder', () => {
     expect(types).toContain('barPercent')
     expect(types).toContain('pie')
     expect(types).toContain('treeMap')
-    expect(types).toContain('graphSankey')
+    expect(types).toContain('sankey')
     expect(types).toContain('hierarchySankey')
     expect(types).toContain('racePie')
     expect(types.length).toBeGreaterThan(20)
   })
 
-  test('graphSankey chart type metadata', () => {
-    const builder = VBI.chart.create({ chartType: 'graphSankey' } as VBIChartDSL)
+  test('sankey chart type metadata', () => {
+    const builder = VBI.chart.create({ chartType: 'sankey' } as VBIChartDSL)
 
     expect(builder.chartType.getSupportedDimensionEncodings()).toEqual([
       'source',

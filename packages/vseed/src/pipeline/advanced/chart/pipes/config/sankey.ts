@@ -2,14 +2,14 @@ import { pick } from 'remeda'
 import { replaceNullToUndefined } from 'src/pipeline/utils'
 import type { AdvancedPipe, AdvancedVSeed, Config } from 'src/types'
 
-export const graphSankeyConfig: AdvancedPipe = (advancedVSeed, context) => {
+export const sankeyConfig: AdvancedPipe = (advancedVSeed, context) => {
   const { vseed } = context
   const { chartType } = vseed
   const result = {
     ...advancedVSeed,
   }
 
-  const pickedConfig = pick(vseed, ['backgroundColor', 'color', 'label', 'legend', 'tooltip']) as Config['graphSankey']
+  const pickedConfig = pick(vseed, ['backgroundColor', 'color', 'label', 'legend', 'tooltip']) as Config['sankey']
   const config = replaceNullToUndefined(pickedConfig)
 
   result.config = {
