@@ -42,6 +42,42 @@ export default defineConfig({
       title: 'VisActor VBI',
       description: 'VisActor VBI',
     },
+    {
+      lang: 'ja-JP',
+      label: '日本語',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
+    {
+      lang: 'de-DE',
+      label: 'Deutsch',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
+    {
+      lang: 'id-ID',
+      label: 'Bahasa Indonesia',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
+    {
+      lang: 'fr-FR',
+      label: 'Français',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
+    {
+      lang: 'ko-KR',
+      label: '한국어',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
+    {
+      lang: 'vi-VN',
+      label: 'Tiếng Việt',
+      title: 'VisActor VBI',
+      description: 'VisActor VBI',
+    },
   ],
   themeConfig: {
     socialLinks: [

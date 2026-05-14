@@ -2,12 +2,6 @@
 
 ## Properties
 
-| Property | Type | Description |
-| --- | --- | --- |
-| **chart** | `VBIChartBuilder<TQueryDSL, TSeedDSL>` | - |
-| **text** | `ReportTextBuilder` | - |
-
-
 ## Methods
 
 ### constructor
@@ -15,16 +9,15 @@
 **Definition**:
 
 ```typescript
-constructor(doc: Y.Doc, page: Y.Map<any>, chartOptions: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>)
+constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, page: Y.Map<any>)
 ```
 
 **Parameters**:
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `doc` | Y.Doc | - |
+| `parent` | VBIReportBuilder<TQueryDSL, TSeedDSL> | - |
 | `page` | Y.Map<any> | - |
-| `chartOptions` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
 
 ### getId
 
@@ -52,12 +45,12 @@ setTitle(title: string): this
 | --- | --- | --- |
 | `title` | string | - |
 
-### setChart
+### setChartId
 
 **Definition**:
 
 ```typescript
-setChart(chartBuilder: VBIChartBuilder<TQueryDSL, TSeedDSL> | VBIChartDSLInput): this
+setChartId(chart: ResourceReference): this
 ```
 
 **Returns**: `this`
@@ -66,14 +59,14 @@ setChart(chartBuilder: VBIChartBuilder<TQueryDSL, TSeedDSL> | VBIChartDSLInput):
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `chartBuilder` | VBIChartBuilder<TQueryDSL, TSeedDSL> \| VBIChartDSLInput | - |
+| `chart` | ResourceReference | - |
 
-### setText
+### setInsightId
 
 **Definition**:
 
 ```typescript
-setText(content: string): this
+setInsightId(insight: ResourceReference): this
 ```
 
 **Returns**: `this`
@@ -82,7 +75,7 @@ setText(content: string): this
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `content` | string | - |
+| `insight` | ResourceReference | - |
 
 ### toJSON
 

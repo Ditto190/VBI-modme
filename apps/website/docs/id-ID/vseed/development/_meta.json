@@ -1,0 +1,16 @@
+[
+  "quickStart",
+  {
+    "type": "dir",
+    "name": "devProgress",
+    "label": "Progres Pengembangan",
+    "collapsed": false
+  },
+  "architecture",
+  {
+    "type": "dir",
+    "name": "designPhilosophy",
+    "label": "Filosofi Desain",
+    "collapsed": true
+  }
+]

@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## undo-redo
 
-Undo/Redo tests
+Undo/redo behavior test
 
 
 ```tsx preview
@@ -52,18 +52,18 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
-        builder.measures.add('profit', (node) => {
-          node.setAlias('Profit').setEncoding('yAxis').setAggregate({ func: 'sum' })
-        })
+  builder.measures.add('profit', (node) => {
+    node.setAlias('Profit').setEncoding('yAxis').setAggregate({ func: 'sum' })
+  })
 
-        if (builder.undoManager.canUndo()) {
-          builder.undoManager.undo()
-        }
+  if (builder.undoManager.canUndo()) {
+    builder.undoManager.undo()
+  }
 
-        if (builder.undoManager.canRedo()) {
-          builder.undoManager.redo()
-        }
-      }
+  if (builder.undoManager.canRedo()) {
+    builder.undoManager.redo()
+  }
+}
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }

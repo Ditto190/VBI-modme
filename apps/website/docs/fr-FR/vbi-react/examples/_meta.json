@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Vue d'ensemble"
+  },
+  {
+    "type": "file",
+    "name": "basicHooks",
+    "label": "Hooks de base"
+  },
+  {
+    "type": "file",
+    "name": "layoutWithComponents",
+    "label": "Mise en page avec composants"
+  },
+  {
+    "type": "file",
+    "name": "vbi-react-starter",
+    "label": "Starter Demo"
+  },
+  {
+    "type": "file",
+    "name": "filterMutations",
+    "label": "Modifier les conditions de filtre"
+  }
+]

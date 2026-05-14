@@ -1,0 +1,32 @@
+[
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Panduan",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "examples",
+    "label": "Contoh",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "option",
+    "label": "Opsi",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API",
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "development",
+    "label": "Kontribusi",
+    "collapsed": true
+  }
+]
