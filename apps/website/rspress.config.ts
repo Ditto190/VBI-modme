@@ -5,6 +5,65 @@ import * as path from 'node:path'
 
 import i18nJson from './i18n.json'
 
+const allLocales = [
+  {
+    lang: 'zh-CN',
+    label: '简体中文',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'en-US',
+    label: 'English',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'ja-JP',
+    label: '日本語',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'de-DE',
+    label: 'Deutsch',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'id-ID',
+    label: 'Bahasa Indonesia',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'fr-FR',
+    label: 'Français',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'ko-KR',
+    label: '한국어',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+  {
+    lang: 'vi-VN',
+    label: 'Tiếng Việt',
+    title: 'VisActor VBI',
+    description: 'VisActor VBI',
+  },
+]
+
+const isDev = process.env.NODE_ENV === 'development'
+const devEnableLocales = ['en-US']
+const devLocales = allLocales.filter((locale) => devEnableLocales.includes(locale.lang))
+const devLocaleSet = new Set(devLocales.map((locale) => locale.lang))
+const devLocaleExcludes = allLocales
+  .filter((locale) => !devLocaleSet.has(locale.lang))
+  .map((locale) => `${locale.lang}/**`)
+
 export default defineConfig({
   root: './docs',
   base: '/VBI/',
@@ -28,57 +87,8 @@ export default defineConfig({
       ],
     }),
   ],
-  lang: 'zh-CN',
-  locales: [
-    {
-      lang: 'zh-CN',
-      label: '简体中文',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'en-US',
-      label: 'English',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'ja-JP',
-      label: '日本語',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'de-DE',
-      label: 'Deutsch',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'id-ID',
-      label: 'Bahasa Indonesia',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'fr-FR',
-      label: 'Français',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'ko-KR',
-      label: '한국어',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-    {
-      lang: 'vi-VN',
-      label: 'Tiếng Việt',
-      title: 'VisActor VBI',
-      description: 'VisActor VBI',
-    },
-  ],
+  lang: isDev? devEnableLocales[0] :'zh-CN',
+  locales: isDev ? devLocales : allLocales,
   themeConfig: {
     socialLinks: [
       {
@@ -96,7 +106,7 @@ export default defineConfig({
   icon: '/logo.svg',
   logoText: 'VisActor VBI',
   route: {
-    exclude: ['components/**/*'],
+    exclude: ['components/**/*', ...(isDev ? devLocaleExcludes : [])],
   },
   builderConfig: {
     tools: {
