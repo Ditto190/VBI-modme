@@ -1,12 +1,12 @@
-# Documentation
+# Tài liệu
 
 :::info
-Writing `TypeScript` types is indirectly writing the configuration options' documentation.
+Viết kiểu `TypeScript` cũng chính là gián tiếp viết tài liệu cho các tùy chọn cấu hình.
 :::
 
-The documentation for all VSeed chart types is located in the [`packages/vseed/src/types/chartType`](https://github.com/VisActor/VSeed/tree/main/packages/vseed/src/types/chartType) directory.
+Tài liệu của tất cả loại chart trong VSeed nằm trong thư mục [`packages/vseed/src/types/chartType`](https://github.com/VisActor/VSeed/tree/main/packages/vseed/src/types/chartType).
 
-## Automatically Building Documentation
+## Tự động build tài liệu
 
 ```bash title="source: scripts/build-docs.js"
 pnpm run build:docs
@@ -14,8 +14,8 @@ pnpm run build:docs
 
 
 :::warning
-Please do not directly modify the documentation content, as it will be overwritten at any time.
+Không chỉnh sửa trực tiếp nội dung tài liệu, vì nội dung này có thể bị ghi đè bất cứ lúc nào.
 
-`build:docs` completes in just a few seconds, so incremental updates are not implemented. Each documentation build will delete all old documentation and generate brand new documentation.
+`build:docs` hoàn tất chỉ trong vài giây, nên không triển khai cập nhật tăng dần. Mỗi lần build tài liệu sẽ xóa toàn bộ tài liệu cũ và tạo tài liệu mới.
 
 :::

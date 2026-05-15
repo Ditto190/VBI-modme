@@ -38,9 +38,9 @@ export default () => {
 }
 ```
 
-## Rose Chart (Zero Dimensions)
+## Biểu đồ hoa hồng (không có chiều)
 
-A rose chart without any dimension fields.
+Biểu đồ hoa hồng (không có chiều)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -62,9 +62,9 @@ export default () => {
 }
 ```
 
-## Stacked Rose Chart
+## Biểu đồ hoa hồng xếp chồng kết hợp
 
-A stacked rose chart for comparing multiple measures across different categories.
+Biểu đồ hoa hồng xếp chồng kết hợp
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -107,25 +107,25 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất lợi nhuận",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -136,9 +136,9 @@ export default () => {
 }
 ```
 
-## Pivot Stacked Rose Chart
+## Biểu đồ hoa hồng xếp chồng dạng pivot
 
-A stacked rose chart with pivot table layout.
+Biểu đồ hoa hồng xếp chồng dạng pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -149,28 +149,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Danh mục"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Ngày",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Khu vực",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     }
   ],
   "dataset": [
@@ -321,9 +321,9 @@ export default () => {
 }
 ```
 
-## stackingRose Chart
+## Biểu đồ hoa hồng xếp chồng
 
-stackingRose Chart
+Biểu đồ hoa hồng xếp chồng
 
 ```tsx preview
 import { VSeedRender } from '@components'

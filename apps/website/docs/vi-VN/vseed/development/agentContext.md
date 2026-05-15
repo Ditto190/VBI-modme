@@ -1,74 +1,74 @@
-# Agent Development Context (VSeed)
+# Ngữ cảnh phát triển Agent (VSeed)
 
-This document is for agent-code and contributors. It summarizes the core architecture, data flow, and extension patterns of the VSeed package to help quickly establish a global understanding during automated development.
+Tài liệu này dành cho agent-code và contributor. Nó tóm tắt kiến trúc cốt lõi, luồng dữ liệu và cách mở rộng của subpackage VSeed để nhanh chóng xây dựng hiểu biết tổng quan khi phát triển tự động.
 
-> This is a "context index" designed for Agent use. For more detailed engineering notes, refer to: `packages/vseed/AGENTS.md`.
+> Đây là "chỉ mục ngữ cảnh" được thiết kế cho Agent sử dụng. Để xem ghi chú kỹ thuật chi tiết hơn, tham khảo `packages/vseed/AGENTS.md`.
 
-## 1. Goal and Purpose
+## 1. Mục tiêu và định vị
 
-VSeed is a **Spec Builder** that converts `VSeed DSL` into `VChart` / `VTable` renderable Specs, supporting the capability to intelligently generate and edit charts.
+VSeed là một **Spec Builder** chuyển đổi `VSeed DSL` thành Spec có thể render của `VChart` / `VTable`, hỗ trợ khả năng tạo và chỉnh sửa chart một cách thông minh.
 
 - Input: `VSeed DSL`
-- Output: `VChart` / `VTable` Spec
-- Core flow: `AdvancedPipeline` + `SpecPipeline`
+- Output: Spec `VChart` / `VTable`
+- Luồng cốt lõi: `AdvancedPipeline` + `SpecPipeline`
 
-## 2. Two-Stage Pipeline
+## 2. Pipeline hai giai đoạn
 
 1. **AdvancedPipeline**
 
 - Input: `VSeed DSL`
-- Output: `AdvancedVSeed` (serializable intermediate state)
-- Responsibilities: Data reshaping, default inference, encoding modeling, themes & styles, analytics configuration
+- Output: `AdvancedVSeed` (trạng thái trung gian có thể serialize)
+- Phụ trách: reshape dữ liệu, suy luận mặc định, mô hình hóa encoding, theme và style, cấu hình phân tích
 
 2. **SpecPipeline**
 
 - Input: `AdvancedVSeed`
-- Output: Final Spec (not serializable, rendered directly)
-- Responsibilities: Map intermediate state to concrete VChart / VTable configuration
+- Output: Spec cuối cùng (không thể serialize, render trực tiếp)
+- Phụ trách: ánh xạ trạng thái trung gian thành cấu hình VChart / VTable cụ thể
 
-## 3. Builder Entry Point
+## 3. Entry point của Builder
 
-- Use `Builder.from(vseed).build()` to generate a Spec
-- `prepare()` executes dynamicFilter (when needed)
+- Dùng `Builder.from(vseed).build()` để tạo Spec
+- `prepare()` thực thi dynamicFilter khi cần
 
-Source entry points:
+Entry point source:
 - `packages/vseed/src/builder/builder/builder.ts`
 - `packages/vseed/src/builder/builder/build.ts`
 - `packages/vseed/src/builder/builder/prepare.ts`
 
-## 4. Data Reshaping (Core)
+## 4. Reshape dữ liệu (cốt lõi)
 
-- `foldMeasures`: Fold multiple measures into a single measure; generates `foldInfo`
-- `unfoldDimensions`: Merge dimensions by visual encoding channel; generates `unfoldInfo`
-- `dataReshapeByEncoding`: Combined call (fold + unfold)
+- `foldMeasures`: Gấp nhiều measure thành một measure duy nhất và tạo `foldInfo`
+- `unfoldDimensions`: Gộp dimension theo kênh encoding trực quan và tạo `unfoldInfo`
+- `dataReshapeByEncoding`: Lệnh gọi kết hợp (fold + unfold)
 
-Source entry points:
+Entry point source:
 - `packages/vseed/src/dataReshape/foldMeasures.ts`
 - `packages/vseed/src/dataReshape/unfoldDimensions.ts`
 - `packages/vseed/src/dataReshape/dataReshapeByEncoding.ts`
 
-## 5. Extension & Registration
+## 5. Mở rộng và đăng ký
 
-- `registerAll()`: Register all charts and themes
-- `registerXxx()`: Register individual chart type pipeline
-- `updateAdvanced()` / `updateSpec()`: Insert custom Pipes
+- `registerAll()`: Đăng ký tất cả chart và theme
+- `registerXxx()`: Đăng ký pipeline cho từng loại chart
+- `updateAdvanced()` / `updateSpec()`: Chèn Pipe tùy chỉnh
 
-Source entry points:
+Entry point source:
 - `packages/vseed/src/builder/register/all.ts`
 - `packages/vseed/src/builder/register/chartType/*`
 - `packages/vseed/src/builder/register/custom.ts`
 
-## 6. Pipeline Design Principles
+## 6. Nguyên tắc thiết kế Pipeline
 
-- Pipes should be as atomic as possible, minimizing if/else
-- Combine conditional flows via Adapters
-- Chart type determined by Pipe composition
+- Pipe nên càng nguyên tử càng tốt, giảm if/else
+- Kết hợp các luồng có điều kiện thông qua Adapter
+- Loại chart được quyết định bởi tổ hợp Pipe
 
-Reference:
-- `apps/website/docs/en-US/vseed/development/designPhilosophy/pipeline/pipelineDesign.md`
+Tham khảo:
+- `apps/website/docs/vi-VN/vseed/development/designPhilosophy/pipeline/pipelineDesign.md`
 
-## 7. More Context
+## 7. Ngữ cảnh đầy đủ hơn
 
 - `packages/vseed/AGENTS.md`
-- `apps/website/docs/en-US/vseed/development/architecture.md`
-- `apps/website/docs/en-US/vseed/development/designPhilosophy/vseed.md`
+- `apps/website/docs/vi-VN/vseed/development/architecture.md`
+- `apps/website/docs/vi-VN/vseed/development/designPhilosophy/vseed.md`

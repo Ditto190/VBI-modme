@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Multi-Measure Funnel Chart
+## Funnel-Diagramm mit mehreren Kennzahlen
 
-Multi-Measure Funnel Chart
+Funnel-Diagramm mit mehreren Kennzahlen
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -63,15 +63,15 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Umsatz"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     },
     {
       "id": "profit1",
-      "alias": "Return Rate"
+      "alias": "Rendite"
     }
   ]
 }
@@ -80,9 +80,9 @@ export default () => {
 }
 ```
 
-## Combined Funnel Chart
+## Kombiniertes Funnel-Diagramm
 
-Combined Funnel Chart
+Kombiniertes Funnel-Diagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -120,19 +120,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "left"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "parentId": "right"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ]
 }
@@ -141,9 +141,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Funnel Chart
+## Pivotiertes kombiniertes Funnel-Diagramm
 
-Pivot Combined Funnel Chart
+Pivotiertes kombiniertes Funnel-Diagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -154,11 +154,11 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategorie"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Datum",
       "encoding": "column"
     },
     {
@@ -170,12 +170,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     }
   ],
   "dataset": [

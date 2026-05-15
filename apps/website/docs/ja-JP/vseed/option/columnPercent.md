@@ -1,54 +1,54 @@
 # ColumnPercent
 
-:::info{title=Recommended}
-- Recommended field configuration: `1` measure(s), `2` dimension(s)
+:::info{title=推奨}
+\- 推奨フィールド設定: `1` 個のメジャー、`2` 個のディメンション
 
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
-
-:::
-
-:::info{title=Encoding Mapping}
-Percent Column Chart supports the following visual channels:
-
-`xAxis`  : x-axis channel, supports `multiple dimensions`, mapped to the x-axis by dimension value
-
-`yAxis`  : y-axis channel, supports `multiple measures`, mapped to the y-axis by measure value
-
-`detail` : detail channel, supports `multiple dimensions`, used to display more granular data within the same color series
-
-`color`  : color channel, supports `multiple dimensions` or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
-
-`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point
-
-`label`  : label channel, supports `multiple dimensions` and `multiple measures`, displays data labels on data points
+\- Data Reshape をサポート: 少なくとも `1` 個のメジャー、`0` 個のディメンション
 
 :::
 
-:::note{title=Description}
-Percent Column Chart, suitable for scenarios showing the proportional relationship of each category. The Y-axis displays data proportions in percentage format.
+:::info{title=エンコーディングマッピング}
+パーセント縦棒グラフは次のビジュアルチャネルをサポートします:
 
-Applicable scenarios:
+`xAxis`  : x 軸チャネル。`複数のディメンション`をサポートし、ディメンション値を x 軸へマッピングします
 
-- Proportional comparison of data across different categories
+`yAxis`  : y 軸チャネル。`複数のメジャー`をサポートし、メジャー値を y 軸へマッピングします
 
-- Composition analysis of multi-dimensional data
+`detail` : 詳細チャネル。`複数のディメンション`をサポートし、同じカラー系列内でより細かな粒度のデータを表示するときに使用します
 
-- Proportional change trends in time series
+`color`  : カラーチャネル。`複数のディメンション`または`1 つのメジャー`をサポートします。ディメンションの色は系列の区別に、メジャーの色はメジャー値から図形色への線形マッピングに使用します
+
+`tooltip`: ツールチップチャネル。`複数のディメンション`と`複数のメジャー`をサポートし、データ点にマウスホバーしたときに表示されます
+
+`label`  : ラベルチャネル。`複数のディメンション`と`複数のメジャー`をサポートし、データ点上にデータラベルを表示します
+
+:::
+
+:::note{title=説明}
+パーセント縦棒グラフは、各カテゴリの構成比を表示する場面に適しており、Y軸はデータの比率をパーセント形式で表示します
+
+適用シナリオ:
+
+\- 異なるカテゴリデータの構成比の比較
+
+\- 多次元データの構成分析
+
+\- 時系列における構成比の変化傾向
 
 :::
 
 :::warning{title=Warning}
-Data requirements:
+データ要件:
 
-- At least 1 measure field
+\- 少なくとも1つのメジャーフィールド
 
-- The first dimension will be placed on the X-axis. The remaining dimensions will be merged with the measure names (when multiple measures exist) and displayed as legend items.
+\- 最初のディメンションはX軸に配置され、残りのディメンションはメジャー名（複数メジャーがある場合）と結合されて凡例項目として表示されます。
 
-- All measures are automatically merged into one measure
+\- すべてのメジャーは自動的に 1 つのメジャーにマージされます
 
-Features enabled by default:
+デフォルトで有効な機能:
 
-- Legend, axes, percent labels, tooltips, and proportion calculation are enabled by default.
+\- デフォルトで凡例、軸、パーセントラベル、ツールチップ、比率計算を有効化します
 
 :::
 
@@ -57,14 +57,16 @@ Features enabled by default:
 
 **Type:** `"columnPercent"`
 
-:::note{title=Description}
-Percent Column Chart
+:::note{title=説明}
+パーセント縦棒グラフ
 
-Percent Column Chart, displaying the proportional relationship between categories in percentage format.
+
+
+パーセント縦棒グラフ。各カテゴリデータの構成比をパーセント形式で表示します
 
 :::
 
-**Example**
+**例**
 'columnPercent'
 
 
@@ -74,14 +76,16 @@ Percent Column Chart, displaying the proportional relationship between categorie
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset
+:::note{title=説明}
+TidyData仕様に準拠し、事前集計済みのデータセットで、チャートのデータソースと構造を定義します。ユーザーが入力データを手動処理する必要はありません。VSeedの強力なデータリシェイプ機能が自動的に処理します。面グラフのデータは最終的に2つのディメンションと1つのメジャーにリシェイプされます。
 
-A TidyData-compliant and already aggregated dataset used to define the chart's data source and structure. User-input datasets do not require manual processing as VSeed features powerful data reshaping capabilities and will automatically reshape the data. Percent Column Chart data will eventually be converted to 2 dimensions and 1 measure.
+
+
+TidyData 仕様に準拠し、集計済みのデータセットです。グラフのデータソースと構造を定義します。ユーザーが入力するデータセットに追加処理は不要です。VSeed には強力なデータ再整形機能があり、自動でデータを再整形します。パーセント縦棒グラフのデータは最終的に 2 つのディメンションと 1 つのメジャーに変換されます。
 
 :::
 
-**Example**
+**例**
 [{category:'A', value:30}, {category:'B', value:70}]
 
 
@@ -91,15 +95,17 @@ A TidyData-compliant and already aggregated dataset used to define the chart's d
 
 **Type:** `ColumnDimension[] | undefined`
 
-:::note{title=Description}
-Dimensions
+:::note{title=説明}
+最初のディメンションはX軸にマッピングされ、残りのディメンションはメジャー名（複数メジャーがある場合）と結合されて凡例項目として表示されます。
 
-The first dimension is mapped to the X-axis; the remaining dimensions are merged with measure names (when multiple measures exist) and displayed as legend items.
+
+
+**例**
 
 :::
 
-**Example**
-[{id: 'category', alias: 'Category'}]
+**例**
+[{id: 'category', alias: 'カテゴリ'}]
 
 
 
@@ -108,8 +114,8 @@ The first dimension is mapped to the X-axis; the remaining dimensions are merged
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=説明}
+ディメンションに対応するフィールド ID
 
 :::
 
@@ -117,8 +123,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=説明}
+ディメンションの別名
 
 :::
 
@@ -126,8 +132,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=説明}
+ディメンションの日付フォーマット設定
 
 :::
 
@@ -136,8 +142,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=説明}
+時間粒度。日付表示の精度を決定します
 
 :::
 
@@ -145,22 +151,22 @@ Time granularity, determines the date display precision
 
 **Type:** `"xAxis" | "color" | "detail" | "tooltip" | "label" | "row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=説明}
+ディメンションをマッピングするチャネル
 
-- xAxis: supports mapping multiple dimensions to the x-axis
+\- xAxis: 複数ディメンションをx軸にマッピングできます
 
-- color: supports mapping multiple dimensions to the color channel
+\- color: 複数ディメンションを色チャネルにマッピングできます
 
-- detail: supports mapping multiple dimensions to the detail channel
+\- detail: 複数ディメンションを詳細チャネルにマッピングできます
 
-- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: 複数のディメンションをツールチップチャネルへマッピングできます
 
-- label: supports mapping multiple dimensions to the label channel
+\- label: 複数のディメンションをラベルチャネルへマッピングできます
 
-- row: supports mapping multiple dimensions to the row channel
+\- row: 複数ディメンションを行チャネルにマッピングできます
 
-- column: supports mapping multiple dimensions to the column channel
+\- column: 複数ディメンションを列チャネルにマッピングできます
 
 :::
 
@@ -169,15 +175,17 @@ Channel to which the dimension is mapped
 
 **Type:** `ColumnMeasure[] | undefined`
 
-:::note{title=Description}
-Measures
+:::note{title=説明}
+メジャー
 
-Percent Column Chart measures are automatically merged into one measure and mapped to the Y-axis. When multiple measures exist, the measure names will be merged with the remaining dimensions and displayed as legend items.
+
+
+パーセント縦棒グラフのメジャーは自動的に 1 つのメジャーに結合され、Y軸へマッピングされます。複数のメジャーがある場合、メジャー名は他のディメンションと結合され、凡例項目として表示されます。
 
 :::
 
-**Example**
-[{id: 'value', alias: 'Value Proportion', format: 'percent'}]
+**例**
+[{id: 'value', alias: '値の割合', format: 'percent'}]
 
 
 
@@ -186,8 +194,8 @@ Percent Column Chart measures are automatically merged into one measure and mapp
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=説明}
+メジャー ID。重複できません
 
 :::
 
@@ -195,8 +203,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=説明}
+メジャーの別名。重複可能。未設定の場合、alias は id になります
 
 :::
 
@@ -204,20 +212,20 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+:::note{title=説明}
+自動数値フォーマット。デフォルトで有効で、優先度が最も高い
 
-When autoFormat=true, it overrides all numFormat configurations
+autoFormat=true の場合、すべての numFormat 設定を上書きします
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+有効にすると、チャートのデータラベルとツールチップは、メジャー値と言語環境に基づいて適切なフォーマットを自動選択します
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+フォーマット規則: 10進数、compact notation 有効、小数部は最小0桁・最大2桁、自動丸め、ブラウザの Intl.NumberFormat 実装を使用
 
-For example:
+例:
 
-\- locale=zh-CN: 749740.264 → 749.7万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-\- locale=en-US: 749740.264 → 749.7K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -225,10 +233,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=説明}
+メジャーのカスタム数値フォーマット。ラベルとツールチップに自動適用されます
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+注意: カスタムフォーマットを使用するには autoFormat=false を明示的に設定する必要があります。そうしないと autoFormat がこの設定を上書きします
 
 :::
 
@@ -237,8 +245,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+数値フォーマットタイプ。数値（10進数）、パーセント（%）、パーミル（‰）、科学表記をサポート
 
 :::
 
@@ -246,14 +254,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+数値フォーマットの比率。0 にはできません
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -261,14 +269,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+数値フォーマット記号。例: %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -276,8 +284,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+数値フォーマットの桁区切り
 
 :::
 
@@ -285,8 +293,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -294,8 +302,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -303,18 +311,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用し、significantDigits より優先度は低いです
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1235 に変換, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.6 に変換, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -322,20 +330,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+数値フォーマットの有効桁数。ブラウザの Intl.NumberFormat の minimumSignificantDigits と maximumSignificantDigits を使用し、fractionDigits より優先度は高いです
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1000 に変換, significantDigits:1
+\- 1234.5678 は 1200 に変換, significantDigits:2
+\- 1234.5678 は 1230 に変換, significantDigits:3
+\- 1234.5678 は 1234 に変換, significantDigits:4
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -343,14 +351,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+significantDigits と fractionDigits の両方を設定した場合の数値フォーマットの丸め優先度。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingPriority と同じ規則に従います
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1230 に変換, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -358,8 +366,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -372,8 +380,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+数値フォーマットタイプ。数値（10進数）、パーセント（%）、パーミル（‰）、科学表記をサポート
 
 :::
 
@@ -381,14 +389,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+数値フォーマットの比率。0 にはできません
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -396,14 +404,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+数値フォーマット記号。例: %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -411,8 +419,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+数値フォーマットの桁区切り
 
 :::
 
@@ -420,8 +428,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -429,8 +437,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -438,18 +446,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用し、significantDigits より優先度は低いです
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1235 に変換, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.6 に変換, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -457,20 +465,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+数値フォーマットの有効桁数。ブラウザの Intl.NumberFormat の minimumSignificantDigits と maximumSignificantDigits を使用し、fractionDigits より優先度は高いです
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1000 に変換, significantDigits:1
+\- 1234.5678 は 1200 に変換, significantDigits:2
+\- 1234.5678 は 1230 に変換, significantDigits:3
+\- 1234.5678 は 1234 に変換, significantDigits:4
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -478,14 +486,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+significantDigits と fractionDigits の両方を設定した場合の数値フォーマットの丸め優先度。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingPriority と同じ規則に従います
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1230 に変換, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -493,8 +501,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -502,18 +510,18 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"color" | "detail" | "tooltip" | "label" | "yAxis" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped
+:::note{title=説明}
+メジャーをマッピングするチャネル
 
-- yAxis: measure mapped to the y-axis
+\- yAxis: メジャーをy軸にマッピングします
 
-- detail: measure mapped to the detail channel
+\- detail: メジャーを詳細チャネルにマッピングします
 
-- color: measure mapped to the color channel
+\- color: メジャーを色チャネルにマッピングします
 
-- label: measure mapped to the label channel
+\- label: メジャーをラベルチャネルへマッピング
 
-- tooltip: measure mapped to the tooltip channel
+\- tooltip: メジャーをツールチップチャネルへマッピング
 
 :::
 
@@ -521,13 +529,13 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=説明}
+フラットなメジャー設定形式でツリー状のメジャーグループを構築します。parentId は親メジャーグループの id を指し、メジャーツリーの構築に使用されます
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+メジャーツリーの設定方法は2つあります: 方法1は children でメジャーツリーを直接設定する方法、方法2は parentId を持つフラットなメジャーリストを設定する方法です。この2つの方法は同時に使用できません
 
 :::
 
@@ -536,8 +544,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration, used to specify the field name for pagination, which must be a dimension.
+:::note{title=説明}
+
 
 :::
 
@@ -546,8 +554,8 @@ Pagination configuration, used to specify the field name for pagination, which m
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=説明}
+
 
 :::
 
@@ -555,13 +563,13 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+:::note{title=説明}
+
 
 :::
 
-**Example**
-'2023-01-01'
+**例**
+'2023\-01\-01'
 
 
 
@@ -570,8 +578,8 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color. Defaults to a transparent background. Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+:::note{title=説明}
+チャートの背景色。デフォルトは透明背景です。背景色には色文字列 (例: 'red', 'blue')、または hex、rgb、rgba 値 (例: '#ff0000', 'rgba(255,0,0,0.5)') を指定できます。
 
 :::
 
@@ -580,8 +588,8 @@ Chart background color. Defaults to a transparent background. Background color c
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
+:::note{title=説明}
+
 
 :::
 
@@ -590,12 +598,12 @@ Color configuration for defining the chart's color scheme, including color lists
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -604,12 +612,12 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -618,12 +626,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Color mapping used to map data values to specific colors
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 {
  'profit': 'red',
  'sales': 'blue',
@@ -635,8 +643,8 @@ Color mapping used to map data values to specific colors
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart
+:::note{title=説明}
+
 
 :::
 
@@ -644,8 +652,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart
+:::note{title=説明}
+
 
 :::
 
@@ -654,8 +662,8 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `Label | undefined`
 
-:::note{title=Description}
-Label configuration for defining chart data labels, including their position, format, and style.
+:::note{title=説明}
+
 
 :::
 
@@ -664,8 +672,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled
+:::note{title=説明}
+
 
 :::
 
@@ -673,8 +681,8 @@ Whether label functionality is enabled
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line
+:::note{title=説明}
+
 
 :::
 
@@ -682,12 +690,12 @@ Whether labels wrap to the next line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values
+:::note{title=説明}
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -695,12 +703,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values as a percentage.
+:::note{title=説明}
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -708,12 +716,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension labels
+:::note{title=説明}
 
-Display all dimension labels
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -721,8 +729,8 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+:::note{title=説明}
+
 
 :::
 
@@ -730,8 +738,8 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+:::note{title=説明}
+
 
 :::
 
@@ -740,8 +748,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+
 
 :::
 
@@ -749,14 +757,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
+
 
 
 
@@ -764,14 +772,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
+
 
 
 
@@ -779,8 +787,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+
 
 :::
 
@@ -788,8 +796,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+
 
 :::
 
@@ -797,8 +805,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+
 
 :::
 
@@ -806,18 +814,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1234.6 に変換, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換, fractionDigits:5 (roundingMode:halfCeil)
+
 
 
 
@@ -825,20 +833,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1200 に変換, significantDigits:2
+\- 1234.5678 は 1230 に変換, significantDigits:3
+\- 1234.5678 は 1234 に変換, significantDigits:4
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:8 (roundingMode:halfCeil)
+
 
 
 
@@ -846,14 +854,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
+
 
 
 
@@ -861,8 +869,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+
 
 :::
 
@@ -870,8 +878,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=説明}
+
 
 :::
 
@@ -879,8 +887,8 @@ Label font size
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=説明}
+
 
 :::
 
@@ -888,8 +896,8 @@ Label font weight
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label background color
+:::note{title=説明}
+
 
 :::
 
@@ -897,8 +905,8 @@ Label background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label stroke color
+:::note{title=説明}
+
 
 :::
 
@@ -906,8 +914,8 @@ Label stroke color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label font color
+:::note{title=説明}
+
 
 :::
 
@@ -915,8 +923,8 @@ Label font color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels automatically invert font color based on the graphical element's color
+:::note{title=説明}
+
 
 :::
 
@@ -924,8 +932,8 @@ Whether labels automatically invert font color based on the graphical element's 
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-label position
+:::note{title=説明}
+
 
 :::
 
@@ -933,8 +941,8 @@ label position
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label overlap avoidance function is enabled
+:::note{title=説明}
+
 
 :::
 
@@ -942,8 +950,8 @@ Whether the label overlap avoidance function is enabled
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filtering; the default relationship between selectors is OR
+:::note{title=説明}
+
 
 :::
 
@@ -952,8 +960,8 @@ Label filtering; the default relationship between selectors is OR
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+
 
 :::
 
@@ -961,12 +969,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+
+
+
 
 :::
 
@@ -974,14 +982,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+
+
+
 
 :::
 
@@ -989,8 +997,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -998,26 +1006,38 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed by AI-generated code)
+:::note{title=説明}
 
-Implement complex data filtering logic using AI-generated JavaScript code
 
-Core Capabilities:
 
-- Supports arbitrarily complex data filtering conditions
 
-- Use built-in utility functions for data manipulation
 
-- Secure execution in the browser environment (Web Worker sandbox)
 
-Environment Requirements: Only supports browser environments; Node.js environments will use fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Chart dynamic filter configuration
 
-Implement filtering of chart markers (bars, points, etc.) using AI-generated JavaScript code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -1030,15 +1050,15 @@ Implement filtering of chart markers (bars, points, etc.) using AI-generated Jav
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=説明}
+
 
 :::
 
-**Example**
-"Highlight bars with sales greater than 1000"
+**例**
+"売上が1000を超える棒をハイライト"
 
-"Highlight the bar with the highest profit margin in each region"
+"各地域で利益率が最も高い棒をハイライト"
 
 
 
@@ -1046,23 +1066,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=説明}
 
-- Can only use built-in utility functions (accessed via _ or R)
 
-- Input parameters: data (array), where each item contains a __row_index field representing the row number
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-- __row_index represents the original data item's row number, and field represents the field to be highlighted
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight the sales field for data items with sales greater than 1000
+**例**
+return _.map(filtered, item => ({
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1071,7 +1093,7 @@ field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region
+const maxItems = _.map(grouped, group =>
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1085,7 +1107,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+const profitRate = item.profit / item.sales;
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1105,8 +1127,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+:::note{title=説明}
+
 
 :::
 
@@ -1115,8 +1137,8 @@ Fallback plan when code execution fails or the environment is not supported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+
 
 :::
 
@@ -1124,12 +1146,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+
+
+
 
 :::
 
@@ -1137,14 +1159,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+
+
+
 
 :::
 
@@ -1152,8 +1174,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -1161,10 +1183,12 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+
 
 :::
 
@@ -1186,8 +1210,8 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend configuration, used to define the chart's legend, including position, format, style, etc.
+:::note{title=説明}
+
 
 :::
 
@@ -1196,12 +1220,12 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether legend functionality is enabled
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 enable: true
 
 
@@ -1210,18 +1234,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether legend border is enabled
+:::note{title=説明}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
-border: true
+**例**
+
 
 
 
@@ -1229,8 +1253,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=説明}
+
 
 :::
 
@@ -1238,8 +1262,8 @@ Legend font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon color
+:::note{title=説明}
+
 
 :::
 
@@ -1247,8 +1271,8 @@ Pager icon color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon disabled color
+:::note{title=説明}
+
 
 :::
 
@@ -1256,13 +1280,13 @@ Pager icon disabled color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size
+:::note{title=説明}
+
 
 :::
 
-**Example**
-labelFontSize: 10
+**例**
+
 
 
 
@@ -1270,8 +1294,8 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=説明}
+
 
 :::
 
@@ -1279,13 +1303,13 @@ Legend font color
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight
+:::note{title=説明}
+
 
 :::
 
-**Example**
-labelFontWeight: 400
+**例**
+
 
 
 
@@ -1293,18 +1317,18 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Legend shape
+:::note{title=説明}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
-shapeType: 'circle'
+**例**
+
 
 
 
@@ -1312,13 +1336,13 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-Legend position
+:::note{title=説明}
+
 
 :::
 
-**Example**
-position: 'rightTop'
+**例**
+
 
 
 
@@ -1326,32 +1350,63 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum number of columns or rows for the legend when there are many legend items
+:::note{title=説明}
 
-If the position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of columns displayed
 
-If the position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of rows displayed
+
+
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
-maxSize: 2
+**例**
 
 
+
+
+
+## regionPadding
+
+**Type:** `RegionPadding | undefined`
+
+:::note{title=説明}
+
+
+
+
+**Type:** `false | true`
+
+:::
+
+
+### top
+
+**Type:** `number | undefined`
+
+### right
+
+**Type:** `number | undefined`
+
+### bottom
+
+**Type:** `number | undefined`
+
+### left
+
+**Type:** `number | undefined`
 
 
 ## tooltip
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-Tooltip configuration, used to define the chart's tooltips, including position, format, style, etc.
+:::note{title=説明}
+ブラシ選択を有効にするかどうか
 
 :::
 
@@ -1360,8 +1415,8 @@ Tooltip configuration, used to define the chart's tooltips, including position, 
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether tooltip functionality is enabled
+:::note{title=説明}
+
 
 :::
 
@@ -1370,12 +1425,16 @@ Whether tooltip functionality is enabled
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Brush
+:::note{title=説明}
 
-Brush configuration, used to enable/disable brush selection capabilities.
 
-Chart brush configuration
+
+
+
+
+
+
+ブラシ選択モード: 単一または複数
 
 :::
 
@@ -1384,8 +1443,8 @@ Chart brush configuration
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable brush selection
+:::note{title=説明}
+
 
 :::
 
@@ -1393,18 +1452,20 @@ Whether to enable brush selection
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-Brush type
+:::note{title=説明}
+**Type:** `XLinearAxis | undefined`
 
-Defines the shape and selection direction of the brush box
 
-- `rect`: Rectangular selection, allows simultaneous selection in both X and Y directions
 
-- `polygon`: Polygonal selection, allows for multi-point arbitrary polygon selection
+**Type:** `boolean | undefined`
 
-- `x`: X-axis selection, selection is restricted to the X-axis direction, Y-axis is unrestricted
 
-- `y`: Y-axis selection, selection is restricted to the Y-axis direction, X-axis is unrestricted
+
+
+
+
+
+
 
 :::
 
@@ -1412,14 +1473,16 @@ Defines the shape and selection direction of the brush box
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-Brush mode, single or multiple selection
+:::note{title=説明}
+選択されたデータポイントの不透明度。範囲は0-1です
 
-Defines the selection mode
 
-- `single`: Single selection mode, only one brush box can exist at a time
 
-- `multiple`: Multiple selection mode, multiple brush boxes can exist simultaneously
+**Type:** `number | boolean | undefined`
+
+**Type:** `string | undefined`
+
+
 
 :::
 
@@ -1427,8 +1490,8 @@ Defines the selection mode
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear the selection box when brush ends
+:::note{title=説明}
+
 
 :::
 
@@ -1436,10 +1499,12 @@ Whether to clear the selection box when brush ends
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for selected data items
+:::note{title=説明}
 
-Defines the style of data points within the selected brush area
+
+
+
+
 
 :::
 
@@ -1448,10 +1513,12 @@ Defines the style of data points within the selected brush area
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity
+:::note{title=説明}
 
-Opacity of selected data points, range 0-1
+
+
+
+
 
 :::
 
@@ -1459,8 +1526,8 @@ Opacity of selected data points, range 0-1
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color
+:::note{title=説明}
+
 
 :::
 
@@ -1468,8 +1535,8 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width
+:::note{title=説明}
+
 
 :::
 
@@ -1477,10 +1544,12 @@ Stroke width
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for unselected data items
+:::note{title=説明}
+X 軸、カテゴリ軸、X 軸設定。位置、フォーマット、スタイルなど、チャートの X 軸を定義します。
 
-Defines the style of data points outside the selected brush area
+
+
+
 
 :::
 
@@ -1489,10 +1558,12 @@ Defines the style of data points outside the selected brush area
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity
+:::note{title=説明}
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
 
-Opacity of unselected data points, range 0-1
+
+
+
 
 :::
 
@@ -1500,8 +1571,8 @@ Opacity of unselected data points, range 0-1
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color
+:::note{title=説明}
+
 
 :::
 
@@ -1509,8 +1580,272 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width
+:::note{title=説明}
+**Type:** `boolean | undefined`
+
+:::
+
+
+## animation
+
+**Type:** `BarLikeAnimation | undefined`
+
+:::note{title=説明}
+軸ラベルの自動非表示間隔。2 つのテキストラベルの間隔が autoHideGap 未満の場合、重なったラベルは自動的に非表示になります。カテゴリ軸でのみ有効です。
+
+
+
+autoHide が無効な場合は、minGap で設定されたサンプリングを使用します
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+### params
+
+**Type:** `BarLikeAnimationParams | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+
+#### appear
+
+**Type:** `BarLikeAppearAnimation | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+**Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+#### update
+
+**Type:** `BarLikeUpdateAnimation | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+
+##### effects
+
+**Type:** `("growth" | "moveIn")[] | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+**Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+#### loop
+
+**Type:** `BarLikeAnimationLoop | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=説明}
+**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### loop
+
+**Type:** `BarLikeLoopAnimation | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+
+###### effects
+
+**Type:** `BarLikeLoopEffect[] | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=説明}
+
 
 :::
 
@@ -1519,8 +1854,8 @@ Stroke width
 
 **Type:** `XBandAxis | undefined`
 
-:::note{title=Description}
-X-axis, category axis. X-axis configuration, used to define the chart's X-axis, including position, format, style, etc.
+:::note{title=説明}
+**Type:** `boolean | undefined`
 
 :::
 
@@ -1529,8 +1864,8 @@ X-axis, category axis. X-axis configuration, used to define the chart's X-axis, 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible
+:::note{title=説明}
+グリッド線タイプ
 
 :::
 
@@ -1538,8 +1873,8 @@ Whether the axis is visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is reversed; only effective for numeric axes
+:::note{title=説明}
+X軸 animation configuration
 
 :::
 
@@ -1547,8 +1882,8 @@ Whether the axis is reversed; only effective for numeric axes
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force the display of the 0 value on the axis. If min and max are configured, this setting is ignored. Only effective for numeric axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1556,8 +1891,8 @@ Whether to force the display of the 0 value on the axis. If min and max are conf
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Axis labels, auto-hide. If two labels overlap (interval is smaller than autoHideGap), the label causing the overlap is automatically hidden. Only effective for category axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1565,12 +1900,12 @@ Axis labels, auto-hide. If two labels overlap (interval is smaller than autoHide
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis labels, auto-hide interval. If the interval between two text labels is smaller than autoHideGap, the label causing the overlap is automatically hidden. Only effective for category axes.
+:::note{title=説明}
 
-When autoHide is enabled, autoHide is used, set on autoHideSeparation
 
-When autoHide is disabled, sampling is used, set on minGap
+Y 軸、数値軸、Y 軸設定。位置、フォーマット、スタイルなど、チャートの Y 軸を定義します。
+
+**Type:** `string | undefined`
 
 :::
 
@@ -1578,17 +1913,17 @@ When autoHide is disabled, sampling is used, set on minGap
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Axis labels, auto-rotate. When label width exceeds axis length, automatically rotate labels. Only effective for category axes.
+:::note{title=説明}
+
 
 :::
 
-### labelAutoRotateAngle
+### labelAutoRotateAngleRange
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Axis labels, auto-rotation angle range. When auto-rotation is enabled, this defines the label rotation angle range. Only effective for category axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1596,8 +1931,8 @@ Axis labels, auto-rotation angle range. When auto-rotation is enabled, this defi
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Axis labels, auto-limit length. When label width exceeds axis length, redundant text is represented by an ellipsis. Full label is visible on hover. Only effective for category axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1605,8 +1940,8 @@ Axis labels, auto-limit length. When label width exceeds axis length, redundant 
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis labels, maximum auto-limited length. When label text length exceeds this value, redundant text is represented by an ellipsis. Full label is visible on hover. Only effective for category axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1614,8 +1949,8 @@ Axis labels, maximum auto-limited length. When label text length exceeds this va
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-X-axis scale labels
+:::note{title=説明}
+
 
 :::
 
@@ -1624,8 +1959,8 @@ X-axis scale labels
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible
+:::note{title=説明}
+
 
 :::
 
@@ -1633,8 +1968,8 @@ Whether labels are visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color
+:::note{title=説明}
+
 
 :::
 
@@ -1642,8 +1977,8 @@ Label color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=説明}
+
 
 :::
 
@@ -1651,8 +1986,8 @@ Label font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=説明}
+
 
 :::
 
@@ -1660,8 +1995,8 @@ Label font weight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle
+:::note{title=説明}
+
 
 :::
 
@@ -1669,8 +2004,8 @@ Label rotation angle
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-X-axis line
+:::note{title=説明}
+
 
 :::
 
@@ -1679,8 +2014,8 @@ X-axis line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible
+:::note{title=説明}
+
 
 :::
 
@@ -1688,8 +2023,8 @@ Whether the axis line is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color
+:::note{title=説明}
+
 
 :::
 
@@ -1697,8 +2032,8 @@ Axis line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width
+:::note{title=説明}
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
 
 :::
 
@@ -1706,8 +2041,8 @@ Axis line width
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-X-axis ticks
+:::note{title=説明}
+
 
 :::
 
@@ -1716,8 +2051,8 @@ X-axis ticks
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -1725,8 +2060,8 @@ Whether ticks are visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -1734,8 +2069,8 @@ Whether ticks point inwards
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用し、significantDigits より優先度は低いです
 
 :::
 
@@ -1743,8 +2078,8 @@ Tick color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size
+:::note{title=説明}
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
 
 :::
 
@@ -1752,8 +2087,8 @@ Tick size
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-X-axis title
+:::note{title=説明}
+
 
 :::
 
@@ -1762,8 +2097,8 @@ X-axis title
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible
+:::note{title=説明}
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
 
 :::
 
@@ -1771,8 +2106,8 @@ Whether the title is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text, defaults to the field configuration
+:::note{title=説明}
+**Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::
 
@@ -1780,8 +2115,8 @@ Title text, defaults to the field configuration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color
+:::note{title=説明}
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
 
 :::
 
@@ -1789,8 +2124,8 @@ Title color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -1798,8 +2133,8 @@ Title font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight
+:::note{title=説明}
+X軸目盛りラベル
 
 :::
 
@@ -1807,8 +2142,8 @@ Title font weight
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-X-axis grid lines
+:::note{title=説明}
+
 
 :::
 
@@ -1821,8 +2156,8 @@ X-axis grid lines
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color
+:::note{title=説明}
+
 
 :::
 
@@ -1830,8 +2165,8 @@ Grid line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width
+:::note{title=説明}
+
 
 :::
 
@@ -1839,8 +2174,8 @@ Grid line width
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line type
+:::note{title=説明}
+
 
 :::
 
@@ -1848,8 +2183,8 @@ Grid line type
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-X-axis animation configuration
+:::note{title=説明}
+
 
 :::
 
@@ -1858,8 +2193,8 @@ X-axis animation configuration
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration
+:::note{title=説明}
+
 
 :::
 
@@ -1867,8 +2202,8 @@ Animation duration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=説明}
+
 
 :::
 
@@ -1877,8 +2212,8 @@ Animation easing function
 
 **Type:** `YLinearAxis | undefined`
 
-:::note{title=Description}
-Y-axis, numeric axis. Y-axis configuration, used to define the chart's Y-axis, including position, format, style, etc.
+:::note{title=説明}
+
 
 :::
 
@@ -1887,8 +2222,8 @@ Y-axis, numeric axis. Y-axis configuration, used to define the chart's Y-axis, i
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible
+:::note{title=説明}
+**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1896,8 +2231,8 @@ Whether the axis is visible
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value of the axis; higher priority than `nice` and `zero`
+:::note{title=説明}
+
 
 :::
 
@@ -1905,8 +2240,8 @@ Minimum value of the axis; higher priority than `nice` and `zero`
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value of the axis; higher priority than `nice` and `zero`. If set to true, the maximum value is automatically calculated based on the data range.
+:::note{title=説明}
+
 
 :::
 
@@ -1914,8 +2249,8 @@ Maximum value of the axis; higher priority than `nice` and `zero`. If set to tru
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic axis; only effective for numeric axes
+:::note{title=説明}
+
 
 :::
 
@@ -1923,8 +2258,8 @@ Whether to use a logarithmic axis; only effective for numeric axes
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base of the logarithmic axis; only effective for numeric axes
+:::note{title=説明}
+
 
 :::
 
@@ -1932,8 +2267,8 @@ Base of the logarithmic axis; only effective for numeric axes
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust the axis scale intervals to make labels more readable. This setting is ignored if `min` and `max` are configured. Only effective for numeric axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1941,8 +2276,8 @@ Whether to automatically adjust the axis scale intervals to make labels more rea
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is reversed; only effective for numeric axes
+:::note{title=説明}
+sortLegend: {
 
 :::
 
@@ -1950,8 +2285,8 @@ Whether the axis is reversed; only effective for numeric axes
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force the display of the 0 value on the axis. If min and max are configured, this setting is ignored. Only effective for numeric axes.
+:::note{title=説明}
+
 
 :::
 
@@ -1959,8 +2294,8 @@ Whether to force the display of the 0 value on the axis. If min and max are conf
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format numeric axis labels. Only effective for numeric axes. When `autoFormat` is true, `numFormat` configuration is ignored.
+:::note{title=説明}
+
 
 :::
 
@@ -1968,8 +2303,8 @@ Whether to automatically format numeric axis labels. Only effective for numeric 
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Number formatting for numeric axes. Only effective for numeric axes. Lower priority than `autoFormat`.
+:::note{title=説明}
+
 
 :::
 
@@ -1978,8 +2313,8 @@ Number formatting for numeric axes. Only effective for numeric axes. Lower prior
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+
 
 :::
 
@@ -1987,14 +2322,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+
+
 
 
 
@@ -2002,14 +2337,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-- 100000 converts to 100,000, ratio:1, symbol:""
-- 100000 converts to 100K, ratio:1000, symbol:"K"
+**例**
+
+
 
 
 
@@ -2017,8 +2352,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+
 
 :::
 
@@ -2026,8 +2361,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+
 
 :::
 
@@ -2035,8 +2370,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+
 
 :::
 
@@ -2044,18 +2379,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+
+
+アニメーションのイージング関数
+
+
+
 
 
 
@@ -2063,20 +2398,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+カテゴリ軸ソート設定。ディメンションまたはメジャーに基づくソート、およびカスタムソート順をサポートします
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -2084,14 +2419,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+ソート順。任意値は 'asc' または 'desc' です
+
 
 
 
@@ -2099,8 +2434,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+
 
 :::
 
@@ -2108,8 +2443,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis scale labels
+:::note{title=説明}
+\- orderBy:'date'
 
 :::
 
@@ -2118,8 +2453,8 @@ Y-axis scale labels
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible
+:::note{title=説明}
+カスタムソート順。カテゴリ軸に直接適用されます
 
 :::
 
@@ -2127,8 +2462,8 @@ Whether labels are visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color
+:::note{title=説明}
+
 
 :::
 
@@ -2136,8 +2471,8 @@ Label color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=説明}
+  orderBy: 'profit',
 
 :::
 
@@ -2145,8 +2480,8 @@ Label font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=説明}
+or
 
 :::
 
@@ -2154,8 +2489,8 @@ Label font weight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle
+:::note{title=説明}
+
 
 :::
 
@@ -2163,8 +2498,8 @@ Label rotation angle
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis line
+:::note{title=説明}
+
 
 :::
 
@@ -2173,8 +2508,8 @@ Y-axis line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible
+:::note{title=説明}
+
 
 :::
 
@@ -2182,8 +2517,8 @@ Whether the axis line is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color
+:::note{title=説明}
+**Type:** `string[] | undefined`
 
 :::
 
@@ -2191,8 +2526,8 @@ Axis line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width
+:::note{title=説明}
+
 
 :::
 
@@ -2200,8 +2535,8 @@ Axis line width
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis ticks
+:::note{title=説明}
+
 
 :::
 
@@ -2210,8 +2545,8 @@ Y-axis ticks
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible
+:::note{title=説明}
+
 
 :::
 
@@ -2219,8 +2554,8 @@ Whether ticks are visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards
+:::note{title=説明}
+**Type:** `brand`
 
 :::
 
@@ -2228,8 +2563,8 @@ Whether ticks point inwards
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color
+:::note{title=説明}
+
 
 :::
 
@@ -2237,8 +2572,8 @@ Tick color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size
+:::note{title=説明}
+
 
 :::
 
@@ -2246,8 +2581,8 @@ Tick size
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis title
+:::note{title=説明}
+
 
 :::
 
@@ -2256,8 +2591,8 @@ Y-axis title
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible
+:::note{title=説明}
+
 
 :::
 
@@ -2265,8 +2600,8 @@ Whether the title is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text, defaults to the field configuration
+:::note{title=説明}
+sort order, optional values 'asc' or 'desc'
 
 :::
 
@@ -2274,8 +2609,8 @@ Title text, defaults to the field configuration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color
+:::note{title=説明}
+\- orderBy:'profit'
 
 :::
 
@@ -2283,8 +2618,8 @@ Title color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size
+:::note{title=説明}
+
 
 :::
 
@@ -2292,8 +2627,8 @@ Title font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight
+:::note{title=説明}
+**Type:** `string | number | undefined`
 
 :::
 
@@ -2301,8 +2636,8 @@ Title font weight
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-Y-axis grid lines
+:::note{title=説明}
+
 
 :::
 
@@ -2315,8 +2650,8 @@ Y-axis grid lines
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color
+:::note{title=説明}
+
 
 :::
 
@@ -2324,8 +2659,8 @@ Grid line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width
+:::note{title=説明}
+
 
 :::
 
@@ -2333,8 +2668,8 @@ Grid line width
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line type
+:::note{title=説明}
+**例**
 
 :::
 
@@ -2342,8 +2677,8 @@ Grid line type
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-Y-axis animation configuration
+:::note{title=説明}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -2352,8 +2687,8 @@ Y-axis animation configuration
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration
+:::note{title=説明}
+operator: 'not in',
 
 :::
 
@@ -2361,8 +2696,8 @@ Animation duration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=説明}
+}
 
 :::
 
@@ -2371,10 +2706,12 @@ Animation easing function
 
 **Type:** `CrosshairRect | undefined`
 
-:::note{title=Description}
-Vertical tooltip configuration, used to define the chart's vertical tooltip, including color, label style, etc.
+:::note{title=説明}
+コード実行に失敗した場合、または環境がサポートされない場合のフォールバック方法。
 
-Crosshair rectangle area configuration, a configuration type used to display a crosshair rectangle area in the chart.
+
+
+
 
 :::
 
@@ -2383,8 +2720,8 @@ Crosshair rectangle area configuration, a configuration type used to display a c
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the crosshair rectangle area
+:::note{title=説明}
+selector = {
 
 :::
 
@@ -2392,8 +2729,8 @@ Whether to display the crosshair rectangle area
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair rectangle area color
+:::note{title=説明}
+\- not in: ディメンションフィールドの値が value に含まれないデータ項目を選択します
 
 :::
 
@@ -2401,8 +2738,8 @@ Crosshair rectangle area color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair rectangle area label color
+:::note{title=説明}
+演算子
 
 :::
 
@@ -2410,8 +2747,8 @@ Crosshair rectangle area label color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the crosshair rectangle area label
+:::note{title=説明}
+
 
 :::
 
@@ -2419,8 +2756,8 @@ Whether to display the crosshair rectangle area label
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair rectangle area label background color
+:::note{title=説明}
+
 
 :::
 
@@ -2429,8 +2766,8 @@ Crosshair rectangle area label background color
 
 **Type:** `number | number[] | undefined`
 
-:::note{title=Description}
-Stacking corner radius for Percent Column Chart
+:::note{title=説明}
+並列縦棒グラフの積み上げ角丸
 
 :::
 
@@ -2439,8 +2776,8 @@ Stacking corner radius for Percent Column Chart
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Maximum width of the bars, can be a pixel value or a percentage string.
+:::note{title=説明}
+
 
 :::
 
@@ -2449,26 +2786,28 @@ Maximum width of the bars, can be a pixel value or a percentage string.
 
 **Type:** `Sort | undefined`
 
-:::note{title=Description}
-X-axis sort configuration, supports sorting by dimensions or measures, as well as custom sort order.
+:::note{title=説明}
+AI生成のJavaScriptコードで複雑なデータフィルタリングロジックを実装します
 
-Category axis sort configuration, supports sorting by dimensions or measures, as well as custom sort order.
+
+
+
 
 :::
 
-**Example**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
+**例**
+
+
+**Type:** `"in" | "not in" | undefined`
 }
 
-- order:'asc'
-- orderBy:'date'
-or
-- customOrder:['2019', '2020', '2021']
+演算子
+}
+
+
+\- not in: ディメンションフィールドの値が value に含まれないデータ項目を選択します
+
+注意: selector と dynamicFilter は同時に使用できません。dynamicFilter の優先度が高いです
 
 
 
@@ -2477,13 +2816,13 @@ or
 
 **Type:** `"asc" | "desc" | undefined`
 
-:::note{title=Description}
-Sort order, can be 'asc' or 'desc'
+:::note{title=説明}
+
 
 :::
 
-**Example**
-order:'asc'
+**例**
+**Type:** `"row-with-field"`
 
 
 
@@ -2491,14 +2830,14 @@ order:'asc'
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Field to sort by, can be a dimension ID or a measure ID
+:::note{title=説明}
+
 
 :::
 
-**Example**
-- orderBy:'date'
-- orderBy:'profit'
+**例**
+
+
 
 
 
@@ -2506,8 +2845,8 @@ Field to sort by, can be a dimension ID or a measure ID
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Custom sort order, applied directly to the category axis
+:::note{title=説明}
+
 
 :::
 
@@ -2516,26 +2855,28 @@ Custom sort order, applied directly to the category axis
 
 **Type:** `SortLegend | undefined`
 
-:::note{title=Description}
-Legend sort configuration, supports sorting by dimensions or measures, as well as custom sort order.
+:::note{title=説明}
 
-Legend sort configuration, supports sorting by dimensions or measures, as well as custom sort order; the sort array follows the left-to-right or top-to-bottom order.
+
+
+
+
 
 :::
 
-**Example**
-sortLegend: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sortLegend: {
-  customOrder:['2019', '2020', '2021']
+**例**
+
+チャートのアニメーションフィルタ設定
+
 }
 
-- order:'asc'
-- orderBy:'date'
-or
-- customOrder:['2019', '2020', '2021']
+AI が生成した JavaScript コードでチャートマーカー (棒、点など) のフィルタリングを実装します
+}
+
+
+
+_.maxBy(group, item => item.profit / item.sales)
+
 
 
 
@@ -2544,13 +2885,13 @@ or
 
 **Type:** `"asc" | "desc" | undefined`
 
-:::note{title=Description}
-Sort order, can be 'asc' or 'desc'
+:::note{title=説明}
+])
 
 :::
 
-**Example**
-order:'asc'
+**例**
+"Highlight the bar with the highest profit rate in each region"
 
 
 
@@ -2558,14 +2899,14 @@ order:'asc'
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Field to sort by, can be a dimension ID or a measure ID
+:::note{title=説明}
+AI 生成の JavaScript フィルタリングコード
 
 :::
 
-**Example**
-- orderBy:'date'
-- orderBy:'profit'
+**例**
+
+\- 入力パラメータ: data (配列)。各項目には行番号を表す __row_index フィールドが含まれます
 
 
 
@@ -2573,8 +2914,8 @@ Field to sort by, can be a dimension ID or a measure ID
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Custom sort order, applied directly to the legend; ascending is left-to-right or top-to-bottom, descending is right-to-left or bottom-to-top.
+:::note{title=説明}
+
 
 :::
 
@@ -2583,16 +2924,20 @@ Custom sort order, applied directly to the legend; ascending is left-to-right or
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Theme is a low-priority configuration functionality that includes common configurations shared by all chart types and those shared within a single chart type category. Built-in 'light' and 'dark' themes are provided, and users can customize themes via Builder.
+:::note{title=説明}
 
-Theme
 
-Built-in 'light' and 'dark' themes are available; new themes can be customized via `registerTheme`.
+
+
+const maxItems = _.map(grouped, group =>
+
+
+
+_.map(maxItems, item => [
 
 :::
 
-**Example**
+**例**
 'dark'
 
 'light'
@@ -2615,16 +2960,16 @@ Built-in 'light' and 'dark' themes are available; new themes can be customized v
 
 **Type:** `BarStyle | BarStyle[] | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) style, used to define the style of graphical rectangles in the chart, including color, borders, corner radius, etc.
+:::note{title=説明}
+矩形マークのスタイル。グラフの矩形マークの色、枠線、角丸などを定義します。
 
-Supports global style or conditional style configuration.
+棒プリミティブ (矩形) を表示するかどうか
 
-Data Filter
 
-If `selector` is configured, it provides four types of data matching capabilities: numerical selector, local data selector, conditional dimension selector, and conditional measure selector.
 
-If `selector` is not configured, the style applies globally.
+
+
+**Type:** `string | undefined`
 
 :::
 
@@ -2633,45 +2978,47 @@ If `selector` is not configured, the style applies globally.
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data selector
+:::note{title=説明}
 
-If `selector` is configured, it provides four types of data matching capabilities: numerical selector, local data selector, conditional dimension selector, and conditional measure selector.
 
-If `selector` is not configured, the style applies globally.
+
+
+**Type:** `string | undefined`
+
+**Type:** `boolean | undefined`
 
 :::
 
-**Example**
-Numerical Selector
-selector = "tool"
-selector = ["tool", "book"]
-selector = 100
-selector = [100, 200]
+**例**
+棒プリミティブ (矩形) のストローク色
 
-Local Data Selector
-selector = { profit: 100 }
-selector = [{ profit: 100 }, { profit: 200 }]
+**Type:** `number | undefined`
 
-Conditional Dimension Selector
-selector = {
+**Type:** `string | undefined`
+
+**Type:** `number | undefined`
+
+
+
+
+
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-selector = {
+
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
-Conditional Measure Selector
-selector = {
+**例**
+
 field: 'profit',
 operator: '>=',
 value: 100
 }
-selector = {
+
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -2684,8 +3031,8 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+
 
 :::
 
@@ -2693,12 +3040,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+**Type:** `number | number[] | undefined`
+
+
 
 :::
 
@@ -2706,14 +3053,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+**Type:** `Selector | Selectors | undefined`
+
+4
 
 :::
 
@@ -2721,8 +3068,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -2730,28 +3077,40 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed by AI-generated code)
+:::note{title=説明}
 
-Implement complex data filtering logic using AI-generated JavaScript code.
 
-Applicable to Top N, statistical analysis, complex conditions, and other scenarios where static selectors are difficult to express.
 
-Core Capabilities:
 
-- Supports arbitrarily complex data filtering conditions.
+\- in: ディメンションフィールドの値が value に含まれるデータ項目を選択します
 
-- Use built-in utility functions for data manipulation.
+\- not in: ディメンションフィールドの値が value に含まれないデータ項目を選択します
 
-- Secure execution in the browser environment (Web Worker sandbox).
 
-Environment Requirements: Only supports browser environments; Node.js environments will use fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Chart dynamic filter configuration
 
-Implement filtering of chart markers (bars, points, etc.) using AI-generated JavaScript code.
+**Type:** `"in" | "not in" | undefined`
+
+\- not in: ディメンションフィールド値が値リストに含まれないデータ項目を選択します。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -2764,15 +3123,15 @@ Implement filtering of chart markers (bars, points, etc.) using AI-generated Jav
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=説明}
+
 
 :::
 
-**Example**
-"Highlight bars with sales greater than 1000"
+**例**
+"売上が1000を超える棒をハイライト"
 
-"Highlight the bar with the highest profit margin in each region"
+"各地域で利益率が最も高い棒をハイライト"
 
 
 
@@ -2780,23 +3139,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=説明}
 
-- Can only use built-in utility functions (accessed via _ or R)
 
-- Input parameters: data (array), where each item contains a __row_index field representing the row number
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-- __row_index represents the original data item's row number, and field represents the field to be highlighted
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight the sales field for data items with sales greater than 1000
+**例**
+
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2805,7 +3166,7 @@ field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2819,7 +3180,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2839,8 +3200,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+:::note{title=説明}
+field: 'sales'
 
 :::
 
@@ -2849,8 +3210,8 @@ Fallback plan when code execution fails or the environment is not supported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+return _.flatten(
 
 :::
 
@@ -2858,12 +3219,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+\- 禁止事項: eval、Function、非同期処理、DOM API、ネットワークリクエスト
 
-- in: Select data items where the dimension field value is in the specified value list
+const profitRate = item.profit / item.sales;
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+});
 
 :::
 
@@ -2871,14 +3232,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+**Type:** `Selector | Selectors | undefined`
+
+);
 
 :::
 
@@ -2886,8 +3247,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -2895,10 +3256,12 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+\- in: ディメンションフィールドの値が value に含まれるデータ項目を選択します
 
 :::
 
@@ -2919,8 +3282,8 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether graphical rectangles (bars) are visible
+:::note{title=説明}
+
 
 :::
 
@@ -2928,8 +3291,8 @@ Whether graphical rectangles (bars) are visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) color
+:::note{title=説明}
+
 
 :::
 
@@ -2937,8 +3300,8 @@ Graphical rectangle (bar) color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) color opacity
+:::note{title=説明}
+
 
 :::
 
@@ -2946,8 +3309,8 @@ Graphical rectangle (bar) color opacity
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) border color
+:::note{title=説明}
+
 
 :::
 
@@ -2955,8 +3318,8 @@ Graphical rectangle (bar) border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) border width
+:::note{title=説明}
+**Type:** `string | string[] | undefined`
 
 :::
 
@@ -2964,17 +3327,17 @@ Graphical rectangle (bar) border width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) border style
+:::note{title=説明}
+
 
 :::
 
-**Example**
-solid
+**例**
+**Type:** `string | undefined`
 
-dashed
 
-dotted
+
+
 
 
 
@@ -2982,15 +3345,17 @@ dotted
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Graphical rectangle (bar) corner radius
+:::note{title=説明}
 
-Graphical rectangle (bar) stroke opacity
+
+
+
+テキストフォントサイズ
 
 :::
 
-**Example**
-4
+**例**
+12
 
 [0, 0, 10, 10]
 
@@ -3005,8 +3370,8 @@ Graphical rectangle (bar) stroke opacity
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-:::note{title=Description}
-Annotation point configuration; defines markers on data points based on selected data, including position, format, style, etc.
+:::note{title=説明}
+
 
 :::
 
@@ -3015,8 +3380,8 @@ Annotation point configuration; defines markers on data points based on selected
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data point selector, used to select data points for annotation.
+:::note{title=説明}
+
 
 :::
 
@@ -3025,8 +3390,8 @@ Data point selector, used to select data points for annotation.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+'right' Text is on the left side of the annotation point.
 
 :::
 
@@ -3034,12 +3399,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+テキストの垂直揃え。通常は 'top' に設定して注釈ポイントの下部にテキストを表示し、チャートの表示領域内に収まるようにします。
 
-- in: Select data items where the dimension field value is in the specified value list
+テキストがチャートの表示領域内で完全に表示されるように 'top' に設定することを推奨します。
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+top: テキストは注釈ポイントの下部にあり、テキストの上端がポイントに揃います。
 
 :::
 
@@ -3047,14 +3412,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+'top' Text is at the bottom of the annotation point.
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+
+**Type:** `boolean | undefined`
 
 :::
 
@@ -3062,8 +3427,17 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=説明}
+
 
 :::
 
@@ -3071,28 +3445,40 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed by AI-generated code)
+:::note{title=説明}
 
-Implement complex data filtering logic using AI-generated JavaScript code.
 
-Applicable to Top N, statistical analysis, complex conditions, and other scenarios where static selectors are difficult to express.
 
-Core Capabilities:
 
-- Supports arbitrarily complex data filtering conditions.
+背景のストローク色
 
-- Use built-in utility functions for data manipulation.
+true
 
-- Secure execution in the browser environment (Web Worker sandbox).
 
-Environment Requirements: Only supports browser environments; Node.js environments will use fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Chart dynamic filter configuration
 
-Implement filtering of chart markers (bars, points, etc.) using AI-generated JavaScript code.
+
+
+
+
+
+
+
+
+'red'
+
+
+
+
+
+
+
+
+
+
+
+背景の角丸半径
 
 :::
 
@@ -3105,15 +3491,15 @@ Implement filtering of chart markers (bars, points, etc.) using AI-generated Jav
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=説明}
+背景のパディング
 
 :::
 
-**Example**
-"Highlight bars with sales greater than 1000"
+**例**
+"売上が1000を超える棒をハイライト"
 
-"Highlight the bar with the highest profit margin in each region"
+"各地域で利益率が最も高い棒をハイライト"
 
 
 
@@ -3121,23 +3507,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=説明}
+負の値はコンポーネント全体を上方向に移動します。例: -10 はテキストと背景を 10 ピクセル上に移動します。
 
-- Can only use built-in utility functions (accessed via _ or R)
 
-- Input parameters: data (array), where each item contains a __row_index field representing the row number
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-- __row_index represents the original data item's row number, and field represents the field to be highlighted
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+**例**
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight the sales field for data items with sales greater than 1000
+**例**
+
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -3146,7 +3534,7 @@ field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -3160,7 +3548,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -3180,8 +3568,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+:::note{title=説明}
+
 
 :::
 
@@ -3190,8 +3578,8 @@ Fallback plan when code execution fails or the environment is not supported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+**Type:** `"value"`
 
 :::
 
@@ -3199,12 +3587,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+**例**
+
+
 
 :::
 
@@ -3212,14 +3600,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+
+
+
 
 :::
 
@@ -3227,8 +3615,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+"Use the highest sales value as a mark line reference"
 
 :::
 
@@ -3236,10 +3624,12 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
+注釈線の平均値を計算します
 
-Written during the prepare() phase; read-only at runtime
+
+
+
 
 :::
 
@@ -3260,13 +3650,13 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=説明}
+**Type:** `string | number | undefined`
 
 :::
 
-**Example**
-'Annotation text'
+**例**
+'注釈テキスト'
 
 
 
@@ -3274,12 +3664,12 @@ Annotation text
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3288,13 +3678,13 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=説明}
+
 
 :::
 
-**Example**
-12
+**例**
+
 
 
 
@@ -3302,13 +3692,13 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=説明}
+
 
 :::
 
-**Example**
-400
+**例**
+
 
 
 
@@ -3316,21 +3706,21 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally, if set to 'right', text will appear on the left side of the annotation point to ensure visibility in the chart.
+:::note{title=説明}
 
-Recommended setting is 'right' to ensure the text remains on the left side of the point.
 
-right: Text is on the left side of the point; the text's right edge aligns with the point.
 
-left: Text is on the right side of the point; the text's left edge aligns with the point.
 
-center: Text is centered on the point; the text's center aligns with the point.
+
+
+テキスト色
+
+'注釈テキスト'
 
 :::
 
-**Example**
-'right' Text is on the left side of the point.
+**例**
+'right' テキストは注釈点の左側
 
 
 
@@ -3338,21 +3728,21 @@ center: Text is centered on the point; the text's center aligns with the point.
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text vertical alignment. Generally, if set to 'top', text will appear at the bottom of the point to ensure visibility in the chart.
+:::note{title=説明}
+テキストがチャートの表示領域内で完全に表示されるように 'top' に設定することを推奨します。
 
-Recommended setting is 'top' to ensure the full text is visible.
+top: テキストは参照線の下部にあり、上端が (垂直) 注釈線の端に揃います。
 
-top: Text is below the point; the text's top edge aligns with the point.
+middle: テキストは参照線上で中央揃えになり、中心が (垂直) 注釈線の端に揃います。
 
-middle: Text is centered on the point; the text's center aligns with the point.
+bottom: テキストは参照線の上部にあり、下端が (垂直) 注釈線の端に揃います。
 
-bottom: Text is above the point; the text's bottom edge aligns with the point.
+
 
 :::
 
-**Example**
-'top' Text is below the point.
+**例**
+'top' テキストは注釈点の下側
 
 
 
@@ -3360,13 +3750,13 @@ bottom: Text is above the point; the text's bottom edge aligns with the point.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the text background is visible
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-true
+**例**
+
 
 
 
@@ -3374,12 +3764,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=説明}
+top: テキストは参照線の下に配置され、上端が (垂直) 注釈線の端に揃います。
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3388,12 +3778,12 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3402,13 +3792,13 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=説明}
+'right'
 
 :::
 
-**Example**
-2
+**例**
+
 
 
 
@@ -3416,13 +3806,13 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border corner radius
+:::note{title=説明}
+
 
 :::
 
-**Example**
-4
+**例**
+
 
 
 
@@ -3430,13 +3820,13 @@ Background border corner radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=説明}
+**Type:** `boolean | undefined`
 
 :::
 
-**Example**
-4
+**例**
+
 
 
 
@@ -3444,17 +3834,17 @@ Background padding
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Overall offset in the Y direction for the annotation point component. Set to a positive value if the point is at the top of the chart (large values) or negative if it's at the bottom (small values).
+:::note{title=説明}
+**Type:** `string | undefined`
 
-Negative values shift the entire component (text, background) upwards. For example, -10 shifts it up by 10 pixels.
+**例**
 
-Positive values shift the entire component downwards. For example, 10 shifts it down by 10 pixels.
+
 
 :::
 
-**Example**
-offsetY: 5 shifts the entire component down by 5 pixels.
+**例**
+**Type:** `number | undefined`
 
 
 
@@ -3462,17 +3852,17 @@ offsetY: 5 shifts the entire component down by 5 pixels.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Overall offset in the X direction for the annotation point component. Set to a positive value if the point is on the left side (category start) or negative if it's on the right side (category end).
+:::note{title=説明}
 
-Negative values shift the entire component (text, background) to the left. For example, -10 shifts it left by 10 pixels.
 
-Positive values shift the entire component to the right. For example, 10 shifts it right by 10 pixels.
+
+
+
 
 :::
 
-**Example**
-offsetX: 5 shifts the entire component to the right by 5 pixels.
+**例**
+
 
 
 
@@ -3481,8 +3871,8 @@ offsetX: 5 shifts the entire component to the right by 5 pixels.
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
-:::note{title=Description}
-Dimension value annotation line, displayed vertically. Position, style, etc., can be configured.
+:::note{title=説明}
+**Type:** `number | undefined`
 
 :::
 
@@ -3491,8 +3881,8 @@ Dimension value annotation line, displayed vertically. Position, style, etc., ca
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed X-value for the vertical annotation line. For category axes on the X-axis, enter a dimension value; for numeric axes, enter a specific number.
+:::note{title=説明}
+
 
 :::
 
@@ -3500,14 +3890,18 @@ Fixed X-value for the vertical annotation line. For category axes on the X-axis,
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed by AI-generated code)
+:::note{title=説明}
 
-Dynamically calculate the annotation line value using AI-generated JavaScript code.
 
-Applicable for determining annotation line positions based on data, such as average, max, quantile, or target values.
 
-Only supports browser environments (requires Web Worker).
+
+
+
+**Type:** `string | number | (string | number)[] | undefined`
+
+
+
+
 
 :::
 
@@ -3520,15 +3914,15 @@ Only supports browser environments (requires Web Worker).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=説明}
+平均、最大値、分位数、ビジネスラインなど、注釈線の位置をデータに基づいて動的に決定する必要があるシナリオに適しています。
 
 :::
 
-**Example**
-"Get the highest sales value as a reference for the annotation line."
+**例**
+"注釈線の参照値として最大売上を取得"
 
-"Calculate the average sales value for the annotation line."
+"注釈線に使用する平均売上を計算"
 
 
 
@@ -3536,42 +3930,44 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=説明}
 
-- Can only use built-in utility functions (accessed via _ or R)
 
-- Input parameters: data (array)
 
-- Must return a single numerical value or string: number | string
 
-- Applicable Scenarios: Dynamic values required for annotation lines (horizontal, vertical).
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+**例**
+
+
+
+
+
+
 
 :::
 
-**Example**
-Get the maximum sales value for the annotation line
+**例**
+
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-Calculate average value for the annotation line
+
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Get quantile for the annotation line
+
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-Calculate target value based on conditions
+**例**
 ```javascript
 const currentYearTotal = _.sumBy(
 _.filter(data, item => item.year === 2024),
@@ -3586,8 +3982,8 @@ return currentYearTotal;
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+:::note{title=説明}
+\- 入力パラメータ: data (配列)。
 
 :::
 
@@ -3595,10 +3991,12 @@ Fallback plan when code execution fails or the environment is not supported
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+const maxSales = _.maxBy(data, 'sales')?.sales;
 
 :::
 
@@ -3615,13 +4013,13 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=説明}
+prepare() フェーズで書き込まれ、実行時は読み取り専用です
 
 :::
 
-**Example**
-'Annotation text'
+**例**
+'注釈テキスト'
 
 
 
@@ -3629,12 +4027,12 @@ Annotation text
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Text position; the position of the annotation line label relative to the line.
+:::note{title=説明}
+_.filter(data, item => item.year === 2024),
 
 :::
 
-**Example**
+**例**
 'outsideEnd'
 
 
@@ -3643,12 +4041,12 @@ Text position; the position of the annotation line label relative to the line.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3657,13 +4055,13 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=説明}
+const index = Math.floor(sorted.length * 0.75);
 
 :::
 
-**Example**
-12
+**例**
+**Type:** `false | true`
 
 
 
@@ -3671,13 +4069,13 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=説明}
+
 
 :::
 
-**Example**
-400
+**例**
+
 
 
 
@@ -3685,20 +4083,20 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally, no manual setting is required.
+:::note{title=説明}
 
-Recommended setting is 'right' to ensure the text remains on the left side of the annotation line.
 
-right: Text is on the left side of the line; the text's right edge aligns with the vertical line.
+テキスト位置
 
-left: Text is on the right side of the line; the text's left edge aligns with the vertical line.
 
-center: Text is centered on the line; the text's center aligns with the vertical line.
+
+注釈線ラベル位置 (ラベルの線に対する相対位置)。
+
+
 
 :::
 
-**Example**
+**例**
 'right'
 
 
@@ -3707,20 +4105,20 @@ center: Text is centered on the line; the text's center aligns with the vertical
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text vertical alignment. Generally, no manual setting is required.
+:::note{title=説明}
+**例**
 
-Recommended setting is 'top' to ensure the full text remains visible in the chart.
+**例**
 
-top: Text is at the bottom of the line; the text's top edge aligns with the end of the vertical line.
 
-middle: Text is centered on the line; the text's center aligns with the end of the vertical line.
 
-bottom: Text is at the top of the line; the text's bottom edge aligns with the end of the vertical line.
+
+
+
 
 :::
 
-**Example**
+**例**
 'top'
 
 
@@ -3729,13 +4127,13 @@ bottom: Text is at the top of the line; the text's bottom edge aligns with the e
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the line is visible
+:::note{title=説明}
+
 
 :::
 
-**Example**
-true
+**例**
+
 
 
 
@@ -3743,12 +4141,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3757,13 +4155,13 @@ Line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width
+:::note{title=説明}
+
 
 :::
 
-**Example**
-2
+**例**
+
 
 
 
@@ -3771,12 +4169,12 @@ Line width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Line style
+:::note{title=説明}
+テキストがチャートの表示領域内で完全に表示されるように 'top' に設定することを推奨します。
 
 :::
 
-**Example**
+**例**
 'solid'
 
 
@@ -3785,13 +4183,13 @@ Line style
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether text background is visible
+:::note{title=説明}
+
 
 :::
 
-**Example**
-true
+**例**
+center: テキストは基準線の中央にあります（水平マークラインの端）。
 
 
 
@@ -3799,12 +4197,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3813,12 +4211,12 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -3827,13 +4225,13 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=説明}
+
 
 :::
 
-**Example**
-2
+**例**
+
 
 
 
@@ -3841,13 +4239,13 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border corner radius
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-4
+**例**
+
 
 
 
@@ -3855,13 +4253,13 @@ Background border corner radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-4
+**例**
+
 
 
 
@@ -3870,8 +4268,8 @@ Background padding
 
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
-:::note{title=Description}
-Numerical annotation line (including average, maximum, minimum lines, etc.), displayed horizontally. Position, style, etc., can be configured. Use this configuration for drawing annotation lines corresponding to values like average lines.
+:::note{title=説明}
+4
 
 :::
 
@@ -3880,8 +4278,8 @@ Numerical annotation line (including average, maximum, minimum lines, etc.), dis
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed Y-value for the horizontal annotation line. For category axes on the Y-axis, enter a dimension value; for numeric axes, enter a specific number.
+:::note{title=説明}
+
 
 :::
 
@@ -3889,14 +4287,18 @@ Fixed Y-value for the horizontal annotation line. For category axes on the Y-axi
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed by AI-generated code)
+:::note{title=説明}
 
-Dynamically calculate the annotation line value using AI-generated JavaScript code.
 
-Applicable for determining annotation line positions based on data, such as average, max, quantile, or target values.
 
-Only supports browser environments (requires Web Worker).
+
+
+
+
+
+
+
+
 
 :::
 
@@ -3909,15 +4311,15 @@ Only supports browser environments (requires Web Worker).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=説明}
+
 
 :::
 
-**Example**
-"Get the highest sales value as a reference for the annotation line."
+**例**
+"注釈線の参照値として最大売上を取得"
 
-"Calculate the average sales value for the annotation line."
+"注釈線に使用する平均売上を計算"
 
 
 
@@ -3925,42 +4327,44 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=説明}
+演算子
 
-- Can only use built-in utility functions (accessed via _ or R)
 
-- Input parameters: data (array)
 
-- Must return a single numerical value or string: number | string
+\- not in: ディメンションフィールドの値が value に含まれないデータ項目を選択します
 
-- Applicable Scenarios: Dynamic values required for annotation lines (horizontal, vertical).
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+'red'
+
+**Type:** `"in" | "not in" | undefined`
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
-**Example**
-Get the maximum sales value for the annotation line
+**例**
+\- not in: ディメンションフィールドの値が value に含まれないデータ項目を選択します
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-Calculate average value for the annotation line
+
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Get quantile for the annotation line
+
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-Calculate target value based on conditions
+'solid'
 ```javascript
 const currentYearTotal = _.sumBy(
 _.filter(data, item => item.year === 2024),
@@ -3975,8 +4379,8 @@ return currentYearTotal;
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+:::note{title=説明}
+
 
 :::
 
@@ -3984,10 +4388,12 @@ Fallback plan when code execution fails or the environment is not supported
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+テキスト色
 
 :::
 
@@ -4004,13 +4410,13 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-'Annotation text'
+**例**
+'注釈テキスト'
 
 
 
@@ -4018,14 +4424,16 @@ Annotation text
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Text position
+:::note{title=説明}
+**例**
 
-The position of the annotation line label (relative to the line).
+
+
+
 
 :::
 
-**Example**
+**例**
 'outsideEnd'
 
 
@@ -4034,12 +4442,12 @@ The position of the annotation line label (relative to the line).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=説明}
+center: テキストは注釈領域内で中央揃えになり、テキストの中心が領域に揃います。
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4048,13 +4456,13 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=説明}
+テキストの垂直揃え。通常は 'top' に設定して注釈領域の下部にテキストを表示し、チャートの表示領域内に収まるようにします。
 
 :::
 
-**Example**
-12
+**例**
+
 
 
 
@@ -4062,13 +4470,13 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=説明}
+
 
 :::
 
-**Example**
-400
+**例**
+**Type:** `boolean | undefined`
 
 
 
@@ -4076,20 +4484,20 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally, no manual setting is required.
+:::note{title=説明}
 
-Recommended setting is 'right' to ensure the text remains on the left side of the annotation line.
 
-right: Text is on the left side of the line; the text's right edge aligns with the (horizontal) annotation line's end point.
 
-left: Text is on the right side of the line; the text's left edge aligns with the (horizontal) annotation line's end point.
 
-center: Text is centered on the line; the text's center aligns with the (horizontal) annotation line's end point.
+
+
+
+
+背景色
 
 :::
 
-**Example**
+**例**
 'right'
 
 
@@ -4098,20 +4506,20 @@ center: Text is centered on the line; the text's center aligns with the (horizon
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text vertical alignment. Generally, no manual setting is required.
+:::note{title=説明}
+背景のストローク色
 
-Recommended setting is 'top' to ensure the full text is visible.
 
-top: Text is at the bottom of the line; the text's top edge aligns with the (horizontal) annotation line.
 
-middle: Text is centered on the line; the text's center aligns with the (horizontal) annotation line.
+背景のストローク色
 
-bottom: Text is at the top of the line; the text's bottom edge aligns with the (horizontal) annotation line.
+**例**
+
+**例**
 
 :::
 
-**Example**
+**例**
 'top'
 
 
@@ -4120,13 +4528,13 @@ bottom: Text is at the top of the line; the text's bottom edge aligns with the (
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether text background is visible
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-true
+**例**
+
 
 
 
@@ -4134,12 +4542,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=説明}
+背景の角丸半径
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4148,12 +4556,12 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=説明}
+背景のパディング
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4162,15 +4570,17 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=説明}
+注釈領域の色
 
-Background border width
+
+
+注釈領域の色
 
 :::
 
-**Example**
-2
+**例**
+
 
 
 
@@ -4178,13 +4588,13 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border corner radius
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-4
+**例**
+
 
 
 
@@ -4192,13 +4602,13 @@ Background border corner radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
-4
+**例**
+
 
 
 
@@ -4206,15 +4616,17 @@ Background padding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the line is visible
+:::note{title=説明}
+**例**
 
-Line is visible
+
+
+**例**
 
 :::
 
-**Example**
-true
+**例**
+
 
 
 
@@ -4222,12 +4634,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4236,13 +4648,13 @@ Line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width
+:::note{title=説明}
+
 
 :::
 
-**Example**
-2
+**例**
+
 
 
 
@@ -4250,12 +4662,12 @@ Line width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Line style
+:::note{title=説明}
+注釈領域枠線の角丸半径。
 
 :::
 
-**Example**
+**例**
 'solid'
 
 
@@ -4264,8 +4676,8 @@ Line style
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
-:::note{title=Description}
-Whether to enable the function to split the main line into two segments.
+:::note{title=説明}
+
 
 :::
 
@@ -4274,8 +4686,8 @@ Whether to enable the function to split the main line into two segments.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Primary color for segments greater than the annotation value.
+:::note{title=説明}
+
 
 :::
 
@@ -4283,8 +4695,8 @@ Primary color for segments greater than the annotation value.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Primary color for segments smaller than the annotation value.
+:::note{title=説明}
+
 
 :::
 
@@ -4293,8 +4705,8 @@ Primary color for segments smaller than the annotation value.
 
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
-:::note{title=Description}
-Annotation area configuration; defines marker areas on the chart based on selected data, including their position, style, etc.
+:::note{title=説明}
+**例**
 
 :::
 
@@ -4303,8 +4715,8 @@ Annotation area configuration; defines marker areas on the chart based on select
 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
-:::note{title=Description}
-Marks data based on selected items.
+:::note{title=説明}
+4
 
 :::
 
@@ -4313,8 +4725,8 @@ Marks data based on selected items.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; refers to the ID of a specific dimension item
+:::note{title=説明}
+
 
 :::
 
@@ -4322,12 +4734,12 @@ Dimension field; refers to the ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-- in: Select data items where the dimension field value is in the specified value list
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
+
+
+注釈領域の色
 
 :::
 
@@ -4335,14 +4747,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+**例**
 
-- in: Select data items where the dimension field value is in the specified value list
+**Type:** `number | undefined`
 
-- not in: Select data items where the dimension field value is NOT in the specified value list
 
-same as operator
+
+
 
 :::
 
@@ -4350,8 +4762,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select the value of the dimension field in the data item; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -4359,13 +4771,13 @@ Select the value of the dimension field in the data item; supports arrays
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=説明}
+'red'
 
 :::
 
-**Example**
-'Annotation text'
+**例**
+'注釈テキスト'
 
 
 
@@ -4373,12 +4785,12 @@ Annotation text
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
-:::note{title=Description}
-Text position
+:::note{title=説明}
+2
 
 :::
 
-**Example**
+**例**
 'top'
 
 
@@ -4387,12 +4799,12 @@ Text position
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=説明}
+4
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4401,13 +4813,13 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=説明}
+[2, 2]
 
 :::
 
-**Example**
-12
+**例**
+
 
 
 
@@ -4415,12 +4827,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=説明}
+0
 
 :::
 
-**Example**
+**例**
 400
 
 
@@ -4429,21 +4841,21 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally, if set to 'right', text will appear in the middle of the annotation area, ensuring visibility in the chart.
+:::note{title=説明}
+多項式回帰線設定。多項式の次数、回帰線スタイルなどを含みます。
 
-Recommended setting is 'center' to ensure the text remains centered within the annotation area.
+'center' に設定することを推奨します。これにより、テキストをマークエリアの中央に配置できます
 
-right: Text is on the left side of the annotation area; the text's right edge aligns with the area.
 
-left: Text is on the right side of the annotation area; the text's left edge aligns with the area.
 
-center: Text is centered within the area; the text's center aligns with the area.
+
+
+
 
 :::
 
-**Example**
-'center' Text is centered within the area.
+**例**
+'center' テキストは注釈領域の中央
 
 
 
@@ -4451,21 +4863,21 @@ center: Text is centered within the area; the text's center aligns with the area
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text vertical alignment. Generally, if set to 'top', text will appear at the bottom of the annotation area to ensure visibility in the chart.
+:::note{title=説明}
 
-Recommended setting is 'top' to ensure the full text is visible.
 
-top: Text is at the bottom of the area; the text's top edge aligns with the area.
 
-middle: Text is centered within the area; the text's center aligns with the area.
 
-bottom: Text is at the top of the area; the text's bottom edge aligns with the area.
+
+
+
+
+多項式回帰の次数
 
 :::
 
-**Example**
-'top' Text is at the bottom of the area.
+**例**
+'top' テキストは注釈領域の下側
 
 
 
@@ -4473,12 +4885,12 @@ bottom: Text is at the top of the area; the text's bottom edge aligns with the a
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the background is visible
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 true
 
 
@@ -4487,12 +4899,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=説明}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4501,14 +4913,16 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=説明}
+テキスト色
 
-Background border color
+
+
+テキスト色
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4517,12 +4931,12 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=説明}
+**例**
 
 :::
 
-**Example**
+**例**
 2
 
 
@@ -4531,14 +4945,16 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border corner radius
+:::note{title=説明}
+**例**
 
-Background border corner radius
+
+
+**例**
 
 :::
 
-**Example**
+**例**
 4
 
 
@@ -4547,12 +4963,12 @@ Background border corner radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=説明}
+背景の内側余白
 
 :::
 
-**Example**
+**例**
 4
 
 
@@ -4561,12 +4977,12 @@ Background padding
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Annotation area color
+:::note{title=説明}
+マークエリアの色
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4575,12 +4991,12 @@ Annotation area color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area color opacity
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 0.5
 
 
@@ -4589,12 +5005,12 @@ Annotation area color opacity
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Annotation area border color
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 'red'
 
 
@@ -4603,13 +5019,13 @@ Annotation area border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area border width
+:::note{title=説明}
+
 
 :::
 
-**Example**
-2
+**例**
+
 
 
 
@@ -4617,13 +5033,13 @@ Annotation area border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area border corner radius
+:::note{title=説明}
+
 
 :::
 
-**Example**
-4
+**例**
+**Type:** `boolean | undefined`
 
 
 
@@ -4631,12 +5047,12 @@ Annotation area border corner radius
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Annotation area border line style
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 [2, 2]
 
 
@@ -4645,12 +5061,12 @@ Annotation area border line style
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Outer padding of the annotation area
+:::note{title=説明}
+マークエリアの余白
 
 :::
 
-**Example**
+**例**
 0
 
 
@@ -4660,12 +5076,14 @@ Outer padding of the annotation area
 
 **Type:** `DimensionLinkage | undefined`
 
-:::note{title=Description}
-Whether to enable dimension linkage in pivot charts or measure combinations.
+:::note{title=説明}
+グラフでピボット機能またはメジャー組み合わせを有効にしたとき、ディメンション連動機能を有効にするかどうか
 
-When hovering over a dimension value, links and highlights data with the same dimension value in other charts.
+あるディメンション値にホバーしたとき、他のグラフ内の同じディメンション値のデータを連動して強調表示します
 
-Pivot chart dimension linkage configuration
+
+
+ピボットグラフのディメンション連動設定
 
 :::
 
@@ -4674,8 +5092,8 @@ Pivot chart dimension linkage configuration
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether to enable pivot chart dimension linkage
+:::note{title=説明}
+ピボットグラフのディメンション連動を有効にするかどうか
 
 :::
 
@@ -4683,8 +5101,8 @@ Whether to enable pivot chart dimension linkage
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show tooltips for all dimensions' sub-charts
+:::note{title=説明}
+すべてのディメンションに対応するサブグラフの Tooltip 情報を表示するかどうか
 
 :::
 
@@ -4692,8 +5110,8 @@ Whether to show tooltips for all dimensions' sub-charts
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the label for the corresponding crosshair
+:::note{title=説明}
+crosshair に対応するラベルを表示するかどうか
 
 :::
 
@@ -4702,7 +5120,8 @@ Whether to show the label for the corresponding crosshair
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Chart language configuration; supports 'zh-CN' and 'en-US'. You can also call `intl.setLocale('zh-CN')` to set the language.
+:::note{title=説明}
+グラフの言語設定。'zh\-CN' と 'en\-US' の 2 つの言語をサポートします。また intl.setLocale('zh\-CN') メソッドを呼び出して言語を設定できます
 
 :::
+

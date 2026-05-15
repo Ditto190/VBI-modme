@@ -40,11 +40,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     }
   ]
 }
@@ -53,9 +53,9 @@ export default () => {
 }
 ```
 
-## Default Dual Axis Chart
+## Hiệu ứng mặc định của biểu đồ hai trục
 
-Default Dual Axis Chart
+Hiệu ứng mặc định của biểu đồ hai trục
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -66,11 +66,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     }
   ],
   "dataset": [
@@ -106,9 +106,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## Biểu đồ hai trục
 
-Dual Axis Chart
+Biểu đồ hai trục
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -119,12 +119,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "primaryYAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "secondaryYAxis"
     }
   ],
@@ -161,9 +161,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## Biểu đồ hai trục kết hợp
 
-Combined Dual Axis Chart
+Biểu đồ hai trục kết hợp
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -174,25 +174,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Tỷ lệ",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất hoàn vốn",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -237,7 +237,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ]
 }
@@ -246,9 +246,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Dual Axis Chart
+## Biểu đồ hai trục kết hợp dạng pivot
 
-Pivot Combined Dual Axis Chart
+Biểu đồ hai trục kết hợp dạng pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -259,16 +259,16 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     },
     {
       "id": "type",
-      "alias": "Type",
+      "alias": "Loại",
       "encoding": "row"
     },
     {
       "id": "test",
-      "alias": "Tests",
+      "alias": "Kiểm thử",
       "encoding": "column"
     }
   ],
@@ -457,25 +457,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Tỷ lệ",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất hoàn vốn",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -486,9 +486,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## Biểu đồ hai trục
 
-Dual Axis Chart
+Biểu đồ hai trục
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -526,13 +526,13 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "primaryYAxis",
       "chartType": "area"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "secondaryYAxis",
       "chartType": "column"
     }
@@ -543,9 +543,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## Biểu đồ hai trục kết hợp
 
-Combined Dual Axis Chart
+Biểu đồ hai trục kết hợp
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -556,28 +556,28 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "primaryYAxis",
       "parentId": "first",
       "chartType": "area"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "secondaryYAxis",
       "parentId": "first",
       "chartType": "scatter"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Tỷ lệ",
       "encoding": "primaryYAxis",
       "parentId": "second",
       "chartType": "column"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất hoàn vốn",
       "encoding": "secondaryYAxis",
       "parentId": "second",
       "chartType": "line"
@@ -623,7 +623,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ]
 }
@@ -646,13 +646,13 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Profit"
+        "titleText": "Lợi nhuận"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Ratio"
+        "titleText": "Tỷ lệ"
       }
     }
   ],
@@ -660,38 +660,38 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Sales"
+        "titleText": "Doanh số"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Return Rate"
+        "titleText": "Tỷ suất hoàn vốn"
       }
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Tỷ lệ",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất hoàn vốn",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -736,7 +736,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ]
 }

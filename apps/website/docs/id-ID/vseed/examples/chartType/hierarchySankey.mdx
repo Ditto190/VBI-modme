@@ -1,8 +1,8 @@
 # HierarchySankey
 
-## Regional Sales Hierarchy Sankey
+## Sankey Hierarki Penjualan Regional
 
-A hierarchy sankey chart showing sales flowing from region to country to city.
+Menampilkan diagram sankey hierarki yang menunjukkan penjualan mengalir dari wilayah ke negara lalu ke kota.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -86,9 +86,9 @@ export default () => {
 }
 ```
 
-## Multiple Hierarchy Dimensions + One Measure
+## Dimensi Hierarki Bertingkat + Satu Metrik
 
-This example shows a hierarchical flow from region to country and then to channel, with a single measure controlling the flow size.
+Menampilkan aliran hierarki dari wilayah besar ke negara lalu ke kanal, dengan satu metrik yang mengontrol ukuran aliran.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -98,60 +98,60 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Direct",
+      "region": "Cina Utara",
+      "country": "Tiongkok",
+      "channel": "Langsung",
       "revenue": 42
     },
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Partner",
+      "region": "Cina Utara",
+      "country": "Tiongkok",
+      "channel": "Mitra",
       "revenue": 18
     },
     {
-      "region": "East China",
-      "country": "China",
-      "channel": "Direct",
+      "region": "Cina Timur",
+      "country": "Tiongkok",
+      "channel": "Langsung",
       "revenue": 36
     },
     {
-      "region": "East China",
-      "country": "China",
+      "region": "Cina Timur",
+      "country": "Tiongkok",
       "channel": "E-commerce",
       "revenue": 22
     },
     {
-      "region": "Southeast Asia",
-      "country": "Singapore",
-      "channel": "Direct",
+      "region": "Asia Tenggara",
+      "country": "Singapura",
+      "channel": "Langsung",
       "revenue": 15
     },
     {
-      "region": "Southeast Asia",
+      "region": "Asia Tenggara",
       "country": "Malaysia",
-      "channel": "Partner",
+      "channel": "Mitra",
       "revenue": 12
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Wilayah Besar"
     },
     {
       "id": "country",
-      "alias": "Country"
+      "alias": "Negara"
     },
     {
       "id": "channel",
-      "alias": "Channel"
+      "alias": "Kanal"
     }
   ],
   "measures": [
     {
       "id": "revenue",
-      "alias": "Revenue"
+      "alias": "Pendapatan"
     }
   ],
   "legend": {
@@ -172,9 +172,9 @@ export default () => {
 }
 ```
 
-## Measure Name As A Hierarchy Dimension + One Measure
+## Nama Metrik sebagai Dimensi Hierarki + Satu Metrik
 
-This example places the measure name itself on the hierarchy path, so each region flows into different business metrics while a single numeric measure controls the magnitude.
+Menempatkan “nama metrik” itu sendiri ke dalam jalur hierarki untuk menampilkan aliran berbagai metrik bisnis di setiap wilayah besar, dengan satu metrik numerik yang mengontrol ukurannya.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -184,50 +184,50 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "metricName": "Revenue",
+      "region": "Cina Utara",
+      "metricName": "Penjualan",
       "value": 42
     },
     {
-      "region": "North China",
-      "metricName": "Profit",
+      "region": "Cina Utara",
+      "metricName": "Laba",
       "value": 12
     },
     {
-      "region": "East China",
-      "metricName": "Revenue",
+      "region": "Cina Timur",
+      "metricName": "Penjualan",
       "value": 36
     },
     {
-      "region": "East China",
-      "metricName": "Profit",
+      "region": "Cina Timur",
+      "metricName": "Laba",
       "value": 10
     },
     {
-      "region": "South China",
-      "metricName": "Revenue",
+      "region": "Cina Selatan",
+      "metricName": "Penjualan",
       "value": 28
     },
     {
-      "region": "South China",
-      "metricName": "Profit",
+      "region": "Cina Selatan",
+      "metricName": "Laba",
       "value": 8
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Wilayah Besar"
     },
     {
       "id": "metricName",
-      "alias": "Metric Name"
+      "alias": "Nama Metrik"
     }
   ],
   "measures": [
     {
       "id": "value",
-      "alias": "Metric Value"
+      "alias": "Nilai Metrik"
     }
   ],
   "legend": {

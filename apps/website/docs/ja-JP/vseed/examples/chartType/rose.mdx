@@ -38,9 +38,9 @@ export default () => {
 }
 ```
 
-## Rose Chart (Zero Dimensions)
+## ローズチャート（ゼロディメンション）
 
-A rose chart without any dimension fields.
+ローズチャート（ゼロディメンション）
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -62,9 +62,9 @@ export default () => {
 }
 ```
 
-## Stacked Rose Chart
+## 複合積み上げローズチャート
 
-A stacked rose chart for comparing multiple measures across different categories.
+複合積み上げローズチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -107,25 +107,25 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "収益率",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -136,9 +136,9 @@ export default () => {
 }
 ```
 
-## Pivot Stacked Rose Chart
+## ピボット積み上げローズチャート
 
-A stacked rose chart with pivot table layout.
+ピボット積み上げローズチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -149,28 +149,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "カテゴリ"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "日付",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "地域",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     }
   ],
   "dataset": [
@@ -321,9 +321,9 @@ export default () => {
 }
 ```
 
-## stackingRose Chart
+## 積み上げローズチャート
 
-stackingRose Chart
+積み上げローズチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'

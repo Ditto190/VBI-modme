@@ -1,42 +1,42 @@
 # VSeed
 
-:::info Summary
-Bridges flexible business requirements from above, constrains data input formats from below, and orchestrates data uniformly — turning complexity into simplicity.
+:::info Tóm tắt một câu
+Tiếp nhận nhu cầu kinh doanh linh hoạt ở phía trên, ràng buộc hình thức truy cập dữ liệu ở phía dưới, và điều phối dữ liệu thống nhất để biến phức tạp thành đơn giản.
 :::
 
-## What is VSeed?
+## VSeed là gì?
 
-`VSeed` is a visualization tool for data analysis, focused on providing highly consistent data transformation capabilities across different chart types, along with a set of out-of-the-box features to meet lightweight data analysis needs.
+`VSeed` là công cụ trực quan hóa hướng tới phân tích dữ liệu. Nó tập trung cung cấp khả năng chuyển đổi dữ liệu có tính nhất quán cao giữa các loại chart khác nhau, đồng thời cung cấp một số chức năng sẵn dùng để đáp ứng nhu cầu phân tích dữ liệu nhẹ.
 
-## What are VSeed's Advantages?
+## Ưu điểm của VSeed là gì?
 
-> First, it's genuinely easy to use. Second, it's truly flexible. Third, VSeed contains many abstractions — you need to understand how VSeed performs data reshaping to use it perfectly.
+> Trước hết, nó thực sự dễ dùng; tiếp theo, nó thật sự linh hoạt; cuối cùng, VSeed có nhiều phần đóng gói, nên cần hiểu cách VSeed reshape dữ liệu để có thể sử dụng trọn vẹn.
 
-1. The most intuitive way to switch chart types [Demo](/vseed/guide/intro/chartTypeSwitch)
-2. The easiest-to-use pivot charts [Demo](/vseed/guide/intro/pivotAndCombine)
-3. Powerful data reshaping — no manual data processing needed; any number of dimensions and measures, any chart type can be rendered [Demo](/vseed/guide/intro/dataReshape)
-4. `VSeed` is fully serializable, enabling cross-platform transfer of `VSeed DSL` [Demo](/vseed/guide/intro/crossPlatformRender)
-5. Out-of-the-box: number formatting, internationalization, light/dark themes, common styles, and more [Demo](/vseed/guide/intro/internationalization)
-6. Excellent data processing performance — supports Node.js-side data processing with Web-side visualization [Demo](/vseed/guide/intro/separateBuild)
+1. Cách chuyển đổi loại chart trực quan nhất [Demo](/vseed/guide/intro/chartTypeSwitch)
+2. Pivot chart dễ dùng nhất [Demo](/vseed/guide/intro/pivotAndCombine)
+3. Khả năng reshape dữ liệu mạnh mẽ, không cần xử lý dữ liệu thủ công; bất kỳ số lượng dimension, measure và bất kỳ loại chart nào cũng có thể tạo biểu đồ [Demo](/vseed/guide/intro/dataReshape)
+4. `VSeed` hoàn toàn có thể serialize, nên hỗ trợ truyền `VSeed DSL` đa nền tảng [Demo](/vseed/guide/intro/crossPlatformRender)
+5. Sẵn dùng: định dạng số, quốc tế hóa, theme sáng/tối, style thông dụng, v.v. [Demo](/vseed/guide/intro/internationalization)
+6. Hiệu năng xử lý dữ liệu tốt, hỗ trợ xử lý dữ liệu ở phía `Node` và trực quan hóa ở phía `Web` [Demo](/vseed/guide/intro/separateBuild)
 
-## What are VSeed's Limitations?
+## Nhược điểm của VSeed là gì?
 
-1. `VSeed` does not handle fine-grained customization of individual chart details — that's the responsibility of `VChart` and `VTable`. `VSeed` only provides the ability to flexibly modify `spec`; users can customize every chart detail according to their needs.
-2. Only datasets conforming to the `tidyData` specification can be visualized by `VSeed`. Non-standard datasets are not accepted.
-3. Built on top of the `VisActor` ecosystem — users need to understand the basic concepts of `VChart` and `VTable`.
+1. `VSeed` không chịu trách nhiệm tinh chỉnh từng chi tiết của một chart đơn lẻ. Những nhu cầu như vậy do `VChart`, `VTable` cung cấp. `VSeed` chỉ cung cấp khả năng chỉnh sửa `spec` linh hoạt; người dùng có thể tùy chỉnh từng chi tiết chart theo nhu cầu của mình.
+2. Chỉ những dataset tuân thủ chuẩn `tidyData` mới có thể được `VSeed` trực quan hóa. Dataset không chuẩn sẽ không được `VSeed` chấp nhận.
+3. Được xây dựng trên hệ sinh thái `VisActor`, nên người dùng cần hiểu các khái niệm cơ bản của `VChart` và `VTable`.
 
-## What are VSeed's Principles?
+## Nguyên tắc của VSeed là gì?
 
-1. `VSeed` must support serialization.
-2. `VSeed` should not provide excessive style configuration — it should focus on the relationship between charts and data.
-3. `VSeed` should encapsulate common general-purpose features in the analytics domain, such as number formatting, internationalization, themes, common styles, and common functionality — providing them out of the box.
-4. More flexible customization should be handled by users themselves. Therefore, VSeed only exposes a Spec Builder for building VChart and VTable specs.
-   - Users can flexibly control VChart and VTable instances.
-   - Users can modify VChart and VTable specs according to their needs.
+1. `VSeed` phải hỗ trợ serialize.
+2. `VSeed` không cần cung cấp quá nhiều khả năng cấu hình style, mà nên tập trung xử lý quan hệ giữa chart và dữ liệu.
+3. `VSeed` nên đóng gói các chức năng phổ biến trong lĩnh vực phân tích, như định dạng số, quốc tế hóa, theme, style thông dụng và chức năng thông dụng, để có thể dùng ngay.
+4. Các nhu cầu tùy chỉnh linh hoạt hơn nên do người dùng tự tùy chỉnh lần hai. Vì vậy VSeed chỉ cung cấp ra bên ngoài một Spec Builder để xây dựng spec của VChart và VTable.
+   - Người dùng có thể linh hoạt kiểm soát VChart Instance và VTable Instance.
+   - Người dùng có thể linh hoạt chỉnh sửa spec của VChart và VTable theo nhu cầu.
 
-## Why Design VSeed?
+## Vì sao thiết kế VSeed?
 
-1. `VChart` can never seamlessly switch to `VTable` and vice versa — for such needs, a higher-level abstraction layer is inevitable.
-2. Users of `VChart` and `VTable` must process data themselves — this work gets repeated hundreds or thousands of times unintentionally. `VSeed` aims to reduce data processing complexity in common scenarios and eliminate repetitive work.
-3. Lowers the barrier to using `VChart` and `VTable` to some extent — for example, rendering `PivotChart` with `VTable`.
-4. `VSeed` may ultimately evolve into a sub-module of `HeadlessBI`, used to build general-purpose data analysis tools.
+1. `VChart` sẽ không bao giờ có thể chuyển liền mạch sang `VTable`, và ngược lại. Với nhu cầu như vậy, một lớp đóng gói trừu tượng phía trên là điều tất yếu.
+2. Người dùng `VChart`, `VTable` phải tự xử lý dữ liệu. Công việc này vô tình bị lặp lại hàng trăm, hàng nghìn lần. `VSeed` muốn giảm độ phức tạp của xử lý dữ liệu trong các kịch bản thông dụng và giảm công việc lặp lại.
+3. Ở một mức độ nhất định, nó có thể hạ thấp ngưỡng sử dụng `VChart` và `VTable`, ví dụ dùng `VTable` để render `PivotChart`.
+4. `VSeed` cuối cùng có thể phát triển thành một submodule của `HeadlessBI`, dùng để xây dựng công cụ phân tích dữ liệu phổ thông.

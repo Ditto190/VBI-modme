@@ -116,9 +116,9 @@ export default () => {
 }
 ```
 
-## Measure Combination
+## Kennzahlenkombination
 
-Displays the distribution of sales and profit across categories like Food & Beverage and Personal Care, using nested rectangles to show hierarchies and measure relationships.
+Zeigt die Verteilung von Umsatz und Gewinn in Kategorien wie Lebensmittel & Getränke und Körperpflege und stellt Hierarchien sowie Kennzahlenbeziehungen mit verschachtelten Rechtecken dar.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -128,135 +128,135 @@ export default () => {
   "chartType": "treeMap",
   "dataset": [
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Yunling Spring Mineral Water",
+      "category": "Lebensmittel & Getränke",
+      "subKategorie": "Getränke",
+      "product": "Yunling-Quellmineralwasser",
       "sales": 12000,
       "profit": 1800
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Guoyue Fresh Orange Juice",
+      "category": "Lebensmittel & Getränke",
+      "subKategorie": "Getränke",
+      "product": "Guoyue frisch gepresster Orangensaft",
       "sales": 8500,
       "profit": 1400
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Mingxiang Oolong Tea",
+      "category": "Lebensmittel & Getränke",
+      "subKategorie": "Getränke",
+      "product": "Mingxiang Oolong-Tee",
       "sales": 6200,
       "profit": 950
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Cuile Potato Chips (Tomato)",
+      "category": "Lebensmittel & Getränke",
+      "subKategorie": "Snacks",
+      "product": "Cuile Kartoffelchips (Tomate)",
       "sales": 9500,
       "profit": 1600
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Nuts Party Mixed Nuts",
+      "category": "Lebensmittel & Getränke",
+      "subKategorie": "Snacks",
+      "product": "Nuts Party Nussmischung",
       "sales": 7800,
       "profit": 2100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Silky Smooth Shampoo",
+      "category": "Körperpflege",
+      "subKategorie": "Pflegeprodukte",
+      "product": "Seidig-glattes Shampoo",
       "sales": 6800,
       "profit": 1100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Facial Amino Acid Cleanser",
+      "category": "Körperpflege",
+      "subKategorie": "Pflegeprodukte",
+      "product": "Aminosäure-Gesichtsreiniger",
       "sales": 5200,
       "profit": 980
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Bijing Multi-effect Laundry Detergent",
+      "category": "Körperpflege",
+      "subKategorie": "Haushaltsreinigung",
+      "product": "Bijing Multi-Effekt-Waschmittel",
       "sales": 7200,
       "profit": 1050
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Kitchen Oil Cleaning Spray",
+      "category": "Körperpflege",
+      "subKategorie": "Haushaltsreinigung",
+      "product": "Küchen-Fettlöserspray",
       "sales": 4300,
       "profit": 720
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
+      "category": "Digitale Haushaltsgeräte",
+      "subKategorie": "Smarte Wearables",
       "product": "Smart S9 Smartwatch",
       "sales": 15000,
       "profit": 3200
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Yuepao Pro Fitness Tracker",
+      "category": "Digitale Haushaltsgeräte",
+      "subKategorie": "Smarte Wearables",
+      "product": "Yuepao Pro Fitness-Tracker",
       "sales": 6500,
       "profit": 1400
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "WarmNest Desktop Fan Heater",
+      "category": "Digitale Haushaltsgeräte",
+      "subKategorie": "Kleingeräte",
+      "product": "WarmNest Tisch-Heizlüfter",
       "sales": 4800,
       "profit": 880
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "Fresh Grind Portable Coffee Maker",
+      "category": "Digitale Haushaltsgeräte",
+      "subKategorie": "Kleingeräte",
+      "product": "Tragbare Kaffeemaschine Fresh Grind",
       "sales": 11000,
       "profit": 2600
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "PureBreath Car Air Purifier",
+      "category": "Digitale Haushaltsgeräte",
+      "subKategorie": "Kleingeräte",
+      "product": "PureBreath Auto-Luftreiniger",
       "sales": 7600,
       "profit": 1750
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Elegance Light Business Jacket",
+      "category": "Bekleidung & Accessoires",
+      "subKategorie": "Herrenbekleidung",
+      "product": "Elegance leichte Business-Jacke",
       "sales": 8800,
       "profit": 2400
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Cotton Whisper Basic T-shirt 3-pack",
+      "category": "Bekleidung & Accessoires",
+      "subKategorie": "Herrenbekleidung",
+      "product": "Cotton Whisper Basic-T-Shirts im 3er-Pack",
       "sales": 5600,
       "profit": 1500
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "Flora Floral Print Dress",
+      "category": "Bekleidung & Accessoires",
+      "subKategorie": "Damenbekleidung",
+      "product": "Flora Kleid mit Blumenmuster",
       "sales": 9200,
       "profit": 2800
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "WarmWeave Cashmere Scarf",
+      "category": "Bekleidung & Accessoires",
+      "subKategorie": "Damenbekleidung",
+      "product": "WarmWeave Kaschmirschal",
       "sales": 4100,
       "profit": 1200
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Footwear",
-      "product": "CloudStep Cushioning Running Shoes",
+      "category": "Bekleidung & Accessoires",
+      "subKategorie": "Schuhe",
+      "product": "CloudStep gedämpfte Laufschuhe",
       "sales": 13500,
       "profit": 3600
     }
@@ -264,35 +264,35 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Kategorie",
       "encoding": "hierarchy"
     },
     {
-      "id": "subCategory",
-      "alias": "Sub-Category",
+      "id": "subKategorie",
+      "alias": "Unterkategorie",
       "encoding": "hierarchy"
     },
     {
       "id": "product",
-      "alias": "Product",
+      "alias": "Produkt",
       "encoding": "hierarchy"
     },
     {
       "id": "__MeaId__",
-      "alias": "Measure Name",
+      "alias": "Kennzahlenname",
       "encoding": "hierarchy"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales (CNY)",
+      "alias": "Umsatz (CNY)",
       "encoding": "size",
       "parentId": "a"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "size",
       "parentId": "b"
     }

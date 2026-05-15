@@ -1,9 +1,9 @@
-# Spec Pipeline
+# spec-Pipeline
 
-## Spec pipeline
+## spec-Pipeline
 
-The `spec pipeline` receives an advancedVSeed DSL and outputs a spec.
+Die `spec pipeline` nimmt eine advancedVSeed DSL entgegen und gibt eine spec aus.
 
-A `spec` is the input data structure for VChart or VTable, used to describe the configuration options of a chart.
+Eine `spec` ist die Eingabedatenstruktur für VChart oder VTable und beschreibt die Konfigurationsoptionen eines Diagramms.
 
-The `spec` itself cannot be fully serialized, so it cannot be constructed in a Node.js environment; it can only be used in a browser environment.
+Die `spec` selbst kann nicht vollständig serialisiert werden. Deshalb kann sie nicht in einer Node.js-Umgebung erstellt werden, sondern nur in einer Browserumgebung verwendet werden.

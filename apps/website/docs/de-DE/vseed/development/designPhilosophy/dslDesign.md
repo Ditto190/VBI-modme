@@ -1,36 +1,36 @@
-# DSL Design
+# DSL-Design
 
-:::info Significance
+:::info Bedeutung
 
-VSeed is a declarative DSL
+VSeed ist eine deklarative DSL
 
-- DSL design is the art of expressing domain problems — it effectively simplifies complex issues.
-- DSL allows those familiar with it to code as naturally as writing in their native language. Once you are familiar with VSeed, rendering charts feels as simple as writing plain English.
-- `VChart` and `VTable` follow the same philosophy.
+- DSL-Design ist die Kunst, Domänenprobleme auszudrücken, und kann komplexe Probleme wirksam vereinfachen.
+- Eine DSL ermöglicht vertrauten Nutzern, so natürlich zu codieren wie in ihrer Muttersprache zu schreiben. Wenn Sie mit VSeed vertraut sind, fühlt sich das Rendern von Charts so einfach an wie das Schreiben natürlicher Sprache.
+- `VChart` und `VTable` folgen demselben Prinzip.
 
 
 :::
 
 :::tip
 
-A `Declarative DSL` focuses on **"What"**. It describes the expected result or final state, without specifying the exact steps the computer should take to reach that state.
+Eine `deklarative DSL` konzentriert sich auf „Was“ (What). Sie beschreibt, wie das erwartete Ergebnis oder der Endzustand aussehen soll, ohne sich um die konkreten Schritte zu kümmern, mit denen der Computer diesen Zustand erreicht.
 
 
-An `Imperative DSL` focuses on **"How"**. It provides a series of explicit, step-by-step instructions, telling the computer exactly how to reach the desired state.
+Eine `imperative DSL` konzentriert sich auf „Wie“ (How). Sie stellt eine Reihe klarer, schrittweiser Anweisungen bereit und teilt dem Computer mit, wie er den Zielzustand Schritt für Schritt erreicht.
 :::
 
-## VSeed Trade-offs
+## VSeed-Abwägungen
 
-1. Domain Focus
+1. Domänenfokus (Focus)
 
-Sacrificing some generality to focus on solving domain-specific problems. The core goal of VSeed is not to deeply satisfy all the requirements of a single chart type, but to focus on data transformation before the chart type is determined. Other concerns, such as themes, interactions, and animations, are left to the consumer.
+VSeed opfert etwas Allgemeingültigkeit, um sich auf die Lösung domänenspezifischer Probleme zu konzentrieren. Das Kernziel von VSeed ist daher nicht, alle Anforderungen eines einzelnen Charttyps tiefgehend zu erfüllen, sondern sich auf die Datentransformation vor der Wahl des Charttyps zu konzentrieren. Weitere Funktionen wie Themes, Interaktionen und Animationen bleiben dem Nutzer überlassen.
 
-2. Abstraction Level
+2. Abstraktionsebene (Abstraction Level)
 
-`VSeed` provides a high level of abstraction, allowing users to focus on solving problems rather than worrying about low-level implementation details. This boosts development efficiency — for example, switching chart types only requires changing a single parameter, without worrying about the underlying mechanics.
+`VSeed` bietet eine höhere Abstraktionsebene, sodass Nutzer sich auf die Problemlösung konzentrieren können, statt auf Implementierungsdetails der unteren Ebene. Dadurch steigt die Entwicklungseffizienz. Zum Beispiel erfordert der Wechsel des Charttyps nur die Änderung eines Parameters, ohne die Details des Wechsels beachten zu müssen.
 
-3. Constraint is Advantage
+3. Einschränkung ist Vorteil (Constraint is Advantage)
 
-`VSeed` emphasizes constraints: it accepts a `VSeed DSL` as input and outputs a `spec` for either `VTable` or `VChart`. This allows users to maintain fine-grained control over individual chart features — `VSeed` is not a black box.
+`VSeed` betont Einschränkungen: Es nimmt eine `VSeed DSL` entgegen und gibt eine `spec` für `VTable` oder `VChart` aus. Dadurch können Nutzer die Funktionen einzelner Charts flexibler steuern. `VSeed` ist keine Blackbox.
 
-Therefore, VSeed can be simply thought of as a `Spec Builder` that does not break the original capabilities of `VTable` or `VChart`. Any `VChart` or `VTable` user can quickly integrate `VSeed` into their existing platform.
+Daher kann VSeed einfach als `Spec Builder` verstanden werden, der die ursprünglichen Fähigkeiten von `VTable` oder `VChart` nicht beeinträchtigt. Jeder `VChart`- oder `VTable`-Nutzer kann `VSeed` schnell in eine bestehende Plattform integrieren.

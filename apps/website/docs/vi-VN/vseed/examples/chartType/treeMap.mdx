@@ -116,9 +116,9 @@ export default () => {
 }
 ```
 
-## Measure Combination
+## Kết hợp chỉ số
 
-Displays the distribution of sales and profit across categories like Food & Beverage and Personal Care, using nested rectangles to show hierarchies and measure relationships.
+Hiển thị phân bố doanh số và lợi nhuận theo các danh mục như Thực phẩm & Đồ uống và Chăm sóc cá nhân, dùng các hình chữ nhật lồng nhau để thể hiện phân cấp và quan hệ giữa các chỉ số.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -128,135 +128,135 @@ export default () => {
   "chartType": "treeMap",
   "dataset": [
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Yunling Spring Mineral Water",
+      "category": "Thực phẩm & Đồ uống",
+      "subDanh mục": "Đồ uống",
+      "product": "Nước khoáng suối Yunling",
       "sales": 12000,
       "profit": 1800
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Guoyue Fresh Orange Juice",
+      "category": "Thực phẩm & Đồ uống",
+      "subDanh mục": "Đồ uống",
+      "product": "Nước cam tươi Guoyue",
       "sales": 8500,
       "profit": 1400
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Mingxiang Oolong Tea",
+      "category": "Thực phẩm & Đồ uống",
+      "subDanh mục": "Đồ uống",
+      "product": "Trà ô long Mingxiang",
       "sales": 6200,
       "profit": 950
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Cuile Potato Chips (Tomato)",
+      "category": "Thực phẩm & Đồ uống",
+      "subDanh mục": "Đồ ăn vặt",
+      "product": "Khoai tây lát Cuile (vị cà chua)",
       "sales": 9500,
       "profit": 1600
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Nuts Party Mixed Nuts",
+      "category": "Thực phẩm & Đồ uống",
+      "subDanh mục": "Đồ ăn vặt",
+      "product": "Hạt hỗn hợp Nuts Party",
       "sales": 7800,
       "profit": 2100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Silky Smooth Shampoo",
+      "category": "Chăm sóc cá nhân",
+      "subDanh mục": "Đồ dùng vệ sinh cá nhân",
+      "product": "Dầu gội mềm mượt Silky",
       "sales": 6800,
       "profit": 1100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Facial Amino Acid Cleanser",
+      "category": "Chăm sóc cá nhân",
+      "subDanh mục": "Đồ dùng vệ sinh cá nhân",
+      "product": "Sữa rửa mặt amino acid",
       "sales": 5200,
       "profit": 980
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Bijing Multi-effect Laundry Detergent",
+      "category": "Chăm sóc cá nhân",
+      "subDanh mục": "Vệ sinh nhà cửa",
+      "product": "Nước giặt đa năng Bijing",
       "sales": 7200,
       "profit": 1050
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Kitchen Oil Cleaning Spray",
+      "category": "Chăm sóc cá nhân",
+      "subDanh mục": "Vệ sinh nhà cửa",
+      "product": "Xịt tẩy dầu mỡ nhà bếp",
       "sales": 4300,
       "profit": 720
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Smart S9 Smartwatch",
+      "category": "Thiết bị số gia dụng",
+      "subDanh mục": "Thiết bị đeo thông minh",
+      "product": "Đồng hồ thông minh Smart S9",
       "sales": 15000,
       "profit": 3200
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Yuepao Pro Fitness Tracker",
+      "category": "Thiết bị số gia dụng",
+      "subDanh mục": "Thiết bị đeo thông minh",
+      "product": "Vòng theo dõi vận động Yuepao Pro",
       "sales": 6500,
       "profit": 1400
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "WarmNest Desktop Fan Heater",
+      "category": "Thiết bị số gia dụng",
+      "subDanh mục": "Thiết bị gia dụng nhỏ",
+      "product": "Máy sưởi để bàn WarmNest",
       "sales": 4800,
       "profit": 880
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "Fresh Grind Portable Coffee Maker",
+      "category": "Thiết bị số gia dụng",
+      "subDanh mục": "Thiết bị gia dụng nhỏ",
+      "product": "Máy pha cà phê di động Fresh Grind",
       "sales": 11000,
       "profit": 2600
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "PureBreath Car Air Purifier",
+      "category": "Thiết bị số gia dụng",
+      "subDanh mục": "Thiết bị gia dụng nhỏ",
+      "product": "Máy lọc không khí ô tô PureBreath",
       "sales": 7600,
       "profit": 1750
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Elegance Light Business Jacket",
+      "category": "Trang phục & phụ kiện",
+      "subDanh mục": "Đồ nam",
+      "product": "Áo khoác công sở nhẹ Elegance",
       "sales": 8800,
       "profit": 2400
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Cotton Whisper Basic T-shirt 3-pack",
+      "category": "Trang phục & phụ kiện",
+      "subDanh mục": "Đồ nam",
+      "product": "Bộ 3 áo thun cơ bản Cotton Whisper",
       "sales": 5600,
       "profit": 1500
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "Flora Floral Print Dress",
+      "category": "Trang phục & phụ kiện",
+      "subDanh mục": "Đồ nữ",
+      "product": "Váy hoa Flora",
       "sales": 9200,
       "profit": 2800
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "WarmWeave Cashmere Scarf",
+      "category": "Trang phục & phụ kiện",
+      "subDanh mục": "Đồ nữ",
+      "product": "Khăn choàng cashmere WarmWeave",
       "sales": 4100,
       "profit": 1200
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Footwear",
-      "product": "CloudStep Cushioning Running Shoes",
+      "category": "Trang phục & phụ kiện",
+      "subDanh mục": "Giày dép",
+      "product": "Giày chạy bộ đệm CloudStep",
       "sales": 13500,
       "profit": 3600
     }
@@ -264,35 +264,35 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Danh mục",
       "encoding": "hierarchy"
     },
     {
-      "id": "subCategory",
-      "alias": "Sub-Category",
+      "id": "subDanh mục",
+      "alias": "Danh mục con",
       "encoding": "hierarchy"
     },
     {
       "id": "product",
-      "alias": "Product",
+      "alias": "Sản phẩm",
       "encoding": "hierarchy"
     },
     {
       "id": "__MeaId__",
-      "alias": "Measure Name",
+      "alias": "Tên chỉ số",
       "encoding": "hierarchy"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales (CNY)",
+      "alias": "Doanh số (CNY)",
       "encoding": "size",
       "parentId": "a"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "size",
       "parentId": "b"
     }

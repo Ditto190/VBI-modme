@@ -1,14 +1,14 @@
 # BarParallel
 
-:::info{title=Recommended}
+:::info{title=Khuyen nghi}
 \- Recommended field configuration: `1` measure(s), `2` dimension(s)
 
 \- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
 
 :::
 
-:::info{title=Encoding Mapping}
-Parallel bar chart supports the following visual channels:
+:::info{title=Anh xa ma hoa}
+Parallel bar charts support the following visual channels:
 
 `yAxis`  : y-axis channel, supports`multiple dimensions`, mapped to the y-axis by dimension value
 
@@ -24,7 +24,7 @@ Parallel bar chart supports the following visual channels:
 
 :::
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Parallel bar chart, suitable for horizontal parallel comparison scenarios of multiple measures, where multiple bars are sorted in parallel to display different measure values.
 
 Applicable scenarios:
@@ -57,7 +57,7 @@ Features enabled by default:
 
 **Type:** `"barParallel"`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Parallel bar chart, suitable for horizontal parallel comparison of multiple measures.
 
 :::
@@ -72,7 +72,7 @@ Parallel bar chart, suitable for horizontal parallel comparison of multiple meas
 
 **Type:** `Record[]`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Data source; an aggregated dataset conforming to the TidyData specification, used to define the chart's data source and structure. Users don't need to process the dataset beforehand as VSeed features powerful data reshaping capabilities to automatically handle it; parallel bar chart data will eventually be converted to 2 dimensions and 1 measure.
 
 :::
@@ -87,13 +87,13 @@ Data source; an aggregated dataset conforming to the TidyData specification, use
 
 **Type:** `BarDimension[] | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Dimensions; the first dimension is mapped to the Y-axis, while other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items.
 
 :::
 
 **Example**
-[{id: 'category', alias: 'Category'}]
+[{id: 'category', alias: 'category'}]
 
 
 
@@ -102,7 +102,7 @@ Dimensions; the first dimension is mapped to the Y-axis, while other dimensions 
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Field ID corresponding to the dimension
 
 :::
@@ -111,7 +111,7 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Dimension alias
 
 :::
@@ -120,7 +120,7 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Dimension date format configuration
 
 :::
@@ -130,7 +130,7 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Time granularity, determines the date display precision
 
 :::
@@ -139,7 +139,7 @@ Time granularity, determines the date display precision
 
 **Type:** `"color" | "detail" | "tooltip" | "label" | "row" | "column" | "yAxis" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Channel to which the dimension is mapped
 
 - yAxis: Supports mapping multiple dimensions to the Y-axis.
@@ -163,13 +163,13 @@ Channel to which the dimension is mapped
 
 **Type:** `BarMeasure[] | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Measures; parallel bar chart measures are automatically merged into one measure and mapped to the X-axis. When multiple measures exist, measure names are merged with other dimensions to be displayed as legend items.
 
 :::
 
 **Example**
-[{id: 'value1', alias: 'Measures1'}, {id: 'value2', alias: 'Measures2'}]
+[{id: 'value1', alias: 'measure1'}, {id: 'value2', alias: 'measure2'}]
 
 
 
@@ -178,7 +178,7 @@ Measures; parallel bar chart measures are automatically merged into one measure 
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Measure ID, must be unique
 
 :::
@@ -187,7 +187,7 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Measure alias, duplicates allowed; when not set, alias defaults to id
 
 :::
@@ -196,7 +196,7 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Automatic number formatting, enabled by default, highest priority
 
 When autoFormat=true, it overrides all numFormat configurations
@@ -207,7 +207,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-- locale=zh-CN: 749740.264 → 74.97万
+\- locale='zh-CN': 749740.264 -> 744.5K
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -217,7 +217,7 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Custom number formatting for measures; automatically applied to labels and tooltips
 
 Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
@@ -229,7 +229,7 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
@@ -238,7 +238,7 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format ratio, cannot be 0
 
 :::
@@ -253,7 +253,7 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format symbol, e.g. %, ‰
 
 :::
@@ -268,7 +268,7 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Thousands separator for number formatting
 
 :::
@@ -277,7 +277,7 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format suffix
 
 :::
@@ -286,7 +286,7 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format prefix
 
 :::
@@ -295,7 +295,7 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
 
 :::
@@ -314,7 +314,7 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
 
 :::
@@ -335,7 +335,7 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
 
 :::
@@ -350,7 +350,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
 
 :::
@@ -364,7 +364,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
@@ -373,7 +373,7 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format ratio, cannot be 0
 
 :::
@@ -388,7 +388,7 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format symbol, e.g. %, ‰
 
 :::
@@ -403,7 +403,7 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Thousands separator for number formatting
 
 :::
@@ -412,7 +412,7 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format suffix
 
 :::
@@ -421,7 +421,7 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format prefix
 
 :::
@@ -430,7 +430,7 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
 
 :::
@@ -449,7 +449,7 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
 
 :::
@@ -470,7 +470,7 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
 
 :::
@@ -485,7 +485,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
 
 :::
@@ -494,7 +494,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"xAxis" | "color" | "detail" | "tooltip" | "label" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Channel to which the measure is mapped
 
 \- xAxis: measure mapped to the x-axis
@@ -513,7 +513,7 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
 
 :::
@@ -528,7 +528,7 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Pagination
 
 
@@ -542,7 +542,7 @@ Pagination configuration for the chart's pagination feature
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Pagination field; specifies the field name for pagination, must be a dimension
 
 :::
@@ -551,7 +551,7 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Current pagination value; specifies the value used to determine the current page
 
 :::
@@ -566,7 +566,7 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Chart background color; defaults to a transparent background. Background color can be a color string (e.g., 'red', 'blue'), or a hex, rgb, or rgba value (e.g., '#ff0000', 'rgba(255,0,0,0.5)').
 
 :::
@@ -576,7 +576,7 @@ Chart background color; defaults to a transparent background. Background color c
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
 
 :::
@@ -586,7 +586,7 @@ Color configuration for defining the chart's color scheme, including color lists
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Discrete color scheme used to define the colors of different elements in the chart
 
 :::
@@ -600,39 +600,57 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Continuous color scheme
+
 :::
+
+**Example**
+['#FFCDD2, #F8BBD0]
+
+
 
 ### colorMapping
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Manual color mapping
+:::note{title=Mo ta}
+Color mapping used to map data values to specific colors.
+
 :::
+
+**Example**
+{
+ 'profit': 'red',
+ 'sales': 'blue',
+}
+
+
 
 ### positiveColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color for positive values
+:::note{title=Mo ta}
+Positive/negative color configuration; defines the color for positive values in the chart.
+
 :::
 
 ### negativeColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color for negative values
+:::note{title=Mo ta}
+Positive/negative color configuration; defines the color for negative values in the chart.
+
 :::
+
 
 ## label
 
 **Type:** `Label | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Label configuration for defining chart data labels, including their position, format, and style.
 
 :::
@@ -642,8 +660,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled
+:::note{title=Mo ta}
+Whether labels display measure values
 
 :::
 
@@ -651,8 +669,8 @@ Whether label functionality is enabled
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line
+:::note{title=Mo ta}
+Whether labels wrap to the next line.
 
 :::
 
@@ -660,12 +678,12 @@ Whether labels wrap to the next line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values
+:::note{title=Mo ta}
+Whether labels display measure values.
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
 
 :::
 
@@ -673,12 +691,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Whether labels display measure values as percentages.
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
 
 :::
 
@@ -686,12 +704,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension labels
+:::note{title=Mo ta}
+Whether labels display dimension labels.
 
-Display all dimension labels
+Displays all dimension labels.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
 
 :::
 
@@ -699,8 +717,8 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+:::note{title=Mo ta}
+Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored.
 
 :::
 
@@ -708,8 +726,8 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+:::note{title=Mo ta}
+Label value format configuration; merged with the `format` in `measure`, where the `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
 
 :::
 
@@ -718,7 +736,7 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
@@ -727,7 +745,7 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format ratio, cannot be 0
 
 :::
@@ -742,7 +760,7 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format symbol, e.g. %, ‰
 
 :::
@@ -757,7 +775,7 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Thousands separator for number formatting
 
 :::
@@ -766,7 +784,7 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format suffix
 
 :::
@@ -775,7 +793,7 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format prefix
 
 :::
@@ -784,7 +802,7 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
 
 :::
@@ -803,7 +821,7 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
 
 :::
@@ -824,7 +842,7 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
 
 :::
@@ -839,7 +857,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
 
 :::
@@ -848,8 +866,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=Mo ta}
+selector = {
 
 :::
 
@@ -857,64 +875,72 @@ Label font size
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=Mo ta}
+}
+
 :::
 
 ### labelBackgroundColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Label background color
+
 :::
 
 ### labelStroke
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Label stroke color
+
 :::
 
 ### labelColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Label font color
+
 :::
 
 ### labelColorSmartInvert
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label automatically inverts its font color based on the graphical element's color.
+:::note{title=Mo ta}
+Whether the label font color automatically inverts based on the element's color.
+
 :::
 
 ### labelPosition
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Label position
+
 :::
 
 ### labelOverlap
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the label overlap prevention feature.
+:::note{title=Mo ta}
+Whether label overlap handling is enabled.
+
 :::
 
 ### selector
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filtering; the default relationship between multiple selectors is OR.
+:::note{title=Mo ta}
+Label selection; conditions between selectors default to OR.
+
 :::
 
 
@@ -922,20 +948,21 @@ Label filtering; the default relationship between multiple selectors is OR.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the `id` of an item in `dimensions`).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
 :::
 
@@ -943,34 +970,7 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
-
-- in: Select data items where the dimension field value is within the `value` array.
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-Same as `operator`.
-
-:::
-
-#### value
-
-**Type:** `string | number | (string | number)[]`
-
-:::note{title=Description}
-Selected dimension field values; supports arrays.
-:::
-
-### dynamicFilter
-
-**Type:** `ChartDynamicFilter | undefined`
-
-:::note{title=Description}
-Dynamic filter (executes AI-generated code)
-
-Implements complex data filtering logic via AI-generated JavaScript code.
-
+:::note{title=Mo ta}
 Core capabilities:
 
 - Supports arbitrary complex data filtering conditions.
@@ -979,11 +979,53 @@ Core capabilities:
 
 - Executes safely in the browser environment (Web Worker sandbox).
 
-Environment requirements: Only supported in browser environments; Node.js environments will use the fallback.
+:::
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+#### value
 
-Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via AI-generated JavaScript code.
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
+:::
+
+### dynamicFilter
+
+**Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Mo ta}
+- center: Text is centered on the point.
+
+
+
+'right' (text is on the left side of the point)
+
+
+
+"Highlight the bar with the highest profit margin in each region"
+
+Line visibility.
+
+\- Uses built-in utility functions for data manipulation.
+
+true
+
+
+
+Environment Requirements: Supports browser environment only; Node.js environment will use fallback.
+
+
+
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+
+
+
+**Example**
+
+
+
+Background visibility.
 
 :::
 
@@ -996,14 +1038,15 @@ Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Mo ta}
+const maxItems = _.map(grouped, group =>
+
 :::
 
 **Example**
-"Highlight bars where sales are greater than 1000"
+    { __row_index: item.__row_index, field: 'product' },
 
-"Highlight the bar with the highest profit margin in each region"
+  ])
 
 
 
@@ -1011,18 +1054,20 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code:
+:::note{title=Mo ta}
+});
 
-- Only built-in utility functions (accessed via `_` or `R`) can be used.
 
-- Input parameter: `data` (Array), each item contains a `__row_index` field representing the row number.
 
-- Must return an array of row index and field combinations: `Array<{ __row_index: number, field: string }>`.
+    { __row_index: item.__row_index, field: 'sales' }
 
-- `__row_index` represents the original data item's row number, and `field` represents the field to highlight.
+);
 
-- Prohibited: `eval`, `Function`, asynchronous operations, DOM API, network requests.
+\- Must return an array of row index and field combinations: `Array<{ __row_index: number, field: string }>`.
+
+\- `__row_index` represents the row number of the original data item, and `field` represents the field to highlight.
+
+**Example**
 
 :::
 
@@ -1031,36 +1076,36 @@ Highlight the `sales` field of data items where sales are greater than 1000:
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
-  __row_index: item.__row_index,
-  field: 'sales'
+__row_index: item.__row_index,
+field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region:
+4
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
-  _.maxBy(group, item => item.profit / item.sales)
+_.maxBy(group, item => item.profit / item.sales)
 );
 return _.flatten(
-  _.map(maxItems, item => [
-    { __row_index: item.__row_index, field: 'product' },
-    { __row_index: item.__row_index, field: 'profit' }
-  ])
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
 );
 ```
 
-Highlight data items meeting multiple conditions:
+Highlight data items based on multiple filtering conditions:
 ```javascript
 const filtered = _.filter(data, item => {
-  const profitRate = item.profit / item.sales;
-  return profitRate > 0.2 && item.sales > 5000;
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
 });
 return _.flatten(
-  _.map(filtered, item => [
-    { __row_index: item.__row_index, field: 'product' },
-    { __row_index: item.__row_index, field: 'sales' }
-  ])
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
 );
 ```
 
@@ -1070,8 +1115,9 @@ return _.flatten(
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 
@@ -1079,20 +1125,21 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the `id` of an item in `dimensions`).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
 :::
 
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
 :::
 
@@ -1100,14 +1147,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
-Same as `operator`.
+- Executes safely in the browser environment (Web Worker sandbox).
 
 :::
 
@@ -1115,18 +1162,21 @@ Same as `operator`.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selected dimension field values; supports arrays.
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
 :::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Mo ta}
+User's filtering requirement description (natural language).
 
-Written during the `prepare()` phase, read-only at runtime.
+
+
+"Get the highest sales value as the annotation line reference"
 
 :::
 
@@ -1148,8 +1198,9 @@ Written during the `prepare()` phase, read-only at runtime.
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend configuration used to define the chart's legend, including position, format, style, etc.
+:::note{title=Mo ta}
+Legend configuration, used to define the chart's legend, including its position, format, and style.
+
 :::
 
 
@@ -1157,8 +1208,9 @@ Legend configuration used to define the chart's legend, including position, form
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the legend feature.
+:::note{title=Mo ta}
+Whether the legend feature is enabled.
+
 :::
 
 **Example**
@@ -1170,16 +1222,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the legend border.
+:::note{title=Mo ta}
+Whether the legend border is enabled.
+
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+Applies only to discrete legends.
+
 :::
 
 **Example**
-border: true
+Legend font weight
 
 
 
@@ -1187,32 +1241,36 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=Mo ta}
+Legend font color.
+
 :::
 
 ### pagerIconColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon color
+:::note{title=Mo ta}
+Pagination icon color.
+
 :::
 
 ### pagerIconDisableColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon disabled color
+:::note{title=Mo ta}
+Pagination icon disabled/grayed-out color.
+
 :::
 
 ### labelFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size
+:::note{title=Mo ta}
+Legend font size.
+
 :::
 
 **Example**
@@ -1224,16 +1282,18 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=Mo ta}
+Legend font color.
+
 :::
 
 ### labelFontWeight
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight
+:::note{title=Mo ta}
+Legend font weight.
+
 :::
 
 **Example**
@@ -1245,16 +1305,18 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Legend shape
+:::note{title=Mo ta}
+Legend shape type.
+
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+Applies only to discrete legends.
+
 :::
 
 **Example**
-shapeType: 'circle'
+Brush
 
 
 
@@ -1262,8 +1324,9 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Legend position
+
 :::
 
 **Example**
@@ -1275,30 +1338,64 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum number of columns or rows for the legend when many items exist.
+:::note{title=Mo ta}
+- `rect`: Rectangular brush, allows selection along both X and Y axes simultaneously.
 
-If the position is horizontal (`bottom`, `top`, etc.), `maxSize` controls the number of columns.
+- `polygon`: Polygonal brush, allows selection of an arbitrary polygon by clicking multiple points.
 
-If the position is vertical (`left`, `right`, etc.), `maxSize` controls the number of rows.
+- `x`: X-axis brush, restricts selection to the horizontal direction.
+
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+Applies only to discrete legends.
+
 :::
 
 **Example**
-maxSize: 2
+Brush mode; defines whether single or multiple areas can be selected.
 
 
+
+
+## regionPadding
+
+**Type:** `RegionPadding | undefined`
+
+:::note{title=Mo ta}
+Tooltip configuration, used to define the chart's tooltips, including their position, format, and style.
+
+
+
+Brush selection
+
+:::
+
+
+### top
+
+**Type:** `number | undefined`
+
+### right
+
+**Type:** `number | undefined`
+
+### bottom
+
+**Type:** `number | undefined`
+
+### left
+
+**Type:** `number | undefined`
 
 
 ## tooltip
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-Tooltip configuration used to define the chart's tooltips, including position, format, style, etc.
+:::note{title=Mo ta}
+\- `rect`: Rectangular selection; selection can be made in both X and Y directions simultaneously.
+
 :::
 
 
@@ -1306,8 +1403,9 @@ Tooltip configuration used to define the chart's tooltips, including position, f
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether to enable the tooltips feature.
+:::note{title=Mo ta}
+Whether tooltip is enabled
+
 :::
 
 
@@ -1315,12 +1413,17 @@ Whether to enable the tooltips feature.
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Brush
+:::note{title=Mo ta}
+Defines the shape and direction of the selection box.
 
-Brush configuration used to enable/disable and configure the brush selection capability.
 
-Chart brush configuration.
+
+\- `polygon`: Polygonal brush; allows drawing an arbitrary polygon by clicking multiple points.
+
+
+
+\- `y`: Y-axis brush; selects only in the Y-axis direction, unrestricted on the X-axis.
+
 :::
 
 
@@ -1328,54 +1431,69 @@ Chart brush configuration.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable brush selection.
+:::note{title=Mo ta}
+Define the style of data points that are selected.
+
 :::
 
 ### brushType
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-Brush type; defines the shape and direction of the selection area.
+:::note{title=Mo ta}
+brushtype
 
-- `rect`: Rectangular brush, allows selection along both X and Y axes simultaneously.
 
-- `polygon`: Polygonal brush, allows selection of an arbitrary polygon by clicking multiple points.
 
-- `x`: X-axis brush, restricts selection to the horizontal direction.
+Opacity
 
-- `y`: Y-axis brush, restricts selection to the vertical direction.
+Opacity of the selected data points, ranging from 0 to 1
+
+\- `polygon`: polygon brush selection; click multiple points to draw any polygon for selection
+
+\- `x`: brush selection in the X-axis direction only; the Y-axis direction is unrestricted
+
+Whether the axis is visible.
+
 :::
 
 ### brushMode
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-Brush mode; defines whether single or multiple areas can be selected.
+:::note{title=Mo ta}
+Opacity of selected data points, range 0-1
 
-- `single`: Single selection mode, only one brush area can exist at a time.
 
-- `multiple`: Multiple selection mode, multiple brush areas can exist simultaneously.
+
+Style for unselected data items
+
+Defines the style of data points outside the selected brush area
+
+\- `multiple`: multiple selection mode; multiple brush regions can exist at the same time
+
 :::
 
 ### removeOnClick
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear the selection area upon a click after the brush ends.
+:::note{title=Mo ta}
+Whether to clear the brush region after brushing ends
+
 :::
 
 ### inBrushStyle
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data items within the brush selection.
+:::note{title=Mo ta}
+Opacity of unselected data points, ranging from 0 to 1
 
-Defines the style of data points captured by the brush.
+
+
+Defines the style of brushed data points
+
 :::
 
 
@@ -1383,34 +1501,44 @@ Defines the style of data points captured by the brush.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity for selected data items (range: 0-1).
+:::note{title=Mo ta}
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+
+
+
+Defines the style of data points outside the selection.
+
 :::
 
 #### stroke
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color
+:::note{title=Mo ta}
+Category axis (X-axis) configuration, used to define the chart's X-axis, including position, format, style, etc.
+
 :::
 
 #### lineWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Stroke width
+
 :::
 
 ### outOfBrushStyle
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data items outside the brush selection.
+:::note{title=Mo ta}
+X-axis, category axis, X-axis configuration; defines the X-axis of the chart, including its position, format, style, etc.
 
-Defines the style of data points not captured by the brush.
+
+
+Defines the style of data points outside the brush selection
+
 :::
 
 
@@ -1418,24 +1546,295 @@ Defines the style of data points not captured by the brush.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity for unselected data items (range: 0-1).
+:::note{title=Mo ta}
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+
+
+
+Opacity of data points outside the brush selection, range 0-1
+
 :::
 
 #### stroke
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color
+:::note{title=Mo ta}
+Category axis (X-axis) configuration, used to define the chart's X-axis, including position, format, style, etc.
+
 :::
 
 #### lineWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Stroke width
+
+:::
+
+
+## animation
+
+**Type:** `BarLikeAnimation | undefined`
+
+:::note{title=Mo ta}
+Axis label, auto-hide interval; if the interval between two text labels is less than autoHideGap, the overlapping label is automatically hidden. Only effective for category axes.
+
+
+
+When autoHide is disabled, use sampling, configured on minGap
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mo ta}
+Whether bar/column chart animation is enabled
+
+:::
+
+### params
+
+**Type:** `BarLikeAnimationParams | undefined`
+
+:::note{title=Mo ta}
+Bar/column chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `BarLikeAppearAnimation | undefined`
+
+:::note{title=Mo ta}
+Whether to display the axis in reverse; applies only to numeric axes.
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Mo ta}
+**Example**
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mo ta}
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Tick size
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Mo ta}
+Label rotation angle
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Number format ratio, cannot be 0.
+
+:::
+
+#### update
+
+**Type:** `BarLikeUpdateAnimation | undefined`
+
+:::note{title=Mo ta}
+Bar/column chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("growth" | "moveIn")[] | undefined`
+
+:::note{title=Mo ta}
+**Example**
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mo ta}
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Tick size
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Mo ta}
+Label rotation angle
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Number format ratio, cannot be 0.
+
+:::
+
+#### loop
+
+**Type:** `BarLikeAnimationLoop | undefined`
+
+:::note{title=Mo ta}
+\- 1234.5678 converted to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mo ta}
+Tick size
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Mo ta}
+\- 1234.5678 converted to 1230, significantDigits:3
+
+:::
+
+##### loop
+
+**Type:** `BarLikeLoopAnimation | undefined`
+
+:::note{title=Mo ta}
+\- 1234.5678 converted to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+
+:::
+
+
+###### effects
+
+**Type:** `BarLikeLoopEffect[] | undefined`
+
+:::note{title=Mo ta}
+\- 1234.5678 converted to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mo ta}
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Tick size
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Mo ta}
+Label rotation angle
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Number format ratio, cannot be 0.
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Mo ta}
+Bar/column chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+atmosphereanimationeasefunction
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+atmosphereanimationcolor
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Mo ta}
+Atmosphere animation effect; supports ripple, fade, and breathe
+
 :::
 
 
@@ -1443,8 +1842,9 @@ Stroke width
 
 **Type:** `XLinearAxis | undefined`
 
-:::note{title=Description}
-X-axis (numeric axis) configuration used to define the X-axis, including position, format, style, etc.
+:::note{title=Mo ta}
+X-axis numeric-axis configuration, used to define the chart X-axis, including position, format, style, and related settings.
+
 :::
 
 
@@ -1452,80 +1852,90 @@ X-axis (numeric axis) configuration used to define the X-axis, including positio
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=Mo ta}
+Axis line color
+
 :::
 
 ### min
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value of the axis; has higher priority than `nice` and `zero`.
+:::note{title=Mo ta}
+Axis line width
+
 :::
 
 ### max
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value of the axis; has higher priority than `nice` and `zero`. If `true`, the maximum value is automatically calculated based on the data range.
+:::note{title=Mo ta}
+X-axis ticks
+
 :::
 
 ### log
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic scale (only effective for numeric axes).
+:::note{title=Mo ta}
+Whether to use a logarithmic axis; only applies to numeric axes
+
 :::
 
 ### logBase
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-The base of the logarithm (only effective for numeric axes).
+:::note{title=Mo ta}
+Animation easing function.
+
 :::
 
 ### nice
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust the axis scale interval for better readability. This setting is ignored if `min` and `max` are configured. Only effective for numeric axes.
+:::note{title=Mo ta}
+Y-axis (categorical axis) configuration used to define the Y-axis, including position, format, style, etc.
+
 :::
 
 ### inverse
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to reverse the axis (only effective for numeric axes).
+:::note{title=Mo ta}
+Whether the axis is visible.
+
 :::
 
 ### zero
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force the axis to include zero. This setting is ignored if `min` and `max` are configured. Only effective for numeric axes.
+:::note{title=Mo ta}
+Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
+
 :::
 
 ### autoFormat
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format axis labels. Only effective for numeric axes. If `true`, the `numFormat` configuration is ignored.
+:::note{title=Mo ta}
+Whether to automatically format numeric-axis tick labels. Only applies to numeric axes. When autoFormat is true, numFormat is ignored.
+
 :::
 
 ### numFormat
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Numerical formatting for the axis. Only effective for numeric axes. Has lower priority than `autoFormat`.
+:::note{title=Mo ta}
+Number formatting for numeric axes. Only applies to numeric axes and has lower priority than autoFormat.
+
 :::
 
 
@@ -1533,15 +1943,16 @@ Numerical formatting for the axis. Only effective for numeric axes. Has lower pr
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+
 :::
 
 #### ratio
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format ratio, cannot be 0
 
 :::
@@ -1556,7 +1967,7 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format symbol, e.g. %, ‰
 
 :::
@@ -1571,7 +1982,7 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Thousands separator for number formatting
 
 :::
@@ -1580,7 +1991,7 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format suffix
 
 :::
@@ -1589,7 +2000,7 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Number format prefix
 
 :::
@@ -1598,7 +2009,7 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
 
 :::
@@ -1617,7 +2028,7 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
 
 :::
@@ -1638,7 +2049,7 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
 
 :::
@@ -1653,7 +2064,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
 
 :::
@@ -1662,8 +2073,9 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-X-axis tick label
+:::note{title=Mo ta}
+\- orderBy:'date'
+
 :::
 
 
@@ -1671,48 +2083,54 @@ X-axis tick label
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label is visible.
+:::note{title=Mo ta}
+Custom sort order, which will be applied directly to the category axis
+
 :::
 
 #### labelColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color
+:::note{title=Mo ta}
+value: 'tool'
+
 :::
 
 #### labelFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=Mo ta}
+selector = {
+
 :::
 
 #### labelFontWeight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=Mo ta}
+}
+
 :::
 
 #### labelAngle
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 ### line
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-X-axis line
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 
@@ -1720,32 +2138,36 @@ X-axis line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible.
+:::note{title=Mo ta}
+\- orderBy:'date'
+
 :::
 
 #### lineColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color
+:::note{title=Mo ta}
+}
+
 :::
 
 #### lineWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 ### tick
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-X-axis tick
+:::note{title=Mo ta}
+  order: 'asc',
+
 :::
 
 
@@ -1753,40 +2175,45 @@ X-axis tick
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the tick is visible.
+:::note{title=Mo ta}
+Number format suffix
+
 :::
 
 #### tickInside
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the tick points inward.
+:::note{title=Mo ta}
+Sort order; can be 'asc' or 'desc'
+
 :::
 
 #### tickColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color
+:::note{title=Mo ta}
+Legend sorting configuration; supports sorting based on dimensions or measures, as well as custom sorting orders; the sort array follows the order from left to right or top to bottom.
+
 :::
 
 #### tickSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size
+:::note{title=Mo ta}
+sortLegend: {
+
 :::
 
 ### title
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-X-axis title
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 
@@ -1794,48 +2221,54 @@ X-axis title
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible.
+:::note{title=Mo ta}
+\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
+
 :::
 
 #### titleText
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text, defaults to the field configuration.
+:::note{title=Mo ta}
+}));
+
 :::
 
 #### titleColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color
+:::note{title=Mo ta}
+return _.flatten(
+
 :::
 
 #### titleFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size
+:::note{title=Mo ta}
+Custom sorting order; this order will be directly applied to the legend. Ascending follows left-to-right or top-to-bottom; descending follows right-to-left or bottom-to-top.
+
 :::
 
 #### titleFontWeight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight
+:::note{title=Mo ta}
+  ])
+
 :::
 
 ### grid
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-X-axis grid line
+:::note{title=Mo ta}
+Includes built-in `light` and `dark` themes. Custom themes can be added via `registerTheme`.
+
 :::
 
 
@@ -1847,32 +2280,36 @@ X-axis grid line
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color
+:::note{title=Mo ta}
+selector = [{ profit: 100 }, { profit: 200 }]
+
 :::
 
 #### gridWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width
+:::note{title=Mo ta}
+- not in: Select data items where the dimension field value is not within the `value` array.
+
 :::
 
 #### gridLineDash
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line type
+:::note{title=Mo ta}
+sort: {
+
 :::
 
 ### animation
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-Y-axis animation configuration.
+:::note{title=Mo ta}
+- orderBy: 'date'
+
 :::
 
 
@@ -1880,16 +2317,18 @@ Y-axis animation configuration.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration
+:::note{title=Mo ta}
+value: [100, 300]
+
 :::
 
 #### easing
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function.
+:::note{title=Mo ta}
+}
+
 :::
 
 
@@ -1897,8 +2336,9 @@ Animation easing function.
 
 **Type:** `YBandAxis | undefined`
 
-:::note{title=Description}
-Y-axis (categorical axis) configuration used to define the Y-axis, including position, format, style, etc.
+:::note{title=Mo ta}
+Y-axis category-axis configuration, used to define the chart Y-axis, including position, format, style, and related settings.
+
 :::
 
 
@@ -1906,83 +2346,94 @@ Y-axis (categorical axis) configuration used to define the Y-axis, including pos
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=Mo ta}
+Axis line color
+
 :::
 
 ### inverse
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is reversed (only effective for numeric axes).
+:::note{title=Mo ta}
+Whether the axis is visible.
+
 :::
 
 ### zero
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force show 0 on the axis; ignored if `min` and `max` are configured (only effective for numeric axes).
+:::note{title=Mo ta}
+Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
+
 :::
 
 ### labelAutoHide
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically hide overlapping labels. If two labels overlap (distance less than `autoHideGap`), the label causing the overlap is hidden (only effective for categorical axes).
+:::note{title=Mo ta}
+order: 'asc'
+
 :::
 
 ### labelAutoHideGap
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Target gap for automatic label hiding. If the gap between two text labels is smaller than `autoHideGap`, the label causing the overlap is hidden. Only effective for categorical axes.
+:::note{title=Mo ta}
+Axis label auto-hide gap. If the gap between two labels is smaller than autoHideGap, the overlapping label is hidden automatically. Only applies to category axes.
 
-- When `autoHide` is enabled, this sets the `autoHideSeparation`.
-- When `autoHide` is disabled, this sets the `minGap` for sampling.
+- orderBy: 'date'
+
+When autoHide is disabled, use sampling and configure it through minGap.
+
 :::
 
 ### labelAutoRotate
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically rotate labels when their width exceeds the axis length (only effective for categorical axes).
+:::note{title=Mo ta}
+Axis label auto-rotation. When label width exceeds axis length, labels are rotated automatically. Only applies to category axes.
+
 :::
 
 ### labelAutoRotateAngleRange
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Range of angles for automatic rotation when enabled (only effective for categorical axes).
+:::note{title=Mo ta}
+'dark'
+
 :::
 
 ### labelAutoLimit
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically limit label length. When label width exceeds the axis length, the excess is truncated with an ellipsis. The full label is visible on hover (only effective for categorical axes).
+:::note{title=Mo ta}
+Axis label auto-limit. When label width exceeds axis length, overflow is shown with ellipsis and the full label is visible on hover. Only applies to category axes.
+
 :::
 
 ### labelAutoLimitLength
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum length for label limiting. When text length exceeds this value, it is truncated with an ellipsis and visible on hover (only effective for categorical axes).
+:::note{title=Mo ta}
+Maximum length for axis label auto-limit. When label text exceeds this length, overflow is shown with ellipsis and the full label is visible on hover. Only applies to category axes.
+
 :::
 
 ### label
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis tick label
+:::note{title=Mo ta}
+\- orderBy:'date'
+
 :::
 
 
@@ -1990,48 +2441,54 @@ Y-axis tick label
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label is visible.
+:::note{title=Mo ta}
+Custom sort order, which will be applied directly to the category axis
+
 :::
 
 #### labelColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color
+:::note{title=Mo ta}
+value: 'tool'
+
 :::
 
 #### labelFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=Mo ta}
+selector = {
+
 :::
 
 #### labelFontWeight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=Mo ta}
+}
+
 :::
 
 #### labelAngle
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 ### line
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis line
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 
@@ -2039,32 +2496,36 @@ Y-axis line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible.
+:::note{title=Mo ta}
+\- orderBy:'date'
+
 :::
 
 #### lineColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color
+:::note{title=Mo ta}
+}
+
 :::
 
 #### lineWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 ### tick
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis tick
+:::note{title=Mo ta}
+  order: 'asc',
+
 :::
 
 
@@ -2072,40 +2533,45 @@ Y-axis tick
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the tick is visible.
+:::note{title=Mo ta}
+Number format suffix
+
 :::
 
 #### tickInside
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the tick points inward.
+:::note{title=Mo ta}
+Sort order; can be 'asc' or 'desc'
+
 :::
 
 #### tickColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color
+:::note{title=Mo ta}
+Legend sorting configuration; supports sorting based on dimensions or measures, as well as custom sorting orders; the sort array follows the order from left to right or top to bottom.
+
 :::
 
 #### tickSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size
+:::note{title=Mo ta}
+sortLegend: {
+
 :::
 
 ### title
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis title
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 
@@ -2113,48 +2579,54 @@ Y-axis title
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible.
+:::note{title=Mo ta}
+\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
+
 :::
 
 #### titleText
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text, defaults to the field configuration.
+:::note{title=Mo ta}
+}));
+
 :::
 
 #### titleColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color
+:::note{title=Mo ta}
+return _.flatten(
+
 :::
 
 #### titleFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size
+:::note{title=Mo ta}
+Custom sorting order; this order will be directly applied to the legend. Ascending follows left-to-right or top-to-bottom; descending follows right-to-left or bottom-to-top.
+
 :::
 
 #### titleFontWeight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight
+:::note{title=Mo ta}
+  ])
+
 :::
 
 ### grid
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-Y-axis grid line
+:::note{title=Mo ta}
+Includes built-in `light` and `dark` themes. Custom themes can be added via `registerTheme`.
+
 :::
 
 
@@ -2166,32 +2638,36 @@ Y-axis grid line
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color
+:::note{title=Mo ta}
+selector = [{ profit: 100 }, { profit: 200 }]
+
 :::
 
 #### gridWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width
+:::note{title=Mo ta}
+- not in: Select data items where the dimension field value is not within the `value` array.
+
 :::
 
 #### gridLineDash
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line type
+:::note{title=Mo ta}
+sort: {
+
 :::
 
 ### animation
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-Y-axis animation configuration.
+:::note{title=Mo ta}
+- orderBy: 'date'
+
 :::
 
 
@@ -2199,16 +2675,18 @@ Y-axis animation configuration.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration
+:::note{title=Mo ta}
+value: [100, 300]
+
 :::
 
 #### easing
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function.
+:::note{title=Mo ta}
+}
+
 :::
 
 
@@ -2216,8 +2694,12 @@ Animation easing function.
 
 **Type:** `CrosshairRect | undefined`
 
-:::note{title=Description}
-Crosshair rectangle configuration. Used to define the color and label style of the crosshair rectangle area in the chart.
+:::note{title=Mo ta}
+selector = { profit: 100 }
+
+
+
+selector = {
 
 :::
 
@@ -2226,40 +2708,45 @@ Crosshair rectangle configuration. Used to define the color and label style of t
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the crosshair rectangle area.
+:::note{title=Mo ta}
+Bar color
+
 :::
 
 ### rectColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the crosshair rectangle area.
+:::note{title=Mo ta}
+operator: 'between'
+
 :::
 
 ### labelColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color for the crosshair rectangle area.
+:::note{title=Mo ta}
+Operator
+
 :::
 
 ### labelVisible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the label for the crosshair rectangle area.
+:::note{title=Mo ta}
+Whether to show the crosshair rectangular-area label
+
 :::
 
 ### labelBackgroundColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color for the crosshair rectangle label.
+:::note{title=Mo ta}
+solid
+
 :::
 
 
@@ -2267,8 +2754,9 @@ Background color for the crosshair rectangle label.
 
 **Type:** `number | number[] | undefined`
 
-:::note{title=Description}
-Corner radius for stacked bars in a bar chart.
+:::note{title=Mo ta}
+Bar chart stacked corner radius
+
 :::
 
 
@@ -2276,8 +2764,9 @@ Corner radius for stacked bars in a bar chart.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Maximum height of the rectangle (can be a pixel value or a percentage string).
+:::note{title=Mo ta}
+Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code.
+
 :::
 
 
@@ -2285,8 +2774,9 @@ Maximum height of the rectangle (can be a pixel value or a percentage string).
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-The distance between rectangles within the same category (can be a pixel value or a percentage string).
+:::note{title=Mo ta}
+Distance between rectangles in the same category. It can be a pixel value or a percentage string.
+
 :::
 
 
@@ -2294,61 +2784,82 @@ The distance between rectangles within the same category (can be a pixel value o
 
 **Type:** `Sort | undefined`
 
-:::note{title=Description}
-Sort configuration for categorical axes, supports sorting based on dimensions or measures, as well as custom sort orders.
+:::note{title=Mo ta}
+Y-axis sort configuration. Supports sorting by dimensions or measures and custom sort order.
+
+
+
+Selector for the annotation point, used to pick data items.
+
 :::
 
 **Example**
-sort: {
+Dimension field ID (the `id` of an item in `dimensions`).
   orderBy: 'profit',
   order: 'asc',
 }
-sort: {
+Dimension field ID (the `id` of an item in `dimensions`).
   customOrder:['2019', '2020', '2021']
 }
 
-- order: 'asc'
-- orderBy: 'date'
-or
-- customOrder: ['2019', '2020', '2021']
+User's filtering requirement description (natural language).
+return _.map(filtered, item => ({
+Chart Dynamic Filter configuration.
+**Example**
+
+
+
 
 ### order
 
 **Type:** `"asc" | "desc" | undefined`
 
-:::note{title=Description}
-Sort order, can be 'asc' or 'desc'.
+:::note{title=Mo ta}
+])
+
 :::
 
 **Example**
-order: 'asc'
+- in: Select data items where the dimension field value is within the `value` array.
+
+
 
 ### orderBy
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-The field the sort depends on; can be a dimension ID or a measure ID.
+:::note{title=Mo ta}
+Highlight the data item with the highest profit rate in each region
+
 :::
 
 **Example**
-- orderBy: 'date'
-- orderBy: 'profit'
+return _.map(filtered, item => ({
+  __row_index: item.__row_index,
+
+
 
 ### customOrder
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Custom sort order; this order will be directly applied to the categorical axis.
+:::note{title=Mo ta}
+Suitable for scenarios complex for static selectors, such as Top N, statistical analysis, or complex combined conditions.
+
 :::
+
 
 ## sortLegend
 
 **Type:** `SortLegend | undefined`
 
-:::note{title=Description}
-Legend sort configuration, supports sorting based on dimensions or measures, as well as custom sort orders. Sort arrays follow a left-to-right or top-to-bottom order.
+:::note{title=Mo ta}
+Environment requirements: Only supported in browser environments; Node.js environments will use the fallback.
+
+
+
+Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via AI-generated JavaScript code.
+
 :::
 
 **Example**
@@ -2357,51 +2868,71 @@ sortLegend: {
   order: 'asc',
 }
 sortLegend: {
-  customOrder: ['2019', '2020', '2021']
+  customOrder:['2019', '2020', '2021']
 }
 
-- order: 'asc'
-- orderBy: 'date'
-or
-- customOrder: ['2019', '2020', '2021']
+User's filtering requirement description (natural language).
+return _.map(filtered, item => ({
+Chart Dynamic Filter configuration.
+**Example**
+
+
+
 
 ### order
 
 **Type:** `"asc" | "desc" | undefined`
 
-:::note{title=Description}
-Sort order, can be 'asc' or 'desc'.
+:::note{title=Mo ta}
+])
+
 :::
 
 **Example**
-order: 'asc'
+- in: Select data items where the dimension field value is within the `value` array.
+
+
 
 ### orderBy
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-The field the sort depends on; can be a dimension ID or a measure ID.
+:::note{title=Mo ta}
+Highlight the data item with the highest profit rate in each region
+
 :::
 
 **Example**
-- orderBy: 'date'
-- orderBy: 'profit'
+return _.map(filtered, item => ({
+  __row_index: item.__row_index,
+
+
 
 ### customOrder
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Custom sort order; this order will be directly applied to the legend. Ascending: left to right or top to bottom; Descending: right to left or bottom to top.
+:::note{title=Mo ta}
+  _.maxBy(group, item => item.profit / item.sales)
+
 :::
+
 
 ## theme
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Themes are low-priority configuration options including general settings shared by all chart types and specific settings shared within a single chart type. Built-in 'light' and 'dark' themes are available; users can also define custom themes via the Builder or `registerTheme`.
+:::note{title=Mo ta}
+Highlight data items meeting multiple conditions:
+
+
+
+  return profitRate > 0.2 && item.sales > 5000;
+
+
+
+    { __row_index: item.__row_index, field: 'product' },
+
 :::
 
 **Example**
@@ -2411,6 +2942,9 @@ Chart theme. Themes are low-priority configuration options including general set
 
 'customThemeName'
 
+
+
+
 ### length
 
 **Type:** `number`
@@ -2419,12 +2953,22 @@ Chart theme. Themes are low-priority configuration options including general set
 
 **Type:** `brand`
 
+
 ## barStyle
 
 **Type:** `BarStyle | BarStyle[] | undefined`
 
-:::note{title=Description}
-Bar mark style. Configuration used to define bar styles, including color, borders, corner radius, etc. Supports global styling or conditional style configurations.
+:::note{title=Mo ta}
+Rectangle mark style. Bar chart style configuration used to define bar color, border, corner radius, and related settings.
+
+Operator
+
+- in: Select data items where the dimension field value is within the `value` array.
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
+
 :::
 
 
@@ -2432,19 +2976,26 @@ Bar mark style. Configuration used to define bar styles, including color, border
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data selector. If configured, provides four types of matching capabilities: value selector, partial data selector, conditional dimension selector, and conditional measure selector. If not configured, styling applies globally.
+:::note{title=Mo ta}
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
+
 :::
 
 **Example**
-Value selector
+dashed
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
-selector = { profit: 100 }
+Local data selector
+Dynamic filter execution result (runtime field)
 selector = [{ profit: 100 }, { profit: 200 }]
 
 Conditional dimension selector
@@ -2459,7 +3010,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+**Example**
 selector = {
 field: 'profit',
 operator: '>=',
@@ -2478,8 +3029,8 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the id of an item in dimensions).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
 
 :::
 
@@ -2487,12 +3038,12 @@ Dimension field ID (the id of an item in dimensions).
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
 :::
 
@@ -2500,35 +3051,7 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
-
-- in: Select data items where the dimension field value is within the `value` array.
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-Same as `operator`.
-:::
-
-#### value
-
-**Type:** `string | number | (string | number)[]`
-
-:::note{title=Description}
-Selected dimension field values; supports arrays.
-:::
-
-### dynamicFilter
-
-**Type:** `ChartDynamicFilter | undefined`
-
-:::note{title=Description}
-Dynamic filter (executes AI-generated code)
-
-Implements complex data filtering logic via AI-generated JavaScript code.
-
-Suitable for scenarios complex for static selectors, such as Top N, statistical analysis, or complex combined conditions.
-
+:::note{title=Mo ta}
 Core capabilities:
 
 - Supports arbitrary complex data filtering conditions.
@@ -2537,11 +3060,56 @@ Core capabilities:
 
 - Executes safely in the browser environment (Web Worker sandbox).
 
-Environment requirements: Only supported in browser environments; Node.js environments will use the fallback.
+:::
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+#### value
 
-Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via AI-generated JavaScript code.
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
+:::
+
+### dynamicFilter
+
+**Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Mo ta}
+- center: Text is centered on the point.
+
+
+
+'right' (text is on the left side of the point)
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+
+
+"Highlight the bar with the highest profit margin in each region"
+
+Line visibility.
+
+\- Uses built-in utility functions for data manipulation.
+
+true
+
+
+
+Environment Requirements: Supports browser environment only; Node.js environment will use fallback.
+
+
+
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+
+
+
+**Example**
+
+
+
+Background visibility.
+
 :::
 
 
@@ -2553,14 +3121,15 @@ Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Mo ta}
+const maxItems = _.map(grouped, group =>
+
 :::
 
 **Example**
-"Highlight bars where sales are greater than 1000"
+    { __row_index: item.__row_index, field: 'product' },
 
-"Highlight the bar with the highest profit margin in each region"
+  ])
 
 
 
@@ -2568,18 +3137,21 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code:
+:::note{title=Mo ta}
+});
 
-- Only built-in utility functions (accessed via `_` or `R`) can be used.
 
-- Input parameter: `data` (Array), each item contains a `__row_index` field representing the row number.
 
-- Must return an array of row index and field combinations: `Array<{ __row_index: number, field: string }>`.
+    { __row_index: item.__row_index, field: 'sales' }
 
-- `__row_index` represents the original data item's row number, and `field` represents the field to highlight.
+);
 
-- Prohibited: `eval`, `Function`, asynchronous operations, DOM API, network requests.
+\- Must return an array of row index and field combinations: `Array<{ __row_index: number, field: string }>`.
+
+\- `__row_index` represents the row number of the original data item, and `field` represents the field to highlight.
+
+**Example**
+
 :::
 
 **Example**
@@ -2587,36 +3159,36 @@ Highlight the `sales` field of data items where sales are greater than 1000:
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
-  __row_index: item.__row_index,
-  field: 'sales'
+__row_index: item.__row_index,
+field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region:
+4
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
-  _.maxBy(group, item => item.profit / item.sales)
+_.maxBy(group, item => item.profit / item.sales)
 );
 return _.flatten(
-  _.map(maxItems, item => [
-    { __row_index: item.__row_index, field: 'product' },
-    { __row_index: item.__row_index, field: 'profit' }
-  ])
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
 );
 ```
 
-Highlight data items meeting multiple conditions:
+Highlight data items based on multiple filtering conditions:
 ```javascript
 const filtered = _.filter(data, item => {
-  const profitRate = item.profit / item.sales;
-  return profitRate > 0.2 && item.sales > 5000;
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
 });
 return _.flatten(
-  _.map(filtered, item => [
-    { __row_index: item.__row_index, field: 'product' },
-    { __row_index: item.__row_index, field: 'sales' }
-  ])
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
 );
 ```
 
@@ -2626,8 +3198,9 @@ return _.flatten(
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 
@@ -2635,52 +3208,59 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the `id` of an item in `dimensions`).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
 :::
 
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
+
 :::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
-Same as `operator`.
+- Executes safely in the browser environment (Web Worker sandbox).
+
 :::
 
 ##### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selected dimension field values; supports arrays.
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
 :::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Mo ta}
+User's filtering requirement description (natural language).
 
-Written during the `prepare()` phase, read-only at runtime.
+
+
+"Get the highest sales value as the annotation line reference"
+
 :::
 
 
@@ -2700,48 +3280,54 @@ Written during the `prepare()` phase, read-only at runtime.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the bar mark (rectangle) is visible.
+:::note{title=Mo ta}
+Whether the bar mark (rectangle mark) is visible
+
 :::
 
 ### barColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Bar color
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 ### barColorOpacity
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bar color opacity.
+:::note{title=Mo ta}
+const avgSales = _.meanBy(data, 'sales');
+
 :::
 
 ### barBorderColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Bar border color.
+:::note{title=Mo ta}
+Border color of the bar mark (rectangle mark)
+
 :::
 
 ### barBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bar border width.
+:::note{title=Mo ta}
+'Annotation Text'
+
 :::
 
 ### barBorderStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Bar border style.
+:::note{title=Mo ta}
+Fallback plan when code execution fails or the environment is not supported.
+
 :::
 
 **Example**
@@ -2757,14 +3343,17 @@ dotted
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bar corner radius.
+:::note{title=Mo ta}
+**Example**
 
-Bar stroke opacity.
+
+
+Text font size
+
 :::
 
 **Example**
-4
+Annotation text.
 
 [0, 0, 10, 10]
 
@@ -2779,8 +3368,9 @@ Bar stroke opacity.
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-:::note{title=Description}
-Annotation point configuration. Used to define chart annotation points based on selected data, including their position, format, style, etc.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 
@@ -2788,8 +3378,9 @@ Annotation point configuration. Used to define chart annotation points based on 
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Selector for the annotation point, used to pick data items.
+:::note{title=Mo ta}
+Text color.
+
 :::
 
 
@@ -2797,55 +3388,29 @@ Selector for the annotation point, used to pick data items.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the `id` of an item in `dimensions`).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
+
 :::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
-
-- in: Select data items where the dimension field value is within the `value` array.
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-Same as `operator`.
-:::
-
-#### value
-
-**Type:** `string | number | (string | number)[]`
-
-:::note{title=Description}
-Selected dimension field values; supports arrays.
-:::
-
-### dynamicFilter
-
-**Type:** `ChartDynamicFilter | undefined`
-
-:::note{title=Description}
-Dynamic filter (executes AI-generated code)
-
-Implements complex data filtering logic via AI-generated JavaScript code.
-
-Suitable for scenarios complex for static selectors, such as Top N, statistical analysis, or complex combined conditions.
-
+:::note{title=Mo ta}
 Core capabilities:
 
 - Supports arbitrary complex data filtering conditions.
@@ -2854,11 +3419,65 @@ Core capabilities:
 
 - Executes safely in the browser environment (Web Worker sandbox).
 
-Environment requirements: Only supported in browser environments; Node.js environments will use the fallback.
+:::
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+#### value
 
-Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via AI-generated JavaScript code.
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
+
+:::
+
+### dynamicFilter
+
+**Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Mo ta}
+- center: Text is centered on the point.
+
+
+
+'right' (text is on the left side of the point)
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+
+
+"Highlight the bar with the highest profit margin in each region"
+
+Line visibility.
+
+\- Uses built-in utility functions for data manipulation.
+
+true
+
+
+
+Environment Requirements: Supports browser environment only; Node.js environment will use fallback.
+
+
+
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+
+
+
+**Example**
+
+
+
+Background visibility.
+
 :::
 
 
@@ -2870,14 +3489,15 @@ Chart dynamic filter configuration: filters chart marks (bars, points, etc.) via
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Mo ta}
+const maxItems = _.map(grouped, group =>
+
 :::
 
 **Example**
-"Highlight bars where sales are greater than 1000"
+    { __row_index: item.__row_index, field: 'product' },
 
-"Highlight the bar with the highest profit margin in each region"
+  ])
 
 
 
@@ -2885,18 +3505,21 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code:
+:::note{title=Mo ta}
+});
 
-- Only built-in utility functions (accessed via `_` or `R`) can be used.
 
-- Input parameter: `data` (Array), each item contains a `__row_index` field representing the row number.
 
-- Must return an array of row index and field combinations: `Array<{ __row_index: number, field: string }>`.
+    { __row_index: item.__row_index, field: 'sales' }
 
-- `__row_index` represents the original data item's row number, and `field` represents the field to highlight.
+);
 
-- Prohibited: `eval`, `Function`, asynchronous operations, DOM API, network requests.
+\- Must return an array of row index and field combinations: `Array<{ __row_index: number, field: string }>`.
+
+\- `__row_index` represents the row number of the original data item, and `field` represents the field to highlight.
+
+**Example**
+
 :::
 
 **Example**
@@ -2904,36 +3527,36 @@ Highlight the `sales` field of data items where sales are greater than 1000:
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
-  __row_index: item.__row_index,
-  field: 'sales'
+__row_index: item.__row_index,
+field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region:
+4
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
-  _.maxBy(group, item => item.profit / item.sales)
+_.maxBy(group, item => item.profit / item.sales)
 );
 return _.flatten(
-  _.map(maxItems, item => [
-    { __row_index: item.__row_index, field: 'product' },
-    { __row_index: item.__row_index, field: 'profit' }
-  ])
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
 );
 ```
 
-Highlight data items meeting multiple conditions:
+Highlight data items based on multiple filtering conditions:
 ```javascript
 const filtered = _.filter(data, item => {
-  const profitRate = item.profit / item.sales;
-  return profitRate > 0.2 && item.sales > 5000;
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
 });
 return _.flatten(
-  _.map(filtered, item => [
-    { __row_index: item.__row_index, field: 'product' },
-    { __row_index: item.__row_index, field: 'sales' }
-  ])
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
 );
 ```
 
@@ -2943,8 +3566,9 @@ return _.flatten(
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 
@@ -2952,52 +3576,59 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the `id` of an item in `dimensions`).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
 :::
 
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
+
 :::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
-Same as `operator`.
+- Executes safely in the browser environment (Web Worker sandbox).
+
 :::
 
 ##### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selected dimension field values; supports arrays.
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
 :::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Mo ta}
+User's filtering requirement description (natural language).
 
-Written during the `prepare()` phase, read-only at runtime.
+
+
+"Get the highest sales value as the annotation line reference"
+
 :::
 
 
@@ -3017,12 +3648,13 @@ Written during the `prepare()` phase, read-only at runtime.
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text.
+:::note{title=Mo ta}
+Written during the prepare() phase; read-only at runtime.
+
 :::
 
 **Example**
-'Annotation text'
+const maxSales = _.maxBy(data, 'sales')?.sales;
 
 
 
@@ -3030,12 +3662,13 @@ Annotation text.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color.
+:::note{title=Mo ta}
+'Annotation text'
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3043,8 +3676,9 @@ Text color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size.
+:::note{title=Mo ta}
+return currentYearTotal;
+
 :::
 
 **Example**
@@ -3056,8 +3690,9 @@ Text font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight.
+:::note{title=Mo ta}
+'red'
+
 :::
 
 **Example**
@@ -3069,18 +3704,21 @@ Text font weight.
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally set to 'right'; text is displayed on the left side of the annotation point to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+**Example**
 
-Suggested to be set to 'right' to ensure text stays on the left of the point.
+Recommended value is 'right', which keeps the text on the left side of the annotation point.
 
-- right: Text is on the left of the point, with the right edge aligned to the point.
-- left: Text is on the right of the point, with the left edge aligned to the point.
-- center: Text is centered on the point.
+Text font size.
+
+Text color
+
+**Example**
+
 :::
 
 **Example**
-'right' (text is on the left side of the point)
+'Annotation text'
 
 
 
@@ -3088,18 +3726,21 @@ Suggested to be set to 'right' to ensure text stays on the left of the point.
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text baseline. Generally set to 'top'; text is displayed at the bottom of the annotation point to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+Text position; the location of the annotation line's label (relative to the line).
 
-Suggested to be set to 'top' to ensure the label is fully visible.
+- right: Text is on the left side of the annotation area, with the right edge aligned to the area.
 
-- top: Text is at the bottom of the point, with the top edge aligned to the point.
-- middle: Text is centered vertically on the point.
-- bottom: Text is at the top of the point, with the bottom edge aligned to the point.
+'outsideEnd'
+
+bottom: Text is at the top of the reference line; the bottom edge aligns with the endpoint of the (vertical) annotation line.
+
+'right'
+
 :::
 
 **Example**
-'top' (text is at the bottom of the annotation point)
+Text color.
 
 
 
@@ -3107,12 +3748,13 @@ Suggested to be set to 'top' to ensure the label is fully visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Background visibility.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-true
+'top' (text is at the bottom of the annotation area)
 
 
 
@@ -3120,12 +3762,13 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3133,12 +3776,13 @@ Background color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color.
+:::note{title=Mo ta}
+2
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3146,8 +3790,9 @@ Background border color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
@@ -3159,12 +3804,13 @@ Background border width.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -3172,12 +3818,13 @@ Background border radius.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -3185,16 +3832,17 @@ Background padding.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-The overall pixel offset of the annotation point in the Y direction. When the point is near the top of the chart (large values), a positive value is recommended; when near the bottom (small values), a negative value is recommended.
+:::note{title=Mo ta}
+**Example**
 
-A negative value shifts the whole component (text, background, etc.) upwards. For example, -10 shifts it up by 10 pixels.
+**Example**
 
-A positive value shifts the whole component downwards. For example, 10 shifts it down by 10 pixels.
+Whether the background is visible.
+
 :::
 
 **Example**
-offsetY: 5 (shifts the whole annotation point down by 5 pixels)
+offsetY: 5, moves the whole annotation point down by 5 pixels
 
 
 
@@ -3202,16 +3850,17 @@ offsetY: 5 (shifts the whole annotation point down by 5 pixels)
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-The overall pixel offset of the annotation point in the X direction. When the point is on the left side (start of the categorical axis), a positive value is recommended; when on the right side (end of the categorical axis), a negative value is recommended.
+:::note{title=Mo ta}
+Background color.
 
-A negative value shifts the whole component (text, background, etc.) to the left. For example, -10 shifts it left by 10 pixels.
+A negative value moves the whole component left. For example, -10 moves the whole annotation point, including text and text background, left by 10 pixels.
 
-A positive value shifts the whole component to the right. For example, 10 shifts it right by 10 pixels.
+**Example**
+
 :::
 
 **Example**
-offsetX: 5, Offset the annotation point by 5 pixels to the right.
+offsetX: 5, moves the whole annotation point right by 5 pixels
 
 
 
@@ -3220,8 +3869,8 @@ offsetX: 5, Offset the annotation point by 5 pixels to the right.
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
-:::note{title=Description}
-Numeric annotation line (including average line, maximum line, minimum line, etc.), displayed vertically. Used to set the position, style, etc. of the annotation line. use this configuration to draw annotation lines corresponding to numerical values like the average.
+:::note{title=Mo ta}
+'red'
 
 :::
 
@@ -3230,8 +3879,8 @@ Numeric annotation line (including average line, maximum line, minimum line, etc
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed X-value for the vertical annotation line. If the categorical axis is in the X direction, a dimension value can be input; if a numeric axis is in the X direction, a specific numeric value can be used.
+:::note{title=Mo ta}
+);
 
 :::
 
@@ -3239,14 +3888,18 @@ Fixed X-value for the vertical annotation line. If the categorical axis is in th
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executes AI-generated code)
+:::note{title=Mo ta}
+- center: Text is centered on the point.
 
-Dynamically calculates annotation line values via AI-generated JavaScript code.
 
-Suitable for scenarios requiring dynamic determination of annotation line positions based on data, such as averages, maximums, quantiles, business lines, etc.
 
-Only supported in browser environments (requires Web Worker).
+Background border corner radius.
+
+Line visibility.
+
+
+
+true
 
 :::
 
@@ -3259,8 +3912,8 @@ Only supported in browser environments (requires Web Worker).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Mo ta}
+const maxItems = _.map(grouped, group =>
 
 :::
 
@@ -3275,46 +3928,48 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code:
+:::note{title=Mo ta}
+});
 
-- Only built-in utility functions (accessed via `_` or `R`) can be used.
 
-- Input parameter: `data` (Array).
 
-- Must return a single numeric or string value: `number | string`.
+    { __row_index: item.__row_index, field: 'sales' }
 
-- Suitable for dynamic values needed by annotation lines (horizontal/vertical).
+Annotation area
 
-- Prohibited: `eval`, `Function`, asynchronous operations, DOM API, network requests.
+**Example**
+
+Annotation area configuration; defines an area on the chart based on selected data, including its position, style, etc.
+
+**Example**
 
 :::
 
 **Example**
-Get the maximum sales value as the annotation line value:
+\- not in: Select data items where the value of the dimension field is not in the value
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-Calculate the average for the annotation line:
+Select the value of the dimension field in the data item; supports arrays
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Get the quantile as the annotation line:
+Calculate target value based on conditions
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-Calculate the goal value based on conditions:
+**Example**
 ```javascript
 const currentYearTotal = _.sumBy(
-  _.filter(data, item => item.year === 2024),
-  'sales'
+_.filter(data, item => item.year === 2024),
+'sales'
 );
 return currentYearTotal;
 ```
@@ -3325,18 +3980,22 @@ return currentYearTotal;
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Mo ta}
+User's filtering requirement description (natural language).
 
-Written during the `prepare()` phase, read-only at runtime.
+
+
+"Get the highest sales value as the annotation line reference"
+
 :::
 
 
@@ -3352,12 +4011,13 @@ Written during the `prepare()` phase, read-only at runtime.
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text.
+:::note{title=Mo ta}
+Written during the prepare() phase; read-only at runtime.
+
 :::
 
 **Example**
-'Annotation text'
+const maxSales = _.maxBy(data, 'sales')?.sales;
 
 
 
@@ -3365,8 +4025,9 @@ Annotation text.
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Text position; the location of the annotation line's label (relative to the line).
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 **Example**
@@ -3378,12 +4039,13 @@ Text position; the location of the annotation line's label (relative to the line
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color.
+:::note{title=Mo ta}
+'Annotation text'
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3391,8 +4053,9 @@ Text color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size.
+:::note{title=Mo ta}
+return currentYearTotal;
+
 :::
 
 **Example**
@@ -3404,8 +4067,9 @@ Text font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight.
+:::note{title=Mo ta}
+'red'
+
 :::
 
 **Example**
@@ -3417,18 +4081,21 @@ Text font weight.
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally set to 'right'; text is displayed on the left side of the annotation line to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+12
 
-Suggested to be set to 'right' to ensure text stays on the left of the line.
+center: Text is centered in the annotation area.
 
-- right: Text is on the left of the reference line, with the right edge aligned to the (vertical) annotation line.
-- left: Text is on the right of the reference line, with the left edge aligned to the (vertical) annotation line.
-- center: Text is centered on the reference line.
+Text color.
+
+Annotation line label position (relative position of the label to the line).
+
+**Example**
+
 :::
 
 **Example**
-'right'
+400
 
 
 
@@ -3436,14 +4103,17 @@ Suggested to be set to 'right' to ensure text stays on the left of the line.
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text baseline. Generally set to 'top'; text is displayed at the bottom of the annotation line to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+Suggested to be set to 'center' to ensure text is centered within the area.
 
-Suggested to be set to 'top' to ensure the label is fully visible.
+- right: Text is on the left side of the annotation area, with the right edge aligned to the area.
 
-- top: Text is at the bottom of the reference line, with the top edge aligned to the endpoint of the (vertical) annotation line.
-- middle: Text is vertically centered on the reference line.
-- bottom: Text is at the top of the reference line, with the bottom edge aligned to the endpoint of the (vertical) annotation line.
+- center: Text is centered in the annotation area.
+
+'top'
+
+'center' (text is in the middle of the annotation area)
+
 :::
 
 **Example**
@@ -3455,12 +4125,13 @@ Suggested to be set to 'top' to ensure the label is fully visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Line visibility.
+:::note{title=Mo ta}
+- middle: Text is vertically centered in the annotation area.
+
 :::
 
 **Example**
-true
+'top' (text is at the bottom of the annotation area)
 
 
 
@@ -3468,12 +4139,13 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color.
+:::note{title=Mo ta}
+Background visibility.
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3481,8 +4153,9 @@ Line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width.
+:::note{title=Mo ta}
+top: Text is below the reference line, with the top edge aligned with the (horizontal) annotation line.
+
 :::
 
 **Example**
@@ -3494,8 +4167,9 @@ Line width.
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Line style.
+:::note{title=Mo ta}
+Annotation area border corner radius.
+
 :::
 
 **Example**
@@ -3507,12 +4181,13 @@ Line style.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Background visibility.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-true
+'top' (text is at the bottom of the annotation area)
 
 
 
@@ -3520,12 +4195,13 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3533,12 +4209,13 @@ Background color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color.
+:::note{title=Mo ta}
+2
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3546,8 +4223,9 @@ Background border color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
@@ -3559,12 +4237,13 @@ Background border width.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -3572,12 +4251,13 @@ Background border radius.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -3586,8 +4266,9 @@ Background padding.
 
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
-:::note{title=Description}
-Dimension value annotation line, displayed horizontally. Used to set the position, style, etc. of the annotation line.
+:::note{title=Mo ta}
+Dimension-value annotation line, displayed horizontally. It can configure the annotation line position, style, and related settings.
+
 :::
 
 
@@ -3595,22 +4276,28 @@ Dimension value annotation line, displayed horizontally. Used to set the positio
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed Y-value for the horizontal annotation line. If the categorical axis is in the Y direction, a dimension value can be input; if a numeric axis is in the Y direction, a specific numeric value can be used.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 ### dynamicFilter
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executes AI-generated code)
+:::note{title=Mo ta}
+- center: Text is centered on the point.
 
-Dynamically calculates annotation line values via AI-generated JavaScript code.
 
-Suitable for scenarios requiring dynamic determination of annotation line positions based on data, such as averages, maximums, quantiles, business lines, etc.
 
-Only supported in browser environments (requires Web Worker).
+Background border corner radius.
+
+Line visibility.
+
+
+
+true
+
 :::
 
 
@@ -3622,8 +4309,9 @@ Only supported in browser environments (requires Web Worker).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Mo ta}
+const maxItems = _.map(grouped, group =>
+
 :::
 
 **Example**
@@ -3637,45 +4325,48 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code:
+:::note{title=Mo ta}
+});
 
-- Only built-in utility functions (accessed via `_` or `R`) can be used.
 
-- Input parameter: `data` (Array).
 
-- Must return a single numeric or string value: `number | string`.
+    { __row_index: item.__row_index, field: 'sales' }
 
-- Suitable for dynamic values needed by annotation lines (horizontal/vertical).
+Annotation area
 
-- Prohibited: `eval`, `Function`, asynchronous operations, DOM API, network requests.
+**Example**
+
+Annotation area configuration; defines an area on the chart based on selected data, including its position, style, etc.
+
+**Example**
+
 :::
 
 **Example**
-Get the maximum sales value as the annotation line value:
+\- not in: Select data items where the value of the dimension field is not in the value
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-Calculate the average for the annotation line:
+Select the value of the dimension field in the data item; supports arrays
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Get the quantile as the annotation line:
+Calculate target value based on conditions
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-Calculate the goal value based on conditions:
+**Example**
 ```javascript
 const currentYearTotal = _.sumBy(
-  _.filter(data, item => item.year === 2024),
-  'sales'
+_.filter(data, item => item.year === 2024),
+'sales'
 );
 return currentYearTotal;
 ```
@@ -3686,18 +4377,22 @@ return currentYearTotal;
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Mo ta}
+Selected dimension field values; supports arrays.
+
 :::
 
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Mo ta}
+User's filtering requirement description (natural language).
 
-Written during the `prepare()` phase, read-only at runtime.
+
+
+"Get the highest sales value as the annotation line reference"
+
 :::
 
 
@@ -3713,12 +4408,13 @@ Written during the `prepare()` phase, read-only at runtime.
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text.
+:::note{title=Mo ta}
+Written during the prepare() phase; read-only at runtime.
+
 :::
 
 **Example**
-'Annotation text'
+const maxSales = _.maxBy(data, 'sales')?.sales;
 
 
 
@@ -3726,8 +4422,13 @@ Annotation text.
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Text position; the location of the annotation line's label (relative to the line).
+:::note{title=Mo ta}
+**Example**
+
+
+
+Label position of the annotation line, relative to the line.
+
 :::
 
 **Example**
@@ -3739,12 +4440,13 @@ Text position; the location of the annotation line's label (relative to the line
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color.
+:::note{title=Mo ta}
+'Annotation text'
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3752,8 +4454,9 @@ Text color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size.
+:::note{title=Mo ta}
+return currentYearTotal;
+
 :::
 
 **Example**
@@ -3765,8 +4468,9 @@ Text font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight.
+:::note{title=Mo ta}
+'red'
+
 :::
 
 **Example**
@@ -3778,18 +4482,21 @@ Text font weight.
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally set to 'right'; text is displayed on the left side of the annotation line to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+12
 
-Suggested to be set to 'right' to ensure text stays on the left of the line.
+center: Text is centered in the annotation area.
 
-- right: Text is on the left of the reference line, with the right edge aligned to the endpoint of the (horizontal) annotation line.
-- left: Text is on the right of the reference line, with the left edge aligned to the endpoint of the (horizontal) annotation line.
-- center: Text is centered on the reference line.
+Recommended to set to 'top' to ensure the text is fully displayed within the chart's visible area.
+
+**Example**
+
+background color
+
 :::
 
 **Example**
-'right'
+400
 
 
 
@@ -3797,14 +4504,17 @@ Suggested to be set to 'right' to ensure text stays on the left of the line.
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text baseline. Generally set to 'top'; text is displayed at the bottom of the annotation line to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+Suggested to be set to 'center' to ensure text is centered within the area.
 
-Suggested to be set to 'top' to ensure the label is fully visible.
+- right: Text is on the left side of the annotation area, with the right edge aligned to the area.
 
-- top: Text is at the bottom of the reference line, with the top edge aligned to the (horizontal) annotation line.
-- middle: Text is vertically centered on the reference line.
-- bottom: Text is at the top of the reference line, with the bottom edge aligned to the (horizontal) annotation line.
+background stroke color
+
+**Example**
+
+**Example**
+
 :::
 
 **Example**
@@ -3816,12 +4526,13 @@ Suggested to be set to 'top' to ensure the label is fully visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Background visibility.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-true
+'top' (text is at the bottom of the annotation area)
 
 
 
@@ -3829,12 +4540,13 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3842,12 +4554,13 @@ Background color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color.
+:::note{title=Mo ta}
+2
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3855,8 +4568,13 @@ Background border color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width.
+:::note{title=Mo ta}
+4
+
+
+
+4
+
 :::
 
 **Example**
@@ -3868,12 +4586,13 @@ Background border width.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -3881,12 +4600,13 @@ Background border radius.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -3894,12 +4614,17 @@ Background padding.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Line visibility.
+:::note{title=Mo ta}
+- middle: Text is vertically centered in the annotation area.
+
+
+
+- middle: Text is vertically centered in the annotation area.
+
 :::
 
 **Example**
-true
+'top' (text is at the bottom of the annotation area)
 
 
 
@@ -3907,12 +4632,13 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color.
+:::note{title=Mo ta}
+Background visibility.
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -3920,8 +4646,9 @@ Line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width.
+:::note{title=Mo ta}
+top: Text is below the reference line, with the top edge aligned with the (horizontal) annotation line.
+
 :::
 
 **Example**
@@ -3933,8 +4660,9 @@ Line width.
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Line style.
+:::note{title=Mo ta}
+Annotation area border corner radius.
+
 :::
 
 **Example**
@@ -3946,8 +4674,9 @@ Line style.
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
-:::note{title=Description}
-Whether to enable the feature of splitting the main line into two segments.
+:::note{title=Mo ta}
+Line dash style of the annotation area border.
+
 :::
 
 
@@ -3955,16 +4684,18 @@ Whether to enable the feature of splitting the main line into two segments.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-The primary color for the portion greater than the annotation value.
+:::note{title=Mo ta}
+Primary color for the part greater than the annotation value
+
 :::
 
 #### negativeColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-The primary color for the portion less than the annotation value.
+:::note{title=Mo ta}
+0
+
 :::
 
 
@@ -3972,8 +4703,9 @@ The primary color for the portion less than the annotation value.
 
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
-:::note{title=Description}
-Annotation area configuration. Used to define chart annotation areas based on selected data, including their position, style, etc.
+:::note{title=Mo ta}
+Line style.
+
 :::
 
 
@@ -3981,8 +4713,9 @@ Annotation area configuration. Used to define chart annotation areas based on se
 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
-:::note{title=Description}
-Used to mark data based on selected items.
+:::note{title=Mo ta}
+Whether to enable the dimension linkage function when the chart has perspective enabled or when measures are combined.
+
 :::
 
 
@@ -3990,34 +4723,36 @@ Used to mark data based on selected items.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID (the `id` of an item in `dimensions`).
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
+
 :::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Mo ta}
+Core capabilities:
 
-- in: Select data items where the dimension field value is within the `value` array.
+- Supports arbitrary complex data filtering conditions.
 
-- not in: Select data items where the dimension field value is not within the `value` array.
+- Uses built-in utility functions for data manipulation.
 
-same as operator
+- Executes safely in the browser environment (Web Worker sandbox).
 
 :::
 
@@ -4025,8 +4760,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selected dimension field values; supports arrays.
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
 
 :::
 
@@ -4034,13 +4769,13 @@ Selected dimension field values; supports arrays.
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text.
+:::note{title=Mo ta}
+Written during the prepare() phase; read-only at runtime.
 
 :::
 
 **Example**
-'Annotation text'
+const maxSales = _.maxBy(data, 'sales')?.sales;
 
 
 
@@ -4048,8 +4783,8 @@ Annotation text.
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
-:::note{title=Description}
-Text position.
+:::note{title=Mo ta}
+**Example**
 
 :::
 
@@ -4062,13 +4797,13 @@ Text position.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color.
+:::note{title=Mo ta}
+'Annotation text'
 
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -4076,8 +4811,8 @@ Text color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size.
+:::note{title=Mo ta}
+return currentYearTotal;
 
 :::
 
@@ -4090,29 +4825,35 @@ Text font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight.
+:::note{title=Mo ta}
+'red'
+
 :::
 
 **Example**
 400
 
+
+
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Generally set to 'center'; text is displayed in the middle of the annotation area to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+Polynomial regression line configuration, including the polynomial order, regression line style, etc.
 
-Suggested to be set to 'center' to ensure text is centered within the area.
+Recommended value is 'center', which keeps the text in the middle of the annotation area.
 
-- right: Text is on the left side of the annotation area, with the right edge aligned to the area.
-- left: Text is on the right side of the annotation area, with the left edge aligned to the area.
-- center: Text is centered in the annotation area.
+right: text is on the left side of the annotation area; the right edge of the text aligns with the annotation area
+
+left: text is on the right side of the annotation area; the left edge of the text aligns with the annotation area
+
+center: text is centered in the annotation area; the center of the text aligns with the annotation area
+
 :::
 
 **Example**
-'center' (text is in the middle of the annotation area)
+'center': text is in the middle of the annotation area
 
 
 
@@ -4120,18 +4861,21 @@ Suggested to be set to 'center' to ensure text is centered within the area.
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text baseline. Generally set to 'top'; text is displayed at the bottom of the annotation area to ensure it remains within the visible area of the chart.
+:::note{title=Mo ta}
+Text vertical alignment. Generally set it to top so text appears at the bottom of the annotation area and remains inside the visible chart area.
 
-Suggested to be set to 'top' to ensure the label is fully visible.
+- right: Text is on the left side of the annotation area, with the right edge aligned to the area.
 
-- top: Text is at the bottom of the annotation area, with the top edge aligned to the area.
-- middle: Text is vertically centered in the annotation area.
-- bottom: Text is at the top of the annotation area, with the bottom edge aligned to the area.
+top: text is at the bottom of the annotation area; the top edge of the text aligns with the annotation area
+
+middle: text is centered in the annotation area; the center of the text aligns with the annotation area
+
+Order of the polynomial regression
+
 :::
 
 **Example**
-'top' (text is at the bottom of the annotation area)
+'top': text is at the bottom of the annotation area
 
 
 
@@ -4139,12 +4883,13 @@ Suggested to be set to 'top' to ensure the label is fully visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Background visibility.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-true
+'top' (text is at the bottom of the annotation area)
 
 
 
@@ -4152,12 +4897,13 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -4165,12 +4911,17 @@ Background color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color.
+:::note{title=Mo ta}
+2
+
+
+
+2
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -4178,8 +4929,9 @@ Background border color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width.
+:::note{title=Mo ta}
+4
+
 :::
 
 **Example**
@@ -4191,12 +4943,17 @@ Background border width.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius.
+:::note{title=Mo ta}
+4
+
+
+
+4
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -4204,12 +4961,13 @@ Background border radius.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding.
+:::note{title=Mo ta}
+**Example**
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -4217,12 +4975,13 @@ Background padding.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Annotation area color.
+:::note{title=Mo ta}
+Annotation area fill color
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -4230,8 +4989,9 @@ Annotation area color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area color opacity.
+:::note{title=Mo ta}
+Annotation area fill opacity
+
 :::
 
 **Example**
@@ -4243,12 +5003,13 @@ Annotation area color opacity.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Annotation area border color.
+:::note{title=Mo ta}
+Annotation area border color
+
 :::
 
 **Example**
-'red'
+return sorted[index]?.sales || 0;
 
 
 
@@ -4256,8 +5017,9 @@ Annotation area border color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area border width.
+:::note{title=Mo ta}
+Annotation area border width
+
 :::
 
 **Example**
@@ -4269,12 +5031,13 @@ Annotation area border width.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area border radius.
+:::note{title=Mo ta}
+Annotation area border radius
+
 :::
 
 **Example**
-4
+Annotation text.
 
 
 
@@ -4282,8 +5045,9 @@ Annotation area border radius.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Line style for the annotation area border.
+:::note{title=Mo ta}
+Annotation area border line style
+
 :::
 
 **Example**
@@ -4295,8 +5059,9 @@ Line style for the annotation area border.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Padding for the annotation area.
+:::note{title=Mo ta}
+Annotation area padding
+
 :::
 
 **Example**
@@ -4305,11 +5070,224 @@ Padding for the annotation area.
 
 
 
+## annotationDifferenceLine
+
+**Type:** `AnnotationDifferenceLine | AnnotationDifferenceLine[] | undefined`
+
+:::note{title=Mo ta}
+Difference annotation line configuration, used to bind two data anchors and display an absolute or percentage difference.
+
+:::
+
+
+### start
+
+**Type:** `DifferenceAnchor`
+
+:::note{title=Mo ta}
+Start anchor of the difference annotation line.
+
+
+
+Difference annotation anchor configuration, used to select the data bound to the start or end point.
+
+:::
+
+
+#### selector
+
+**Type:** `DifferenceSelector | DifferenceSelector[]`
+
+:::note{title=Mo ta}
+Anchor selector. It must ultimately locate one logical anchor.
+
+:::
+
+**Example**
+{ year: '1930', type: 'Autocracies' }
+
+[{ field: 'year', operator: 'in', value: ['1930'] }, { field: 'type', operator: 'in', value: ['Autocracies'] }]
+
+
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Mo ta}
+Core capabilities:
+
+- Supports arbitrary complex data filtering conditions.
+
+- Uses built-in utility functions for data manipulation.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Mo ta}
+Core capabilities:
+
+- Supports arbitrary complex data filtering conditions.
+
+- Uses built-in utility functions for data manipulation.
+
+- Executes safely in the browser environment (Web Worker sandbox).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
+:::
+
+### end
+
+**Type:** `DifferenceAnchor`
+
+:::note{title=Mo ta}
+End anchor of the difference annotation line.
+
+
+
+Difference annotation anchor configuration, used to select the data bound to the start or end point.
+
+:::
+
+
+#### selector
+
+**Type:** `DifferenceSelector | DifferenceSelector[]`
+
+:::note{title=Mo ta}
+Anchor selector. It must ultimately locate one logical anchor.
+
+:::
+
+**Example**
+{ year: '1930', type: 'Autocracies' }
+
+[{ field: 'year', operator: 'in', value: ['1930'] }, { field: 'type', operator: 'in', value: ['Autocracies'] }]
+
+
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Mo ta}
+Written during the `prepare()` phase, read-only at runtime.
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Mo ta}
+Core capabilities:
+
+- Supports arbitrary complex data filtering conditions.
+
+- Uses built-in utility functions for data manipulation.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Mo ta}
+Core capabilities:
+
+- Supports arbitrary complex data filtering conditions.
+
+- Uses built-in utility functions for data manipulation.
+
+- Executes safely in the browser environment (Web Worker sandbox).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Mo ta}
+Only supported in browser environments (requires Web Worker).
+
+:::
+
+### differenceType
+
+**Type:** `"percent" | "absolute" | undefined`
+
+:::note{title=Mo ta}
+Difference value type.
+
+\- absolute: display the absolute difference, calculated as end - start
+
+\- percent: display the percentage difference, calculated as (end - start) / start
+
+:::
+
+### textFontSize
+
+**Type:** `number | undefined`
+
+:::note{title=Mo ta}
+textfontsize.
+
+:::
+
+### textColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+textcolor.
+
+:::
+
+### textBackgroundColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Text background color.
+
+:::
+
+### lineColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mo ta}
+Line color.
+
+:::
+
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
+:::note{title=Mo ta}
 Line style.
 
 :::
@@ -4319,10 +5297,15 @@ Line style.
 
 **Type:** `DimensionLinkage | undefined`
 
-:::note{title=Description}
-Whether to enable the dimension linkage feature when the chart has pivot functionality or measure combinations enabled. When hovering over a dimension value, data with the same dimension value in other charts will be highlighted in coordination.
+:::note{title=Mo ta}
+Whether to enable dimension linkage when the chart uses pivot mode or measure combinations.
 
-Configuration for dimension linkage in pivot charts.
+When hovering a dimension value, highlight data with the same dimension value in other linked charts.
+
+
+
+Pivot chart dimension linkage configuration
+
 :::
 
 
@@ -4330,24 +5313,27 @@ Configuration for dimension linkage in pivot charts.
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether to enable dimension linkage for pivot charts.
+:::note{title=Mo ta}
+Whether pivot chart dimension linkage is enabled
+
 :::
 
 ### showTooltip
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show tooltips for all sub-charts corresponding to the dimension.
+:::note{title=Mo ta}
+Whether to show Tooltip information for subcharts corresponding to all dimensions
+
 :::
 
 ### showLabel
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the crosshair label.
+:::note{title=Mo ta}
+Whether to show the label corresponding to the crosshair
+
 :::
 
 
@@ -4355,6 +5341,8 @@ Whether to show the crosshair label.
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Chart language configuration. Supports 'zh-CN' and 'en-US' languages. Additionally, the `intl.setLocale('zh-CN')` method can be called to set the language.
+:::note{title=Mo ta}
+Chart language configuration. Supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
+
 :::
+

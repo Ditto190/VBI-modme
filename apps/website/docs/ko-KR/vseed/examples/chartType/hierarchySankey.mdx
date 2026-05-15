@@ -1,8 +1,8 @@
 # HierarchySankey
 
-## Regional Sales Hierarchy Sankey
+## 지역별 매출 계층 Sankey
 
-A hierarchy sankey chart showing sales flowing from region to country to city.
+지역에서 국가, 다시 도시로 매출이 흐르는 계층 Sankey 차트를 보여줍니다.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -86,9 +86,9 @@ export default () => {
 }
 ```
 
-## Multiple Hierarchy Dimensions + One Measure
+## 다중 계층 차원 + 단일 지표
 
-This example shows a hierarchical flow from region to country and then to channel, with a single measure controlling the flow size.
+대권역에서 국가, 다시 채널로 이어지는 계층 흐름을 보여주며, 단일 지표로 흐름의 크기를 제어합니다.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -98,60 +98,60 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Direct",
+      "region": "화북",
+      "country": "중국",
+      "channel": "직영",
       "revenue": 42
     },
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Partner",
+      "region": "화북",
+      "country": "중국",
+      "channel": "대리",
       "revenue": 18
     },
     {
-      "region": "East China",
-      "country": "China",
-      "channel": "Direct",
+      "region": "화동",
+      "country": "중국",
+      "channel": "직영",
       "revenue": 36
     },
     {
-      "region": "East China",
-      "country": "China",
-      "channel": "E-commerce",
+      "region": "화동",
+      "country": "중국",
+      "channel": "전자상거래",
       "revenue": 22
     },
     {
-      "region": "Southeast Asia",
-      "country": "Singapore",
-      "channel": "Direct",
+      "region": "동남아시아",
+      "country": "싱가포르",
+      "channel": "직영",
       "revenue": 15
     },
     {
-      "region": "Southeast Asia",
-      "country": "Malaysia",
-      "channel": "Partner",
+      "region": "동남아시아",
+      "country": "말레이시아",
+      "channel": "대리",
       "revenue": 12
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "대권역"
     },
     {
       "id": "country",
-      "alias": "Country"
+      "alias": "국가"
     },
     {
       "id": "channel",
-      "alias": "Channel"
+      "alias": "채널"
     }
   ],
   "measures": [
     {
       "id": "revenue",
-      "alias": "Revenue"
+      "alias": "매출"
     }
   ],
   "legend": {
@@ -172,9 +172,9 @@ export default () => {
 }
 ```
 
-## Measure Name As A Hierarchy Dimension + One Measure
+## 지표 이름을 계층 차원으로 사용 + 단일 지표
 
-This example places the measure name itself on the hierarchy path, so each region flows into different business metrics while a single numeric measure controls the magnitude.
+“지표 이름” 자체를 계층 경로에 넣어 각 대권역 아래의 서로 다른 비즈니스 지표 흐름을 보여주고, 단일 수치 지표로 크기를 제어합니다.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -184,50 +184,50 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "metricName": "Revenue",
+      "region": "화북",
+      "metricName": "매출",
       "value": 42
     },
     {
-      "region": "North China",
-      "metricName": "Profit",
+      "region": "화북",
+      "metricName": "이익",
       "value": 12
     },
     {
-      "region": "East China",
-      "metricName": "Revenue",
+      "region": "화동",
+      "metricName": "매출",
       "value": 36
     },
     {
-      "region": "East China",
-      "metricName": "Profit",
+      "region": "화동",
+      "metricName": "이익",
       "value": 10
     },
     {
-      "region": "South China",
-      "metricName": "Revenue",
+      "region": "화남",
+      "metricName": "매출",
       "value": 28
     },
     {
-      "region": "South China",
-      "metricName": "Profit",
+      "region": "화남",
+      "metricName": "이익",
       "value": 8
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "대권역"
     },
     {
       "id": "metricName",
-      "alias": "Metric Name"
+      "alias": "지표 이름"
     }
   ],
   "measures": [
     {
       "id": "value",
-      "alias": "Metric Value"
+      "alias": "지표 값"
     }
   ],
   "legend": {

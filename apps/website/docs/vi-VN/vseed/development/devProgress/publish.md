@@ -1,42 +1,42 @@
 ---
-title: Publish
+title: Phát hành
 ---
 
 
-# Publish
+# Phát hành
 
-## Generate Changeset
+## Tạo changeset
 
-To generate new changesets, please run `pnpm changeset` in the root directory of the repository. The resulting markdown files generated in the `.changeset` directory should be committed to the repository.
+Để tạo changeset mới, hãy chạy `pnpm changeset` trong thư mục gốc của repository. Các file markdown được tạo trong thư mục `.changeset` cần được commit vào repository.
 ```bash
 pnpm changeset
 ```
 
-After generating the changeset, perform a `git commit`:
+Sau khi tạo changeset, thực hiện `git commit`:
 ```bash
 git add .
 git commit -m "chore: commit message"
 ```
 
-The above process can be repeated multiple times. The content of each changeset will be accumulated in the final version publish.
+Quy trình trên có thể lặp lại nhiều lần. Nội dung của mỗi changeset sẽ được tích lũy vào bản phát hành phiên bản cuối cùng.
 
-## Update Version
+## Cập nhật phiên bản
 
-Run the following command to update the version and the ChangeLog.
+Chạy lệnh sau để cập nhật phiên bản và ChangeLog.
 ```bash
 pnpm changeset version
 ```
 
-Update dependencies and the lock file:
+Cập nhật dependencies và lock file:
 ```bash
 pnpm install
 ```
 
-Commit changes:
+Commit các thay đổi:
 ```bash
 git add .
 git commit -m "chore: release message"
 git push
 ```
 
-After the PR is merged into the `main` branch, the changesets workflow will be triggered automatically to perform the packaging and publishing task.
+Sau khi PR được merge vào branch `main`, changesets workflow sẽ tự động được kích hoạt để thực hiện công việc packaging và phát hành.

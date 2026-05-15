@@ -40,19 +40,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "이익",
       "encoding": "yAxis"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "label": {
@@ -64,9 +64,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Scatter Chart
+## 복합 산점도
 
-A scatter chart with multiple data series.
+복합 산점도
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -109,31 +109,31 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "encoding": "xAxis",
       "parentId": "0"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "이익",
       "encoding": "yAxis",
       "parentId": "0"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "encoding": "xAxis",
       "parentId": "1"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "수익률",
       "encoding": "yAxis",
       "parentId": "1"
     }
@@ -144,9 +144,9 @@ export default () => {
 }
 ```
 
-## Pivot Scatter Chart
+## 피벗 복합 산점도
 
-A scatter chart with pivot table layout.
+피벗 복합 산점도
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -157,29 +157,29 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "카테고리",
       "encoding": "color"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "날짜",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "지역",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "이익",
       "encoding": "yAxis"
     }
   ],

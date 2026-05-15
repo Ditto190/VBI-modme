@@ -1,8 +1,8 @@
 # Sort
 
-## Legend Internal Sort
+## Sắp xếp nội bộ chú giải
 
-Legend Internal Sort
+Sắp xếp nội bộ chú giải
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -45,21 +45,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     }
   ],
   "sortLegend": {
@@ -71,83 +71,9 @@ export default () => {
 }
 ```
 
-## Measure Sort
+## Sắp xếp chỉ số
 
-Measure Sort
-
-```tsx preview
-import { VSeedRender } from '@components'
-
-export default () => {
-  const vseedConfig = {
-  "chartType": "line",
-  "dataset": [
-    {
-      "date": "2019",
-      "profit": 10,
-      "sales": 20,
-      "count": 15
-    },
-    {
-      "date": "2020",
-      "profit": 30,
-      "sales": 60,
-      "count": 33
-    },
-    {
-      "date": "2021",
-      "profit": 30,
-      "sales": 60,
-      "count": 22
-    },
-    {
-      "date": "2022",
-      "profit": 50,
-      "sales": 100,
-      "count": 14
-    },
-    {
-      "date": "2023",
-      "profit": 40,
-      "sales": 80,
-      "count": 30
-    }
-  ],
-  "dimensions": [
-    {
-      "id": "date",
-      "alias": "Date"
-    }
-  ],
-  "measures": [
-    {
-      "id": "count",
-      "alias": "Quantity"
-    },
-    {
-      "id": "sales",
-      "alias": "Sales",
-      "parentId": "group"
-    },
-    {
-      "id": "profit",
-      "alias": "Profit",
-      "parentId": "group"
-    }
-  ],
-  "sortLegend": {
-    "order": "desc",
-    "orderBy": "sales"
-  }
-}
-
-  return <VSeedRender vseed={vseedConfig} />
-}
-```
-
-## Measuressort
-
-Measuressort
+Sắp xếp chỉ số
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -190,22 +116,96 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "parentId": "group"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
+      "parentId": "group"
+    }
+  ],
+  "sortLegend": {
+    "order": "desc",
+    "orderBy": "sales"
+  }
+}
+
+  return <VSeedRender vseed={vseedConfig} />
+}
+```
+
+## Sắp xếp chỉ số
+
+Sắp xếp chỉ số
+
+```tsx preview
+import { VSeedRender } from '@components'
+
+export default () => {
+  const vseedConfig = {
+  "chartType": "line",
+  "dataset": [
+    {
+      "date": "2019",
+      "profit": 10,
+      "sales": 20,
+      "count": 15
+    },
+    {
+      "date": "2020",
+      "profit": 30,
+      "sales": 60,
+      "count": 33
+    },
+    {
+      "date": "2021",
+      "profit": 30,
+      "sales": 60,
+      "count": 22
+    },
+    {
+      "date": "2022",
+      "profit": 50,
+      "sales": 100,
+      "count": 14
+    },
+    {
+      "date": "2023",
+      "profit": 40,
+      "sales": 80,
+      "count": 30
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "date",
+      "alias": "Ngày"
+    }
+  ],
+  "measures": [
+    {
+      "id": "count",
+      "alias": "Số lượng"
+    },
+    {
+      "id": "sales",
+      "alias": "Doanh số",
+      "parentId": "group"
+    },
+    {
+      "id": "profit",
+      "alias": "Lợi nhuận",
       "parentId": "group"
     }
   ],
@@ -219,9 +219,9 @@ export default () => {
 }
 ```
 
-## Dimension Sort
+## Sắp xếp chiều dữ liệu
 
-Dimension Sort
+Sắp xếp chiều dữ liệu
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -264,21 +264,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ],
   "sortLegend": {
@@ -291,9 +291,9 @@ export default () => {
 }
 ```
 
-## Dimensionssort
+## Sắp xếp chiều dữ liệu
 
-Dimensionssort
+Sắp xếp chiều dữ liệu
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -336,21 +336,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ],
   "sort": {
@@ -363,9 +363,9 @@ export default () => {
 }
 ```
 
-## Custom Sort
+## Sắp xếp tùy chỉnh
 
-Custom Sort
+Sắp xếp tùy chỉnh
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -408,21 +408,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ],
   "sort": {
@@ -440,9 +440,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend ID)
+## Sắp xếp tùy chỉnh (ID chú giải)
 
-Custom Sort (Legend ID)
+Sắp xếp tùy chỉnh (ID chú giải)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -485,28 +485,28 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Quantity-count",
-      "Sales-sales",
-      "Profit-profit"
+      "Số lượng-count",
+      "Doanh số-sales",
+      "Lợi nhuận-profit"
     ]
   }
 }
@@ -515,9 +515,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend Name)
+## Sắp xếp tùy chỉnh (tên chú giải)
 
-Custom Sort (Legend Name)
+Sắp xếp tùy chỉnh (tên chú giải)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -560,28 +560,28 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Sales",
-      "Quantity",
-      "Profit"
+      "Doanh số",
+      "Số lượng",
+      "Lợi nhuận"
     ]
   }
 }

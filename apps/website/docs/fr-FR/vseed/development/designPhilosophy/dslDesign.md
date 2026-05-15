@@ -1,36 +1,36 @@
-# DSL Design
+# Conception du DSL
 
-:::info Significance
+:::info Signification
 
-VSeed is a declarative DSL
+VSeed est un DSL déclaratif
 
-- DSL design is the art of expressing domain problems — it effectively simplifies complex issues.
-- DSL allows those familiar with it to code as naturally as writing in their native language. Once you are familiar with VSeed, rendering charts feels as simple as writing plain English.
-- `VChart` and `VTable` follow the same philosophy.
+- La conception d'un DSL est l'art d'exprimer les problèmes du domaine et permet de simplifier efficacement des problèmes complexes.
+- Un DSL permet aux personnes qui le connaissent de coder aussi naturellement que dans leur langue maternelle. Une fois VSeed maîtrisé, rendre un graphique devient aussi simple qu'écrire en langage naturel.
+- `VChart` et `VTable` suivent la même logique.
 
 
 :::
 
 :::tip
 
-A `Declarative DSL` focuses on **"What"**. It describes the expected result or final state, without specifying the exact steps the computer should take to reach that state.
+Un `DSL déclaratif` se concentre sur le « quoi » (What). Il décrit le résultat attendu ou l'état final souhaité, sans se préoccuper des étapes concrètes que l'ordinateur doit suivre pour atteindre cet état.
 
 
-An `Imperative DSL` focuses on **"How"**. It provides a series of explicit, step-by-step instructions, telling the computer exactly how to reach the desired state.
+Un `DSL impératif` se concentre sur le « comment » (How). Il fournit une série d'instructions explicites et progressives, indiquant à l'ordinateur comment atteindre l'état cible étape par étape.
 :::
 
-## VSeed Trade-offs
+## Compromis de VSeed
 
-1. Domain Focus
+1. Focalisation sur le domaine (Focus)
 
-Sacrificing some generality to focus on solving domain-specific problems. The core goal of VSeed is not to deeply satisfy all the requirements of a single chart type, but to focus on data transformation before the chart type is determined. Other concerns, such as themes, interactions, and animations, are left to the consumer.
+VSeed sacrifie une partie de la généralité pour se concentrer sur la résolution de problèmes propres à un domaine. Son objectif principal n'est donc pas de satisfaire en profondeur toutes les exigences d'un type de graphique unique, mais de se concentrer sur la transformation des données avant le choix du type de graphique. Les autres fonctions, comme les thèmes, interactions et animations, sont laissées au consommateur.
 
-2. Abstraction Level
+2. Niveau d'abstraction (Abstraction Level)
 
-`VSeed` provides a high level of abstraction, allowing users to focus on solving problems rather than worrying about low-level implementation details. This boosts development efficiency — for example, switching chart types only requires changing a single parameter, without worrying about the underlying mechanics.
+`VSeed` fournit un niveau d'abstraction élevé, permettant aux utilisateurs de se concentrer sur la résolution du problème plutôt que sur les détails d'implémentation bas niveau. Cela améliore l'efficacité du développement. Par exemple, changer de type de graphique ne nécessite que de modifier un paramètre, sans se préoccuper des détails du changement.
 
-3. Constraint is Advantage
+3. La contrainte est un avantage (Constraint is Advantage)
 
-`VSeed` emphasizes constraints: it accepts a `VSeed DSL` as input and outputs a `spec` for either `VTable` or `VChart`. This allows users to maintain fine-grained control over individual chart features — `VSeed` is not a black box.
+`VSeed` met l'accent sur les contraintes: il reçoit un `VSeed DSL` et produit une `spec` pour `VTable` ou `VChart`. Cela permet aux utilisateurs de contrôler plus finement les fonctions d'un graphique individuel. `VSeed` n'est pas une boîte noire.
 
-Therefore, VSeed can be simply thought of as a `Spec Builder` that does not break the original capabilities of `VTable` or `VChart`. Any `VChart` or `VTable` user can quickly integrate `VSeed` into their existing platform.
+Ainsi, VSeed peut être simplement considéré comme un `Spec Builder` qui ne casse pas les capacités originales de `VTable` ou `VChart`. Tout utilisateur de `VChart` ou `VTable` peut intégrer rapidement `VSeed` dans sa plateforme existante.

@@ -4,8 +4,8 @@
 
 ### registerCustomTheme
 
-:::note{title=Description}
-Register a custom theme.
+:::note{title=설명}
+커스텀 테마를 등록합니다.
 :::
 
 ```ts
@@ -14,23 +14,23 @@ function registerCustomTheme(key: string, themeConfig:
     | ((props: { lightTheme: CustomThemeConfig; darkTheme: CustomThemeConfig }) => CustomThemeConfig)): void
 ```
 
-**Parameters:**
+**매개변수:**
 
-- Unique identifier for the theme
-- Theme configuration object, or a function that returns a configuration object.
-If a function, it receives an object containing lightTheme and darkTheme as parameters, making it easy to extend existing themes.
+- 테마의 고유 식별자
+- 테마 설정 객체 또는 설정 객체를 반환하는 함수
+함수인 경우 lightTheme와 darkTheme을 포함한 객체를 매개변수로 받아 기존 테마를 기반으로 쉽게 확장할 수 있습니다.
 
-**Example:**
+**예:**
 
 registerCustomTheme('myTheme', { ... });
-// Or modify based on the light theme
+// 또는 라이트 테마를 기반으로 수정
 registerCustomTheme('myTheme', ({ lightTheme }) => ({ ...lightTheme, ... }));
 
 ### registerDarkTheme
 
-:::note{title=Description}
-Register the dark theme (Dark Theme).
-After registration, retrieve it via Builder.getTheme('dark').
+:::note{title=설명}
+다크 테마(Dark Theme)를 등록합니다.
+등록 후 Builder.getTheme('dark')로 가져올 수 있습니다.
 :::
 
 ```ts
@@ -39,9 +39,9 @@ function registerDarkTheme(): void
 
 ### registerLightTheme
 
-:::note{title=Description}
-Register the light theme (Light Theme).
-After registration, retrieve it via Builder.getTheme('light').
+:::note{title=설명}
+라이트 테마(Light Theme)를 등록합니다.
+등록 후 Builder.getTheme('light')로 가져올 수 있습니다.
 :::
 
 ```ts
@@ -52,9 +52,9 @@ function registerLightTheme(): void
 
 ### registerArea
 
-:::note{title=Description}
-Register the Area Chart build pipeline.
-Once registered, Builder supports building Area Chart Spec and Advanced Config.
+:::note{title=설명}
+Area Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Area Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -63,9 +63,9 @@ function registerArea(): void
 
 ### registerAreaPercent
 
-:::note{title=Description}
-Register the Area Percent Chart build pipeline.
-Once registered, Builder supports building Area Percent Chart Spec and Advanced Config.
+:::note{title=설명}
+Area Percent Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Area Percent Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -74,9 +74,9 @@ function registerAreaPercent(): void
 
 ### registerBar
 
-:::note{title=Description}
-Register the Bar Chart build pipeline.
-Once registered, Builder supports building Bar Chart Spec and Advanced Config.
+:::note{title=설명}
+Bar Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Bar Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -85,9 +85,9 @@ function registerBar(): void
 
 ### registerBarParallel
 
-:::note{title=Description}
-Register the Bar Parallel Chart build pipeline.
-Once registered, Builder supports building Bar Parallel Chart Spec and Advanced Config.
+:::note{title=설명}
+Bar Parallel Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Bar Parallel Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -96,9 +96,9 @@ function registerBarParallel(): void
 
 ### registerBarPercent
 
-:::note{title=Description}
-Register the Bar Percent Chart build pipeline.
-Once registered, Builder supports building Bar Percent Chart Spec and Advanced Config.
+:::note{title=설명}
+Bar Percent Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Bar Percent Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -107,9 +107,9 @@ function registerBarPercent(): void
 
 ### registerBoxPlot
 
-:::note{title=Description}
-Register the Box Plot Chart build pipeline.
-Once registered, Builder supports building Box Plot Chart Spec and Advanced Config.
+:::note{title=설명}
+Box Plot Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Box Plot Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -118,9 +118,9 @@ function registerBoxPlot(): void
 
 ### registerCirclePacking
 
-:::note{title=Description}
-Register the CirclePacking Chart build pipeline.
-Once registered, Builder supports building CirclePacking Chart Spec and Advanced Config.
+:::note{title=설명}
+CirclePacking Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 CirclePacking Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -129,9 +129,9 @@ function registerCirclePacking(): void
 
 ### registerColumn
 
-:::note{title=Description}
-Register the Column Chart build pipeline.
-Once registered, Builder supports building Column Chart Spec and Advanced Config.
+:::note{title=설명}
+Column Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Column Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -140,9 +140,9 @@ function registerColumn(): void
 
 ### registerColumnParallel
 
-:::note{title=Description}
-Register the Column Parallel Chart build pipeline.
-Once registered, Builder supports building Column Parallel Chart Spec and Advanced Config.
+:::note{title=설명}
+Column Parallel Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Column Parallel Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -151,9 +151,9 @@ function registerColumnParallel(): void
 
 ### registerColumnPercent
 
-:::note{title=Description}
-Register the Column Percent Chart build pipeline.
-Once registered, Builder supports building Column Percent Chart Spec and Advanced Config.
+:::note{title=설명}
+Column Percent Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Column Percent Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -162,9 +162,9 @@ function registerColumnPercent(): void
 
 ### registerDonut
 
-:::note{title=Description}
-Register the Donut Chart build pipeline.
-Once registered, Builder supports building Donut Chart Spec and Advanced Config.
+:::note{title=설명}
+Donut Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Donut Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -173,9 +173,9 @@ function registerDonut(): void
 
 ### registerDualAxis
 
-:::note{title=Description}
-Register the Dual Axis Chart build pipeline.
-Once registered, Builder supports building Dual Axis Chart Spec and Advanced Config.
+:::note{title=설명}
+Dual Axis Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Dual Axis Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -184,9 +184,9 @@ function registerDualAxis(): void
 
 ### registerFunnel
 
-:::note{title=Description}
-Register the Funnel Chart build pipeline.
-Once registered, Builder supports building Funnel Chart Spec and Advanced Config.
+:::note{title=설명}
+Funnel Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Funnel Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -195,9 +195,9 @@ function registerFunnel(): void
 
 ### registerHeatmap
 
-:::note{title=Description}
-Register the Heatmap Chart build pipeline.
-Once registered, Builder supports building Heatmap Chart Spec and Advanced Config.
+:::note{title=설명}
+Heatmap Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Heatmap Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -206,8 +206,8 @@ function registerHeatmap(): void
 
 ### registerHierarchySankey
 
-:::note{title=Description}
-Register the HierarchySankey Chart build pipeline.
+:::note{title=설명}
+HierarchySankey Chart의 구축 파이프라인을 등록합니다.
 :::
 
 ```ts
@@ -216,9 +216,9 @@ function registerHierarchySankey(): void
 
 ### registerHistogram
 
-:::note{title=Description}
-Register the Histogram Chart build pipeline.
-Once registered, Builder supports building Histogram Chart Spec and Advanced Config.
+:::note{title=설명}
+Histogram Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Histogram Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -227,9 +227,9 @@ function registerHistogram(): void
 
 ### registerLine
 
-:::note{title=Description}
-Register the Line Chart build pipeline.
-Once registered, Builder supports building Line Chart Spec and Advanced Config.
+:::note{title=설명}
+Line Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Line Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -238,9 +238,9 @@ function registerLine(): void
 
 ### registerPie
 
-:::note{title=Description}
-Register the Pie Chart build pipeline.
-Once registered, Builder supports building Pie Chart Spec and Advanced Config.
+:::note{title=설명}
+Pie Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Pie Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -249,9 +249,9 @@ function registerPie(): void
 
 ### registerPivotTable
 
-:::note{title=Description}
-Register the Pivot Table Chart build pipeline.
-Once registered, Builder supports building Pivot Table Chart Spec and Advanced Config.
+:::note{title=설명}
+Pivot Table Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Pivot Table Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -260,9 +260,9 @@ function registerPivotTable(): void
 
 ### registerRaceBar
 
-:::note{title=Description}
-Register the RaceBar Chart build pipeline.
-Once registered, Builder supports building RaceBar Chart Spec.
+:::note{title=설명}
+RaceBar Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 RaceBar Chart의 Spec 구축을 지원합니다.
 :::
 
 ```ts
@@ -271,9 +271,9 @@ function registerRaceBar(): void
 
 ### registerRaceColumn
 
-:::note{title=Description}
-Register the RaceColumn Chart build pipeline.
-Once registered, Builder supports building RaceColumn Chart Spec.
+:::note{title=설명}
+RaceColumn Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 RaceColumn Chart의 Spec 구축을 지원합니다.
 :::
 
 ```ts
@@ -282,9 +282,9 @@ function registerRaceColumn(): void
 
 ### registerRaceDonut
 
-:::note{title=Description}
-Register the RaceDonut Chart build pipeline.
-Once registered, Builder supports building RaceDonut Chart Spec.
+:::note{title=설명}
+RaceDonut Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 RaceDonut Chart의 Spec 구축을 지원합니다.
 :::
 
 ```ts
@@ -293,9 +293,9 @@ function registerRaceDonut(): void
 
 ### registerRaceLine
 
-:::note{title=Description}
-Register the RaceLine Chart build pipeline.
-Once registered, Builder supports building RaceLine Chart Spec.
+:::note{title=설명}
+RaceLine Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 RaceLine Chart의 Spec 구축을 지원합니다.
 :::
 
 ```ts
@@ -304,9 +304,9 @@ function registerRaceLine(): void
 
 ### registerRacePie
 
-:::note{title=Description}
-Register the RacePie Chart build pipeline.
-Once registered, Builder supports building RacePie Chart Spec.
+:::note{title=설명}
+RacePie Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 RacePie Chart의 Spec 구축을 지원합니다.
 :::
 
 ```ts
@@ -315,9 +315,9 @@ function registerRacePie(): void
 
 ### registerRaceScatter
 
-:::note{title=Description}
-Register the RaceScatter Chart build pipeline.
-Once registered, Builder supports building RaceScatter Chart Spec.
+:::note{title=설명}
+RaceScatter Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 RaceScatter Chart의 Spec 구축을 지원합니다.
 :::
 
 ```ts
@@ -326,9 +326,9 @@ function registerRaceScatter(): void
 
 ### registerRadar
 
-:::note{title=Description}
-Register the Radar Chart build pipeline.
-Once registered, Builder supports building Radar Chart Spec and Advanced Config.
+:::note{title=설명}
+Radar Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Radar Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -337,9 +337,9 @@ function registerRadar(): void
 
 ### registerRose
 
-:::note{title=Description}
-Register the Rose Chart build pipeline.
-Once registered, Builder supports building Rose Chart Spec and Advanced Config.
+:::note{title=설명}
+Rose Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Rose Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -348,9 +348,9 @@ function registerRose(): void
 
 ### registerRoseParallel
 
-:::note{title=Description}
-Register the Rose Parallel Chart build pipeline.
-Once registered, Builder supports building Rose Parallel Chart Spec and Advanced Config.
+:::note{title=설명}
+Rose Parallel Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Rose Parallel Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -359,9 +359,9 @@ function registerRoseParallel(): void
 
 ### registerScatter
 
-:::note{title=Description}
-Register the Scatter Chart build pipeline.
-Once registered, Builder supports building Scatter Chart Spec and Advanced Config.
+:::note{title=설명}
+Scatter Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Scatter Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -370,9 +370,9 @@ function registerScatter(): void
 
 ### registerSunburst
 
-:::note{title=Description}
-Register the Sunburst Chart build pipeline.
-Once registered, Builder supports building Sunburst Chart Spec and Advanced Config.
+:::note{title=설명}
+Sunburst Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Sunburst Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -381,9 +381,9 @@ function registerSunburst(): void
 
 ### registerTable
 
-:::note{title=Description}
-Register the Table Chart build pipeline.
-Once registered, Builder supports building Table Chart Spec and Advanced Config.
+:::note{title=설명}
+Table Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 Table Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
@@ -392,11 +392,12 @@ function registerTable(): void
 
 ### registerTreeMap
 
-:::note{title=Description}
-Register the TreeMap Chart build pipeline.
-Once registered, Builder supports building TreeMap Chart Spec and Advanced Config.
+:::note{title=설명}
+TreeMap Chart의 구축 파이프라인을 등록합니다.
+등록 후 Builder는 TreeMap Chart의 Spec과 Advanced Config 구축을 지원합니다.
 :::
 
 ```ts
 function registerTreeMap(): void
 ```
+

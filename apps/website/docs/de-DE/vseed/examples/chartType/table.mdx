@@ -63,9 +63,9 @@ export default () => {
 }
 ```
 
-## Standard Table
+## Basistabelle
 
-A standard table with dimension and measure definitions.
+Basistabelle
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -123,33 +123,33 @@ export default () => {
   "measures": [
     {
       "id": "goalProfit",
-      "alias": "Profit Goal"
+      "alias": "Gewinnziel"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     },
     {
       "id": "sales",
-      "alias": "Sales Volume"
+      "alias": "Absatzmenge"
     },
     {
       "id": "leftCount",
-      "alias": "Remaining Quantity"
+      "alias": "Restanzahl"
     },
     {
       "id": "salesCount",
-      "alias": "Sales Count"
+      "alias": "Verkaufsanzahl"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     },
     {
       "id": "type",
-      "alias": "Type"
+      "alias": "Typ"
     }
   ]
 }
@@ -158,9 +158,9 @@ export default () => {
 }
 ```
 
-## Grouped Table
+## Gruppierte Tabelle
 
-A table with grouped dimensions and measures for hierarchical display.
+Gruppierte Tabelle
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -218,37 +218,37 @@ export default () => {
   "measures": [
     {
       "id": "goalProfit",
-      "alias": "Profit Goal"
+      "alias": "Gewinnziel"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     },
     {
       "id": "table",
-      "alias": "Sales Measures",
+      "alias": "Verkaufskennzahlen",
       "children": [
         {
           "id": "countInfo",
-          "alias": "Quantity Information",
+          "alias": "Mengeninformationen",
           "children": [
             {
               "id": "leftCount",
-              "alias": "Remaining Quantity"
+              "alias": "Restanzahl"
             },
             {
               "id": "salesCount",
-              "alias": "Sales Count"
+              "alias": "Verkaufsanzahl"
             }
           ]
         },
         {
           "id": "saleInfo",
-          "alias": "Sales Information",
+          "alias": "Verkaufsinformationen",
           "children": [
             {
               "id": "sales",
-              "alias": "Sales Volume"
+              "alias": "Absatzmenge"
             }
           ]
         }
@@ -258,15 +258,15 @@ export default () => {
   "dimensions": [
     {
       "id": "dimensionGroup",
-      "alias": "Dimension Group",
+      "alias": "Dimensionsgruppe",
       "children": [
         {
           "id": "date",
-          "alias": "Date"
+          "alias": "Datum"
         },
         {
           "id": "type",
-          "alias": "Type"
+          "alias": "Typ"
         }
       ]
     }
@@ -307,17 +307,17 @@ export default () => {
   "dimensions": [
     {
       "id": "product",
-      "alias": "Product Name"
+      "alias": "Produktname"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Umsatz"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "numFormat": {
         "type": "number",
         "fractionDigits": 1

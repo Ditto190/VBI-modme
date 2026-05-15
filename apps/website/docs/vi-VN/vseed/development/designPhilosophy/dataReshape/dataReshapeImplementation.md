@@ -1,30 +1,30 @@
-# Data Reshape-Implementation
+# Reshape dữ liệu - Triển khai
 
-:::info Simple Yet Ingenious
-This is the most interesting and core module of VSeed. It seems complex, but it is actually very simple and ingenious, consisting of less than 200 lines of code.
+:::info Đơn giản mà tinh tế
+Đây là một trong những module thú vị nhất và cốt lõi nhất của VSeed. Nhìn có vẻ phức tạp, nhưng thực ra rất đơn giản và tinh tế, chỉ chưa đến 200 dòng mã.
 
-As long as `foldMeasures` and `unfoldDimensions` are properly utilized, any Measures and Dimensions can be converted to fixed Measures and Dimensions, achieving highly flexible visual mapping.
+Chỉ cần sử dụng tốt `foldMeasures` và `unfoldDimensions`, có thể chuyển đổi bất kỳ chỉ số và chiều dữ liệu nào thành chỉ số và chiều dữ liệu cố định, từ đó đạt được ánh xạ trực quan đủ linh hoạt.
 :::
 
 ## foldMeasures
 
-[Source Code Location](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/foldMeasures.ts)
+[Vị trí mã nguồn](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/foldMeasures.ts)
 
-`foldMeasures` folds all Measures into one measure, adding a `Measure Name Dimension` and a `Measure ID Dimension`. Any potentially lost information is stored in `foldInfo`, and data statistics can also be computed during this process.
+`foldMeasures` `fold` toàn bộ chỉ số thành một chỉ số, thêm một `chiều tên chỉ số` và một `chiều Id chỉ số`. Tất cả thông tin có thể bị mất đều được lưu trong `foldInfo`, đồng thời có thể thực hiện thống kê dữ liệu trong quá trình này.
 
-### Features
+### Đặc điểm
 
-1. Feature 1: After `foldMeasures` finishes executing, there will be exactly 1 measure field. This means data described by multiple measures can all be converted to 1 measure; mapping any multiple measures data to exactly one graphic element.
-2. Feature 2: A data item is strictly consistent with the graphic element (geometric element)'s data. One data item corresponds to one graphic element.
-3. Feature 3: Data statistics are computed during this process.
+1. Đặc điểm 1: Sau khi `foldMeasures` chạy xong, chắc chắn chỉ còn 1 trường chỉ số. Điều này có nghĩa là dữ liệu được mô tả bằng nhiều chỉ số đều có thể được chuyển thành 1 chỉ số; dữ liệu nhiều chỉ số bất kỳ có thể tương ứng với một phần tử đồ họa.
+2. Đặc điểm 2: Mục dữ liệu và dữ liệu của phần tử đồ họa (phần tử hình học) khớp nghiêm ngặt với nhau. Một dữ liệu tương ứng với một phần tử đồ họa.
+3. Đặc điểm 3: Quá trình này thực hiện thống kê dữ liệu.
 
-:::tip The Most Ingenious Part!!!
-- `1` measure `0` dimensions -> After `foldMeasures`, you get `1` measure and `2` dimensions (including Measure Name and Measure ID).
-- `4` measures `1` dimension -> After `2` passes of `foldMeasures`, you can get `2` measures and `3` dimensions (including Measure Name and Measure ID), which perfectly supports scenarios like Dual Axis Charts.
-- `N` measures `0` dimensions -> After `Y` (Y ≤ N) passes of `foldMeasures`, you can get `Y` measures and `2` dimensions (including Measure Name and Measure ID).
+:::tip Điểm tinh tế nhất!!!
+- `1` chỉ số `0` chiều, sau `foldMeasures` có thể nhận được `1` chỉ số và `2` chiều (bao gồm tên chỉ số và Id chỉ số).
+- `4` chỉ số `1` chiều, sau `2` lần `foldMeasures` có thể nhận được `2` chỉ số và `3` chiều (bao gồm tên chỉ số và Id chỉ số), nhờ đó hỗ trợ hoàn hảo các kịch bản như biểu đồ hai trục.
+- `N` chỉ số `0` chiều, sau `Y` (Y ≤ N) lần `foldMeasures`, có thể nhận được `Y` chỉ số và `2` chiều (bao gồm tên chỉ số và Id chỉ số).
 
 :::
-### Minimal Runnable Example
+### Ví dụ tối thiểu có thể chạy
 
 ```js title=foldMeasures
 const data = [
@@ -69,7 +69,7 @@ function foldMeasures(dataset, measures, options) {
       const { id, alias } = measure
       const newRow = { ...row }
 
-      // Delete other Measure fields to avoid duplication
+      // Xóa các trường chỉ số khác để tránh lặp lại
       for (const key of ids) {
         delete newRow[key]
       }
@@ -109,7 +109,7 @@ const { dataset: foldedData, foldInfo } = foldMeasures(data, measures, {
 console.log(foldedData)
 ```
 
-```json title=Expected Output
+```json title=Kết quả mong đợi
 [
   {
     "category": "A",
@@ -140,45 +140,45 @@ console.log(foldedData)
 
 ## unfoldDimensions
 
-[Source Code Location](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/unfoldDimensions.ts)
+[Vị trí mã nguồn](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/unfoldDimensions.ts)
 
 
-`unfoldDimensions` concatenates any subset of Dimensions into a new Dimension without losing any information. All newly added information is stored in `unfoldInfo`.
+`unfoldDimensions` `concat` bất kỳ chiều dữ liệu nào thành một chiều dữ liệu mới mà không làm mất thông tin. Tất cả thông tin được thêm vào đều được lưu trong `unfoldInfo`.
 
-A complete `unfoldDimensions` == Converting all Dimension values to Measures + One `foldMeasures` pass.
+Một `unfoldDimensions` hoàn chỉnh == chuyển tất cả giá trị chiều thành chỉ số + một lần `foldMeasures`
 
-However, the cost of iterating over the dataset is significant. An extra `foldMeasures` pass would result in performance degradation.
+Tuy nhiên, chi phí duyệt `dataset` rất lớn. Một lần `foldMeasures` dư thừa sẽ làm giảm hiệu năng.
 
-Because `foldMeasures` inherently guarantees that one data item holds precisely one measure, we can directly apply a simple merge exclusively on the source data. This cleanly achieves the equivalent effect, ultimately scaling performance substantially.
+`foldMeasures` có thể trực tiếp đảm bảo một dữ liệu chỉ có một chỉ số. Vì vậy, chỉ cần thực hiện phép gộp đơn giản ngay trên dữ liệu nguồn là có thể tinh tế đạt được hiệu quả tương đương, cuối cùng cải thiện hiệu năng đáng kể.
 
-Upon further consideration, theoretically, `unfoldDimensions` and `foldMeasures` could be fully merged to complete all data processing within a single dataset iteration. However, for the sake of readability and maintainability, they are tentatively kept apart when there is no performance bottleneck.
+Sau khi cân nhắc, về lý thuyết `unfoldDimensions` có thể được hợp nhất hoàn toàn với `foldMeasures`, hoàn thành toàn bộ xử lý dữ liệu trong một lần duyệt `dataset`. Tuy nhiên, vì khả năng đọc và bảo trì, khi chưa có bottleneck hiệu năng, tạm thời không hợp nhất.
 
-### Features
+### Đặc điểm
 
-Feature 1: After `unfoldDimensions` is executed, there is strictly 1 measure field remaining.
-Feature 2: It can merge Dimensions without losing the original data structure.
+Đặc điểm 1: Sau khi `unfoldDimensions` chạy xong, chắc chắn chỉ còn 1 trường chỉ số. 
+Đặc điểm 2: Có thể gộp chiều mà không làm mất dữ liệu gốc.
 
-:::tip The Most Ingenious Part!!!
-1. As long as it proceeds after `foldMeasures`, you can achieve the expansion of Dimensions and merging of Measures via a simple concat operation, yielding outstanding performance.
-2. Arbitrary Dimensions can be merged together to form an entirely new Dimension field, empowering infinitely flexible visual channel mappings.
-3. Since it is not complex intrinsically, it can theoretically be stitched seamlessly onto `foldMeasures` to diminish traversal passes and bolster performance.
+:::tip Điểm tinh tế nhất!!!
+1. Chỉ cần thực hiện sau `foldMeasures`, có thể dùng thao tác `concat` đơn giản nhất để hoàn tất việc mở rộng chiều và gộp chỉ số, với hiệu năng cực kỳ tốt.
+2. Bất kỳ chiều nào cũng có thể được gộp thành một trường chiều hoàn toàn mới, đạt được ánh xạ kênh thị giác tùy ý.
+3. Vì bản thân không phức tạp, về lý thuyết có thể hợp nhất với `foldMeasures` để giảm số lần duyệt và nâng cao hiệu năng.
 
 :::
 
-### Minimal Runnable Example
+### Ví dụ tối thiểu có thể chạy
 
 ```js
 const XEncoding = '__DimX__'
 const ColorEncoding = '__DimColor__'
 /**
- * Unfolds and merges Dimensions of visual channels. It executes after foldMeasures, so a Cartesian product is not needed.
- * @param {Array<Object>} dataset The original dataset
- * @param {Array<Object>} dimensions An array of Dimensions where each dimension object contains at least an id field
- * @param {Object} encoding Encoding object, where the key is the channel name and the value is an array of Dimension IDs
- * @param {Object} options Configuration items
- *  - foldMeasureId: The field name for the folded measures
- *  - separator: The separator to stitch dimension values
- *  - colorItemAsId: Whether to exclusively use the Color item as the colorId, default false
+ * Mở rộng và gộp chiều của kênh thị giác. Vì gộp chiều sau foldMeasures nên không cần tích Descartes
+ * @param {Array<Object>} dataset Tập dữ liệu gốc
+ * @param {Array<Object>} dimensions Mảng chiều, mỗi đối tượng chiều ít nhất chứa trường id
+ * @param {Object} encoding Đối tượng encoding, key là tên kênh, value là mảng id chiều
+ * @param {Object} options Cấu hình
+ *  - foldMeasureId: tên trường của chỉ số đã fold
+ *  - separator: dấu phân tách để nối giá trị chiều
+ *  - colorItemAsId: có chỉ dùng mục màu làm colorId hay không, mặc định false
  * @returns {Object} { dataset, unfoldInfo }
  */
 function unfoldDimensions(dataset, dimensions, encoding, options) {
@@ -192,7 +192,7 @@ function unfoldDimensions(dataset, dimensions, encoding, options) {
     colorIdMap: {},
   }
 
-  // Filter corresponding Dimensions based on the given encoding
+  // Lọc các chiều tương ứng theo encoding
   const xDimensions = encoding.x ? dimensions.filter(d => encoding.x.includes(d.id)) : []
   const colorDimensions = encoding.color ? dimensions.filter(d => encoding.color.includes(d.id)) : []
 
@@ -219,11 +219,11 @@ function unfoldDimensions(dataset, dimensions, encoding, options) {
 }
 
 /**
- * Applies encoding to the data by mutating datum directly
- * @param {string} encoding The encoding field name
- * @param {Array<Object>} dimensions Array of Dimensions
- * @param {Object} datum A single data item
- * @param {string} separator Stitching separator
+ * Áp dụng encoding vào dữ liệu, chỉnh sửa datum tại chỗ
+ * @param {string} encoding Tên trường encoding
+ * @param {Array<Object>} dimensions Mảng chiều
+ * @param {Object} datum Một dòng dữ liệu
+ * @param {string} separator Dấu phân tách nối chuỗi
  */
 function applyEncoding(encoding, dimensions, datum, separator) {
   if (encoding && dimensions.length) {
@@ -261,7 +261,7 @@ console.log(unfoldedData)
 
 ```
 
-```json title=Expected Output
+```json title=Kết quả mong đợi
 [
   {
     "category": "A",

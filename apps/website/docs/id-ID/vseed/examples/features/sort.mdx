@@ -1,8 +1,8 @@
 # Sort
 
-## Legend Internal Sort
+## Pengurutan Internal Legenda
 
-Legend Internal Sort
+Pengurutan Internal Legenda
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -45,21 +45,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ],
   "sortLegend": {
@@ -71,83 +71,9 @@ export default () => {
 }
 ```
 
-## Measure Sort
+## Pengurutan Metrik
 
-Measure Sort
-
-```tsx preview
-import { VSeedRender } from '@components'
-
-export default () => {
-  const vseedConfig = {
-  "chartType": "line",
-  "dataset": [
-    {
-      "date": "2019",
-      "profit": 10,
-      "sales": 20,
-      "count": 15
-    },
-    {
-      "date": "2020",
-      "profit": 30,
-      "sales": 60,
-      "count": 33
-    },
-    {
-      "date": "2021",
-      "profit": 30,
-      "sales": 60,
-      "count": 22
-    },
-    {
-      "date": "2022",
-      "profit": 50,
-      "sales": 100,
-      "count": 14
-    },
-    {
-      "date": "2023",
-      "profit": 40,
-      "sales": 80,
-      "count": 30
-    }
-  ],
-  "dimensions": [
-    {
-      "id": "date",
-      "alias": "Date"
-    }
-  ],
-  "measures": [
-    {
-      "id": "count",
-      "alias": "Quantity"
-    },
-    {
-      "id": "sales",
-      "alias": "Sales",
-      "parentId": "group"
-    },
-    {
-      "id": "profit",
-      "alias": "Profit",
-      "parentId": "group"
-    }
-  ],
-  "sortLegend": {
-    "order": "desc",
-    "orderBy": "sales"
-  }
-}
-
-  return <VSeedRender vseed={vseedConfig} />
-}
-```
-
-## Measuressort
-
-Measuressort
+Pengurutan Metrik
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -190,22 +116,96 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "group"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
+      "parentId": "group"
+    }
+  ],
+  "sortLegend": {
+    "order": "desc",
+    "orderBy": "sales"
+  }
+}
+
+  return <VSeedRender vseed={vseedConfig} />
+}
+```
+
+## Pengurutan Metrik
+
+Pengurutan Metrik
+
+```tsx preview
+import { VSeedRender } from '@components'
+
+export default () => {
+  const vseedConfig = {
+  "chartType": "line",
+  "dataset": [
+    {
+      "date": "2019",
+      "profit": 10,
+      "sales": 20,
+      "count": 15
+    },
+    {
+      "date": "2020",
+      "profit": 30,
+      "sales": 60,
+      "count": 33
+    },
+    {
+      "date": "2021",
+      "profit": 30,
+      "sales": 60,
+      "count": 22
+    },
+    {
+      "date": "2022",
+      "profit": 50,
+      "sales": 100,
+      "count": 14
+    },
+    {
+      "date": "2023",
+      "profit": 40,
+      "sales": 80,
+      "count": 30
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "date",
+      "alias": "Tanggal"
+    }
+  ],
+  "measures": [
+    {
+      "id": "count",
+      "alias": "Jumlah"
+    },
+    {
+      "id": "sales",
+      "alias": "Penjualan",
+      "parentId": "group"
+    },
+    {
+      "id": "profit",
+      "alias": "Laba",
       "parentId": "group"
     }
   ],
@@ -219,9 +219,9 @@ export default () => {
 }
 ```
 
-## Dimension Sort
+## Pengurutan Dimensi
 
-Dimension Sort
+Pengurutan Dimensi
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -264,21 +264,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     }
   ],
   "sortLegend": {
@@ -291,9 +291,9 @@ export default () => {
 }
 ```
 
-## Dimensionssort
+## Pengurutan Dimensi
 
-Dimensionssort
+Pengurutan Dimensi
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -336,21 +336,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     }
   ],
   "sort": {
@@ -363,9 +363,9 @@ export default () => {
 }
 ```
 
-## Custom Sort
+## Pengurutan Kustom
 
-Custom Sort
+Pengurutan Kustom
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -408,21 +408,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     }
   ],
   "sort": {
@@ -440,9 +440,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend ID)
+## Pengurutan Kustom (ID Legenda)
 
-Custom Sort (Legend ID)
+Pengurutan Kustom (ID Legenda)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -485,28 +485,28 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Quantity-count",
-      "Sales-sales",
-      "Profit-profit"
+      "Jumlah-count",
+      "Penjualan-sales",
+      "Laba-profit"
     ]
   }
 }
@@ -515,9 +515,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend Name)
+## Pengurutan Kustom (Nama Legenda)
 
-Custom Sort (Legend Name)
+Pengurutan Kustom (Nama Legenda)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -560,28 +560,28 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Jumlah"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Sales",
-      "Quantity",
-      "Profit"
+      "Penjualan",
+      "Jumlah",
+      "Laba"
     ]
   }
 }

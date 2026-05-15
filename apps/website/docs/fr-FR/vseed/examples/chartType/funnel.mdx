@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Multi-Measure Funnel Chart
+## Graphique en entonnoir multi-indicateurs
 
-Multi-Measure Funnel Chart
+Graphique en entonnoir multi-indicateurs
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -63,15 +63,15 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     },
     {
       "id": "profit1",
-      "alias": "Return Rate"
+      "alias": "Taux de rendement"
     }
   ]
 }
@@ -80,9 +80,9 @@ export default () => {
 }
 ```
 
-## Combined Funnel Chart
+## Graphique en entonnoir combiné
 
-Combined Funnel Chart
+Graphique en entonnoir combiné
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -120,12 +120,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "parentId": "left"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
       "parentId": "right"
     }
   ],
@@ -141,9 +141,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Funnel Chart
+## Graphique en entonnoir combiné pivoté
 
-Pivot Combined Funnel Chart
+Graphique en entonnoir combiné pivoté
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -154,7 +154,7 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Catégorie"
     },
     {
       "id": "date",
@@ -163,19 +163,19 @@ export default () => {
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Région",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     }
   ],
   "dataset": [

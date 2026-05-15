@@ -38,9 +38,9 @@ export default () => {
 }
 ```
 
-## Rose Chart (Zero Dimensions)
+## Diagramme rose (zéro dimension)
 
-A rose chart without any dimension fields.
+Diagramme rose (zéro dimension)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -62,9 +62,9 @@ export default () => {
 }
 ```
 
-## Stacked Rose Chart
+## Diagramme rose empilé combiné
 
-A stacked rose chart for comparing multiple measures across different categories.
+Diagramme rose empilé combiné
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -113,19 +113,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Taux de rendement",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -136,9 +136,9 @@ export default () => {
 }
 ```
 
-## Pivot Stacked Rose Chart
+## Diagramme rose empilé pivoté
 
-A stacked rose chart with pivot table layout.
+Diagramme rose empilé pivoté
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -149,7 +149,7 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Catégorie"
     },
     {
       "id": "date",
@@ -158,19 +158,19 @@ export default () => {
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Région",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     }
   ],
   "dataset": [
@@ -321,9 +321,9 @@ export default () => {
 }
 ```
 
-## stackingRose Chart
+## Diagramme rose empilé
 
-stackingRose Chart
+Diagramme rose empilé
 
 ```tsx preview
 import { VSeedRender } from '@components'

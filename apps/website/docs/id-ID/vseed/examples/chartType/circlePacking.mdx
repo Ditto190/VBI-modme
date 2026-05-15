@@ -116,9 +116,9 @@ export default () => {
 }
 ```
 
-## Measures Combination
+## Kombinasi Metrik
 
-Displays the distribution of sales and profit across categories such as Food & Beverage and Personal Care, using nested circles to show hierarchies and measure relationships.
+Menampilkan distribusi penjualan dan laba pada kategori seperti Makanan & Minuman serta Perawatan Pribadi, menggunakan lingkaran bersarang untuk menunjukkan hierarki dan hubungan metrik.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -128,135 +128,135 @@ export default () => {
   "chartType": "circlePacking",
   "dataset": [
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Yunling Spring Mineral Water",
+      "category": "Makanan & Minuman",
+      "subKategori": "Minuman",
+      "product": "Air Mineral Mata Air Yunling",
       "sales": 12000,
       "profit": 1800
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Guoyue Fresh Orange Juice",
+      "category": "Makanan & Minuman",
+      "subKategori": "Minuman",
+      "product": "Jus Jeruk Segar Guoyue",
       "sales": 8500,
       "profit": 1400
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Mingxiang Oolong Tea",
+      "category": "Makanan & Minuman",
+      "subKategori": "Minuman",
+      "product": "Teh Oolong Mingxiang",
       "sales": 6200,
       "profit": 950
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Cuile Potato Chips (Tomato)",
+      "category": "Makanan & Minuman",
+      "subKategori": "Camilan",
+      "product": "Keripik Kentang Cuile (Tomat)",
       "sales": 9500,
       "profit": 1600
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Nuts Party Mixed Nuts",
+      "category": "Makanan & Minuman",
+      "subKategori": "Camilan",
+      "product": "Kacang Campur Nuts Party",
       "sales": 7800,
       "profit": 2100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Silky Smooth Shampoo",
+      "category": "Perawatan Pribadi",
+      "subKategori": "Perlengkapan Mandi",
+      "product": "Sampo Halus Lembut",
       "sales": 6800,
       "profit": 1100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Facial Amino Acid Cleanser",
+      "category": "Perawatan Pribadi",
+      "subKategori": "Perlengkapan Mandi",
+      "product": "Pembersih Wajah Asam Amino",
       "sales": 5200,
       "profit": 980
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Bijing Multi-effect Laundry Detergent",
+      "category": "Perawatan Pribadi",
+      "subKategori": "Pembersih Rumah",
+      "product": "Deterjen Laundry Multi-efek Bijing",
       "sales": 7200,
       "profit": 1050
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Kitchen Oil Cleaning Spray",
+      "category": "Perawatan Pribadi",
+      "subKategori": "Pembersih Rumah",
+      "product": "Semprotan Pembersih Minyak Dapur",
       "sales": 4300,
       "profit": 720
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Smart S9 Smartwatch",
+      "category": "Peralatan Digital",
+      "subKategori": "Perangkat Pakai Pintar",
+      "product": "Smartwatch Smart S9",
       "sales": 15000,
       "profit": 3200
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Yuepao Pro Fitness Tracker",
+      "category": "Peralatan Digital",
+      "subKategori": "Perangkat Pakai Pintar",
+      "product": "Pelacak Kebugaran Yuepao Pro",
       "sales": 6500,
       "profit": 1400
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "WarmNest Desktop Fan Heater",
+      "category": "Peralatan Digital",
+      "subKategori": "Peralatan Kecil",
+      "product": "Pemanas Kipas Meja WarmNest",
       "sales": 4800,
       "profit": 880
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "Fresh Grind Portable Coffee Maker",
+      "category": "Peralatan Digital",
+      "subKategori": "Peralatan Kecil",
+      "product": "Pembuat Kopi Portabel Fresh Grind",
       "sales": 11000,
       "profit": 2600
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "PureBreath Car Air Purifier",
+      "category": "Peralatan Digital",
+      "subKategori": "Peralatan Kecil",
+      "product": "Pembersih Udara Mobil PureBreath",
       "sales": 7600,
       "profit": 1750
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Elegance Light Business Jacket",
+      "category": "Pakaian & Aksesori",
+      "subKategori": "Pakaian Pria",
+      "product": "Jaket Bisnis Ringan Elegance",
       "sales": 8800,
       "profit": 2400
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Cotton Whisper Basic T-shirt 3-pack",
+      "category": "Pakaian & Aksesori",
+      "subKategori": "Pakaian Pria",
+      "product": "Kaos Basic Cotton Whisper Isi 3",
       "sales": 5600,
       "profit": 1500
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "Flora Floral Print Dress",
+      "category": "Pakaian & Aksesori",
+      "subKategori": "Pakaian Wanita",
+      "product": "Gaun Motif Bunga Flora",
       "sales": 9200,
       "profit": 2800
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "WarmWeave Cashmere Scarf",
+      "category": "Pakaian & Aksesori",
+      "subKategori": "Pakaian Wanita",
+      "product": "Syal Kasmir WarmWeave",
       "sales": 4100,
       "profit": 1200
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Footwear",
-      "product": "CloudStep Cushioning Running Shoes",
+      "category": "Pakaian & Aksesori",
+      "subKategori": "Alas Kaki",
+      "product": "Sepatu Lari Bantalan CloudStep",
       "sales": 13500,
       "profit": 3600
     }
@@ -264,35 +264,35 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Kategori",
       "encoding": "hierarchy"
     },
     {
-      "id": "subCategory",
-      "alias": "Sub-Category",
+      "id": "subKategori",
+      "alias": "Sub-Kategori",
       "encoding": "hierarchy"
     },
     {
       "id": "product",
-      "alias": "Product",
+      "alias": "Produk",
       "encoding": "hierarchy"
     },
     {
       "id": "__MeaId__",
-      "alias": "Measure Name",
+      "alias": "Nama Metrik",
       "encoding": "hierarchy"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales (Yuan)",
+      "alias": "Penjualan (Yuan)",
       "encoding": "size",
       "parentId": "a"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "size",
       "parentId": "b"
     }

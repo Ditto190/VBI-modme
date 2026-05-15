@@ -1,42 +1,42 @@
 ---
-title: Publish
+title: リリース
 ---
 
 
-# Publish
+# リリース
 
-## Generate Changeset
+## changeset の生成
 
-To generate new changesets, please run `pnpm changeset` in the root directory of the repository. The resulting markdown files generated in the `.changeset` directory should be committed to the repository.
+新しい changeset を生成するには、リポジトリのルートディレクトリで `pnpm changeset` を実行してください。`.changeset` ディレクトリに生成された markdown ファイルはリポジトリへコミットする必要があります。
 ```bash
 pnpm changeset
 ```
 
-After generating the changeset, perform a `git commit`:
+changeset を生成した後、`git commit` を実行します:
 ```bash
 git add .
 git commit -m "chore: commit message"
 ```
 
-The above process can be repeated multiple times. The content of each changeset will be accumulated in the final version publish.
+上記の手順は複数回繰り返せます。各 changeset の内容は最終的なバージョンリリースに累積されます。
 
-## Update Version
+## バージョンの更新
 
-Run the following command to update the version and the ChangeLog.
+次のコマンドを実行してバージョンを更新し、ChangeLog を更新します。
 ```bash
 pnpm changeset version
 ```
 
-Update dependencies and the lock file:
+依存関係と lock file を更新します:
 ```bash
 pnpm install
 ```
 
-Commit changes:
+変更をコミットします:
 ```bash
 git add .
 git commit -m "chore: release message"
 git push
 ```
 
-After the PR is merged into the `main` branch, the changesets workflow will be triggered automatically to perform the packaging and publishing task.
+PR が `main` ブランチへマージされると、changesets workflow が自動でトリガーされ、パッケージングとリリース作業が実行されます。

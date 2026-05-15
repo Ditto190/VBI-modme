@@ -1,74 +1,74 @@
-# Agent Development Context (VSeed)
+# Agent 開発コンテキスト (VSeed)
 
-This document is for agent-code and contributors. It summarizes the core architecture, data flow, and extension patterns of the VSeed package to help quickly establish a global understanding during automated development.
+このドキュメントは agent-code とコントリビューター向けです。VSeed サブパッケージの中核アーキテクチャ、データフロー、拡張方法をまとめ、自動化開発時に全体像をすばやく把握できるようにします。
 
-> This is a "context index" designed for Agent use. For more detailed engineering notes, refer to: `packages/vseed/AGENTS.md`.
+> これは Agent 利用を想定した「コンテキスト索引」です。より詳しいエンジニアリング説明は `packages/vseed/AGENTS.md` を参照してください。
 
-## 1. Goal and Purpose
+## 1. 目標と位置づけ
 
-VSeed is a **Spec Builder** that converts `VSeed DSL` into `VChart` / `VTable` renderable Specs, supporting the capability to intelligently generate and edit charts.
+VSeed は `VSeed DSL` を `VChart` / `VTable` のレンダリング可能な Spec に変換する **Spec Builder** であり、チャートのインテリジェントな生成と編集を支えます。
 
-- Input: `VSeed DSL`
-- Output: `VChart` / `VTable` Spec
-- Core flow: `AdvancedPipeline` + `SpecPipeline`
+- 入力: `VSeed DSL`
+- 出力: `VChart` / `VTable` Spec
+- コアフロー: `AdvancedPipeline` + `SpecPipeline`
 
-## 2. Two-Stage Pipeline
+## 2. 二段階 Pipeline
 
 1. **AdvancedPipeline**
 
-- Input: `VSeed DSL`
-- Output: `AdvancedVSeed` (serializable intermediate state)
-- Responsibilities: Data reshaping, default inference, encoding modeling, themes & styles, analytics configuration
+- 入力: `VSeed DSL`
+- 出力: `AdvancedVSeed` (シリアライズ可能な中間状態)
+- 役割: データリシェイプ、デフォルト推論、エンコーディングモデリング、テーマとスタイル、分析設定
 
 2. **SpecPipeline**
 
-- Input: `AdvancedVSeed`
-- Output: Final Spec (not serializable, rendered directly)
-- Responsibilities: Map intermediate state to concrete VChart / VTable configuration
+- 入力: `AdvancedVSeed`
+- 出力: 最終 Spec (シリアライズ不可、直接レンダリングされる)
+- 役割: 中間状態を具体的な VChart / VTable 設定へマッピング
 
-## 3. Builder Entry Point
+## 3. Builder エントリーポイント
 
-- Use `Builder.from(vseed).build()` to generate a Spec
-- `prepare()` executes dynamicFilter (when needed)
+- `Builder.from(vseed).build()` を使って Spec を生成します
+- `prepare()` は必要に応じて dynamicFilter を実行します
 
-Source entry points:
+ソースのエントリーポイント:
 - `packages/vseed/src/builder/builder/builder.ts`
 - `packages/vseed/src/builder/builder/build.ts`
 - `packages/vseed/src/builder/builder/prepare.ts`
 
-## 4. Data Reshaping (Core)
+## 4. データリシェイプ (コア)
 
-- `foldMeasures`: Fold multiple measures into a single measure; generates `foldInfo`
-- `unfoldDimensions`: Merge dimensions by visual encoding channel; generates `unfoldInfo`
-- `dataReshapeByEncoding`: Combined call (fold + unfold)
+- `foldMeasures`: 複数の指標を単一指標へ折りたたみ、`foldInfo` を生成します
+- `unfoldDimensions`: 視覚エンコーディングチャネルごとにディメンションを統合し、`unfoldInfo` を生成します
+- `dataReshapeByEncoding`: 組み合わせ呼び出し (fold + unfold)
 
-Source entry points:
+ソース入口:
 - `packages/vseed/src/dataReshape/foldMeasures.ts`
 - `packages/vseed/src/dataReshape/unfoldDimensions.ts`
 - `packages/vseed/src/dataReshape/dataReshapeByEncoding.ts`
 
-## 5. Extension & Registration
+## 5. 拡張と登録
 
-- `registerAll()`: Register all charts and themes
-- `registerXxx()`: Register individual chart type pipeline
-- `updateAdvanced()` / `updateSpec()`: Insert custom Pipes
+- `registerAll()`: すべてのチャートとテーマを登録します
+- `registerXxx()`: 個別のチャートタイプ pipeline を登録します
+- `updateAdvanced()` / `updateSpec()`: カスタム Pipe を挿入します
 
-Source entry points:
+ソース入口:
 - `packages/vseed/src/builder/register/all.ts`
 - `packages/vseed/src/builder/register/chartType/*`
 - `packages/vseed/src/builder/register/custom.ts`
 
-## 6. Pipeline Design Principles
+## 6. Pipeline 設計原則
 
-- Pipes should be as atomic as possible, minimizing if/else
-- Combine conditional flows via Adapters
-- Chart type determined by Pipe composition
+- Pipe はできるだけ原子的にし、if/else を減らします
+- Adapter によって条件付きフローを組み合わせます
+- チャートタイプは Pipe の組み合わせで決まります
 
-Reference:
-- `apps/website/docs/en-US/vseed/development/designPhilosophy/pipeline/pipelineDesign.md`
+参考:
+- `apps/website/docs/ja-JP/vseed/development/designPhilosophy/pipeline/pipelineDesign.md`
 
-## 7. More Context
+## 7. より詳しいコンテキスト
 
 - `packages/vseed/AGENTS.md`
-- `apps/website/docs/en-US/vseed/development/architecture.md`
-- `apps/website/docs/en-US/vseed/development/designPhilosophy/vseed.md`
+- `apps/website/docs/ja-JP/vseed/development/architecture.md`
+- `apps/website/docs/ja-JP/vseed/development/designPhilosophy/vseed.md`

@@ -2,7 +2,7 @@
   {
     "type": "dir",
     "name": "chart",
-    "label": "Chart",
+    "label": "Diagramm",
     "collapsible": true,
     "collapsed": false
   },
@@ -16,7 +16,7 @@
   {
     "type": "dir",
     "name": "report",
-    "label": "Report",
+    "label": "Bericht",
     "collapsible": true,
     "collapsed": false
   }

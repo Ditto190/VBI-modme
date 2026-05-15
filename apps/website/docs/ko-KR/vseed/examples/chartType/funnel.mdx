@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Multi-Measure Funnel Chart
+## 다중 지표 퍼널 차트
 
-Multi-Measure Funnel Chart
+다중 지표 퍼널 차트
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -63,15 +63,15 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "profit1",
-      "alias": "Return Rate"
+      "alias": "수익률"
     }
   ]
 }
@@ -80,9 +80,9 @@ export default () => {
 }
 ```
 
-## Combined Funnel Chart
+## 복합 퍼널 차트
 
-Combined Funnel Chart
+복합 퍼널 차트
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -120,19 +120,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "parentId": "left"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "이익",
       "parentId": "right"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ]
 }
@@ -141,9 +141,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Funnel Chart
+## 피벗 복합 퍼널 차트
 
-Pivot Combined Funnel Chart
+피벗 복합 퍼널 차트
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -154,28 +154,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "카테고리"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "날짜",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "지역",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     }
   ],
   "dataset": [

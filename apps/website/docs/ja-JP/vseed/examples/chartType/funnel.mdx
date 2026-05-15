@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Multi-Measure Funnel Chart
+## 複数指標ファネルチャート
 
-Multi-Measure Funnel Chart
+複数指標ファネルチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -63,15 +63,15 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "売上"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     },
     {
       "id": "profit1",
-      "alias": "Return Rate"
+      "alias": "収益率"
     }
   ]
 }
@@ -80,9 +80,9 @@ export default () => {
 }
 ```
 
-## Combined Funnel Chart
+## 複合ファネルチャート
 
-Combined Funnel Chart
+複合ファネルチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -120,19 +120,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "parentId": "left"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "parentId": "right"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ]
 }
@@ -141,9 +141,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Funnel Chart
+## ピボット複合ファネルチャート
 
-Pivot Combined Funnel Chart
+ピボット複合ファネルチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -154,28 +154,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "カテゴリ"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "日付",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "地域",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     }
   ],
   "dataset": [

@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Multi-Measure Funnel Chart
+## Biểu đồ phễu nhiều chỉ số
 
-Multi-Measure Funnel Chart
+Biểu đồ phễu nhiều chỉ số
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -63,15 +63,15 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "profit1",
-      "alias": "Return Rate"
+      "alias": "Tỷ suất lợi nhuận"
     }
   ]
 }
@@ -80,9 +80,9 @@ export default () => {
 }
 ```
 
-## Combined Funnel Chart
+## Biểu đồ phễu kết hợp
 
-Combined Funnel Chart
+Biểu đồ phễu kết hợp
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -120,19 +120,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "parentId": "left"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "parentId": "right"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ]
 }
@@ -141,9 +141,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Funnel Chart
+## Biểu đồ phễu kết hợp dạng pivot
 
-Pivot Combined Funnel Chart
+Biểu đồ phễu kết hợp dạng pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -154,28 +154,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Danh mục"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Ngày",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Khu vực",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     }
   ],
   "dataset": [

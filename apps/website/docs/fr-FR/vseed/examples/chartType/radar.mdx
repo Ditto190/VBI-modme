@@ -24,9 +24,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Radar Chart
+## Graphique radar combiné
 
-A radar chart with multiple data series.
+Graphique radar combiné
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -80,12 +80,12 @@ export default () => {
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
       "parentId": "sales-and-profit"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Taux de rendement",
       "parentId": "ratio"
     }
   ]
@@ -95,9 +95,9 @@ export default () => {
 }
 ```
 
-## Pivot Radar Chart
+## Graphique radar combiné pivoté
 
-A radar chart with pivot table layout.
+Graphique radar combiné pivoté
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -108,7 +108,7 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Catégorie"
     },
     {
       "id": "date",
@@ -117,19 +117,19 @@ export default () => {
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Région",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     }
   ],
   "dataset": [

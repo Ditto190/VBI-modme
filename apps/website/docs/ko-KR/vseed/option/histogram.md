@@ -1,22 +1,22 @@
 # Histogram
 
-:::info{title=Encoding Mapping}
-The Histogram Chart supports the following visual channels:
+:::info{title=인코딩 매핑}
+히스토그램은 다음 시각 채널을 지원합니다:
 
-`xAxis`  : x-axis channel, supports `one dimension`, mapped to the x-axis after binning calculations based on dimension values.
+`xAxis`  : x축 채널, `하나의 차원`을 지원하며 차원 값을 구간화 계산한 뒤 x축에 표시합니다
 
 :::
 
-:::note{title=Description}
-Histogram, suitable for displaying data distribution. The X-axis is a numeric axis (continuous data), and the Y-axis is a numeric axis (continuous data). Bars are vertically oriented.
+:::note{title=설명}
+히스토그램은 데이터 분포를 표시하는 데 적합하며, X축은 숫자 축(연속 데이터), Y축도 숫자 축(연속 데이터)이고 막대는 세로로 배열됩니다
 
-Applicable scenarios:
+적용 시나리오:
 
-- Displaying data distribution, such as frequency or probability distribution.
+\- 빈도 분포, 확률 분포 등 데이터의 분포 상황을 표시할 때
 
-- Analyzing central tendency and dispersion of data.
+\- 데이터의 중심 경향과 분산 정도를 분석할 때
 
-- Identifying outliers and patterns within the data.
+\- 데이터의 이상치와 패턴을 식별할 때
 
 :::
 
@@ -25,8 +25,8 @@ Applicable scenarios:
 
 **Type:** `"histogram"`
 
-:::note{title=Description}
-Histogram, suitable for displaying data distribution.
+:::note{title=설명}
+히스토그램으로, 데이터 분포를 표시하는 데 적합합니다
 
 :::
 
@@ -35,13 +35,13 @@ Histogram, suitable for displaying data distribution.
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset. Compliant with TidyData specification and already aggregated, defines the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Histogram Chart data is ultimately converted to 1 dimension and 1 measure.
+:::note{title=설명}
+TidyData를 준수하고 이미 집계된 데이터셋으로, 차트의 데이터 소스와 구조를 정의하는 데 사용됩니다. 사용자 입력 데이터셋은 전처리가 필요 없습니다. VSeed에는 강력한 Data Reshape 기능이 포함되어 Column Chart 데이터를 자동으로 2개 차원과 1개 측정값으로 변환합니다.
 
 :::
 
-**Example**
-[{category:10, value:100}, {category:20, value:200}]
+**예시**
+[{category:'A', value:100}, {category:'B', value:200}]
 
 
 
@@ -50,13 +50,13 @@ Dataset. Compliant with TidyData specification and already aggregated, defines t
 
 **Type:** `HistogramDimension[] | undefined`
 
-:::note{title=Description}
-Histograms typically do not require explicit dimensions in the traditional sense, but can be configured for binning.
+:::note{title=설명}
+히스토그램은 일반적으로 차원이 필요하지 않습니다
 
 :::
 
-**Example**
-[{id: "category", alias: "Category"}]
+**예시**
+[{id: "category", alias: "카테고리"}]
 
 
 
@@ -65,8 +65,8 @@ Histograms typically do not require explicit dimensions in the traditional sense
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=설명}
+차원에 해당하는 필드 ID
 
 :::
 
@@ -74,8 +74,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=설명}
+차원 별칭
 
 :::
 
@@ -83,8 +83,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=설명}
+차원 날짜 형식 설정
 
 :::
 
@@ -93,8 +93,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=설명}
+시간 입도이며 날짜 표시 정밀도를 결정합니다
 
 :::
 
@@ -102,20 +102,20 @@ Time granularity, determines the date display precision
 
 **Type:** `"tooltip" | "label" | "row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped:
+:::note{title=설명}
+차원이 매핑되는 채널
 
-- color: supports mapping multiple dimensions to the color channel
+\- color: 여러 디멘션을 색상 채널에 매핑할 수 있습니다
 
-- detail: supports mapping multiple dimensions to the detail channel
+\- detail: 여러 디멘션을 상세 채널에 매핑할 수 있습니다
 
-- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: 여러 차원을 툴팁 채널에 매핑할 수 있습니다
 
-- label: supports mapping multiple dimensions to the label channel
+\- label: 여러 차원을 레이블 채널에 매핑할 수 있습니다
 
-- row: supports mapping multiple dimensions to the row channel
+\- row: 여러 디멘션을 행 채널에 매핑할 수 있습니다
 
-- column: supports mapping multiple dimensions to the column channel
+\- column: 여러 디멘션을 열 채널에 매핑할 수 있습니다
 
 :::
 
@@ -124,13 +124,13 @@ Channel to which the dimension is mapped:
 
 **Type:** `HistogramMeasure[] | undefined`
 
-:::note{title=Description}
-Histogram supports only one measure, typically representing the frequency or count.
+:::note{title=설명}
+히스토그램은 하나의 차원만 지원하며 데이터는 이산 데이터입니다
 
 :::
 
-**Example**
-[{id: "value", alias: "Value"}]
+**예시**
+[{id: "value", alias: "값"}]
 
 
 
@@ -139,8 +139,8 @@ Histogram supports only one measure, typically representing the frequency or cou
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=설명}
+지표 ID, 중복될 수 없습니다
 
 :::
 
@@ -148,8 +148,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=설명}
+지표 별칭, 중복 허용. 설정하지 않으면 alias는 id가 됩니다
 
 :::
 
@@ -157,20 +157,20 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority.
+:::note{title=설명}
+자동 숫자 서식, 기본 활성화, 가장 높은 우선순위
 
-When autoFormat=true, it overrides all numFormat configurations.
+autoFormat=true이면 모든 numFormat 설정을 덮어씁니다
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale.
+활성화하면 차트 데이터 레이블과 툴팁이 지표 값과 로케일에 따라 적절한 형식을 자동으로 선택합니다
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation.
+서식 규칙: compact notation이 활성화된 십진수, 소수 자릿수 최소 0자리 및 최대 2자리, 자동 반올림, 브라우저의 Intl.NumberFormat 구현 사용
 
-For example:
+예:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-- locale=en-US: 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -178,10 +178,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips.
+:::note{title=설명}
+지표의 사용자 지정 숫자 서식이며 레이블과 툴팁에 자동 적용됩니다
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this configuration.
+참고: 사용자 지정 서식을 사용하려면 autoFormat=false를 명시적으로 설정해야 합니다. 그렇지 않으면 autoFormat이 이 설정을 덮어씁니다
 
 :::
 
@@ -190,8 +190,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+숫자 서식 유형. 숫자(십진수), 퍼센트(%), 퍼밀(‰), 과학적 표기법을 지원
 
 :::
 
@@ -199,14 +199,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+숫자 서식 비율, 0일 수 없습니다
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
 
@@ -214,14 +214,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰
+:::note{title=설명}
+숫자 서식 기호, 예: %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
 
@@ -229,8 +229,8 @@ Number format symbol, e.g., %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+숫자 서식의 천 단위 구분 기호
 
 :::
 
@@ -238,8 +238,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+숫자 서식 접미사
 
 :::
 
@@ -247,8 +247,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+숫자 서식 접두사
 
 :::
 
@@ -256,18 +256,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=설명}
+숫자 서식의 소수 자릿수. 브라우저 Intl.NumberFormat의 minimumFractionDigits와 maximumFractionDigits를 사용하며 significantDigits보다 우선순위가 낮습니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678 은 1235 로 변환, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.6 로 변환, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.57 로 변환, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 은 1230.568 로 변환, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.5678 로 변환, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.56780 로 변환, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -275,20 +275,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=설명}
+숫자 서식의 유효 자릿수. 브라우저 Intl.NumberFormat의 minimumSignificantDigits와 maximumSignificantDigits를 사용하며 fractionDigits보다 우선순위가 높습니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678 은 1000 로 변환, significantDigits:1
+\- 1234.5678 은 1200 로 변환, significantDigits:2
+\- 1234.5678 은 1230 로 변환, significantDigits:3
+\- 1234.5678 은 1234 로 변환, significantDigits:4
+\- 1234.5678 은 1234.6 로 변환, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.57 로 변환, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.568 로 변환, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -296,14 +296,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=설명}
+significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 반올림 우선순위. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingPriority와 같은 규칙을 따릅니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+\- 1234.5678 은 1230 로 변환, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -311,8 +311,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=설명}
+숫자 서식의 반올림 모드. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingMode와 같은 규칙을 따릅니다
 
 :::
 
@@ -325,8 +325,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+숫자 서식 유형. 숫자(십진수), 퍼센트(%), 퍼밀(‰), 과학적 표기법을 지원
 
 :::
 
@@ -334,14 +334,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+숫자 서식 비율, 0일 수 없습니다
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
 
@@ -349,14 +349,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰
+:::note{title=설명}
+숫자 서식 기호, 예: %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
 
@@ -364,8 +364,8 @@ Number format symbol, e.g., %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+숫자 서식의 천 단위 구분 기호
 
 :::
 
@@ -373,8 +373,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+숫자 서식 접미사
 
 :::
 
@@ -382,8 +382,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+숫자 서식 접두사
 
 :::
 
@@ -391,18 +391,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=설명}
+숫자 서식의 소수 자릿수. 브라우저 Intl.NumberFormat의 minimumFractionDigits와 maximumFractionDigits를 사용하며 significantDigits보다 우선순위가 낮습니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678 은 1235 로 변환, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.6 로 변환, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.57 로 변환, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 은 1230.568 로 변환, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.5678 로 변환, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.56780 로 변환, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -410,20 +410,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=설명}
+숫자 서식의 유효 자릿수. 브라우저 Intl.NumberFormat의 minimumSignificantDigits와 maximumSignificantDigits를 사용하며 fractionDigits보다 우선순위가 높습니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678 은 1000 로 변환, significantDigits:1
+\- 1234.5678 은 1200 로 변환, significantDigits:2
+\- 1234.5678 은 1230 로 변환, significantDigits:3
+\- 1234.5678 은 1234 로 변환, significantDigits:4
+\- 1234.5678 은 1234.6 로 변환, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.57 로 변환, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.568 로 변환, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -431,14 +431,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=설명}
+significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 반올림 우선순위. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingPriority와 같은 규칙을 따릅니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+\- 1234.5678 은 1230 로 변환, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -446,8 +446,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=설명}
+숫자 서식의 반올림 모드. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingMode와 같은 규칙을 따릅니다
 
 :::
 
@@ -455,20 +455,20 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"value" | "color" | "tooltip" | "label" | "x0" | "x1" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped:
+:::note{title=설명}
+지표가 매핑되는 채널
 
-- value: value channel for the Histogram
+\- value: 히스토그램의 값 채널
 
-- x0: x0 channel for the Histogram
+\- x0: 히스토그램의 x0 채널
 
-- x1: x1 channel for the Histogram
+\- x1: 히스토그램의 x1 채널
 
-- color: measure mapped to the color channel
+\- color: 메저를 색상 채널에 매핑합니다
 
-- label: measure mapped to the label channel
+\- label: 지표를 레이블 채널에 매핑
 
-- tooltip: measure mapped to the tooltip channel
+\- tooltip: 지표를 툴팁 채널에 매핑
 
 :::
 
@@ -476,13 +476,13 @@ Channel to which the measure is mapped:
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In a flat measure configuration, builds a tree-like measure structure. parentId points to the ID of the parent measure group, used for building the hierarchy.
+:::note{title=설명}
+평면 지표 설정 형태에서 트리 형태의 지표 그룹을 구성합니다. parentId는 부모 지표 그룹의 id를 가리키며 지표 트리를 구성하는 데 사용됩니다
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is providing a flat measure list with parentId. These two methods cannot be used simultaneously.
+지표 트리를 설정하는 방법은 두 가지입니다. 옵션 1은 children으로 지표 트리를 직접 설정하고, 옵션 2는 parentId가 있는 평면 지표 목록을 설정합니다. 두 방법은 동시에 사용할 수 없습니다
 
 :::
 
@@ -491,8 +491,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration.
+:::note{title=설명}
+
 
 :::
 
@@ -501,8 +501,8 @@ Pagination configuration.
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension.
+:::note{title=설명}
+
 
 :::
 
@@ -510,13 +510,13 @@ Pagination field; specifies the field name for pagination, must be a dimension.
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-'2023-01-01'
+**예시**
+'2023\-01\-01'
 
 
 
@@ -525,8 +525,8 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color. Default is transparent. Can be a color string (e.g., 'red', 'blue'), or a hex, rgb, or rgba value (e.g., '#ff0000', 'rgba(255,0,0,0.5)').
+:::note{title=설명}
+
 
 :::
 
@@ -535,8 +535,8 @@ Chart background color. Default is transparent. Can be a color string (e.g., 're
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
+:::note{title=설명}
+
 
 :::
 
@@ -545,12 +545,12 @@ Color configuration for defining the chart's color scheme, including color lists
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart.
+:::note{title=설명}
+
 
 :::
 
-**Example**
+**예시**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -559,12 +559,12 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart.
+:::note{title=설명}
+
 
 :::
 
-**Example**
+**예시**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -573,12 +573,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Color mapping used to map data values to specific colors.
+:::note{title=설명}
+
 
 :::
 
-**Example**
+**예시**
 {
  'profit': 'red',
  'sales': 'blue',
@@ -590,8 +590,8 @@ Color mapping used to map data values to specific colors.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart.
+:::note{title=설명}
+
 
 :::
 
@@ -599,8 +599,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart.
+:::note{title=설명}
+
 
 :::
 
@@ -609,8 +609,8 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `Label | undefined`
 
-:::note{title=Description}
-Label configuration for defining chart data labels, including their position, format, and style.
+:::note{title=설명}
+
 
 :::
 
@@ -619,8 +619,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled.
+:::note{title=설명}
+
 
 :::
 
@@ -628,8 +628,8 @@ Whether label functionality is enabled.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line.
+:::note{title=설명}
+
 
 :::
 
@@ -637,12 +637,12 @@ Whether labels wrap to the next line.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values.
+:::note{title=설명}
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+
+
+
 
 :::
 
@@ -650,12 +650,12 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure value percentages.
+:::note{title=설명}
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+
+
+
 
 :::
 
@@ -663,12 +663,12 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension names.
+:::note{title=설명}
 
-Displays all dimension labels.
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+
+
+
 
 :::
 
@@ -676,8 +676,8 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted. When autoFormat is true, numFormat configuration is ignored.
+:::note{title=설명}
+
 
 :::
 
@@ -685,8 +685,8 @@ Whether label values are automatically formatted. When autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+:::note{title=설명}
+
 
 :::
 
@@ -695,8 +695,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+
 
 :::
 
@@ -704,14 +704,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000은 10K로 변환, ratio:1000, symbol:"K"
+
 
 
 
@@ -719,14 +719,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000은 10K로 변환, ratio:1000, symbol:"K"
+
 
 
 
@@ -734,8 +734,8 @@ Number format symbol, e.g., %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+
 
 :::
 
@@ -743,8 +743,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+
 
 :::
 
@@ -752,8 +752,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+
 
 :::
 
@@ -761,18 +761,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678 은 1234.6 로 변환, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.57 로 변환, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 은 1230.568 로 변환, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.5678 로 변환, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.56780 로 변환, fractionDigits:5 (roundingMode:halfCeil)
+
 
 
 
@@ -780,20 +780,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678 은 1200 로 변환, significantDigits:2
+\- 1234.5678 은 1230 로 변환, significantDigits:3
+\- 1234.5678 은 1234 로 변환, significantDigits:4
+\- 1234.5678 은 1234.6 로 변환, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.57 로 변환, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.568 로 변환, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:8 (roundingMode:halfCeil)
+
 
 
 
@@ -801,14 +801,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:3 (roundingPriority:morePrecision)
+
 
 
 
@@ -816,8 +816,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=설명}
+
 
 :::
 
@@ -825,8 +825,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size.
+:::note{title=설명}
+
 
 :::
 
@@ -834,8 +834,8 @@ Label font size.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight.
+:::note{title=설명}
+
 
 :::
 
@@ -843,8 +843,8 @@ Label font weight.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label background color.
+:::note{title=설명}
+
 
 :::
 
@@ -852,8 +852,8 @@ Label background color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label stroke (outline) color.
+:::note{title=설명}
+
 
 :::
 
@@ -861,8 +861,8 @@ Label stroke (outline) color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label font color.
+:::note{title=설명}
+
 
 :::
 
@@ -870,8 +870,8 @@ Label font color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically invert the label font color based on the graphic element color.
+:::note{title=설명}
+
 
 :::
 
@@ -879,8 +879,8 @@ Whether to automatically invert the label font color based on the graphic elemen
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-Label position.
+:::note{title=설명}
+
 
 :::
 
@@ -888,8 +888,8 @@ Label position.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label overlap avoidance function is enabled.
+:::note{title=설명}
+
 
 :::
 
@@ -897,8 +897,8 @@ Whether the label overlap avoidance function is enabled.
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filtering; the default condition relationship between selectors is OR.
+:::note{title=설명}
+
 
 :::
 
@@ -907,8 +907,8 @@ Label filtering; the default condition relationship between selectors is OR.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=설명}
+
 
 :::
 
@@ -916,12 +916,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=설명}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+
+
+
 
 :::
 
@@ -929,14 +929,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=설명}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
 
-Same as operator.
+
+
+
+
 
 :::
 
@@ -944,8 +944,8 @@ Same as operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selective dimension values; supports arrays.
+:::note{title=설명}
+
 
 :::
 
@@ -953,26 +953,38 @@ Selective dimension values; supports arrays.
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution).
+:::note{title=설명}
 
-Implement complex data filtering logic via AI-generated JavaScript code.
 
-Key capabilities:
 
-- Supports any complex data filtering conditions.
 
-- Uses built-in utility functions for data operations.
 
-- Executes safely in the browser environment (Web Worker sandbox).
 
-Requirements: Supports only browser environments; Node.js environments will use the fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Configuration for the chart dynamic filter.
 
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -985,15 +997,15 @@ Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=설명}
+
 
 :::
 
-**Example**
-"Highlight sales columns greater than 1000."
+**예시**
+"매출이 1000을 초과하는 막대 강조"
 
-"Highlight the column with the highest profit margin in each region."
+"각 지역에서 이익률이 가장 높은 막대 강조"
 
 
 
@@ -1001,23 +1013,25 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code.
+:::note{title=설명}
 
-- Can only use built-in utility functions (access via _ or R).
 
-- Input parameter: data (array); each item includes a __row_index field representing the row number.
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>.
 
-- __row_index represents the row number of the original data item, and field represents the field to be highlighted.
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests.
+
+
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight 'sales' field for data items where sales > 1000:
+**예시**
+return _.map(filtered, item => ({
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1026,7 +1040,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region:
+const maxItems = _.map(grouped, group =>
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1040,7 +1054,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items meeting multiple filtering conditions:
+const profitRate = item.profit / item.sales;
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1060,8 +1074,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=설명}
+
 
 :::
 
@@ -1070,8 +1084,8 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=설명}
+
 
 :::
 
@@ -1079,12 +1093,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=설명}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+
+
+
 
 :::
 
@@ -1092,14 +1106,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=설명}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
 
-Same as operator.
+
+
+
+
 
 :::
 
@@ -1107,8 +1121,8 @@ Same as operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selective dimension values; supports arrays.
+:::note{title=설명}
+
 
 :::
 
@@ -1116,8 +1130,12 @@ Selective dimension values; supports arrays.
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field). Written during the prepare() phase; read-only at runtime.
+:::note{title=설명}
+
+
+
+
+
 
 :::
 
@@ -1139,8 +1157,8 @@ Dynamic filter execution result (runtime field). Written during the prepare() ph
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=설명}
+
 
 :::
 
@@ -1149,12 +1167,12 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether legend functionality is enabled.
+:::note{title=설명}
+
 
 :::
 
-**Example**
+**예시**
 enable: true
 
 
@@ -1163,18 +1181,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the legend border is enabled.
+:::note{title=설명}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+
 
 :::
 
-**Example**
-border: true
+**예시**
+
 
 
 
@@ -1182,8 +1200,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color.
+:::note{title=설명}
+
 
 :::
 
@@ -1191,8 +1209,8 @@ Legend font color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pagination icon color.
+:::note{title=설명}
+
 
 :::
 
@@ -1200,8 +1218,8 @@ Pagination icon color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pagination icon disabled color.
+:::note{title=설명}
+
 
 :::
 
@@ -1209,13 +1227,13 @@ Pagination icon disabled color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-labelFontSize: 10
+**예시**
+
 
 
 
@@ -1223,8 +1241,8 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color.
+:::note{title=설명}
+
 
 :::
 
@@ -1232,13 +1250,13 @@ Legend font color.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-labelFontWeight: 400
+**예시**
+
 
 
 
@@ -1246,18 +1264,18 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Legend shape.
+:::note{title=설명}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+
 
 :::
 
-**Example**
-shapeType: 'circle'
+**예시**
+
 
 
 
@@ -1265,13 +1283,13 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-Legend position.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-position: 'rightTop'
+**예시**
+
 
 
 
@@ -1279,21 +1297,22 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum number of columns or rows for the legend when many items exist.
+:::note{title=설명}
 
-If position is horizontal (bottom, top, etc.), maxSize controls the number of columns.
-If position is vertical (left, right, etc.), maxSize controls the number of rows.
+
+
+
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+
 
 :::
 
-**Example**
-maxSize: 2
+**예시**
+
 
 
 
@@ -1302,8 +1321,8 @@ maxSize: 2
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-Tooltip configuration, used to define the chart's tooltips, including position, format, and style.
+:::note{title=설명}
+브러시 선택 활성화 여부
 
 :::
 
@@ -1312,8 +1331,8 @@ Tooltip configuration, used to define the chart's tooltips, including position, 
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether tooltip functionality is enabled.
+:::note{title=설명}
+
 
 :::
 
@@ -1322,8 +1341,16 @@ Whether tooltip functionality is enabled.
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Brush configuration, used to enable/disable region selection capabilities.
+:::note{title=설명}
+
+
+
+
+
+
+
+
+브러시 선택 모드: 단일 또는 다중
 
 :::
 
@@ -1332,8 +1359,8 @@ Brush configuration, used to enable/disable region selection capabilities.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether region selection is enabled.
+:::note{title=설명}
+
 
 :::
 
@@ -1341,16 +1368,20 @@ Whether region selection is enabled.
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-Brush type. Defines the selection box shape and direction:
+:::note{title=설명}
+**Type:** `XLinearAxis | undefined`
 
-- `rect`: Rectangular selection, allows selecting in both X and Y directions.
 
-- `polygon`: Polygon selection, allows drawing arbitrary shapes by clicking multiple points.
 
-- `x`: Horizontal selection, restricts selection to the X-axis direction.
+**Type:** `boolean | undefined`
 
-- `y`: Vertical selection, restricts selection to the Y-axis direction.
+
+
+
+
+
+
+
 
 :::
 
@@ -1358,12 +1389,16 @@ Brush type. Defines the selection box shape and direction:
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-Selection mode, single or multiple. Defines the selection logic:
+:::note{title=설명}
+불투명도 of selected data points, range 0-1
 
-- `single`: Single selection mode, only one selection box can exist at a time.
 
-- `multiple`: Multiple selection mode, multiple selection boxes can exist simultaneously.
+
+**Type:** `number | boolean | undefined`
+
+**Type:** `string | undefined`
+
+
 
 :::
 
@@ -1371,8 +1406,8 @@ Selection mode, single or multiple. Defines the selection logic:
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear selection boxes after region selection ends.
+:::note{title=설명}
+
 
 :::
 
@@ -1380,8 +1415,12 @@ Whether to clear selection boxes after region selection ends.
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data within the selected region.
+:::note{title=설명}
+
+
+
+
+
 
 :::
 
@@ -1390,8 +1429,12 @@ Style for data within the selected region.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity for selected data points, range 0-1.
+:::note{title=설명}
+
+
+
+
+
 
 :::
 
@@ -1399,8 +1442,8 @@ Opacity for selected data points, range 0-1.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color.
+:::note{title=설명}
+
 
 :::
 
@@ -1408,8 +1451,8 @@ Stroke color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width.
+:::note{title=설명}
+
 
 :::
 
@@ -1417,8 +1460,12 @@ Stroke width.
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data outside the selected region.
+:::note{title=설명}
+X축, 범주 축, X축 구성입니다. 위치, 형식, 스타일 등을 포함하여 차트의 X축을 정의합니다.
+
+
+
+
 
 :::
 
@@ -1427,8 +1474,12 @@ Style for data outside the selected region.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity for data points outside the selection, range 0-1.
+:::note{title=설명}
+\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+
+
+
+
 
 :::
 
@@ -1436,8 +1487,8 @@ Opacity for data points outside the selection, range 0-1.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color.
+:::note{title=설명}
+
 
 :::
 
@@ -1445,8 +1496,8 @@ Stroke color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width.
+:::note{title=설명}
+**Type:** `boolean | undefined`
 
 :::
 
@@ -1455,8 +1506,8 @@ Stroke width.
 
 **Type:** `XLinearAxis | undefined`
 
-:::note{title=Description}
-X-axis configuration (numeric axis), used to define the chart's X-axis, including position, format, and style.
+:::note{title=설명}
+x축, 숫자 축 설정으로, 차트 x축의 위치, 형식, 스타일 등을 정의합니다.
 
 :::
 
@@ -1465,8 +1516,8 @@ X-axis configuration (numeric axis), used to define the chart's X-axis, includin
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=설명}
+그리드선 타입
 
 :::
 
@@ -1474,8 +1525,8 @@ Whether the axis is visible.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value of the axis; higher priority than `nice` and `zero`.
+:::note{title=설명}
+축 선 width
 
 :::
 
@@ -1483,8 +1534,8 @@ Minimum value of the axis; higher priority than `nice` and `zero`.
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value of the axis; higher priority than `nice` and `zero`. If `true`, the maximum value is automatically calculated based on the data range.
+:::note{title=설명}
+X축 눈금
 
 :::
 
@@ -1492,8 +1543,8 @@ Maximum value of the axis; higher priority than `nice` and `zero`. If `true`, th
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic scale; only effective for numeric axes.
+:::note{title=설명}
+로그 축을 사용할지 여부이며, 숫자 축에만 적용됩니다
 
 :::
 
@@ -1501,8 +1552,8 @@ Whether to use a logarithmic scale; only effective for numeric axes.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base for the logarithmic scale; only effective for numeric axes.
+:::note{title=설명}
+애니메이션 이징 함수입니다.
 
 :::
 
@@ -1510,8 +1561,8 @@ Base for the logarithmic scale; only effective for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust axis tick intervals for better readability. Overridden by `min` and `max` configurations; only effective for numeric axes.
+:::note{title=설명}
+Y축(카테고리 축) 설정으로, 위치, 형식, 스타일 등을 포함해 Y축을 정의합니다.
 
 :::
 
@@ -1519,8 +1570,8 @@ Whether to automatically adjust axis tick intervals for better readability. Over
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is inverted; only effective for numeric axes.
+:::note{title=설명}
+X축 animation configuration
 
 :::
 
@@ -1528,8 +1579,8 @@ Whether the axis is inverted; only effective for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force the axis to include 0. Overridden by `min` and `max` configurations; only effective for numeric axes.
+:::note{title=설명}
+
 
 :::
 
@@ -1537,8 +1588,8 @@ Whether to force the axis to include 0. Overridden by `min` and `max` configurat
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format axis tick labels; only effective for numeric axes. When `true`, `numFormat` is ignored.
+:::note{title=설명}
+
 
 :::
 
@@ -1546,8 +1597,8 @@ Whether to automatically format axis tick labels; only effective for numeric axe
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Numerical formatting for the axis; only effective for numeric axes. Lower priority than `autoFormat`.
+:::note{title=설명}
+
 
 :::
 
@@ -1556,8 +1607,8 @@ Numerical formatting for the axis; only effective for numeric axes. Lower priori
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+
 
 :::
 
@@ -1565,14 +1616,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+숫자 포맷 비율이며 0일 수 없습니다
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+자동 회전이 활성화된 경우의 각도 범위입니다(카테고리 축에만 유효).
+
 
 
 
@@ -1580,14 +1631,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+
+라벨 제한의 최대 길이입니다. 텍스트 길이가 이 값을 초과하면 말줄임표로 잘리고 마우스를 올리면 표시됩니다(카테고리 축에만 유효).
 
 
 
@@ -1595,8 +1646,8 @@ Number format symbol, e.g., %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+**Type:** `string | undefined`
 
 :::
 
@@ -1604,8 +1655,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+**Type:** `number | undefined`
 
 :::
 
@@ -1613,8 +1664,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+**Type:** `number[] | undefined`
 
 :::
 
@@ -1622,18 +1673,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=설명}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+레이블 font weight
+
+
+\- 1234.5678은 1230.568로 변환됩니다, fractionDigits:3 (roundingMode:halfCeil)
+
+**Type:** `number | undefined`
 
 
 
@@ -1641,20 +1692,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=설명}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+
+
+
+**Type:** `boolean | undefined`
+
+**Type:** `YBandAxis | undefined`
+
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -1662,14 +1713,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+
+축 선 width
 
 
 
@@ -1677,8 +1728,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=설명}
+숫자 포맷 반올림 모드로, 브라우저의 Intl.NumberFormat을 사용해 포맷하며 규칙은 Intl.NumberFormat의 roundingMode와 같습니다
 
 :::
 
@@ -1686,8 +1737,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-X-axis tick labels.
+:::note{title=설명}
+
 
 :::
 
@@ -1696,8 +1747,8 @@ X-axis tick labels.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible.
+:::note{title=설명}
+
 
 :::
 
@@ -1705,8 +1756,8 @@ Whether labels are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color.
+:::note{title=설명}
+
 
 :::
 
@@ -1714,8 +1765,8 @@ Label color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size.
+:::note{title=설명}
+
 
 :::
 
@@ -1723,8 +1774,8 @@ Label font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight.
+:::note{title=설명}
+
 
 :::
 
@@ -1732,8 +1783,8 @@ Label font weight.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle.
+:::note{title=설명}
+
 
 :::
 
@@ -1741,8 +1792,8 @@ Label rotation angle.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-X-axis line.
+:::note{title=설명}
+
 
 :::
 
@@ -1751,8 +1802,8 @@ X-axis line.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible.
+:::note{title=설명}
+
 
 :::
 
@@ -1760,8 +1811,8 @@ Whether the axis line is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color.
+:::note{title=설명}
+
 
 :::
 
@@ -1769,8 +1820,8 @@ Axis line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width.
+:::note{title=설명}
+\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
 
 :::
 
@@ -1778,8 +1829,8 @@ Axis line width.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-X-axis ticks.
+:::note{title=설명}
+
 
 :::
 
@@ -1788,8 +1839,8 @@ X-axis ticks.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible.
+:::note{title=설명}
+숫자 서식 접미사
 
 :::
 
@@ -1797,8 +1848,8 @@ Whether ticks are visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards.
+:::note{title=설명}
+숫자 서식 접두사
 
 :::
 
@@ -1806,8 +1857,8 @@ Whether ticks point inwards.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color.
+:::note{title=설명}
+숫자 서식의 소수 자릿수. 브라우저 Intl.NumberFormat의 minimumFractionDigits와 maximumFractionDigits를 사용하며 significantDigits보다 우선순위가 낮습니다
 
 :::
 
@@ -1815,8 +1866,8 @@ Tick color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size.
+:::note{title=설명}
+\- 1234.5678 은 1234.5678 로 변환, fractionDigits:4 (roundingMode:halfCeil)
 
 :::
 
@@ -1824,8 +1875,8 @@ Tick size.
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-X-axis title.
+:::note{title=설명}
+
 
 :::
 
@@ -1834,8 +1885,8 @@ X-axis title.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible.
+:::note{title=설명}
+\- 1234.5678 은 1234.6 로 변환, significantDigits:5 (roundingMode:halfCeil)
 
 :::
 
@@ -1843,8 +1894,8 @@ Whether the title is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text; defaults to following field configurations.
+:::note{title=설명}
+**Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::
 
@@ -1852,8 +1903,8 @@ Title text; defaults to following field configurations.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color.
+:::note{title=설명}
+\- 1234.5678 은 1234.5678 로 변환, significantDigits:3 (roundingPriority:morePrecision)
 
 :::
 
@@ -1861,8 +1912,8 @@ Title color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size.
+:::note{title=설명}
+숫자 서식의 반올림 모드. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingMode와 같은 규칙을 따릅니다
 
 :::
 
@@ -1870,8 +1921,8 @@ Title font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight.
+:::note{title=설명}
+X축 눈금 라벨
 
 :::
 
@@ -1879,8 +1930,8 @@ Title font weight.
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-X-axis grid lines.
+:::note{title=설명}
+
 
 :::
 
@@ -1893,8 +1944,8 @@ X-axis grid lines.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color.
+:::note{title=설명}
+
 
 :::
 
@@ -1902,8 +1953,8 @@ Grid line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width.
+:::note{title=설명}
+
 
 :::
 
@@ -1911,8 +1962,8 @@ Grid line width.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line pattern.
+:::note{title=설명}
+
 
 :::
 
@@ -1920,8 +1971,8 @@ Grid line pattern.
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-X-axis animation configuration.
+:::note{title=설명}
+**Type:** `number | undefined`
 
 :::
 
@@ -1930,8 +1981,8 @@ X-axis animation configuration.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration.
+:::note{title=설명}
+
 
 :::
 
@@ -1939,8 +1990,8 @@ Animation duration.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function.
+:::note{title=설명}
+
 
 :::
 
@@ -1949,8 +2000,8 @@ Animation easing function.
 
 **Type:** `YLinearAxis | undefined`
 
-:::note{title=Description}
-Y-axis configuration (numeric axis), used to define the chart's Y-axis, including position, format, and style.
+:::note{title=설명}
+
 
 :::
 
@@ -1959,8 +2010,8 @@ Y-axis configuration (numeric axis), used to define the chart's Y-axis, includin
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=설명}
+**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1968,8 +2019,8 @@ Whether the axis is visible.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value of the axis; higher priority than `nice` and `zero`.
+:::note{title=설명}
+
 
 :::
 
@@ -1977,8 +2028,8 @@ Minimum value of the axis; higher priority than `nice` and `zero`.
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value of the axis; higher priority than `nice` and `zero`. If `true`, the maximum value is automatically calculated based on the data range.
+:::note{title=설명}
+
 
 :::
 
@@ -1986,8 +2037,8 @@ Maximum value of the axis; higher priority than `nice` and `zero`. If `true`, th
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic scale; only effective for numeric axes.
+:::note{title=설명}
+
 
 :::
 
@@ -1995,8 +2046,8 @@ Whether to use a logarithmic scale; only effective for numeric axes.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base for the logarithmic scale; only effective for numeric axes.
+:::note{title=설명}
+
 
 :::
 
@@ -2004,8 +2055,8 @@ Base for the logarithmic scale; only effective for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust axis tick intervals for better readability. Overridden by `min` and `max` configurations; only effective for numeric axes.
+:::note{title=설명}
+
 
 :::
 
@@ -2013,8 +2064,8 @@ Whether to automatically adjust axis tick intervals for better readability. Over
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is inverted; only effective for numeric axes.
+:::note{title=설명}
+sortLegend: {
 
 :::
 
@@ -2022,8 +2073,8 @@ Whether the axis is inverted; only effective for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force the axis to include 0. Overridden by `min` and `max` configurations; only effective for numeric axes.
+:::note{title=설명}
+
 
 :::
 
@@ -2031,8 +2082,8 @@ Whether to force the axis to include 0. Overridden by `min` and `max` configurat
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format axis tick labels; only effective for numeric axes. When `true`, `numFormat` is ignored.
+:::note{title=설명}
+
 
 :::
 
@@ -2040,8 +2091,8 @@ Whether to automatically format axis tick labels; only effective for numeric axe
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Numerical formatting for the axis; only effective for numeric axes. Lower priority than `autoFormat`.
+:::note{title=설명}
+
 
 :::
 
@@ -2050,8 +2101,8 @@ Numerical formatting for the axis; only effective for numeric axes. Lower priori
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+
 
 :::
 
@@ -2059,14 +2110,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+
+
 
 
 
@@ -2074,14 +2125,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰
+:::note{title=설명}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+
+
 
 
 
@@ -2089,8 +2140,8 @@ Number format symbol, e.g., %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+
 
 :::
 
@@ -2098,8 +2149,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+
 
 :::
 
@@ -2107,8 +2158,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+
 
 :::
 
@@ -2116,18 +2167,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=설명}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+
+
+애니메이션 easing 함수
+
+
+
 
 
 
@@ -2135,20 +2186,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=설명}
+범주 축 정렬 구성입니다. 차원 또는 측정값 기반 정렬과 사용자 지정 정렬 순서를 지원합니다
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -2156,14 +2207,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+정렬 순서입니다. 선택 가능한 값은 'asc' 또는 'desc'입니다
+
 
 
 
@@ -2171,8 +2222,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=설명}
+
 
 :::
 
@@ -2180,8 +2231,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis tick labels.
+:::note{title=설명}
+\- orderBy:'date'
 
 :::
 
@@ -2190,8 +2241,8 @@ Y-axis tick labels.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible.
+:::note{title=설명}
+사용자 지정 정렬 순서이며 범주 축에 직접 적용됩니다
 
 :::
 
@@ -2199,8 +2250,8 @@ Whether labels are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick label color.
+:::note{title=설명}
+
 
 :::
 
@@ -2208,8 +2259,8 @@ Tick label color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick label font size.
+:::note{title=설명}
+  orderBy: 'profit',
 
 :::
 
@@ -2217,8 +2268,8 @@ Tick label font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick label font weight.
+:::note{title=설명}
+or
 
 :::
 
@@ -2226,8 +2277,8 @@ Tick label font weight.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick label rotation angle.
+:::note{title=설명}
+
 
 :::
 
@@ -2235,8 +2286,8 @@ Tick label rotation angle.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis line.
+:::note{title=설명}
+
 
 :::
 
@@ -2245,8 +2296,8 @@ Y-axis line.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible.
+:::note{title=설명}
+
 
 :::
 
@@ -2254,8 +2305,8 @@ Whether the axis line is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color.
+:::note{title=설명}
+**Type:** `string[] | undefined`
 
 :::
 
@@ -2263,8 +2314,8 @@ Axis line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width.
+:::note{title=설명}
+
 
 :::
 
@@ -2272,8 +2323,8 @@ Axis line width.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis ticks.
+:::note{title=설명}
+
 
 :::
 
@@ -2282,8 +2333,8 @@ Y-axis ticks.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible.
+:::note{title=설명}
+
 
 :::
 
@@ -2291,8 +2342,8 @@ Whether ticks are visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards.
+:::note{title=설명}
+**Type:** `brand`
 
 :::
 
@@ -2300,8 +2351,8 @@ Whether ticks point inwards.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color.
+:::note{title=설명}
+
 
 :::
 
@@ -2309,8 +2360,8 @@ Tick color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size.
+:::note{title=설명}
+
 
 :::
 
@@ -2318,8 +2369,8 @@ Tick size.
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis title.
+:::note{title=설명}
+
 
 :::
 
@@ -2328,8 +2379,8 @@ Y-axis title.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible.
+:::note{title=설명}
+
 
 :::
 
@@ -2337,8 +2388,8 @@ Whether the title is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text; defaults to following field configurations.
+:::note{title=설명}
+sort order, optional values 'asc' or 'desc'
 
 :::
 
@@ -2346,8 +2397,8 @@ Title text; defaults to following field configurations.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color.
+:::note{title=설명}
+\- orderBy:'profit'
 
 :::
 
@@ -2355,8 +2406,8 @@ Title color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size.
+:::note{title=설명}
+
 
 :::
 
@@ -2364,8 +2415,8 @@ Title font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight.
+:::note{title=설명}
+**Type:** `string | number | undefined`
 
 :::
 
@@ -2373,8 +2424,8 @@ Title font weight.
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-Y-axis grid lines.
+:::note{title=설명}
+
 
 :::
 
@@ -2387,8 +2438,8 @@ Y-axis grid lines.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color.
+:::note{title=설명}
+
 
 :::
 
@@ -2396,8 +2447,8 @@ Grid line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width.
+:::note{title=설명}
+
 
 :::
 
@@ -2405,8 +2456,8 @@ Grid line width.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line pattern.
+:::note{title=설명}
+**예시**
 
 :::
 
@@ -2414,8 +2465,8 @@ Grid line pattern.
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-Y-axis animation configuration.
+:::note{title=설명}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -2424,8 +2475,8 @@ Y-axis animation configuration.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration.
+:::note{title=설명}
+operator: 'not in',
 
 :::
 
@@ -2433,8 +2484,8 @@ Animation duration.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function.
+:::note{title=설명}
+}
 
 :::
 
@@ -2443,10 +2494,12 @@ Animation easing function.
 
 **Type:** `CrosshairRect | undefined`
 
-:::note{title=Description}
-Vertical tooltip configuration, used to define the chart's vertical tooltip, including color, label style, etc.
+:::note{title=설명}
+코드 실행에 실패하거나 환경이 지원되지 않을 때의 fallback 방법입니다.
 
-Crosshair rectangle configuration, a type of configuration used to display crosshair rectangular areas in charts.
+
+
+
 
 :::
 
@@ -2455,8 +2508,8 @@ Crosshair rectangle configuration, a type of configuration used to display cross
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the crosshair rectangle.
+:::note{title=설명}
+selector = {
 
 :::
 
@@ -2464,8 +2517,8 @@ Whether to show the crosshair rectangle.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair rectangle color.
+:::note{title=설명}
+\- not in: 차원 필드 값이 value에 포함되지 않은 데이터 항목을 선택합니다
 
 :::
 
@@ -2473,8 +2526,8 @@ Crosshair rectangle color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair rectangle label color.
+:::note{title=설명}
+연산자
 
 :::
 
@@ -2482,8 +2535,8 @@ Crosshair rectangle label color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show the crosshair rectangle label.
+:::note{title=설명}
+
 
 :::
 
@@ -2491,8 +2544,8 @@ Whether to show the crosshair rectangle label.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair rectangle label background color.
+:::note{title=설명}
+
 
 :::
 
@@ -2501,8 +2554,8 @@ Crosshair rectangle label background color.
 
 **Type:** `number | number[] | undefined`
 
-:::note{title=Description}
-Corner radius for stacked bars.
+:::note{title=설명}
+prepare() 단계에서 기록되며 런타임에는 읽기 전용입니다
 
 :::
 
@@ -2511,8 +2564,8 @@ Corner radius for stacked bars.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number of bins for the Histogram; defines the total count of binned rectangles (bars).
+:::note{title=설명}
+히스토그램 구간 수로, 히스토그램 구간 사각형(막대)의 수를 정의합니다
 
 :::
 
@@ -2521,8 +2574,8 @@ Number of bins for the Histogram; defines the total count of binned rectangles (
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bin step size used to calculate bin width, which also affects the final width of binned bars. If both `binCount` and `binStep` are set, `binStep` takes precedence.
+:::note{title=설명}
+구간 간격으로, 구간 너비를 계산하는 데 사용되며 최종 히스토그램의 사각형(막대) 너비에도 영향을 줍니다. binCount와 binStep이 모두 설정되면 binStep이 우선합니다
 
 :::
 
@@ -2531,8 +2584,8 @@ Bin step size used to calculate bin width, which also affects the final width of
 
 **Type:** `"count" | "percentage" | undefined`
 
-:::note{title=Description}
-Bin value type for the Histogram; defines whether bars represent 'count' or 'percentage'. Defaults to 'count'.
+:::note{title=설명}
+히스토그램 구간 값 유형으로, 히스토그램 구간 사각형(막대)의 값 유형을 정의하며 기본값은 'count'입니다
 
 :::
 
@@ -2541,14 +2594,20 @@ Bin value type for the Histogram; defines whether bars represent 'count' or 'per
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Themes are lower-priority configurations containing general settings shared across all chart types and specific settings shared within a chart category.
+:::note{title=설명}
 
-Light and dark themes are built-in; users can define custom themes via the Builder.
+
+
+
+const maxItems = _.map(grouped, group =>
+
+
+
+_.map(maxItems, item => [
 
 :::
 
-**Example**
+**예시**
 'dark'
 
 'light'
@@ -2571,10 +2630,16 @@ Light and dark themes are built-in; users can define custom themes via the Build
 
 **Type:** `BarStyle | BarStyle[] | undefined`
 
-:::note{title=Description}
-Bar style configuration, used to define bar colors, borders, corner radii, etc. Supports global styling or conditional styling based on selectors.
+:::note{title=설명}
 
-If `selector` is configured, provides matching capabilities for numerical, partial data, dimension, or measure conditions. If not set, styles apply globally.
+
+막대 primitive(사각형)를 표시할지 여부
+
+
+
+
+
+**Type:** `string | undefined`
 
 :::
 
@@ -2583,41 +2648,47 @@ If `selector` is configured, provides matching capabilities for numerical, parti
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
+:::note{title=설명}
+
+
+
+
+**Type:** `string | undefined`
+
+**Type:** `boolean | undefined`
 
 :::
 
-**Example**
-Value Selector:
-selector = "tool"
-selector = ["tool", "book"]
-selector = 100
-selector = [100, 200]
+**예시**
+막대 primitive(사각형) 선 색상
 
-Partial Data Selector:
-selector = { profit: 100 }
-selector = [{ profit: 100 }, { profit: 200 }]
+**Type:** `number | undefined`
 
-Conditional Dimension Selector:
-selector = {
+**Type:** `string | undefined`
+
+**Type:** `number | undefined`
+
+
+
+
+
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-selector = {
+
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
-Conditional Measure Selector:
-selector = {
+**예시**
+
 field: 'profit',
 operator: '>=',
 value: 100
 }
-selector = {
+
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -2630,8 +2701,8 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=설명}
+
 
 :::
 
@@ -2639,12 +2710,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=설명}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+**Type:** `number | number[] | undefined`
+
+
 
 :::
 
@@ -2652,8 +2723,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator (same as operator).
+:::note{title=설명}
+
+
+
+
+**Type:** `Selector | Selectors | undefined`
+
+4
 
 :::
 
@@ -2661,8 +2738,8 @@ Operator (same as operator).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Dimension values for selection; supports arrays.
+:::note{title=설명}
+
 
 :::
 
@@ -2670,22 +2747,40 @@ Dimension values for selection; supports arrays.
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution).
+:::note{title=설명}
 
-Implement complex data filtering via AI-generated JavaScript code. Useful for scenarios like Top N, statistical analysis, or complex conditions that static selectors cannot express.
 
-Key capabilities:
 
-- Supports any complex data filtering conditions.
 
-- Uses built-in utility functions for data operations.
+\- in: 차원 필드 값이 value에 포함된 데이터 항목을 선택합니다
 
-- Executes safely in the browser environment (Web Worker sandbox).
+\- not in: 차원 필드 값이 value에 포함되지 않은 데이터 항목을 선택합니다
 
-Requirements: Supports only browser environments; Node.js environments will use the fallback.
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+
+
+
+**Type:** `"in" | "not in" | undefined`
+
+\- not in: 차원 필드 값이 값 목록에 포함되지 않은 데이터 항목을 선택합니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -2698,15 +2793,15 @@ Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilt
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=설명}
+
 
 :::
 
-**Example**
-"Highlight sales columns greater than 1000."
+**예시**
+"매출이 1000을 초과하는 막대 강조"
 
-"Highlight the column with the highest profit margin in each region."
+"각 지역에서 이익률이 가장 높은 막대 강조"
 
 
 
@@ -2714,23 +2809,25 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code.
+:::note{title=설명}
 
-- Can only use built-in utility functions (access via _ or R).
 
-- Input parameter: data (array); each item includes a __row_index field representing the row number.
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>.
 
-- __row_index represents the row number of the original data item, and field represents the field to be highlighted.
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests.
+
+
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight 'sales' field for data items where sales > 1000:
+**예시**
+
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2739,7 +2836,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region:
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2753,7 +2850,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items meeting multiple filtering conditions:
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2773,8 +2870,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=설명}
+field: 'sales'
 
 :::
 
@@ -2783,8 +2880,8 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=설명}
+return _.flatten(
 
 :::
 
@@ -2792,12 +2889,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=설명}
+\- 금지: eval, Function, 비동기 작업, DOM API, 네트워크 요청
 
-- in: Select data items where the dimension field value is in the 'value' list.
+const profitRate = item.profit / item.sales;
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+});
 
 :::
 
@@ -2805,8 +2902,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator (same as operator).
+:::note{title=설명}
+
+
+
+
+**Type:** `Selector | Selectors | undefined`
+
+);
 
 :::
 
@@ -2814,8 +2917,8 @@ Operator (same as operator).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Dimension values for selection; supports arrays.
+:::note{title=설명}
+
 
 :::
 
@@ -2823,8 +2926,12 @@ Dimension values for selection; supports arrays.
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field). Written during the prepare() phase; read-only at runtime.
+:::note{title=설명}
+
+
+
+
+\- in: 차원 필드 값이 value에 포함된 데이터 항목을 선택합니다
 
 :::
 
@@ -2845,8 +2952,8 @@ Dynamic filter execution result (runtime field). Written during the prepare() ph
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether bar elements are visible.
+:::note{title=설명}
+
 
 :::
 
@@ -2854,8 +2961,8 @@ Whether bar elements are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Bar color.
+:::note{title=설명}
+
 
 :::
 
@@ -2863,8 +2970,8 @@ Bar color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bar color opacity.
+:::note{title=설명}
+
 
 :::
 
@@ -2872,8 +2979,8 @@ Bar color opacity.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Bar border color.
+:::note{title=설명}
+
 
 :::
 
@@ -2881,8 +2988,8 @@ Bar border color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bar border width.
+:::note{title=설명}
+**Type:** `string | string[] | undefined`
 
 :::
 
@@ -2890,17 +2997,17 @@ Bar border width.
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Bar border style.
+:::note{title=설명}
+
 
 :::
 
-**Example**
-solid
+**예시**
+**Type:** `string | undefined`
 
-dashed
 
-dotted
+
+
 
 
 
@@ -2908,34 +3015,33 @@ dotted
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Bar border opacity.
+:::note{title=설명}
+
+
+
+
+텍스트 글꼴 크기
 
 :::
 
-### barRadius
-
-**Type:** `number | number[] | undefined`
-
-:::note{title=Description}
-Bar corner radius.
-
-:::
-
-**Example**
-4
+**예시**
+12
 
 [0, 0, 10, 10]
 
 
+
+### barRadius
+
+**Type:** `number | number[] | undefined`
 
 
 ## annotationPoint
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-:::note{title=Description}
-Annotation point configuration, defining highlight points based on selected data, including position, format, and style.
+:::note{title=설명}
+
 
 :::
 
@@ -2944,8 +3050,8 @@ Annotation point configuration, defining highlight points based on selected data
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Selector used to identify specific data points for annotation.
+:::note{title=설명}
+
 
 :::
 
@@ -2954,24 +3060,95 @@ Selector used to identify specific data points for annotation.
 
 **Type:** `string`
 
+:::note{title=설명}
+'right' Text is on the left side of the annotation point.
+
+:::
+
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=설명}
+텍스트 세로 정렬입니다. 일반적으로 'top'으로 설정하여 텍스트가 주석 포인트 아래쪽에 표시되고 차트의 보이는 영역 안에 유지되도록 합니다.
+
+텍스트가 차트의 보이는 영역 안에 완전히 표시되도록 'top'으로 설정하는 것을 권장합니다.
+
+top: 텍스트가 주석 포인트 아래쪽에 있으며, 텍스트의 위쪽 가장자리가 포인트에 맞춰집니다.
+
+:::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=설명}
+'top' Text is at the bottom of the annotation point.
+
+
+
+
+
+**Type:** `boolean | undefined`
+
+:::
+
 #### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=설명}
+
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=설명}
+
+
+:::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution).
+:::note{title=설명}
+
+
+
+
+배경 선 색상
+
+true
+
+
+
+
+
+
+
+
+
+
+
+
+
+'red'
+
+
+
+
+
+
+
+
+
+
+
+배경 모서리 반경
 
 :::
 
@@ -2984,29 +3161,172 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+배경 패딩
+
+:::
+
+**예시**
+"매출이 1000을 초과하는 막대 강조"
+
+"각 지역에서 이익률이 가장 높은 막대 강조"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=설명}
+음수 값은 전체 컴포넌트를 위로 이동합니다. 예를 들어 -10은 텍스트와 배경을 10픽셀 위로 이동합니다.
+
+
+
+
+
+**예시**
+
+
+
+
+
+
+
+:::
+
+**예시**
+
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
 
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=설명}
+**Type:** `"value"`
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=설명}
+
+
+**예시**
+
+
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=설명}
+
+
+
+
+
+
+
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=설명}
+"Use the highest sales value as a mark line reference"
+
+:::
+
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=설명}
+주석선의 평균을 계산합니다
+
+
+
+
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text.
+:::note{title=설명}
+**Type:** `string | number | undefined`
 
 :::
 
-**Example**
-'Annotation text'
+**예시**
+'주석 텍스트'
 
 
 
@@ -3014,134 +3334,215 @@ Annotation text.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+'red'
+
+
 
 ### textFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Typically, setting to 'right' places text to the left of the point, keeping it within the chart area.
+:::note{title=설명}
 
-- 'right': Text to the left of the point, right-edge aligned.
-- 'left': Text to the right of the point, left-edge aligned.
-- 'center': Centered on the point.
+
+
+
+
+
+텍스트 색상
+
+'주석 텍스트'
 
 :::
+
+**예시**
+'right' 텍스트는 주석 지점의 왼쪽
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Text vertical baseline. Typically, setting to 'top' places text below the point for visibility.
+:::note{title=설명}
+텍스트가 차트의 보이는 영역 안에 완전히 표시되도록 'top'으로 설정하는 것을 권장합니다.
 
-- 'top': Text below the point, top-edge aligned.
-- 'middle': Centered vertically.
-- 'bottom': Text above the point, bottom-edge aligned.
+top: 텍스트가 기준선 아래쪽에 있으며, 위쪽 가장자리가 (세로) 주석선의 끝에 맞춰집니다.
+
+middle: 텍스트가 기준선 중앙에 있으며, 중심이 (세로) 주석선의 끝에 맞춰집니다.
+
+bottom: 텍스트가 기준선 위쪽에 있으며, 아래쪽 가장자리가 (세로) 주석선의 끝에 맞춰집니다.
+
+
 
 :::
+
+**예시**
+'top' 텍스트는 주석 지점의 아래쪽
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether text background is visible.
+:::note{title=설명}
+**예시**
 
 :::
+
+**예시**
+
+
+
 
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color.
+:::note{title=설명}
+top: 텍스트가 기준선 아래에 있으며, 위쪽 가장자리가 (세로) 주석선의 끝에 맞춰집니다.
 
 :::
+
+**예시**
+'red'
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+'red'
+
+
 
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width.
+:::note{title=설명}
+'right'
 
 :::
+
+**예시**
+
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background corner radius.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+
+
+
 
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding.
+:::note{title=설명}
+**Type:** `boolean | undefined`
 
 :::
+
+**예시**
+
+
+
 
 ### offsetY
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Vertical offset for the entire annotation component. Negative values move up; positive values move down.
+:::note{title=설명}
+**Type:** `string | undefined`
+
+**예시**
+
+
 
 :::
+
+**예시**
+**Type:** `number | undefined`
+
+
 
 ### offsetX
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Horizontal offset for the entire annotation component. Negative values move left; positive values move right.
+:::note{title=설명}
+
+
+
+
+
 
 :::
+
+**예시**
+
+
+
 
 
 ## annotationVerticalLine
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
-:::note{title=Description}
-Vertical annotation line, typically used for marking specific values along the X-axis (binning values). Supports custom positioning and styling.
+:::note{title=설명}
+숫자 마크 라인(구간 값)으로, 세로 방향으로 표시되며 마크 라인의 위치, 스타일 등을 설정할 수 있습니다. 구간 값에 해당하는 마크 라인이 필요하면 이 설정을 사용할 수 있습니다
 
 :::
 
@@ -3150,8 +3551,8 @@ Vertical annotation line, typically used for marking specific values along the X
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed X-value for the vertical annotation line. Accepts dimension values or numeric coordinates depending on the axis type.
+:::note{title=설명}
+
 
 :::
 
@@ -3159,8 +3560,18 @@ Fixed X-value for the vertical annotation line. Accepts dimension values or nume
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution). Used to calculate annotation line positions (e.g., mean, max, quantiles) dynamically based on data. Requires browser environment (Web Worker).
+:::note{title=설명}
+
+
+
+
+
+
+**Type:** `string | number | (string | number)[] | undefined`
+
+
+
+
 
 :::
 
@@ -3173,118 +3584,362 @@ Dynamic filter (AI-generated code execution). Used to calculate annotation line 
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+평균, 최댓값, 분위수, 비즈니스 라인 등 데이터에 따라 주석선 위치를 동적으로 결정해야 하는 시나리오에 적합합니다.
+
+:::
+
+**예시**
+"주석선 기준값으로 최고 매출 값 가져오기"
+
+"주석선에 사용할 평균 매출 계산"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=설명}
+
+
+
+
+
+
+**예시**
+
+
+
+
+
+
+
+:::
+
+**예시**
+
+```javascript
+const maxSales = _.maxBy(data, 'sales')?.sales;
+return maxSales || 0;
+```
+
+
+```javascript
+const avgSales = _.meanBy(data, 'sales');
+return _.round(avgSales, 2);
+```
+
+
+```javascript
+const sorted = _.sortBy(data, 'sales');
+const index = Math.floor(sorted.length * 0.75);
+return sorted[index]?.sales || 0;
+```
+
+**예시**
+```javascript
+const currentYearTotal = _.sumBy(
+_.filter(data, item => item.year === 2024),
+'sales'
+);
+return currentYearTotal;
+```
+
+
 
 #### fallback
 
 **Type:** `string | number | undefined`
 
+:::note{title=설명}
+\- 입력 파라미터: data(배열).
+
+:::
+
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
+
+:::note{title=설명}
+
+
+
+
+const maxSales = _.maxBy(data, 'sales')?.sales;
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `string | number | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text.
+:::note{title=설명}
+prepare() 단계에서 기록되며 런타임에는 읽기 전용입니다
 
 :::
+
+**예시**
+'주석 텍스트'
+
+
 
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Relative position of the label text to the annotation line.
+:::note{title=설명}
+_.filter(data, item => item.year === 2024),
 
 :::
+
+**예시**
+'outsideEnd'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+const index = Math.floor(sorted.length * 0.75);
+
+:::
+
+**예시**
+**Type:** `false | true`
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+
+
+
+
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Horizontal text alignment relative to the vertical line.
+:::note{title=설명}
+
+
+텍스트 위치
+
+
+
+주석선 레이블 위치(선에 대한 레이블의 상대 위치)입니다.
+
+
 
 :::
+
+**예시**
+'right'
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical text alignment relative to the endpoint of the vertical line.
+:::note{title=설명}
+**예시**
+
+**예시**
+
+
+
+
+
+
 
 :::
+
+**예시**
+'top'
+
+
 
 ### lineVisible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the annotation line is visible.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+
+
+
 
 ### lineColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+'red'
+
+
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+
+
+:::
+
+**예시**
+
+
+
 
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
+:::note{title=설명}
+텍스트가 차트의 보이는 영역 안에 완전히 표시되도록 'top'으로 설정하는 것을 권장합니다.
+
+:::
+
+**예시**
+'solid'
+
+
+
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
+
+:::note{title=설명}
+
+
+:::
+
+**예시**
+center: 텍스트가 기준선 중앙에 있습니다(수평 마크 라인의 끝).
+
+
 
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
+
+:::note{title=설명}
+
+
+:::
+
+**예시**
+'red'
+
+
 
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+
+
+
+
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+
+
+
 
 
 ## annotationHorizontalLine
 
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
-:::note{title=Description}
-Horizontal annotation line (e.g., mean, max, min), used to mark specific values along the Y-axis. Note that binned values are affected by `binValueType`.
+:::note{title=설명}
+숫자 마크 라인(평균선, 최대값선, 최소값선 등)으로, 가로 방향으로 표시되며 마크 라인의 위치, 스타일 등을 설정할 수 있습니다. 구간 값에 해당하는 마크 라인을 그리려면 이 설정을 사용하십시오. 구간 값은 `binValueType`의 영향을 받습니다
 
 :::
 
@@ -3293,8 +3948,8 @@ Horizontal annotation line (e.g., mean, max, min), used to mark specific values 
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed Y-value for the horizontal annotation line. Accepts dimension values or numeric coordinates depending on the axis type.
+:::note{title=설명}
+
 
 :::
 
@@ -3302,8 +3957,18 @@ Fixed Y-value for the horizontal annotation line. Accepts dimension values or nu
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter used to calculate the annotation line value dynamically (e.g., average sales, peak value).
+:::note{title=설명}
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -3316,107 +3981,373 @@ Dynamic filter used to calculate the annotation line value dynamically (e.g., av
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+"주석선 기준값으로 최고 매출 값 가져오기"
+
+"주석선에 사용할 평균 매출 계산"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=설명}
+연산자
+
+
+
+\- not in: 차원 필드 값이 value에 포함되지 않은 데이터 항목을 선택합니다
+
+
+
+'red'
+
+**Type:** `"in" | "not in" | undefined`
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
+
+:::
+
+**예시**
+\- not in: 차원 필드 값이 value에 포함되지 않은 데이터 항목을 선택합니다
+```javascript
+const maxSales = _.maxBy(data, 'sales')?.sales;
+return maxSales || 0;
+```
+
+
+```javascript
+const avgSales = _.meanBy(data, 'sales');
+return _.round(avgSales, 2);
+```
+
+
+```javascript
+const sorted = _.sortBy(data, 'sales');
+const index = Math.floor(sorted.length * 0.75);
+return sorted[index]?.sales || 0;
+```
+
+'solid'
+```javascript
+const currentYearTotal = _.sumBy(
+_.filter(data, item => item.year === 2024),
+'sales'
+);
+return currentYearTotal;
+```
+
+
 
 #### fallback
 
 **Type:** `string | number | undefined`
 
+:::note{title=설명}
+
+
+:::
+
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
+
+:::note{title=설명}
+
+
+
+
+텍스트 색상
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `string | number | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+'주석 텍스트'
+
+
+
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Position of the label relative to the line.
+:::note{title=설명}
+**예시**
+
+
+
+
 
 :::
+
+**예시**
+'outsideEnd'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+center: 텍스트가 주석 영역 중앙에 있으며, 텍스트의 중심이 영역에 맞춰집니다.
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+텍스트 세로 정렬입니다. 일반적으로 'top'으로 설정하여 텍스트가 주석 영역 하단에 표시되고 차트의 보이는 영역 안에 유지되도록 합니다.
+
+:::
+
+**예시**
+
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+**Type:** `boolean | undefined`
+
+
+
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Horizontal alignment relative to the endpoint of the horizontal line.
+:::note{title=설명}
+
+
+
+
+
+
+
+
+배경색
 
 :::
+
+**예시**
+'right'
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical alignment relative to the line itself.
+:::note{title=설명}
+배경 선 색상
+
+
+
+배경 선 색상
+
+**예시**
+
+**예시**
 
 :::
+
+**예시**
+'top'
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+
+
+
+
 ### textBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=설명}
+배경 모서리 반경
+
+:::
+
+**예시**
+'red'
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+배경 패딩
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+주석 영역 색상
+
+
+
+주석 영역 색상
+
+:::
+
+**예시**
+
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+
+
+
 
 ### lineVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=설명}
+**예시**
+
+
+
+**예시**
+
+:::
+
+**예시**
+
+
+
+
 ### lineColor
 
 **Type:** `string | undefined`
+
+:::note{title=설명}
+
+
+:::
+
+**예시**
+'red'
+
+
 
 ### lineWidth
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+
+
+
+
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=설명}
+주석 영역 테두리 모서리 반경입니다.
+
+:::
+
+**예시**
+'solid'
+
+
 
 ### splitLine
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
-:::note{title=Description}
-Whether to enable splitting the main line into two segments (e.g., highlighting above/below threshold).
+:::note{title=설명}
+
 
 :::
 
@@ -3425,8 +4356,8 @@ Whether to enable splitting the main line into two segments (e.g., highlighting 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Main color for segments exceeding the threshold.
+:::note{title=설명}
+
 
 :::
 
@@ -3434,8 +4365,8 @@ Main color for segments exceeding the threshold.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Main color for segments below the threshold.
+:::note{title=설명}
+
 
 :::
 
@@ -3444,8 +4375,8 @@ Main color for segments below the threshold.
 
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
-:::note{title=Description}
-Annotation area configuration, defining highlighted regions based on selected data, including position, format, and style.
+:::note{title=설명}
+**예시**
 
 :::
 
@@ -3454,8 +4385,8 @@ Annotation area configuration, defining highlighted regions based on selected da
 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
-:::note{title=Description}
-Data selector used to identify the range for the annotation area.
+:::note{title=설명}
+4
 
 :::
 
@@ -3464,145 +4395,359 @@ Data selector used to identify the range for the annotation area.
 
 **Type:** `string`
 
+:::note{title=설명}
+
+
+:::
+
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=설명}
+
+
+
+
+주석 영역 색상
+
+:::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=설명}
+**예시**
+
+**Type:** `number | undefined`
+
+
+
+
+
+:::
+
 #### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=설명}
+
+
+:::
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text within the area.
+:::note{title=설명}
+'red'
 
 :::
+
+**예시**
+'주석 텍스트'
+
+
 
 ### textPosition
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
-:::note{title=Description}
-Text position within the area.
+:::note{title=설명}
+2
 
 :::
+
+**예시**
+'top'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+4
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+[2, 2]
+
+:::
+
+**예시**
+
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+0
+
+:::
+
+**예시**
+400
+
+
+
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment. Setting to 'center' ensures title appears centered within the area.
+:::note{title=설명}
+다항 회귀선 구성입니다. 다항식 차수, 회귀선 스타일 등을 포함합니다.
+
+'center'로 설정하는 것을 권장합니다. 이렇게 하면 텍스트가 마크 영역의 중앙에 표시됩니다
+
+
+
+
+
+
 
 :::
+
+**예시**
+'center' 텍스트는 주석 영역의 가운데
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical alignment.
+:::note{title=설명}
+
+
+
+
+
+
+
+
+다항 회귀 차수
 
 :::
+
+**예시**
+'top' 텍스트는 주석 영역의 아래쪽
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+true
+
+
+
 ### textBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=설명}
+**Type:** `string | undefined`
+
+:::
+
+**예시**
+'red'
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+텍스트 색상
+
+
+
+텍스트 색상
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+**예시**
+
+:::
+
+**예시**
+2
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+**예시**
+
+
+
+**예시**
+
+:::
+
+**예시**
+4
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+배경 안쪽 여백
+
+:::
+
+**예시**
+4
+
+
 
 ### areaColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color of the annotation area.
+:::note{title=설명}
+마크 영역 색상
 
 :::
+
+**예시**
+'red'
+
+
 
 ### areaColorOpacity
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity of the area.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+0.5
+
+
 
 ### areaBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+'red'
+
+
+
 ### areaBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+
+
+:::
+
+**예시**
+
+
+
 
 ### areaBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+
+
+:::
+
+**예시**
+**Type:** `boolean | undefined`
+
+
+
 ### areaLineDash
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Dash pattern for the area border.
+:::note{title=설명}
+
 
 :::
+
+**예시**
+[2, 2]
+
+
 
 ### outerPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Outer padding for the annotation area.
+:::note{title=설명}
+마크 영역의 여백
 
 :::
+
+**예시**
+0
+
+
 
 
 ## kdeRegressionLine
 
 **Type:** `KdeRegressionLine | KdeRegressionLine[] | undefined`
 
-:::note{title=Description}
-Kernel Density Estimation (KDE) regression line configuration, used to show trends and distribution density.
+:::note{title=설명}
+커널 밀도 회귀선 설정으로, 데이터의 추세와 분포를 표시하는 데 사용됩니다
 
 :::
 
@@ -3611,8 +4756,8 @@ Kernel Density Estimation (KDE) regression line configuration, used to show tren
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the KDE regression line.
+:::note{title=설명}
+회귀선 기능을 활성화할지 여부
 
 :::
 
@@ -3620,8 +4765,10 @@ Whether to enable the KDE regression line.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color; defaults to the chart's primary color if not set.
+:::note{title=설명}
+회귀선 색상
+
+회귀선 색상을 설정합니다. 설정하지 않으면 기본적으로 차트의 주 색상을 사용합니다
 
 :::
 
@@ -3629,8 +4776,10 @@ Line color; defaults to the chart's primary color if not set.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width in pixels. Defaults to 1.
+:::note{title=설명}
+회귀선 너비
+
+회귀선 너비를 픽셀 단위로 설정하며, 기본값은 1입니다
 
 :::
 
@@ -3638,8 +4787,10 @@ Line width in pixels. Defaults to 1.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Line pattern (e.g., solid, dashed, dotted).
+:::note{title=설명}
+회귀선 스타일
+
+회귀선 스타일을 설정합니다. 예: 실선, 점선 등. 기본값은 실선입니다
 
 :::
 
@@ -3647,8 +4798,10 @@ Line pattern (e.g., solid, dashed, dotted).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label text for the regression line. An empty string hides the label.
+:::note{title=설명}
+회귀선 레이블 텍스트
+
+회귀선의 레이블 텍스트를 설정합니다. 빈 문자열은 레이블을 표시하지 않음을 의미합니다
 
 :::
 
@@ -3656,21 +4809,51 @@ Label text for the regression line. An empty string hides the label.
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+텍스트 색상
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+텍스트 글꼴 크기
+
+:::
+
+**예시**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+텍스트 글꼴 두께
+
+:::
+
+**예시**
+400
+
+
 
 
 ## ecdfRegressionLine
 
 **Type:** `EcdfRegressionLine | EcdfRegressionLine[] | undefined`
 
-:::note{title=Description}
-Empirical Cumulative Distribution Function (ECDF) regression line configuration, used to show the cumulative distribution of data.
+:::note{title=설명}
+경험적 누적 분포 함수 회귀선 설정으로, 데이터의 누적 분포를 표시하는 데 사용됩니다
 
 :::
 
@@ -3679,8 +4862,8 @@ Empirical Cumulative Distribution Function (ECDF) regression line configuration,
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the ECDF regression line.
+:::note{title=설명}
+활성화 여부
 
 :::
 
@@ -3688,37 +4871,101 @@ Whether to enable the ECDF regression line.
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+회귀선 색상
+
+회귀선 색상을 설정합니다. 설정하지 않으면 기본적으로 차트의 주 색상을 사용합니다
+
+:::
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+회귀선 너비
+
+회귀선 너비를 픽셀 단위로 설정하며, 기본값은 1입니다
+
+:::
 
 ### lineDash
 
 **Type:** `number[] | undefined`
 
+:::note{title=설명}
+회귀선 스타일
+
+회귀선 스타일을 설정합니다. 예: 실선, 점선 등. 기본값은 실선입니다
+
+:::
+
 ### text
 
 **Type:** `string | undefined`
+
+:::note{title=설명}
+회귀선 레이블 텍스트
+
+회귀선의 레이블 텍스트를 설정합니다. 빈 문자열은 레이블을 표시하지 않음을 의미합니다
+
+:::
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=설명}
+텍스트 색상
+
+:::
+
+**예시**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=설명}
+텍스트 글꼴 크기
+
+:::
+
+**예시**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=설명}
+텍스트 글꼴 두께
+
+:::
+
+**예시**
+400
+
+
 
 
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
 
-:::note{title=Description}
-Dimension linkage configuration. When multiple charts or measures are combined, hovering over a dimension value highlights matching data across all charts.
+:::note{title=설명}
+차트에서 피벗 기능 또는 지표 조합을 활성화했을 때 차원 연동 기능을 활성화할지 여부
+
+특정 차원 값에 hover하면 다른 차트의 동일한 차원 값 데이터도 연동되어 강조 표시됩니다
+
+
+
+피벗 차트 차원 연동 설정
 
 :::
 
@@ -3727,12 +4974,17 @@ Dimension linkage configuration. When multiple charts or measures are combined, 
 
 **Type:** `false | true`
 
+:::note{title=설명}
+피벗 차트 차원 연동을 활성화할지 여부
+
+:::
+
 ### showTooltip
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show tooltips for all linked dimension points.
+:::note{title=설명}
+모든 차원에 해당하는 하위 차트의 Tooltip 정보를 표시할지 여부
 
 :::
 
@@ -3740,8 +4992,8 @@ Whether to show tooltips for all linked dimension points.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show crosshair labels for linked points.
+:::note{title=설명}
+crosshair에 해당하는 레이블을 표시할지 여부
 
 :::
 
@@ -3750,7 +5002,8 @@ Whether to show crosshair labels for linked points.
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call intl.setLocale('zh-CN') to set the language.
+:::note{title=설명}
+차트 언어 설정입니다. 'zh\-CN'과 'en\-US' 두 언어를 지원하며, intl.setLocale('zh\-CN') 메서드를 호출해 언어를 설정할 수도 있습니다
 
 :::
+

@@ -1,5 +1,5 @@
 # VBI
 
-:::info In Development
-Coming Soon
+:::info 개발 중
+곧 공개됩니다
 :::

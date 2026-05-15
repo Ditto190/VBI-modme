@@ -1,52 +1,52 @@
 # Radar
 
-:::info{title=Recommended}
-\- Recommended field configuration: `1` measure(s), `1` dimension(s)
+:::info{title=Recommendation}
+\- Recommended field configuration: `1` measure and `1` dimension
 
-\- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
+\- Supports data reshaping: at least `1` measure and `0` dimensions
 
 :::
 
 :::info{title=Encoding Mapping}
-The Radar Chart supports the following visual channels:
+Radar charts support the following visual channels:
 
-`angle`  : Angle channel, supports `multiple dimensions`, mapping dimension values to the angle axis.
+`angle`  : Angle channel, supports `multiple dimensions`, mapped to the angle axis by dimension value
 
-`radius` : Radius channel, supports `multiple measures`, mapping measure values to the radius axis.
+`radius` : Radius channel, supports `multiple measures`, mapped to the radius axis by measure value
 
-`color`  : Color channel, supports `multiple dimensions` or `one measure`. Dimensions are used to distinguish different data series, while measures are used for linearly mapping values to colors.
+`color`  : Color channel, supports `multiple dimensions` or `one measure`; dimension colors distinguish data series, while measure colors linearly map measure values to graphic colors
 
-`tooltip`: Tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over data elements.
+`tooltip`: Tooltip channel, supports `multiple dimensions` and `multiple measures`, shown when hovering over data points
 
-`label`  : Label channel, supports `multiple dimensions` and `multiple measures`, displaying data labels on data points.
+`label`  : Label channel, supports `multiple dimensions` and `multiple measures`, displayed as data labels on data points
 
 :::
 
 :::note{title=Description}
-Radar Chart: Suitable for comparative analysis of multi-dimensional data, displaying the distribution of each dimension through a multi-axis coordinate system.
+Radar chart, suitable for comparative analysis of multidimensional data, showing value distribution across dimensions through a multi-axis coordinate system
 
-**Applicable scenarios:**
+Skenario penggunaan:
 
-\- Comparative analysis of comprehensive performance across multiple dimensions.
+\- Compare overall performance across multidimensional data
 
-\- Performance evaluation of multiple subjects across multiple measures.
+\- Evaluate multiple objects across multiple measures
 
-\- Visualizing multi-dimensional characteristics of categorical data.
+\- Show multidimensional features of categorical data
 
 :::
 
 :::warning{title=Warning}
 Data requirements:
 
-\- At least one numeric field.
+\- At least one numeric field (measure)
 
-\- The first dimension(s) serve as the radar chart's axis dimensions, while other dimensions distinguish different data series for comparison.
+\- The first dimension becomes the radar axes; other dimensions are compared as different series
 
-\- Supports multiple measures displayed as different data series.
+\- Supports displaying multiple measures as separate series
 
-**Features enabled by default:**
+Features enabled by default:
 
-\- Legend, radar coordinate system, data labels, tooltips, and numeric scaling are enabled by default.
+\- Legend, radar coordinate system, data labels, tooltip, and value scaling are enabled by default
 
 :::
 
@@ -56,7 +56,11 @@ Data requirements:
 **Type:** `"radar"`
 
 :::note{title=Description}
-Radar Chart: Displays comparative relationships of multi-dimensional data through a multi-axis coordinate system.
+Radar chart
+
+
+
+Radar chart, showing multidimensional comparison through a multi-axis coordinate system
 
 :::
 
@@ -71,7 +75,11 @@ Radar Chart: Displays comparative relationships of multi-dimensional data throug
 **Type:** `Record[]`
 
 :::note{title=Description}
-Dataset: An aggregated dataset conforming to the TidyData specification, defining the data source and structure. VSeed features powerful data reshaping capabilities and will automatically process the input data. Radar chart data is ultimately converted to two dimensions and one measure for mapping.
+Dataset
+
+
+
+An aggregated dataset that conforms to the TidyData specification. It defines the chart data source and structure. User input does not need preprocessing because VSeed reshapes data automatically. Radar chart data is eventually converted to two dimensions and one measure.
 
 :::
 
@@ -86,7 +94,11 @@ Dataset: An aggregated dataset conforming to the TidyData specification, definin
 **Type:** `RadarDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions: The first dimension is mapped to the angle axis. Remaining dimensions are combined with measure names (if multiple measures exist) to serve as legend items for series differentiation.
+Dimensi pertama dipetakan ke sumbu X; dimensi lainnya digabung dengan nama metrik (saat ada beberapa metrik) dan ditampilkan sebagai item legenda.
+
+
+
+The first dimension of a radar chart is mapped to the angle axis; the remaining dimensions are merged with measure names when multiple measures exist and displayed as legend items.
 
 :::
 
@@ -101,7 +113,7 @@ Dimensions: The first dimension is mapped to the angle axis. Remaining dimension
 **Type:** `string`
 
 :::note{title=Description}
-Field ID corresponding to the dimension
+ID field yang sesuai dengan dimensi
 
 :::
 
@@ -110,7 +122,7 @@ Field ID corresponding to the dimension
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Dimension alias
+Alias dimensi
 
 :::
 
@@ -119,7 +131,7 @@ Dimension alias
 **Type:** `TimeFormat | undefined`
 
 :::note{title=Description}
-Dimension date format configuration
+Konfigurasi format tanggal dimensi
 
 :::
 
@@ -129,7 +141,7 @@ Dimension date format configuration
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
 :::note{title=Description}
-Time granularity, determines the date display precision
+Granularitas waktu, menentukan presisi tampilan tanggal
 
 :::
 
@@ -138,21 +150,21 @@ Time granularity, determines the date display precision
 **Type:** `"color" | "detail" | "tooltip" | "label" | "row" | "column" | "angle" | undefined`
 
 :::note{title=Description}
-Channel to which the dimension is mapped
+Kanal tempat dimensi dipetakan
 
 \- angle: supports mapping multiple dimensions to the angle channel
 
-\- color: supports mapping multiple dimensions to the color channel
+\- color: mendukung pemetaan beberapa dimensi ke channel warna
 
-\- detail: supports mapping multiple dimensions to the detail channel
+\- detail: mendukung pemetaan beberapa dimensi ke channel detail
 
-\- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: mendukung pemetaan beberapa dimensi ke channel tooltip
 
-\- label: supports mapping multiple dimensions to the label channel
+\- label: mendukung pemetaan beberapa dimensi ke channel label
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: mendukung pemetaan beberapa dimensi ke channel baris
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: mendukung pemetaan beberapa dimensi ke channel kolom
 
 :::
 
@@ -162,7 +174,11 @@ Channel to which the dimension is mapped
 **Type:** `RadarMeasure[] | undefined`
 
 :::note{title=Description}
-Measures: Radar chart measures are automatically merged into one composite measure and mapped to the radius axis. When multiple measures exist, their names are combined with dimensions to serve as legend items for series differentiation.
+Metrik
+
+
+
+Radar chart measures are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with other dimensions and displayed as legend items.
 
 :::
 
@@ -177,7 +193,7 @@ Measures: Radar chart measures are automatically merged into one composite measu
 **Type:** `string`
 
 :::note{title=Description}
-Measure ID, must be unique
+ID metrik, harus unik
 
 :::
 
@@ -186,7 +202,7 @@ Measure ID, must be unique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+Alias measure, duplikat diperbolehkan; jika tidak diatur, alias menggunakan ID
 
 :::
 
@@ -195,17 +211,17 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+Pemformatan angka otomatis, aktif secara default, prioritas tertinggi
 
-When autoFormat=true, it overrides all numFormat configurations
+Saat autoFormat=true, semua konfigurasi numFormat akan ditimpa.
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+Setelah diaktifkan, label data dan tooltip chart akan otomatis memilih format yang sesuai berdasarkan nilai measure dan locale.
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+Aturan format: angka desimal, notasi ringkas aktif, minimum 0 digit desimal, maksimum 2 digit desimal, pembulatan otomatis, menggunakan implementasi Intl.NumberFormat browser.
 
-For example:
+Contoh:
 
-\- locale=zh-CN: 749740.264 → 744.5万
+\- locale=zh-CN: 749740.264 → 74.45~74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -216,9 +232,9 @@ For example:
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+Pemformatan angka kustom untuk measure; otomatis diterapkan ke label dan tooltip.
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+Catatan: Untuk menggunakan format kustom, autoFormat harus secara eksplisit diatur ke false; jika tidak, autoFormat akan menimpa konfigurasi ini.
 
 :::
 
@@ -228,7 +244,7 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+
 
 :::
 
@@ -237,13 +253,13 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Number format ratio, cannot be 0
+Rasio format angka, tidak boleh 0
 
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+
+Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, teks dipotong dengan elipsis dan terlihat saat hover (hanya berlaku untuk sumbu kategori).
 
 
 
@@ -252,13 +268,13 @@ Number format ratio, cannot be 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format symbol, e.g. %, ‰
+
 
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+
+Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, teks dipotong dengan elipsis dan terlihat saat hover (hanya berlaku untuk sumbu kategori).
 
 
 
@@ -267,7 +283,7 @@ Number format symbol, e.g. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Thousands separator for number formatting
+**Type:** `string | undefined`
 
 :::
 
@@ -276,7 +292,7 @@ Thousands separator for number formatting
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format suffix
+**Type:** `number | undefined`
 
 :::
 
@@ -285,7 +301,7 @@ Number format suffix
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format prefix
+**Type:** `number[] | undefined`
 
 :::
 
@@ -294,17 +310,17 @@ Number format prefix
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+Ketebalan font label
+
+
+\- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+
+**Type:** `number | undefined`
 
 
 
@@ -313,19 +329,19 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+**Type:** `string | undefined`
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+
+
+
+**Type:** `boolean | undefined`
+
+**Type:** `YBandAxis | undefined`
+
+\- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -334,13 +350,13 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+
+Garis sumbu width
 
 
 
@@ -349,7 +365,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+Mode pembulatan format angka, diformat menggunakan Intl.NumberFormat browser, dengan aturan yang sama seperti roundingMode pada Intl.NumberFormat
 
 :::
 
@@ -363,7 +379,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+
 
 :::
 
@@ -372,13 +388,13 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Number format ratio, cannot be 0
+Rasio format angka, tidak boleh 0
 
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+
+Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, teks dipotong dengan elipsis dan terlihat saat hover (hanya berlaku untuk sumbu kategori).
 
 
 
@@ -387,13 +403,13 @@ Number format ratio, cannot be 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format symbol, e.g. %, ‰
+
 
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+
+Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, teks dipotong dengan elipsis dan terlihat saat hover (hanya berlaku untuk sumbu kategori).
 
 
 
@@ -402,7 +418,7 @@ Number format symbol, e.g. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Thousands separator for number formatting
+**Type:** `string | undefined`
 
 :::
 
@@ -411,7 +427,7 @@ Thousands separator for number formatting
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format suffix
+**Type:** `number | undefined`
 
 :::
 
@@ -420,7 +436,7 @@ Number format suffix
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format prefix
+**Type:** `number[] | undefined`
 
 :::
 
@@ -429,17 +445,17 @@ Number format prefix
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+Ketebalan font label
+
+
+\- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+
+**Type:** `number | undefined`
 
 
 
@@ -448,19 +464,19 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+**Type:** `string | undefined`
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+
+
+
+**Type:** `boolean | undefined`
+
+**Type:** `YBandAxis | undefined`
+
+\- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -469,13 +485,13 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+
+Garis sumbu width
 
 
 
@@ -484,7 +500,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+Mode pembulatan format angka, diformat menggunakan Intl.NumberFormat browser, dengan aturan yang sama seperti roundingMode pada Intl.NumberFormat
 
 :::
 
@@ -493,15 +509,15 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `"color" | "tooltip" | "label" | "radius" | undefined`
 
 :::note{title=Description}
-Channel to which the measure is mapped
+Kanal tempat metrik dipetakan
 
-\- radius: measure mapped to the radius channel
+\- radius: radius mapped from the measure
 
-\- color: measure mapped to the color channel
+\- color: Measure mapped to the color channel
 
-\- label: measure mapped to the label channel
+\- label: Measure mapped to the label channel
 
-\- tooltip: measure mapped to the tooltip channel
+\- tooltip: Measure mapped to the tooltip channel
 
 :::
 
@@ -510,12 +526,12 @@ Channel to which the measure is mapped
 **Type:** `string | undefined`
 
 :::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+Membangun grup measure berbentuk pohon dalam bentuk konfigurasi measure datar. parentId menunjuk ke ID grup measure induk, digunakan untuk membangun pohon measure.
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+Ada dua cara mengonfigurasi pohon measure: Opsi 1 langsung mengonfigurasi pohon measure dengan children; Opsi 2 mengonfigurasi daftar measure datar dengan parentId. Kedua metode ini tidak dapat digunakan bersamaan.
 
 :::
 
@@ -525,7 +541,7 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 **Type:** `Page | undefined`
 
 :::note{title=Description}
-Pagination configuration: Used to specify the field name for pagination, which must be a dimension.
+Paging configuration, used to specify the paging field name; it must be a dimension
 
 :::
 
@@ -535,7 +551,7 @@ Pagination configuration: Used to specify the field name for pagination, which m
 **Type:** `string`
 
 :::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+Field paginasi; menentukan nama field untuk paginasi, harus berupa dimensi.
 
 :::
 
@@ -544,7 +560,7 @@ Pagination field; specifies the field name for pagination, must be a dimension
 **Type:** `string`
 
 :::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+Nilai paginasi saat ini; menentukan nilai yang digunakan untuk menentukan halaman saat ini.
 
 :::
 
@@ -563,7 +579,7 @@ Chart background color
 
 
 
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+The background color can be a color string such as 'red' or 'blue', or hex, rgb, or rgba values such as '#ff0000' and 'rgba(255,0,0,0.5)'
 
 :::
 
@@ -573,11 +589,11 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 **Type:** `Color | undefined`
 
 :::note{title=Description}
-Color
+Warna
 
 
 
-Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
+Color configuration, used to define chart color schemes including color lists, color mappings, and gradients.
 
 :::
 
@@ -587,7 +603,7 @@ Color configuration for defining the chart's color scheme, including color lists
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart
+Skema warna diskret yang digunakan untuk mendefinisikan warna berbagai elemen dalam chart.
 
 :::
 
@@ -601,7 +617,7 @@ Discrete color scheme used to define the colors of different elements in the cha
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart
+Skema warna gradien linear yang digunakan untuk mendefinisikan warna berbagai elemen dalam chart.
 
 :::
 
@@ -615,7 +631,7 @@ Linear gradient color scheme used to define the colors of different elements in 
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Description}
-Color mapping used to map data values to specific colors
+Pemetaan warna untuk memetakan nilai data ke warna tertentu.
 
 :::
 
@@ -632,7 +648,7 @@ Color mapping used to map data values to specific colors
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart
+Konfigurasi warna positif/negatif; mendefinisikan warna untuk nilai positif dalam chart.
 
 :::
 
@@ -641,7 +657,7 @@ Positive/negative color configuration; defines the color for positive values in 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart
+Konfigurasi warna positif/negatif; mendefinisikan warna untuk nilai negatif dalam chart.
 
 :::
 
@@ -655,7 +671,7 @@ Label
 
 
 
-Label configuration for defining chart data labels, including their position, format, and style.
+Label configuration, used to define data label position, format, style, and related settings.
 
 :::
 
@@ -665,7 +681,7 @@ Label configuration for defining chart data labels, including their position, fo
 **Type:** `false | true`
 
 :::note{title=Description}
-Whether label functionality is enabled
+Apakah fungsi label diaktifkan.
 
 :::
 
@@ -674,7 +690,7 @@ Whether label functionality is enabled
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels wrap to the next line
+Apakah label berpindah ke baris berikutnya.
 
 :::
 
@@ -683,11 +699,11 @@ Whether labels wrap to the next line
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels display measure values
+Apakah label menampilkan nilai metrik.
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+Dalam skenario multi-metrik, tidak perlu khawatir tentang konflik nilai karena semua metrik terkait plot melalui proses `foldMeasures` dan digabung menjadi satu metrik yang merepresentasikan satu titik data.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+Catatan: label pada encoding memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi label pada encoding.
 
 :::
 
@@ -696,11 +712,11 @@ Note: encoding's label has higher priority; this config does not affect encoding
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels display the percentage of measure values.
+Apakah label menampilkan nilai measure sebagai persentase.
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures undergo `foldMeasures` processing and are merged into one measure representing a single data point.
+Dalam skenario multi-metrik, tidak perlu khawatir tentang konflik nilai karena semua metrik terkait plot melalui proses `foldMeasures` dan digabung menjadi satu metrik yang merepresentasikan satu titik data.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label.
+Catatan: label pada encoding memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi label pada encoding.
 
 :::
 
@@ -709,11 +725,11 @@ Note: encoding's label has higher priority; this config does not affect encoding
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels display dimension labels
+Apakah label menampilkan label dimensi.
 
-Display all dimension labels
+Menampilkan semua label dimensi.
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+Catatan: label pada encoding memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi label pada encoding.
 
 :::
 
@@ -722,7 +738,7 @@ Note: encoding's label has higher priority; this config does not affect encoding
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+Apakah nilai label diformat otomatis; ketika autoFormat bernilai true, konfigurasi numFormat diabaikan.
 
 :::
 
@@ -731,7 +747,7 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+Konfigurasi format nilai label; digabung dengan `format` pada `measure`, dan `format` milik `measure` memiliki prioritas lebih tinggi. Prioritas numFormat lebih rendah dari autoFormat.
 
 :::
 
@@ -741,7 +757,7 @@ Label value format configuration; merged with the `format` in `measure`, where `
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+
 
 :::
 
@@ -750,13 +766,13 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Number format ratio, cannot be 0
+Rasio format angka, tidak boleh 0
 
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+
+Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, teks dipotong dengan elipsis dan terlihat saat hover (hanya berlaku untuk sumbu kategori).
 
 
 
@@ -765,13 +781,13 @@ Number format ratio, cannot be 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format symbol, e.g. %, ‰
+
 
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+
+Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, teks dipotong dengan elipsis dan terlihat saat hover (hanya berlaku untuk sumbu kategori).
 
 
 
@@ -780,7 +796,7 @@ Number format symbol, e.g. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Thousands separator for number formatting
+**Type:** `string | undefined`
 
 :::
 
@@ -789,7 +805,7 @@ Thousands separator for number formatting
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format suffix
+**Type:** `number | undefined`
 
 :::
 
@@ -798,7 +814,7 @@ Number format suffix
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format prefix
+**Type:** `number[] | undefined`
 
 :::
 
@@ -807,17 +823,17 @@ Number format prefix
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+Ketebalan font label
+
+
+\- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+
+**Type:** `number | undefined`
 
 
 
@@ -826,19 +842,19 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+**Type:** `string | undefined`
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+
+
+
+**Type:** `boolean | undefined`
+
+**Type:** `YBandAxis | undefined`
+
+\- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -847,13 +863,13 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+
 
 :::
 
 **Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+
+Garis sumbu width
 
 
 
@@ -862,7 +878,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+Mode pembulatan format angka, diformat menggunakan Intl.NumberFormat browser, dengan aturan yang sama seperti roundingMode pada Intl.NumberFormat
 
 :::
 
@@ -871,7 +887,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Label font size
+
 
 :::
 
@@ -880,7 +896,7 @@ Label font size
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Label font weight
+Tinggi maksimum persegi panjang; dapat berupa nilai piksel atau string persentase.
 
 :::
 
@@ -889,7 +905,7 @@ Label font weight
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label background color
+Warna latar label
 
 :::
 
@@ -898,7 +914,7 @@ Label background color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label stroke color
+Warna stroke label
 
 :::
 
@@ -907,7 +923,7 @@ Label stroke color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label font color
+Warna font label
 
 :::
 
@@ -916,7 +932,7 @@ Label font color
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the label color is automatically inverted based on the element color
+Apakah warna font label otomatis dibalik berdasarkan warna elemen.
 
 :::
 
@@ -925,7 +941,7 @@ Whether the label color is automatically inverted based on the element color
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Description}
-label position
+Posisi label
 
 :::
 
@@ -934,7 +950,7 @@ label position
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the label anti-overlap function is enabled
+Apakah penanganan tumpang tindih label diaktifkan.
 
 :::
 
@@ -943,7 +959,7 @@ Whether the label anti-overlap function is enabled
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Label filtering; the default relationship between selectors is 'OR'
+Seleksi label; kondisi antar selector default-nya OR.
 
 :::
 
@@ -953,7 +969,7 @@ Label filtering; the default relationship between selectors is 'OR'
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -962,11 +978,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -975,11 +991,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -990,7 +1006,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -999,37 +1015,37 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution)
+**Contoh**
 
 
 
-Implement complex data filtering logic via AI-generated JavaScript code
 
 
 
-Core capabilities:
 
-\- Supports any complex data filtering conditions
+Lebar border latar belakang.
 
-\- Use built-in utility functions for data operations
+Visibilitas garis.
 
-\- Execute safely in the browser environment (Web Worker sandbox)
-
-
-
-Environment requirements: Only supports browser environment; Node.js environment will use fallback
+**Contoh**
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
 
 
-Chart dynamic filter configuration
 
 
 
-Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
+Radius sudut border latar belakang.
+
+
+
+**Contoh**
+
+
+
+
 
 :::
 
@@ -1043,14 +1059,14 @@ Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScr
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+
 
 :::
 
 **Example**
-"Highlight bars with sales greater than 1000"
+"Sorot batang dengan penjualan lebih dari 1000"
 
-"Highlight the bar with the highest profit margin in each region"
+"Sorot batang dengan margin laba tertinggi di setiap wilayah"
 
 
 
@@ -1059,24 +1075,24 @@ User's filtering requirement description (natural language)
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code
+Operator
 
 
 
-\- Can only use built-in utility functions (accessed via _ or R)
+\- not in: Memilih item data ketika nilai field dimensi tidak ada dalam value
 
-\- Input parameters: data (array), each item contains __row_index field representing line number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
+Offset horizontal titik anotasi dalam piksel. Ketika titik berada di kiri (awal sumbu kategori), disarankan nilai positif; ketika berada di kanan (akhir sumbu kategori), disarankan nilai negatif.
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+Nilai negatif menggeser seluruh komponen ke kiri (misalnya -10).
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
 **Example**
-Highlight the sales field of data items with sales greater than 1000
+offsetX: 5 (seluruh komponen bergeser ke kanan 5 piksel)
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1085,7 +1101,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1099,7 +1115,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1120,7 +1136,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+
 
 :::
 
@@ -1130,7 +1146,7 @@ Fallback solution when code execution fails or the environment is not supported
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -1139,11 +1155,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -1152,11 +1168,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -1167,7 +1183,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -1176,11 +1192,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+\- not in: Memilih item data ketika nilai field dimensi TIDAK ada dalam daftar nilai.
 
 
 
-Written during the prepare() phase, read-only at runtime
+Warna teks
 
 :::
 
@@ -1203,11 +1219,11 @@ Written during the prepare() phase, read-only at runtime
 **Type:** `Legend | undefined`
 
 :::note{title=Description}
-Legend
+Legenda
 
 
 
-Legend configuration, used to define the chart's legend, including its position, format, style, etc.
+Legend configuration, used to define legend position, format, style, and related settings.
 
 :::
 
@@ -1217,7 +1233,7 @@ Legend configuration, used to define the chart's legend, including its position,
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether legend functionality is enabled
+Apakah fitur legenda diaktifkan.
 
 :::
 
@@ -1231,12 +1247,12 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether legend border is enabled
+Apakah border legenda diaktifkan.
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+Hanya berlaku untuk legenda diskret.
 
 :::
 
@@ -1250,7 +1266,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Legend font color
+Warna font legenda.
 
 :::
 
@@ -1259,7 +1275,7 @@ Legend font color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Pager icon color
+Warna ikon paginasi.
 
 :::
 
@@ -1268,7 +1284,7 @@ Pager icon color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Pager icon disabled color
+Warna ikon paginasi saat nonaktif/abu-abu.
 
 :::
 
@@ -1277,7 +1293,7 @@ Pager icon disabled color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Legend font size
+Ukuran font legenda.
 
 :::
 
@@ -1291,7 +1307,7 @@ labelFontSize: 10
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Legend font color
+Warna font legenda.
 
 :::
 
@@ -1300,7 +1316,7 @@ Legend font color
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Legend font weight
+Ketebalan font legenda.
 
 :::
 
@@ -1314,12 +1330,12 @@ labelFontWeight: 400
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Description}
-Legend shape
+Tipe bentuk legenda.
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+Hanya berlaku untuk legenda diskret.
 
 :::
 
@@ -1333,7 +1349,7 @@ shapeType: 'circle'
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Description}
-Legend position
+Posisi legenda
 
 :::
 
@@ -1347,16 +1363,16 @@ position: 'rightTop'
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Maximum number of columns or rows when there are many legend items;
+Jumlah maksimum kolom atau baris ketika item legenda banyak.
 
-If position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of columns displayed
+Jika position bersifat horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize mengontrol jumlah kolom yang ditampilkan.
 
-If position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of rows displayed
+Jika position bersifat vertikal (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize mengontrol jumlah baris yang ditampilkan.
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+Hanya berlaku untuk legenda diskret.
 
 :::
 
@@ -1375,7 +1391,7 @@ Tooltip
 
 
 
-Tooltip configuration, used to define the chart's tooltips, including its position, format, style, etc.
+Tooltip configuration, used to define tooltip position, format, style, and related settings.
 
 :::
 
@@ -1385,7 +1401,7 @@ Tooltip configuration, used to define the chart's tooltips, including its positi
 **Type:** `false | true`
 
 :::note{title=Description}
-Whether tooltip functionality is enabled
+
 
 :::
 
@@ -1395,15 +1411,15 @@ Whether tooltip functionality is enabled
 **Type:** `Brush | undefined`
 
 :::note{title=Description}
-Brush Selection
+Brush selection
 
 
 
-Brush configuration, used to enable/disable the brush selection capability.
+Brush selection configuration, used to enable or disable brush selection.
 
 
 
-Chart brush configuration
+\- `y`: Brush sumbu Y; hanya memilih pada arah sumbu Y, tanpa batas pada sumbu X.
 
 :::
 
@@ -1413,7 +1429,7 @@ Chart brush configuration
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to enable brush selection
+
 
 :::
 
@@ -1422,19 +1438,19 @@ Whether to enable brush selection
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-Brush type
+**Type:** `XLinearAxis | undefined`
 
 
 
-Define the shape and direction of the brush selection box
+**Type:** `boolean | undefined`
 
-\- `rect`: Rectangular selection, can pick in both X and Y directions simultaneously
 
-\- `polygon`: Polygon selection, pick an arbitrary polygon by clicking multiple points
 
-\- `x`: X-axis selection, only pick along the X-axis, no restriction on the Y-axis
 
-\- `y`: Y-axis selection, only pick along the Y-axis, no restriction on the X-axis
+
+
+
+
 
 :::
 
@@ -1443,15 +1459,15 @@ Define the shape and direction of the brush selection box
 **Type:** `"single" | "multiple" | undefined`
 
 :::note{title=Description}
-Selection mode: single or multiple
 
 
 
-Define the picking mode
 
-\- `single`: Single selection mode, only one picking box at a time
+**Type:** `number | boolean | undefined`
 
-\- `multiple`: Multiple selection mode, multiple picking boxes can exist simultaneously
+**Type:** `number | undefined`
+
+
 
 :::
 
@@ -1460,7 +1476,7 @@ Define the picking mode
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to clear the selection box after picking ends
+
 
 :::
 
@@ -1469,11 +1485,11 @@ Whether to clear the selection box after picking ends
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style of selected data
 
 
 
-Define the style of picked data points
+
+
 
 :::
 
@@ -1483,11 +1499,11 @@ Define the style of picked data points
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacity
+\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
 
 
 
-Opacity of selected data points, range 0-1
+Mendefinisikan gaya titik data di luar seleksi.
 
 :::
 
@@ -1496,7 +1512,7 @@ Opacity of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Stroke color
+
 
 :::
 
@@ -1505,7 +1521,7 @@ Stroke color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Stroke width
+**Type:** `boolean | undefined`
 
 :::
 
@@ -1514,11 +1530,11 @@ Stroke width
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style of unselected data
+Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, termasuk posisi, format, gaya, dll.
 
 
 
-Define the style of unpicked data points
+
 
 :::
 
@@ -1528,11 +1544,11 @@ Define the style of unpicked data points
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacity
+\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
 
 
 
-Opacity of unselected data points, range 0-1
+
 
 :::
 
@@ -1541,7 +1557,7 @@ Opacity of unselected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Stroke color
+
 
 :::
 
@@ -1550,7 +1566,216 @@ Stroke color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Stroke width
+**Type:** `boolean | undefined`
+
+:::
+
+
+## animation
+
+**Type:** `RadarAnimation | undefined`
+
+:::note{title=Description}
+Konfigurasi animasi
+
+
+
+Chart animation configuration; available effects are constrained by chart type
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether radar chart animation is enabled
+
+:::
+
+### params
+
+**Type:** `RadarAnimationParams | undefined`
+
+:::note{title=Description}
+Radar chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `RadarAppearAnimation | undefined`
+
+:::note{title=Description}
+Radar chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("radial" | "scale")[] | undefined`
+
+:::note{title=Description}
+Radar chart appear effects, supporting radial and scale animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether the current animation stage is enabled
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `RadarUpdateAnimation | undefined`
+
+:::note{title=Description}
+Radar chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Description}
+Radar chart update effects, supporting grow animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether the current animation stage is enabled
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `RadarAnimationLoop | undefined`
+
+:::note{title=Description}
+Radar chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether loop animation is enabled
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Radar chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Description}
+Atmosphere animation effect, supporting ripple, visibility, and breathing effects
 
 :::
 
@@ -1560,19 +1785,19 @@ Stroke width
 **Type:** `Theme | undefined`
 
 :::note{title=Description}
-Chart theme. Theme is a low-priority configuration that includes common settings shared across all chart types and specific settings for a single chart type.
+Chart theme. Theme is a lower-priority functional configuration that includes common settings shared by all chart types and by a single chart type.
 
 
 
-Built-in light and dark themes; users can customize themes via Builder.
+Two built-in themes are provided: light and dark. Users can customize themes through Builder.
 
 
 
-Theme
+Operator
 
 
 
-Built-in light and dark themes; new themes can be customized via registerTheme.
+\- not in: Memilih item data ketika nilai field dimensi TIDAK ada dalam daftar nilai.
 
 :::
 
@@ -1600,19 +1825,15 @@ Built-in light and dark themes; new themes can be customized via registerTheme.
 **Type:** `PointStyle | PointStyle[] | undefined`
 
 :::note{title=Description}
-Point element style configuration, used to define the chart's point element styles, including color, border, etc.
+Point mark style configuration, used to define point mark color, border, and related settings.
 
-Supports global style or conditional style configuration.
+Supports global style or conditional style configuration
+
+Filter data
+
+**Type:** `string | undefined`
 
 
-
-Data filter
-
-
-
-If selector is configured, it provides four types of data matching capabilities: numerical selector, partial data selector, conditional dimension selector, and conditional measure selector.
-
-If selector is not configured, the style applies globally.
 
 :::
 
@@ -1622,28 +1843,28 @@ If selector is not configured, the style applies globally.
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Data selector
+- not in: Memilih item data ketika nilai field dimensi tidak berada dalam array `value`.
 
 
 
-If selector is configured, it provides four types of data matching capabilities: numerical selector, partial data selector, conditional dimension selector, and conditional measure selector.
+**Type:** `string | undefined`
 
-If selector is not configured, the style applies globally.
+
 
 :::
 
 **Example**
-Numerical selector
+Warna stroke primitive bar (persegi panjang)
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
+
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+
 selector = {
 field: 'category',
 operator: 'in',
@@ -1655,7 +1876,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+
 selector = {
 field: 'profit',
 operator: '>=',
@@ -1675,7 +1896,7 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -1684,11 +1905,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -1697,11 +1918,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -1712,7 +1933,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -1721,39 +1942,39 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution)
+**Contoh**
 
 
 
-Implement complex data filtering logic via AI-generated JavaScript code
-
-Suitable for scenarios that are difficult to express with static selectors, such as Top N, statistical analysis, and complex conditions
 
 
 
-Core capabilities:
-
-\- Supports any complex data filtering conditions
-
-\- Use built-in utility functions for data manipulation
-
-\- Safely executed in the browser environment (Web Worker sandbox)
 
 
 
-Environment requirements: Only supports browser environment; Node.js environment will use fallback
+Lebar border latar belakang.
+
+Visibilitas garis.
+
+**Contoh**
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
 
 
-Chart dynamic filter configuration
 
 
 
-Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaScript code
+Radius sudut border latar belakang.
+
+
+
+**Contoh**
+
+
+
+
 
 :::
 
@@ -1767,14 +1988,14 @@ Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaS
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+
 
 :::
 
 **Example**
-"Highlight bars with sales greater than 1000"
+"Sorot batang dengan penjualan lebih dari 1000"
 
-"Highlight the bar with the highest profit margin in each region"
+"Sorot batang dengan margin laba tertinggi di setiap wilayah"
 
 
 
@@ -1783,24 +2004,24 @@ User's filtering requirement description (natural language)
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code
+Operator
 
 
 
-\- Can only use built-in utility functions (accessed via _ or R)
+\- not in: Memilih item data ketika nilai field dimensi tidak ada dalam value
 
-\- Input parameters: data (array), each item contains __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
+Offset horizontal titik anotasi dalam piksel. Ketika titik berada di kiri (awal sumbu kategori), disarankan nilai positif; ketika berada di kanan (akhir sumbu kategori), disarankan nilai negatif.
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+Nilai negatif menggeser seluruh komponen ke kiri (misalnya -10).
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
 **Example**
-Highlight the sales field of data items with sales greater than 1000
+offsetX: 5 (seluruh komponen bergeser ke kanan 5 piksel)
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1809,7 +2030,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1823,7 +2044,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1844,7 +2065,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+
 
 :::
 
@@ -1854,7 +2075,7 @@ Fallback solution when code execution fails or the environment is not supported
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -1863,11 +2084,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -1876,11 +2097,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -1891,7 +2112,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -1900,11 +2121,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+\- not in: Memilih item data ketika nilai field dimensi TIDAK ada dalam daftar nilai.
 
 
 
-Written during the prepare() phase, read-only at runtime
+Warna teks
 
 :::
 
@@ -1926,7 +2147,7 @@ Written during the prepare() phase, read-only at runtime
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the point is visible
+Apakah titik terlihat
 
 :::
 
@@ -1935,11 +2156,11 @@ Whether the point is visible
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Point size
+Ukuran titik
 
 
 
-Point size
+Ukuran titik
 
 :::
 
@@ -1948,11 +2169,11 @@ Point size
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Point element color
+Warna markah titik
 
 
 
-Point element color
+Warna markah titik
 
 :::
 
@@ -1961,11 +2182,11 @@ Point element color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Point element color opacity
+Opasitas warna markah titik
 
 
 
-Point element color opacity
+Opasitas warna markah titik
 
 :::
 
@@ -1974,11 +2195,11 @@ Point element color opacity
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Point element border color
+Warna border markah titik
 
 
 
-Point element border color
+Warna border markah titik
 
 :::
 
@@ -1987,11 +2208,11 @@ Point element border color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Point element border width
+Lebar border markah titik
 
 
 
-Point element border width
+Lebar border markah titik
 
 :::
 
@@ -2000,11 +2221,11 @@ Point element border width
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
 :::note{title=Description}
-Point element border style
+Gaya border markah titik
 
 
 
-Point element border style
+Gaya border markah titik
 
 :::
 
@@ -2023,19 +2244,15 @@ dotted
 **Type:** `LineStyle | LineStyle[] | undefined`
 
 :::note{title=Description}
-Line element style configuration, used to define the chart's line element styles, including color, opacity, curve, etc.
+Line mark style configuration, used to define line mark color, opacity, curve, and related settings.
 
-Supports global style or conditional style configuration.
+Supports global style or conditional style configuration
+
+Filter data
+
+**Type:** `string | undefined`
 
 
-
-Data filter
-
-
-
-If selector is configured, it provides four types of data matching capabilities: numerical selector, partial data selector, conditional dimension selector, and conditional measure selector.
-
-If selector is not configured, the style applies globally.
 
 :::
 
@@ -2045,28 +2262,28 @@ If selector is not configured, the style applies globally.
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Data selector
+- not in: Memilih item data ketika nilai field dimensi tidak berada dalam array `value`.
 
 
 
-If selector is configured, it provides four types of data matching capabilities: numerical selector, partial data selector, conditional dimension selector, and conditional measure selector.
+**Type:** `string | undefined`
 
-If selector is not configured, the style applies globally.
+
 
 :::
 
 **Example**
-Numerical selector
+Warna stroke primitive bar (persegi panjang)
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
+
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+
 selector = {
 field: 'category',
 operator: 'in',
@@ -2078,7 +2295,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+
 selector = {
 field: 'profit',
 operator: '>=',
@@ -2098,7 +2315,7 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -2107,11 +2324,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -2120,11 +2337,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -2135,7 +2352,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -2144,39 +2361,39 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution)
+**Contoh**
 
 
 
-Implement complex data filtering logic via AI-generated JavaScript code
-
-Suitable for scenarios that are difficult to express with static selectors, such as Top N, statistical analysis, and complex conditions
 
 
 
-Core capabilities:
-
-\- Supports any complex data filtering conditions
-
-\- Use built-in utility functions for data manipulation
-
-\- Safely executed in the browser environment (Web Worker sandbox)
 
 
 
-Environment requirements: Only supports browser environment; Node.js environment will use fallback
+Lebar border latar belakang.
+
+Visibilitas garis.
+
+**Contoh**
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
 
 
-Chart dynamic filter configuration
 
 
 
-Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaScript code
+Radius sudut border latar belakang.
+
+
+
+**Contoh**
+
+
+
+
 
 :::
 
@@ -2190,14 +2407,14 @@ Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaS
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+
 
 :::
 
 **Example**
-"Highlight bars with sales greater than 1000"
+"Sorot batang dengan penjualan lebih dari 1000"
 
-"Highlight the bar with the highest profit margin in each region"
+"Sorot batang dengan margin laba tertinggi di setiap wilayah"
 
 
 
@@ -2206,24 +2423,24 @@ User's filtering requirement description (natural language)
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code
+Operator
 
 
 
-\- Can only use built-in utility functions (accessed via _ or R)
+\- not in: Memilih item data ketika nilai field dimensi tidak ada dalam value
 
-\- Input parameters: data (array), each item contains __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
+Offset horizontal titik anotasi dalam piksel. Ketika titik berada di kiri (awal sumbu kategori), disarankan nilai positif; ketika berada di kanan (akhir sumbu kategori), disarankan nilai negatif.
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+Nilai negatif menggeser seluruh komponen ke kiri (misalnya -10).
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
 **Example**
-Highlight the sales field of data items with sales greater than 1000
+offsetX: 5 (seluruh komponen bergeser ke kanan 5 piksel)
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2232,7 +2449,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2246,7 +2463,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2267,7 +2484,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+
 
 :::
 
@@ -2277,7 +2494,7 @@ Fallback solution when code execution fails or the environment is not supported
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -2286,11 +2503,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -2299,11 +2516,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -2314,7 +2531,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -2323,11 +2540,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+\- not in: Memilih item data ketika nilai field dimensi TIDAK ada dalam daftar nilai.
 
 
 
-Written during the prepare() phase, read-only at runtime
+Warna teks
 
 :::
 
@@ -2349,7 +2566,7 @@ Written during the prepare() phase, read-only at runtime
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the line segment is visible
+Apakah segmen garis terlihat
 
 :::
 
@@ -2358,7 +2575,7 @@ Whether the line segment is visible
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the line segment is smooth
+Apakah segmen garis dihaluskan
 
 :::
 
@@ -2367,7 +2584,7 @@ Whether the line segment is smooth
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Line segment color
+Warna segmen garis
 
 :::
 
@@ -2376,7 +2593,7 @@ Line segment color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Line segment color opacity
+Opasitas warna segmen garis
 
 :::
 
@@ -2385,9 +2602,23 @@ Line segment color opacity
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Line segment width
+Lebar segmen garis
 
 :::
+
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Gaya segmen garis
+
+:::
+
+**Example**
+`lineStyle: 'solid'`
+
+
 
 
 ## areaStyle
@@ -2395,19 +2626,15 @@ Line segment width
 **Type:** `AreaStyle | AreaStyle[] | undefined`
 
 :::note{title=Description}
-Area element style configuration, used to define the chart's area element styles, including color, opacity, border, etc.
+Area mark style configuration, used to define area mark color, opacity, border, and related settings.
 
-Supports global style or conditional style configuration.
+Supports global style or conditional style configuration
+
+Filter data
+
+**Type:** `string | undefined`
 
 
-
-Data filter
-
-
-
-If selector is configured, it provides four types of data matching capabilities: numerical selector, partial data selector, conditional dimension selector, and conditional measure selector.
-
-If selector is not configured, the style applies globally.
 
 :::
 
@@ -2417,28 +2644,28 @@ If selector is not configured, the style applies globally.
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Data selector
+- not in: Memilih item data ketika nilai field dimensi tidak berada dalam array `value`.
 
 
 
-If selector is configured, it provides four types of data matching capabilities: numerical selector, partial data selector, conditional dimension selector, and conditional measure selector.
+**Type:** `string | undefined`
 
-If selector is not configured, the style applies globally.
+
 
 :::
 
 **Example**
-Numerical selector
+Warna stroke primitive bar (persegi panjang)
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
+
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+
 selector = {
 field: 'category',
 operator: 'in',
@@ -2450,7 +2677,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+
 selector = {
 field: 'profit',
 operator: '>=',
@@ -2470,7 +2697,7 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -2479,11 +2706,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -2492,11 +2719,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -2507,7 +2734,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -2516,39 +2743,39 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution)
+**Contoh**
 
 
 
-Implement complex data filtering logic via AI-generated JavaScript code
-
-Suitable for scenarios that are difficult to express with static selectors, such as Top N, statistical analysis, and complex conditions
 
 
 
-Core capabilities:
-
-\- Supports any complex data filtering conditions
-
-\- Use built-in utility functions for data manipulation
-
-\- Safely executed in the browser environment (Web Worker sandbox)
 
 
 
-Environment requirements: Only supports browser environment; Node.js environment will use fallback
+Lebar border latar belakang.
+
+Visibilitas garis.
+
+**Contoh**
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
 
 
-Chart dynamic filter configuration
 
 
 
-Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaScript code
+Radius sudut border latar belakang.
+
+
+
+**Contoh**
+
+
+
+
 
 :::
 
@@ -2562,14 +2789,14 @@ Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaS
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+
 
 :::
 
 **Example**
-"Highlight bars with sales greater than 1000"
+"Sorot batang dengan penjualan lebih dari 1000"
 
-"Highlight the bar with the highest profit margin in each region"
+"Sorot batang dengan margin laba tertinggi di setiap wilayah"
 
 
 
@@ -2578,24 +2805,24 @@ User's filtering requirement description (natural language)
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code
+Operator
 
 
 
-\- Can only use built-in utility functions (accessed via _ or R)
+\- not in: Memilih item data ketika nilai field dimensi tidak ada dalam value
 
-\- Input parameters: data (array), each item contains __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
+Offset horizontal titik anotasi dalam piksel. Ketika titik berada di kiri (awal sumbu kategori), disarankan nilai positif; ketika berada di kanan (akhir sumbu kategori), disarankan nilai negatif.
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+Nilai negatif menggeser seluruh komponen ke kiri (misalnya -10).
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
 **Example**
-Highlight the sales field of data items with sales greater than 1000
+offsetX: 5 (seluruh komponen bergeser ke kanan 5 piksel)
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2604,7 +2831,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2618,7 +2845,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2639,7 +2866,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+
 
 :::
 
@@ -2649,7 +2876,7 @@ Fallback solution when code execution fails or the environment is not supported
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+
 
 :::
 
@@ -2658,11 +2885,11 @@ Dimension field, the ID of a dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 :::
 
@@ -2671,11 +2898,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Apakah menampilkan label yang sesuai dengan crosshair.
 
-\- in: Select data items where the value of the dimension field is in 'value'
+**Type:** `number | undefined`
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+
 
 same as operator
 
@@ -2686,7 +2913,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+
 
 :::
 
@@ -2695,11 +2922,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+\- not in: Memilih item data ketika nilai field dimensi TIDAK ada dalam daftar nilai.
 
 
 
-Written during the prepare() phase, read-only at runtime
+Warna teks
 
 :::
 
@@ -2721,11 +2948,11 @@ Written during the prepare() phase, read-only at runtime
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the area element is visible
+Whether the area mark is visible
 
 
 
-Whether the area element is visible
+Whether the area mark is visible
 
 :::
 
@@ -2734,11 +2961,11 @@ Whether the area element is visible
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Area element color
+Area mark color
 
 
 
-Area element color
+Area mark color
 
 :::
 
@@ -2747,11 +2974,11 @@ Area element color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Area element color opacity
+Area mark color opacity
 
 
 
-Area element color opacity
+Area mark color opacity
 
 :::
 
@@ -2761,10 +2988,11 @@ Area element color opacity
 **Type:** `Locale | undefined`
 
 :::note{title=Description}
-Language
+Bahasa
 
 
 
-Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to set the language.
+Chart language configuration. Supports 'zh\-CN' and 'en\-US'. You can also call intl.setLocale('zh\-CN') to set the language.
 
 :::
+

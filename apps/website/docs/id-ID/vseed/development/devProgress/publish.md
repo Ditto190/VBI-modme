@@ -1,42 +1,42 @@
 ---
-title: Publish
+title: Rilis
 ---
 
 
-# Publish
+# Rilis
 
-## Generate Changeset
+## Membuat changeset
 
-To generate new changesets, please run `pnpm changeset` in the root directory of the repository. The resulting markdown files generated in the `.changeset` directory should be committed to the repository.
+Untuk membuat changeset baru, jalankan `pnpm changeset` dari direktori root repository. File markdown yang dihasilkan di direktori `.changeset` harus di-commit ke repository.
 ```bash
 pnpm changeset
 ```
 
-After generating the changeset, perform a `git commit`:
+Setelah membuat changeset, lakukan `git commit`:
 ```bash
 git add .
 git commit -m "chore: commit message"
 ```
 
-The above process can be repeated multiple times. The content of each changeset will be accumulated in the final version publish.
+Proses di atas dapat diulang beberapa kali. Konten dari setiap changeset akan diakumulasikan ke rilis versi final.
 
-## Update Version
+## Memperbarui versi
 
-Run the following command to update the version and the ChangeLog.
+Jalankan perintah berikut untuk memperbarui versi dan ChangeLog.
 ```bash
 pnpm changeset version
 ```
 
-Update dependencies and the lock file:
+Perbarui dependensi dan lock file:
 ```bash
 pnpm install
 ```
 
-Commit changes:
+Commit perubahan:
 ```bash
 git add .
 git commit -m "chore: release message"
 git push
 ```
 
-After the PR is merged into the `main` branch, the changesets workflow will be triggered automatically to perform the packaging and publishing task.
+Setelah PR digabungkan ke branch `main`, changesets workflow akan dipicu secara otomatis untuk menjalankan proses packaging dan rilis.

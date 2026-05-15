@@ -38,9 +38,9 @@ export default () => {
 }
 ```
 
-## Rose Chart (Zero Dimensions)
+## Rosendiagramm (null Dimensionen)
 
-A rose chart without any dimension fields.
+Rosendiagramm (null Dimensionen)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -62,9 +62,9 @@ export default () => {
 }
 ```
 
-## Stacked Rose Chart
+## Kombiniertes gestapeltes Rosendiagramm
 
-A stacked rose chart for comparing multiple measures across different categories.
+Kombiniertes gestapeltes Rosendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -107,25 +107,25 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -136,9 +136,9 @@ export default () => {
 }
 ```
 
-## Pivot Stacked Rose Chart
+## Pivotiertes gestapeltes Rosendiagramm
 
-A stacked rose chart with pivot table layout.
+Pivotiertes gestapeltes Rosendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -149,11 +149,11 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategorie"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Datum",
       "encoding": "column"
     },
     {
@@ -165,12 +165,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     }
   ],
   "dataset": [
@@ -321,9 +321,9 @@ export default () => {
 }
 ```
 
-## stackingRose Chart
+## Gestapeltes Rosendiagramm
 
-stackingRose Chart
+Gestapeltes Rosendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'

@@ -4,8 +4,8 @@
 
 ### registerCustomTheme
 
-:::note{title=Description}
-Register a custom theme.
+:::note{title=Deskripsi}
+Mendaftarkan tema kustom.
 :::
 
 ```ts
@@ -14,23 +14,23 @@ function registerCustomTheme(key: string, themeConfig:
     | ((props: { lightTheme: CustomThemeConfig; darkTheme: CustomThemeConfig }) => CustomThemeConfig)): void
 ```
 
-**Parameters:**
+**Parameter:**
 
-- Unique identifier for the theme
-- Theme configuration object, or a function that returns a configuration object.
-If a function, it receives an object containing lightTheme and darkTheme as parameters, making it easy to extend existing themes.
+- Identifier unik untuk tema
+- Objek konfigurasi tema, atau fungsi yang mengembalikan objek konfigurasi
+Jika berupa fungsi, fungsi ini menerima objek yang berisi lightTheme dan darkTheme sebagai parameter, sehingga mudah memperluas tema yang sudah ada.
 
-**Example:**
+**Contoh:**
 
 registerCustomTheme('myTheme', { ... });
-// Or modify based on the light theme
+// Atau ubah berdasarkan tema terang
 registerCustomTheme('myTheme', ({ lightTheme }) => ({ ...lightTheme, ... }));
 
 ### registerDarkTheme
 
-:::note{title=Description}
-Register the dark theme (Dark Theme).
-After registration, retrieve it via Builder.getTheme('dark').
+:::note{title=Deskripsi}
+Mendaftarkan tema gelap (Dark Theme).
+Setelah terdaftar, dapat diambil melalui Builder.getTheme('dark').
 :::
 
 ```ts
@@ -39,9 +39,9 @@ function registerDarkTheme(): void
 
 ### registerLightTheme
 
-:::note{title=Description}
-Register the light theme (Light Theme).
-After registration, retrieve it via Builder.getTheme('light').
+:::note{title=Deskripsi}
+Mendaftarkan tema terang (Light Theme).
+Setelah terdaftar, dapat diambil melalui Builder.getTheme('light').
 :::
 
 ```ts
@@ -52,9 +52,9 @@ function registerLightTheme(): void
 
 ### registerArea
 
-:::note{title=Description}
-Register the Area Chart build pipeline.
-Once registered, Builder supports building Area Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Area Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Area Chart.
 :::
 
 ```ts
@@ -63,9 +63,9 @@ function registerArea(): void
 
 ### registerAreaPercent
 
-:::note{title=Description}
-Register the Area Percent Chart build pipeline.
-Once registered, Builder supports building Area Percent Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Area Percent Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Area Percent Chart.
 :::
 
 ```ts
@@ -74,9 +74,9 @@ function registerAreaPercent(): void
 
 ### registerBar
 
-:::note{title=Description}
-Register the Bar Chart build pipeline.
-Once registered, Builder supports building Bar Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Bar Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Bar Chart.
 :::
 
 ```ts
@@ -85,9 +85,9 @@ function registerBar(): void
 
 ### registerBarParallel
 
-:::note{title=Description}
-Register the Bar Parallel Chart build pipeline.
-Once registered, Builder supports building Bar Parallel Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Bar Parallel Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Bar Parallel Chart.
 :::
 
 ```ts
@@ -96,9 +96,9 @@ function registerBarParallel(): void
 
 ### registerBarPercent
 
-:::note{title=Description}
-Register the Bar Percent Chart build pipeline.
-Once registered, Builder supports building Bar Percent Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Bar Percent Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Bar Percent Chart.
 :::
 
 ```ts
@@ -107,9 +107,9 @@ function registerBarPercent(): void
 
 ### registerBoxPlot
 
-:::note{title=Description}
-Register the Box Plot Chart build pipeline.
-Once registered, Builder supports building Box Plot Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Box Plot Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Box Plot Chart.
 :::
 
 ```ts
@@ -118,9 +118,9 @@ function registerBoxPlot(): void
 
 ### registerCirclePacking
 
-:::note{title=Description}
-Register the CirclePacking Chart build pipeline.
-Once registered, Builder supports building CirclePacking Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk CirclePacking Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk CirclePacking Chart.
 :::
 
 ```ts
@@ -129,9 +129,9 @@ function registerCirclePacking(): void
 
 ### registerColumn
 
-:::note{title=Description}
-Register the Column Chart build pipeline.
-Once registered, Builder supports building Column Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Column Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Column Chart.
 :::
 
 ```ts
@@ -140,9 +140,9 @@ function registerColumn(): void
 
 ### registerColumnParallel
 
-:::note{title=Description}
-Register the Column Parallel Chart build pipeline.
-Once registered, Builder supports building Column Parallel Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Column Parallel Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Column Parallel Chart.
 :::
 
 ```ts
@@ -151,9 +151,9 @@ function registerColumnParallel(): void
 
 ### registerColumnPercent
 
-:::note{title=Description}
-Register the Column Percent Chart build pipeline.
-Once registered, Builder supports building Column Percent Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Column Percent Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Column Percent Chart.
 :::
 
 ```ts
@@ -162,9 +162,9 @@ function registerColumnPercent(): void
 
 ### registerDonut
 
-:::note{title=Description}
-Register the Donut Chart build pipeline.
-Once registered, Builder supports building Donut Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Donut Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Donut Chart.
 :::
 
 ```ts
@@ -173,9 +173,9 @@ function registerDonut(): void
 
 ### registerDualAxis
 
-:::note{title=Description}
-Register the Dual Axis Chart build pipeline.
-Once registered, Builder supports building Dual Axis Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Dual Axis Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Dual Axis Chart.
 :::
 
 ```ts
@@ -184,9 +184,9 @@ function registerDualAxis(): void
 
 ### registerFunnel
 
-:::note{title=Description}
-Register the Funnel Chart build pipeline.
-Once registered, Builder supports building Funnel Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Funnel Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Funnel Chart.
 :::
 
 ```ts
@@ -195,9 +195,9 @@ function registerFunnel(): void
 
 ### registerHeatmap
 
-:::note{title=Description}
-Register the Heatmap Chart build pipeline.
-Once registered, Builder supports building Heatmap Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Heatmap Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Heatmap Chart.
 :::
 
 ```ts
@@ -206,8 +206,8 @@ function registerHeatmap(): void
 
 ### registerHierarchySankey
 
-:::note{title=Description}
-Register the HierarchySankey Chart build pipeline.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk HierarchySankey Chart.
 :::
 
 ```ts
@@ -216,9 +216,9 @@ function registerHierarchySankey(): void
 
 ### registerHistogram
 
-:::note{title=Description}
-Register the Histogram Chart build pipeline.
-Once registered, Builder supports building Histogram Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Histogram Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Histogram Chart.
 :::
 
 ```ts
@@ -227,9 +227,9 @@ function registerHistogram(): void
 
 ### registerLine
 
-:::note{title=Description}
-Register the Line Chart build pipeline.
-Once registered, Builder supports building Line Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Line Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Line Chart.
 :::
 
 ```ts
@@ -238,9 +238,9 @@ function registerLine(): void
 
 ### registerPie
 
-:::note{title=Description}
-Register the Pie Chart build pipeline.
-Once registered, Builder supports building Pie Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Pie Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Pie Chart.
 :::
 
 ```ts
@@ -249,9 +249,9 @@ function registerPie(): void
 
 ### registerPivotTable
 
-:::note{title=Description}
-Register the Pivot Table Chart build pipeline.
-Once registered, Builder supports building Pivot Table Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Pivot Table Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Pivot Table Chart.
 :::
 
 ```ts
@@ -260,9 +260,9 @@ function registerPivotTable(): void
 
 ### registerRaceBar
 
-:::note{title=Description}
-Register the RaceBar Chart build pipeline.
-Once registered, Builder supports building RaceBar Chart Spec.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk RaceBar Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec untuk RaceBar Chart.
 :::
 
 ```ts
@@ -271,9 +271,9 @@ function registerRaceBar(): void
 
 ### registerRaceColumn
 
-:::note{title=Description}
-Register the RaceColumn Chart build pipeline.
-Once registered, Builder supports building RaceColumn Chart Spec.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk RaceColumn Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec untuk RaceColumn Chart.
 :::
 
 ```ts
@@ -282,9 +282,9 @@ function registerRaceColumn(): void
 
 ### registerRaceDonut
 
-:::note{title=Description}
-Register the RaceDonut Chart build pipeline.
-Once registered, Builder supports building RaceDonut Chart Spec.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk RaceDonut Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec untuk RaceDonut Chart.
 :::
 
 ```ts
@@ -293,9 +293,9 @@ function registerRaceDonut(): void
 
 ### registerRaceLine
 
-:::note{title=Description}
-Register the RaceLine Chart build pipeline.
-Once registered, Builder supports building RaceLine Chart Spec.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk RaceLine Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec untuk RaceLine Chart.
 :::
 
 ```ts
@@ -304,9 +304,9 @@ function registerRaceLine(): void
 
 ### registerRacePie
 
-:::note{title=Description}
-Register the RacePie Chart build pipeline.
-Once registered, Builder supports building RacePie Chart Spec.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk RacePie Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec untuk RacePie Chart.
 :::
 
 ```ts
@@ -315,9 +315,9 @@ function registerRacePie(): void
 
 ### registerRaceScatter
 
-:::note{title=Description}
-Register the RaceScatter Chart build pipeline.
-Once registered, Builder supports building RaceScatter Chart Spec.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk RaceScatter Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec untuk RaceScatter Chart.
 :::
 
 ```ts
@@ -326,9 +326,9 @@ function registerRaceScatter(): void
 
 ### registerRadar
 
-:::note{title=Description}
-Register the Radar Chart build pipeline.
-Once registered, Builder supports building Radar Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Radar Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Radar Chart.
 :::
 
 ```ts
@@ -337,9 +337,9 @@ function registerRadar(): void
 
 ### registerRose
 
-:::note{title=Description}
-Register the Rose Chart build pipeline.
-Once registered, Builder supports building Rose Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Rose Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Rose Chart.
 :::
 
 ```ts
@@ -348,9 +348,9 @@ function registerRose(): void
 
 ### registerRoseParallel
 
-:::note{title=Description}
-Register the Rose Parallel Chart build pipeline.
-Once registered, Builder supports building Rose Parallel Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Rose Parallel Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Rose Parallel Chart.
 :::
 
 ```ts
@@ -359,9 +359,9 @@ function registerRoseParallel(): void
 
 ### registerScatter
 
-:::note{title=Description}
-Register the Scatter Chart build pipeline.
-Once registered, Builder supports building Scatter Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Scatter Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Scatter Chart.
 :::
 
 ```ts
@@ -370,9 +370,9 @@ function registerScatter(): void
 
 ### registerSunburst
 
-:::note{title=Description}
-Register the Sunburst Chart build pipeline.
-Once registered, Builder supports building Sunburst Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Sunburst Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Sunburst Chart.
 :::
 
 ```ts
@@ -381,9 +381,9 @@ function registerSunburst(): void
 
 ### registerTable
 
-:::note{title=Description}
-Register the Table Chart build pipeline.
-Once registered, Builder supports building Table Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk Table Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk Table Chart.
 :::
 
 ```ts
@@ -392,11 +392,12 @@ function registerTable(): void
 
 ### registerTreeMap
 
-:::note{title=Description}
-Register the TreeMap Chart build pipeline.
-Once registered, Builder supports building TreeMap Chart Spec and Advanced Config.
+:::note{title=Deskripsi}
+Mendaftarkan pipeline build untuk TreeMap Chart.
+Setelah terdaftar, Builder akan mendukung pembuatan Spec dan Advanced Config untuk TreeMap Chart.
 :::
 
 ```ts
 function registerTreeMap(): void
 ```
+

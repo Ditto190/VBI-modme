@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Combined Parallel Bar Chart
+## Biểu đồ thanh song song kết hợp
 
-Combined Parallel Bar Chart
+Biểu đồ thanh song song kết hợp
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -61,12 +61,12 @@ export default () => {
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "parentId": "sales-and-profit"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất lợi nhuận",
       "parentId": "ratio"
     }
   ],
@@ -105,7 +105,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ]
 }
@@ -114,9 +114,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Parallel Bar Chart
+## Biểu đồ thanh song song kết hợp dạng pivot
 
-Pivot Combined Parallel Bar Chart
+Biểu đồ thanh song song kết hợp dạng pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -127,28 +127,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Danh mục"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Ngày",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Khu vực",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     }
   ],
   "dataset": [

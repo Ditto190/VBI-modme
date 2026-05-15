@@ -24,9 +24,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Radar Chart
+## Diagram Radar Gabungan
 
-A radar chart with multiple data series.
+Diagram Radar Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -69,7 +69,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
@@ -80,12 +80,12 @@ export default () => {
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "parentId": "sales-and-profit"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "parentId": "ratio"
     }
   ]
@@ -95,9 +95,9 @@ export default () => {
 }
 ```
 
-## Pivot Radar Chart
+## Diagram Radar Gabungan Pivot
 
-A radar chart with pivot table layout.
+Diagram Radar Gabungan Pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -108,28 +108,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategori"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Tanggal",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Wilayah",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ],
   "dataset": [

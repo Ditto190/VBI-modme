@@ -38,9 +38,9 @@ export default () => {
 }
 ```
 
-## Rose Chart (Zero Dimensions)
+## Diagram Rose (Tanpa Dimensi)
 
-A rose chart without any dimension fields.
+Diagram Rose (Tanpa Dimensi)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -62,9 +62,9 @@ export default () => {
 }
 ```
 
-## Stacked Rose Chart
+## Diagram Rose Bertumpuk Gabungan
 
-A stacked rose chart for comparing multiple measures across different categories.
+Diagram Rose Bertumpuk Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -107,25 +107,25 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -136,9 +136,9 @@ export default () => {
 }
 ```
 
-## Pivot Stacked Rose Chart
+## Diagram Rose Bertumpuk Pivot
 
-A stacked rose chart with pivot table layout.
+Diagram Rose Bertumpuk Pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -149,28 +149,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategori"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Tanggal",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Wilayah",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ],
   "dataset": [
@@ -321,9 +321,9 @@ export default () => {
 }
 ```
 
-## stackingRose Chart
+## Diagram Rose Bertumpuk
 
-stackingRose Chart
+Diagram Rose Bertumpuk
 
 ```tsx preview
 import { VSeedRender } from '@components'

@@ -1,36 +1,36 @@
-# DSL Design
+# DSL 設計
 
-:::info Significance
+:::info 意義
 
-VSeed is a declarative DSL
+VSeed は宣言型 DSL です
 
-- DSL design is the art of expressing domain problems — it effectively simplifies complex issues.
-- DSL allows those familiar with it to code as naturally as writing in their native language. Once you are familiar with VSeed, rendering charts feels as simple as writing plain English.
-- `VChart` and `VTable` follow the same philosophy.
+- DSL 設計はドメイン問題を表現する技術であり、複雑な問題を効果的に単純化できます。
+- DSL は、慣れた人が母語を書くように自然にコードを書けるようにします。VSeed に慣れると、チャートのレンダリングは自然言語を書くのと同じくらい簡単になります。
+- `VChart`、`VTable` も同じです。
 
 
 :::
 
 :::tip
 
-A `Declarative DSL` focuses on **"What"**. It describes the expected result or final state, without specifying the exact steps the computer should take to reach that state.
+`宣言型 DSL` は「何であるか」（What）に注目します。期待する結果や最終状態がどのようなものかを記述し、コンピューター内部でその状態に到達する具体的な手順には関心を持ちません。
 
 
-An `Imperative DSL` focuses on **"How"**. It provides a series of explicit, step-by-step instructions, telling the computer exactly how to reach the desired state.
+`命令型 DSL` は「どう行うか」（How）に注目します。明確で段階的な一連の指示を提供し、目標状態へどのように到達するかをコンピューターに伝えます。
 :::
 
-## VSeed Trade-offs
+## VSeed の取捨選択
 
-1. Domain Focus
+1. ドメインへの集中（Focus）
 
-Sacrificing some generality to focus on solving domain-specific problems. The core goal of VSeed is not to deeply satisfy all the requirements of a single chart type, but to focus on data transformation before the chart type is determined. Other concerns, such as themes, interactions, and animations, are left to the consumer.
+一定の汎用性を犠牲にし、特定ドメインの問題解決に集中します。そのため VSeed の中核目標は、単一チャートタイプのすべての要件を深く満たすことではなく、チャートタイプが決まる前のデータ変換に集中することです。テーマ、インタラクション、アニメーションなどのその他の機能は利用側に委ねます。
 
-2. Abstraction Level
+2. 抽象レベル（Abstraction Level）
 
-`VSeed` provides a high level of abstraction, allowing users to focus on solving problems rather than worrying about low-level implementation details. This boosts development efficiency — for example, switching chart types only requires changing a single parameter, without worrying about the underlying mechanics.
+`VSeed` は高い抽象レベルを提供し、ユーザーが低レベルの実装詳細ではなく問題解決に集中できるようにします。これにより開発効率が向上します。たとえばチャートタイプの切り替えは、切り替えの詳細を気にせず、1 つのパラメータを変更するだけで済みます。
 
-3. Constraint is Advantage
+3. 制約こそ利点（Constraint is Advantage）
 
-`VSeed` emphasizes constraints: it accepts a `VSeed DSL` as input and outputs a `spec` for either `VTable` or `VChart`. This allows users to maintain fine-grained control over individual chart features — `VSeed` is not a black box.
+`VSeed` は制約を重視します。`VSeed DSL` を受け取り、`VTable` または `VChart` の `spec` を出力します。これにより、ユーザーは単一チャートの機能をより柔軟に制御できます。`VSeed` はブラックボックスではありません。
 
-Therefore, VSeed can be simply thought of as a `Spec Builder` that does not break the original capabilities of `VTable` or `VChart`. Any `VChart` or `VTable` user can quickly integrate `VSeed` into their existing platform.
+したがって、VSeed は `VTable` や `VChart` の元の機能を壊さない `Spec Builder` と簡単に考えられます。どの `VChart`、`VTable` ユーザーでも、既存プラットフォームへすばやく `VSeed` を組み込めます。
