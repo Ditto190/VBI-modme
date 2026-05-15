@@ -1103,17 +1103,47 @@ Rencana fallback saat eksekusi kode gagal atau lingkungan tidak didukung.
 
 **Type:** `string`
 
+:::note{title=Deskripsi}
+Field dimensi, yaitu id dari salah satu item dalam dimensions.
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Operator
+
+\- in: Memilih item data yang nilai field dimensinya berada di dalam value
+
+\- not in: Memilih item data yang nilai field dimensinya tidak berada di dalam value
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Deskripsi}
+Operator
+
+\- in: Memilih item data yang nilai field dimensinya berada di dalam value
+
+\- not in: Memilih item data yang nilai field dimensinya tidak berada di dalam value
+
+same as operator
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Memilih item data berdasarkan nilai field dimensi; array didukung.
+
+:::
 
 #### result
 
@@ -1416,7 +1446,7 @@ Tema terang dan gelap tersedia bawaan; pengguna dapat menentukan tema kustom mel
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Locale. Konfigurasi bahasa chart; mendukung 'zh-CN' dan 'en-US'. Alternatifnya, panggil intl.setLocale('zh-CN') untuk mengatur bahasa.

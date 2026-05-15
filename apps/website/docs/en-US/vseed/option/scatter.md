@@ -1555,6 +1555,267 @@ Stroke width
 
 :::
 
+## animation
+
+**Type:** `ScatterAnimation | undefined`
+
+:::note{title=Description}
+Animation configuration
+
+Chart animation configuration, with available effects constrained by chart type.
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable scatter chart animation
+
+:::
+
+### params
+
+**Type:** `ScatterAnimationParams | undefined`
+
+:::note{title=Description}
+Scatter chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `ScatterAppearAnimation | undefined`
+
+:::note{title=Description}
+Scatter chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("growth" | "scale")[] | undefined`
+
+:::note{title=Description}
+Scatter chart appear effects, supporting growth and scale animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `ScatterUpdateAnimation | undefined`
+
+:::note{title=Description}
+Scatter chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Description}
+Scatter chart update effects, supporting growth animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `ScatterAnimationLoop | undefined`
+
+:::note{title=Description}
+Scatter chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable loop animation
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### loop
+
+**Type:** `ScatterLoopAnimation | undefined`
+
+:::note{title=Description}
+Scatter chart loop animation configuration
+
+:::
+
+
+###### effects
+
+**Type:** `ScatterLoopEffect[] | undefined`
+
+:::note{title=Description}
+Scatter chart loop effects
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Scatter chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Description}
+Atmosphere animation effect, supporting ripple, fade, and breath effects
+
+:::
+
 
 ## xAxis
 
@@ -3098,6 +3359,15 @@ Same as operator
 
 :::note{title=Description}
 Selection value for the dimension field; supports arrays
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
 
 :::
 
@@ -5401,7 +5671,7 @@ Whether to display the label corresponding to the crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language

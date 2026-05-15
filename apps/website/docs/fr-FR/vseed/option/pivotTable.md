@@ -1302,7 +1302,7 @@ Les thèmes clair et sombre sont intégrés ; les utilisateurs peuvent définir 
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale. Configuration de langue du graphique ; prend en charge 'zh-CN' et 'en-US'. Vous pouvez aussi appeler `intl.setLocale('zh-CN')` pour définir la langue.

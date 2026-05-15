@@ -971,7 +971,6 @@ Label filtering; the default relationship between selectors is OR
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -984,7 +983,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -997,7 +995,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -1008,7 +1005,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -1068,7 +1064,6 @@ Chart dynamic filter configuration
 **Example**
 "Highlight data items with sales greater than 1000"
 
-**Type:** `string`
 
 
 
@@ -1148,7 +1143,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1161,7 +1155,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1174,7 +1167,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -1185,7 +1177,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -1465,7 +1456,6 @@ Whether brush selection is enabled
 
 \- `polygon`: polygon brush selection, draws an arbitrary polygon by clicking multiple points
 
-**Type:** `"single" | "multiple" | undefined`
 
 \- `y`: Y-axis brush selection, only constrained in the Y-axis direction
 
@@ -1482,7 +1472,6 @@ Whether brush selection is enabled
 
 Defines the brush selection mode
 
-**Type:** `boolean | undefined`
 
 \- `multiple`: multiple selection mode; multiple brush areas can exist at the same time
 
@@ -1885,7 +1874,7 @@ Có sẵn hai theme tích hợp là light và dark. Theme mới có thể đư�
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language
@@ -1895,4 +1884,3 @@ Language
 Cấu hình ngôn ngữ của biểu đồ. Hỗ trợ hai ngôn ngữ 'zh\-CN' và 'en\-US'; ngoài ra có thể gọi intl.setLocale('zh\-CN') để đặt ngôn ngữ
 
 :::
-

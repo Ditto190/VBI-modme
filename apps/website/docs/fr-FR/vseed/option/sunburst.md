@@ -1236,7 +1236,7 @@ Thèmes clair et sombre intégrés ; de nouveaux thèmes peuvent être personnal
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Langue

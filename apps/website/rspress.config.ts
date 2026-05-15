@@ -109,6 +109,9 @@ export default defineConfig({
     exclude: ['components/**/*', ...(isDev ? devLocaleExcludes : [])],
   },
   builderConfig: {
+    performance:{
+      printFileSize: false,
+    },
     tools: {
       rspack: (config, { isServer }) => {
         config.resolve.alias = {

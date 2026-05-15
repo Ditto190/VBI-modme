@@ -4620,6 +4620,15 @@ Annotation area padding
 **Type:** `DimensionLinkage | undefined`
 
 :::note{title=Description}
+Indique si le linkage des dimensions est activé lorsque le graphique utilise la fonction de pivot ou des combinaisons de mesures.
+
+Au survol d'une valeur de dimension, les données ayant la même valeur de dimension dans les autres graphiques sont mises en évidence de manière coordonnée.
+
+
+
+Configuration du linkage des dimensions pour les graphiques pivot
+
+:::
 
 
 ### enable
@@ -4652,7 +4661,7 @@ Whether to display the crosshair label
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, methods like intl.setLocale('zh-CN') can be used to set the language.

@@ -1236,7 +1236,7 @@ prepare() 단계에서 작성되며 런타임에는 읽기 전용
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=설명}
 언어

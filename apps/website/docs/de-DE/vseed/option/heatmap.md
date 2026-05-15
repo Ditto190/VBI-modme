@@ -1103,17 +1103,47 @@ Fallback-Plan, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unt
 
 **Type:** `string`
 
+:::note{title=Beschreibung}
+Dimensionsfeld, die ID eines Eintrags in dimensions.
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Beschreibung}
+Operator
+
+\- in: Wählt Datenzeilen aus, deren Dimensionsfeldwert in value enthalten ist
+
+\- not in: Wählt Datenzeilen aus, deren Dimensionsfeldwert nicht in value enthalten ist
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Beschreibung}
+Operator
+
+\- in: Wählt Datenzeilen aus, deren Dimensionsfeldwert in value enthalten ist
+
+\- not in: Wählt Datenzeilen aus, deren Dimensionsfeldwert nicht in value enthalten ist
+
+same as operator
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Beschreibung}
+Wählt Datenzeilen anhand des Dimensionsfeldwerts aus; Arrays werden unterstützt.
+
+:::
 
 #### result
 
@@ -1416,7 +1446,7 @@ Helle und dunkle Themes sind integriert; Benutzer können über den Builder eige
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Locale. Sprachkonfiguration des Diagramms; unterstützt 'zh-CN' und 'en-US'. Alternativ kann intl.setLocale('zh-CN') aufgerufen werden, um die Sprache festzulegen.

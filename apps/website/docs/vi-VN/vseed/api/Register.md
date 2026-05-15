@@ -357,6 +357,12 @@ Sau khi đăng ký, Builder sẽ hỗ trợ xây dựng Spec và Advanced Config
 function registerRoseParallel(): void
 ```
 
+### registerSankey
+
+```ts
+function registerSankey(): void
+```
+
 ### registerScatter
 
 :::note{title=Mô tả}
@@ -400,4 +406,3 @@ Sau khi đăng ký, Builder sẽ hỗ trợ xây dựng Spec và Advanced Config
 ```ts
 function registerTreeMap(): void
 ```
-

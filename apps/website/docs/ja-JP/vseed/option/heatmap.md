@@ -1103,17 +1103,47 @@ _.map(filtered, item => [
 
 **Type:** `string`
 
+:::note{title=説明}
+ディメンションフィールド。dimensions のいずれかの項目の id。
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=説明}
+演算子
+
+\- in: データ項目のディメンションフィールドの値が value 内にあるデータ項目を選択します
+
+\- not in: データ項目のディメンションフィールドの値が value 内にないデータ項目を選択します
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=説明}
+演算子
+
+\- in: データ項目のディメンションフィールドの値が value 内にあるデータ項目を選択します
+
+\- not in: データ項目のディメンションフィールドの値が value 内にないデータ項目を選択します
+
+same as operator
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=説明}
+データ項目のディメンションフィールドの値を選択します。配列をサポートします。
+
+:::
 
 #### result
 
@@ -1416,7 +1446,7 @@ labelFontWeight: 400
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=説明}
 ロケール。チャートの言語設定。'zh-CN' と 'en-US' をサポートします。または intl.setLocale('zh-CN') を呼び出して言語を設定できます。

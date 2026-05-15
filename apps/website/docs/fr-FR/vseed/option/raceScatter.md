@@ -223,7 +223,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -232,7 +231,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -241,7 +239,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -250,7 +247,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -260,7 +256,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -269,7 +264,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -277,9 +271,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -358,7 +350,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -367,7 +358,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -376,7 +366,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -385,7 +374,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -395,7 +383,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -404,7 +391,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -412,9 +398,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -978,7 +962,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -987,7 +970,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -996,7 +978,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1005,7 +986,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1015,7 +995,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1024,7 +1003,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1032,9 +1010,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -1162,7 +1138,6 @@ Selection d etiquette ; les conditions entre selecteurs sont OR par defaut.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1175,7 +1150,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1269,7 +1243,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1339,7 +1312,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1352,7 +1324,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1608,11 +1579,9 @@ Configuration du brush, utilisée pour prendre en charge l’interaction de sél
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1633,9 +1602,7 @@ Configuration du brush, utilisée pour prendre en charge l’interaction de sél
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -1691,7 +1658,6 @@ Definit le style des points de donnees hors de la selection.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1736,7 +1702,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1756,7 +1721,6 @@ Configuration de l axe X, axe numerique affichant la premiere valeur de mesure
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1886,7 +1850,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1895,7 +1858,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -1904,7 +1866,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1913,7 +1874,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1923,7 +1883,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1932,7 +1891,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1940,9 +1898,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -2051,7 +2007,6 @@ Hauteur maximale du rectangle ; peut etre une valeur en pixels ou une chaine en 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2134,7 +2089,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2221,7 +2175,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2250,7 +2203,6 @@ Configuration de l axe Y, axe numerique affichant la deuxieme valeur de mesure
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2380,7 +2332,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2389,7 +2340,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -2398,7 +2348,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -2407,7 +2356,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2417,7 +2365,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -2426,7 +2373,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2434,9 +2380,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -2545,7 +2489,6 @@ Hauteur maximale du rectangle ; peut etre une valeur en pixels ou une chaine en 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2628,7 +2571,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2715,7 +2657,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2835,7 +2776,6 @@ Configuration du style des points de donnees, sous forme d un style unique ou d 
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2895,7 +2835,6 @@ value: [100, 300]
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2908,7 +2847,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3004,7 +2942,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3074,7 +3011,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3087,7 +3023,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3263,7 +3198,6 @@ Configuration des points de repère, utilisée pour ajouter des repères sur des
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3276,7 +3210,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3381,7 +3314,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3451,7 +3383,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3464,7 +3395,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -3574,7 +3504,6 @@ Couleur du texte
 
 Taille de police du texte.
 
-**Type:** `string | string[] | undefined`
 
 **Exemple**
 
@@ -3626,7 +3555,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -3716,7 +3644,6 @@ true
 :::note{title=Description}
 Couleur d arriere-plan.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -3802,9 +3729,7 @@ Opérateur
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3951,7 +3876,6 @@ center : le texte est centre dans la zone d annotation.
 
 Couleur du texte.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -4059,7 +3983,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4199,9 +4122,7 @@ Opérateur
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4404,7 +4325,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4598,7 +4518,6 @@ Indique si la fonction de liaison de dimension est activee lorsque la perspectiv
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -4611,7 +4530,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -4761,7 +4679,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4935,10 +4852,9 @@ Marge de la zone de repère
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Configuration de la langue
 
 :::
-

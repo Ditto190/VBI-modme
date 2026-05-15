@@ -1302,7 +1302,7 @@ true
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=설명}
 Locale. 차트 언어 설정. 'zh-CN'과 'en-US'를 지원합니다. 또는 `intl.setLocale('zh-CN')`를 호출해 언어를 설정할 수 있습니다.

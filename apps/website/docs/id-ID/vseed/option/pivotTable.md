@@ -1302,7 +1302,7 @@ Tema terang dan gelap tersedia bawaan; pengguna dapat menentukan tema kustom mel
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Locale. Konfigurasi bahasa chart; mendukung 'zh-CN' dan 'en-US'. Alternatifnya, panggil `intl.setLocale('zh-CN')` untuk mengatur bahasa.

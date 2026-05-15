@@ -357,6 +357,12 @@ Après enregistrement, Builder prendra en charge la construction de la Spec et d
 function registerRoseParallel(): void
 ```
 
+### registerSankey
+
+```ts
+function registerSankey(): void
+```
+
 ### registerScatter
 
 :::note{title=Description}
@@ -400,4 +406,3 @@ Après enregistrement, Builder prendra en charge la construction de la Spec et d
 ```ts
 function registerTreeMap(): void
 ```
-

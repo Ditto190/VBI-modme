@@ -553,6 +553,24 @@ Player progress bar rail color.
 
 :::
 
+### fontFamily
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Player text font family
+
+:::
+
+### fontSize
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Player text font size
+
+:::
+
 ### trackColor
 
 **Type:** `string | undefined`
@@ -2866,11 +2884,6 @@ Value of the dimension field in the selected data items, supports arrays.
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Animated filter (AI-generated code execution)
-
-
-
-:::note{title=Description}
 Dynamic filter (AI-generated code execution).
 
 Dynamically calculates filtering logic via AI-generated JavaScript code.
@@ -3179,6 +3192,15 @@ Same as operator.
 
 :::note{title=Description}
 Value of the dimension field in the selected data items, supports arrays.
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
 
 :::
 
@@ -4757,10 +4779,9 @@ Padding for the annotation area.
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale configuration.
 
 :::
-

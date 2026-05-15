@@ -1302,7 +1302,7 @@ Light and dark themes are built-in; users can define custom themes via the Build
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call `intl.setLocale('zh-CN')` to set the language.

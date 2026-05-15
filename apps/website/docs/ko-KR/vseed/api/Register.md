@@ -357,6 +357,12 @@ Rose Parallel Chart의 구축 파이프라인을 등록합니다.
 function registerRoseParallel(): void
 ```
 
+### registerSankey
+
+```ts
+function registerSankey(): void
+```
+
 ### registerScatter
 
 :::note{title=설명}
@@ -400,4 +406,3 @@ TreeMap Chart의 구축 파이프라인을 등록합니다.
 ```ts
 function registerTreeMap(): void
 ```
-

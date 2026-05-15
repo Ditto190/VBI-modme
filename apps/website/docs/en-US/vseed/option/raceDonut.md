@@ -583,6 +583,24 @@ Player progress bar track color.
 
 :::
 
+### fontFamily
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Player text font family
+
+:::
+
+### fontSize
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Player text font size
+
+:::
+
 ### trackColor
 
 **Type:** `string | undefined`
@@ -1668,7 +1686,7 @@ Built-in light and dark themes; new themes can be customized via `registerTheme`
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale configuration

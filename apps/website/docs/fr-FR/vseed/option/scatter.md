@@ -265,7 +265,6 @@ Remarque : pour utiliser un format personnalisé, définissez explicitement auto
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -307,7 +306,6 @@ Remarque : pour utiliser un format personnalisé, définissez explicitement auto
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -400,7 +398,6 @@ Ordre de tri, les valeurs optionnelles sont 'asc' ou 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -442,7 +439,6 @@ Ordre de tri, les valeurs optionnelles sont 'asc' ou 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -814,7 +810,6 @@ Label configuration, used to define data label position, format, style, and rela
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -856,7 +851,6 @@ Label configuration, used to define data label position, format, style, and rela
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1013,7 +1007,6 @@ or
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1026,7 +1019,6 @@ or
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1120,7 +1112,6 @@ Opérateur
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1190,7 +1181,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1203,7 +1193,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1471,11 +1460,9 @@ Mode de selection par brush : simple ou multiple
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1496,9 +1483,7 @@ Opacité of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1554,7 +1539,6 @@ Opacité of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1599,7 +1583,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1887,7 +1870,6 @@ Numeric axis. X-axis configuration used to define position, format, style, and r
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2002,7 +1984,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2044,7 +2025,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2182,7 +2162,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2265,7 +2244,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2352,7 +2330,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2385,7 +2362,6 @@ Numeric axis. Y-axis configuration used to define position, format, style, and r
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2500,7 +2476,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2542,7 +2517,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2680,7 +2654,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2763,7 +2736,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2850,7 +2822,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2983,7 +2954,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -2999,7 +2969,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -3059,7 +3028,6 @@ value: [100, 300]
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3072,7 +3040,6 @@ value: [100, 300]
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3168,7 +3135,6 @@ Opérateur
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3238,7 +3204,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3251,7 +3216,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3431,7 +3395,6 @@ Annotation point configuration. Defines chart annotation points based on selecte
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3444,7 +3407,6 @@ Annotation point configuration. Defines chart annotation points based on selecte
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3549,7 +3511,6 @@ Opérateur
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3619,7 +3580,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3632,7 +3592,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -3742,7 +3701,6 @@ Couleur du texte
 
 Taille de police du texte.
 
-**Type:** `string | string[] | undefined`
 
 **Exemple**
 
@@ -3794,7 +3752,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -3884,7 +3841,6 @@ true
 :::note{title=Description}
 Couleur d arriere-plan.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -3974,9 +3930,7 @@ Opérateur
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4123,7 +4077,6 @@ center : le texte est centre dans la zone d annotation.
 
 Couleur du texte.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -4231,7 +4184,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4375,9 +4327,7 @@ Opérateur
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4580,7 +4530,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4778,7 +4727,6 @@ Indique si la fonction de liaison de dimension est activee lorsque la perspectiv
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -4791,7 +4739,6 @@ Indique si la fonction de liaison de dimension est activee lorsque la perspectiv
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -4941,7 +4888,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -5828,7 +5774,7 @@ Indique s’il faut afficher l’étiquette correspondant au crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Langue

@@ -1379,7 +1379,6 @@ enable: true
 
 
 
-**Type:** `false | true`
 
 :::
 
@@ -1453,11 +1452,9 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1478,9 +1475,7 @@ Deckkraft of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1581,7 +1576,6 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1652,7 +1646,6 @@ Wenn autoHide deaktiviert ist, wird Sampling verwendet, konfiguriert uber minGap
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
 :::
 
@@ -1707,7 +1700,6 @@ Wenn autoHide deaktiviert ist, wird Sampling verwendet, konfiguriert uber minGap
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
 :::
 
@@ -1744,7 +1736,6 @@ Wenn autoHide deaktiviert ist, wird Sampling verwendet, konfiguriert uber minGap
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1790,7 +1781,6 @@ Wenn autoHide deaktiviert ist, wird Sampling verwendet, konfiguriert uber minGap
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1855,7 +1845,6 @@ Wenn autoHide deaktiviert ist, wird Sampling verwendet, konfiguriert uber minGap
 **Type:** `XBandAxis | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1905,7 +1894,6 @@ X-Achse animation configuration
 
 Y-Achse, numerische Achse, Y-Achsenkonfiguration; definiert die Y-Achse des Diagramms einschliesslich Position, Format, Stil usw.
 
-**Type:** `string | undefined`
 
 :::
 
@@ -2107,7 +2095,6 @@ Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::
 
@@ -2223,7 +2210,6 @@ Beschriftung der X-Achsen-Ticks
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2338,7 +2324,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2380,7 +2365,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2518,7 +2502,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string[] | undefined`
 
 :::
 
@@ -2555,7 +2538,6 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `brand`
 
 :::
 
@@ -2628,7 +2610,6 @@ sort order, optional values 'asc' or 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | number | undefined`
 
 :::
 
@@ -2798,7 +2779,6 @@ Implementiert komplexe Datenfilterlogik mit KI-generiertem JavaScript-Code
 **Beispiel**
 
 
-**Type:** `"in" | "not in" | undefined`
 }
 
 Operator
@@ -2822,7 +2802,6 @@ Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden;
 :::
 
 **Beispiel**
-**Type:** `"row-with-field"`
 
 
 
@@ -2969,7 +2948,6 @@ Ob das Balken-Primitive (Rechteck) sichtbar ist
 
 
 
-**Type:** `string | undefined`
 
 :::
 
@@ -2983,20 +2961,15 @@ Ob das Balken-Primitive (Rechteck) sichtbar ist
 
 
 
-**Type:** `string | undefined`
 
-**Type:** `boolean | undefined`
 
 :::
 
 **Beispiel**
 Strichfarbe des Balken-Primitives (Rechteck)
 
-**Type:** `number | undefined`
 
-**Type:** `string | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -3043,7 +3016,6 @@ value: [100, 300]
 :::note{title=Beschreibung}
 
 
-**Type:** `number | number[] | undefined`
 
 
 
@@ -3058,7 +3030,6 @@ value: [100, 300]
 
 
 
-**Type:** `Selector | Selectors | undefined`
 
 4
 
@@ -3090,7 +3061,6 @@ value: [100, 300]
 
 
 
-**Type:** `"in" | "not in" | undefined`
 
 \- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert NICHT in der Werteliste enthalten ist.
 
@@ -3237,7 +3207,6 @@ const profitRate = item.profit / item.sales;
 
 
 
-**Type:** `Selector | Selectors | undefined`
 
 );
 
@@ -3319,7 +3288,6 @@ const profitRate = item.profit / item.sales;
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | string[] | undefined`
 
 :::
 
@@ -3333,7 +3301,6 @@ const profitRate = item.profit / item.sales;
 :::
 
 **Beispiel**
-**Type:** `string | undefined`
 
 
 
@@ -3419,7 +3386,6 @@ top: Text befindet sich unterhalb des Anmerkungspunkts; die obere Textkante ist 
 
 
 
-**Type:** `boolean | undefined`
 
 :::
 
@@ -3579,7 +3545,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-**Type:** `"value"`
 
 :::
 
@@ -3651,7 +3616,6 @@ Den Durchschnitt fur die Anmerkungslinie berechnen
 **Type:** `string | string[] | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | number | undefined`
 
 :::
 
@@ -3821,7 +3785,6 @@ top: Text liegt unter der Referenzlinie, die Oberkante ist am Ende der (vertikal
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -3835,7 +3798,6 @@ top: Text liegt unter der Referenzlinie, die Oberkante ist am Ende der (vertikal
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 **Beispiel**
 
@@ -3844,7 +3806,6 @@ top: Text liegt unter der Referenzlinie, die Oberkante ist am Ende der (vertikal
 :::
 
 **Beispiel**
-**Type:** `number | undefined`
 
 
 
@@ -3872,7 +3833,6 @@ top: Text liegt unter der Referenzlinie, die Oberkante ist am Ende der (vertikal
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -3897,7 +3857,6 @@ top: Text liegt unter der Referenzlinie, die Oberkante ist am Ende der (vertikal
 
 
 
-**Type:** `string | number | (string | number)[] | undefined`
 
 
 
@@ -4061,7 +4020,6 @@ const index = Math.floor(sorted.length * 0.75);
 :::
 
 **Beispiel**
-**Type:** `false | true`
 
 
 
@@ -4338,9 +4296,7 @@ Operator
 
 'red'
 
-**Type:** `"in" | "not in" | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4476,7 +4432,6 @@ Vertikale Textausrichtung; typischerweise auf 'top' gesetzt, damit Text unten im
 :::
 
 **Beispiel**
-**Type:** `boolean | undefined`
 
 
 
@@ -4750,7 +4705,6 @@ Farbe des Anmerkungsbereichs
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -4900,7 +4854,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -5039,7 +4992,6 @@ Farbe des Markierungsbereichs
 :::
 
 **Beispiel**
-**Type:** `boolean | undefined`
 
 
 
@@ -5118,10 +5070,9 @@ Ob das zum crosshair gehörende Label angezeigt wird
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprachkonfiguration des Diagramms; unterstützt die beiden Sprachen 'zh\-CN' und 'en\-US'. Zusätzlich kann die Sprache über intl.setLocale('zh\-CN') gesetzt werden
 
 :::
-

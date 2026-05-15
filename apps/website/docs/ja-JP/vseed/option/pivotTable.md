@@ -1302,7 +1302,7 @@ true
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=説明}
 ロケール。チャート言語設定。'zh-CN' と 'en-US' をサポートします。別の方法として `intl.setLocale('zh-CN')` を呼び出して言語を設定できます。

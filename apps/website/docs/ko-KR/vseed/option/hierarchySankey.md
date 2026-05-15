@@ -1430,7 +1430,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=설명}
 언어
@@ -1440,4 +1440,3 @@ _.map(maxItems, item => [
 차트 언어 설정으로, 'zh\-CN'과 'en\-US' 두 언어를 지원합니다
 
 :::
-

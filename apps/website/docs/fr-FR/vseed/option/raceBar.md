@@ -643,7 +643,6 @@ Configuration du filtre dynamique du graphique.
 **Type:** `"asc" | "desc" | undefined`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1555,11 +1554,9 @@ Configuration du brush
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1580,9 +1577,7 @@ Configuration du brush
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -1683,7 +1678,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1833,7 +1827,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1842,7 +1835,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -1851,7 +1843,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1860,7 +1851,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1870,7 +1860,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 est converti en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1879,7 +1868,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1887,9 +1875,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 est converti en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -1952,7 +1938,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1961,7 +1946,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -2090,7 +2074,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2131,7 +2114,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -2140,7 +2122,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2149,7 +2130,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `number[] | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2158,7 +2138,6 @@ Mode d’arrondi du formatage numérique, utilisant Intl.NumberFormat du navigat
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -2197,7 +2176,6 @@ Configuration de l’axe Y, axe catégoriel affichant les valeurs de dimension, 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2246,7 +2224,6 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `CrosshairRect | undefined`
 
 :::
 
@@ -2356,7 +2333,6 @@ Hauteur maximale du rectangle ; peut etre une valeur en pixels ou une chaine en 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2439,7 +2415,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2526,7 +2501,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2577,7 +2551,6 @@ operator: 'between'
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string`
 
 :::
 
@@ -2586,7 +2559,6 @@ operator: 'between'
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -2723,7 +2695,6 @@ Configuration du style du graphique à barres
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2732,33 +2703,27 @@ Configuration du style du graphique à barres
 **Exemple**
 Couleur du trace du primitive barre (rectangle)
 
-**Type:** `number | undefined`
 
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 
 Résultat d'exécution du filtre dynamique (champ runtime)
 
 
 
-**Type:** `string | undefined`
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-**Type:** `string | undefined`
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
 
-**Type:** `string | undefined`
 field: 'profit',
 operator: '>=',
 value: 100
 }
-**Type:** `string | undefined`
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -2796,9 +2761,7 @@ value: [100, 300]
 :::note{title=Description}
 
 
-**Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-**Type:** `Selector | Selectors | undefined`
 
 
 
@@ -2838,7 +2801,6 @@ Opérateur
 
 
 
-**Type:** `"in" | "not in" | undefined`
 
 
 
@@ -2892,7 +2854,6 @@ Opérateur
 
 
 
-**Type:** `"row-with-field"`
 
 :::
 
@@ -2979,7 +2940,6 @@ Valeur X fixe de la ligne d’annotation verticale. Si l’axe catégoriel est d
 
 
 
-**Type:** `ValueDynamicFilter | undefined`
 
 :::
 
@@ -3131,7 +3091,6 @@ Configuration des points de repère
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -3453,7 +3412,6 @@ Ecrit pendant la phase prepare() ; en lecture seule a l execution.
 
 Taille de police du texte.
 
-**Type:** `string | string[] | undefined`
 
 **Exemple**
 
@@ -3595,7 +3553,6 @@ true
 :::note{title=Description}
 Couleur d arriere-plan.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -3671,7 +3628,6 @@ Visibilité de la ligne.
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `string | number | (string | number)[] | undefined`
 
 
 
@@ -3700,7 +3656,6 @@ const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-**Type:** `string | undefined`
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
@@ -3830,7 +3785,6 @@ Valeurs du champ de dimension selectionnees ; prend en charge les tableaux.
 
 Couleur du texte.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -4078,9 +4032,7 @@ Opérateur
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4202,7 +4154,6 @@ Couleur du texte
 :::
 
 **Exemple**
-**Type:** `number | undefined`
 
 
 
@@ -4216,7 +4167,6 @@ Couleur du texte
 :::
 
 **Exemple**
-**Type:** `"left" | "right" | "center" | undefined`
 
 
 
@@ -4274,7 +4224,6 @@ couleur du trace de l arriere-plan
 :::
 
 **Exemple**
-**Type:** `string | undefined`
 
 
 
@@ -4490,7 +4439,6 @@ Indique si les infobulles sont affichees pour tous les sous-graphiques correspon
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -4640,7 +4588,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4779,7 +4726,6 @@ Couleur de la zone de repère
 :::
 
 **Exemple**
-**Type:** `boolean | undefined`
 
 
 
@@ -4856,10 +4802,9 @@ Indique s’il faut afficher l’étiquette correspondant au crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Configuration de la langue
 
 :::
-

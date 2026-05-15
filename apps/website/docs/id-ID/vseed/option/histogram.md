@@ -1369,11 +1369,9 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1394,9 +1392,7 @@ Opasitas of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1497,7 +1493,6 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1647,7 +1642,6 @@ Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, t
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -1656,7 +1650,6 @@ Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, t
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `number | undefined`
 
 :::
 
@@ -1665,7 +1658,6 @@ Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, t
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1674,7 +1666,6 @@ Panjang maksimum untuk pembatasan label. Saat panjang teks melebihi nilai ini, t
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1684,7 +1675,6 @@ Ketebalan font label
 
 \- 1234.5678 dikonversi menjadi 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1693,7 +1683,6 @@ Ketebalan font label
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -1701,9 +1690,7 @@ Ketebalan font label
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -1895,7 +1882,6 @@ Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan m
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::
 
@@ -1972,7 +1958,6 @@ Label tick sumbu X
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `number | undefined`
 
 :::
 
@@ -2011,7 +1996,6 @@ Label tick sumbu X
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2126,7 +2110,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2168,7 +2151,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2306,7 +2288,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string[] | undefined`
 
 :::
 
@@ -2343,7 +2324,6 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `brand`
 
 :::
 
@@ -2416,7 +2396,6 @@ sort order, optional values 'asc' or 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | number | undefined`
 
 :::
 
@@ -2639,7 +2618,6 @@ Apakah primitive bar (persegi panjang) terlihat
 
 
 
-**Type:** `string | undefined`
 
 :::
 
@@ -2653,20 +2631,15 @@ Apakah primitive bar (persegi panjang) terlihat
 
 
 
-**Type:** `string | undefined`
 
-**Type:** `boolean | undefined`
 
 :::
 
 **Contoh**
 Warna stroke primitive bar (persegi panjang)
 
-**Type:** `number | undefined`
 
-**Type:** `string | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -2713,7 +2686,6 @@ value: [100, 300]
 :::note{title=Deskripsi}
 
 
-**Type:** `number | number[] | undefined`
 
 
 
@@ -2728,7 +2700,6 @@ value: [100, 300]
 
 
 
-**Type:** `Selector | Selectors | undefined`
 
 4
 
@@ -2760,7 +2731,6 @@ value: [100, 300]
 
 
 
-**Type:** `"in" | "not in" | undefined`
 
 \- not in: Memilih item data ketika nilai field dimensi TIDAK ada dalam daftar nilai.
 
@@ -2907,7 +2877,6 @@ const profitRate = item.profit / item.sales;
 
 
 
-**Type:** `Selector | Selectors | undefined`
 
 );
 
@@ -2989,7 +2958,6 @@ const profitRate = item.profit / item.sales;
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | string[] | undefined`
 
 :::
 
@@ -3003,7 +2971,6 @@ const profitRate = item.profit / item.sales;
 :::
 
 **Contoh**
-**Type:** `string | undefined`
 
 
 
@@ -3089,7 +3056,6 @@ top: Teks berada di bagian bawah titik anotasi; tepi atas teks sejajar dengan ti
 
 
 
-**Type:** `boolean | undefined`
 
 :::
 
@@ -3249,7 +3215,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Deskripsi}
-**Type:** `"value"`
 
 :::
 
@@ -3321,7 +3286,6 @@ Hitung rata-rata untuk garis anotasi
 **Type:** `string | string[] | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | number | undefined`
 
 :::
 
@@ -3491,7 +3455,6 @@ top: Teks berada di bawah garis referensi, dengan tepi atas sejajar dengan ujung
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -3505,7 +3468,6 @@ top: Teks berada di bawah garis referensi, dengan tepi atas sejajar dengan ujung
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 **Contoh**
 
@@ -3514,7 +3476,6 @@ top: Teks berada di bawah garis referensi, dengan tepi atas sejajar dengan ujung
 :::
 
 **Contoh**
-**Type:** `number | undefined`
 
 
 
@@ -3567,7 +3528,6 @@ Garis penanda numerik (nilai bin), ditampilkan secara vertikal, dapat mengatur p
 
 
 
-**Type:** `string | number | (string | number)[] | undefined`
 
 
 
@@ -3731,7 +3691,6 @@ const index = Math.floor(sorted.length * 0.75);
 :::
 
 **Contoh**
-**Type:** `false | true`
 
 
 
@@ -4008,9 +3967,7 @@ Operator
 
 'red'
 
-**Type:** `"in" | "not in" | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4146,7 +4103,6 @@ Perataan vertikal teks; biasanya diatur ke 'top' agar teks muncul di bagian bawa
 :::
 
 **Contoh**
-**Type:** `boolean | undefined`
 
 
 
@@ -4420,7 +4376,6 @@ Warna area anotasi
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -4570,7 +4525,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -4709,7 +4663,6 @@ Warna area penanda
 :::
 
 **Contoh**
-**Type:** `boolean | undefined`
 
 
 
@@ -5000,10 +4953,9 @@ Apakah menampilkan label yang sesuai dengan crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Konfigurasi bahasa chart, mendukung dua bahasa 'zh\-CN' dan 'en\-US'; selain itu bahasa dapat diatur dengan memanggil metode intl.setLocale('zh\-CN')
 
 :::
-

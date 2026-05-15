@@ -208,7 +208,6 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -250,7 +249,6 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -343,7 +341,6 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -385,7 +382,6 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -670,7 +666,6 @@ Farbe der Vorwärts-Taste des Players
 **Type:** `BackgroundColor`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -864,7 +859,6 @@ Beschriftungskonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -906,7 +900,6 @@ Beschriftungskonfiguration
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1063,7 +1056,6 @@ or
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1076,7 +1068,6 @@ or
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1170,7 +1161,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1240,7 +1230,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1253,7 +1242,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1524,11 +1512,9 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1549,9 +1535,7 @@ Deckkraft of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1607,7 +1591,6 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1652,7 +1635,6 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1686,10 +1668,9 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprachkonfiguration
 
 :::
-

@@ -1302,7 +1302,7 @@ Helle und dunkle Themes sind integriert; Benutzer können über den Builder eige
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Locale. Sprachkonfiguration des Diagramms; unterstützt 'zh-CN' und 'en-US'. Alternativ kann `intl.setLocale('zh-CN')` aufgerufen werden, um die Sprache festzulegen.

@@ -1430,7 +1430,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Bahasa
@@ -1440,4 +1440,3 @@ Bahasa
 Konfigurasi bahasa chart, mendukung dua bahasa 'zh\-CN' dan 'en\-US'
 
 :::
-

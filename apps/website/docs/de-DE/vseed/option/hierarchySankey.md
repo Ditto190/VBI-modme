@@ -1430,7 +1430,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprache
@@ -1440,4 +1440,3 @@ Sprache
 Sprachkonfiguration des Diagramms; unterstützt die beiden Sprachen 'zh\-CN' und 'en\-US'
 
 :::
-

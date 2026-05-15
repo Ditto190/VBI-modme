@@ -1236,7 +1236,7 @@ Integrierte helle und dunkle Themes; neue Themes können über registerTheme ang
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprache

@@ -1554,6 +1554,212 @@ Stroke width
 
 :::
 
+## animation
+
+**Type:** `RadarAnimation | undefined`
+
+:::note{title=Description}
+Animation configuration
+
+Chart animation configuration, with available effects constrained by chart type.
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable radar chart animation
+
+:::
+
+### params
+
+**Type:** `RadarAnimationParams | undefined`
+
+:::note{title=Description}
+Radar chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `RadarAppearAnimation | undefined`
+
+:::note{title=Description}
+Radar chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("radial" | "scale")[] | undefined`
+
+:::note{title=Description}
+Radar chart appear effects, supporting radial and scale animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `RadarUpdateAnimation | undefined`
+
+:::note{title=Description}
+Radar chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Description}
+Radar chart update effects, supporting growth animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `RadarAnimationLoop | undefined`
+
+:::note{title=Description}
+Radar chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable loop animation
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Radar chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Description}
+Atmosphere animation effect, supporting ripple, fade, and breath effects
+
+:::
+
 
 ## theme
 
@@ -2389,6 +2595,19 @@ Line segment width
 
 :::
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line segment style
+
+:::
+
+**Example**
+`lineStyle: 'solid'`
+
+
 
 ## areaStyle
 
@@ -2758,7 +2977,7 @@ Area element color opacity
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language
@@ -2768,4 +2987,3 @@ Language
 Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to set the language.
 
 :::
-

@@ -1430,7 +1430,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Mô tả}
 Ngôn ngữ
@@ -1440,4 +1440,3 @@ Ngôn ngữ
 Cấu hình ngôn ngữ biểu đồ, hỗ trợ hai ngôn ngữ 'zh\-CN' và 'en\-US'
 
 :::
-

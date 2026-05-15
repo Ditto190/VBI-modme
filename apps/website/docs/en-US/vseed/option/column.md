@@ -528,6 +528,7 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
+:::note{title=Description}
 Pagination configuration, used to specify the field name for pagination, which must be a dimension.
 
 :::
@@ -1351,6 +1352,37 @@ maxSize: 2
 
 
 
+## regionPadding
+
+**Type:** `RegionPadding | undefined`
+
+:::note{title=Description}
+Chart region padding
+
+
+
+Maps to VChart region[0].padding, used to reserve space for annotations, labels, and other elements that extend outside the chart region.
+
+:::
+
+
+### top
+
+**Type:** `number | undefined`
+
+### right
+
+**Type:** `number | undefined`
+
+### bottom
+
+**Type:** `number | undefined`
+
+### left
+
+**Type:** `number | undefined`
+
+
 ## tooltip
 
 **Type:** `Tooltip | undefined`
@@ -1520,6 +1552,270 @@ Stroke color
 
 :::note{title=Description}
 Stroke width
+
+:::
+
+
+## animation
+
+**Type:** `BarLikeAnimation | undefined`
+
+:::note{title=Description}
+Animation configuration
+
+
+
+Chart animation configuration, with available effects constrained by chart type.
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable bar/column chart animation
+
+:::
+
+### params
+
+**Type:** `BarLikeAnimationParams | undefined`
+
+:::note{title=Description}
+Bar/column chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `BarLikeAppearAnimation | undefined`
+
+:::note{title=Description}
+Bar/column chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Description}
+Bar/column chart appear effects, supporting growth animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `BarLikeUpdateAnimation | undefined`
+
+:::note{title=Description}
+Bar/column chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("growth" | "moveIn")[] | undefined`
+
+:::note{title=Description}
+Bar/column chart update effects, supporting growth and move-in animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `BarLikeAnimationLoop | undefined`
+
+:::note{title=Description}
+Bar/column chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable loop animation
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### loop
+
+**Type:** `BarLikeLoopAnimation | undefined`
+
+:::note{title=Description}
+Bar/column chart loop animation configuration
+
+:::
+
+
+###### effects
+
+**Type:** `BarLikeLoopEffect[] | undefined`
+
+:::note{title=Description}
+Bar/column chart loop effects
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Bar/column chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Description}
+Atmosphere animation effect, supporting ripple, fade, and breath effects
 
 :::
 
@@ -3096,6 +3392,15 @@ Value of the dimension field, supports arrays
 
 :::
 
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
@@ -3655,7 +3960,6 @@ Written during the prepare() phase, read-only at runtime
 
 :::
 
-
 ##### success
 
 **Type:** `false | true`
@@ -3711,15 +4015,65 @@ Text color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Vertical text alignment; typically not required.
+Text font size
 
-Recommended set to 'top' to ensure the text is fully displayed within the chart's visible area.
+:::
 
-top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
+**Example**
+12
 
-middle: Text is centered on the reference line; the center aligns with the endpoint of the (vertical) annotation line.
 
-bottom: Text is at the top of the reference line; the bottom edge aligns with the endpoint of the (vertical) annotation line.
+
+### textFontWeight
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Text font weight
+
+:::
+
+**Example**
+400
+
+
+
+### textAlign
+
+**Type:** `"left" | "right" | "center" | undefined`
+
+:::note{title=Description}
+Text alignment; generally no need to set.
+
+Recommended to set to 'right' to ensure the text is on the left of the mark line.
+
+right: Text is on the left of the reference line, its right edge aligned with the (vertical) mark line.
+
+left: Text is on the right of the reference line, its left edge aligned with the (vertical) mark line.
+
+center: Text is centered on the reference line.
+
+:::
+
+**Example**
+'right'
+
+
+
+### textBaseline
+
+**Type:** `"top" | "bottom" | "middle" | undefined`
+
+:::note{title=Description}
+Text vertical alignment; generally no need to set.
+
+Recommended to set to 'top' to ensure the text is displayed completely within the visible area.
+
+top: Text is below the reference line, aligned to the endpoint of the (vertical) mark line by its top edge.
+
+middle: Text is centered horizontally relative to the endpoint of the (vertical) mark line.
+
+bottom: Text is above the reference line, aligned to the endpoint of the (vertical) mark line by its bottom edge.
 
 :::
 
@@ -4002,47 +4356,6 @@ Written during the prepare() phase, read-only at runtime
 
 :::
 
-Get the quantile for the annotation line
-```javascript
-const sorted = _.sortBy(data, 'sales');
-const index = Math.floor(sorted.length * 0.75);
-return sorted[index]?.sales || 0;
-```
-
-Calculate the goal value based on conditions
-```javascript
-const currentYearTotal = _.sumBy(
-_.filter(data, item => item.year === 2024),
-'sales'
-);
-return currentYearTotal;
-```
-
-
-
-#### fallback
-
-**Type:** `string | number | undefined`
-
-:::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported.
-
-:::
-
-#### result
-
-**Type:** `{ success: boolean; data?: number | string; } | undefined`
-
-:::note{title=Description}
-Animated filter execution result (runtime field)
-
-
-
-Written during the prepare() phase, read-only at runtime
-
-:::
-
-
 ##### success
 
 **Type:** `false | true`
@@ -4282,8 +4595,78 @@ true
 :::note{title=Description}
 Line color
 
-:::::note{title=Description}
-Annotation area configuration; defines the chart's annotation area based on the selected data, including position, style, etc.
+:::
+
+**Example**
+'red'
+
+
+
+### lineWidth
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Line width
+
+:::
+
+**Example**
+2
+
+
+
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style
+
+:::
+
+**Example**
+'solid'
+
+
+
+### splitLine
+
+**Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
+
+:::note{title=Description}
+Whether to enable the function to split the main line into two segments.
+
+:::
+
+
+#### positiveColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Main color for the portion greater than the mark value
+
+:::
+
+#### negativeColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Main color for parts less than the mark value
+
+:::
+
+
+## annotationArea
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
+
+:::note{title=Description}
+Mark area
+
+Mark area configuration, according to the selected data, defines the annotation areas in the chart, including position and style.
 
 :::
 
@@ -4293,7 +4676,7 @@ Annotation area configuration; defines the chart's annotation area based on the 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
 :::note{title=Description}
-Depends on selected data for data marking.
+Depends on the selected data for marking.
 
 :::
 
@@ -4314,9 +4697,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in the value
+\- in: Select data items where the dimension field value is in 'value'
 
-\- not in: Select data items where the value of the dimension field is not in the value
+\- not in: Select data items where the dimension field value is not in 'value'
 
 :::
 
@@ -4327,9 +4710,9 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in the value
+\- in: Select data items where the dimension field value is in 'value'
 
-\- not in: Select data items where the value of the dimension field is not in the value
+\- not in: Select data items where the dimension field value is not in 'value'
 
 same as operator
 
@@ -4340,7 +4723,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Value of the dimension field, supports arrays
+Select dimension values; supports arrays
 
 :::
 
@@ -4419,20 +4802,20 @@ Text font weight
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Description}
-Text alignment; typically set to 'right' so text appears centered within the annotation area, ensuring it remains within the visible area of the chart.
+Text alignment; generally set to 'right' to ensure the text is displayed in the middle of the mark area and within the visible range.
 
-Recommended set to 'center' to ensure the text is centered within the annotation area.
+Recommended to set to 'center' to ensure the text is in the center of the mark area.
 
-right: Text is on the left side of the annotation area; the right edge of the text aligns with the area.
+right: Text is on the left of the mark area, its right edge aligned with the area.
 
-left: Text is on the right side of the annotation area; the left edge of the text aligns with the area.
+left: Text is on the right of the mark area, its left edge aligned with the area.
 
-center: Text is centered in the annotation area; the center of the text aligns with the area.
+center: Text is centered within the mark area.
 
 :::
 
 **Example**
-'center' Text is centered in the annotation area
+'center' Text is in the middle of the mark area
 
 
 
@@ -4441,20 +4824,20 @@ center: Text is centered in the annotation area; the center of the text aligns w
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Description}
-Vertical text alignment; typically set to 'top' so text appears at the bottom of the annotation area, ensuring it remains within the visible area of the chart.
+Text vertical alignment; generally set to 'top' to ensure the text is at the bottom of the mark area and within the visible range.
 
-Recommended set to 'top' to ensure the text is fully displayed within the chart's visible area.
+Recommended to set to 'top' to ensure the text is displayed completely within the visible area.
 
-top: Text is at the bottom of the annotation area; the top edge aligns with the area.
+top: Text is at the bottom of the mark area, its top edge aligned with the area.
 
-middle: Text is centered in the annotation area; the center aligns with the area.
+middle: Text is vertically centered within the mark area.
 
-bottom: Text is at the top of the annotation area; the bottom edge aligns with the area.
+bottom: Text is at the top of the mark area, its bottom edge aligned with the area.
 
 :::
 
 **Example**
-'top' Text is at the bottom of the annotation area
+'top' Text is at the bottom of the mark area
 
 
 
@@ -4463,7 +4846,7 @@ bottom: Text is at the top of the annotation area; the bottom edge aligns with t
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-background visibility
+Background visible
 
 :::
 
@@ -4477,7 +4860,7 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-background color
+Background color
 
 :::
 
@@ -4491,11 +4874,7 @@ background color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-background stroke color
-
-
-
-background stroke color
+Background border color
 
 :::
 
@@ -4509,7 +4888,7 @@ background stroke color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-background stroke width
+Background border width
 
 :::
 
@@ -4523,11 +4902,7 @@ background stroke width
 **Type:** `number | undefined`
 
 :::note{title=Description}
-background corner radius
-
-
-
-background corner radius
+Background border radius
 
 :::
 
@@ -4541,7 +4916,7 @@ background corner radius
 **Type:** `number | undefined`
 
 :::note{title=Description}
-background padding
+Background padding
 
 :::
 
@@ -4555,7 +4930,7 @@ background padding
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Annotation area color
+Mark area region color
 
 :::
 
@@ -4569,7 +4944,7 @@ Annotation area color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Annotation area color opacity
+Mark area region color opacity
 
 :::
 
@@ -4583,7 +4958,7 @@ Annotation area color opacity
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Annotation area stroke color
+Mark area region border color
 
 :::
 
@@ -4597,7 +4972,7 @@ Annotation area stroke color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Annotation area stroke width
+Mark area region border width
 
 :::
 
@@ -4611,7 +4986,7 @@ Annotation area stroke width
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Annotation area corner radius
+Mark area region border radius
 
 :::
 
@@ -4625,175 +5000,7 @@ Annotation area corner radius
 **Type:** `number[] | undefined`
 
 :::note{title=Description}
-Line type for the annotation area border
-
-:::
-ined`
-
-:::note{title=Description}
-background visibility
-
-:::
-
-**Example**
-true
-
-
-
-### textBackgroundColor
-
-**Type:** `string | undefined`
-
-:::note{title=Description}
-background color
-
-:::
-
-**Example**
-'red'
-
-
-
-### textBackgroundBorderColor
-
-**Type:** `string | undefined`
-
-:::note{title=Description}
-background stroke color
-
-
-
-background stroke color
-
-:::
-
-**Example**
-'red'
-
-
-
-### textBackgroundBorderWidth
-
-**Type:** `number | undefined`
-
-:::note{title=Description}
-background stroke width
-
-:::
-
-**Example**
-2
-
-
-
-### textBackgroundBorderRadius
-
-**Type:** `number | undefined`
-
-:::note{title=Description}
-background corner radius
-
-
-
-background corner radius
-
-:::
-
-**Example**
-4
-
-
-
-### textBackgroundPadding
-
-**Type:** `number | undefined`
-
-:::note{title=Description}
-background padding
-
-:::
-
-**Example**
-4
-
-
-
-### areaColor
-
-**Type:** `string | undefined`
-
-:::note{title=Description}
-Annotation area color
-
-:::
-
-**Example**
-'red'
-
-
-
-### areaColorOpacity
-
-**Type:** `number | undefined`
-
-:::note{title=Description}
-Annotation area color opacity
-
-:::
-
-**Example**
-0.5
-
-
-
-### areaBorderColor
-
-**Type:** `string | undefined`
-
-:::note{title=Description}
-Annotation area stroke color
-
-:::
-
-**Example**
-'red'
-
-
-
-### areaBorderWidth
-
-**Type:** `number | undefined`
-
-:::note{title=Description}
-Annotation area stroke width
-
-:::
-
-**Example**
-2
-
-
-
-### areaBorderRadius
-
-**Type:** `number | undefined`
-
-:::note{title=Description}
-Annotation area corner radius
-
-:::
-
-**Example**
-4
-
-
-
-### areaLineDash
-
-**Type:** `number[] | undefined`
-
-:::note{title=Description}
-Line type for the annotation area border
+Line type for the mark area region border
 
 :::
 
@@ -4807,7 +5014,7 @@ Line type for the annotation area border
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Annotation area margin
+Margin for the mark area region
 
 :::
 
@@ -4815,7 +5022,227 @@ Annotation area margin
 0
 
 
+## annotationDifferenceLine
 
+**Type:** `AnnotationDifferenceLine | AnnotationDifferenceLine[] | undefined`
+
+:::note{title=Description}
+Difference annotation line configuration, used to bind two data anchors and display an absolute or percentage difference.
+
+:::
+
+
+### start
+
+**Type:** `DifferenceAnchor`
+
+:::note{title=Description}
+Start anchor for the difference annotation line.
+
+
+
+Difference annotation anchor configuration, used to select the data bound to the start or end point.
+
+:::
+
+
+#### selector
+
+**Type:** `DifferenceSelector | DifferenceSelector[]`
+
+:::note{title=Description}
+Anchor selector, which must ultimately locate a logical anchor.
+
+:::
+
+**Example**
+{ year: '1930', type: 'Autocracies' }
+
+[{ field: 'year', operator: 'in', value: ['1930'] }, { field: 'type', operator: 'in', value: ['Autocracies'] }]
+
+
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Description}
+Dimension field, the id of one item in dimensions
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+same as operator
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Value of the dimension field used to select data items; arrays are supported
+
+:::
+
+### end
+
+**Type:** `DifferenceAnchor`
+
+:::note{title=Description}
+End anchor for the difference annotation line.
+
+
+
+Difference annotation anchor configuration, used to select the data bound to the start or end point.
+
+:::
+
+
+#### selector
+
+**Type:** `DifferenceSelector | DifferenceSelector[]`
+
+:::note{title=Description}
+Anchor selector, which must ultimately locate a logical anchor.
+
+:::
+
+**Example**
+{ year: '1930', type: 'Autocracies' }
+
+[{ field: 'year', operator: 'in', value: ['1930'] }, { field: 'type', operator: 'in', value: ['Autocracies'] }]
+
+
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Description}
+Dimension field, the id of one item in dimensions
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+same as operator
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Value of the dimension field used to select data items; arrays are supported
+
+:::
+
+### differenceType
+
+**Type:** `"percent" | "absolute" | undefined`
+
+:::note{title=Description}
+Difference value type.
+
+\- absolute: show the absolute difference, calculated as end \- start
+
+\- percent: show the percentage difference, calculated as (end \- start) / start
+
+:::
+
+### textFontSize
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Text font size.
+
+:::
+
+### textColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Text color.
+
+:::
+
+### textBackgroundColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Text background color.
+
+:::
+
+### lineColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Line color.
+
+:::
+
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style.
+
+:::
 
 ## polynomialRegressionLine
 
@@ -4977,16 +5404,6 @@ Confidence interval opacity
 
 
 
-### lineStyle
-
-**Type:** `"solid" | "dashed" | "dotted" | undefined`
-
-:::note{title=Description}
-Line style.
-
-:::
-
-
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
@@ -5033,7 +5450,7 @@ Whether to display the label corresponding to the crosshair.
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to set the language globally.
