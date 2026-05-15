@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Multi-Measure Funnel Chart
+## Diagram Funnel Multi-Metrik
 
-Multi-Measure Funnel Chart
+Diagram Funnel Multi-Metrik
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -63,15 +63,15 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "profit1",
-      "alias": "Return Rate"
+      "alias": "Tingkat Pengembalian"
     }
   ]
 }
@@ -80,9 +80,9 @@ export default () => {
 }
 ```
 
-## Combined Funnel Chart
+## Diagram Funnel Gabungan
 
-Combined Funnel Chart
+Diagram Funnel Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -120,19 +120,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "left"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "parentId": "right"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ]
 }
@@ -141,9 +141,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Funnel Chart
+## Diagram Funnel Gabungan Pivot
 
-Pivot Combined Funnel Chart
+Diagram Funnel Gabungan Pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -154,28 +154,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategori"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Tanggal",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Wilayah",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ],
   "dataset": [

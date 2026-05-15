@@ -40,12 +40,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
       "encoding": "yAxis"
     }
   ],
@@ -64,9 +64,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Scatter Chart
+## Nuage de points combiné
 
-A scatter chart with multiple data series.
+Nuage de points combiné
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -115,25 +115,25 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "encoding": "xAxis",
       "parentId": "0"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
       "encoding": "yAxis",
       "parentId": "0"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "encoding": "xAxis",
       "parentId": "1"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Taux de rendement",
       "encoding": "yAxis",
       "parentId": "1"
     }
@@ -144,9 +144,9 @@ export default () => {
 }
 ```
 
-## Pivot Scatter Chart
+## Nuage de points combiné pivoté
 
-A scatter chart with pivot table layout.
+Nuage de points combiné pivoté
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -157,7 +157,7 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Catégorie",
       "encoding": "color"
     },
     {
@@ -167,19 +167,19 @@ export default () => {
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Région",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
       "encoding": "yAxis"
     }
   ],

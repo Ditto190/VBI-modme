@@ -40,19 +40,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "yAxis"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "label": {
@@ -64,9 +64,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Scatter Chart
+## Diagram Sebar Gabungan
 
-A scatter chart with multiple data series.
+Diagram Sebar Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -109,31 +109,31 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "xAxis",
       "parentId": "0"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "yAxis",
       "parentId": "0"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "xAxis",
       "parentId": "1"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "encoding": "yAxis",
       "parentId": "1"
     }
@@ -144,9 +144,9 @@ export default () => {
 }
 ```
 
-## Pivot Scatter Chart
+## Diagram Sebar Gabungan Pivot
 
-A scatter chart with pivot table layout.
+Diagram Sebar Gabungan Pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -157,29 +157,29 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Kategori",
       "encoding": "color"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Tanggal",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Wilayah",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "yAxis"
     }
   ],

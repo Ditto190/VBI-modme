@@ -1,9 +1,9 @@
-# Spec Pipeline
+# spec パイプライン
 
-## Spec pipeline
+## spec パイプライン
 
-The `spec pipeline` receives an advancedVSeed DSL and outputs a spec.
+`spec pipeline` は advancedVSeed DSL を受け取り、spec を出力します。
 
-A `spec` is the input data structure for VChart or VTable, used to describe the configuration options of a chart.
+`spec` は VChart または VTable の入力データ構造で、チャートの設定項目を記述するために使用します。
 
-The `spec` itself cannot be fully serialized, so it cannot be constructed in a Node.js environment; it can only be used in a browser environment.
+`spec` 自体は完全にはシリアライズできないため、Node.js 環境では構築できず、ブラウザー環境でのみ使用できます。

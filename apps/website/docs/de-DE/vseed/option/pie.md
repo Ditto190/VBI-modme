@@ -1,46 +1,52 @@
 # Pie
 
-:::info{title=Recommended}
-- Recommended field configuration: `1` measure(s), `1` dimension(s)
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
-:::
+:::info{title=Empfohlen}
+- Empfohlene Feldkonfiguration: `1` Kennzahl, `1` Dimension
 
-:::info{title=Encoding Mapping}
-The Pie Chart supports the following visual channels:
-
-`angle`  : angle channel, supports `multiple measures`, mapping measure values to sector angles.
-
-`detail` : subdivision channel, supports `multiple dimensions`, used for displaying finer granularity data within the same color series.
-
-`color`  : color channel, supports `multiple dimensions` or `one measure`. Dimension colors are used to distinguish different data series, while measure colors are used for linear mapping of values to graphical colors.
-
-`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point.
-
-`label`  : label channel, supports `multiple dimensions` and `multiple measures`, displaying data labels on data points.
+\- Unterstützt Data Reshape: mindestens `1` Kennzahl, `0` Dimensionen
 
 :::
 
-:::note{title=Description}
-Pie Chart, suitable for showing the proportional relationship of single-dimension data using sector areas to represent category shares.
+:::info{title=Encoding-Zuordnung}
+Das Kreisdiagramm unterstützt die folgenden visuellen Kanäle:
 
-Applicable scenarios:
+`angle`  : Winkelkanal, unterstützt `mehrere Kennzahlen` und ordnet Kennzahlwerte dem Sektorwinkel zu
 
-- Showing the proportional distribution of categorical data.
-- Emphasizing the relationship between parts and the whole.
-- Proportional analysis with a small number of categories (recommended not to exceed 6).
+`detail` : Detailkanal, unterstützt `mehrere Dimensionen`, um innerhalb derselben Farbserie feiner granulare Daten anzuzeigen
+
+`color`  : Farbkanal, unterstützt `mehrere Dimensionen` oder `eine Kennzahl`; Dimensionsfarben unterscheiden Datenreihen, Kennzahlfarben bilden Kennzahlwerte linear auf Grafikfarben ab
+
+`tooltip`: Tooltip-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen`, wird beim Hover über einen Datenpunkt angezeigt
+
+`label`  : Label-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen`, zeigt Datenlabels auf Datenpunkten an
+
+:::
+
+:::note{title=Beschreibung}
+Ein Kreisdiagramm eignet sich zur Darstellung von Anteilen einer eindimensionalen Datenverteilung; die Sektorfläche zeigt den Anteil jeder Kategorie
+
+Geeignete Szenarien:
+
+\- Darstellung der Anteilsverteilung kategorialer Daten
+
+\- Beziehung zwischen dem Ganzen und seinen Teilen hervorheben
+
+\- Anteilsanalyse bei wenigen Kategorien (empfohlen: höchstens 6)
 
 :::
 
 :::warning{title=Warning}
-Data requirements:
+Datenanforderungen:
 
-- At least 1 numeric field.
-- All dimensions are merged with measure names (when multiple measures exist) into a single dimension to serve as legend items.
-- All measures are automatically merged into one measure.
+\- mindestens 1 numerisches Feld
 
-Features enabled by default:
+\- Alle Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt
 
-- Legend, data labels, tooltips, and percentage calculations are enabled by default.
+\- Alle Kennzahlen werden automatisch zu einer Kennzahl zusammengeführt
+
+Standardmäßig aktivierte Funktionen:
+
+\- Legende, Datenlabels, Tooltips und Anteilsberechnung sind standardmäßig aktiviert
 
 :::
 
@@ -49,12 +55,16 @@ Features enabled by default:
 
 **Type:** `"pie"`
 
-:::note{title=Description}
-Pie Chart. Shows the proportional relationship of single-dimension data.
+:::note{title=Beschreibung}
+Kreisdiagramm
+
+
+
+Kreisdiagramm, stellt Anteilsbeziehungen eindimensionaler Daten dar
 
 :::
 
-**Example**
+**Beispiel**
 'pie'
 
 
@@ -64,12 +74,16 @@ Pie Chart. Shows the proportional relationship of single-dimension data.
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset. Compliant with TidyData specification and already aggregated, defines the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Pie Chart data is ultimately converted to 1 dimension and 1 measure.
+:::note{title=Beschreibung}
+Ein voraggregierter, TidyData-konformer Datensatz, der Datenquelle und Struktur des Diagramms definiert. Benutzer müssen Eingabedaten nicht manuell verarbeiten; die leistungsfähige Data-Reshape-Funktion von VSeed übernimmt dies automatisch. Daten des Flächendiagramms werden letztlich in 2 Dimensionen und 1 Kennzahl umgeformt.
+
+
+
+Ein bereits aggregierter Datensatz, der der TidyData-Spezifikation entspricht und Datenquelle sowie Struktur des Diagramms definiert. Der vom Benutzer eingegebene Datensatz muss nicht weiter verarbeitet werden. VSeed verfügt über leistungsfähige Data-Reshape-Funktionen und formt die Daten automatisch um. Die Daten des Funnel-Diagramms werden schließlich in 1 Dimension und 1 Kennzahl umgewandelt.
 
 :::
 
-**Example**
+**Beispiel**
 [{category:'A', value:30}, {category:'B', value:70}]
 
 
@@ -79,13 +93,17 @@ Dataset. Compliant with TidyData specification and already aggregated, defines t
 
 **Type:** `PieDimension[] | undefined`
 
-:::note{title=Description}
-Dimensions. All dimensions of the Pie Chart are merged with measure names (if multiple measures exist) into a single dimension, mapped to the angle channel, and served as legend items.
+:::note{title=Beschreibung}
+Die erste Dimension wird der X-Achse zugeordnet; die verbleibenden Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zusammengeführt und als Legendeneinträge angezeigt.
+
+
+
+Alle Dimensionen des Kreisdiagramms werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt, dem Winkel zugeordnet und als Legendeneinträge angezeigt
 
 :::
 
-**Example**
-[{id: 'category', alias: 'Category'}]
+**Beispiel**
+[{id: 'category', alias: 'Kategorie'}]
 
 
 
@@ -94,8 +112,8 @@ Dimensions. All dimensions of the Pie Chart are merged with measure names (if mu
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=Beschreibung}
+Feld-ID, die der Dimension entspricht
 
 :::
 
@@ -103,8 +121,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=Beschreibung}
+Dimensionsalias
 
 :::
 
@@ -112,8 +130,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=Beschreibung}
+Datumsformatkonfiguration der Dimension
 
 :::
 
@@ -122,8 +140,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=Beschreibung}
+Zeitgranularität; bestimmt die Genauigkeit der Datumsanzeige
 
 :::
 
@@ -131,20 +149,20 @@ Time granularity, determines the date display precision
 
 **Type:** `"color" | "detail" | "tooltip" | "label" | "row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped:
+:::note{title=Beschreibung}
+Kanal, dem die Dimension zugeordnet wird
 
-- color: supports mapping multiple dimensions to the color channel
+\- color: unterstützt die Zuordnung mehrerer Dimensionen zum Farbkanal
 
-- detail: supports mapping multiple dimensions to the detail channel
+\- detail: unterstützt die Zuordnung mehrerer Dimensionen zum Detailkanal
 
-- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: unterstützt das Zuordnen mehrerer Dimensionen zum Tooltip-Kanal
 
-- label: supports mapping multiple dimensions to the label channel
+\- label: unterstützt das Zuordnen mehrerer Dimensionen zum Beschriftungskanal
 
-- row: supports mapping multiple dimensions to the row channel
+\- row: unterstützt die Zuordnung mehrerer Dimensionen zum Zeilenkanal
 
-- column: supports mapping multiple dimensions to the column channel
+\- column: unterstützt die Zuordnung mehrerer Dimensionen zum Spaltenkanal
 
 :::
 
@@ -153,13 +171,17 @@ Channel to which the dimension is mapped:
 
 **Type:** `PieMeasure[] | undefined`
 
-:::note{title=Description}
-Measures. All measures in a Pie Chart are automatically merged into one measure and mapped to the sector radius. When multiple measures exist, measure names are merged with remaining dimensions to serve as legend items.
+:::note{title=Beschreibung}
+Kennzahlen
+
+
+
+Alle Kennzahlen des Kreisdiagramms werden automatisch zu einer Kennzahl zusammengeführt und der Radiusachse zugeordnet. Bei mehreren Kennzahlen werden die Kennzahlnamen mit den übrigen Dimensionen kombiniert und als Legendeneinträge angezeigt.
 
 :::
 
-**Example**
-[{id: 'value', alias: 'Value Share', format: 'percent'}]
+**Beispiel**
+[{id: 'value', alias: 'Wertanteil', format: 'percent'}]
 
 
 
@@ -168,8 +190,8 @@ Measures. All measures in a Pie Chart are automatically merged into one measure 
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=Beschreibung}
+Kennzahl-ID, muss eindeutig sein
 
 :::
 
@@ -177,8 +199,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=Beschreibung}
+Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht alias der id
 
 :::
 
@@ -186,20 +208,20 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority.
+:::note{title=Beschreibung}
+Automatische Zahlenformatierung, standardmäßig aktiviert, höchste Priorität
 
-When autoFormat=true, it overrides all numFormat configurations.
+Wenn autoFormat=true ist, werden alle numFormat-Konfigurationen überschrieben
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale.
+Wenn aktiviert, wählen Diagramm-Datenbeschriftungen und Tooltips automatisch die passende Formatierung anhand von Kennzahlwerten und Gebietsschema aus
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation.
+Formatierungsregeln: Dezimalzahlen mit aktivierter compact notation, mindestens 0 und höchstens 2 Dezimalstellen, automatische Rundung, umgesetzt mit Intl.NumberFormat des Browsers
 
-For example:
+Zum Beispiel:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-- locale=en-US: 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -207,10 +229,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips.
+:::note{title=Beschreibung}
+Benutzerdefinierte Zahlenformatierung für Kennzahlen; wird automatisch auf Beschriftungen und Tooltips angewendet
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this configuration.
+Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit gesetzt werden; andernfalls überschreibt autoFormat diese Konfiguration
 
 :::
 
@@ -219,8 +241,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
 
 :::
 
@@ -228,14 +250,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+Verhältnis der Zahlenformatierung, darf nicht 0 sein
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -243,14 +265,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+Symbol der Zahlenformatierung, z. B. %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -258,8 +280,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+Tausendertrennzeichen für die Zahlenformatierung
 
 :::
 
@@ -267,8 +289,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+Suffix der Zahlenformatierung
 
 :::
 
@@ -276,8 +298,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+Präfix der Zahlenformatierung
 
 :::
 
@@ -285,18 +307,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Beschreibung}
+Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und maximumFractionDigits von Intl.NumberFormat im Browser; niedrigere Priorität als significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -304,20 +326,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Beschreibung}
+Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDigits und maximumSignificantDigits von Intl.NumberFormat im Browser; höhere Priorität als fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -325,14 +347,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Beschreibung}
+Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingPriority
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -340,8 +362,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Beschreibung}
+Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingMode
 
 :::
 
@@ -354,8 +376,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
 
 :::
 
@@ -363,14 +385,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+Verhältnis der Zahlenformatierung, darf nicht 0 sein
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -378,14 +400,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+Symbol der Zahlenformatierung, z. B. %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -393,8 +415,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+Tausendertrennzeichen für die Zahlenformatierung
 
 :::
 
@@ -402,8 +424,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+Suffix der Zahlenformatierung
 
 :::
 
@@ -411,8 +433,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+Präfix der Zahlenformatierung
 
 :::
 
@@ -420,18 +442,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Beschreibung}
+Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und maximumFractionDigits von Intl.NumberFormat im Browser; niedrigere Priorität als significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -439,20 +461,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Beschreibung}
+Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDigits und maximumSignificantDigits von Intl.NumberFormat im Browser; höhere Priorität als fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -460,14 +482,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Beschreibung}
+Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingPriority
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -475,8 +497,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Beschreibung}
+Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingMode
 
 :::
 
@@ -484,16 +506,16 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"color" | "tooltip" | "label" | "angle" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped:
+:::note{title=Beschreibung}
+Kanal, dem die Kennzahl zugeordnet wird
 
-- angle: measure mapped to the angle channel
+\- angle: Winkel, dem die Kennzahl zugeordnet wird
 
-- color: measure mapped to the color channel
+\- color: Kennzahl wird dem Farbkanal zugeordnet
 
-- label: measure mapped to the label channel
+\- label: Kennzahl, die dem Beschriftungskanal zugeordnet wird
 
-- tooltip: measure mapped to the tooltip channel
+\- tooltip: Kennzahl, die dem Tooltip-Kanal zugeordnet wird
 
 :::
 
@@ -501,13 +523,13 @@ Channel to which the measure is mapped:
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In a flat measure configuration, builds a tree-like measure structure. parentId points to the ID of the parent measure group, used for building the hierarchy.
+:::note{title=Beschreibung}
+In flacher Kennzahlkonfiguration wird eine baumförmige Kennzahlgruppe aufgebaut. parentId verweist auf die id der übergeordneten Kennzahlgruppe und dient zum Aufbau des Kennzahlbaums
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is providing a flat measure list with parentId. These two methods cannot be used simultaneously.
+Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfiguriert den Kennzahlbaum direkt mit children; Option 2 konfiguriert eine flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
 
 :::
 
@@ -516,8 +538,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration. Specifies the field name for pagination, which must be a dimension.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -526,8 +548,8 @@ Pagination configuration. Specifies the field name for pagination, which must be
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -535,13 +557,13 @@ Pagination field; specifies the field name for pagination, must be a dimension.
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-'2023-01-01'
+**Beispiel**
+'2023\-01\-01'
 
 
 
@@ -550,8 +572,12 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color. Default is transparent. Can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)').
+:::note{title=Beschreibung}
+
+
+
+
+
 
 :::
 
@@ -560,8 +586,12 @@ Chart background color. Default is transparent. Can be a color string (e.g. 'red
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
+:::note{title=Beschreibung}
+Farbe
+
+
+
+
 
 :::
 
@@ -570,12 +600,12 @@ Color configuration for defining the chart's color scheme, including color lists
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -584,12 +614,12 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -598,12 +628,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Color mapping used to map data values to specific colors.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 {
  'profit': 'red',
  'sales': 'blue',
@@ -615,8 +645,8 @@ Color mapping used to map data values to specific colors.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -624,8 +654,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -634,8 +664,12 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `PieLabel | undefined`
 
-:::note{title=Description}
-Label configuration for defining chart data labels, including their position, format, and style.
+:::note{title=Beschreibung}
+Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Position, Format und Stil.
+
+
+
+
 
 :::
 
@@ -644,8 +678,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -653,8 +687,8 @@ Whether label functionality is enabled.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -662,12 +696,12 @@ Whether labels wrap to the next line.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values.
+:::note{title=Beschreibung}
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+
+
+
 
 :::
 
@@ -675,12 +709,12 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure value percentages.
+:::note{title=Beschreibung}
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+
+
+
 
 :::
 
@@ -688,12 +722,12 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension names.
+:::note{title=Beschreibung}
 
-Displays all dimension labels.
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+
+
+
 
 :::
 
@@ -701,8 +735,8 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted. When autoFormat is true, numFormat configuration is ignored.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -710,8 +744,8 @@ Whether label values are automatically formatted. When autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -720,8 +754,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -729,14 +763,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
+
 
 
 
@@ -744,14 +778,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
+
 
 
 
@@ -759,8 +793,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -768,8 +802,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -777,8 +811,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -786,18 +820,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
+
 
 
 
@@ -805,20 +839,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
+
 
 
 
@@ -826,14 +860,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
+
 
 
 
@@ -841,8 +875,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -850,8 +884,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -859,8 +893,8 @@ Label font size.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -868,8 +902,8 @@ Label font weight.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label background color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -877,8 +911,8 @@ Label background color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label stroke (outline) color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -886,8 +920,8 @@ Label stroke (outline) color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label font color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -895,8 +929,8 @@ Label font color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically invert the label font color based on the sector color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -904,8 +938,8 @@ Whether to automatically invert the label font color based on the sector color.
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-Label position.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -913,8 +947,8 @@ Label position.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label overlap avoidance function is enabled.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -922,8 +956,8 @@ Whether the label overlap avoidance function is enabled.
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filtering; the default condition relationship between selectors is OR.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -932,8 +966,8 @@ Label filtering; the default condition relationship between selectors is OR.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -941,12 +975,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Beschreibung}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+
+
+
 
 :::
 
@@ -954,14 +988,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Beschreibung}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
 
-Same as operator.
+
+
+
+
 
 :::
 
@@ -969,8 +1003,8 @@ Same as operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selective dimension values; supports arrays.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -978,26 +1012,38 @@ Selective dimension values; supports arrays.
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution).
+:::note{title=Beschreibung}
 
-Implement complex data filtering logic via AI-generated JavaScript code.
 
-Key capabilities:
 
-- Supports any complex data filtering conditions.
 
-- Uses built-in utility functions for data operations.
 
-- Executes safely in the browser environment (Web Worker sandbox).
 
-Requirements: Supports only browser environments; Node.js environments will use the fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Configuration for the chart dynamic filter.
 
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -1010,15 +1056,15 @@ Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-"Highlight sectors with shares greater than 30%."
+**Beispiel**
+"Balken mit Umsatz über 1000 hervorheben"
 
-"Highlight the category with the highest value in each region."
+"Balken mit der höchsten Gewinnmarge je Region hervorheben"
 
 
 
@@ -1026,23 +1072,25 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code.
+:::note{title=Beschreibung}
 
-- Can only use built-in utility functions (access via _ or R).
 
-- Input parameter: data (array); each item includes a __row_index field representing the row number.
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>.
 
-- __row_index represents the row number of the original data item, and field represents the field to be highlighted.
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests.
+
+
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight 'sales' field for data items where sales > 1000:
+**Beispiel**
+return _.map(filtered, item => ({
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1051,7 +1099,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region:
+const maxItems = _.map(grouped, group =>
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1065,7 +1113,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items meeting multiple filtering conditions:
+const profitRate = item.profit / item.sales;
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1085,8 +1133,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1095,8 +1143,8 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1104,12 +1152,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Beschreibung}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+
+
+
 
 :::
 
@@ -1117,14 +1165,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Beschreibung}
 
-- in: Select data items where the dimension field value is in the 'value' list.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
 
-Same as operator.
+
+
+
+
 
 :::
 
@@ -1132,8 +1180,8 @@ Same as operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selective dimension values; supports arrays.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1141,8 +1189,12 @@ Selective dimension values; supports arrays.
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field). Written during the prepare() phase; read-only at runtime.
+:::note{title=Beschreibung}
+
+
+
+
+
 
 :::
 
@@ -1163,14 +1215,14 @@ Dynamic filter execution result (runtime field). Written during the prepare() ph
 
 **Type:** `"arc" | "labelLine" | "edge" | undefined`
 
-:::note{title=Description}
-Label layout mode. Only effective for Pie Chart and Donut Chart when `labelPosition` is `outside`.
+:::note{title=Beschreibung}
+Layoutmodus der Beschriftungen; gilt nur für Kreis- und Donut-Diagramme und nur wenn `labelPosition` auf `outside` gesetzt ist
 
-- arc: Layout labels along the arc.
+\- arc: Beschriftungen entlang des Bogens anordnen
 
-- labelLine: Aligns labels at both ends, connecting sector graphics with labels via leader lines.
+\- labelLine: Beschriftungen beidseitig ausrichten und Sektor-Markierung sowie Beschriftung über Führungslinien verbinden
 
-- edge: Aligns labels at both ends, connecting sector graphics with labels via leader lines, positioned close to the edges of the chart.
+\- edge: Beschriftungen beidseitig ausrichten, Sektor-Markierung und Beschriftung über Führungslinien verbinden und nahe an die beiden Diagrammränder setzen
 
 :::
 
@@ -1179,8 +1231,12 @@ Label layout mode. Only effective for Pie Chart and Donut Chart when `labelPosit
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Beschreibung}
+
+
+
+
+
 
 :::
 
@@ -1189,12 +1245,12 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether legend functionality is enabled.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 enable: true
 
 
@@ -1203,18 +1259,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the legend border is enabled.
+:::note{title=Beschreibung}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+
 
 :::
 
-**Example**
-border: true
+**Beispiel**
+
 
 
 
@@ -1222,8 +1278,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1231,8 +1287,8 @@ Legend font color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pagination icon color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1240,8 +1296,8 @@ Pagination icon color.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pagination icon disabled color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1249,13 +1305,13 @@ Pagination icon disabled color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-labelFontSize: 10
+**Beispiel**
+
 
 
 
@@ -1263,8 +1319,8 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1272,13 +1328,13 @@ Legend font color.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-labelFontWeight: 400
+**Beispiel**
+
 
 
 
@@ -1286,18 +1342,18 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Legend shape.
+:::note{title=Beschreibung}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+
 
 :::
 
-**Example**
-shapeType: 'circle'
+**Beispiel**
+
 
 
 
@@ -1305,13 +1361,13 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-Legend position.
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-position: 'rightTop'
+**Beispiel**
+
 
 
 
@@ -1319,21 +1375,22 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum number of columns or rows for the legend when many items exist.
+:::note{title=Beschreibung}
 
-If position is horizontal (bottom, top, etc.), maxSize controls the number of columns.
-If position is vertical (left, right, etc.), maxSize controls the number of rows.
+
+
+
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends.
+
 
 :::
 
-**Example**
-maxSize: 2
+**Beispiel**
+
 
 
 
@@ -1342,8 +1399,12 @@ maxSize: 2
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-Tooltip configuration, used to define the chart's tooltips, including position, format, and style.
+:::note{title=Beschreibung}
+
+
+
+
+Ob die Brush-Auswahl aktiviert wird
 
 :::
 
@@ -1352,8 +1413,8 @@ Tooltip configuration, used to define the chart's tooltips, including position, 
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether tooltip functionality is enabled.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1362,8 +1423,16 @@ Whether tooltip functionality is enabled.
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Brush configuration, used to enable/disable region selection capabilities.
+:::note{title=Beschreibung}
+
+
+
+
+
+
+
+
+Brush-Auswahlmodus: einzeln oder mehrfach
 
 :::
 
@@ -1372,8 +1441,8 @@ Brush configuration, used to enable/disable region selection capabilities.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether region selection is enabled.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1381,16 +1450,20 @@ Whether region selection is enabled.
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-Brush type. Defines the selection box shape and direction:
+:::note{title=Beschreibung}
+**Type:** `XLinearAxis | undefined`
 
-- `rect`: Rectangular selection, allows selecting in both X and Y directions.
 
-- `polygon`: Polygon selection, allows drawing arbitrary shapes by clicking multiple points.
 
-- `x`: Horizontal selection, restricts selection to the X-axis direction.
+**Type:** `boolean | undefined`
 
-- `y`: Vertical selection, restricts selection to the Y-axis direction.
+
+
+
+
+
+
+
 
 :::
 
@@ -1398,12 +1471,16 @@ Brush type. Defines the selection box shape and direction:
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-Selection mode, single or multiple. Defines the selection logic:
+:::note{title=Beschreibung}
+Deckkraft of selected data points, range 0-1
 
-- `single`: Single selection mode, only one selection box can exist at a time.
 
-- `multiple`: Multiple selection mode, multiple selection boxes can exist simultaneously.
+
+**Type:** `number | boolean | undefined`
+
+**Type:** `string | undefined`
+
+
 
 :::
 
@@ -1411,8 +1488,8 @@ Selection mode, single or multiple. Defines the selection logic:
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear selection boxes after region selection ends.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1420,8 +1497,12 @@ Whether to clear selection boxes after region selection ends.
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data within the selected region.
+:::note{title=Beschreibung}
+
+
+
+
+
 
 :::
 
@@ -1430,8 +1511,12 @@ Style for data within the selected region.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity for selected data points, range 0-1.
+:::note{title=Beschreibung}
+
+
+
+
+
 
 :::
 
@@ -1439,8 +1524,8 @@ Opacity for selected data points, range 0-1.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1448,8 +1533,8 @@ Stroke color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1457,8 +1542,12 @@ Stroke width.
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data outside the selected region.
+:::note{title=Beschreibung}
+X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagramms einschliesslich Position, Format, Stil usw.
+
+
+
+
 
 :::
 
@@ -1467,8 +1556,12 @@ Style for data outside the selected region.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity for data points outside the selection, range 0-1.
+:::note{title=Beschreibung}
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+
+
+
+
 
 :::
 
@@ -1476,8 +1569,8 @@ Opacity for data points outside the selection, range 0-1.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1485,8 +1578,263 @@ Stroke color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width.
+:::note{title=Beschreibung}
+**Type:** `boolean | undefined`
+
+:::
+
+
+## animation
+
+**Type:** `PieLikeAnimation | undefined`
+
+:::note{title=Beschreibung}
+Auto-Hide-Intervall fur Achsenbeschriftungen; wenn der Abstand zwischen zwei Textbeschriftungen kleiner als autoHideGap ist, wird die uberlappende Beschriftung automatisch ausgeblendet. Nur fur Kategorieachsen wirksam.
+
+
+
+Wenn autoHide deaktiviert ist, wird Sampling verwendet, konfiguriert uber minGap
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+Ob Animationen für Kreis-/Donut-/Rose-Diagramme aktiviert werden
+
+:::
+
+### params
+
+**Type:** `PieLikeAnimationParams | undefined`
+
+:::note{title=Beschreibung}
+Animationsparameter für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+
+#### appear
+
+**Type:** `PieLikeAppearAnimation | undefined`
+
+:::note{title=Beschreibung}
+Konfiguration der Eingangsanimation für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+
+##### effects
+
+**Type:** `("radial" | "scale")[] | undefined`
+
+:::note{title=Beschreibung}
+Eingangseffekte für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale und Skalierungsanimationen
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+**Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+#### update
+
+**Type:** `PieLikeUpdateAnimation | undefined`
+
+:::note{title=Beschreibung}
+Konfiguration der Aktualisierungsanimation für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+
+##### effects
+
+**Type:** `"radial"[] | undefined`
+
+:::note{title=Beschreibung}
+Aktualisierungseffekt für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale Animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+**Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+#### loop
+
+**Type:** `PieLikeAnimationLoop | undefined`
+
+:::note{title=Beschreibung}
+Konfiguration der Schleifenanimation für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+##### loop
+
+**Type:** `PieLikeLoopAnimation | undefined`
+
+:::note{title=Beschreibung}
+Konfiguration der Schleifenanimation für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+
+###### effects
+
+**Type:** `PieLikeLoopEffect[] | undefined`
+
+:::note{title=Beschreibung}
+Schleifeneffekt für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+##### atmosphere
+
+**Type:** `NoEffectAtmosphereConfig | undefined`
+
+:::note{title=Beschreibung}
+Konfiguration der Atmosphäre-Animation für Kreis-/Donut-/Rose-Diagramme
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1495,14 +1843,24 @@ Stroke width.
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Themes are lower-priority configurations containing general settings shared across all chart types and specific settings shared within a chart category.
+:::note{title=Beschreibung}
 
-Light and dark themes are built-in; users can define custom themes via the Builder.
+
+
+
+Datenselektor. Wenn konfiguriert, bietet er Matching-Funktionen für numerische Werte, partielle Datenelemente, Dimensionen oder Kennzahlen. Wenn nicht gesetzt, gelten Stile global.
+
+
+
+const maxItems = _.map(grouped, group =>
+
+
+
+_.map(maxItems, item => [
 
 :::
 
-**Example**
+**Beispiel**
 'dark'
 
 'light'
@@ -1525,7 +1883,12 @@ Light and dark themes are built-in; users can define custom themes via the Build
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call intl.setLocale('zh-CN') to set the language.
+:::note{title=Beschreibung}
+Sprache
+
+
+
+Sprachkonfiguration des Diagramms; unterstützt die beiden Sprachen 'zh\-CN' und 'en\-US'. Zusätzlich kann die Sprache über intl.setLocale('zh\-CN') gesetzt werden
 
 :::
+

@@ -1,8 +1,8 @@
 # Sort
 
-## Legend Internal Sort
+## 범례 자체 정렬
 
-Legend Internal Sort
+범례 자체 정렬
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -45,21 +45,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     }
   ],
   "sortLegend": {
@@ -71,83 +71,9 @@ export default () => {
 }
 ```
 
-## Measure Sort
+## 지표 정렬
 
-Measure Sort
-
-```tsx preview
-import { VSeedRender } from '@components'
-
-export default () => {
-  const vseedConfig = {
-  "chartType": "line",
-  "dataset": [
-    {
-      "date": "2019",
-      "profit": 10,
-      "sales": 20,
-      "count": 15
-    },
-    {
-      "date": "2020",
-      "profit": 30,
-      "sales": 60,
-      "count": 33
-    },
-    {
-      "date": "2021",
-      "profit": 30,
-      "sales": 60,
-      "count": 22
-    },
-    {
-      "date": "2022",
-      "profit": 50,
-      "sales": 100,
-      "count": 14
-    },
-    {
-      "date": "2023",
-      "profit": 40,
-      "sales": 80,
-      "count": 30
-    }
-  ],
-  "dimensions": [
-    {
-      "id": "date",
-      "alias": "Date"
-    }
-  ],
-  "measures": [
-    {
-      "id": "count",
-      "alias": "Quantity"
-    },
-    {
-      "id": "sales",
-      "alias": "Sales",
-      "parentId": "group"
-    },
-    {
-      "id": "profit",
-      "alias": "Profit",
-      "parentId": "group"
-    }
-  ],
-  "sortLegend": {
-    "order": "desc",
-    "orderBy": "sales"
-  }
-}
-
-  return <VSeedRender vseed={vseedConfig} />
-}
-```
-
-## Measuressort
-
-Measuressort
+지표 정렬
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -190,22 +116,96 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "parentId": "group"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "이익",
+      "parentId": "group"
+    }
+  ],
+  "sortLegend": {
+    "order": "desc",
+    "orderBy": "sales"
+  }
+}
+
+  return <VSeedRender vseed={vseedConfig} />
+}
+```
+
+## 지표 정렬
+
+지표 정렬
+
+```tsx preview
+import { VSeedRender } from '@components'
+
+export default () => {
+  const vseedConfig = {
+  "chartType": "line",
+  "dataset": [
+    {
+      "date": "2019",
+      "profit": 10,
+      "sales": 20,
+      "count": 15
+    },
+    {
+      "date": "2020",
+      "profit": 30,
+      "sales": 60,
+      "count": 33
+    },
+    {
+      "date": "2021",
+      "profit": 30,
+      "sales": 60,
+      "count": 22
+    },
+    {
+      "date": "2022",
+      "profit": 50,
+      "sales": 100,
+      "count": 14
+    },
+    {
+      "date": "2023",
+      "profit": 40,
+      "sales": 80,
+      "count": 30
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "date",
+      "alias": "날짜"
+    }
+  ],
+  "measures": [
+    {
+      "id": "count",
+      "alias": "수량"
+    },
+    {
+      "id": "sales",
+      "alias": "매출",
+      "parentId": "group"
+    },
+    {
+      "id": "profit",
+      "alias": "이익",
       "parentId": "group"
     }
   ],
@@ -219,9 +219,9 @@ export default () => {
 }
 ```
 
-## Dimension Sort
+## 차원 정렬
 
-Dimension Sort
+차원 정렬
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -264,21 +264,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ],
   "sortLegend": {
@@ -291,9 +291,9 @@ export default () => {
 }
 ```
 
-## Dimensionssort
+## 차원 정렬
 
-Dimensionssort
+차원 정렬
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -336,21 +336,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ],
   "sort": {
@@ -363,9 +363,9 @@ export default () => {
 }
 ```
 
-## Custom Sort
+## 사용자 지정 정렬
 
-Custom Sort
+사용자 지정 정렬
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -408,21 +408,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ],
   "sort": {
@@ -440,9 +440,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend ID)
+## 사용자 지정 정렬(범례 ID)
 
-Custom Sort (Legend ID)
+사용자 지정 정렬(범례 ID)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -485,28 +485,28 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Quantity-count",
-      "Sales-sales",
-      "Profit-profit"
+      "수량-count",
+      "매출-sales",
+      "이익-profit"
     ]
   }
 }
@@ -515,9 +515,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend Name)
+## 사용자 지정 정렬(범례 이름)
 
-Custom Sort (Legend Name)
+사용자 지정 정렬(범례 이름)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -560,28 +560,28 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Sales",
-      "Quantity",
-      "Profit"
+      "매출",
+      "수량",
+      "이익"
     ]
   }
 }

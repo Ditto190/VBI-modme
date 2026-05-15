@@ -1,76 +1,76 @@
-# Data Reshaping — Principles
+# Remodelage des données - Principes
 
-:::info Data Reshaping
-VSeed proposes a universal dimension reshaping method to further lower the barrier to data visualization.
+:::info Remodelage des données
+VSeed propose une méthode universelle de remodelage des dimensions afin d'abaisser davantage le seuil d'accès à la visualisation des données.
 :::
 
-Data reshaping refers to the process of converting data from one structured form to another. The core is changing the organization of data (rows, columns, indices, hierarchies) to suit different analysis or processing needs while maintaining data integrity.
+Le remodelage des données consiste à convertir les données d'une forme structurée vers une autre. L'essentiel est de modifier l'organisation des données, comme les lignes, colonnes, index et hiérarchies, afin de répondre à différents besoins d'analyse ou de traitement tout en conservant l'intégrité des données.
 
-## Dimension Reshaping
+## Remodelage des dimensions
 
-Python and R languages already have tools that support dimension reshaping:
-1. Python Pandas provides `pivot` and `melt` for data reshaping
-2. R tidyverse provides `pivot_longer` and `pivot_wider` for data reshaping
+Python et R disposent déjà d'outils prenant en charge le remodelage des dimensions :
+1. Python Pandas fournit `pivot` et `melt` pour le remodelage des données
+2. R tidyverse fournit `pivot_longer` et `pivot_wider` pour le remodelage des données
 
-## Dimension Increase (Upsampling) and Reduction
+## Augmentation et réduction des dimensions
 
-Dimension increase and reduction philosophically align with category theory (objects and morphisms, isomorphisms), but are not strictly implemented following category theory.
+L'augmentation et la réduction des dimensions rejoignent, dans l'esprit, la théorie des catégories (objets, morphismes et isomorphismes), mais leur implémentation ne suit pas strictement cette théorie.
 
-Special notes:
-1. During dimension increase, "measure name" and "measure value" information is created "out of nothing"
-2. During dimension reduction, "measure name" and "measure value" information that exists in the data is "removed"
+Points importants :
+1. Lors de l'augmentation de dimension, les informations « nom de mesure » et « valeur de mesure » inexistantes sont créées « à partir de rien »
+2. Lors de la réduction de dimension, les informations « nom de mesure » et « valeur de mesure » présentes dans les données sont « supprimées »
 
-Dimension increase can completely transform data, but dimension column names may have null values, so filling in additional information is supported.
-Dimension reduction loses information content, so additional transformation information needs to be saved to achieve true isomorphic transformation — otherwise information will inevitably be lost.
+L'augmentation de dimension peut transformer complètement les données, mais les noms de colonnes de dimension peuvent contenir des valeurs nulles ; le remplissage d'informations supplémentaires est donc pris en charge.
+La réduction de dimension perd du contenu informationnel. Il faut donc conserver des informations de transformation supplémentaires pour atteindre une véritable transformation isomorphe ; sinon, des informations seront forcément perdues.
 
 ![commonDataReshape](/images/commonDataReshape.png)
 
-## Grouped Dimension Increase and Reduction
+## Augmentation et réduction des dimensions groupées
 
-Similar to ordinary increase and reduction, with similar information addition or loss scenarios. Additionally, the introduction of grouping creates more empty data.
+Comme pour l'augmentation et la réduction ordinaires, il existe des scénarios similaires d'ajout ou de perte d'information. De plus, l'introduction du groupement génère davantage de données vides.
 
-Significance:
-1. **Measure grouping**: Easily handles detail data through grouped dimension increase
-2. **Multi-group queries**: Multiple SQL queries can easily fetch multiple sets of detail data, and they can be merged into one dataset via grouped dimension reduction
+Rôle :
+1. **Groupement des mesures** : permet de traiter facilement les données de détail via l'augmentation de dimension groupée
+2. **Requêtes multi-groupes** : plusieurs SQL peuvent facilement obtenir plusieurs jeux de données de détail, puis les fusionner en un seul jeu via la réduction de dimension groupée
 
 ![groupedDataReshape](/images/groupedDataReshape.png)
 
-## Rule Derivation
+## Dérivation des règles
 
-### Dimension Increase
+### Augmentation de dimension
 
 ![rule](/images/ruleDataReshape.png)
 
 ![commonDataReshape2](/images/commonDataReshape2.png)
 
 :::tip
-1. Multiple measures — dimension increase turns measure count to 1. 1 measure after dimension increase is still 1.
-2. Multiple dimensions — dimension increase adds one more dimension. Even 0 dimensions becomes 1.
-3. 0 dimensions, 1 measure — can repeatedly apply dimension increase to get any number of dimensions and 1 measure (so 1 measure can also render a bar chart)
+1. Pour plusieurs mesures, l'augmentation de dimension ramène le nombre de mesures à 1. Une mesure reste aussi 1 après augmentation.
+2. Pour plusieurs dimensions, l'augmentation de dimension ajoute une dimension. Même 0 dimension devient 1.
+3. Avec 0 dimension et 1 mesure, on peut appliquer l'augmentation de dimension à répétition pour obtenir n'importe quel nombre de dimensions et 1 mesure, ce qui permet aussi de tracer un histogramme avec une seule mesure.
 :::
 
-### Dimension Reduction
+### Réduction de dimension
 
 ![rule](/images/ruleDataReshape2.png)
 
 ![groupedDataReshape2](/images/groupedDataReshape2.png)
 
 :::tip
-1. Multiple measures — dimension reduction: measure values and measures form a Cartesian product, creating new measures
-2. Multiple dimensions — dimension reduction: multiple dimension values form a Cartesian product, creating new dimensions
+1. Pour plusieurs mesures, la réduction de dimension fait former un produit cartésien entre les valeurs de dimension et les mesures, créant de nouvelles mesures
+2. Pour plusieurs dimensions, la réduction de dimension fait former un produit cartésien entre plusieurs valeurs de dimension, créant de nouvelles dimensions
 :::
 
-## Examples
+## Exemples
 
-#### 0 Dimensions, 1 Measure
+#### 0 dimension, 1 mesure
 ![0d1m](/images/0d1m.png)
-#### 0 Dimensions, 3 Measures
+#### 0 dimension, 3 mesures
 ![0d3m](/images/0d3m.png)
-#### 1 Dimension, 1 Measure
+#### 1 dimension, 1 mesure
 ![1d1m](/images/1d1m.png)
-#### 1 Dimension, 2 Measures
+#### 1 dimension, 2 mesures
 ![1d2m](/images/1d2m.png)
-#### 2 Dimensions, 1 Measure
+#### 2 dimensions, 1 mesure
 ![2d1m](/images/2d1m.png)
-#### 2 Dimensions, 2 Measures
+#### 2 dimensions, 2 mesures
 ![2d2m](/images/2d2m.png)

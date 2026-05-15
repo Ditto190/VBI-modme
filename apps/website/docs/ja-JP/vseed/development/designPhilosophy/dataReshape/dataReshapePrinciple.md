@@ -1,76 +1,76 @@
-# Data Reshaping — Principles
+# データリシェイプ - 原理
 
-:::info Data Reshaping
-VSeed proposes a universal dimension reshaping method to further lower the barrier to data visualization.
+:::info データリシェイプ
+VSeed は、データ可視化のハードルをさらに下げるために、汎用的なディメンションリシェイプ方法を提案します。
 :::
 
-Data reshaping refers to the process of converting data from one structured form to another. The core is changing the organization of data (rows, columns, indices, hierarchies) to suit different analysis or processing needs while maintaining data integrity.
+データリシェイプとは、データをある構造化形式から別の構造化形式へ変換するプロセスです。核心は、データの完全性を保ちながら、行、列、インデックス、階層などのデータの組織方法を変え、異なる分析や処理ニーズに適応させることです。
 
-## Dimension Reshaping
+## ディメンションリシェイプ
 
-Python and R languages already have tools that support dimension reshaping:
-1. Python Pandas provides `pivot` and `melt` for data reshaping
-2. R tidyverse provides `pivot_longer` and `pivot_wider` for data reshaping
+Python と R には、すでにディメンションリシェイプをサポートするツールがあります。
+1. Python Pandas は `pivot` と `melt` によるデータリシェイプを提供します
+2. R tidyverse は `pivot_longer` と `pivot_wider` によるデータリシェイプを提供します
 
-## Dimension Increase (Upsampling) and Reduction
+## 昇次元と降次元
 
-Dimension increase and reduction philosophically align with category theory (objects and morphisms, isomorphisms), but are not strictly implemented following category theory.
+昇次元と降次元は精神的には圏論の考え方（対象と射、同型）に沿っていますが、実装上は厳密に圏論に従っているわけではありません。
 
-Special notes:
-1. During dimension increase, "measure name" and "measure value" information is created "out of nothing"
-2. During dimension reduction, "measure name" and "measure value" information that exists in the data is "removed"
+特に強調すべき点:
+1. 昇次元では、存在しない「指標名」と「指標値」の情報を「無から」作成します
+2. 降次元では、データ内に存在する「指標名」と「指標値」の情報を「削除」します
 
-Dimension increase can completely transform data, but dimension column names may have null values, so filling in additional information is supported.
-Dimension reduction loses information content, so additional transformation information needs to be saved to achieve true isomorphic transformation — otherwise information will inevitably be lost.
+昇次元はデータを完全に変換できますが、ディメンション列名に空値が出ることがあるため、追加情報による補完をサポートします。
+降次元は情報内容を失うため、真の意味での同型変換を実現するには追加の変換情報を保存する必要があります。そうしなければ、情報は必ず失われます。
 
 ![commonDataReshape](/images/commonDataReshape.png)
 
-## Grouped Dimension Increase and Reduction
+## グループ化された昇次元と降次元
 
-Similar to ordinary increase and reduction, with similar information addition or loss scenarios. Additionally, the introduction of grouping creates more empty data.
+通常の昇次元と降次元と同様に、情報追加または情報損失の場面があります。さらに、グループの導入により、より多くの空データが発生します。
 
-Significance:
-1. **Measure grouping**: Easily handles detail data through grouped dimension increase
-2. **Multi-group queries**: Multiple SQL queries can easily fetch multiple sets of detail data, and they can be merged into one dataset via grouped dimension reduction
+作用と意味:
+1. **指標グループ化**: グループ化された昇次元により、明細データをすばやく処理できます
+2. **複数グループクエリ**: 複数の SQL によって複数の明細データを簡単に取得し、グループ化された降次元によって 1 つのデータに結合できます
 
 ![groupedDataReshape](/images/groupedDataReshape.png)
 
-## Rule Derivation
+## 規則の導出
 
-### Dimension Increase
+### 昇次元
 
 ![rule](/images/ruleDataReshape.png)
 
 ![commonDataReshape2](/images/commonDataReshape2.png)
 
 :::tip
-1. Multiple measures — dimension increase turns measure count to 1. 1 measure after dimension increase is still 1.
-2. Multiple dimensions — dimension increase adds one more dimension. Even 0 dimensions becomes 1.
-3. 0 dimensions, 1 measure — can repeatedly apply dimension increase to get any number of dimensions and 1 measure (so 1 measure can also render a bar chart)
+1. 複数指標の昇次元では、指標数が 1 になります。1 個の指標を昇次元しても、指標はやはり 1 個です。
+2. 複数ディメンションの昇次元では、ディメンションが 1 つ増えます。0 個のディメンションでも 1 つ増えます。
+3. 0 個のディメンションと 1 個の指標は、繰り返し昇次元することで任意個のディメンションと 1 個の指標を得られます（つまり、1 個の指標でも棒グラフを描けます）
 :::
 
-### Dimension Reduction
+### 降次元
 
 ![rule](/images/ruleDataReshape2.png)
 
 ![groupedDataReshape2](/images/groupedDataReshape2.png)
 
 :::tip
-1. Multiple measures — dimension reduction: measure values and measures form a Cartesian product, creating new measures
-2. Multiple dimensions — dimension reduction: multiple dimension values form a Cartesian product, creating new dimensions
+1. 複数指標の降次元では、ディメンション値と指標がデカルト積を形成し、新しい指標になります
+2. 複数ディメンションの降次元では、複数のディメンション値がデカルト積を形成し、新しいディメンションになります
 :::
 
-## Examples
+## 例
 
-#### 0 Dimensions, 1 Measure
+#### 0 個のディメンション、1 個の指標
 ![0d1m](/images/0d1m.png)
-#### 0 Dimensions, 3 Measures
+#### 0 個のディメンション、3 個の指標
 ![0d3m](/images/0d3m.png)
-#### 1 Dimension, 1 Measure
+#### 1 個のディメンション、1 個の指標
 ![1d1m](/images/1d1m.png)
-#### 1 Dimension, 2 Measures
+#### 1 個のディメンション、2 個の指標
 ![1d2m](/images/1d2m.png)
-#### 2 Dimensions, 1 Measure
+#### 2 個のディメンション、1 個の指標
 ![2d1m](/images/2d1m.png)
-#### 2 Dimensions, 2 Measures
+#### 2 個のディメンション、2 個の指標
 ![2d2m](/images/2d2m.png)

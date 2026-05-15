@@ -1,70 +1,70 @@
-# Common Scripts
+# Skrip Umum
 
-To maintain Monorepo consistency, **all scripts must be run from the project root directory**.
+Untuk menjaga konsistensi monorepo, **semua skrip harus dijalankan dari direktori root proyek**.
 
-## Core Script (g)
+## Skrip Inti (g)
 
-`g` (Generator) is the most critical helper script in VSeed development.
+`g` (Generator) adalah skrip bantu paling penting dalam pengembangan VSeed.
 
 ```bash
 pnpm run g
 ```
 
-**Description**:
-This command is a combination of `build:test`, `build:docs`, and `build:api`, used to keep development environment resources in sync:
-1. **Generate test cases**: Parses JSON Specs under `tests/integrations` and generates corresponding `.test.ts` files.
-2. **Generate documentation**: Parses TypeScript type definitions and updates API documentation in `apps/website`.
+**Deskripsi**:
+Perintah ini merupakan gabungan `build:test`, `build:docs`, dan `build:api`, yang digunakan untuk menjaga sumber daya lingkungan pengembangan tetap sinkron:
+1. **Menghasilkan kasus uji**: Mem-parsing JSON Spec di bawah `tests/integrations` dan menghasilkan file `.test.ts` yang sesuai.
+2. **Menghasilkan dokumentasi**: Mem-parsing definisi tipe TypeScript dan memperbarui dokumentasi API di `apps/website`.
 
-**When to use**:
-- After modifying chart logic or adding a new chart type.
-- After modifying TypeScript type definitions.
-- Before committing code.
+**Kapan digunakan**:
+- Setelah mengubah logika chart atau menambahkan jenis chart baru.
+- Setelah mengubah definisi tipe TypeScript.
+- Sebelum melakukan commit kode.
 
-## Development & Build
+## Pengembangan & Build
 
-### Start Development Environment
-Start VSeed watch mode and the documentation site simultaneously.
+### Memulai Lingkungan Pengembangan
+Menjalankan mode watch VSeed dan situs dokumentasi secara bersamaan.
 ```bash
 pnpm run dev
 ```
 
-### Build the Project
-Build the VSeed core library.
+### Membangun Proyek
+Membangun library inti VSeed.
 ```bash
 pnpm --filter=@visactor/vseed run build
 ```
 
-## Testing
+## Pengujian
 
-### Run All Tests
+### Jalankan Semua Tes
 ```bash
 pnpm --filter=@visactor/vseed run test
 ```
 
-### Run Unit Tests
+### Jalankan Tes Unit
 ```bash
 pnpm --filter=@visactor/vseed run test:unit
 ```
 
-### Run Integration Tests
+### Jalankan Tes Integrasi
 ```bash
 pnpm --filter=@visactor/vseed run test:integration
 ```
 
-### Update Test Snapshots
-Run this when your code changes cause snapshot diffs (that are expected):
+### Perbarui Snapshot Tes
+Jalankan ini saat perubahan kode Anda menyebabkan diff snapshot yang memang diharapkan:
 ```bash
 pnpm --filter=@visactor/vseed run test:update
 ```
 
-## Code Quality
+## Kualitas Kode
 
-### Lint Check
+### Pemeriksaan Lint
 ```bash
 pnpm run lint
 ```
 
-### Type Check
+### Pemeriksaan Tipe
 ```bash
 pnpm run typecheck
 ```

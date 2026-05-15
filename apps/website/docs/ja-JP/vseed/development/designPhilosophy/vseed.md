@@ -1,42 +1,42 @@
 # VSeed
 
-:::info Summary
-Bridges flexible business requirements from above, constrains data input formats from below, and orchestrates data uniformly — turning complexity into simplicity.
+:::info 一文要約
+上位では柔軟なビジネス要件を受け止め、下位ではデータ入力形式を制約し、データを統一的に編成して複雑さを単純化します。
 :::
 
-## What is VSeed?
+## VSeed とは？
 
-`VSeed` is a visualization tool for data analysis, focused on providing highly consistent data transformation capabilities across different chart types, along with a set of out-of-the-box features to meet lightweight data analysis needs.
+`VSeed` はデータ分析向けの可視化ツールです。異なるチャートタイプ間で高い一貫性を持つデータ変換能力を提供することに注力し、軽量なデータ分析ニーズを満たすための一部のすぐに使える機能も提供します。
 
-## What are VSeed's Advantages?
+## VSeed の利点は何ですか？
 
-> First, it's genuinely easy to use. Second, it's truly flexible. Third, VSeed contains many abstractions — you need to understand how VSeed performs data reshaping to use it perfectly.
+> まず本当に使いやすく、次に確かに柔軟です。最後に、VSeed には多くの封装があるため、VSeed がどのようにデータリシェイプを行うかを理解してこそ、完全に活用できます。
 
-1. The most intuitive way to switch chart types [Demo](/vseed/guide/intro/chartTypeSwitch)
-2. The easiest-to-use pivot charts [Demo](/vseed/guide/intro/pivotAndCombine)
-3. Powerful data reshaping — no manual data processing needed; any number of dimensions and measures, any chart type can be rendered [Demo](/vseed/guide/intro/dataReshape)
-4. `VSeed` is fully serializable, enabling cross-platform transfer of `VSeed DSL` [Demo](/vseed/guide/intro/crossPlatformRender)
-5. Out-of-the-box: number formatting, internationalization, light/dark themes, common styles, and more [Demo](/vseed/guide/intro/internationalization)
-6. Excellent data processing performance — supports Node.js-side data processing with Web-side visualization [Demo](/vseed/guide/intro/separateBuild)
+1. 最も直感的なチャート切り替え方法 [Demo](/vseed/guide/intro/chartTypeSwitch)
+2. 最も使いやすいピボットチャート [Demo](/vseed/guide/intro/pivotAndCombine)
+3. 強力なデータリシェイプ能力。データ処理は不要で、任意の数のディメンションと指標、任意のチャートタイプで出図できます [Demo](/vseed/guide/intro/dataReshape)
+4. `VSeed` は完全にシリアライズ可能なため、`VSeed DSL` のクロスプラットフォーム転送をサポートします [Demo](/vseed/guide/intro/crossPlatformRender)
+5. すぐに使える機能: 数値フォーマット、国際化、ライト/ダークテーマ、一般的なスタイルなど [Demo](/vseed/guide/intro/internationalization)
+6. 優れたデータ処理性能。`Node` 側でデータを処理し、`Web` 側で可視化できます [Demo](/vseed/guide/intro/separateBuild)
 
-## What are VSeed's Limitations?
+## VSeed の弱点は何ですか？
 
-1. `VSeed` does not handle fine-grained customization of individual chart details — that's the responsibility of `VChart` and `VTable`. `VSeed` only provides the ability to flexibly modify `spec`; users can customize every chart detail according to their needs.
-2. Only datasets conforming to the `tidyData` specification can be visualized by `VSeed`. Non-standard datasets are not accepted.
-3. Built on top of the `VisActor` ecosystem — users need to understand the basic concepts of `VChart` and `VTable`.
+1. `VSeed` は単一チャートの細部を磨き込む役割を担いません。そのような要件は `VChart`、`VTable` が提供します。`VSeed` は `spec` を柔軟に変更する能力だけを提供し、ユーザーは自分の要件に応じてチャートの各詳細を柔軟に変更できます。
+2. `tidyData` 規範に従うデータセットだけが `VSeed` で可視化できます。標準的でないデータセットは `VSeed` では受け付けません。
+3. `VisActor` エコシステム上に構築されているため、利用者は `VChart` と `VTable` の基本概念を理解する必要があります。
 
-## What are VSeed's Principles?
+## VSeed の原則は何ですか？
 
-1. `VSeed` must support serialization.
-2. `VSeed` should not provide excessive style configuration — it should focus on the relationship between charts and data.
-3. `VSeed` should encapsulate common general-purpose features in the analytics domain, such as number formatting, internationalization, themes, common styles, and common functionality — providing them out of the box.
-4. More flexible customization should be handled by users themselves. Therefore, VSeed only exposes a Spec Builder for building VChart and VTable specs.
-   - Users can flexibly control VChart and VTable instances.
-   - Users can modify VChart and VTable specs according to their needs.
+1. `VSeed` はシリアライズをサポートしなければなりません。
+2. `VSeed` は過剰なスタイル設定能力を提供する必要はなく、チャートとデータの関係を処理することに集中すべきです。
+3. `VSeed` は数値フォーマット、国際化、テーマ、一般的なスタイル、一般的な機能など、分析領域でよく使われる汎用機能を封装し、すぐに使えるようにすべきです。
+4. より柔軟なカスタマイズ要件はユーザーが二次カスタマイズすべきです。そのため、VSeed は VChart、VTable の spec を構築するための Spec Builder だけを外部に提供します。
+   - ユーザーは VChart Instance と VTable Instance を柔軟に制御できます。
+   - ユーザーは自分の要件に応じて VChart、VTable の spec を柔軟に変更できます。
 
-## Why Design VSeed?
+## なぜ VSeed を設計するのですか？
 
-1. `VChart` can never seamlessly switch to `VTable` and vice versa — for such needs, a higher-level abstraction layer is inevitable.
-2. Users of `VChart` and `VTable` must process data themselves — this work gets repeated hundreds or thousands of times unintentionally. `VSeed` aims to reduce data processing complexity in common scenarios and eliminate repetitive work.
-3. Lowers the barrier to using `VChart` and `VTable` to some extent — for example, rendering `PivotChart` with `VTable`.
-4. `VSeed` may ultimately evolve into a sub-module of `HeadlessBI`, used to build general-purpose data analysis tools.
+1. `VChart` は `VTable` へシームレスに切り替えることができず、その逆も同じです。このような要件に対しては、上位の抽象封装が必然的に必要になります。
+2. `VChart`、`VTable` のユーザーは自分でデータを処理しなければなりません。この作業は無意識のうちに何百回、何千回も繰り返されます。`VSeed` は一般的なシナリオのデータ処理複雑度を下げ、反復作業を減らしたいと考えています。
+3. `VChart` と `VTable` の利用ハードルを一定程度下げられます。たとえば `VTable` で `PivotChart` をレンダリングできます。
+4. `VSeed` は最終的に `HeadlessBI` のサブモジュールへ発展し、汎用的なデータ分析ツールを構築するために使われる可能性があります。

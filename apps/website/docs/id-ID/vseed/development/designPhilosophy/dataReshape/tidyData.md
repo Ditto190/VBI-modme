@@ -1,22 +1,22 @@
 # TidyData
 
-:::info Significance
-TidyData, through its core principle of "variables as columns, observations as rows," dramatically reduces the complexity of data cleaning — letting us focus on business problems rather than data format conversion.
+:::info Makna
+TidyData, melalui prinsip inti "variabel sebagai kolom, observasi sebagai baris", sangat mengurangi kompleksitas pembersihan data sehingga kita dapat lebih fokus pada masalah bisnis daripada konversi format data.
 :::
 
-## Paper
+## Makalah
 
-Author: `Hadley Wickham`. The paper discusses a small module in data processing — data tidying — because tidy datasets are easier to manipulate, model, and visualize, and have a specific structure.
+Penulis makalah ini adalah `Hadley Wickham`. Makalah ini membahas satu modul kecil dalam pemrosesan data, yaitu perapian data, karena dataset yang rapi lebih mudah dioperasikan, dimodelkan, dan divisualisasikan, serta memiliki struktur tertentu.
 
-This paper is highly recommended. See: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
+Makalah ini sangat disarankan untuk dibaca. Lihat: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
 
-## TidyData in VSeed
+## TidyData di VSeed
 
-The `dataset` configuration in VSeed DSL uses the `TidyData` format.
+Konfigurasi `dataset` dalam VSeed DSL adalah dataset dalam format `TidyData`.
 
-Core characteristics:
-1. **Each variable has a column**: Variable values are stored in separate columns, e.g., "age", "gender".
-2. **Each observation has a row**: All variable values for one observation form a row, e.g., a person's age and gender.
-3. **Each unit of observation has a table**: Different types of observation units (e.g., person, time, location) should be stored separately.
+Karakteristik inti:
+1. **Setiap variabel satu kolom**: Nilai variabel disimpan dalam kolom terpisah, seperti "usia" dan "jenis kelamin".
+2. **Setiap observasi satu baris**: Semua nilai variabel dari satu objek observasi membentuk satu baris, misalnya informasi usia dan jenis kelamin seseorang.
+3. **Setiap unit observasi satu tabel**: Jenis unit observasi yang berbeda, seperti orang, waktu, dan lokasi, sebaiknya disimpan secara terpisah.
 
-Therefore, the result of an `SQL` query can be passed directly into VSeed's `dataset` configuration — no additional data processing needed for quick analysis and visualization.
+Karena itu, hasil query `SQL` dapat langsung dimasukkan ke konfigurasi `dataset` milik `VSeed` tanpa pemrosesan data tambahan, sehingga analisis dan visualisasi dapat dilakukan dengan cepat.

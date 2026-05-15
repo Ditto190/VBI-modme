@@ -2,7 +2,7 @@ import { Empty, Spin } from 'antd'
 import { VSeedRender } from 'src/components/Render'
 import { useVBIStore, useVBIStoreConfig } from 'src/model'
 import { ChartToolbar } from './ChartToolbar'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 
 type ChartWorkspaceProps = {
   isFullscreen: boolean

@@ -1,22 +1,22 @@
 # TidyData
 
 :::info Significance
-TidyData, through its core principle of "variables as columns, observations as rows," dramatically reduces the complexity of data cleaning — letting us focus on business problems rather than data format conversion.
+TidyData は「変数を列、観測を行にする」という中核原則によって、データクリーニングの複雑さを大幅に下げ、データ形式変換ではなくビジネス課題に集中できるようにします。
 :::
 
-## Paper
+## 論文
 
-Author: `Hadley Wickham`. The paper discusses a small module in data processing — data tidying — because tidy datasets are easier to manipulate, model, and visualize, and have a specific structure.
+論文の著者は `Hadley Wickham` です。この論文は、データ処理の小さなモジュールであるデータ整理について論じています。整然としたデータセットは操作、モデリング、可視化が容易で、特定の構造を持つためです。
 
-This paper is highly recommended. See: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
+この論文は読むことを強くおすすめします。[Tidy Data](https://www.jstatsoft.org/article/view/v059i10) を参照してください。
 
-## TidyData in VSeed
+## VSeed における TidyData
 
-The `dataset` configuration in VSeed DSL uses the `TidyData` format.
+VSeed DSL の `dataset` 設定は `TidyData` 形式のデータセットです。
 
-Core characteristics:
-1. **Each variable has a column**: Variable values are stored in separate columns, e.g., "age", "gender".
-2. **Each observation has a row**: All variable values for one observation form a row, e.g., a person's age and gender.
-3. **Each unit of observation has a table**: Different types of observation units (e.g., person, time, location) should be stored separately.
+中核的な特徴は次のとおりです。
+1. **各変数が 1 列**: 変数の値は「年齢」「性別」のように個別の列に保存されます。
+2. **各観測が 1 行**: 1 つの観測対象に関するすべての変数値が 1 行を構成します。たとえば、ある人の年齢と性別の情報です。
+3. **各観測単位が 1 テーブル**: 人、時間、場所など、異なる種類の観測単位は分けて保存するべきです。
 
-Therefore, the result of an `SQL` query can be passed directly into VSeed's `dataset` configuration — no additional data processing needed for quick analysis and visualization.
+したがって、`SQL` クエリの結果は追加のデータ処理なしで、VSeed の `dataset` 設定へ直接渡せます。これにより分析と可視化をすばやく行えます。

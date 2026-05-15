@@ -1,8 +1,8 @@
 # HierarchySankey
 
-## Regional Sales Hierarchy Sankey
+## Sankey hiérarchique des ventes régionales
 
-A hierarchy sankey chart showing sales flowing from region to country to city.
+Affiche un diagramme sankey hiérarchique où les ventes circulent de la région vers le pays, puis vers la ville.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -86,9 +86,9 @@ export default () => {
 }
 ```
 
-## Multiple Hierarchy Dimensions + One Measure
+## Dimensions hiérarchiques multiniveaux + un indicateur
 
-This example shows a hierarchical flow from region to country and then to channel, with a single measure controlling the flow size.
+Affiche le flux hiérarchique de la grande région vers le pays puis vers le canal, avec un seul indicateur qui contrôle la taille du flux.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -98,60 +98,60 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "country": "China",
+      "region": "Chine du Nord",
+      "country": "Chine",
       "channel": "Direct",
       "revenue": 42
     },
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Partner",
+      "region": "Chine du Nord",
+      "country": "Chine",
+      "channel": "Partenaire",
       "revenue": 18
     },
     {
-      "region": "East China",
-      "country": "China",
+      "region": "Chine de l’Est",
+      "country": "Chine",
       "channel": "Direct",
       "revenue": 36
     },
     {
-      "region": "East China",
-      "country": "China",
+      "region": "Chine de l’Est",
+      "country": "Chine",
       "channel": "E-commerce",
       "revenue": 22
     },
     {
-      "region": "Southeast Asia",
-      "country": "Singapore",
+      "region": "Asie du Sud-Est",
+      "country": "Singapour",
       "channel": "Direct",
       "revenue": 15
     },
     {
-      "region": "Southeast Asia",
-      "country": "Malaysia",
-      "channel": "Partner",
+      "region": "Asie du Sud-Est",
+      "country": "Malaisie",
+      "channel": "Partenaire",
       "revenue": 12
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Grande région"
     },
     {
       "id": "country",
-      "alias": "Country"
+      "alias": "Pays"
     },
     {
       "id": "channel",
-      "alias": "Channel"
+      "alias": "Canal"
     }
   ],
   "measures": [
     {
       "id": "revenue",
-      "alias": "Revenue"
+      "alias": "Revenus"
     }
   ],
   "legend": {
@@ -172,9 +172,9 @@ export default () => {
 }
 ```
 
-## Measure Name As A Hierarchy Dimension + One Measure
+## Nom de l’indicateur comme dimension hiérarchique + un indicateur
 
-This example places the measure name itself on the hierarchy path, so each region flows into different business metrics while a single numeric measure controls the magnitude.
+Place le « nom de l’indicateur » lui-même dans le chemin hiérarchique pour afficher le flux des différents indicateurs métier sous chaque grande région, avec un seul indicateur numérique qui contrôle la taille.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -184,50 +184,50 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "metricName": "Revenue",
+      "region": "Chine du Nord",
+      "metricName": "Ventes",
       "value": 42
     },
     {
-      "region": "North China",
-      "metricName": "Profit",
+      "region": "Chine du Nord",
+      "metricName": "Bénéfice",
       "value": 12
     },
     {
-      "region": "East China",
-      "metricName": "Revenue",
+      "region": "Chine de l’Est",
+      "metricName": "Ventes",
       "value": 36
     },
     {
-      "region": "East China",
-      "metricName": "Profit",
+      "region": "Chine de l’Est",
+      "metricName": "Bénéfice",
       "value": 10
     },
     {
-      "region": "South China",
-      "metricName": "Revenue",
+      "region": "Chine du Sud",
+      "metricName": "Ventes",
       "value": 28
     },
     {
-      "region": "South China",
-      "metricName": "Profit",
+      "region": "Chine du Sud",
+      "metricName": "Bénéfice",
       "value": 8
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Grande région"
     },
     {
       "id": "metricName",
-      "alias": "Metric Name"
+      "alias": "Nom de l’indicateur"
     }
   ],
   "measures": [
     {
       "id": "value",
-      "alias": "Metric Value"
+      "alias": "Valeur de l’indicateur"
     }
   ],
   "legend": {

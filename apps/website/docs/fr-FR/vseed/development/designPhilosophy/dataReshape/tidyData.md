@@ -1,22 +1,22 @@
 # TidyData
 
-:::info Significance
-TidyData, through its core principle of "variables as columns, observations as rows," dramatically reduces the complexity of data cleaning — letting us focus on business problems rather than data format conversion.
+:::info Signification
+TidyData, grâce à son principe central « variables en colonnes, observations en lignes », réduit fortement la complexité du nettoyage des données et nous permet de nous concentrer sur les problèmes métier plutôt que sur la conversion des formats de données.
 :::
 
-## Paper
+## Article
 
-Author: `Hadley Wickham`. The paper discusses a small module in data processing — data tidying — because tidy datasets are easier to manipulate, model, and visualize, and have a specific structure.
+L'auteur de l'article est `Hadley Wickham`. L'article traite d'un petit module du traitement des données, le rangement des données, car les jeux de données propres sont plus faciles à manipuler, modéliser et visualiser, et possèdent une structure spécifique.
 
-This paper is highly recommended. See: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
+La lecture de cet article est vivement recommandée. Voir : [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
 
-## TidyData in VSeed
+## TidyData dans VSeed
 
-The `dataset` configuration in VSeed DSL uses the `TidyData` format.
+La configuration `dataset` dans VSeed DSL correspond à un jeu de données au format `TidyData`.
 
-Core characteristics:
-1. **Each variable has a column**: Variable values are stored in separate columns, e.g., "age", "gender".
-2. **Each observation has a row**: All variable values for one observation form a row, e.g., a person's age and gender.
-3. **Each unit of observation has a table**: Different types of observation units (e.g., person, time, location) should be stored separately.
+Caractéristiques principales :
+1. **Chaque variable occupe une colonne** : les valeurs des variables sont stockées dans des colonnes distinctes, par exemple « âge » et « sexe ».
+2. **Chaque observation occupe une ligne** : toutes les valeurs des variables d'un objet observé forment une ligne, par exemple l'âge et le sexe d'une personne.
+3. **Chaque unité d'observation occupe une table** : différents types d'unités d'observation, comme les personnes, le temps ou les lieux, doivent être stockés séparément.
 
-Therefore, the result of an `SQL` query can be passed directly into VSeed's `dataset` configuration — no additional data processing needed for quick analysis and visualization.
+Ainsi, le résultat d'une requête `SQL` peut être transmis directement à la configuration `dataset` de `VSeed`, sans traitement de données supplémentaire, afin de réaliser rapidement analyse et visualisation.

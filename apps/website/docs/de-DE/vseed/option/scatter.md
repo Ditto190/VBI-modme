@@ -1,48 +1,48 @@
 # Scatter
 
-:::info{title=Recommended}
-\- Recommended field configuration: `2` measure(s), `1` dimension(s)
+:::info{title=Recommendation}
+\- Recommended field configuration: `2` measures and `1` dimension
 
-\- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
+\- Supports data reshaping: at least `1` measure and `0` dimensions
 
 :::
 
 :::info{title=Encoding Mapping}
-The Scatter Chart supports the following visual channels:
+Scatter charts support the following visual channels:
 
-`xAxis`  : x-axis channel, supports`multiple measures`, mapped to the x-axis by measure value
+`xAxis`  : X-axis channel, supports `multiple measures`, mapped to the X-axis by measure value
 
-`yAxis`  : y-axis channel, supports`multiple measures`, mapped to the y-axis by measure value
+`yAxis`  : Y-axis channel, supports `multiple measures`, mapped to the Y-axis by measure value
 
-`color`  : color channel, supports`multiple dimensions`or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
+`color`  : Color channel, supports `multiple dimensions` or `one measure`; dimension colors distinguish data series, while measure colors linearly map measure values to graphic colors
 
-`tooltip`: tooltip channel, supports`multiple dimensions` and `multiple measures`, displayed when hovering over a data point
+`tooltip`: Tooltip channel, supports `multiple dimensions` and `multiple measures`, shown when hovering over data points
 
-`label`  : label channel, supports`multiple dimensions` and `multiple measures`, displays data labels on data points
+`label`  : Label channel, supports `multiple dimensions` and `multiple measures`, displayed as data labels on data points
 
 :::
 
-:::note{title=Description}
-Scatter Chart, suitable for showing data distribution, using point positions to represent data values.
+:::note{title=Beschreibung}
+Scatter chart, suitable for showing data distribution with point positions representing data values
 
-Applicable scenarios:
+Anwendungsszenarien:
 
-\- Analyzing data distribution characteristics, such as central tendency, distribution range, outliers, etc.
+\- Analyze distribution characteristics such as central tendency, range, and outliers
 
 :::
 
 :::warning{title=Warning}
 Data requirements:
 
-\- At least 2 numerical fields
+\- At least two numeric fields (measures)
 
-\- The first measure field will be placed on the X-axis, remaining measures will be merged and mapped to the Y-axis
+\- The first measure field is placed on the X-axis, and the remaining measures are merged and mapped to the Y-axis
 
-\- Measure names and dimension names will be merged and displayed as legend items
+\- Measure names and dimension names are merged and displayed as legend items
 
 Features enabled by default:
 
-\- Legends, axes, data point markers, tooltips, and trend lines are enabled by default
+\- Legend, axes, data point markers, tooltips, and trend lines are enabled by default
 
 :::
 
@@ -51,14 +51,16 @@ Features enabled by default:
 
 **Type:** `"scatter"`
 
-:::note{title=Description}
-Scatter Chart
+:::note{title=Beschreibung}
+Streudiagramm
 
-Scatter Chart, suitable for showing data distribution, using point positions to represent data values.
+
+
+Scatter chart, suitable for showing data distribution with point positions representing data values
 
 :::
 
-**Example**
+**Beispiel**
 'scatter'
 
 
@@ -68,14 +70,16 @@ Scatter Chart, suitable for showing data distribution, using point positions to 
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset
+:::note{title=Beschreibung}
+Datensatz
 
-TidyData-compliant and already aggregated dataset used to define the chart's data source and structure. User-input datasets do not need manual processing; VSeed features powerful data reshaping capabilities and will automatically reshape the data. Scatter Chart data is ultimately converted to 2 dimensions and 1 measure.
+
+
+An aggregated dataset that conforms to the TidyData specification. It defines the chart data source and structure. User input does not need preprocessing because VSeed reshapes data automatically. Scatter chart data is eventually converted to two dimensions and one measure.
 
 :::
 
-**Example**
+**Beispiel**
 [{month:'Jan', value:100}, {month:'Feb', value:150}, {month:'Mar', value:120}]
 
 
@@ -85,14 +89,16 @@ TidyData-compliant and already aggregated dataset used to define the chart's dat
 
 **Type:** `ScatterDimension[] | undefined`
 
-:::note{title=Description}
-Dimensions
+:::note{title=Beschreibung}
+Die erste Dimension wird der X-Achse zugeordnet; die verbleibenden Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zusammengeführt und als Legendeneinträge angezeigt.
 
-The first dimension of the Scatter Chart is mapped to the X-axis; remaining dimensions are merged with measure names (when multiple measures exist) and displayed as legend items.
+
+
+The first dimension in a scatter chart is mapped to the X-axis; the remaining dimensions are merged with measure names when multiple measures exist and displayed as legend items
 
 :::
 
-**Example**
+**Beispiel**
 [{id: "month", alias: "Month"}]
 
 
@@ -102,8 +108,8 @@ The first dimension of the Scatter Chart is mapped to the X-axis; remaining dime
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=Beschreibung}
+Feld-ID, die der Dimension entspricht
 
 :::
 
@@ -111,8 +117,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=Beschreibung}
+Dimensionsalias
 
 :::
 
@@ -120,8 +126,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=Beschreibung}
+Datumsformatkonfiguration der Dimension
 
 :::
 
@@ -130,8 +136,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=Beschreibung}
+Zeitgranularität; bestimmt die Genauigkeit der Datumsanzeige
 
 :::
 
@@ -139,20 +145,20 @@ Time granularity, determines the date display precision
 
 **Type:** `"color" | "detail" | "tooltip" | "label" | "row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=Beschreibung}
+Kanal, dem die Dimension zugeordnet wird
 
-\- color: supports mapping multiple dimensions to the color channel
+\- color: unterstützt die Zuordnung mehrerer Dimensionen zum Farbkanal
 
-\- detail: supports mapping multiple dimensions to the detail channel
+\- detail: unterstützt die Zuordnung mehrerer Dimensionen zum Detailkanal
 
-\- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: unterstützt das Zuordnen mehrerer Dimensionen zum Tooltip-Kanal
 
-\- label: supports mapping multiple dimensions to the label channel
+\- label: unterstützt das Zuordnen mehrerer Dimensionen zum Beschriftungskanal
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: unterstützt die Zuordnung mehrerer Dimensionen zum Zeilenkanal
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: unterstützt die Zuordnung mehrerer Dimensionen zum Spaltenkanal
 
 :::
 
@@ -161,12 +167,12 @@ Channel to which the dimension is mapped
 
 **Type:** `ScatterMeasure[] | undefined`
 
-:::note{title=Description}
-Scatter Chart Measures
+:::note{title=Beschreibung}
+Scatter chart measures
 
 :::
 
-**Example**
+**Beispiel**
 [
   {
     id: 'profit', alias: 'Profit', encoding: 'xAxis'
@@ -183,8 +189,8 @@ Scatter Chart Measures
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=Beschreibung}
+Kennzahl-ID, muss eindeutig sein
 
 :::
 
@@ -192,8 +198,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=Beschreibung}
+Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht alias der id
 
 :::
 
@@ -201,18 +207,18 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+:::note{title=Beschreibung}
+Automatische Zahlenformatierung, standardmäßig aktiviert, höchste Priorität
 
-When autoFormat=true, it overrides all numFormat configurations
+Wenn autoFormat=true ist, werden alle numFormat-Konfigurationen überschrieben
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+Wenn aktiviert, wählen Diagramm-Datenbeschriftungen und Tooltips automatisch die passende Formatierung anhand von Kennzahlwerten und Gebietsschema aus
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+Formatierungsregeln: Dezimalzahlen mit aktivierter compact notation, mindestens 0 und höchstens 2 Dezimalstellen, automatische Rundung, umgesetzt mit Intl.NumberFormat des Browsers
 
-For example:
+Zum Beispiel:
 
-\- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -222,10 +228,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=Beschreibung}
+Benutzerdefinierte Zahlenformatierung für Kennzahlen; wird automatisch auf Beschriftungen und Tooltips angewendet
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit gesetzt werden; andernfalls überschreibt autoFormat diese Konfiguration
 
 :::
 
@@ -234,8 +240,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -243,14 +249,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -258,14 +264,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -273,8 +279,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -282,8 +288,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -291,8 +297,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -300,18 +306,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Beschreibung}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+
+
+Easing-Funktion der Animation
+
+
+
 
 
 
@@ -319,20 +325,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Beschreibung}
+Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -340,14 +346,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
+
 
 
 
@@ -355,8 +361,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -369,8 +375,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -378,14 +384,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -393,14 +399,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -408,8 +414,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -417,8 +423,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -426,8 +432,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -435,18 +441,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Beschreibung}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+
+
+Easing-Funktion der Animation
+
+
+
 
 
 
@@ -454,20 +460,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Beschreibung}
+Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -475,14 +481,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
+
 
 
 
@@ -490,8 +496,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -499,20 +505,20 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"xAxis" | "color" | "tooltip" | "label" | "yAxis" | "size" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped
+:::note{title=Beschreibung}
+Kanal, dem die Kennzahl zugeordnet wird
 
-\- xAxis: measure mapped to the x-axis
+\- xAxis: Measure mapped to the X-axis
 
-\- yAxis: measure mapped to the y-axis
+\- yAxis: Kennzahl wird der Y-Achse zugeordnet
 
-\- size: measure mapped to the size channel
+\- size: size mapped from the measure
 
-\- color: measure mapped to the color channel
+\- color: Kennzahl wird dem Farbkanal zugeordnet
 
-\- label: measure mapped to the label channel
+\- label: Kennzahl, die dem Beschriftungskanal zugeordnet wird
 
-\- tooltip: measure mapped to the tooltip channel
+\- tooltip: Kennzahl, die dem Tooltip-Kanal zugeordnet wird
 
 :::
 
@@ -520,13 +526,13 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=Beschreibung}
+In flacher Kennzahlkonfiguration wird eine baumförmige Kennzahlgruppe aufgebaut. parentId verweist auf die id der übergeordneten Kennzahlgruppe und dient zum Aufbau des Kennzahlbaums
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfiguriert den Kennzahlbaum direkt mit children; Option 2 konfiguriert eine flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
 
 :::
 
@@ -535,8 +541,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration, used to specify the pagination field name, which must be a dimension
+:::note{title=Beschreibung}
+Paging configuration, used to specify the paging field name; it must be a dimension
 
 :::
 
@@ -545,8 +551,8 @@ Pagination configuration, used to specify the pagination field name, which must 
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -554,12 +560,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 '2023\-01\-01'
 
 
@@ -569,14 +575,14 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `number | number[] | undefined`
 
-:::note{title=Description}
-Scatter Chart measure size, used to define the size or size range of data points in the Scatter Chart.
+:::note{title=Beschreibung}
+Scatter chart measure size, used to define the size or size range of data points
 
-\- If size is a single number, e.g., 10, it means the size of data points is fixed at 10.
+\- If the size range is a number such as 10, the data point size is fixed at 10
 
-\- If size is an array of length 2, e.g., [10, 40], it means the size of data points ranges from 10 to 40.
+\- If the size range is a two-item array such as [10, 40], the data point size ranges from 10 to 40
 
-\- Mutually exclusive with sizeRange; has lower priority than sizeRange.
+\- Mutually exclusive with sizeRange; lower priority than size
 
 :::
 
@@ -585,14 +591,14 @@ Scatter Chart measure size, used to define the size or size range of data points
 
 **Type:** `number | number[] | undefined`
 
-:::note{title=Description}
-Scatter Chart measure size range, used to define the size range of data points in the Scatter Chart.
+:::note{title=Beschreibung}
+Scatter chart measure size range, used to define the size range of data points,
 
-\- If sizeRange is an array of length 2, e.g., [10, 40], it means the size of data points ranges from 10 to 40.
+\- If the size range is a two-item array such as [10, 40], the data point size ranges from 10 to 40
 
-\- If sizeRange is a single number, e.g., 10, it means the size of data points is fixed at 10.
+\- If the size range is a number such as 10, the data point size is fixed at 10
 
-\- Mutually exclusive with size; has higher priority than size.
+\- Mutually exclusive with sizeRange; higher priority than size
 
 :::
 
@@ -601,10 +607,12 @@ Scatter Chart measure size range, used to define the size range of data points i
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
+:::note{title=Beschreibung}
 Chart background color
 
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+
+
+The background color can be a color string such as 'red' or 'blue', or hex, rgb, or rgba values such as '#ff0000' and 'rgba(255,0,0,0.5)'
 
 :::
 
@@ -613,10 +621,12 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color
+:::note{title=Beschreibung}
+Farbe
 
-Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
+
+
+Color configuration, used to define chart color schemes including color lists, color mappings, and gradients.
 
 :::
 
@@ -625,12 +635,12 @@ Color configuration for defining the chart's color scheme, including color lists
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -639,12 +649,12 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -653,12 +663,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Color mapping used to map data values to specific colors
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 {
  'profit': 'red',
  'sales': 'blue',
@@ -670,8 +680,8 @@ Color mapping used to map data values to specific colors
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -679,8 +689,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -689,10 +699,12 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `Label | undefined`
 
-:::note{title=Description}
-Label
+:::note{title=Beschreibung}
+Beschriftung
 
-Label configuration for defining chart data labels, including their position, format, and style.
+
+
+Label configuration, used to define data label position, format, style, and related settings.
 
 :::
 
@@ -701,8 +713,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -710,8 +722,8 @@ Whether label functionality is enabled
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -719,12 +731,12 @@ Whether labels wrap to the next line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values
+:::note{title=Beschreibung}
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -732,12 +744,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values as a percentage
+:::note{title=Beschreibung}
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -745,12 +757,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension labels
+:::note{title=Beschreibung}
 
-Display all dimension labels
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -758,8 +770,8 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -767,8 +779,8 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -777,8 +789,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -786,14 +798,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -801,14 +813,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -816,8 +828,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -825,8 +837,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -834,8 +846,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -843,18 +855,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Beschreibung}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+
+
+Easing-Funktion der Animation
+
+
+
 
 
 
@@ -862,20 +874,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Beschreibung}
+Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -883,14 +895,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
+
 
 
 
@@ -898,8 +910,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -907,8 +919,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=Beschreibung}
+  orderBy: 'profit',
 
 :::
 
@@ -916,8 +928,8 @@ Label font size
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=Beschreibung}
+or
 
 :::
 
@@ -925,8 +937,8 @@ Label font weight
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label background color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -934,8 +946,8 @@ Label background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label stroke color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -943,8 +955,8 @@ Label stroke color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label font color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -952,8 +964,8 @@ Label font color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels automatically invert font color based on the mark's color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -961,8 +973,8 @@ Whether labels automatically invert font color based on the mark's color
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-label position
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -970,8 +982,8 @@ label position
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label anti-overlap functionality is enabled
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -979,8 +991,8 @@ Whether label anti-overlap functionality is enabled
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filter; default relationship between selectors is "Or"
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -989,8 +1001,8 @@ Label filter; default relationship between selectors is "Or"
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -998,12 +1010,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -1011,14 +1023,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -1026,8 +1038,8 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1035,26 +1047,38 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed via AI-generated code)
+:::note{title=Beschreibung}
 
-Implement complex data filtering logic using AI-generated JavaScript code.
 
-Key Capabilities:
 
-\- Supports arbitrarily complex data filtering conditions
 
-\- Uses internal utility functions for data operations
+Strichfarbe des Hintergrunds
 
-\- Executes safely in the browser environment (Web Worker sandbox)
 
-Environment Requirements: Supports browser environment only; Node.js environments will use fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Chart dynamic filter configuration.
 
-Filtering of chart marks (bars, points, etc.) implemented via AI-generated JavaScript code.
+
+
+
+
+
+
+
+
+'red'
+
+
+
+
+
+
+
+
+
+
+
+Eckenradius des Hintergrunds
 
 :::
 
@@ -1067,15 +1091,15 @@ Filtering of chart marks (bars, points, etc.) implemented via AI-generated JavaS
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-"Highlight bars with sales greater than 1000"
+**Beispiel**
+"Datenelemente mit Umsatz ueber 1000 hervorheben"
 
-"Highlight the bar with the highest profit margin in each region"
+"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -1083,23 +1107,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=Beschreibung}
+Operator
 
-\- Can only use internal utility functions (accessed via _ or R)
 
-\- Input parameter: data (array), each item includes a __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
+\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
 
-\- __row_index represents the original data item's row number, field represents the field to highlight
+**Beispiel**
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, network requests
+
+
+
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
-**Example**
-Highlight the sales field of data items with sales greater than 1000
+**Beispiel**
+sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1108,7 +1134,7 @@ field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region
+Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1122,7 +1148,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items with multi-condition filtering
+Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1142,8 +1168,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is unsupported
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1152,8 +1178,8 @@ Fallback plan when code execution fails or the environment is unsupported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1161,12 +1187,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -1174,14 +1200,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -1189,8 +1215,8 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1198,10 +1224,12 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Beschreibung}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+Textfarbe
 
 :::
 
@@ -1223,10 +1251,12 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend
+:::note{title=Beschreibung}
+Legende
 
-Legend configuration used to define the chart's legend, including its position, format, and style.
+
+
+Legend configuration, used to define legend position, format, style, and related settings.
 
 :::
 
@@ -1235,12 +1265,12 @@ Legend configuration used to define the chart's legend, including its position, 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the legend functionality is enabled
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 enable: true
 
 
@@ -1249,17 +1279,17 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the legend border is enabled
+:::note{title=Beschreibung}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
+**Beispiel**
 border: true
 
 
@@ -1268,8 +1298,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1277,8 +1307,8 @@ Legend font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pagination icon color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1286,8 +1316,8 @@ Pagination icon color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pagination icon color when disabled
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1295,12 +1325,12 @@ Pagination icon color when disabled
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 labelFontSize: 10
 
 
@@ -1309,8 +1339,8 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1318,12 +1348,12 @@ Legend font color
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 labelFontWeight: 400
 
 
@@ -1332,17 +1362,17 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Legend shape
+:::note{title=Beschreibung}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
+**Beispiel**
 shapeType: 'circle'
 
 
@@ -1351,12 +1381,12 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-Legend position
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 position: 'rightTop'
 
 
@@ -1365,21 +1395,21 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum number of columns or rows for the legend when a large number of legends exist.
+:::note{title=Beschreibung}
 
-If position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of displayed columns.
 
-If position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of displayed rows.
+
+
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
+**Beispiel**
 maxSize: 2
 
 
@@ -1389,10 +1419,12 @@ maxSize: 2
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-tooltips
+:::note{title=Beschreibung}
+Tooltip
 
-Tooltips configuration used to define chart tooltips, including their position, format, and style.
+
+
+Tooltip configuration, used to define tooltip position, format, style, and related settings.
 
 :::
 
@@ -1401,8 +1433,8 @@ Tooltips configuration used to define chart tooltips, including their position, 
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether tooltips are enabled
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1411,12 +1443,16 @@ Whether tooltips are enabled
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Brush selection
+:::note{title=Beschreibung}
+Brush-Auswahl
 
-Brush configuration used to enable/disable the brush selection capability.
 
-Chart brush configuration.
+
+Brush selection configuration, used to enable or disable brush selection.
+
+
+
+Brush-Auswahlmodus: einzeln oder mehrfach
 
 :::
 
@@ -1425,8 +1461,8 @@ Chart brush configuration.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether brush selection is enabled
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1434,18 +1470,20 @@ Whether brush selection is enabled
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-Brush type
+:::note{title=Beschreibung}
+**Type:** `XLinearAxis | undefined`
 
-Defines the shape and direction of the brush selector.
 
-\- `rect`: Rectangular selection; can perform selection in both X and Y axis directions simultaneously.
 
-\- `polygon`: Polygonal selection; allows drawing arbitrary polygons by clicking multiple points.
+**Type:** `boolean | undefined`
 
-\- `x`: X-axis selection; performs selection only in the X-axis direction, with no Y-axis restrictions.
 
-\- `y`: Y-axis selection; performs selection only in the Y-axis direction, with no X-axis restrictions.
+
+
+
+
+
+
 
 :::
 
@@ -1453,14 +1491,16 @@ Defines the shape and direction of the brush selector.
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-Brush mode; single selection or multiple selection
+:::note{title=Beschreibung}
+Deckkraft of selected data points, range 0-1
 
-Defines the brush mode.
 
-\- `single`: Single selection mode; only one brush selector can exist at a time.
 
-\- `multiple`: Multiple selection mode; multiple brush selectors can exist simultaneously.
+**Type:** `number | boolean | undefined`
+
+**Type:** `string | undefined`
+
+
 
 :::
 
@@ -1468,8 +1508,8 @@ Defines the brush mode.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear the selection box when brush ends
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1477,10 +1517,12 @@ Whether to clear the selection box when brush ends
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data items within the brush selection
+:::note{title=Beschreibung}
 
-Defines the visual style of data points that have been selected via the brush.
+
+
+
+
 
 :::
 
@@ -1489,10 +1531,12 @@ Defines the visual style of data points that have been selected via the brush.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity
+:::note{title=Beschreibung}
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
 
-Opacity of selected data points, ranging from 0 to 1.
+
+
+
 
 :::
 
@@ -1500,8 +1544,8 @@ Opacity of selected data points, ranging from 0 to 1.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1509,8 +1553,8 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width
+:::note{title=Beschreibung}
+**Type:** `boolean | undefined`
 
 :::
 
@@ -1518,10 +1562,12 @@ Stroke width
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Style for data items outside the brush selection
+:::note{title=Beschreibung}
+X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagramms einschliesslich Position, Format, Stil usw.
 
-Defines the visual style of data points that have not been selected via the brush.
+
+
+
 
 :::
 
@@ -1530,10 +1576,12 @@ Defines the visual style of data points that have not been selected via the brus
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity
+:::note{title=Beschreibung}
+\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
 
-Opacity of unselected data points, ranging from 0 to 1.
+
+
+
 
 :::
 
@@ -1541,8 +1589,8 @@ Opacity of unselected data points, ranging from 0 to 1.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1550,8 +1598,272 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Stroke width
+:::note{title=Beschreibung}
+**Type:** `boolean | undefined`
+
+:::
+
+
+## animation
+
+**Type:** `ScatterAnimation | undefined`
+
+:::note{title=Beschreibung}
+Animationskonfiguration
+
+
+
+Chart animation configuration; available effects are constrained by chart type
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+Whether scatter chart animation is enabled
+
+:::
+
+### params
+
+**Type:** `ScatterAnimationParams | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `ScatterAppearAnimation | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("growth" | "scale")[] | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart appear effects, supporting grow and scale animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+Whether the current animation stage is enabled
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `ScatterUpdateAnimation | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart update effects, supporting grow animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+Whether the current animation stage is enabled
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `ScatterAnimationLoop | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+Whether loop animation is enabled
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+Loop animation interval, in milliseconds
+
+:::
+
+##### loop
+
+**Type:** `ScatterLoopAnimation | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart loop animation configuration
+
+:::
+
+
+###### effects
+
+**Type:** `ScatterLoopEffect[] | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart loop effect
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Beschreibung}
+Whether the current animation stage is enabled
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Animation easing function
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Beschreibung}
+Animation duration, in milliseconds
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Animation highlight or atmosphere color
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Beschreibung}
+Scatter chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+Atmosphere animation color
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Beschreibung}
+Atmosphere animation effect, supporting ripple, visibility, and breathing effects
 
 :::
 
@@ -1560,10 +1872,12 @@ Stroke width
 
 **Type:** `XLinearAxis | undefined`
 
-:::note{title=Description}
-x-axis
+:::note{title=Beschreibung}
+X-Achse
 
-Numeric axis; x-axis configuration used to define the chart's x-axis, including its position, format, and style.
+
+
+Numeric axis. X-axis configuration used to define position, format, style, and related settings.
 
 :::
 
@@ -1572,8 +1886,8 @@ Numeric axis; x-axis configuration used to define the chart's x-axis, including 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible
+:::note{title=Beschreibung}
+**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1581,8 +1895,8 @@ Whether the axis is visible
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value of the axis; has higher priority than nice and zero.
+:::note{title=Beschreibung}
+Achsenlinie width
 
 :::
 
@@ -1590,8 +1904,8 @@ Minimum value of the axis; has higher priority than nice and zero.
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value of the axis; has higher priority than nice and zero. If set to true, the maximum value is automatically calculated based on the data range.
+:::note{title=Beschreibung}
+X-Achsen-Ticks
 
 :::
 
@@ -1599,8 +1913,8 @@ Maximum value of the axis; has higher priority than nice and zero. If set to tru
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic axis; effective only for numeric axes.
+:::note{title=Beschreibung}
+Ob eine logarithmische Achse verwendet wird; gilt nur für numerische Achsen
 
 :::
 
@@ -1608,8 +1922,8 @@ Whether to use a logarithmic axis; effective only for numeric axes.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base of the logarithmic axis; effective only for numeric axes.
+:::note{title=Beschreibung}
+Easing-Funktion der Animation.
 
 :::
 
@@ -1617,8 +1931,8 @@ Base of the logarithmic axis; effective only for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust axis tick intervals to make labels more readable. This setting is ignored when min and max are configured. Effective only for numeric axes.
+:::note{title=Beschreibung}
+Y-Achsen-Einstellung (Kategorieachse) zur Definition der Y-Achse, einschließlich Position, Format, Stil usw.
 
 :::
 
@@ -1626,8 +1940,8 @@ Whether to automatically adjust axis tick intervals to make labels more readable
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is displayed in reverse; effective only for numeric axes.
+:::note{title=Beschreibung}
+sortLegend: {
 
 :::
 
@@ -1635,8 +1949,8 @@ Whether the axis is displayed in reverse; effective only for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force display of the zero value on the axis. This setting is ignored when min and max are configured. Effective only for numeric axes.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1644,8 +1958,8 @@ Whether to force display of the zero value on the axis. This setting is ignored 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format axis labels; effective only for numeric axes. When autoFormat is true, numFormat is ignored.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1653,8 +1967,8 @@ Whether to automatically format axis labels; effective only for numeric axes. Wh
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Number formatting for the axis; effective only for numeric axes. Has lower priority than autoFormat.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1663,8 +1977,8 @@ Number formatting for the axis; effective only for numeric axes. Has lower prior
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1672,14 +1986,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -1687,14 +2001,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -1702,8 +2016,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1711,8 +2025,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1720,8 +2034,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1729,18 +2043,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Beschreibung}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+
+
+Easing-Funktion der Animation
+
+
+
 
 
 
@@ -1748,20 +2062,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Beschreibung}
+Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -1769,14 +2083,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
+
 
 
 
@@ -1784,8 +2098,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1793,8 +2107,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-x-axis tick labels
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1803,8 +2117,8 @@ x-axis tick labels
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1812,8 +2126,8 @@ Whether labels are visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color
+:::note{title=Beschreibung}
+value: 'tool'
 
 :::
 
@@ -1821,8 +2135,8 @@ Label color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=Beschreibung}
+  orderBy: 'profit',
 
 :::
 
@@ -1830,8 +2144,8 @@ Label font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=Beschreibung}
+or
 
 :::
 
@@ -1839,8 +2153,8 @@ Label font weight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1848,8 +2162,8 @@ Label rotation angle
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-x-axis line
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
@@ -1858,8 +2172,8 @@ x-axis line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible
+:::note{title=Beschreibung}
+\- orderBy:'date'
 
 :::
 
@@ -1867,8 +2181,8 @@ Whether the axis line is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color
+:::note{title=Beschreibung}
+**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -1876,8 +2190,8 @@ Axis line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1885,8 +2199,8 @@ Axis line width
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-x-axis ticks
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1895,8 +2209,8 @@ x-axis ticks
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1904,8 +2218,8 @@ Whether ticks are visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1913,8 +2227,8 @@ Whether ticks point inwards
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color
+:::note{title=Beschreibung}
+Legenden-Sortierkonfiguration; unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolgen; das sort-Array folgt der Reihenfolge von links nach rechts oder von oben nach unten.
 
 :::
 
@@ -1922,8 +2236,8 @@ Tick color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size
+:::note{title=Beschreibung}
+sortLegend: {
 
 :::
 
@@ -1931,8 +2245,8 @@ Tick size
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-x-axis title
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1941,8 +2255,8 @@ x-axis title
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -1950,8 +2264,8 @@ Whether the title is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text; defaults to following the field configuration.
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
@@ -1959,8 +2273,8 @@ Title text; defaults to following the field configuration.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color
+:::note{title=Beschreibung}
+\- orderBy:'profit'
 
 :::
 
@@ -1968,8 +2282,8 @@ Title color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size
+:::note{title=Beschreibung}
+Benutzerdefinierte Sortierreihenfolge; diese Reihenfolge wird direkt auf die Legende angewendet. Aufsteigend folgt links-nach-rechts oder oben-nach-unten; absteigend folgt rechts-nach-links oder unten-nach-oben.
 
 :::
 
@@ -1977,8 +2291,8 @@ Title font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight
+:::note{title=Beschreibung}
+  ])
 
 :::
 
@@ -1986,8 +2300,8 @@ Title font weight
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-x-axis grid lines
+:::note{title=Beschreibung}
+Enthalt die integrierten Themes `light` und `dark`. Benutzerdefinierte Themes konnen uber `registerTheme` hinzugefugt werden.
 
 :::
 
@@ -2000,8 +2314,8 @@ x-axis grid lines
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2009,8 +2323,8 @@ Grid line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width
+:::note{title=Beschreibung}
+- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
 
 :::
 
@@ -2018,8 +2332,8 @@ Grid line width
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line type
+:::note{title=Beschreibung}
+Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 
 :::
 
@@ -2027,8 +2341,8 @@ Grid line type
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-y-axis animation configuration
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2037,8 +2351,8 @@ y-axis animation configuration
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration
+:::note{title=Beschreibung}
+**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2046,8 +2360,8 @@ Animation duration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2056,10 +2370,12 @@ Animation easing function
 
 **Type:** `YLinearAxis | undefined`
 
-:::note{title=Description}
-y-axis
+:::note{title=Beschreibung}
+Y-Achse
 
-Numeric axis; y-axis configuration used to define the chart's y-axis, including its position, format, and style.
+
+
+Numeric axis. Y-axis configuration used to define position, format, style, and related settings.
 
 :::
 
@@ -2068,8 +2384,8 @@ Numeric axis; y-axis configuration used to define the chart's y-axis, including 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible
+:::note{title=Beschreibung}
+**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2077,8 +2393,8 @@ Whether the axis is visible
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value of the axis; has higher priority than nice and zero.
+:::note{title=Beschreibung}
+Achsenlinie width
 
 :::
 
@@ -2086,8 +2402,8 @@ Minimum value of the axis; has higher priority than nice and zero.
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value of the axis; has higher priority than nice and zero. If set to true, the maximum value is automatically calculated based on the data range.
+:::note{title=Beschreibung}
+X-Achsen-Ticks
 
 :::
 
@@ -2095,8 +2411,8 @@ Maximum value of the axis; has higher priority than nice and zero. If set to tru
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic axis; effective only for numeric axes.
+:::note{title=Beschreibung}
+Ob eine logarithmische Achse verwendet wird; gilt nur für numerische Achsen
 
 :::
 
@@ -2104,8 +2420,8 @@ Whether to use a logarithmic axis; effective only for numeric axes.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base of the logarithmic axis; effective only for numeric axes.
+:::note{title=Beschreibung}
+Easing-Funktion der Animation.
 
 :::
 
@@ -2113,8 +2429,8 @@ Base of the logarithmic axis; effective only for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust axis tick intervals to make labels more readable. This setting is ignored when min and max are configured. Effective only for numeric axes.
+:::note{title=Beschreibung}
+Y-Achsen-Einstellung (Kategorieachse) zur Definition der Y-Achse, einschließlich Position, Format, Stil usw.
 
 :::
 
@@ -2122,8 +2438,8 @@ Whether to automatically adjust axis tick intervals to make labels more readable
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is displayed in reverse; effective only for numeric axes.
+:::note{title=Beschreibung}
+sortLegend: {
 
 :::
 
@@ -2131,8 +2447,8 @@ Whether the axis is displayed in reverse; effective only for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force display of the zero value on the axis. This setting is ignored when min and max are configured. Effective only for numeric axes.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2140,8 +2456,8 @@ Whether to force display of the zero value on the axis. This setting is ignored 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format axis labels; effective only for numeric axes. When autoFormat is true, numFormat is ignored.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2149,8 +2465,8 @@ Whether to automatically format axis labels; effective only for numeric axes. Wh
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Number formatting for the axis; effective only for numeric axes. Has lower priority than autoFormat.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2159,8 +2475,8 @@ Number formatting for the axis; effective only for numeric axes. Has lower prior
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2168,14 +2484,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -2183,14 +2499,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Beispiel**
+
+
 
 
 
@@ -2198,8 +2514,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2207,8 +2523,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2216,8 +2532,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2225,18 +2541,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Beschreibung}
+**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Beispiel**
+
+
+Easing-Funktion der Animation
+
+
+
 
 
 
@@ -2244,20 +2560,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Beschreibung}
+Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Beispiel**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 
 
 
@@ -2265,14 +2581,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Beispiel**
+Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
+
 
 
 
@@ -2280,8 +2596,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2289,8 +2605,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-x-axis tick labels
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2299,8 +2615,8 @@ x-axis tick labels
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2308,8 +2624,8 @@ Whether labels are visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color
+:::note{title=Beschreibung}
+value: 'tool'
 
 :::
 
@@ -2317,8 +2633,8 @@ Label color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=Beschreibung}
+  orderBy: 'profit',
 
 :::
 
@@ -2326,8 +2642,8 @@ Label font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=Beschreibung}
+or
 
 :::
 
@@ -2335,8 +2651,8 @@ Label font weight
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2344,8 +2660,8 @@ Label rotation angle
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-x-axis line
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
@@ -2354,8 +2670,8 @@ x-axis line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible
+:::note{title=Beschreibung}
+\- orderBy:'date'
 
 :::
 
@@ -2363,8 +2679,8 @@ Whether the axis line is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color
+:::note{title=Beschreibung}
+**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2372,8 +2688,8 @@ Axis line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2381,8 +2697,8 @@ Axis line width
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-x-axis ticks
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2391,8 +2707,8 @@ x-axis ticks
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2400,8 +2716,8 @@ Whether ticks are visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2409,8 +2725,8 @@ Whether ticks point inwards
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color
+:::note{title=Beschreibung}
+Legenden-Sortierkonfiguration; unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolgen; das sort-Array folgt der Reihenfolge von links nach rechts oder von oben nach unten.
 
 :::
 
@@ -2418,8 +2734,8 @@ Tick color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick size
+:::note{title=Beschreibung}
+sortLegend: {
 
 :::
 
@@ -2427,8 +2743,8 @@ Tick size
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-x-axis title
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2437,8 +2753,8 @@ x-axis title
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2446,8 +2762,8 @@ Whether the title is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text; defaults to following the field configuration.
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
@@ -2455,8 +2771,8 @@ Title text; defaults to following the field configuration.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color
+:::note{title=Beschreibung}
+\- orderBy:'profit'
 
 :::
 
@@ -2464,8 +2780,8 @@ Title color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size
+:::note{title=Beschreibung}
+Benutzerdefinierte Sortierreihenfolge; diese Reihenfolge wird direkt auf die Legende angewendet. Aufsteigend folgt links-nach-rechts oder oben-nach-unten; absteigend folgt rechts-nach-links oder unten-nach-oben.
 
 :::
 
@@ -2473,8 +2789,8 @@ Title font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight
+:::note{title=Beschreibung}
+  ])
 
 :::
 
@@ -2482,8 +2798,8 @@ Title font weight
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-x-axis grid lines
+:::note{title=Beschreibung}
+Enthalt die integrierten Themes `light` und `dark`. Benutzerdefinierte Themes konnen uber `registerTheme` hinzugefugt werden.
 
 :::
 
@@ -2496,8 +2812,8 @@ x-axis grid lines
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2505,8 +2821,8 @@ Grid line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width
+:::note{title=Beschreibung}
+- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
 
 :::
 
@@ -2514,8 +2830,8 @@ Grid line width
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line type
+:::note{title=Beschreibung}
+Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 
 :::
 
@@ -2523,8 +2839,8 @@ Grid line type
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-y-axis animation configuration
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2533,8 +2849,8 @@ y-axis animation configuration
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration
+:::note{title=Beschreibung}
+**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2542,8 +2858,8 @@ Animation duration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2552,12 +2868,16 @@ Animation easing function
 
 **Type:** `CrosshairLine | undefined`
 
-:::note{title=Description}
-Vertical crosshair line
+:::note{title=Beschreibung}
+Vertikale Hilfslinie
 
-A vertical line displayed when moving the mouse over the chart.
 
-Crosshair configuration; a type used to define the crosshair (indicator line) in a chart.
+
+Vertical guide line shown when the mouse moves over the chart
+
+
+
+Crosshair-Linienkonfiguration; ein Konfigurationstyp zum Anzeigen einer Crosshair-Linie (Hilfslinie) im Diagramm
 
 :::
 
@@ -2566,8 +2886,8 @@ Crosshair configuration; a type used to define the crosshair (indicator line) in
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the crosshair line
+:::note{title=Beschreibung}
+Ob die Crosshair-Linie angezeigt wird
 
 :::
 
@@ -2575,8 +2895,8 @@ Whether to display the crosshair line
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair line color
+:::note{title=Beschreibung}
+Farbe der Crosshair-Linie
 
 :::
 
@@ -2584,8 +2904,8 @@ Crosshair line color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair line label color
+:::note{title=Beschreibung}
+Farbe der Crosshair-Linienbeschriftung
 
 :::
 
@@ -2593,8 +2913,8 @@ Crosshair line label color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the crosshair label
+:::note{title=Beschreibung}
+Whether the crosshair line label is shown
 
 :::
 
@@ -2602,8 +2922,8 @@ Whether to display the crosshair label
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Crosshair label background color
+:::note{title=Beschreibung}
+Hintergrundfarbe der Crosshair-Linienbeschriftung
 
 :::
 
@@ -2612,18 +2932,24 @@ Crosshair label background color
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme; themes are lower-priority configuration features containing general settings shared by all chart types as well as settings shared by specific chart classes.
+:::note{title=Beschreibung}
+Chart theme. Theme is a lower-priority functional configuration that includes common settings shared by all chart types and by a single chart type.
 
-Includes built-in 'light' and 'dark' themes; users can define custom themes via the Builder.
 
-Theme
 
-Built-in 'light' and 'dark' themes; new themes can be customized via registerTheme.
+Two built-in themes are provided: light and dark. Users can customize themes through Builder.
+
+
+
+const maxItems = _.map(grouped, group =>
+
+
+
+_.map(maxItems, item => [
 
 :::
 
-**Example**
+**Beispiel**
 'dark'
 
 'light'
@@ -2646,18 +2972,20 @@ Built-in 'light' and 'dark' themes; new themes can be customized via registerThe
 
 **Type:** `PointStyle | PointStyle[] | undefined`
 
-:::note{title=Description}
-Point mark style
+:::note{title=Beschreibung}
+Punktmarkenstil
 
-Point mark style configuration used to define the styling for data points, including color, borders, etc.
 
-Supports global styling or conditional style configurations.
 
-Data filter.
+Point mark style configuration, used to define point mark color, border, and related settings.
 
-Provides four types of data matching capabilities if selector is configured: numerical selector, local data selector, conditional dimension selector, and conditional measure selector.
+Supports global style or conditional style configuration
 
-If selector is not configured, the style applies globally.
+Datenfilter
+
+**Type:** `string | undefined`
+
+
 
 :::
 
@@ -2666,27 +2994,29 @@ If selector is not configured, the style applies globally.
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data selector
+:::note{title=Beschreibung}
+- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
 
-Provides four types of data matching capabilities if selector is configured: numerical selector, local data selector, conditional dimension selector, and conditional measure selector.
 
-If selector is not configured, the style applies globally.
+
+**Type:** `string | undefined`
+
+
 
 :::
 
-**Example**
-Numerical selector
+**Beispiel**
+Strichfarbe des Balken-Primitives (Rechteck)
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Local data selector
+
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+
 selector = {
 field: 'category',
 operator: 'in',
@@ -2698,7 +3028,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+
 selector = {
 field: 'profit',
 operator: '>=',
@@ -2717,8 +3047,8 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2726,12 +3056,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -2739,14 +3069,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -2754,8 +3084,8 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2763,28 +3093,40 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed via AI-generated code)
+:::note{title=Beschreibung}
 
-Implement complex data filtering logic using AI-generated JavaScript code.
 
-Applicable to scenarios difficult to express with static selectors, such as Top N, statistical analysis, or complex conditions.
 
-Key Capabilities:
 
-\- Supports arbitrarily complex data filtering conditions
+Strichfarbe des Hintergrunds
 
-\- Uses internal utility functions for data operations
 
-\- Executes safely in the browser environment (Web Worker sandbox)
 
-Environment Requirements: Supports browser environment only; Node.js environments will use fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Chart dynamic filter configuration.
 
-Filtering of chart marks (bars, points, etc.) implemented via AI-generated JavaScript code.
+
+
+
+
+
+
+
+
+
+'red'
+
+
+
+
+
+
+
+
+
+
+
+Eckenradius des Hintergrunds
 
 :::
 
@@ -2797,15 +3139,15 @@ Filtering of chart marks (bars, points, etc.) implemented via AI-generated JavaS
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-"Highlight bars with sales greater than 1000"
+**Beispiel**
+"Datenelemente mit Umsatz ueber 1000 hervorheben"
 
-"Highlight the bar with the highest profit margin in each region"
+"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -2813,23 +3155,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=Beschreibung}
+Operator
 
-\- Can only use internal utility functions (accessed via _ or R)
 
-\- Input parameter: data (array), each item includes a __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
+\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
 
-\- __row_index represents the original data item's row number, field represents the field to highlight
+**Beispiel**
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, network requests
+
+
+
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
-**Example**
-Highlight the sales field of data items with sales greater than 1000
+**Beispiel**
+sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2838,7 +3182,7 @@ field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region
+Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2852,7 +3196,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items with multi-condition filtering
+Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2872,8 +3216,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is unsupported
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2882,8 +3226,8 @@ Fallback plan when code execution fails or the environment is unsupported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2891,12 +3235,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -2904,14 +3248,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -2919,8 +3263,8 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -2928,10 +3272,12 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Beschreibung}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+Textfarbe
 
 :::
 
@@ -2952,8 +3298,8 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the point is visible
+:::note{title=Beschreibung}
+Ob Punkte sichtbar sind
 
 :::
 
@@ -2961,10 +3307,12 @@ Whether the point is visible
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Point size
+:::note{title=Beschreibung}
+Punktgroesse
 
-Point size
+
+
+Punktgroesse
 
 :::
 
@@ -2972,10 +3320,12 @@ Point size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Point mark color
+:::note{title=Beschreibung}
+Farbe der Punktmarke
 
-Point mark color
+
+
+Farbe der Punktmarke
 
 :::
 
@@ -2983,8 +3333,10 @@ Point mark color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Beschreibung}
 Point mark color opacity
+
+
 
 Point mark color opacity
 
@@ -2994,10 +3346,12 @@ Point mark color opacity
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Point mark border color
+:::note{title=Beschreibung}
+Rahmenfarbe der Punktmarke
 
-Point mark border color
+
+
+Rahmenfarbe der Punktmarke
 
 :::
 
@@ -3005,10 +3359,12 @@ Point mark border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Point mark border width
+:::note{title=Beschreibung}
+Rahmenbreite der Punktmarke
 
-Point mark border width
+
+
+Rahmenbreite der Punktmarke
 
 :::
 
@@ -3016,14 +3372,16 @@ Point mark border width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Point mark border style
+:::note{title=Beschreibung}
+Rahmenstil der Punktmarke
 
-Point mark border style
+
+
+Rahmenstil der Punktmarke
 
 :::
 
-**Example**
+**Beispiel**
 solid
 
 dashed
@@ -3037,10 +3395,12 @@ dotted
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-:::note{title=Description}
-Annotation point
+:::note{title=Beschreibung}
+Markierungspunkt
 
-Annotation point configuration; defines chart annotation points based on selected data, including their position, format, style, etc.
+
+
+Annotation point configuration. Defines chart annotation points based on selected data, including position, format, style, and related settings.
 
 :::
 
@@ -3049,8 +3409,8 @@ Annotation point configuration; defines chart annotation points based on selecte
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Selector for the annotation point, used to select data points.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3059,8 +3419,8 @@ Selector for the annotation point, used to select data points.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3068,12 +3428,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -3081,14 +3441,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -3096,8 +3456,17 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3105,28 +3474,40 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed via AI-generated code)
+:::note{title=Beschreibung}
 
-Implement complex data filtering logic using AI-generated JavaScript code.
 
-Applicable to scenarios difficult to express with static selectors, such as Top N, statistical analysis, or complex conditions.
 
-Key Capabilities:
 
-\- Supports arbitrarily complex data filtering conditions
+Strichfarbe des Hintergrunds
 
-\- Uses internal utility functions for data operations
 
-\- Executes safely in the browser environment (Web Worker sandbox)
 
-Environment Requirements: Supports browser environment only; Node.js environments will use fallback.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
 
-Chart dynamic filter configuration.
 
-Filtering of chart marks (bars, points, etc.) implemented via AI-generated JavaScript code.
+
+
+
+
+
+
+
+
+
+'red'
+
+
+
+
+
+
+
+
+
+
+
+Eckenradius des Hintergrunds
 
 :::
 
@@ -3139,15 +3520,15 @@ Filtering of chart marks (bars, points, etc.) implemented via AI-generated JavaS
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-"Highlight bars with sales greater than 1000"
+**Beispiel**
+"Datenelemente mit Umsatz ueber 1000 hervorheben"
 
-"Highlight the bar with the highest profit margin in each region"
+"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -3155,23 +3536,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=Beschreibung}
+Operator
 
-\- Can only use internal utility functions (accessed via _ or R)
 
-\- Input parameter: data (array), each item includes a __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
+\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
 
-\- __row_index represents the original data item's row number, field represents the field to highlight
+**Beispiel**
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, network requests
+
+
+
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
-**Example**
-Highlight the sales field of data items with sales greater than 1000
+**Beispiel**
+sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -3180,7 +3563,7 @@ field: 'sales'
 }));
 ```
 
-Highlight the data item with the highest profit margin in each region
+Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -3194,7 +3577,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items with multi-condition filtering
+Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -3214,8 +3597,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is unsupported
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3224,8 +3607,8 @@ Fallback plan when code execution fails or the environment is unsupported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3233,12 +3616,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -3246,14 +3629,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -3261,8 +3644,8 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3270,10 +3653,12 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Beschreibung}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+Textfarbe
 
 :::
 
@@ -3294,13 +3679,13 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=Beschreibung}
+'red'
 
 :::
 
-**Example**
-'Annotation text'
+**Beispiel**
+'Markierungstext'
 
 
 
@@ -3308,12 +3693,12 @@ Annotation text
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3322,12 +3707,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -3336,12 +3721,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -3350,21 +3735,21 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment; in general, setting this to "right" displays text to the left of the annotation point, ensuring it stays within the visible area of the chart.
+:::note{title=Beschreibung}
 
-Recommended to set to 'right' to ensure text is on the left side of the annotation point.
 
-right: Text is on the left of the annotation point; the right edge of the text aligns with the point.
 
-left: Text is on the right of the annotation point; the left edge of the text aligns with the point.
 
-center: Text is at the center of the annotation point; the center of the text aligns with the point.
+Schriftgrosse des Textes.
+
+**Type:** `string | string[] | undefined`
+
+**Beispiel**
 
 :::
 
-**Example**
-'right' text is on the left side of the annotation point
+**Beispiel**
+'right' Text befindet sich links vom Markierungspunkt
 
 
 
@@ -3372,21 +3757,21 @@ center: Text is at the center of the annotation point; the center of the text al
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical text alignment; in general, setting this to "top" displays text at the bottom of the annotation point, ensuring it stays within the visible area of the chart.
+:::note{title=Beschreibung}
+**Beispiel**
 
-Recommended to set to 'top' to ensure text is fully displayed within the visible area of the chart.
 
-top: Text is at the bottom of the annotation point; the top edge of the text aligns with the point.
 
-middle: Text is at the center of the annotation point; the center of the text aligns with the point.
 
-bottom: Text is at the top of the annotation point; the bottom edge of the text aligns with the point.
+
+
+
+
 
 :::
 
-**Example**
-'top' text is at the bottom of the annotation point
+**Beispiel**
+'top' Text befindet sich unterhalb des Markierungspunkts
 
 
 
@@ -3394,12 +3779,12 @@ bottom: Text is at the top of the annotation point; the bottom edge of the text 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the background is visible
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 true
 
 
@@ -3408,12 +3793,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3422,12 +3807,12 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=Beschreibung}
+Textfarbe
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3436,12 +3821,12 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -3450,12 +3835,12 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -3464,12 +3849,12 @@ Background border radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=Beschreibung}
+Innenabstand des Hintergrunds
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -3478,17 +3863,17 @@ Background padding
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Overall pixel offset distance for the annotation point in the Y direction. When the point is near the top (larger values), a positive offset is recommended; when near the bottom (smaller values), a negative offset is recommended.
+:::note{title=Beschreibung}
 
-A negative value offsets the component upwards (e.g., -10 pixels).
 
-A positive value offsets the component downwards (e.g., 10 pixels).
+
+
+Ob der Hintergrund sichtbar ist.
 
 :::
 
-**Example**
-offsetY: 5, the annotation point is offset downwards by 5 pixels
+**Beispiel**
+true
 
 
 
@@ -3496,17 +3881,17 @@ offsetY: 5, the annotation point is offset downwards by 5 pixels
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Overall pixel offset distance for the annotation point in the X direction. When the point is near the left edge (start of category axis), a positive offset is recommended; when near the right edge (end of axis), a negative offset is recommended.
+:::note{title=Beschreibung}
+Hintergrundfarbe.
 
-A negative value offsets the component to the left (e.g., -10 pixels).
+**Type:** `number | undefined`
 
-A positive value offsets the component to the right (e.g., 10 pixels).
+**Beispiel**
 
 :::
 
-**Example**
-offsetX: 5, the annotation point is offset to the right by 5 pixels
+**Beispiel**
+2
 
 
 
@@ -3515,10 +3900,12 @@ offsetX: 5, the annotation point is offset to the right by 5 pixels
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
-:::note{title=Description}
-Vertical annotation line
+:::note{title=Beschreibung}
+Vertikale Markierungslinie
 
-Numerical annotation line (including mean, max, min lines, etc.), displayed vertically. Position, style, etc. can be configured. Use this for lines corresponding to values such as the mean of an X-axis measure.
+
+
+Numeric annotation line, including average, maximum, and minimum lines. Displayed vertically and configurable by position and style. Use this configuration to draw annotation lines for numeric values such as X-axis measure averages.
 
 :::
 
@@ -3527,8 +3914,8 @@ Numerical annotation line (including mean, max, min lines, etc.), displayed vert
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed x-value for the vertical annotation line. For category axes in the X direction, enter dimension values; for numeric axes in the X direction, enter specific numerical values.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3536,14 +3923,18 @@ Fixed x-value for the vertical annotation line. For category axes in the X direc
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed via AI-generated code)
+:::note{title=Beschreibung}
 
-Calculate the value of the annotation line dynamically via AI-generated JavaScript code.
 
-Suitable for scenarios where the line position must be determined dynamically based on data, such as averages, maximums, quantiles, or business logic.
 
-Supports browser environment only (requires Web Worker).
+
+
+
+
+
+
+
+
 
 :::
 
@@ -3556,15 +3947,15 @@ Supports browser environment only (requires Web Worker).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's requirement description (natural language)
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-"Use the highest sales value as the annotation line reference"
+**Beispiel**
+"Höchsten Umsatzwert als Referenz für die Markierungslinie abrufen"
 
-"Calculate the average sales for the annotation line"
+"Durchschnittlichen Umsatz für die Markierungslinie berechnen"
 
 
 
@@ -3572,42 +3963,44 @@ User's requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript calculation code
+:::note{title=Beschreibung}
+Operator
 
-\- Can only use internal utility functions (accessed via _ or R)
 
-\- Input parameter: data (array)
 
-\- Must return a single numerical value or string: number | string
+\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
 
-\- Use case: Dynamic numerical values required for annotation lines (horizontal or vertical)
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, network requests
+
+
+
+**Type:** `boolean | undefined`
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
-**Example**
-Get the maximum sales value as the annotation line value
+**Beispiel**
+
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-Calculate average value for the annotation line
+
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Get quantile as the annotation line
+
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-Calculate goal value based on conditions
+
 ```javascript
 const currentYearTotal = _.sumBy(
 _.filter(data, item => item.year === 2024),
@@ -3622,8 +4015,8 @@ return currentYearTotal;
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is unsupported
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3631,10 +4024,12 @@ Fallback plan when code execution fails or the environment is unsupported
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Beschreibung}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+Textfarbe
 
 :::
 
@@ -3651,13 +4046,13 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=Beschreibung}
+'red'
 
 :::
 
-**Example**
-'Annotation text'
+**Beispiel**
+'Markierungstext'
 
 
 
@@ -3665,12 +4060,12 @@ Annotation text
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Text position; the position of the annotation line's label (relative to the line).
+:::note{title=Beschreibung}
+Ausgewahlte Dimensionsfeldwerte; unterstutzt Arrays.
 
 :::
 
-**Example**
+**Beispiel**
 'outsideEnd'
 
 
@@ -3679,12 +4074,12 @@ Text position; the position of the annotation line's label (relative to the line
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3693,12 +4088,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -3707,12 +4102,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -3721,20 +4116,20 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment; in general, no setting is required.
+:::note{title=Beschreibung}
+left: Text befindet sich rechts vom Anmerkungsbereich, die linke Kante ist am Bereich ausgerichtet.
 
-Recommended to set to 'right' to ensure text is on the left side of the annotation line.
+center: Text wird im Anmerkungsbereich zentriert.
 
-right: Text is on the left side of the reference line; the right edge of the text aligns with the (vertical) annotation line.
+Textfarbe.
 
-left: Text is on the right side of the reference line; the left edge of the text aligns with the (vertical) annotation line.
+**Type:** `number | undefined`
 
-center: Text is at the center of the reference line; the center of the text aligns with the (vertical) annotation line.
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 'right'
 
 
@@ -3743,20 +4138,20 @@ center: Text is at the center of the reference line; the center of the text alig
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical text alignment; in general, no setting is required.
+:::note{title=Beschreibung}
+middle: Text wird vertikal im Anmerkungsbereich zentriert.
 
-Recommended to set to 'top' to ensure text is fully displayed within the visible area of the chart.
 
-top: Text is at the bottom of the reference line; the top edge of the text aligns with the endpoint of the (vertical) annotation line.
 
-middle: Text is at the center of the reference line; the center of the text aligns with the endpoint of the (vertical) annotation line.
 
-bottom: Text is at the top of the reference line; the bottom edge of the text aligns with the endpoint of the (vertical) annotation line.
+
+
+
+
 
 :::
 
-**Example**
+**Beispiel**
 'top'
 
 
@@ -3765,12 +4160,12 @@ bottom: Text is at the top of the reference line; the bottom edge of the text al
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the line is visible
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 true
 
 
@@ -3779,12 +4174,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color
+:::note{title=Beschreibung}
+Rahmenfarbe des Anmerkungsbereichs.
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3793,12 +4188,12 @@ Line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width
+:::note{title=Beschreibung}
+Rahmenbreite des Anmerkungsbereichs.
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -3807,12 +4202,12 @@ Line width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Line style
+:::note{title=Beschreibung}
+Eckenradius des Rahmens des Anmerkungsbereichs.
 
 :::
 
-**Example**
+**Beispiel**
 'solid'
 
 
@@ -3821,12 +4216,12 @@ Line style
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the background is visible
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 true
 
 
@@ -3835,12 +4230,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3849,12 +4244,12 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=Beschreibung}
+Textfarbe
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -3863,12 +4258,12 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -3877,12 +4272,12 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -3891,12 +4286,12 @@ Background border radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=Beschreibung}
+Innenabstand des Hintergrunds
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -3906,10 +4301,12 @@ Background padding
 
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
-:::note{title=Description}
-Horizontal annotation line
+:::note{title=Beschreibung}
+Horizontale Markierungslinie
 
-Numerical annotation line (including mean, max, min lines, etc.), displayed horizontally. Position, style, etc. can be configured. Use this for lines corresponding to values such as the mean of a Y-axis measure.
+
+
+Numeric annotation line, including average, maximum, and minimum lines. Displayed vertically and configurable by position and style. Use this configuration to draw annotation lines for numeric values such as Y-axis measure averages.
 
 :::
 
@@ -3918,8 +4315,8 @@ Numerical annotation line (including mean, max, min lines, etc.), displayed hori
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Description}
-Fixed y-value for the horizontal annotation line. For category axes in the Y direction, enter dimension values; for numeric axes in the Y direction, enter specific numerical values.
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -3927,14 +4324,18 @@ Fixed y-value for the horizontal annotation line. For category axes in the Y dir
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (executed via AI-generated code)
+:::note{title=Beschreibung}
 
-Calculate the value of the annotation line dynamically via AI-generated JavaScript code.
 
-Suitable for scenarios where the line position must be determined dynamically based on data, such as averages, maximums, quantiles, or business logic.
 
-Supports browser environment only (requires Web Worker).
+
+
+
+
+
+
+
+
 
 :::
 
@@ -3947,15 +4348,15 @@ Supports browser environment only (requires Web Worker).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's requirement description (natural language)
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
-"Use the highest sales value as the annotation line reference"
+**Beispiel**
+"Höchsten Umsatzwert als Referenz für die Markierungslinie abrufen"
 
-"Calculate the average sales for the annotation line"
+"Durchschnittlichen Umsatz für die Markierungslinie berechnen"
 
 
 
@@ -3963,42 +4364,44 @@ User's requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript calculation code
+:::note{title=Beschreibung}
+Operator
 
-\- Can only use internal utility functions (accessed via _ or R)
 
-\- Input parameter: data (array)
 
-\- Must return a single numerical value or string: number | string
+\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
 
-\- Use case: Dynamic numerical values required for annotation lines (horizontal or vertical)
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, network requests
+
+
+
+**Type:** `boolean | undefined`
+
+**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
-**Example**
-Get the maximum sales value as the annotation line value
+**Beispiel**
+
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-Calculate average value for the annotation line
+
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Get quantile as the annotation line
+
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-Calculate goal value based on conditions
+
 ```javascript
 const currentYearTotal = _.sumBy(
 _.filter(data, item => item.year === 2024),
@@ -4013,8 +4416,8 @@ return currentYearTotal;
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is unsupported
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -4022,10 +4425,12 @@ Fallback plan when code execution fails or the environment is unsupported
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Beschreibung}
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+Textfarbe
 
 :::
 
@@ -4042,13 +4447,13 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=Beschreibung}
+'red'
 
 :::
 
-**Example**
-'Annotation text'
+**Beispiel**
+'Markierungstext'
 
 
 
@@ -4056,14 +4461,16 @@ Annotation text
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Description}
-Text position
+:::note{title=Beschreibung}
+2
 
-The position of the annotation line's label (relative to the line).
+
+
+
 
 :::
 
-**Example**
+**Beispiel**
 'outsideEnd'
 
 
@@ -4072,12 +4479,12 @@ The position of the annotation line's label (relative to the line).
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4086,12 +4493,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -4100,12 +4507,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -4114,20 +4521,20 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment; in general, no setting is required.
+:::note{title=Beschreibung}
+left: Text befindet sich rechts vom Anmerkungsbereich, die linke Kante ist am Bereich ausgerichtet.
 
-Recommended to set to 'right' to ensure text is on the left side of the annotation line.
+center: Text wird im Anmerkungsbereich zentriert.
 
-right: Text is on the left side of the reference line; the right edge of the text aligns with the endpoint of the (horizontal) annotation line.
 
-left: Text is on the right side of the reference line; the left edge of the text aligns with the endpoint of the (horizontal) annotation line.
 
-center: Text is at the center of the reference line; the center of the text aligns with the endpoint of the (horizontal) annotation line.
+**Beispiel**
+
+
 
 :::
 
-**Example**
+**Beispiel**
 'right'
 
 
@@ -4136,20 +4543,20 @@ center: Text is at the center of the reference line; the center of the text alig
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical text alignment; in general, no setting is required.
+:::note{title=Beschreibung}
+middle: Text wird vertikal im Anmerkungsbereich zentriert.
 
-Recommended to set to 'top' to ensure text is fully displayed within the visible area of the chart.
 
-top: Text is at the bottom of the reference line; the top edge of the text aligns with the (horizontal) annotation line.
 
-middle: Text is at the center of the reference line; the center of the text aligns with the (horizontal) annotation line.
+Strichfarbe des Hintergrunds
 
-bottom: Text is at the top of the reference line; the bottom edge of the text aligns with the (horizontal) annotation line.
+**Beispiel**
+
+
 
 :::
 
-**Example**
+**Beispiel**
 'top'
 
 
@@ -4158,12 +4565,12 @@ bottom: Text is at the top of the reference line; the bottom edge of the text al
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the background is visible
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 true
 
 
@@ -4172,12 +4579,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4186,12 +4593,12 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=Beschreibung}
+Textfarbe
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4200,14 +4607,16 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=Beschreibung}
+**Beispiel**
 
-Background border width
+
+
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -4216,12 +4625,12 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -4230,12 +4639,12 @@ Background border radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=Beschreibung}
+Innenabstand des Hintergrunds
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -4244,14 +4653,16 @@ Background padding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the line is visible
+:::note{title=Beschreibung}
 
-Whether the line is visible
+
+
+
+
 
 :::
 
-**Example**
+**Beispiel**
 true
 
 
@@ -4260,12 +4671,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Line color
+:::note{title=Beschreibung}
+Rahmenfarbe des Anmerkungsbereichs.
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4274,12 +4685,12 @@ Line color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width
+:::note{title=Beschreibung}
+Rahmenbreite des Anmerkungsbereichs.
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -4288,12 +4699,12 @@ Line width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Description}
-Line style
+:::note{title=Beschreibung}
+Eckenradius des Rahmens des Anmerkungsbereichs.
 
 :::
 
-**Example**
+**Beispiel**
 'solid'
 
 
@@ -4302,8 +4713,8 @@ Line style
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
-:::note{title=Description}
-Whether to enable the feature that splits the main line into two segments
+:::note{title=Beschreibung}
+Strichelstil des Rahmens des Anmerkungsbereichs.
 
 :::
 
@@ -4312,8 +4723,8 @@ Whether to enable the feature that splits the main line into two segments
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-The main color for the portion greater than the annotation value
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -4321,8 +4732,8 @@ The main color for the portion greater than the annotation value
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-The main color for the portion less than the annotation value
+:::note{title=Beschreibung}
+0
 
 :::
 
@@ -4331,10 +4742,12 @@ The main color for the portion less than the annotation value
 
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
-:::note{title=Description}
-Annotation area
+:::note{title=Beschreibung}
+Markierungsbereich
 
-Annotation area configuration; defines chart annotation areas based on selected data, including their position, style, etc.
+
+
+Annotation region configuration. Defines chart annotation regions based on selected data, including position, style, and related settings.
 
 :::
 
@@ -4343,8 +4756,8 @@ Annotation area configuration; defines chart annotation areas based on selected 
 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
-:::note{title=Description}
-Annotate data based on the selected data items.
+:::note{title=Beschreibung}
+Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktiviert ist oder Kennzahlen kombiniert sind.
 
 :::
 
@@ -4353,8 +4766,8 @@ Annotate data based on the selected data items.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; the id of a specific dimension item
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -4362,12 +4775,12 @@ Dimension field; the id of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
+
 
 :::
 
@@ -4375,14 +4788,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Beschreibung}
+**Beispiel**
 
-\- in: Select data items whose dimension field value is in the value list
+**Type:** `number | undefined`
 
-\- not in: Select data items whose dimension field value is not in the value list
 
-Same as operator
+
+same as operator
 
 :::
 
@@ -4390,8 +4803,8 @@ Same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selection value for the dimension field; supports arrays
+:::note{title=Beschreibung}
+
 
 :::
 
@@ -4399,13 +4812,13 @@ Selection value for the dimension field; supports arrays
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Description}
-Annotation text
+:::note{title=Beschreibung}
+'red'
 
 :::
 
-**Example**
-'Annotation text'
+**Beispiel**
+'Markierungstext'
 
 
 
@@ -4413,12 +4826,12 @@ Annotation text
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
-:::note{title=Description}
-Text position
+:::note{title=Beschreibung}
+2
 
 :::
 
-**Example**
+**Beispiel**
 'top'
 
 
@@ -4427,12 +4840,12 @@ Text position
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4441,12 +4854,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -4455,12 +4868,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -4469,21 +4882,21 @@ Text font weight
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Description}
-Text alignment; in general, setting this to "right" displays text in the middle of the annotation area, ensuring it stays within the visible area of the chart.
+:::note{title=Beschreibung}
+Konfiguration der polynomialen Regressionslinie, einschliesslich Polynomordnung, Stil der Regressionslinie usw.
 
-Recommended to set to 'center' to ensure text is in the middle of the annotation area.
+Es wird empfohlen, 'center' zu setzen, damit der Text in der Mitte des Markierungsbereichs liegt
 
-right: Text is on the left of the annotation area; the right edge of the text aligns with the area.
 
-left: Text is on the right of the annotation area; the left edge of the text aligns with the area.
 
-center: Text is at the center of the annotation area; the center of the text aligns with the area.
+
+
+
 
 :::
 
-**Example**
-'center' text is in the middle of the annotation area
+**Beispiel**
+'center' Text befindet sich in der Mitte des Markierungsbereichs
 
 
 
@@ -4491,21 +4904,21 @@ center: Text is at the center of the annotation area; the center of the text ali
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Description}
-Vertical text alignment; in general, setting this to "top" displays text at the bottom of the annotation area, ensuring it stays within the visible area of the chart.
+:::note{title=Beschreibung}
 
-Recommended to set to 'top' to ensure text is fully displayed within the visible area of the chart.
 
-top: Text is at the bottom of the annotation area; the top edge of the text aligns with the area.
 
-middle: Text is at the center of the annotation area; the center of the text aligns with the area.
 
-bottom: Text is at the top of the annotation area; the bottom edge of the text aligns with the area.
+
+
+
+
+Ordnung der polynomialen Regression
 
 :::
 
-**Example**
-'top' text is at the bottom of the annotation area
+**Beispiel**
+'top' Text befindet sich am unteren Rand des Markierungsbereichs
 
 
 
@@ -4513,12 +4926,12 @@ bottom: Text is at the top of the annotation area; the bottom edge of the text a
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the background is visible
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 true
 
 
@@ -4527,12 +4940,12 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color
+:::note{title=Beschreibung}
+**Type:** `string | undefined`
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4541,14 +4954,16 @@ Background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background border color
+:::note{title=Beschreibung}
+Textfarbe
 
-Background border color
+
+
+Textfarbe
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4557,12 +4972,12 @@ Background border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border width
+:::note{title=Beschreibung}
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -4571,14 +4986,16 @@ Background border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background border radius
+:::note{title=Beschreibung}
+**Beispiel**
 
-Background border radius
+
+
+**Beispiel**
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -4587,12 +5004,12 @@ Background border radius
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Background padding
+:::note{title=Beschreibung}
+Innenabstand des Hintergrunds
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -4601,12 +5018,12 @@ Background padding
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Annotation area color
+:::note{title=Beschreibung}
+Farbe des Markierungsbereichs
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4615,12 +5032,12 @@ Annotation area color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area color opacity
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 0.5
 
 
@@ -4629,12 +5046,12 @@ Annotation area color opacity
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Annotation area border color
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4643,12 +5060,12 @@ Annotation area border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area border width
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 2
 
 
@@ -4657,12 +5074,12 @@ Annotation area border width
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Annotation area border radius
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 4
 
 
@@ -4671,12 +5088,12 @@ Annotation area border radius
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Annotation area border dash pattern
+:::note{title=Beschreibung}
+
 
 :::
 
-**Example**
+**Beispiel**
 [2, 2]
 
 
@@ -4685,12 +5102,12 @@ Annotation area border dash pattern
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Margin of the annotation area
+:::note{title=Beschreibung}
+Randabstand des Markierungsbereichs
 
 :::
 
-**Example**
+**Beispiel**
 0
 
 
@@ -4700,10 +5117,12 @@ Margin of the annotation area
 
 **Type:** `LinearRegressionLine | LinearRegressionLine[] | undefined`
 
-:::note{title=Description}
-Linear regression line
+:::note{title=Beschreibung}
+Lineare Regressionslinie
 
-Linear regression line configuration, including line style, etc.
+
+
+Linear regression line configuration, including line style and related settings.
 
 :::
 
@@ -4712,8 +5131,8 @@ Linear regression line configuration, including line style, etc.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable
+:::note{title=Beschreibung}
+Ob aktiviert
 
 :::
 
@@ -4721,10 +5140,10 @@ Whether to enable
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line color
+:::note{title=Beschreibung}
+Farbe der Regressionslinie
 
-Used to set the regression line color; if not set, the chart's main color is used by default.
+Sets the regression line color. If unset, the chart primary color is used by default.
 
 :::
 
@@ -4732,10 +5151,10 @@ Used to set the regression line color; if not set, the chart's main color is use
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Regression line width
+:::note{title=Beschreibung}
+Breite der Regressionslinie
 
-Used to set the regression line width, in pixels; default is 1.
+Sets the regression line width in pixels. The default value is 1.
 
 :::
 
@@ -4743,10 +5162,10 @@ Used to set the regression line width, in pixels; default is 1.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Regression line style
+:::note{title=Beschreibung}
+Stil der Regressionslinie
 
-Used to set the regression line style, e.g., solid, dashed, etc.; default is solid.
+Sets the regression line style, such as solid or dashed. The default is solid.
 
 :::
 
@@ -4754,10 +5173,10 @@ Used to set the regression line style, e.g., solid, dashed, etc.; default is sol
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line label text
+:::note{title=Beschreibung}
+Beschriftungstext der Regressionslinie
 
-Used to set the regression line's label text; an empty string means no label is shown.
+Sets the regression line label text. An empty string means no label is shown.
 
 :::
 
@@ -4765,12 +5184,12 @@ Used to set the regression line's label text; an empty string means no label is 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4779,12 +5198,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -4793,12 +5212,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -4807,8 +5226,8 @@ Text font weight
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the confidence interval
+:::note{title=Beschreibung}
+Ob das Konfidenzintervall angezeigt wird
 
 :::
 
@@ -4816,8 +5235,8 @@ Whether to display the confidence interval
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval numerical setting; default is 95% confidence level.
+:::note{title=Beschreibung}
+Confidence interval value setting. The default confidence level is 95%.
 
 :::
 
@@ -4825,8 +5244,8 @@ Confidence interval numerical setting; default is 95% confidence level.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Confidence interval color
+:::note{title=Beschreibung}
+Farbe des Konfidenzintervalls
 
 :::
 
@@ -4834,12 +5253,12 @@ Confidence interval color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval opacity
+:::note{title=Beschreibung}
+Deckkraft des Konfidenzintervalls
 
 :::
 
-**Example**
+**Beispiel**
 0.5
 
 
@@ -4848,12 +5267,12 @@ Confidence interval opacity
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Shadow blur level
+:::note{title=Beschreibung}
+Graphic blur effect strength
 
 :::
 
-**Example**
+**Beispiel**
 0
 
 
@@ -4862,12 +5281,12 @@ Shadow blur level
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Mark shadow color
+:::note{title=Beschreibung}
+Graphic shadow color
 
 :::
 
-**Example**
+**Beispiel**
 '#FFFFFF4D'
 
 
@@ -4876,12 +5295,12 @@ Mark shadow color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Horizontal shadow offset
+:::note{title=Beschreibung}
+Horizontal shadow offset distance
 
 :::
 
-**Example**
+**Beispiel**
 0
 
 
@@ -4890,12 +5309,12 @@ Horizontal shadow offset
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Vertical shadow offset
+:::note{title=Beschreibung}
+Vertical shadow offset distance
 
 :::
 
-**Example**
+**Beispiel**
 1
 
 
@@ -4905,10 +5324,12 @@ Vertical shadow offset
 
 **Type:** `LowessRegressionLine | LowessRegressionLine[] | undefined`
 
-:::note{title=Description}
-Locally weighted regression line configuration
+:::note{title=Beschreibung}
+Locally weighted regression line configuration item
 
-Locally weighted regression line configuration, including line style, etc.
+
+
+Locally weighted regression line configuration, including line style and related settings.
 
 :::
 
@@ -4917,8 +5338,8 @@ Locally weighted regression line configuration, including line style, etc.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable
+:::note{title=Beschreibung}
+Ob aktiviert
 
 :::
 
@@ -4926,10 +5347,10 @@ Whether to enable
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line color
+:::note{title=Beschreibung}
+Farbe der Regressionslinie
 
-Used to set the regression line color; if not set, the chart's main color is used by default.
+Sets the regression line color. If unset, the chart primary color is used by default.
 
 :::
 
@@ -4937,10 +5358,10 @@ Used to set the regression line color; if not set, the chart's main color is use
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Regression line width
+:::note{title=Beschreibung}
+Breite der Regressionslinie
 
-Used to set the regression line width, in pixels; default is 1.
+Sets the regression line width in pixels. The default value is 1.
 
 :::
 
@@ -4948,10 +5369,10 @@ Used to set the regression line width, in pixels; default is 1.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Regression line style
+:::note{title=Beschreibung}
+Stil der Regressionslinie
 
-Used to set the regression line style, e.g., solid, dashed, etc.; default is solid.
+Sets the regression line style, such as solid or dashed. The default is solid.
 
 :::
 
@@ -4959,10 +5380,10 @@ Used to set the regression line style, e.g., solid, dashed, etc.; default is sol
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line label text
+:::note{title=Beschreibung}
+Beschriftungstext der Regressionslinie
 
-Used to set the regression line's label text; an empty string means no label is shown.
+Sets the regression line label text. An empty string means no label is shown.
 
 :::
 
@@ -4970,12 +5391,12 @@ Used to set the regression line's label text; an empty string means no label is 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -4984,12 +5405,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -4998,12 +5419,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -5012,8 +5433,8 @@ Text font weight
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the confidence interval
+:::note{title=Beschreibung}
+Ob das Konfidenzintervall angezeigt wird
 
 :::
 
@@ -5021,8 +5442,8 @@ Whether to display the confidence interval
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval numerical setting; default is 95% confidence level.
+:::note{title=Beschreibung}
+Confidence interval value setting. The default confidence level is 95%.
 
 :::
 
@@ -5030,8 +5451,8 @@ Confidence interval numerical setting; default is 95% confidence level.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Confidence interval color
+:::note{title=Beschreibung}
+Farbe des Konfidenzintervalls
 
 :::
 
@@ -5039,12 +5460,12 @@ Confidence interval color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval opacity
+:::note{title=Beschreibung}
+Deckkraft des Konfidenzintervalls
 
 :::
 
-**Example**
+**Beispiel**
 0.5
 
 
@@ -5054,10 +5475,12 @@ Confidence interval opacity
 
 **Type:** `PolynomialRegressionLine | PolynomialRegressionLine[] | undefined`
 
-:::note{title=Description}
-Polynomial regression line
+:::note{title=Beschreibung}
+Polynomiale Regressionslinie
 
-Polynomial regression line configuration, including polynomial degree, line style, etc.
+
+
+Polynomial regression line configuration, including polynomial order, line style, and related settings.
 
 :::
 
@@ -5066,8 +5489,8 @@ Polynomial regression line configuration, including polynomial degree, line styl
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable
+:::note{title=Beschreibung}
+Ob aktiviert
 
 :::
 
@@ -5075,10 +5498,10 @@ Whether to enable
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line color
+:::note{title=Beschreibung}
+Farbe der Regressionslinie
 
-Used to set the regression line color; if not set, the chart's main color is used by default.
+Sets the regression line color. If unset, the chart primary color is used by default.
 
 :::
 
@@ -5086,8 +5509,8 @@ Used to set the regression line color; if not set, the chart's main color is use
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Degree of the polynomial regression
+:::note{title=Beschreibung}
+Polynomial regression order
 
 :::
 
@@ -5095,10 +5518,10 @@ Degree of the polynomial regression
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Regression line width
+:::note{title=Beschreibung}
+Breite der Regressionslinie
 
-Used to set the regression line width, in pixels; default is 1.
+Sets the regression line width in pixels. The default value is 1.
 
 :::
 
@@ -5106,10 +5529,10 @@ Used to set the regression line width, in pixels; default is 1.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Regression line style
+:::note{title=Beschreibung}
+Stil der Regressionslinie
 
-Used to set the regression line style, e.g., solid, dashed, etc.; default is solid.
+Sets the regression line style, such as solid or dashed. The default is solid.
 
 :::
 
@@ -5117,10 +5540,10 @@ Used to set the regression line style, e.g., solid, dashed, etc.; default is sol
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line label text
+:::note{title=Beschreibung}
+Beschriftungstext der Regressionslinie
 
-Used to set the regression line's label text; an empty string means no label is shown.
+Sets the regression line label text. An empty string means no label is shown.
 
 :::
 
@@ -5128,12 +5551,12 @@ Used to set the regression line's label text; an empty string means no label is 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -5142,12 +5565,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -5156,12 +5579,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -5170,8 +5593,8 @@ Text font weight
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the confidence interval
+:::note{title=Beschreibung}
+Ob das Konfidenzintervall angezeigt wird
 
 :::
 
@@ -5179,8 +5602,8 @@ Whether to display the confidence interval
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval numerical setting; default is 95% confidence level.
+:::note{title=Beschreibung}
+Confidence interval value setting. The default confidence level is 95%.
 
 :::
 
@@ -5188,8 +5611,8 @@ Confidence interval numerical setting; default is 95% confidence level.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Confidence interval color
+:::note{title=Beschreibung}
+Farbe des Konfidenzintervalls
 
 :::
 
@@ -5197,12 +5620,12 @@ Confidence interval color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval opacity
+:::note{title=Beschreibung}
+Deckkraft des Konfidenzintervalls
 
 :::
 
-**Example**
+**Beispiel**
 0.5
 
 
@@ -5212,10 +5635,12 @@ Confidence interval opacity
 
 **Type:** `LogisticRegressionLine | LogisticRegressionLine[] | undefined`
 
-:::note{title=Description}
-Logistic regression line
+:::note{title=Beschreibung}
+Logistische Regressionslinie
 
-Logistic regression line configuration, including line style, etc.
+
+
+Logistic regression line configuration, including line style and related settings.
 
 :::
 
@@ -5224,8 +5649,8 @@ Logistic regression line configuration, including line style, etc.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable
+:::note{title=Beschreibung}
+Ob aktiviert
 
 :::
 
@@ -5233,10 +5658,10 @@ Whether to enable
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line color
+:::note{title=Beschreibung}
+Farbe der Regressionslinie
 
-Used to set the regression line color; if not set, the chart's main color is used by default.
+Sets the regression line color. If unset, the chart primary color is used by default.
 
 :::
 
@@ -5244,10 +5669,10 @@ Used to set the regression line color; if not set, the chart's main color is use
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Regression line width
+:::note{title=Beschreibung}
+Breite der Regressionslinie
 
-Used to set the regression line width, in pixels; default is 1.
+Sets the regression line width in pixels. The default value is 1.
 
 :::
 
@@ -5255,10 +5680,10 @@ Used to set the regression line width, in pixels; default is 1.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Regression line style
+:::note{title=Beschreibung}
+Stil der Regressionslinie
 
-Used to set the regression line style, e.g., solid, dashed, etc.; default is solid.
+Sets the regression line style, such as solid or dashed. The default is solid.
 
 :::
 
@@ -5266,10 +5691,10 @@ Used to set the regression line style, e.g., solid, dashed, etc.; default is sol
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Regression line label text
+:::note{title=Beschreibung}
+Beschriftungstext der Regressionslinie
 
-Used to set the regression line's label text; an empty string means no label is shown.
+Sets the regression line label text. An empty string means no label is shown.
 
 :::
 
@@ -5277,12 +5702,12 @@ Used to set the regression line's label text; an empty string means no label is 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color
+:::note{title=Beschreibung}
+4
 
 :::
 
-**Example**
+**Beispiel**
 'red'
 
 
@@ -5291,12 +5716,12 @@ Text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font size
+:::note{title=Beschreibung}
+[2, 2]
 
 :::
 
-**Example**
+**Beispiel**
 12
 
 
@@ -5305,12 +5730,12 @@ Text font size
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Text font weight
+:::note{title=Beschreibung}
+0
 
 :::
 
-**Example**
+**Beispiel**
 400
 
 
@@ -5319,8 +5744,8 @@ Text font weight
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the confidence interval
+:::note{title=Beschreibung}
+Ob das Konfidenzintervall angezeigt wird
 
 :::
 
@@ -5328,8 +5753,8 @@ Whether to display the confidence interval
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval numerical setting; default is 95% confidence level.
+:::note{title=Beschreibung}
+Confidence interval value setting. The default confidence level is 95%.
 
 :::
 
@@ -5337,8 +5762,8 @@ Confidence interval numerical setting; default is 95% confidence level.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Confidence interval color
+:::note{title=Beschreibung}
+Farbe des Konfidenzintervalls
 
 :::
 
@@ -5346,12 +5771,12 @@ Confidence interval color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Confidence interval opacity
+:::note{title=Beschreibung}
+Deckkraft des Konfidenzintervalls
 
 :::
 
-**Example**
+**Beispiel**
 0.5
 
 
@@ -5361,12 +5786,14 @@ Confidence interval opacity
 
 **Type:** `DimensionLinkage | undefined`
 
-:::note{title=Description}
-Whether to enable dimension linkage functionality when the chart has pivot features enabled or measures are combined.
+:::note{title=Beschreibung}
+Whether to enable dimension linkage when pivot or measure grouping is enabled on the chart
 
-When hovering over a dimension value, it highlights data with the same dimension value in other charts.
+When hovering over a dimension value, highlight data with the same dimension value in other charts
 
-Pivot chart dimension linkage configuration.
+
+
+Konfiguration der Dimensionsverknüpfung für Pivot-Diagramme
 
 :::
 
@@ -5375,8 +5802,8 @@ Pivot chart dimension linkage configuration.
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether to enable pivot chart dimension linkage
+:::note{title=Beschreibung}
+Ob die Dimensionsverknüpfung für Pivot-Diagramme aktiviert wird
 
 :::
 
@@ -5384,8 +5811,8 @@ Whether to enable pivot chart dimension linkage
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display tooltips for all sub-charts corresponding to the dimension
+:::note{title=Beschreibung}
+Ob Tooltip-Informationen für die Unterdiagramme aller entsprechenden Dimensionen angezeigt werden
 
 :::
 
@@ -5393,8 +5820,8 @@ Whether to display tooltips for all sub-charts corresponding to the dimension
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to display the label corresponding to the crosshair
+:::note{title=Beschreibung}
+Ob das zum crosshair gehörende Label angezeigt wird
 
 :::
 
@@ -5403,9 +5830,12 @@ Whether to display the label corresponding to the crosshair
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Language
+:::note{title=Beschreibung}
+Sprache
 
-Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the language can be set by calling intl.setLocale('zh-CN').
+
+
+Chart language configuration. Supports 'zh\-CN' and 'en\-US'. You can also call intl.setLocale('zh\-CN') to set the language.
 
 :::
+

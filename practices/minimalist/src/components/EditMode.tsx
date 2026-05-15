@@ -3,8 +3,8 @@ import { FieldPanel } from 'src/components/FieldPanel'
 import { FilterPanel } from 'src/components/FilterPanel'
 import { ShelfPanel } from 'src/components/ShelfPanel'
 import { Toolbar } from 'src/components/Toolbar'
-import type { MinimalLabels } from 'src/config/labels'
-import { useVBIStore } from 'src/model'
+import type { MinimalLabels } from 'src/i18n'
+import { useVBIStore, useVBIStoreConfig } from 'src/model'
 import { toEditorField, toggleField } from 'src/utils/fields'
 
 type EditModeProps = {
@@ -16,6 +16,7 @@ type EditModeProps = {
 export const EditMode = (props: EditModeProps) => {
   const builder = useVBIStore((state) => state.builder)
   const dsl = useVBIStore((state) => state.dsl)
+  const { hideLocale, hideTheme } = useVBIStoreConfig()
   const fields = useVBIStore((state) => state.schema).map(toEditorField)
   const rowCount = (useVBIStore((state) => state.vseed)?.dataset ?? []).filter(Boolean).length
   const selectedFields = new Set([
@@ -25,7 +26,14 @@ export const EditMode = (props: EditModeProps) => {
 
   return (
     <>
-      <Toolbar {...props} builder={builder} dsl={dsl} rowCount={rowCount} />
+      <Toolbar
+        {...props}
+        builder={builder}
+        dsl={dsl}
+        hideLocale={hideLocale}
+        hideTheme={hideTheme}
+        rowCount={rowCount}
+      />
       <div className='mini-workbench'>
         <div className='mini-left'>
           <FieldPanel

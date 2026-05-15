@@ -1,8 +1,8 @@
 # HierarchySankey
 
-## Regional Sales Hierarchy Sankey
+## Sankey phân cấp doanh số theo khu vực
 
-A hierarchy sankey chart showing sales flowing from region to country to city.
+Hiển thị biểu đồ sankey phân cấp cho thấy doanh số chảy từ khu vực đến quốc gia rồi đến thành phố.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -86,9 +86,9 @@ export default () => {
 }
 ```
 
-## Multiple Hierarchy Dimensions + One Measure
+## Chiều phân cấp nhiều cấp + một chỉ số
 
-This example shows a hierarchical flow from region to country and then to channel, with a single measure controlling the flow size.
+Hiển thị luồng phân cấp từ đại khu vực đến quốc gia rồi đến kênh, với một chỉ số duy nhất kiểm soát độ lớn của luồng.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -98,60 +98,60 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Direct",
+      "region": "Hoa Bắc",
+      "country": "Trung Quốc",
+      "channel": "Trực tiếp",
       "revenue": 42
     },
     {
-      "region": "North China",
-      "country": "China",
-      "channel": "Partner",
+      "region": "Hoa Bắc",
+      "country": "Trung Quốc",
+      "channel": "Đại lý",
       "revenue": 18
     },
     {
-      "region": "East China",
-      "country": "China",
-      "channel": "Direct",
+      "region": "Hoa Đông",
+      "country": "Trung Quốc",
+      "channel": "Trực tiếp",
       "revenue": 36
     },
     {
-      "region": "East China",
-      "country": "China",
-      "channel": "E-commerce",
+      "region": "Hoa Đông",
+      "country": "Trung Quốc",
+      "channel": "Thương mại điện tử",
       "revenue": 22
     },
     {
-      "region": "Southeast Asia",
+      "region": "Đông Nam Á",
       "country": "Singapore",
-      "channel": "Direct",
+      "channel": "Trực tiếp",
       "revenue": 15
     },
     {
-      "region": "Southeast Asia",
+      "region": "Đông Nam Á",
       "country": "Malaysia",
-      "channel": "Partner",
+      "channel": "Đại lý",
       "revenue": 12
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Đại khu vực"
     },
     {
       "id": "country",
-      "alias": "Country"
+      "alias": "Quốc gia"
     },
     {
       "id": "channel",
-      "alias": "Channel"
+      "alias": "Kênh"
     }
   ],
   "measures": [
     {
       "id": "revenue",
-      "alias": "Revenue"
+      "alias": "Doanh thu"
     }
   ],
   "legend": {
@@ -172,9 +172,9 @@ export default () => {
 }
 ```
 
-## Measure Name As A Hierarchy Dimension + One Measure
+## Tên chỉ số làm chiều phân cấp + một chỉ số
 
-This example places the measure name itself on the hierarchy path, so each region flows into different business metrics while a single numeric measure controls the magnitude.
+Đưa chính “tên chỉ số” vào đường dẫn phân cấp để hiển thị luồng của các chỉ số kinh doanh khác nhau trong từng đại khu vực, với một chỉ số số duy nhất kiểm soát độ lớn.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -184,50 +184,50 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "metricName": "Revenue",
+      "region": "Hoa Bắc",
+      "metricName": "Doanh số",
       "value": 42
     },
     {
-      "region": "North China",
-      "metricName": "Profit",
+      "region": "Hoa Bắc",
+      "metricName": "Lợi nhuận",
       "value": 12
     },
     {
-      "region": "East China",
-      "metricName": "Revenue",
+      "region": "Hoa Đông",
+      "metricName": "Doanh số",
       "value": 36
     },
     {
-      "region": "East China",
-      "metricName": "Profit",
+      "region": "Hoa Đông",
+      "metricName": "Lợi nhuận",
       "value": 10
     },
     {
-      "region": "South China",
-      "metricName": "Revenue",
+      "region": "Hoa Nam",
+      "metricName": "Doanh số",
       "value": 28
     },
     {
-      "region": "South China",
-      "metricName": "Profit",
+      "region": "Hoa Nam",
+      "metricName": "Lợi nhuận",
       "value": 8
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Đại khu vực"
     },
     {
       "id": "metricName",
-      "alias": "Metric Name"
+      "alias": "Tên chỉ số"
     }
   ],
   "measures": [
     {
       "id": "value",
-      "alias": "Metric Value"
+      "alias": "Giá trị chỉ số"
     }
   ],
   "legend": {

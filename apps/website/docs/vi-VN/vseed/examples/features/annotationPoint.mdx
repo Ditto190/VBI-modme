@@ -1,8 +1,8 @@
 # AnnotationPoint
 
-## condition
+## điều kiện
 
-condition
+điều kiện
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -51,7 +51,7 @@ export default () => {
           "value": 80
         }
       ],
-      "text": "Sales <= 80",
+      "text": "Doanh số <= 80",
       "textAlign": "right",
       "offsetX": -15
     },
@@ -63,7 +63,7 @@ export default () => {
           "value": "2023"
         }
       ],
-      "text": "Year 2023",
+      "text": "Năm 2023",
       "textAlign": "left",
       "offsetX": 0
     }
@@ -71,21 +71,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ]
 }
@@ -94,9 +94,9 @@ export default () => {
 }
 ```
 
-## partial datum
+## datum một phần
 
-partial datum
+datum một phần
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -144,8 +144,8 @@ export default () => {
         }
       ],
       "text": [
-        "Sales",
-        "Min 20"
+        "Doanh số",
+        "Giá trị nhỏ nhất 20"
       ],
       "textAlign": "right",
       "offsetX": -15
@@ -155,8 +155,8 @@ export default () => {
         100
       ],
       "text": [
-        "Sales",
-        "Max 100"
+        "Doanh số",
+        "Giá trị lớn nhất 100"
       ],
       "textAlign": "right",
       "offsetY": 15,
@@ -166,21 +166,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ]
 }
@@ -189,9 +189,9 @@ export default () => {
 }
 ```
 
-## value point
+## điểm giá trị
 
-value point
+điểm giá trị
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -233,7 +233,7 @@ export default () => {
   ],
   "annotationPoint": {
     "selector": 10,
-    "text": "Minimum",
+    "text": "Giá trị nhỏ nhất",
     "textFontWeight": 600,
     "textBaseline": "bottom",
     "textAlign": "center",
@@ -246,21 +246,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Lợi nhuận"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Doanh số"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Số lượng"
     }
   ]
 }

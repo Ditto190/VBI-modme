@@ -40,11 +40,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "売上高"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     }
   ]
 }
@@ -53,9 +53,9 @@ export default () => {
 }
 ```
 
-## Default Dual Axis Chart
+## 双軸グラフのデフォルト表示
 
-Default Dual Axis Chart
+双軸グラフのデフォルト表示
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -66,11 +66,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "売上高"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     }
   ],
   "dataset": [
@@ -106,9 +106,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## 双軸グラフ
 
-Dual Axis Chart
+双軸グラフ
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -119,12 +119,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上高",
       "encoding": "primaryYAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "secondaryYAxis"
     }
   ],
@@ -161,9 +161,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## 複合双軸グラフ
 
-Combined Dual Axis Chart
+複合双軸グラフ
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -174,25 +174,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上高",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "比率",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "回収率",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -237,7 +237,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ]
 }
@@ -246,9 +246,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Dual Axis Chart
+## ピボット複合双軸グラフ
 
-Pivot Combined Dual Axis Chart
+ピボット複合双軸グラフ
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -259,16 +259,16 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     },
     {
       "id": "type",
-      "alias": "Type",
+      "alias": "タイプ",
       "encoding": "row"
     },
     {
       "id": "test",
-      "alias": "Tests",
+      "alias": "テスト",
       "encoding": "column"
     }
   ],
@@ -457,25 +457,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上高",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "比率",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "回収率",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -486,9 +486,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## 双軸グラフ
 
-Dual Axis Chart
+双軸グラフ
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -526,13 +526,13 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上高",
       "encoding": "primaryYAxis",
       "chartType": "area"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "secondaryYAxis",
       "chartType": "column"
     }
@@ -543,9 +543,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## 複合双軸グラフ
 
-Combined Dual Axis Chart
+複合双軸グラフ
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -556,28 +556,28 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "primaryYAxis",
       "parentId": "first",
       "chartType": "area"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上高",
       "encoding": "secondaryYAxis",
       "parentId": "first",
       "chartType": "scatter"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "比率",
       "encoding": "primaryYAxis",
       "parentId": "second",
       "chartType": "column"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "回収率",
       "encoding": "secondaryYAxis",
       "parentId": "second",
       "chartType": "line"
@@ -623,7 +623,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ]
 }
@@ -646,13 +646,13 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Profit"
+        "titleText": "利益"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Ratio"
+        "titleText": "比率"
       }
     }
   ],
@@ -660,38 +660,38 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Sales"
+        "titleText": "売上高"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Return Rate"
+        "titleText": "回収率"
       }
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上高",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "比率",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "回収率",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -736,7 +736,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ]
 }

@@ -2,7 +2,7 @@ import { CalendarOutlined, FontSizeOutlined, NumberOutlined, SearchOutlined, Tab
 import { Input, Select } from 'antd'
 import { useState } from 'react'
 import { writeDraggedField } from 'src/utils/dragDrop'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 
 type FieldListPanelProps = {

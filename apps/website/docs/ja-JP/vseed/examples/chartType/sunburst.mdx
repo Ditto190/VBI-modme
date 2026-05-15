@@ -116,9 +116,9 @@ export default () => {
 }
 ```
 
-## Measure Combination
+## 指標の組み合わせ
 
-Displays the distribution of sales and profit across categories like Food & Beverage and Personal Care, using multi-layered rings to show hierarchies and measure relationships.
+食品・飲料、パーソナルケアなどのカテゴリにおける売上高と利益の分布を表示し、多層リングで階層と指標の関係を示します。
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -128,135 +128,135 @@ export default () => {
   "chartType": "sunburst",
   "dataset": [
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Yunling Spring Mineral Water",
+      "category": "食品・飲料",
+      "subカテゴリ": "飲料",
+      "product": "雲嶺山泉ミネラルウォーター",
       "sales": 12000,
       "profit": 1800
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Guoyue Fresh Orange Juice",
+      "category": "食品・飲料",
+      "subカテゴリ": "飲料",
+      "product": "果悦フレッシュオレンジジュース",
       "sales": 8500,
       "profit": 1400
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Beverages",
-      "product": "Mingxiang Oolong Tea",
+      "category": "食品・飲料",
+      "subカテゴリ": "飲料",
+      "product": "茗香ウーロン茶",
       "sales": 6200,
       "profit": 950
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Cuile Potato Chips (Tomato)",
+      "category": "食品・飲料",
+      "subカテゴリ": "スナック",
+      "product": "脆楽ポテトチップス（トマト味）",
       "sales": 9500,
       "profit": 1600
     },
     {
-      "category": "Food & Beverage",
-      "subCategory": "Snacks",
-      "product": "Nuts Party Mixed Nuts",
+      "category": "食品・飲料",
+      "subカテゴリ": "スナック",
+      "product": "ナッツパーティー ミックスナッツ",
       "sales": 7800,
       "profit": 2100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Silky Smooth Shampoo",
+      "category": "パーソナルケア",
+      "subカテゴリ": "トイレタリー",
+      "product": "シルキーなめらかシャンプー",
       "sales": 6800,
       "profit": 1100
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Toiletries",
-      "product": "Facial Amino Acid Cleanser",
+      "category": "パーソナルケア",
+      "subカテゴリ": "トイレタリー",
+      "product": "アミノ酸洗顔料",
       "sales": 5200,
       "profit": 980
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Bijing Multi-effect Laundry Detergent",
+      "category": "パーソナルケア",
+      "subカテゴリ": "住居用洗剤",
+      "product": "碧浄多機能洗濯洗剤",
       "sales": 7200,
       "profit": 1050
     },
     {
-      "category": "Personal Care",
-      "subCategory": "Home Cleaning",
-      "product": "Kitchen Oil Cleaning Spray",
+      "category": "パーソナルケア",
+      "subカテゴリ": "住居用洗剤",
+      "product": "キッチン油汚れクリーナースプレー",
       "sales": 4300,
       "profit": 720
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Smart S9 Smartwatch",
+      "category": "デジタル家電",
+      "subカテゴリ": "スマートウェアラブル",
+      "product": "霊動S9スマートウォッチ",
       "sales": 15000,
       "profit": 3200
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Smart Wearables",
-      "product": "Yuepao Pro Fitness Tracker",
+      "category": "デジタル家電",
+      "subカテゴリ": "スマートウェアラブル",
+      "product": "悦跑Proフィットネストラッカー",
       "sales": 6500,
       "profit": 1400
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "WarmNest Desktop Fan Heater",
+      "category": "デジタル家電",
+      "subカテゴリ": "小型家電",
+      "product": "ウォームネスト卓上ファンヒーター",
       "sales": 4800,
       "profit": 880
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "Fresh Grind Portable Coffee Maker",
+      "category": "デジタル家電",
+      "subカテゴリ": "小型家電",
+      "product": "挽きたて携帯コーヒーメーカー",
       "sales": 11000,
       "profit": 2600
     },
     {
-      "category": "Digital Appliances",
-      "subCategory": "Small Appliances",
-      "product": "PureBreath Car Air Purifier",
+      "category": "デジタル家電",
+      "subカテゴリ": "小型家電",
+      "product": "ピュアブレス車載空気清浄機",
       "sales": 7600,
       "profit": 1750
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Elegance Light Business Jacket",
+      "category": "アパレル・アクセサリー",
+      "subカテゴリ": "紳士服",
+      "product": "エレガンス軽量ビジネスジャケット",
       "sales": 8800,
       "profit": 2400
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Men's Wear",
-      "product": "Cotton Whisper Basic T-shirt 3-pack",
+      "category": "アパレル・アクセサリー",
+      "subカテゴリ": "紳士服",
+      "product": "コットンウィスパー ベーシックTシャツ3枚セット",
       "sales": 5600,
       "profit": 1500
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "Flora Floral Print Dress",
+      "category": "アパレル・アクセサリー",
+      "subカテゴリ": "婦人服",
+      "product": "フローラ花柄ワンピース",
       "sales": 9200,
       "profit": 2800
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Women's Wear",
-      "product": "WarmWeave Cashmere Scarf",
+      "category": "アパレル・アクセサリー",
+      "subカテゴリ": "婦人服",
+      "product": "ウォームウィーブ カシミヤスカーフ",
       "sales": 4100,
       "profit": 1200
     },
     {
-      "category": "Apparel & Accessories",
-      "subCategory": "Footwear",
-      "product": "CloudStep Cushioning Running Shoes",
+      "category": "アパレル・アクセサリー",
+      "subカテゴリ": "履物",
+      "product": "クラウドステップ クッションランニングシューズ",
       "sales": 13500,
       "profit": 3600
     }
@@ -264,35 +264,35 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "カテゴリ",
       "encoding": "hierarchy"
     },
     {
-      "id": "subCategory",
-      "alias": "Sub-Category",
+      "id": "subカテゴリ",
+      "alias": "サブカテゴリ",
       "encoding": "hierarchy"
     },
     {
       "id": "product",
-      "alias": "Product",
+      "alias": "商品",
       "encoding": "hierarchy"
     },
     {
       "id": "__MeaId__",
-      "alias": "Measure Name",
+      "alias": "指標名",
       "encoding": "hierarchy"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales (CNY)",
+      "alias": "売上高（元）",
       "encoding": "size",
       "parentId": "a"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "size",
       "parentId": "b"
     }

@@ -1,70 +1,70 @@
-# Common Scripts
+# Häufig verwendete Skripte
 
-To maintain Monorepo consistency, **all scripts must be run from the project root directory**.
+Um die Monorepo-Konsistenz zu wahren, **müssen alle Skripte im Projektstammverzeichnis ausgeführt werden**.
 
-## Core Script (g)
+## Kernskript (g)
 
-`g` (Generator) is the most critical helper script in VSeed development.
+`g` (Generator) ist das wichtigste Hilfsskript in der VSeed-Entwicklung.
 
 ```bash
 pnpm run g
 ```
 
-**Description**:
-This command is a combination of `build:test`, `build:docs`, and `build:api`, used to keep development environment resources in sync:
-1. **Generate test cases**: Parses JSON Specs under `tests/integrations` and generates corresponding `.test.ts` files.
-2. **Generate documentation**: Parses TypeScript type definitions and updates API documentation in `apps/website`.
+**Beschreibung**:
+Dieser Befehl ist eine Kombination aus `build:test`, `build:docs` und `build:api` und wird verwendet, um die Ressourcen der Entwicklungsumgebung synchron zu halten:
+1. **Testfälle generieren**: Liest JSON Specs unter `tests/integrations` und erzeugt die entsprechenden `.test.ts`-Dateien.
+2. **Dokumentation generieren**: Liest TypeScript-Typdefinitionen und aktualisiert die API-Dokumentation in `apps/website`.
 
-**When to use**:
-- After modifying chart logic or adding a new chart type.
-- After modifying TypeScript type definitions.
-- Before committing code.
+**Einsatzszenarien**:
+- Nach Änderungen an der Chart-Logik oder beim Hinzufügen eines neuen Chart-Typs.
+- Nach Änderungen an TypeScript-Typdefinitionen.
+- Vor dem Committen von Code.
 
-## Development & Build
+## Entwicklung und Build
 
-### Start Development Environment
-Start VSeed watch mode and the documentation site simultaneously.
+### Entwicklungsumgebung starten
+Startet den VSeed-Watch-Modus und die Dokumentationsseite gleichzeitig.
 ```bash
 pnpm run dev
 ```
 
-### Build the Project
-Build the VSeed core library.
+### Projekt bauen
+Baut die VSeed-Core-Bibliothek.
 ```bash
 pnpm --filter=@visactor/vseed run build
 ```
 
-## Testing
+## Tests
 
-### Run All Tests
+### Alle Tests ausführen
 ```bash
 pnpm --filter=@visactor/vseed run test
 ```
 
-### Run Unit Tests
+### Unit-Tests ausführen
 ```bash
 pnpm --filter=@visactor/vseed run test:unit
 ```
 
-### Run Integration Tests
+### Integrationstests ausführen
 ```bash
 pnpm --filter=@visactor/vseed run test:integration
 ```
 
-### Update Test Snapshots
-Run this when your code changes cause snapshot diffs (that are expected):
+### Test-Snapshots aktualisieren
+Führen Sie dies aus, wenn Ihre Codeänderungen erwartete Snapshot-Diffs verursachen:
 ```bash
 pnpm --filter=@visactor/vseed run test:update
 ```
 
-## Code Quality
+## Codequalität
 
-### Lint Check
+### Lint-Prüfung
 ```bash
 pnpm run lint
 ```
 
-### Type Check
+### Typprüfung
 ```bash
 pnpm run typecheck
 ```

@@ -40,19 +40,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "yAxis"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ],
   "label": {
@@ -64,9 +64,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Scatter Chart
+## 複合散布図
 
-A scatter chart with multiple data series.
+複合散布図
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -109,31 +109,31 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "encoding": "xAxis",
       "parentId": "0"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "yAxis",
       "parentId": "0"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "encoding": "xAxis",
       "parentId": "1"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "収益率",
       "encoding": "yAxis",
       "parentId": "1"
     }
@@ -144,9 +144,9 @@ export default () => {
 }
 ```
 
-## Pivot Scatter Chart
+## ピボット複合散布図
 
-A scatter chart with pivot table layout.
+ピボット複合散布図
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -157,29 +157,29 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "カテゴリ",
       "encoding": "color"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "日付",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "地域",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "encoding": "yAxis"
     }
   ],

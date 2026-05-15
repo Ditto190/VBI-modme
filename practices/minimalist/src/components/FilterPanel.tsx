@@ -2,7 +2,7 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { Button, Input, Popover, Select } from 'antd'
 import { useState } from 'react'
-import type { MinimalLabels } from 'src/config/labels'
+import type { MinimalLabels } from 'src/i18n'
 import type { EditorField } from 'src/types'
 import { addFilter, getFilters, getOperators, removeFilter } from 'src/utils/filter'
 

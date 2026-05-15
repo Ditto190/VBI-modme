@@ -1,6 +1,6 @@
 import type { VBIDimension, VBIMeasure, VBIChartBuilder } from '@visactor/vbi'
 import { getEncodingTitle } from './encodingLabels'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { FieldSlot } from 'src/types'
 
 type DimensionEncoding = NonNullable<VBIDimension['encoding']>

@@ -40,19 +40,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "yAxis"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "label": {
@@ -64,9 +64,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Scatter Chart
+## Biểu đồ phân tán kết hợp
 
-A scatter chart with multiple data series.
+Biểu đồ phân tán kết hợp
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -109,31 +109,31 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Ngày"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "xAxis",
       "parentId": "0"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "yAxis",
       "parentId": "0"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "xAxis",
       "parentId": "1"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tỷ suất lợi nhuận",
       "encoding": "yAxis",
       "parentId": "1"
     }
@@ -144,9 +144,9 @@ export default () => {
 }
 ```
 
-## Pivot Scatter Chart
+## Biểu đồ phân tán kết hợp dạng pivot
 
-A scatter chart with pivot table layout.
+Biểu đồ phân tán kết hợp dạng pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -157,29 +157,29 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Danh mục",
       "encoding": "color"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Ngày",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Khu vực",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Doanh số",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Lợi nhuận",
       "encoding": "yAxis"
     }
   ],

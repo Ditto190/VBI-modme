@@ -1,76 +1,76 @@
-# Data Reshaping — Principles
+# Reshape dữ liệu - Nguyên lý
 
-:::info Data Reshaping
-VSeed proposes a universal dimension reshaping method to further lower the barrier to data visualization.
+:::info Reshape dữ liệu
+VSeed đề xuất một phương pháp reshape dimension phổ dụng nhằm tiếp tục hạ thấp ngưỡng sử dụng trực quan hóa dữ liệu.
 :::
 
-Data reshaping refers to the process of converting data from one structured form to another. The core is changing the organization of data (rows, columns, indices, hierarchies) to suit different analysis or processing needs while maintaining data integrity.
+Reshape dữ liệu là quá trình chuyển dữ liệu từ một dạng cấu trúc sang một dạng cấu trúc khác. Cốt lõi là thay đổi cách tổ chức dữ liệu như hàng, cột, chỉ mục, phân cấp để phù hợp với các nhu cầu phân tích hoặc xử lý khác nhau, đồng thời giữ nguyên tính toàn vẹn của dữ liệu.
 
-## Dimension Reshaping
+## Reshape dimension
 
-Python and R languages already have tools that support dimension reshaping:
-1. Python Pandas provides `pivot` and `melt` for data reshaping
-2. R tidyverse provides `pivot_longer` and `pivot_wider` for data reshaping
+Python và R đã có công cụ hỗ trợ reshape dimension:
+1. Python Pandas cung cấp `pivot` và `melt` để reshape dữ liệu
+2. R tidyverse cung cấp `pivot_longer` và `pivot_wider` để reshape dữ liệu
 
-## Dimension Increase (Upsampling) and Reduction
+## Tăng dimension và giảm dimension
 
-Dimension increase and reduction philosophically align with category theory (objects and morphisms, isomorphisms), but are not strictly implemented following category theory.
+Tăng dimension và giảm dimension về mặt tinh thần phù hợp với tư tưởng của category theory (đối tượng, morphism và isomorphism), nhưng khi triển khai không tuân thủ nghiêm ngặt category theory.
 
-Special notes:
-1. During dimension increase, "measure name" and "measure value" information is created "out of nothing"
-2. During dimension reduction, "measure name" and "measure value" information that exists in the data is "removed"
+Lưu ý đặc biệt:
+1. Khi tăng dimension, thông tin "tên measure" và "giá trị measure" không tồn tại sẽ được tạo ra "từ hư không"
+2. Khi giảm dimension, thông tin "tên measure" và "giá trị measure" đang tồn tại trong dữ liệu sẽ bị "loại bỏ"
 
-Dimension increase can completely transform data, but dimension column names may have null values, so filling in additional information is supported.
-Dimension reduction loses information content, so additional transformation information needs to be saved to achieve true isomorphic transformation — otherwise information will inevitably be lost.
+Tăng dimension có thể chuyển đổi dữ liệu hoàn chỉnh, nhưng tên cột dimension có thể có giá trị rỗng, vì vậy hỗ trợ bổ sung thêm thông tin.
+Giảm dimension sẽ làm mất nội dung thông tin, vì vậy cần lưu thêm thông tin chuyển đổi để đạt được chuyển đổi đẳng cấu đúng nghĩa; nếu không, thông tin chắc chắn sẽ bị mất.
 
 ![commonDataReshape](/images/commonDataReshape.png)
 
-## Grouped Dimension Increase and Reduction
+## Tăng và giảm dimension theo nhóm
 
-Similar to ordinary increase and reduction, with similar information addition or loss scenarios. Additionally, the introduction of grouping creates more empty data.
+Tương tự tăng và giảm thông thường, cũng có các tình huống thêm thông tin hoặc mất thông tin. Ngoài ra, việc đưa nhóm vào sẽ tạo ra nhiều dữ liệu rỗng hơn.
 
-Significance:
-1. **Measure grouping**: Easily handles detail data through grouped dimension increase
-2. **Multi-group queries**: Multiple SQL queries can easily fetch multiple sets of detail data, and they can be merged into one dataset via grouped dimension reduction
+Ý nghĩa:
+1. **Nhóm measure**: Dễ dàng xử lý dữ liệu chi tiết thông qua tăng dimension theo nhóm
+2. **Truy vấn nhiều nhóm**: Nhiều câu SQL có thể dễ dàng lấy nhiều phần dữ liệu chi tiết, rồi hợp nhất thành một dữ liệu thông qua giảm dimension theo nhóm
 
 ![groupedDataReshape](/images/groupedDataReshape.png)
 
-## Rule Derivation
+## Suy luận quy luật
 
-### Dimension Increase
+### Tăng dimension
 
 ![rule](/images/ruleDataReshape.png)
 
 ![commonDataReshape2](/images/commonDataReshape2.png)
 
 :::tip
-1. Multiple measures — dimension increase turns measure count to 1. 1 measure after dimension increase is still 1.
-2. Multiple dimensions — dimension increase adds one more dimension. Even 0 dimensions becomes 1.
-3. 0 dimensions, 1 measure — can repeatedly apply dimension increase to get any number of dimensions and 1 measure (so 1 measure can also render a bar chart)
+1. Tăng dimension với nhiều measure sẽ làm số lượng measure trở thành 1. Một measure sau khi tăng dimension vẫn là 1.
+2. Tăng dimension với nhiều dimension sẽ thêm một dimension. Ngay cả 0 dimension cũng sẽ thêm thành 1.
+3. 0 dimension và 1 measure có thể tăng dimension lặp lại để nhận được bất kỳ số lượng dimension nào và 1 measure, từ đó một measure cũng có thể vẽ biểu đồ cột.
 :::
 
-### Dimension Reduction
+### Giảm dimension
 
 ![rule](/images/ruleDataReshape2.png)
 
 ![groupedDataReshape2](/images/groupedDataReshape2.png)
 
 :::tip
-1. Multiple measures — dimension reduction: measure values and measures form a Cartesian product, creating new measures
-2. Multiple dimensions — dimension reduction: multiple dimension values form a Cartesian product, creating new dimensions
+1. Giảm dimension với nhiều measure: giá trị dimension và measure tạo thành tích Descartes, trở thành measure mới
+2. Giảm dimension với nhiều dimension: nhiều giá trị dimension tạo thành tích Descartes, trở thành dimension mới
 :::
 
-## Examples
+## Ví dụ
 
-#### 0 Dimensions, 1 Measure
+#### 0 dimension, 1 measure
 ![0d1m](/images/0d1m.png)
-#### 0 Dimensions, 3 Measures
+#### 0 dimension, 3 measure
 ![0d3m](/images/0d3m.png)
-#### 1 Dimension, 1 Measure
+#### 1 dimension, 1 measure
 ![1d1m](/images/1d1m.png)
-#### 1 Dimension, 2 Measures
+#### 1 dimension, 2 measure
 ![1d2m](/images/1d2m.png)
-#### 2 Dimensions, 1 Measure
+#### 2 dimension, 1 measure
 ![2d1m](/images/2d1m.png)
-#### 2 Dimensions, 2 Measures
+#### 2 dimension, 2 measure
 ![2d2m](/images/2d2m.png)

@@ -1,8 +1,8 @@
 # AnnotationPoint
 
-## condition
+## 조건
 
-condition
+조건
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -51,7 +51,7 @@ export default () => {
           "value": 80
         }
       ],
-      "text": "Sales <= 80",
+      "text": "매출 <= 80",
       "textAlign": "right",
       "offsetX": -15
     },
@@ -63,7 +63,7 @@ export default () => {
           "value": "2023"
         }
       ],
-      "text": "Year 2023",
+      "text": "2023년",
       "textAlign": "left",
       "offsetX": 0
     }
@@ -71,21 +71,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ]
 }
@@ -94,9 +94,9 @@ export default () => {
 }
 ```
 
-## partial datum
+## 부분 데이터
 
-partial datum
+부분 데이터
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -144,8 +144,8 @@ export default () => {
         }
       ],
       "text": [
-        "Sales",
-        "Min 20"
+        "매출",
+        "최소값 20"
       ],
       "textAlign": "right",
       "offsetX": -15
@@ -155,8 +155,8 @@ export default () => {
         100
       ],
       "text": [
-        "Sales",
-        "Max 100"
+        "매출",
+        "최대값 100"
       ],
       "textAlign": "right",
       "offsetY": 15,
@@ -166,21 +166,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ]
 }
@@ -189,9 +189,9 @@ export default () => {
 }
 ```
 
-## value point
+## 값 포인트
 
-value point
+값 포인트
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -233,7 +233,7 @@ export default () => {
   ],
   "annotationPoint": {
     "selector": 10,
-    "text": "Minimum",
+    "text": "최소값",
     "textFontWeight": 600,
     "textBaseline": "bottom",
     "textAlign": "center",
@@ -246,21 +246,21 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "매출"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "수량"
     }
   ]
 }

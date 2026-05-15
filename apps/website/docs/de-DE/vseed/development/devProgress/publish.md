@@ -1,42 +1,42 @@
 ---
-title: Publish
+title: Veröffentlichen
 ---
 
 
-# Publish
+# Veröffentlichen
 
-## Generate Changeset
+## Changeset erzeugen
 
-To generate new changesets, please run `pnpm changeset` in the root directory of the repository. The resulting markdown files generated in the `.changeset` directory should be committed to the repository.
+Um neue Changesets zu erzeugen, führen Sie `pnpm changeset` im Stammverzeichnis des Repositorys aus. Die dabei im Verzeichnis `.changeset` erzeugten Markdown-Dateien sollten in das Repository committed werden.
 ```bash
 pnpm changeset
 ```
 
-After generating the changeset, perform a `git commit`:
+Nach dem Erzeugen des Changesets führen Sie einen `git commit` aus:
 ```bash
 git add .
 git commit -m "chore: commit message"
 ```
 
-The above process can be repeated multiple times. The content of each changeset will be accumulated in the final version publish.
+Der obige Prozess kann mehrfach wiederholt werden. Der Inhalt jedes Changesets wird für die finale Versionsveröffentlichung gesammelt.
 
-## Update Version
+## Version aktualisieren
 
-Run the following command to update the version and the ChangeLog.
+Führen Sie den folgenden Befehl aus, um die Version zu aktualisieren und das ChangeLog zu aktualisieren.
 ```bash
 pnpm changeset version
 ```
 
-Update dependencies and the lock file:
+Abhängigkeiten und lock file aktualisieren:
 ```bash
 pnpm install
 ```
 
-Commit changes:
+Änderungen committen:
 ```bash
 git add .
 git commit -m "chore: release message"
 git push
 ```
 
-After the PR is merged into the `main` branch, the changesets workflow will be triggered automatically to perform the packaging and publishing task.
+Nachdem der PR in den Branch `main` gemergt wurde, wird der changesets workflow automatisch ausgelöst und führt das Packaging sowie die Veröffentlichung aus.

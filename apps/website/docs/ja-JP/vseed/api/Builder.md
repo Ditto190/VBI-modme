@@ -8,7 +8,7 @@
 prepare(): Promise<void>
 ```
 
-Asynchronously executes dynamic filter code. Call before `build()` to execute code defined in `dynamicFilter`. This is an idempotent method — multiple calls will not re-execute.
+動的フィルターコードを非同期で実行します。`build()` の前に呼び出し、`dynamicFilter` 内の `code` を実行するために使います。冪等なメソッドで、複数回呼び出しても重複実行されません。
 
 ### build
 
@@ -16,7 +16,7 @@ Asynchronously executes dynamic filter code. Call before `build()` to execute co
 build<T = S>(): T
 ```
 
-Generates the final chart configuration (Spec). This is the most commonly used core method. If the configuration includes a `dynamicFilter` code, call `prepare()` first.
+最終的なチャート設定（Spec）を生成します。最もよく使われる中核メソッドです。設定に `dynamicFilter` code が含まれる場合は、先に `prepare()` を呼び出す必要があります。
 
 ### buildSpec
 
@@ -24,7 +24,7 @@ Generates the final chart configuration (Spec). This is the most commonly used c
 buildSpec<T = S>(advanced: AdvancedVSeed): T
 ```
 
-Converts the intermediate-layer configuration (AdvancedVSeed) to the final Spec. Use only when you need deep customization of the intermediate-layer configuration.
+中間層設定（AdvancedVSeed）を最終 Spec に変換します。中間層設定を深くカスタマイズする必要がある場合にのみ使用します。
 
 ### buildAdvanced
 
@@ -32,7 +32,7 @@ Converts the intermediate-layer configuration (AdvancedVSeed) to the final Spec.
 buildAdvanced(): AdvancedVSeed | null
 ```
 
-Generates the intermediate-layer configuration (AdvancedVSeed), i.e., the chart template. More detailed than the raw VSeed, exposing more chart internals.
+中間層設定（AdvancedVSeed）、つまりチャートテンプレートを生成します。元の VSeed より詳細で、より多くのチャート内部情報を公開します。
 
 ### getColorItems
 
@@ -40,7 +40,7 @@ Generates the intermediate-layer configuration (AdvancedVSeed), i.e., the chart 
 getColorItems(): __type[]
 ```
 
-Gets field information related to colors in the data. Commonly used to generate chart legends or color filter UIs.
+データ内で色に関係するフィールド情報を取得します。チャートの凡例や色フィルター UI の生成によく使われます。
 
 ### getColorIdMap
 
@@ -48,7 +48,7 @@ Gets field information related to colors in the data. Commonly used to generate 
 getColorIdMap(): Record
 ```
 
-Gets a detailed mapping table for color fields. Key is the color ID, Value is the detailed information.
+色フィールドの詳細なマッピング表を取得します。Key は色 ID、Value は詳細情報です。
 
 ### getColorValueMap
 
@@ -56,7 +56,7 @@ Gets a detailed mapping table for color fields. Key is the color ID, Value is th
 getColorValueMap(): undefined | Record
 ```
 
-Gets the mapping from `colorId` to the final color value in a discrete color map.
+離散カラーマップ内の `colorId` から最終的な色値へのマッピングを取得します。
 
 ## Static Methods
 
@@ -66,7 +66,7 @@ Gets the mapping from `colorId` to the final color value in a discrete color map
 static getAdvancedPipeline(chartType: ChartType): Pipe[]
 ```
 
-[Internal] Gets the template build pipeline for the specified chart type, used for debugging the VSeed → AdvancedVSeed conversion process.
+[内部メソッド] 指定したチャートタイプのテンプレート構築パイプラインを取得します。VSeed から AdvancedVSeed への変換過程をデバッグするために使います。
 
 ### getSpecPipeline
 
@@ -74,7 +74,7 @@ static getAdvancedPipeline(chartType: ChartType): Pipe[]
 static getSpecPipeline(chartType: ChartType): SpecPipe[]
 ```
 
-[Internal] Gets the Spec build pipeline for the specified chart type, used for debugging the AdvancedVSeed → Spec conversion process.
+[内部メソッド] 指定したチャートタイプの Spec 構築パイプラインを取得します。AdvancedVSeed から Spec への変換過程をデバッグするために使います。
 
 ### getTheme
 
@@ -82,7 +82,7 @@ static getSpecPipeline(chartType: ChartType): SpecPipe[]
 static getTheme(themeKey?: string): CustomThemeConfig
 ```
 
-Gets the configuration of the specified theme. If `themeKey` is not provided, returns the `'light'` theme by default.
+指定したテーマの設定を取得します。`themeKey` を渡さない場合は、デフォルトで `'light'` テーマを返します。
 
 ### getThemeMap
 
@@ -90,7 +90,7 @@ Gets the configuration of the specified theme. If `themeKey` is not provided, re
 static getThemeMap(): Record<string, CustomThemeConfig>
 ```
 
-Gets all registered theme configurations.
+登録済みのすべてのテーマ設定を取得します。
 
 ### from
 
@@ -98,7 +98,7 @@ Gets all registered theme configurations.
 static from<T extends Spec = Spec>(vseed: VSeed): Builder<T>
 ```
 
-Static factory method for conveniently creating a `Builder` instance.
+Builder インスタンスを簡単に作成するための静的ファクトリメソッドです。
 
 ### registerAdvancedPipeline
 
@@ -106,7 +106,7 @@ Static factory method for conveniently creating a `Builder` instance.
 static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline): void
 ```
 
-[Extension] Registers a template build pipeline for a new chart type.
+[拡張メソッド] 新しいチャートタイプのテンプレート構築パイプラインを登録します。
 
 ### registerSpecPipeline
 
@@ -114,7 +114,7 @@ static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline
 static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 ```
 
-[Extension] Registers a Spec build pipeline for a new chart type.
+[拡張メソッド] 新しいチャートタイプの Spec 構築パイプラインを登録します。
 
 ### updateAdvanced
 
@@ -122,7 +122,7 @@ static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 ```
 
-[Extension] Modifies the template build logic for an existing chart, inserting a custom Pipe to influence the generated AdvancedVSeed.
+[拡張メソッド] 既存チャートのテンプレート構築ロジックを変更し、カスタム Pipe を挿入して生成される AdvancedVSeed に影響を与えます。
 
 ### updateSpec
 
@@ -130,7 +130,7 @@ static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 ```
 
-[Extension] Modifies the Spec build logic for an existing chart, inserting a custom Pipe to influence the final generated Spec.
+[拡張メソッド] 既存チャートの Spec 構築ロジックを変更し、カスタム Pipe を挿入して生成される最終 Spec に影響を与えます。
 
 ### registerTheme
 
@@ -138,7 +138,7 @@ static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 static registerTheme(key: string, theme: CustomThemeConfig): void
 ```
 
-[Extension] Registers a custom theme.
+[拡張メソッド] カスタムテーマを登録します。
 
 ## Properties
 
@@ -148,7 +148,7 @@ static registerTheme(key: string, theme: CustomThemeConfig): void
 get locale()
 ```
 
-Gets the locale currently used by the Builder.
+現在の Builder が使用しているロケールを取得します。
 
 ### get vseed
 
@@ -156,7 +156,7 @@ Gets the locale currently used by the Builder.
 get vseed()
 ```
 
-Gets the current VSeed input data.
+現在の VSeed 入力データを取得します。
 
 ### set vseed
 
@@ -164,7 +164,7 @@ Gets the current VSeed input data.
 set vseed(value)
 ```
 
-Updates the VSeed input data. After updating, the cached state from `prepare()` will be cleared.
+VSeed 入力データを更新します。更新後は `prepare()` のキャッシュ状態がクリアされます。
 
 ### get isPrepared
 
@@ -172,7 +172,7 @@ Updates the VSeed input data. After updating, the cached state from `prepare()` 
 get isPrepared()
 ```
 
-Gets the `prepare()` state.
+`prepare()` の状態を取得します。
 
 ### set isPrepared
 
@@ -180,7 +180,7 @@ Gets the `prepare()` state.
 set isPrepared(value: boolean)
 ```
 
-Sets the `prepare()` state.
+`prepare()` の状態を設定します。
 
 ### get advancedVSeed
 
@@ -188,7 +188,7 @@ Sets the `prepare()` state.
 get advancedVSeed()
 ```
 
-Gets the current AdvancedVSeed intermediate configuration object.
+現在の AdvancedVSeed 中間設定オブジェクトを取得します。
 
 ### set advancedVSeed
 
@@ -196,7 +196,7 @@ Gets the current AdvancedVSeed intermediate configuration object.
 set advancedVSeed(value)
 ```
 
-Sets the AdvancedVSeed intermediate configuration object. Typically used for caching or reusing an existing intermediate configuration.
+AdvancedVSeed 中間設定オブジェクトを設定します。通常は既存の中間設定のキャッシュまたは再利用に使います。
 
 ### get spec
 
@@ -204,7 +204,7 @@ Sets the AdvancedVSeed intermediate configuration object. Typically used for cac
 get spec()
 ```
 
-Gets the currently generated final Spec object.
+現在生成されている最終 Spec オブジェクトを取得します。
 
 ### set spec
 
@@ -212,7 +212,7 @@ Gets the currently generated final Spec object.
 set spec(value)
 ```
 
-Sets the Spec object. Typically used for caching.
+Spec オブジェクトを設定します。通常はキャッシュに使います。
 
 ### get performance
 
@@ -220,7 +220,7 @@ Sets the Spec object. Typically used for caching.
 get performance()
 ```
 
-Gets performance statistics from the build process, including the duration of each phase (in ms).
+構築過程の性能統計情報を取得します。各段階の所要時間（単位: ms）を含みます。
 
 ### set performance
 
@@ -228,4 +228,4 @@ Gets performance statistics from the build process, including the duration of ea
 set performance(value)
 ```
 
-Sets the performance statistics.
+性能統計情報を設定します。

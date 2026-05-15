@@ -1,36 +1,36 @@
-# DSL Design
+# Desain DSL
 
-:::info Significance
+:::info Makna
 
-VSeed is a declarative DSL
+VSeed adalah DSL deklaratif
 
-- DSL design is the art of expressing domain problems — it effectively simplifies complex issues.
-- DSL allows those familiar with it to code as naturally as writing in their native language. Once you are familiar with VSeed, rendering charts feels as simple as writing plain English.
-- `VChart` and `VTable` follow the same philosophy.
+- Desain DSL adalah seni mengekspresikan masalah domain, dan dapat menyederhanakan masalah kompleks secara efektif.
+- DSL membuat orang yang sudah terbiasa dapat menulis kode sealami menulis bahasa ibu. Setelah terbiasa dengan VSeed, merender chart terasa sesederhana menulis bahasa alami.
+- `VChart` dan `VTable` juga demikian.
 
 
 :::
 
 :::tip
 
-A `Declarative DSL` focuses on **"What"**. It describes the expected result or final state, without specifying the exact steps the computer should take to reach that state.
+`DSL deklaratif` berfokus pada "apa" (What). Ia mendeskripsikan seperti apa hasil yang diharapkan atau keadaan akhir, tanpa peduli langkah detail yang dilakukan komputer untuk mencapai keadaan tersebut.
 
 
-An `Imperative DSL` focuses on **"How"**. It provides a series of explicit, step-by-step instructions, telling the computer exactly how to reach the desired state.
+`DSL imperatif` berfokus pada "bagaimana" (How). Ia menyediakan serangkaian instruksi eksplisit dan bertahap, memberi tahu komputer cara mencapai keadaan target langkah demi langkah.
 :::
 
-## VSeed Trade-offs
+## Trade-off VSeed
 
-1. Domain Focus
+1. Fokus Domain (Focus)
 
-Sacrificing some generality to focus on solving domain-specific problems. The core goal of VSeed is not to deeply satisfy all the requirements of a single chart type, but to focus on data transformation before the chart type is determined. Other concerns, such as themes, interactions, and animations, are left to the consumer.
+Mengorbankan sebagian generalitas untuk fokus menyelesaikan masalah pada domain tertentu. Karena itu, tujuan inti VSeed bukan memenuhi seluruh kebutuhan satu jenis chart secara mendalam, melainkan fokus pada transformasi data sebelum jenis chart ditentukan. Fungsi lain seperti tema, interaksi, dan animasi diserahkan kepada pengguna.
 
-2. Abstraction Level
+2. Tingkat Abstraksi (Abstraction Level)
 
-`VSeed` provides a high level of abstraction, allowing users to focus on solving problems rather than worrying about low-level implementation details. This boosts development efficiency — for example, switching chart types only requires changing a single parameter, without worrying about the underlying mechanics.
+`VSeed` menyediakan tingkat abstraksi yang lebih tinggi, sehingga pengguna dapat fokus menyelesaikan masalah tanpa memikirkan detail implementasi level bawah. Ini meningkatkan efisiensi pengembangan. Misalnya, berpindah jenis chart cukup mengubah satu parameter, tanpa perlu memperhatikan detail cara perpindahannya.
 
-3. Constraint is Advantage
+3. Batasan adalah Keunggulan (Constraint is Advantage)
 
-`VSeed` emphasizes constraints: it accepts a `VSeed DSL` as input and outputs a `spec` for either `VTable` or `VChart`. This allows users to maintain fine-grained control over individual chart features — `VSeed` is not a black box.
+`VSeed` menekankan batasan: menerima `VSeed DSL` sebagai input dan menghasilkan `spec` untuk `VTable` atau `VChart`. Ini memungkinkan pengguna mengontrol fitur chart tunggal dengan lebih fleksibel. `VSeed` bukan kotak hitam.
 
-Therefore, VSeed can be simply thought of as a `Spec Builder` that does not break the original capabilities of `VTable` or `VChart`. Any `VChart` or `VTable` user can quickly integrate `VSeed` into their existing platform.
+Karena itu, VSeed dapat secara sederhana dianggap sebagai `Spec Builder` yang tidak merusak kemampuan asli `VTable` atau `VChart`. Setiap pengguna `VChart` atau `VTable` dapat dengan cepat mengintegrasikan `VSeed` ke platform yang sudah ada.

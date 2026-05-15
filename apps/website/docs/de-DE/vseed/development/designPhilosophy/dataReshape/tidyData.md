@@ -1,22 +1,22 @@
 # TidyData
 
-:::info Significance
-TidyData, through its core principle of "variables as columns, observations as rows," dramatically reduces the complexity of data cleaning — letting us focus on business problems rather than data format conversion.
+:::info Bedeutung
+TidyData reduziert durch das Kernprinzip „Variablen als Spalten, Beobachtungen als Zeilen“ die Komplexität der Datenbereinigung erheblich, sodass wir uns stärker auf Geschäftsprobleme statt auf Datenformatumwandlungen konzentrieren können.
 :::
 
 ## Paper
 
-Author: `Hadley Wickham`. The paper discusses a small module in data processing — data tidying — because tidy datasets are easier to manipulate, model, and visualize, and have a specific structure.
+Der Autor des Papers ist `Hadley Wickham`. Das Paper behandelt einen kleinen Teilbereich der Datenverarbeitung, die Datenaufbereitung, weil aufgeräumte Datensätze einfacher zu bearbeiten, zu modellieren und zu visualisieren sind und eine bestimmte Struktur besitzen.
 
-This paper is highly recommended. See: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
+Dieses Paper ist sehr empfehlenswert. Siehe: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
 
 ## TidyData in VSeed
 
-The `dataset` configuration in VSeed DSL uses the `TidyData` format.
+Die `dataset`-Konfiguration in VSeed DSL ist ein Datensatz im `TidyData`-Format.
 
-Core characteristics:
-1. **Each variable has a column**: Variable values are stored in separate columns, e.g., "age", "gender".
-2. **Each observation has a row**: All variable values for one observation form a row, e.g., a person's age and gender.
-3. **Each unit of observation has a table**: Different types of observation units (e.g., person, time, location) should be stored separately.
+Kernmerkmale:
+1. **Jede Variable eine Spalte**: Variablenwerte werden in eigenen Spalten gespeichert, z. B. „Alter“ und „Geschlecht“.
+2. **Jede Beobachtung eine Zeile**: Alle Variablenwerte eines Beobachtungsobjekts bilden eine Zeile, z. B. Alter und Geschlecht einer Person.
+3. **Jede Beobachtungseinheit eine Tabelle**: Unterschiedliche Arten von Beobachtungseinheiten, etwa Person, Zeit oder Ort, sollten getrennt gespeichert werden.
 
-Therefore, the result of an `SQL` query can be passed directly into VSeed's `dataset` configuration — no additional data processing needed for quick analysis and visualization.
+Daher kann das Ergebnis einer `SQL`-Abfrage direkt an die `dataset`-Konfiguration von `VSeed` übergeben werden. Zusätzliche Datenverarbeitung ist nicht nötig, um schnell Analyse und Visualisierung durchzuführen.

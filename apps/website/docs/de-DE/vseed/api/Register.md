@@ -4,8 +4,8 @@
 
 ### registerCustomTheme
 
-:::note{title=Description}
-Register a custom theme.
+:::note{title=Beschreibung}
+Registriert ein benutzerdefiniertes Theme.
 :::
 
 ```ts
@@ -14,23 +14,23 @@ function registerCustomTheme(key: string, themeConfig:
     | ((props: { lightTheme: CustomThemeConfig; darkTheme: CustomThemeConfig }) => CustomThemeConfig)): void
 ```
 
-**Parameters:**
+**Parameter:**
 
-- Unique identifier for the theme
-- Theme configuration object, or a function that returns a configuration object.
-If a function, it receives an object containing lightTheme and darkTheme as parameters, making it easy to extend existing themes.
+- Eindeutiger Bezeichner des Themes
+- Theme-Konfigurationsobjekt oder eine Funktion, die ein Konfigurationsobjekt zurückgibt
+Wenn es eine Funktion ist, erhält sie ein Objekt mit lightTheme und darkTheme als Parameter, sodass bestehende Themes einfach erweitert werden können.
 
-**Example:**
+**Beispiel:**
 
 registerCustomTheme('myTheme', { ... });
-// Or modify based on the light theme
+// Oder auf Basis des Light-Themes ändern
 registerCustomTheme('myTheme', ({ lightTheme }) => ({ ...lightTheme, ... }));
 
 ### registerDarkTheme
 
-:::note{title=Description}
-Register the dark theme (Dark Theme).
-After registration, retrieve it via Builder.getTheme('dark').
+:::note{title=Beschreibung}
+Registriert das dunkle Theme (Dark Theme).
+Nach der Registrierung kann es über Builder.getTheme('dark') abgerufen werden.
 :::
 
 ```ts
@@ -39,9 +39,9 @@ function registerDarkTheme(): void
 
 ### registerLightTheme
 
-:::note{title=Description}
-Register the light theme (Light Theme).
-After registration, retrieve it via Builder.getTheme('light').
+:::note{title=Beschreibung}
+Registriert das helle Theme (Light Theme).
+Nach der Registrierung kann es über Builder.getTheme('light') abgerufen werden.
 :::
 
 ```ts
@@ -52,9 +52,9 @@ function registerLightTheme(): void
 
 ### registerArea
 
-:::note{title=Description}
-Register the Area Chart build pipeline.
-Once registered, Builder supports building Area Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Area Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Area Chart.
 :::
 
 ```ts
@@ -63,9 +63,9 @@ function registerArea(): void
 
 ### registerAreaPercent
 
-:::note{title=Description}
-Register the Area Percent Chart build pipeline.
-Once registered, Builder supports building Area Percent Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Area Percent Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Area Percent Chart.
 :::
 
 ```ts
@@ -74,9 +74,9 @@ function registerAreaPercent(): void
 
 ### registerBar
 
-:::note{title=Description}
-Register the Bar Chart build pipeline.
-Once registered, Builder supports building Bar Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Bar Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Bar Chart.
 :::
 
 ```ts
@@ -85,9 +85,9 @@ function registerBar(): void
 
 ### registerBarParallel
 
-:::note{title=Description}
-Register the Bar Parallel Chart build pipeline.
-Once registered, Builder supports building Bar Parallel Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Bar Parallel Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Bar Parallel Chart.
 :::
 
 ```ts
@@ -96,9 +96,9 @@ function registerBarParallel(): void
 
 ### registerBarPercent
 
-:::note{title=Description}
-Register the Bar Percent Chart build pipeline.
-Once registered, Builder supports building Bar Percent Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Bar Percent Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Bar Percent Chart.
 :::
 
 ```ts
@@ -107,9 +107,9 @@ function registerBarPercent(): void
 
 ### registerBoxPlot
 
-:::note{title=Description}
-Register the Box Plot Chart build pipeline.
-Once registered, Builder supports building Box Plot Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Box Plot Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Box Plot Chart.
 :::
 
 ```ts
@@ -118,9 +118,9 @@ function registerBoxPlot(): void
 
 ### registerCirclePacking
 
-:::note{title=Description}
-Register the CirclePacking Chart build pipeline.
-Once registered, Builder supports building CirclePacking Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für CirclePacking Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für CirclePacking Chart.
 :::
 
 ```ts
@@ -129,9 +129,9 @@ function registerCirclePacking(): void
 
 ### registerColumn
 
-:::note{title=Description}
-Register the Column Chart build pipeline.
-Once registered, Builder supports building Column Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Column Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Column Chart.
 :::
 
 ```ts
@@ -140,9 +140,9 @@ function registerColumn(): void
 
 ### registerColumnParallel
 
-:::note{title=Description}
-Register the Column Parallel Chart build pipeline.
-Once registered, Builder supports building Column Parallel Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Column Parallel Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Column Parallel Chart.
 :::
 
 ```ts
@@ -151,9 +151,9 @@ function registerColumnParallel(): void
 
 ### registerColumnPercent
 
-:::note{title=Description}
-Register the Column Percent Chart build pipeline.
-Once registered, Builder supports building Column Percent Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Column Percent Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Column Percent Chart.
 :::
 
 ```ts
@@ -162,9 +162,9 @@ function registerColumnPercent(): void
 
 ### registerDonut
 
-:::note{title=Description}
-Register the Donut Chart build pipeline.
-Once registered, Builder supports building Donut Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Donut Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Donut Chart.
 :::
 
 ```ts
@@ -173,9 +173,9 @@ function registerDonut(): void
 
 ### registerDualAxis
 
-:::note{title=Description}
-Register the Dual Axis Chart build pipeline.
-Once registered, Builder supports building Dual Axis Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Dual Axis Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Dual Axis Chart.
 :::
 
 ```ts
@@ -184,9 +184,9 @@ function registerDualAxis(): void
 
 ### registerFunnel
 
-:::note{title=Description}
-Register the Funnel Chart build pipeline.
-Once registered, Builder supports building Funnel Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Funnel Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Funnel Chart.
 :::
 
 ```ts
@@ -195,9 +195,9 @@ function registerFunnel(): void
 
 ### registerHeatmap
 
-:::note{title=Description}
-Register the Heatmap Chart build pipeline.
-Once registered, Builder supports building Heatmap Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Heatmap Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Heatmap Chart.
 :::
 
 ```ts
@@ -206,8 +206,8 @@ function registerHeatmap(): void
 
 ### registerHierarchySankey
 
-:::note{title=Description}
-Register the HierarchySankey Chart build pipeline.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für HierarchySankey Chart.
 :::
 
 ```ts
@@ -216,9 +216,9 @@ function registerHierarchySankey(): void
 
 ### registerHistogram
 
-:::note{title=Description}
-Register the Histogram Chart build pipeline.
-Once registered, Builder supports building Histogram Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Histogram Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Histogram Chart.
 :::
 
 ```ts
@@ -227,9 +227,9 @@ function registerHistogram(): void
 
 ### registerLine
 
-:::note{title=Description}
-Register the Line Chart build pipeline.
-Once registered, Builder supports building Line Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Line Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Line Chart.
 :::
 
 ```ts
@@ -238,9 +238,9 @@ function registerLine(): void
 
 ### registerPie
 
-:::note{title=Description}
-Register the Pie Chart build pipeline.
-Once registered, Builder supports building Pie Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Pie Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Pie Chart.
 :::
 
 ```ts
@@ -249,9 +249,9 @@ function registerPie(): void
 
 ### registerPivotTable
 
-:::note{title=Description}
-Register the Pivot Table Chart build pipeline.
-Once registered, Builder supports building Pivot Table Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Pivot Table Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Pivot Table Chart.
 :::
 
 ```ts
@@ -260,9 +260,9 @@ function registerPivotTable(): void
 
 ### registerRaceBar
 
-:::note{title=Description}
-Register the RaceBar Chart build pipeline.
-Once registered, Builder supports building RaceBar Chart Spec.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für RaceBar Chart.
+Nach der Registrierung unterstützt Builder das Erstellen der Spec für RaceBar Chart.
 :::
 
 ```ts
@@ -271,9 +271,9 @@ function registerRaceBar(): void
 
 ### registerRaceColumn
 
-:::note{title=Description}
-Register the RaceColumn Chart build pipeline.
-Once registered, Builder supports building RaceColumn Chart Spec.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für RaceColumn Chart.
+Nach der Registrierung unterstützt Builder das Erstellen der Spec für RaceColumn Chart.
 :::
 
 ```ts
@@ -282,9 +282,9 @@ function registerRaceColumn(): void
 
 ### registerRaceDonut
 
-:::note{title=Description}
-Register the RaceDonut Chart build pipeline.
-Once registered, Builder supports building RaceDonut Chart Spec.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für RaceDonut Chart.
+Nach der Registrierung unterstützt Builder das Erstellen der Spec für RaceDonut Chart.
 :::
 
 ```ts
@@ -293,9 +293,9 @@ function registerRaceDonut(): void
 
 ### registerRaceLine
 
-:::note{title=Description}
-Register the RaceLine Chart build pipeline.
-Once registered, Builder supports building RaceLine Chart Spec.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für RaceLine Chart.
+Nach der Registrierung unterstützt Builder das Erstellen der Spec für RaceLine Chart.
 :::
 
 ```ts
@@ -304,9 +304,9 @@ function registerRaceLine(): void
 
 ### registerRacePie
 
-:::note{title=Description}
-Register the RacePie Chart build pipeline.
-Once registered, Builder supports building RacePie Chart Spec.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für RacePie Chart.
+Nach der Registrierung unterstützt Builder das Erstellen der Spec für RacePie Chart.
 :::
 
 ```ts
@@ -315,9 +315,9 @@ function registerRacePie(): void
 
 ### registerRaceScatter
 
-:::note{title=Description}
-Register the RaceScatter Chart build pipeline.
-Once registered, Builder supports building RaceScatter Chart Spec.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für RaceScatter Chart.
+Nach der Registrierung unterstützt Builder das Erstellen der Spec für RaceScatter Chart.
 :::
 
 ```ts
@@ -326,9 +326,9 @@ function registerRaceScatter(): void
 
 ### registerRadar
 
-:::note{title=Description}
-Register the Radar Chart build pipeline.
-Once registered, Builder supports building Radar Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Radar Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Radar Chart.
 :::
 
 ```ts
@@ -337,9 +337,9 @@ function registerRadar(): void
 
 ### registerRose
 
-:::note{title=Description}
-Register the Rose Chart build pipeline.
-Once registered, Builder supports building Rose Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Rose Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Rose Chart.
 :::
 
 ```ts
@@ -348,9 +348,9 @@ function registerRose(): void
 
 ### registerRoseParallel
 
-:::note{title=Description}
-Register the Rose Parallel Chart build pipeline.
-Once registered, Builder supports building Rose Parallel Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Rose Parallel Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Rose Parallel Chart.
 :::
 
 ```ts
@@ -359,9 +359,9 @@ function registerRoseParallel(): void
 
 ### registerScatter
 
-:::note{title=Description}
-Register the Scatter Chart build pipeline.
-Once registered, Builder supports building Scatter Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Scatter Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Scatter Chart.
 :::
 
 ```ts
@@ -370,9 +370,9 @@ function registerScatter(): void
 
 ### registerSunburst
 
-:::note{title=Description}
-Register the Sunburst Chart build pipeline.
-Once registered, Builder supports building Sunburst Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Sunburst Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Sunburst Chart.
 :::
 
 ```ts
@@ -381,9 +381,9 @@ function registerSunburst(): void
 
 ### registerTable
 
-:::note{title=Description}
-Register the Table Chart build pipeline.
-Once registered, Builder supports building Table Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für Table Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für Table Chart.
 :::
 
 ```ts
@@ -392,11 +392,12 @@ function registerTable(): void
 
 ### registerTreeMap
 
-:::note{title=Description}
-Register the TreeMap Chart build pipeline.
-Once registered, Builder supports building TreeMap Chart Spec and Advanced Config.
+:::note{title=Beschreibung}
+Registriert die Build-Pipeline für TreeMap Chart.
+Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced Config für TreeMap Chart.
 :::
 
 ```ts
 function registerTreeMap(): void
 ```
+

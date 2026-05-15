@@ -40,19 +40,19 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "yAxis"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ],
   "label": {
@@ -64,9 +64,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Scatter Chart
+## Kombiniertes Streudiagramm
 
-A scatter chart with multiple data series.
+Kombiniertes Streudiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -109,31 +109,31 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "xAxis",
       "parentId": "0"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "yAxis",
       "parentId": "0"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "xAxis",
       "parentId": "1"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "encoding": "yAxis",
       "parentId": "1"
     }
@@ -144,9 +144,9 @@ export default () => {
 }
 ```
 
-## Pivot Scatter Chart
+## Pivotiertes kombiniertes Streudiagramm
 
-A scatter chart with pivot table layout.
+Pivotiertes kombiniertes Streudiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -157,12 +157,12 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category",
+      "alias": "Kategorie",
       "encoding": "color"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Datum",
       "encoding": "column"
     },
     {
@@ -174,12 +174,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "xAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "yAxis"
     }
   ],

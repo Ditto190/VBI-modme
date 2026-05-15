@@ -63,9 +63,9 @@ export default () => {
 }
 ```
 
-## Standard Table
+## Tabel Dasar
 
-A standard table with dimension and measure definitions.
+Tabel Dasar
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -123,33 +123,33 @@ export default () => {
   "measures": [
     {
       "id": "goalProfit",
-      "alias": "Profit Goal"
+      "alias": "Target Laba"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "sales",
-      "alias": "Sales Volume"
+      "alias": "Jumlah Penjualan"
     },
     {
       "id": "leftCount",
-      "alias": "Remaining Quantity"
+      "alias": "Jumlah Tersisa"
     },
     {
       "id": "salesCount",
-      "alias": "Sales Count"
+      "alias": "Hitungan Penjualan"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     },
     {
       "id": "type",
-      "alias": "Type"
+      "alias": "Tipe"
     }
   ]
 }
@@ -158,9 +158,9 @@ export default () => {
 }
 ```
 
-## Grouped Table
+## Tabel Berkelompok
 
-A table with grouped dimensions and measures for hierarchical display.
+Tabel Berkelompok
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -218,37 +218,37 @@ export default () => {
   "measures": [
     {
       "id": "goalProfit",
-      "alias": "Profit Goal"
+      "alias": "Target Laba"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     },
     {
       "id": "table",
-      "alias": "Sales Measures",
+      "alias": "Metrik Penjualan",
       "children": [
         {
           "id": "countInfo",
-          "alias": "Quantity Information",
+          "alias": "Informasi Jumlah",
           "children": [
             {
               "id": "leftCount",
-              "alias": "Remaining Quantity"
+              "alias": "Jumlah Tersisa"
             },
             {
               "id": "salesCount",
-              "alias": "Sales Count"
+              "alias": "Hitungan Penjualan"
             }
           ]
         },
         {
           "id": "saleInfo",
-          "alias": "Sales Information",
+          "alias": "Informasi Penjualan",
           "children": [
             {
               "id": "sales",
-              "alias": "Sales Volume"
+              "alias": "Jumlah Penjualan"
             }
           ]
         }
@@ -258,15 +258,15 @@ export default () => {
   "dimensions": [
     {
       "id": "dimensionGroup",
-      "alias": "Dimension Group",
+      "alias": "Grup Dimensi",
       "children": [
         {
           "id": "date",
-          "alias": "Date"
+          "alias": "Tanggal"
         },
         {
           "id": "type",
-          "alias": "Type"
+          "alias": "Tipe"
         }
       ]
     }
@@ -307,17 +307,17 @@ export default () => {
   "dimensions": [
     {
       "id": "product",
-      "alias": "Product Name"
+      "alias": "Nama Produk"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "numFormat": {
         "type": "number",
         "fractionDigits": 1

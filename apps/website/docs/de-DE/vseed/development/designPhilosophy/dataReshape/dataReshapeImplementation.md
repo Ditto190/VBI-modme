@@ -1,30 +1,30 @@
-# Data Reshape-Implementation
+# Datenumformung - Implementierung
 
-:::info Simple Yet Ingenious
-This is the most interesting and core module of VSeed. It seems complex, but it is actually very simple and ingenious, consisting of less than 200 lines of code.
+:::info Einfach und zugleich raffiniert
+Dies ist eines der interessantesten und zugleich zentralsten Module von VSeed. Es wirkt komplex, ist tatsächlich aber sehr einfach und raffiniert und umfasst weniger als 200 Zeilen Code.
 
-As long as `foldMeasures` and `unfoldDimensions` are properly utilized, any Measures and Dimensions can be converted to fixed Measures and Dimensions, achieving highly flexible visual mapping.
+Wenn `foldMeasures` und `unfoldDimensions` sinnvoll eingesetzt werden, lassen sich beliebige Measures und Dimensions in feste Measures und Dimensions umwandeln. Dadurch wird eine ausreichend flexible visuelle Zuordnung möglich.
 :::
 
 ## foldMeasures
 
-[Source Code Location](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/foldMeasures.ts)
+[Position des Quellcodes](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/foldMeasures.ts)
 
-`foldMeasures` folds all Measures into one measure, adding a `Measure Name Dimension` and a `Measure ID Dimension`. Any potentially lost information is stored in `foldInfo`, and data statistics can also be computed during this process.
+`foldMeasures` `fold`et alle Measures zu einem Measure, ergänzt eine `Measure-Name-Dimension` und eine `Measure-Id-Dimension`. Alle potenziell verlorenen Informationen werden in `foldInfo` gespeichert; außerdem können während dieses Prozesses Datenstatistiken berechnet werden.
 
-### Features
+### Eigenschaften
 
-1. Feature 1: After `foldMeasures` finishes executing, there will be exactly 1 measure field. This means data described by multiple measures can all be converted to 1 measure; mapping any multiple measures data to exactly one graphic element.
-2. Feature 2: A data item is strictly consistent with the graphic element (geometric element)'s data. One data item corresponds to one graphic element.
-3. Feature 3: Data statistics are computed during this process.
+1. Eigenschaft 1: Nach der Ausführung von `foldMeasures` gibt es garantiert nur noch 1 Measure-Feld. Das bedeutet, dass Daten mit mehreren Measures in 1 Measure umgewandelt werden können und beliebige Mehr-Measure-Daten genau einem grafischen Element zugeordnet werden.
+2. Eigenschaft 2: Dateneintrag und Daten des grafischen Elements (geometrischen Elements) stimmen strikt überein. Ein Dateneintrag entspricht einem grafischen Element.
+3. Eigenschaft 3: Während dieses Prozesses werden Datenstatistiken berechnet.
 
-:::tip The Most Ingenious Part!!!
-- `1` measure `0` dimensions -> After `foldMeasures`, you get `1` measure and `2` dimensions (including Measure Name and Measure ID).
-- `4` measures `1` dimension -> After `2` passes of `foldMeasures`, you can get `2` measures and `3` dimensions (including Measure Name and Measure ID), which perfectly supports scenarios like Dual Axis Charts.
-- `N` measures `0` dimensions -> After `Y` (Y ≤ N) passes of `foldMeasures`, you can get `Y` measures and `2` dimensions (including Measure Name and Measure ID).
+:::tip Der raffinierteste Punkt!!!
+- `1` Measure und `0` Dimensions ergeben nach `foldMeasures` `1` Measure und `2` Dimensions (einschließlich Measure-Name und Measure-Id).
+- `4` Measures und `1` Dimension ergeben nach `2` Durchläufen von `foldMeasures` `2` Measures und `3` Dimensions (einschließlich Measure-Name und Measure-Id), wodurch Szenarien wie Dual-Axis-Charts sauber unterstützt werden.
+- `N` Measures und `0` Dimensions ergeben nach `Y` (Y ≤ N) Durchläufen von `foldMeasures` `Y` Measures und `2` Dimensions (einschließlich Measure-Name und Measure-Id).
 
 :::
-### Minimal Runnable Example
+### Minimal lauffähiges Beispiel
 
 ```js title=foldMeasures
 const data = [
@@ -69,7 +69,7 @@ function foldMeasures(dataset, measures, options) {
       const { id, alias } = measure
       const newRow = { ...row }
 
-      // Delete other Measure fields to avoid duplication
+      // Andere Measure-Felder entfernen, um Duplikate zu vermeiden
       for (const key of ids) {
         delete newRow[key]
       }
@@ -109,7 +109,7 @@ const { dataset: foldedData, foldInfo } = foldMeasures(data, measures, {
 console.log(foldedData)
 ```
 
-```json title=Expected Output
+```json title=Erwartete Ausgabe
 [
   {
     "category": "A",
@@ -140,45 +140,45 @@ console.log(foldedData)
 
 ## unfoldDimensions
 
-[Source Code Location](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/unfoldDimensions.ts)
+[Position des Quellcodes](https://github.com/VisActor/VSeed/blob/main/packages/vseed/src/dataReshape/unfoldDimensions.ts)
 
 
-`unfoldDimensions` concatenates any subset of Dimensions into a new Dimension without losing any information. All newly added information is stored in `unfoldInfo`.
+`unfoldDimensions` `concat`eniert beliebige Dimensions verlustfrei zu einer neuen Dimension. Alle zusätzlich entstehenden Informationen werden in `unfoldInfo` gespeichert.
 
-A complete `unfoldDimensions` == Converting all Dimension values to Measures + One `foldMeasures` pass.
+Ein vollständiges `unfoldDimensions` == alle Dimension-Werte in Measures umwandeln + ein `foldMeasures`-Durchlauf
 
-However, the cost of iterating over the dataset is significant. An extra `foldMeasures` pass would result in performance degradation.
+Das Iterieren über das `dataset` ist jedoch teuer. Ein zusätzlicher `foldMeasures`-Durchlauf würde die Performance verschlechtern.
 
-Because `foldMeasures` inherently guarantees that one data item holds precisely one measure, we can directly apply a simple merge exclusively on the source data. This cleanly achieves the equivalent effect, ultimately scaling performance substantially.
+`foldMeasures` kann direkt sicherstellen, dass ein Dateneintrag nur ein Measure enthält. Daher lässt sich bereits auf den Quelldaten eine einfache Zusammenführung durchführen, die denselben Effekt elegant erreicht und die Performance am Ende deutlich verbessert.
 
-Upon further consideration, theoretically, `unfoldDimensions` and `foldMeasures` could be fully merged to complete all data processing within a single dataset iteration. However, for the sake of readability and maintainability, they are tentatively kept apart when there is no performance bottleneck.
+Nach weiterer Überlegung könnten `unfoldDimensions` und `foldMeasures` theoretisch vollständig zusammengeführt werden, sodass die gesamte Datenverarbeitung in einem einzigen `dataset`-Durchlauf abgeschlossen wird. Aus Gründen der Lesbarkeit und Wartbarkeit werden sie ohne Performance-Engpass vorerst nicht zusammengeführt.
 
-### Features
+### Eigenschaften
 
-Feature 1: After `unfoldDimensions` is executed, there is strictly 1 measure field remaining.
-Feature 2: It can merge Dimensions without losing the original data structure.
+Eigenschaft 1: Nach der Ausführung von `unfoldDimensions` gibt es garantiert nur noch 1 Measure-Feld. 
+Eigenschaft 2: Dimensions können zusammengeführt werden, ohne die ursprünglichen Daten zu verlieren.
 
-:::tip The Most Ingenious Part!!!
-1. As long as it proceeds after `foldMeasures`, you can achieve the expansion of Dimensions and merging of Measures via a simple concat operation, yielding outstanding performance.
-2. Arbitrary Dimensions can be merged together to form an entirely new Dimension field, empowering infinitely flexible visual channel mappings.
-3. Since it is not complex intrinsically, it can theoretically be stitched seamlessly onto `foldMeasures` to diminish traversal passes and bolster performance.
+:::tip Der raffinierteste Punkt!!!
+1. Wenn der Schritt nach `foldMeasures` erfolgt, reichen einfache `concat`-Operationen aus, um Dimensions zu entfalten und Measures zusammenzuführen. Die Performance ist dadurch sehr gut.
+2. Beliebige Dimensions können zu einem komplett neuen Dimension-Feld zusammengeführt werden, wodurch beliebige Zuordnungen zu visuellen Kanälen möglich werden.
+3. Da der Prozess selbst nicht komplex ist, kann er theoretisch mit `foldMeasures` zusammengeführt werden, um Durchläufe zu reduzieren und die Performance zu verbessern.
 
 :::
 
-### Minimal Runnable Example
+### Minimal lauffähiges Beispiel
 
 ```js
 const XEncoding = '__DimX__'
 const ColorEncoding = '__DimColor__'
 /**
- * Unfolds and merges Dimensions of visual channels. It executes after foldMeasures, so a Cartesian product is not needed.
- * @param {Array<Object>} dataset The original dataset
- * @param {Array<Object>} dimensions An array of Dimensions where each dimension object contains at least an id field
- * @param {Object} encoding Encoding object, where the key is the channel name and the value is an array of Dimension IDs
- * @param {Object} options Configuration items
- *  - foldMeasureId: The field name for the folded measures
- *  - separator: The separator to stitch dimension values
- *  - colorItemAsId: Whether to exclusively use the Color item as the colorId, default false
+ * Dimensions der visuellen Kanäle entfalten und zusammenführen. Da die Zusammenführung nach foldMeasures erfolgt, wird kein kartesisches Produkt benötigt
+ * @param {Array<Object>} dataset Ursprüngliches Dataset
+ * @param {Array<Object>} dimensions Dimension-Array; jedes Dimension-Objekt enthält mindestens ein id-Feld
+ * @param {Object} encoding Encoding-Objekt; key ist der Kanalname, value ist ein Array von Dimension-IDs
+ * @param {Object} options Konfiguration
+ *  - foldMeasureId: Feldname des gefalteten Measures
+ *  - separator: Trennzeichen zum Verbinden von Dimension-Werten
+ *  - colorItemAsId: Ob nur das Farbelement als colorId verwendet wird, Standardwert false
  * @returns {Object} { dataset, unfoldInfo }
  */
 function unfoldDimensions(dataset, dimensions, encoding, options) {
@@ -192,7 +192,7 @@ function unfoldDimensions(dataset, dimensions, encoding, options) {
     colorIdMap: {},
   }
 
-  // Filter corresponding Dimensions based on the given encoding
+  // Zugehörige Dimensions anhand des Encoding filtern
   const xDimensions = encoding.x ? dimensions.filter(d => encoding.x.includes(d.id)) : []
   const colorDimensions = encoding.color ? dimensions.filter(d => encoding.color.includes(d.id)) : []
 
@@ -219,11 +219,11 @@ function unfoldDimensions(dataset, dimensions, encoding, options) {
 }
 
 /**
- * Applies encoding to the data by mutating datum directly
- * @param {string} encoding The encoding field name
- * @param {Array<Object>} dimensions Array of Dimensions
- * @param {Object} datum A single data item
- * @param {string} separator Stitching separator
+ * Encoding auf Daten anwenden und datum direkt verändern
+ * @param {string} encoding Encoding-Feldname
+ * @param {Array<Object>} dimensions Dimension-Array
+ * @param {Object} datum Einzelner Dateneintrag
+ * @param {string} separator Trennzeichen für die Verbindung
  */
 function applyEncoding(encoding, dimensions, datum, separator) {
   if (encoding && dimensions.length) {
@@ -261,7 +261,7 @@ console.log(unfoldedData)
 
 ```
 
-```json title=Expected Output
+```json title=Erwartete Ausgabe
 [
   {
     "category": "A",

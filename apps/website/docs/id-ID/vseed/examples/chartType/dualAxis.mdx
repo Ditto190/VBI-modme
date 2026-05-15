@@ -40,11 +40,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ]
 }
@@ -53,9 +53,9 @@ export default () => {
 }
 ```
 
-## Default Dual Axis Chart
+## Tampilan Default Grafik Sumbu Ganda
 
-Default Dual Axis Chart
+Tampilan Default Grafik Sumbu Ganda
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -66,11 +66,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Penjualan"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ],
   "dataset": [
@@ -106,9 +106,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## Grafik Sumbu Ganda
 
-Dual Axis Chart
+Grafik Sumbu Ganda
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -119,12 +119,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "primaryYAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "secondaryYAxis"
     }
   ],
@@ -161,9 +161,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## Grafik Sumbu Ganda Gabungan
 
-Combined Dual Axis Chart
+Grafik Sumbu Ganda Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -174,25 +174,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Rasio",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -237,7 +237,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ]
 }
@@ -246,9 +246,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Dual Axis Chart
+## Grafik Sumbu Ganda Gabungan Pivot
 
-Pivot Combined Dual Axis Chart
+Grafik Sumbu Ganda Gabungan Pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -259,16 +259,16 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     },
     {
       "id": "type",
-      "alias": "Type",
+      "alias": "Tipe",
       "encoding": "row"
     },
     {
       "id": "test",
-      "alias": "Tests",
+      "alias": "Pengujian",
       "encoding": "column"
     }
   ],
@@ -457,25 +457,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Rasio",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -486,9 +486,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## Grafik Sumbu Ganda
 
-Dual Axis Chart
+Grafik Sumbu Ganda
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -526,13 +526,13 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "primaryYAxis",
       "chartType": "area"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "secondaryYAxis",
       "chartType": "column"
     }
@@ -543,9 +543,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## Grafik Sumbu Ganda Gabungan
 
-Combined Dual Axis Chart
+Grafik Sumbu Ganda Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -556,28 +556,28 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "primaryYAxis",
       "parentId": "first",
       "chartType": "area"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "secondaryYAxis",
       "parentId": "first",
       "chartType": "scatter"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Rasio",
       "encoding": "primaryYAxis",
       "parentId": "second",
       "chartType": "column"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "encoding": "secondaryYAxis",
       "parentId": "second",
       "chartType": "line"
@@ -623,7 +623,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ]
 }
@@ -646,13 +646,13 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Profit"
+        "titleText": "Laba"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Ratio"
+        "titleText": "Rasio"
       }
     }
   ],
@@ -660,38 +660,38 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Sales"
+        "titleText": "Penjualan"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Return Rate"
+        "titleText": "Tingkat Pengembalian"
       }
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Rasio",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -736,7 +736,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import type { VBIChartBuilder, VBIChartDSL, VBIDimension, VBIMeasure } from '@visactor/vbi'
 import { useState } from 'react'
 import { ShelfToken } from 'src/components/ShelfToken'
-import type { MinimalLabels } from 'src/config/labels'
+import type { MinimalLabels } from 'src/i18n'
 import type { EditorField, FieldRole } from 'src/types'
 import { addField, clearDragPayload, readDragPayload, removeField, writeTokenDrag } from 'src/utils/fields'
 

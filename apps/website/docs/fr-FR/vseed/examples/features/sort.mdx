@@ -1,8 +1,8 @@
 # Sort
 
-## Legend Internal Sort
+## Tri interne de la légende
 
-Legend Internal Sort
+Tri interne de la légende
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -51,15 +51,15 @@ export default () => {
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     }
   ],
   "sortLegend": {
@@ -71,83 +71,9 @@ export default () => {
 }
 ```
 
-## Measure Sort
+## Tri des indicateurs
 
-Measure Sort
-
-```tsx preview
-import { VSeedRender } from '@components'
-
-export default () => {
-  const vseedConfig = {
-  "chartType": "line",
-  "dataset": [
-    {
-      "date": "2019",
-      "profit": 10,
-      "sales": 20,
-      "count": 15
-    },
-    {
-      "date": "2020",
-      "profit": 30,
-      "sales": 60,
-      "count": 33
-    },
-    {
-      "date": "2021",
-      "profit": 30,
-      "sales": 60,
-      "count": 22
-    },
-    {
-      "date": "2022",
-      "profit": 50,
-      "sales": 100,
-      "count": 14
-    },
-    {
-      "date": "2023",
-      "profit": 40,
-      "sales": 80,
-      "count": 30
-    }
-  ],
-  "dimensions": [
-    {
-      "id": "date",
-      "alias": "Date"
-    }
-  ],
-  "measures": [
-    {
-      "id": "count",
-      "alias": "Quantity"
-    },
-    {
-      "id": "sales",
-      "alias": "Sales",
-      "parentId": "group"
-    },
-    {
-      "id": "profit",
-      "alias": "Profit",
-      "parentId": "group"
-    }
-  ],
-  "sortLegend": {
-    "order": "desc",
-    "orderBy": "sales"
-  }
-}
-
-  return <VSeedRender vseed={vseedConfig} />
-}
-```
-
-## Measuressort
-
-Measuressort
+Tri des indicateurs
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -196,16 +122,90 @@ export default () => {
   "measures": [
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Ventes",
       "parentId": "group"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Bénéfice",
+      "parentId": "group"
+    }
+  ],
+  "sortLegend": {
+    "order": "desc",
+    "orderBy": "sales"
+  }
+}
+
+  return <VSeedRender vseed={vseedConfig} />
+}
+```
+
+## Tri des indicateurs
+
+Tri des indicateurs
+
+```tsx preview
+import { VSeedRender } from '@components'
+
+export default () => {
+  const vseedConfig = {
+  "chartType": "line",
+  "dataset": [
+    {
+      "date": "2019",
+      "profit": 10,
+      "sales": 20,
+      "count": 15
+    },
+    {
+      "date": "2020",
+      "profit": 30,
+      "sales": 60,
+      "count": 33
+    },
+    {
+      "date": "2021",
+      "profit": 30,
+      "sales": 60,
+      "count": 22
+    },
+    {
+      "date": "2022",
+      "profit": 50,
+      "sales": 100,
+      "count": 14
+    },
+    {
+      "date": "2023",
+      "profit": 40,
+      "sales": 80,
+      "count": 30
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "date",
+      "alias": "Date"
+    }
+  ],
+  "measures": [
+    {
+      "id": "count",
+      "alias": "Quantité"
+    },
+    {
+      "id": "sales",
+      "alias": "Ventes",
+      "parentId": "group"
+    },
+    {
+      "id": "profit",
+      "alias": "Bénéfice",
       "parentId": "group"
     }
   ],
@@ -219,9 +219,9 @@ export default () => {
 }
 ```
 
-## Dimension Sort
+## Tri des dimensions
 
-Dimension Sort
+Tri des dimensions
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -270,15 +270,15 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     }
   ],
   "sortLegend": {
@@ -291,9 +291,9 @@ export default () => {
 }
 ```
 
-## Dimensionssort
+## Tri des dimensions
 
-Dimensionssort
+Tri des dimensions
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -342,15 +342,15 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     }
   ],
   "sort": {
@@ -363,9 +363,9 @@ export default () => {
 }
 ```
 
-## Custom Sort
+## Tri personnalisé
 
-Custom Sort
+Tri personnalisé
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -414,15 +414,15 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     }
   ],
   "sort": {
@@ -440,9 +440,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend ID)
+## Tri personnalisé (ID de légende)
 
-Custom Sort (Legend ID)
+Tri personnalisé (ID de légende)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -491,22 +491,22 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Quantity-count",
-      "Sales-sales",
-      "Profit-profit"
+      "Quantité-count",
+      "Ventes-sales",
+      "Bénéfice-profit"
     ]
   }
 }
@@ -515,9 +515,9 @@ export default () => {
 }
 ```
 
-## Custom Sort (Legend Name)
+## Tri personnalisé (nom de légende)
 
-Custom Sort (Legend Name)
+Tri personnalisé (nom de légende)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -566,22 +566,22 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Bénéfice"
     },
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Ventes"
     },
     {
       "id": "count",
-      "alias": "Quantity"
+      "alias": "Quantité"
     }
   ],
   "sortLegend": {
     "customOrder": [
-      "Sales",
-      "Quantity",
-      "Profit"
+      "Ventes",
+      "Quantité",
+      "Bénéfice"
     ]
   }
 }

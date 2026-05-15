@@ -57,7 +57,7 @@ const allLocales = [
 ]
 
 const isDev = process.env.NODE_ENV === 'development'
-const devEnableLocales = ['zh-CN', 'en-US']
+const devEnableLocales = allLocales.map((locale) => locale.lang).slice(0, 2)
 const devLocales = allLocales.filter((locale) => devEnableLocales.includes(locale.lang))
 const devLocaleSet = new Set(devLocales.map((locale) => locale.lang))
 const devLocaleExcludes = allLocales

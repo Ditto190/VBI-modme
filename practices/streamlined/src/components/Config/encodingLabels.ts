@@ -1,10 +1,11 @@
 import type { VBIDimension, VBIMeasure } from '@visactor/vbi'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 
 type DimensionEncoding = NonNullable<VBIDimension['encoding']>
 type MeasureEncoding = NonNullable<VBIMeasure['encoding']>
+type EncodingTitleLocale = 'zh-CN' | 'en-US'
 
-const dimensionTitles: Record<StreamLabels['locale'], Record<DimensionEncoding, string>> = {
+const dimensionTitles: Record<EncodingTitleLocale, Record<DimensionEncoding, string>> = {
   'zh-CN': {
     angle: '角度',
     color: '颜色',
@@ -37,7 +38,7 @@ const dimensionTitles: Record<StreamLabels['locale'], Record<DimensionEncoding, 
   },
 }
 
-const measureTitles: Record<StreamLabels['locale'], Record<MeasureEncoding, string>> = {
+const measureTitles: Record<EncodingTitleLocale, Record<MeasureEncoding, string>> = {
   'zh-CN': {
     angle: '角度',
     color: '颜色',
@@ -86,11 +87,14 @@ const measureTitles: Record<StreamLabels['locale'], Record<MeasureEncoding, stri
   },
 }
 
+const getEncodingLocale = (locale: StreamLabels['locale']) => (locale === 'zh-CN' ? 'zh-CN' : 'en-US')
+
 export const getEncodingTitle = (
   labels: StreamLabels,
   slot: { dimensionEncoding?: DimensionEncoding; measureEncoding?: MeasureEncoding },
 ) => {
-  if (slot.dimensionEncoding) return dimensionTitles[labels.locale][slot.dimensionEncoding]
-  if (slot.measureEncoding) return measureTitles[labels.locale][slot.measureEncoding]
+  const locale = getEncodingLocale(labels.locale)
+  if (slot.dimensionEncoding) return dimensionTitles[locale][slot.dimensionEncoding]
+  if (slot.measureEncoding) return measureTitles[locale][slot.measureEncoding]
   return ''
 }

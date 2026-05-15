@@ -4,7 +4,7 @@ import { ConfigPanel } from 'src/components/Config'
 import { addRecommendedField } from 'src/utils/fieldActions'
 import { toSchemaField } from 'src/utils/fieldUtils'
 import { FieldListPanel } from 'src/components/Fields'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 
 type EditorWorkbenchProps = {
   isFullscreen: boolean

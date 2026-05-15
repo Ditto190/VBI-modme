@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Combined Stacking Bar Chart
+## Kombiniertes gestapeltes Balkendiagramm
 
-Combined Stacking Bar Chart
+Kombiniertes gestapeltes Balkendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -61,12 +61,12 @@ export default () => {
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "parentId": "sales-and-profit"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "parentId": "ratio"
     }
   ],
@@ -105,7 +105,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ]
 }
@@ -114,9 +114,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Stacking Bar Chart
+## Pivotiertes kombiniertes gestapeltes Balkendiagramm
 
-Pivot Combined Stacking Bar Chart
+Pivotiertes kombiniertes gestapeltes Balkendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -127,11 +127,11 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategorie"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Datum",
       "encoding": "column"
     },
     {
@@ -143,12 +143,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     }
   ],
   "dataset": [

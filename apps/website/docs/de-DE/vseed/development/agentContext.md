@@ -1,74 +1,74 @@
-# Agent Development Context (VSeed)
+# Agent-Entwicklungskontext (VSeed)
 
-This document is for agent-code and contributors. It summarizes the core architecture, data flow, and extension patterns of the VSeed package to help quickly establish a global understanding during automated development.
+Dieses Dokument richtet sich an agent-code und Beitragende. Es fasst die Kernarchitektur, den Datenfluss und die Erweiterungsmöglichkeiten des VSeed-Pakets zusammen, damit bei automatisierter Entwicklung schnell ein Gesamtverständnis entsteht.
 
-> This is a "context index" designed for Agent use. For more detailed engineering notes, refer to: `packages/vseed/AGENTS.md`.
+> Dies ist ein für Agents entwickelter „Kontextindex“. Ausführlichere technische Hinweise finden Sie in `packages/vseed/AGENTS.md`.
 
-## 1. Goal and Purpose
+## 1. Ziel und Einordnung
 
-VSeed is a **Spec Builder** that converts `VSeed DSL` into `VChart` / `VTable` renderable Specs, supporting the capability to intelligently generate and edit charts.
+VSeed ist ein **Spec Builder**, der `VSeed DSL` in renderbare `VChart`- / `VTable`-Specs umwandelt und damit das intelligente Erzeugen und Bearbeiten von Charts unterstützt.
 
-- Input: `VSeed DSL`
-- Output: `VChart` / `VTable` Spec
-- Core flow: `AdvancedPipeline` + `SpecPipeline`
+- Eingabe: `VSeed DSL`
+- Ausgabe: `VChart` / `VTable` Spec
+- Kernablauf: `AdvancedPipeline` + `SpecPipeline`
 
-## 2. Two-Stage Pipeline
+## 2. Zweistufige Pipeline
 
 1. **AdvancedPipeline**
 
-- Input: `VSeed DSL`
-- Output: `AdvancedVSeed` (serializable intermediate state)
-- Responsibilities: Data reshaping, default inference, encoding modeling, themes & styles, analytics configuration
+- Eingabe: `VSeed DSL`
+- Ausgabe: `AdvancedVSeed` (serialisierbarer Zwischenzustand)
+- Verantwortlich für: Datenumformung, Standardableitung, Encoding-Modellierung, Themes und Styles, Analysekonfiguration
 
 2. **SpecPipeline**
 
-- Input: `AdvancedVSeed`
-- Output: Final Spec (not serializable, rendered directly)
-- Responsibilities: Map intermediate state to concrete VChart / VTable configuration
+- Eingabe: `AdvancedVSeed`
+- Ausgabe: finale Spec (nicht serialisierbar, direkt gerendert)
+- Verantwortlich für: Abbildung des Zwischenzustands auf konkrete VChart- / VTable-Konfigurationen
 
-## 3. Builder Entry Point
+## 3. Builder-Einstieg
 
-- Use `Builder.from(vseed).build()` to generate a Spec
-- `prepare()` executes dynamicFilter (when needed)
+- `Builder.from(vseed).build()` erzeugt eine Spec
+- `prepare()` führt dynamicFilter aus (falls erforderlich)
 
-Source entry points:
+Quellcode-Einstiege:
 - `packages/vseed/src/builder/builder/builder.ts`
 - `packages/vseed/src/builder/builder/build.ts`
 - `packages/vseed/src/builder/builder/prepare.ts`
 
-## 4. Data Reshaping (Core)
+## 4. Datenumformung (Kern)
 
-- `foldMeasures`: Fold multiple measures into a single measure; generates `foldInfo`
-- `unfoldDimensions`: Merge dimensions by visual encoding channel; generates `unfoldInfo`
-- `dataReshapeByEncoding`: Combined call (fold + unfold)
+- `foldMeasures`: Faltet mehrere Measures zu einem einzelnen Measure und erzeugt `foldInfo`
+- `unfoldDimensions`: Führt Dimensionen nach visuellem Encoding-Kanal zusammen und erzeugt `unfoldInfo`
+- `dataReshapeByEncoding`: Kombinierter Aufruf (fold + unfold)
 
-Source entry points:
+Quellcode-Einstiege:
 - `packages/vseed/src/dataReshape/foldMeasures.ts`
 - `packages/vseed/src/dataReshape/unfoldDimensions.ts`
 - `packages/vseed/src/dataReshape/dataReshapeByEncoding.ts`
 
-## 5. Extension & Registration
+## 5. Erweiterung und Registrierung
 
-- `registerAll()`: Register all charts and themes
-- `registerXxx()`: Register individual chart type pipeline
-- `updateAdvanced()` / `updateSpec()`: Insert custom Pipes
+- `registerAll()`: Registriert alle Charts und Themes
+- `registerXxx()`: Registriert die Pipeline eines einzelnen Charttyps
+- `updateAdvanced()` / `updateSpec()`: Fügt eigene Pipes ein
 
-Source entry points:
+Quellcode-Einstiege:
 - `packages/vseed/src/builder/register/all.ts`
 - `packages/vseed/src/builder/register/chartType/*`
 - `packages/vseed/src/builder/register/custom.ts`
 
-## 6. Pipeline Design Principles
+## 6. Pipeline-Designprinzipien
 
-- Pipes should be as atomic as possible, minimizing if/else
-- Combine conditional flows via Adapters
-- Chart type determined by Pipe composition
+- Pipes sollten möglichst atomar sein und if/else reduzieren
+- Bedingte Abläufe werden über Adapter kombiniert
+- Der Charttyp wird durch die Zusammensetzung der Pipes bestimmt
 
-Reference:
-- `apps/website/docs/en-US/vseed/development/designPhilosophy/pipeline/pipelineDesign.md`
+Referenz:
+- `apps/website/docs/de-DE/vseed/development/designPhilosophy/pipeline/pipelineDesign.md`
 
-## 7. More Context
+## 7. Weiterer Kontext
 
 - `packages/vseed/AGENTS.md`
-- `apps/website/docs/en-US/vseed/development/architecture.md`
-- `apps/website/docs/en-US/vseed/development/designPhilosophy/vseed.md`
+- `apps/website/docs/de-DE/vseed/development/architecture.md`
+- `apps/website/docs/de-DE/vseed/development/designPhilosophy/vseed.md`

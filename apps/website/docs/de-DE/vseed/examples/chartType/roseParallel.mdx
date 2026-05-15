@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Grouped Rose Chart
+## Kombiniertes gruppiertes Rosendiagramm
 
-A grouped rose chart for comparing multiple measures side by side across categories.
+Kombiniertes gruppiertes Rosendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -88,25 +88,25 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -117,9 +117,9 @@ export default () => {
 }
 ```
 
-## Pivot Grouped Rose Chart
+## Pivotiertes kombiniertes gruppiertes Rosendiagramm
 
-A grouped rose chart with pivot table layout.
+Pivotiertes kombiniertes gruppiertes Rosendiagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -130,11 +130,11 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategorie"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Datum",
       "encoding": "column"
     },
     {
@@ -146,12 +146,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     }
   ],
   "dataset": [

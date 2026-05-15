@@ -67,6 +67,12 @@ Load only relevant references:
 
 - `references/software-entropy.md`: Entropy audit workflow, VBI-specific code
   smells, and the pre-edit checklist.
+- `references/VBI.md`: `packages/vbi`, VBI DSL, Builder/sub-builder design,
+  headless logic boundaries, and TDD expectations.
+- `references/website.md`: `apps/website`, Rspress 2 documentation, generated
+  API/example docs, and multilingual documentation synchronization.
+- `references/vquery.md`: `packages/vquery`, QueryDSL-to-SQL, DuckDB execution,
+  example-driven tests, and 100% coverage expectations.
 - `references/vseed.md`: `packages/vseed`, VSeed examples, and generated VSeed
   documentation.
 - `references/practice-minimalist.md`: `practices/minimalist`.

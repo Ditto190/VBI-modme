@@ -1,22 +1,22 @@
 # TidyData
 
-:::info Significance
-TidyData, through its core principle of "variables as columns, observations as rows," dramatically reduces the complexity of data cleaning — letting us focus on business problems rather than data format conversion.
+:::info Ý nghĩa
+TidyData, thông qua nguyên tắc cốt lõi "biến là cột, quan sát là hàng", giảm đáng kể độ phức tạp của việc làm sạch dữ liệu, giúp chúng ta tập trung vào vấn đề kinh doanh thay vì chuyển đổi định dạng dữ liệu.
 :::
 
-## Paper
+## Bài báo
 
-Author: `Hadley Wickham`. The paper discusses a small module in data processing — data tidying — because tidy datasets are easier to manipulate, model, and visualize, and have a specific structure.
+Tác giả bài báo là `Hadley Wickham`. Bài báo thảo luận về một module nhỏ trong xử lý dữ liệu, tức là sắp xếp dữ liệu, vì dataset gọn gàng dễ thao tác, mô hình hóa và trực quan hóa hơn, đồng thời có cấu trúc cụ thể.
 
-This paper is highly recommended. See: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
+Bài báo này rất đáng đọc. Xem: [Tidy Data](https://www.jstatsoft.org/article/view/v059i10)
 
-## TidyData in VSeed
+## TidyData trong VSeed
 
-The `dataset` configuration in VSeed DSL uses the `TidyData` format.
+Cấu hình `dataset` trong VSeed DSL là dataset theo định dạng `TidyData`.
 
-Core characteristics:
-1. **Each variable has a column**: Variable values are stored in separate columns, e.g., "age", "gender".
-2. **Each observation has a row**: All variable values for one observation form a row, e.g., a person's age and gender.
-3. **Each unit of observation has a table**: Different types of observation units (e.g., person, time, location) should be stored separately.
+Đặc trưng cốt lõi:
+1. **Mỗi biến là một cột**: Giá trị biến được lưu trong cột riêng, ví dụ "tuổi", "giới tính".
+2. **Mỗi quan sát là một hàng**: Tất cả giá trị biến của một đối tượng quan sát tạo thành một hàng, ví dụ thông tin tuổi và giới tính của một người.
+3. **Mỗi đơn vị quan sát là một bảng**: Các loại đơn vị quan sát khác nhau, như người, thời gian, địa điểm, nên được lưu tách riêng.
 
-Therefore, the result of an `SQL` query can be passed directly into VSeed's `dataset` configuration — no additional data processing needed for quick analysis and visualization.
+Vì vậy, kết quả truy vấn `SQL` có thể được truyền trực tiếp vào cấu hình `dataset` của `VSeed` mà không cần xử lý dữ liệu bổ sung, từ đó nhanh chóng phân tích và trực quan hóa.

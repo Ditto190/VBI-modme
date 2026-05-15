@@ -1,14 +1,14 @@
-# Dual Axis Chart
+# DualAxis
 
-:::info{title=Recommended}
+:::info{title=Rekomendasi}
 - Recommended field configuration: `2` measure(s), `2` dimension(s)
 
 - Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
 
 :::
 
-:::info{title=Encoding Mapping}
-Dual Axis Chart supports the following visual channels:
+:::info{title=Pemetaan encoding}
+Dual-axis charts support the following visual channels:
 
 `xAxis`          : x-axis channel, supports `multiple dimensions`, mapped to the x-axis by dimension value
 
@@ -26,7 +26,7 @@ Dual Axis Chart supports the following visual channels:
 
 :::
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dual Axis Chart, suitable for comparing the relationship between two measures of different magnitudes or units, including primary and secondary axes.
 
 Applicable scenarios:
@@ -63,7 +63,7 @@ Features enabled by default:
 
 **Type:** `"dualAxis"`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dual Axis Chart, a composite chart showing the comparison between two measures of different magnitudes.
 
 :::
@@ -78,7 +78,7 @@ Dual Axis Chart, a composite chart showing the comparison between two measures o
 
 **Type:** `Record[]`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dataset, compliant with TidyData specification and already aggregated, defines the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Dual Axis Chart data is ultimately converted to 2 dimensions and 1 or 2 measure(s) (depending on if measure groups are configured).
 
 :::
@@ -93,7 +93,7 @@ Dataset, compliant with TidyData specification and already aggregated, defines t
 
 **Type:** `ColumnDimension[] | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dimensions; the first dimension is placed on the X-axis, while other dimensions merge with measure names (if multiple exist) to form legend items.
 
 :::
@@ -108,7 +108,7 @@ Dimensions; the first dimension is placed on the X-axis, while other dimensions 
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Field ID corresponding to the dimension
 
 :::
@@ -117,7 +117,7 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dimension alias
 
 :::
@@ -126,7 +126,7 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dimension date format configuration
 
 :::
@@ -136,7 +136,7 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Time granularity, determines the date display precision
 
 :::
@@ -145,7 +145,7 @@ Time granularity, determines the date display precision
 
 **Type:** `"xAxis" | "color" | "detail" | "tooltip" | "label" | "row" | "column" | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Channel to which the dimension is mapped
 
 - xAxis: supports mapping multiple dimensions to the x-axis
@@ -169,10 +169,14 @@ Channel to which the dimension is mapped
 
 **Type:** `DualAxisMeasure[] | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Dual Axis Chart measures.
 
 Measures mapped to primaryYAxis and secondaryYAxis through encoding can be grouped by setting the `parentId` property. Measures in different groups will be displayed in different sub-charts. You can also set the `chartType` property to specify the chart type for each measure group.
+
+Measures can be grouped by setting the `parentId` property. Measures in different groups are displayed in different subcharts.
+
+**Example**
 
 :::
 
@@ -186,7 +190,7 @@ Measures mapped to primaryYAxis and secondaryYAxis through encoding can be group
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Measure ID, must be unique
 
 :::
@@ -195,7 +199,7 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Measure alias, duplicates allowed; when not set, alias defaults to id
 
 :::
@@ -204,20 +208,20 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority.
-
-When autoFormat=true, it overrides all numFormat configurations.
-
+:::note{title=Deskripsi}
 When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale.
 
 Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation.
 
 For example:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=en-US: 749740.264 → 744.5K
 
 - locale=en-US: 749740.264 → 744.5K
+
+\- locale='zh-CN': 749740.264 -> 744.5K
+
+\- locale='en-US': 749740.264 → 744.5K
 
 :::
 
@@ -225,10 +229,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips.
+:::note{title=Deskripsi}
+Custom number formatting for measures; automatically applied to labels and tooltips
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this configuration.
+Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
 
 :::
 
@@ -237,7 +241,7 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
@@ -246,14 +250,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -261,14 +265,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -276,8 +280,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -285,8 +289,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Deskripsi}
+Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
@@ -294,8 +298,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
 
 :::
 
@@ -303,18 +307,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1000, significantDigits:1
+- 1234.5678 converts to 1200, significantDigits:2
+- 1234.5678 converts to 1230, significantDigits:3
 
 
 
@@ -322,20 +326,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
 - 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -343,14 +347,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Label font size.
 
 
 
@@ -358,8 +362,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Deskripsi}
+Label font weight.
 
 :::
 
@@ -372,7 +376,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
@@ -381,14 +385,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -396,14 +400,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -411,8 +415,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -420,8 +424,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Deskripsi}
+Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
@@ -429,8 +433,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
 
 :::
 
@@ -438,18 +442,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1000, significantDigits:1
+- 1234.5678 converts to 1200, significantDigits:2
+- 1234.5678 converts to 1230, significantDigits:3
 
 
 
@@ -457,20 +461,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
 - 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -478,14 +482,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Label font size.
 
 
 
@@ -493,8 +497,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Deskripsi}
+Label font weight.
 
 :::
 
@@ -502,11 +506,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"color" | "tooltip" | "label" | "primaryYAxis" | "secondaryYAxis" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped:
-
-- primaryYAxis: Measure mapped to the primary Y-axis.
-
+:::note{title=Deskripsi}
 - secondaryYAxis: Measure mapped to the secondary Y-axis.
 
 - color: Measure mapped to the color channel.
@@ -515,19 +515,23 @@ Channel to which the measure is mapped:
 
 - tooltip: Measure mapped to the tooltip channel.
 
+\- label: measure mapped to the label channel
+
+\- tooltip: measure mapped to the tooltip channel
+
 :::
 
 ### parentId
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In a flat measure configuration, builds a tree-like measure structure. parentId points to the ID of the parent measure group, used for building the hierarchy.
+:::note{title=Deskripsi}
+In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is providing a flat measure list with parentId. These two methods cannot be used simultaneously.
+There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
 
 :::
 
@@ -535,11 +539,7 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `"area" | "column" | "areaPercent" | "columnParallel" | "columnPercent" | "line" | "scatter" | undefined`
 
-:::note{title=Description}
-Sets the chart type for this measure group in the Dual Axis Chart.
-
-- line: Line Chart
-
+:::note{title=Deskripsi}
 - column: Bar (Column) Chart
 
 - columnParallel: Parallel Column Chart
@@ -552,6 +552,10 @@ Sets the chart type for this measure group in the Dual Axis Chart.
 
 - scatter: Scatter Chart
 
+\- areaPercent: percentage area chart
+
+\- scatter: scatter chart
+
 :::
 
 
@@ -559,8 +563,8 @@ Sets the chart type for this measure group in the Dual Axis Chart.
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration.
+:::note{title=Deskripsi}
+Pagination configuration
 
 :::
 
@@ -569,8 +573,8 @@ Pagination configuration.
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension.
+:::note{title=Deskripsi}
+Pagination field; specifies the field name for pagination, must be a dimension
 
 :::
 
@@ -578,13 +582,13 @@ Pagination field; specifies the field name for pagination, must be a dimension.
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-'2023-01-01'
+'2023\-01\-01'
 
 
 
@@ -593,8 +597,8 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `boolean | boolean[] | undefined`
 
-:::note{title=Description}
-Defines whether the scales of the two axes in the Dual Axis Chart are aligned. When multiple measure groups exist, alignTicks can be configured as an array, with each item indicating if the respective axes should align.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -608,8 +612,8 @@ Defines whether the scales of the two axes in the Dual Axis Chart are aligned. W
 
 **Type:** `YLinearAxis | YLinearAxis[] | undefined`
 
-:::note{title=Description}
-Primary Y-axis configuration for the Dual Axis Chart, used to define the primary axis, including its position, style, etc. When multiple measure groups exist, primaryYAxis can be an array where each entry corresponds to a primary Y-axis.
+:::note{title=Deskripsi}
+Primary Y-axis configuration for the dual-axis chart, including position, style, and related settings. When measures have multiple groups, primaryYAxis can be configured as an array, with each item corresponding to one primary Y-axis.
 
 :::
 
@@ -618,8 +622,8 @@ Primary Y-axis configuration for the Dual Axis Chart, used to define the primary
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=Deskripsi}
+Grid line type
 
 :::
 
@@ -627,8 +631,8 @@ Whether the axis is visible.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value for the axis; higher priority than nice and zero.
+:::note{title=Deskripsi}
+Garis sumbu width
 
 :::
 
@@ -636,8 +640,8 @@ Minimum value for the axis; higher priority than nice and zero.
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value for the axis; higher priority than nice and zero. If set to true, it automatically calculates based on data range.
+:::note{title=Deskripsi}
+Tick sumbu X
 
 :::
 
@@ -645,8 +649,8 @@ Maximum value for the axis; higher priority than nice and zero. If set to true, 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic scale; only applies to numeric axes.
+:::note{title=Deskripsi}
+Apakah menggunakan sumbu logaritmik, hanya berlaku untuk sumbu numerik
 
 :::
 
@@ -654,8 +658,8 @@ Whether to use a logarithmic scale; only applies to numeric axes.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base for the logarithmic scale; only applies to numeric axes.
+:::note{title=Deskripsi}
+Fungsi easing animasi.
 
 :::
 
@@ -663,8 +667,8 @@ Base for the logarithmic scale; only applies to numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust the axis scale interval for readability; disabled if min and max are explicitly set. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Konfigurasi sumbu Y (sumbu kategori) untuk mendefinisikan sumbu Y, termasuk posisi, format, gaya, dll.
 
 :::
 
@@ -672,8 +676,8 @@ Whether to automatically adjust the axis scale interval for readability; disable
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to reverse the axis; only applies to numeric axes.
+:::note{title=Deskripsi}
+sortLegend: {
 
 :::
 
@@ -681,8 +685,8 @@ Whether to reverse the axis; only applies to numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force a 0 value to be shown on the axis; disabled if min and max are set. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
 
 :::
 
@@ -690,8 +694,8 @@ Whether to force a 0 value to be shown on the axis; disabled if min and max are 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format numeric axis tick labels. When enabled, numFormat configuration is ignored. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Whether to automatically format numeric-axis tick labels. Only applies to numeric axes. When autoFormat is true, numFormat is ignored.
 
 :::
 
@@ -699,8 +703,8 @@ Whether to automatically format numeric axis tick labels. When enabled, numForma
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Formatting configuration for numeric axis digits. Only applies to numeric axes; has lower priority than autoFormat.
+:::note{title=Deskripsi}
+Number formatting for numeric axes. Only applies to numeric axes and has lower priority than autoFormat.
 
 :::
 
@@ -709,8 +713,8 @@ Formatting configuration for numeric axis digits. Only applies to numeric axes; 
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation.
+:::note{title=Deskripsi}
+Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
 
@@ -718,14 +722,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -733,14 +737,14 @@ Number format ratio, cannot be 0.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -748,8 +752,8 @@ Number format symbol, e.g., %, ‰.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a thousands separator.
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -757,8 +761,8 @@ Whether to use a thousands separator.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix.
+:::note{title=Deskripsi}
+Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
@@ -766,8 +770,8 @@ Number format suffix.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix.
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
 
 :::
 
@@ -775,18 +779,18 @@ Number format prefix.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for numeric formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits properties; has lower priority than significantDigits.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1000, significantDigits:1
+- 1234.5678 converts to 1200, significantDigits:2
+- 1234.5678 converts to 1230, significantDigits:3
 
 
 
@@ -794,20 +798,20 @@ Decimal places for numeric formatting, using the browser's Intl.NumberFormat min
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for numeric formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits properties; has higher priority than fractionDigits.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
 - 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -815,14 +819,14 @@ Significant digits for numeric formatting, using the browser's Intl.NumberFormat
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; follows the browser's Intl.NumberFormat roundingPriority rules.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Label font size.
 
 
 
@@ -830,8 +834,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, follows the browser's Intl.NumberFormat roundingMode rules.
+:::note{title=Deskripsi}
+Label font weight.
 
 :::
 
@@ -839,8 +843,8 @@ Rounding mode for number formatting, follows the browser's Intl.NumberFormat rou
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis tick labels.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -849,8 +853,8 @@ Y-axis tick labels.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible.
+:::note{title=Deskripsi}
+Custom sort order, which will be applied directly to the category axis
 
 :::
 
@@ -858,8 +862,8 @@ Whether labels are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -867,8 +871,8 @@ Label color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size.
+:::note{title=Deskripsi}
+Label background color.
 
 :::
 
@@ -876,8 +880,8 @@ Label font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight.
+:::note{title=Deskripsi}
+Label stroke (outline) color.
 
 :::
 
@@ -885,8 +889,8 @@ Label font weight.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -894,8 +898,8 @@ Label rotation angle.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis line.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -904,8 +908,8 @@ Y-axis line.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis line is visible.
+:::note{title=Deskripsi}
+\- orderBy:'date'
 
 :::
 
@@ -913,8 +917,8 @@ Whether the axis line is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Axis line color.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -922,8 +926,8 @@ Axis line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Axis line width.
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 
 :::
 
@@ -931,8 +935,8 @@ Axis line width.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis ticks.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -941,8 +945,8 @@ Y-axis ticks.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible.
+:::note{title=Deskripsi}
+Number format suffix
 
 :::
 
@@ -950,8 +954,8 @@ Whether ticks are visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are oriented inwards.
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -959,8 +963,8 @@ Whether ticks are oriented inwards.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Tick color.
+:::note{title=Deskripsi}
+Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
 
 :::
 
@@ -968,8 +972,8 @@ Tick color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick length.
+:::note{title=Deskripsi}
+selector = [100, 200]
 
 :::
 
@@ -977,8 +981,8 @@ Tick length.
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-Y-axis title.
+:::note{title=Deskripsi}
+operator: 'in',
 
 :::
 
@@ -987,8 +991,8 @@ Y-axis title.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible.
+:::note{title=Deskripsi}
+selector = {
 
 :::
 
@@ -996,8 +1000,8 @@ Whether the title is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text; defaults to following the field configuration.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1005,8 +1009,8 @@ Title text; defaults to following the field configuration.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title color.
+:::note{title=Deskripsi}
+\- orderBy:'profit'
 
 :::
 
@@ -1014,8 +1018,8 @@ Title color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font size.
+:::note{title=Deskripsi}
+Urutan kustom; urutan ini akan langsung diterapkan ke legenda. Naik mengikuti kiri-ke-kanan atau atas-ke-bawah; turun mengikuti kanan-ke-kiri atau bawah-ke-atas.
 
 :::
 
@@ -1023,8 +1027,8 @@ Title font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Title font weight.
+:::note{title=Deskripsi}
+  ])
 
 :::
 
@@ -1032,8 +1036,8 @@ Title font weight.
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-Y-axis grid lines.
+:::note{title=Deskripsi}
+Mencakup tema bawaan `light` dan `dark`. Tema kustom dapat ditambahkan melalui `registerTheme`.
 
 :::
 
@@ -1046,8 +1050,8 @@ Y-axis grid lines.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color.
+:::note{title=Deskripsi}
+Dynamic filter (AI-generated code execution).
 
 :::
 
@@ -1055,8 +1059,8 @@ Grid line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width.
+:::note{title=Deskripsi}
+- not in: Memilih item data ketika nilai field dimensi tidak berada dalam array `value`.
 
 :::
 
@@ -1064,8 +1068,8 @@ Grid line width.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line pattern (dash/dots).
+:::note{title=Deskripsi}
+Mendukung gaya global atau konfigurasi gaya bersyarat.
 
 :::
 
@@ -1073,8 +1077,8 @@ Grid line pattern (dash/dots).
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-Y-axis animation configuration.
+:::note{title=Deskripsi}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -1083,8 +1087,8 @@ Y-axis animation configuration.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Duration of the animation.
+:::note{title=Deskripsi}
+operator: 'not in',
 
 :::
 
@@ -1092,8 +1096,8 @@ Duration of the animation.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Easing function for the animation.
+:::note{title=Deskripsi}
+- Can only use built-in utility functions (access via _ or R).
 
 :::
 
@@ -1102,8 +1106,8 @@ Easing function for the animation.
 
 **Type:** `YLinearAxis | YLinearAxis[] | undefined`
 
-:::note{title=Description}
-Secondary Y-axis configuration for the Dual Axis Chart, used to define the secondary Y-axis (position, style, etc.). If there are multiple measure groups, this can be an array where each entry corresponds to a secondary Y-axis.
+:::note{title=Deskripsi}
+Secondary Y-axis configuration for the dual-axis chart, including position, style, and related settings. When measures have multiple groups, secondaryYAxis can be configured as an array, with each item corresponding to one secondary Y-axis.
 
 :::
 
@@ -1112,8 +1116,8 @@ Secondary Y-axis configuration for the Dual Axis Chart, used to define the secon
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=Deskripsi}
+Grid line type
 
 :::
 
@@ -1121,8 +1125,8 @@ Whether the axis is visible.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value for the axis; higher priority than nice and zero.
+:::note{title=Deskripsi}
+Garis sumbu width
 
 :::
 
@@ -1130,8 +1134,8 @@ Minimum value for the axis; higher priority than nice and zero.
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Description}
-Maximum value for the axis; higher priority than nice and zero. If set to true, it calculates automatically from data.
+:::note{title=Deskripsi}
+Tick sumbu X
 
 :::
 
@@ -1139,8 +1143,8 @@ Maximum value for the axis; higher priority than nice and zero. If set to true, 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to use a logarithmic scale; only applies to numeric axes.
+:::note{title=Deskripsi}
+Apakah menggunakan sumbu logaritmik, hanya berlaku untuk sumbu numerik
 
 :::
 
@@ -1148,8 +1152,8 @@ Whether to use a logarithmic scale; only applies to numeric axes.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Base for the logarithmic scale; only applies to numeric axes.
+:::note{title=Deskripsi}
+Fungsi easing animasi.
 
 :::
 
@@ -1157,8 +1161,8 @@ Base for the logarithmic scale; only applies to numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically adjust the axis scale interval for readability; disabled if min and max are set. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Konfigurasi sumbu Y (sumbu kategori) untuk mendefinisikan sumbu Y, termasuk posisi, format, gaya, dll.
 
 :::
 
@@ -1166,8 +1170,8 @@ Whether to automatically adjust the axis scale interval for readability; disable
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is displayed in reverse; only applies to numeric axes.
+:::note{title=Deskripsi}
+sortLegend: {
 
 :::
 
@@ -1175,8 +1179,8 @@ Whether the axis is displayed in reverse; only applies to numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to force a 0 value to be displayed on the axis; disabled if min and max are set. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
 
 :::
 
@@ -1184,8 +1188,8 @@ Whether to force a 0 value to be displayed on the axis; disabled if min and max 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to automatically format numeric axis labels; disabled if numFormat is provided. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Whether to automatically format numeric-axis tick labels. Only applies to numeric axes. When autoFormat is true, numFormat is ignored.
 
 :::
 
@@ -1193,8 +1197,8 @@ Whether to automatically format numeric axis labels; disabled if numFormat is pr
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Formatting configuration for numeric axis digits. Only applies to numeric axes; lower priority than autoFormat.
+:::note{title=Deskripsi}
+Number formatting for numeric axes. Only applies to numeric axes and has lower priority than autoFormat.
 
 :::
 
@@ -1203,8 +1207,8 @@ Formatting configuration for numeric axis digits. Only applies to numeric axes; 
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation.
+:::note{title=Deskripsi}
+Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
 
@@ -1212,14 +1216,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -1227,14 +1231,14 @@ Number format ratio, cannot be 0.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g., %, ‰.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -1242,8 +1246,8 @@ Number format symbol, e.g., %, ‰.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for numeric formatting.
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -1251,8 +1255,8 @@ Thousands separator for numeric formatting.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix.
+:::note{title=Deskripsi}
+Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
@@ -1260,8 +1264,8 @@ Number format suffix.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix.
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
 
 :::
 
@@ -1269,18 +1273,18 @@ Number format prefix.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for numeric formatting, using the browser's Intl.NumberFormat properties.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1000, significantDigits:1
+- 1234.5678 converts to 1200, significantDigits:2
+- 1234.5678 converts to 1230, significantDigits:3
 
 
 
@@ -1288,20 +1292,20 @@ Decimal places for numeric formatting, using the browser's Intl.NumberFormat pro
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for numeric formatting, uses browser Intl.NumberFormat properties.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
 - 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -1309,14 +1313,14 @@ Significant digits for numeric formatting, uses browser Intl.NumberFormat proper
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority when both decimals and significant digits are specified.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Label font size.
 
 
 
@@ -1324,8 +1328,8 @@ Rounding priority when both decimals and significant digits are specified.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode, using the browser's Intl.NumberFormat.roundingMode property.
+:::note{title=Deskripsi}
+Label font weight.
 
 :::
 
@@ -1333,8 +1337,8 @@ Rounding mode, using the browser's Intl.NumberFormat.roundingMode property.
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-Label configuration for the secondary Y-axis.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1343,8 +1347,8 @@ Label configuration for the secondary Y-axis.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible.
+:::note{title=Deskripsi}
+Custom sort order, which will be applied directly to the category axis
 
 :::
 
@@ -1352,8 +1356,8 @@ Whether labels are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label color.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1361,8 +1365,8 @@ Label color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size.
+:::note{title=Deskripsi}
+Label background color.
 
 :::
 
@@ -1370,8 +1374,8 @@ Label font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font weight.
+:::note{title=Deskripsi}
+Label stroke (outline) color.
 
 :::
 
@@ -1379,8 +1383,8 @@ Label font weight.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1388,8 +1392,8 @@ Label rotation angle.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Axis line for the secondary Y-axis.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1398,8 +1402,8 @@ Axis line for the secondary Y-axis.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the line is visible.
+:::note{title=Deskripsi}
+\- orderBy:'date'
 
 :::
 
@@ -1407,8 +1411,8 @@ Whether the line is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the axis line.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1416,8 +1420,8 @@ Color of the axis line.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Thickness of the axis line.
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 
 :::
 
@@ -1425,8 +1429,8 @@ Thickness of the axis line.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-Ticks for the secondary Y-axis.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1435,8 +1439,8 @@ Ticks for the secondary Y-axis.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible.
+:::note{title=Deskripsi}
+Number format suffix
 
 :::
 
@@ -1444,8 +1448,8 @@ Whether ticks are visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards.
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -1453,8 +1457,8 @@ Whether ticks point inwards.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the ticks.
+:::note{title=Deskripsi}
+Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
 
 :::
 
@@ -1462,8 +1466,8 @@ Color of the ticks.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick length.
+:::note{title=Deskripsi}
+selector = [100, 200]
 
 :::
 
@@ -1471,8 +1475,8 @@ Tick length.
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-Title for the secondary Y-axis.
+:::note{title=Deskripsi}
+operator: 'in',
 
 :::
 
@@ -1481,8 +1485,8 @@ Title for the secondary Y-axis.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the title is visible.
+:::note{title=Deskripsi}
+selector = {
 
 :::
 
@@ -1490,8 +1494,8 @@ Whether the title is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Title text, follows the measure's configuration by default.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1499,8 +1503,8 @@ Title text, follows the measure's configuration by default.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the title.
+:::note{title=Deskripsi}
+\- orderBy:'profit'
 
 :::
 
@@ -1508,8 +1512,8 @@ Color of the title.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font size for the title.
+:::note{title=Deskripsi}
+Urutan kustom; urutan ini akan langsung diterapkan ke legenda. Naik mengikuti kiri-ke-kanan atau atas-ke-bawah; turun mengikuti kanan-ke-kiri atau bawah-ke-atas.
 
 :::
 
@@ -1517,8 +1521,8 @@ Font size for the title.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font weight for the title.
+:::note{title=Deskripsi}
+  ])
 
 :::
 
@@ -1526,8 +1530,8 @@ Font weight for the title.
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-Grid lines associated with the secondary Y-axis.
+:::note{title=Deskripsi}
+Mencakup tema bawaan `light` dan `dark`. Tema kustom dapat ditambahkan melalui `registerTheme`.
 
 :::
 
@@ -1540,8 +1544,8 @@ Grid lines associated with the secondary Y-axis.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the grid lines.
+:::note{title=Deskripsi}
+Dynamic filter (AI-generated code execution).
 
 :::
 
@@ -1549,8 +1553,8 @@ Color of the grid lines.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Width of the grid lines.
+:::note{title=Deskripsi}
+- not in: Memilih item data ketika nilai field dimensi tidak berada dalam array `value`.
 
 :::
 
@@ -1558,8 +1562,8 @@ Width of the grid lines.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Dash pattern for the grid lines.
+:::note{title=Deskripsi}
+Mendukung gaya global atau konfigurasi gaya bersyarat.
 
 :::
 
@@ -1567,8 +1571,8 @@ Dash pattern for the grid lines.
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-Secondary Y-axis animation properties.
+:::note{title=Deskripsi}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -1577,8 +1581,8 @@ Secondary Y-axis animation properties.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation length.
+:::note{title=Deskripsi}
+operator: 'not in',
 
 :::
 
@@ -1586,8 +1590,8 @@ Animation length.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function.
+:::note{title=Deskripsi}
+- Can only use built-in utility functions (access via _ or R).
 
 :::
 
@@ -1596,8 +1600,8 @@ Animation easing function.
 
 **Type:** `XBandAxis | undefined`
 
-:::note{title=Description}
-X-axis (category axis) configuration. Defines position, formatting, and appearance.
+:::note{title=Deskripsi}
+X-axis category-axis configuration, used to define the chart X-axis, including position, format, style, and related settings.
 
 :::
 
@@ -1606,8 +1610,8 @@ X-axis (category axis) configuration. Defines position, formatting, and appearan
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the axis is visible.
+:::note{title=Deskripsi}
+Grid line type
 
 :::
 
@@ -1615,8 +1619,8 @@ Whether the axis is visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to reverse the axis. Only effective for numeric axes.
+:::note{title=Deskripsi}
+sortLegend: {
 
 :::
 
@@ -1624,8 +1628,8 @@ Whether to reverse the axis. Only effective for numeric axes.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Force a 0 value on the axis. Disabled if min and max are set. Only applies to numeric axes.
+:::note{title=Deskripsi}
+Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
 
 :::
 
@@ -1633,8 +1637,8 @@ Force a 0 value on the axis. Disabled if min and max are set. Only applies to nu
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatically hide overlapping labels if the gap is too small. Only effective for category axes.
+:::note{title=Deskripsi}
+order: 'asc'
 
 :::
 
@@ -1642,10 +1646,12 @@ Automatically hide overlapping labels if the gap is too small. Only effective fo
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum gap between labels. If smaller, overlapping labels are hidden. Only effective for category axes.
+:::note{title=Deskripsi}
+Axis label auto-hide gap. If the gap between two labels is smaller than autoHideGap, the overlapping label is hidden automatically. Only applies to category axes.
 
-Uses autoHideSeparation when enabled, otherwise uses sampling-based minGap.
+Y-axis, numeric axis, Y-axis configuration; defines the Y-axis of the chart, including its position, format, style, etc.
+
+When autoHide is disabled, use sampling and configure it through minGap.
 
 :::
 
@@ -1653,8 +1659,8 @@ Uses autoHideSeparation when enabled, otherwise uses sampling-based minGap.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatically rotate labels if they exceed the available axis space. Only applies to category axes.
+:::note{title=Deskripsi}
+Axis label auto-rotation. When label width exceeds axis length, labels are rotated automatically. Only applies to category axes.
 
 :::
 
@@ -1662,8 +1668,8 @@ Automatically rotate labels if they exceed the available axis space. Only applie
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Angle range for label rotation when auto-rotate is enabled. Only applies to category axes.
+:::note{title=Deskripsi}
+'dark'
 
 :::
 
@@ -1671,8 +1677,8 @@ Angle range for label rotation when auto-rotate is enabled. Only applies to cate
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Truncates labels with an ellipsis if they exceed the available space; full label is visible on hover. Only for category axes.
+:::note{title=Deskripsi}
+Axis label auto-limit. When label width exceeds axis length, overflow is shown with ellipsis and the full label is visible on hover. Only applies to category axes.
 
 :::
 
@@ -1680,8 +1686,8 @@ Truncates labels with an ellipsis if they exceed the available space; full label
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-The maximum length before a label is truncated. Only applies to category axes.
+:::note{title=Deskripsi}
+Maximum length for axis label auto-limit. When label text exceeds this length, overflow is shown with ellipsis and the full label is visible on hover. Only applies to category axes.
 
 :::
 
@@ -1689,8 +1695,8 @@ The maximum length before a label is truncated. Only applies to category axes.
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Description}
-Labels for the X-axis ticks.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1699,8 +1705,8 @@ Labels for the X-axis ticks.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels are visible.
+:::note{title=Deskripsi}
+Custom sort order, which will be applied directly to the category axis
 
 :::
 
@@ -1708,8 +1714,8 @@ Whether labels are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of labels.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1717,8 +1723,8 @@ Color of labels.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size.
+:::note{title=Deskripsi}
+Label background color.
 
 :::
 
@@ -1726,8 +1732,8 @@ Label font size.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font weight for labels.
+:::note{title=Deskripsi}
+Label stroke (outline) color.
 
 :::
 
@@ -1735,8 +1741,8 @@ Font weight for labels.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label rotation angle.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1744,8 +1750,8 @@ Label rotation angle.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-X-axis baseline.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1754,8 +1760,8 @@ X-axis baseline.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the line is visible.
+:::note{title=Deskripsi}
+\- orderBy:'date'
 
 :::
 
@@ -1763,8 +1769,8 @@ Whether the line is visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the axis line.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1772,8 +1778,8 @@ Color of the axis line.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Width of the axis line.
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 
 :::
 
@@ -1781,8 +1787,8 @@ Width of the axis line.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Description}
-Ticks for the X-axis.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1791,8 +1797,8 @@ Ticks for the X-axis.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks are visible.
+:::note{title=Deskripsi}
+Number format suffix
 
 :::
 
@@ -1800,8 +1806,8 @@ Whether ticks are visible.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether ticks point inwards.
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -1809,8 +1815,8 @@ Whether ticks point inwards.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the ticks.
+:::note{title=Deskripsi}
+Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
 
 :::
 
@@ -1818,8 +1824,8 @@ Color of the ticks.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Tick length.
+:::note{title=Deskripsi}
+selector = [100, 200]
 
 :::
 
@@ -1827,8 +1833,8 @@ Tick length.
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Description}
-X-axis title.
+:::note{title=Deskripsi}
+operator: 'in',
 
 :::
 
@@ -1837,8 +1843,8 @@ X-axis title.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether titles are visible.
+:::note{title=Deskripsi}
+selector = {
 
 :::
 
@@ -1846,8 +1852,8 @@ Whether titles are visible.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text for the title. Defaults to following mapped fields.
+:::note{title=Deskripsi}
+}
 
 :::
 
@@ -1855,8 +1861,8 @@ Text for the title. Defaults to following mapped fields.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the title.
+:::note{title=Deskripsi}
+\- orderBy:'profit'
 
 :::
 
@@ -1864,8 +1870,8 @@ Color of the title.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font size for titles.
+:::note{title=Deskripsi}
+Urutan kustom; urutan ini akan langsung diterapkan ke legenda. Naik mengikuti kiri-ke-kanan atau atas-ke-bawah; turun mengikuti kanan-ke-kiri atau bawah-ke-atas.
 
 :::
 
@@ -1873,8 +1879,8 @@ Font size for titles.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font weight for titles.
+:::note{title=Deskripsi}
+  ])
 
 :::
 
@@ -1882,8 +1888,8 @@ Font weight for titles.
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Description}
-Grid lines associated with the X-axis.
+:::note{title=Deskripsi}
+Mencakup tema bawaan `light` dan `dark`. Tema kustom dapat ditambahkan melalui `registerTheme`.
 
 :::
 
@@ -1896,8 +1902,8 @@ Grid lines associated with the X-axis.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Grid line color.
+:::note{title=Deskripsi}
+Dynamic filter (AI-generated code execution).
 
 :::
 
@@ -1905,8 +1911,8 @@ Grid line color.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Grid line width.
+:::note{title=Deskripsi}
+- not in: Memilih item data ketika nilai field dimensi tidak berada dalam array `value`.
 
 :::
 
@@ -1914,8 +1920,8 @@ Grid line width.
 
 **Type:** `number[] | undefined`
 
-:::note{title=Description}
-Grid line dash pattern.
+:::note{title=Deskripsi}
+Mendukung gaya global atau konfigurasi gaya bersyarat.
 
 :::
 
@@ -1923,8 +1929,8 @@ Grid line dash pattern.
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Description}
-X-axis animation properties.
+:::note{title=Deskripsi}
+X-axis animation configuration
 
 :::
 
@@ -1933,8 +1939,8 @@ X-axis animation properties.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration for the X-axis.
+:::note{title=Deskripsi}
+operator: 'not in',
 
 :::
 
@@ -1942,8 +1948,8 @@ Animation duration for the X-axis.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Easing function.
+:::note{title=Deskripsi}
+- Can only use built-in utility functions (access via _ or R).
 
 :::
 
@@ -1952,8 +1958,8 @@ Easing function.
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color. Can be a color string ('red'), hex, RGB, or RGBA.
+:::note{title=Deskripsi}
+Chart background color. It can be a color string, such as 'red' or 'blue'. It can also be hex, rgb, or rgba, such as '#ff0000' or 'rgba(255,0,0,0.5)'.
 
 :::
 
@@ -1962,8 +1968,8 @@ Chart background color. Can be a color string ('red'), hex, RGB, or RGBA.
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color schemes, including lists for discrete markers and linear gradients for continuous mapping.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
@@ -1972,8 +1978,8 @@ Color schemes, including lists for discrete markers and linear gradients for con
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-A list of discrete colors to be used sequentially for different series.
+:::note{title=Deskripsi}
+Linear gradient color scheme used to define the colors of different elements in the chart.
 
 :::
 
@@ -1986,8 +1992,8 @@ A list of discrete colors to be used sequentially for different series.
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Gradient colors used for linear mapping of measure values.
+:::note{title=Deskripsi}
+Color mapping used to map data values to specific colors.
 
 :::
 
@@ -2000,15 +2006,15 @@ Gradient colors used for linear mapping of measure values.
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Manual mapping of specific data values to colors.
+:::note{title=Deskripsi}
+ 'profit': 'red',
 
 :::
 
 **Example**
 {
- 'profit': 'red',
  'sales': 'blue',
+}
 }
 
 
@@ -2017,8 +2023,8 @@ Manual mapping of specific data values to colors.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color assigned to positive values.
+:::note{title=Deskripsi}
+Positive/negative color configuration; defines the color for positive values in the chart
 
 :::
 
@@ -2026,8 +2032,8 @@ Color assigned to positive values.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color assigned to negative values.
+:::note{title=Deskripsi}
+Positive/negative color configuration; defines the color for negative values in the chart
 
 :::
 
@@ -2036,8 +2042,8 @@ Color assigned to negative values.
 
 **Type:** `Label | undefined`
 
-:::note{title=Description}
-Global data label configuration (position, formatting, style).
+:::note{title=Deskripsi}
+Label configuration for defining chart data labels, including their position, format, and style.
 
 :::
 
@@ -2046,8 +2052,8 @@ Global data label configuration (position, formatting, style).
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether data labels are enabled globally.
+:::note{title=Deskripsi}
+Whether labels display measure values.
 
 :::
 
@@ -2055,8 +2061,8 @@ Whether data labels are enabled globally.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to subsequent lines.
+:::note{title=Deskripsi}
+Whether labels wrap to the next line
 
 :::
 
@@ -2064,10 +2070,12 @@ Whether labels wrap to subsequent lines.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values.
+:::note{title=Deskripsi}
+Whether labels display measure values
 
-Note: encoding level label settings have higher priority.
+In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
 
 :::
 
@@ -2075,8 +2083,12 @@ Note: encoding level label settings have higher priority.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display the percentage of a measure value relative to a total.
+:::note{title=Deskripsi}
+Whether labels display the percentage of measure values
+
+In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
 
 :::
 
@@ -2084,8 +2096,12 @@ Whether labels display the percentage of a measure value relative to a total.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension names.
+:::note{title=Deskripsi}
+Whether labels display dimension labels
+
+Display all dimension labels
+
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
 
 :::
 
@@ -2093,8 +2109,8 @@ Whether labels display dimension names.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are formatted automatically based on locale.
+:::note{title=Deskripsi}
+Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
 
 :::
 
@@ -2102,8 +2118,8 @@ Whether label values are formatted automatically based on locale.
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Manual formatting settings for labels. Inherits from measure settings unless autoFormat is enabled.
+:::note{title=Deskripsi}
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
 
 :::
 
@@ -2112,8 +2128,8 @@ Manual formatting settings for labels. Inherits from measure settings unless aut
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Display unit/mode.
+:::note{title=Deskripsi}
+Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
 
 :::
 
@@ -2121,14 +2137,14 @@ Display unit/mode.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Scale conversion ratio (e.g., divide by 1000 for 'K').
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -2136,14 +2152,14 @@ Scale conversion ratio (e.g., divide by 1000 for 'K').
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Suffix/symbol added to the number.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
+Number format suffix
 
 
 
@@ -2151,8 +2167,8 @@ Suffix/symbol added to the number.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Enable thousands separation.
+:::note{title=Deskripsi}
+Number format prefix
 
 :::
 
@@ -2160,8 +2176,8 @@ Enable thousands separation.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Custom suffix string.
+:::note{title=Deskripsi}
+Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
@@ -2169,8 +2185,8 @@ Custom suffix string.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Custom prefix string.
+:::note{title=Deskripsi}
+- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
 
 :::
 
@@ -2178,18 +2194,18 @@ Custom prefix string.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number of fixed decimal places.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1000, significantDigits:1
+- 1234.5678 converts to 1200, significantDigits:2
+- 1234.5678 converts to 1230, significantDigits:3
 
 
 
@@ -2197,20 +2213,20 @@ Number of fixed decimal places.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits displayed.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
 - 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
 - 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Example**
+- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -2218,14 +2234,14 @@ Significant digits displayed.
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Conflict resolution between decimals and significant figures.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Label font size.
 
 
 
@@ -2233,8 +2249,8 @@ Conflict resolution between decimals and significant figures.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Mathematical rounding algorithm.
+:::note{title=Deskripsi}
+Label font weight.
 
 :::
 
@@ -2242,8 +2258,8 @@ Mathematical rounding algorithm.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Global label font size.
+:::note{title=Deskripsi}
+Label background color.
 
 :::
 
@@ -2251,8 +2267,8 @@ Global label font size.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Font weight for data labels.
+:::note{title=Deskripsi}
+Label stroke (outline) color.
 
 :::
 
@@ -2260,8 +2276,8 @@ Font weight for data labels.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color for label text box.
+:::note{title=Deskripsi}
+Label font color.
 
 :::
 
@@ -2269,8 +2285,8 @@ Background color for label text box.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Stroke (outline) color for labels.
+:::note{title=Deskripsi}
+Whether to automatically invert the label font color based on the graphic element color.
 
 :::
 
@@ -2278,8 +2294,8 @@ Stroke (outline) color for labels.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Text color for labels.
+:::note{title=Deskripsi}
+Label position.
 
 :::
 
@@ -2287,8 +2303,8 @@ Text color for labels.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Inverts label text color automatically for legibility against graphic background colors.
+:::note{title=Deskripsi}
+Whether the label overlap avoidance function is enabled.
 
 :::
 
@@ -2296,8 +2312,8 @@ Inverts label text color automatically for legibility against graphic background
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-Position of label relative to graphic element.
+:::note{title=Deskripsi}
+Label filtering; the default condition relationship between selectors is OR.
 
 :::
 
@@ -2305,8 +2321,8 @@ Position of label relative to graphic element.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether collision detection is enabled to prevent label overlapping.
+:::note{title=Deskripsi}
+Whether the label anti-overlap function is enabled
 
 :::
 
@@ -2314,8 +2330,8 @@ Whether collision detection is enabled to prevent label overlapping.
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data filter for labels; uses dimension IDs and operations.
+:::note{title=Deskripsi}
+Label filtering; the default relationship between selectors is OR
 
 :::
 
@@ -2324,8 +2340,8 @@ Data filter for labels; uses dimension IDs and operations.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension ID to filter on.
+:::note{title=Deskripsi}
+return _.flatten(
 
 :::
 
@@ -2333,8 +2349,12 @@ Dimension ID to filter on.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Inclusion operator.
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
 
 :::
 
@@ -2342,8 +2362,14 @@ Inclusion operator.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Alias for operator.
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
 
 :::
 
@@ -2351,8 +2377,8 @@ Alias for operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Filter values.
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
 
 :::
 
@@ -2360,12 +2386,38 @@ Filter values.
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic logic filter (AI-generated code execution). Used for complex filtering like "Top 5" or statistical ranges.
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
 
-Executes in a Web Worker sandbox.
 
-Note: dynamicFilter takes priority over selector if both are present.
+
+return _.flatten(
+
+
+
+\- Use built-in utility functions for data manipulation
+
+- Input: data array (items include __row_index).
+
+- Restricted: no eval, Function, async, DOM, or network APIs.
+
+User's filtering requirement description (natural language).
+
+
+
+**Example**
+
+
+
+  field: 'sales'
+
+
+
+Chart dynamic filter configuration
+
+
+
+AI-generated JavaScript filtering code.
 
 :::
 
@@ -2378,14 +2430,15 @@ Note: dynamicFilter takes priority over selector if both are present.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Natural language description of the filtering requirement.
+:::note{title=Deskripsi}
+**Example**
 
 :::
 
 **Example**
-"Highlight sales columns greater than 1000."
+__row_index: item.__row_index,
 
+}));
 
 
 
@@ -2393,26 +2446,60 @@ Natural language description of the filtering requirement.
 
 **Type:** `string`
 
-:::note{title=Description}
-The AI-generated filtering logic in JavaScript.
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
 
-- Uses built-in utilities via _ or R.
-- Input: data array (items include __row_index).
-- Output: Array of { __row_index: number, field: string }.
-- Restricted: no eval, Function, async, DOM, or network APIs.
+
+
+])
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+Highlight data items meeting multiple filtering conditions:
+
+const filtered = _.filter(data, item => {
+
+return profitRate > 0.2 && item.sales > 5000;
 
 :::
 
 **Example**
-Highlight 'sales' field where value > 1000:
+{ __row_index: item.__row_index, field: 'sales' }
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
-  __row_index: item.__row_index,
-  field: 'sales'
+__row_index: item.__row_index,
+field: 'sales'
 }));
 ```
 
+return maxSales || 0;
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+return _.flatten(
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
 
 
 
@@ -2420,8 +2507,8 @@ return _.map(filtered, item => ({
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Static fallback filter if code execution fails or environment is unsupported.
+:::note{title=Deskripsi}
+Operator:
 
 :::
 
@@ -2430,24 +2517,58 @@ Static fallback filter if code execution fails or environment is unsupported.
 
 **Type:** `string`
 
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Read-only runtime result of the filter execution.
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
 
 :::
 
@@ -2469,8 +2590,8 @@ Read-only runtime result of the filter execution.
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend configuration (position, shapes, labeling).
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including its position, format, style, etc.
 
 :::
 
@@ -2479,8 +2600,8 @@ Legend configuration (position, shapes, labeling).
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Toggle legend visibility.
+:::note{title=Deskripsi}
+Whether legend functionality is enabled
 
 :::
 
@@ -2493,18 +2614,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Toggle border around legend items.
+:::note{title=Deskripsi}
+Whether the legend border is enabled
 
 :::
 
 :::warning{title=Warning}
-Applies only to discrete legends.
+Interactive region selection capabilities.
 
 :::
 
 **Example**
-border: true
+**Example**
 
 
 
@@ -2512,8 +2633,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Font color for legend text.
+:::note{title=Deskripsi}
+Legend font color
 
 :::
 
@@ -2521,8 +2642,8 @@ Font color for legend text.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color for active paging arrows.
+:::note{title=Deskripsi}
+Pager icon color
 
 :::
 
@@ -2530,8 +2651,8 @@ Color for active paging arrows.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color for disabled paging arrows.
+:::note{title=Deskripsi}
+Disabled pager icon color
 
 :::
 
@@ -2539,17 +2660,22 @@ Color for disabled paging arrows.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size.
+:::note{title=Deskripsi}
+Legend font size
 
 :::
+
+**Example**
+Visual style for markers inside the selected region.
+
+
 
 ### labelFontColor
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color.
+:::note{title=Deskripsi}
+Legend font color
 
 :::
 
@@ -2557,50 +2683,79 @@ Legend font color.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight.
+:::note{title=Deskripsi}
+Legend font weight
 
 :::
+
+**Example**
+labelFontWeight: 400
+
+
 
 ### shapeType
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Shape of the marker in the legend.
+:::note{title=Deskripsi}
+Legend shape
 
 :::
 
 :::warning{title=Warning}
-Only applies to discrete legends.
+Interactive region selection capabilities.
 
 :::
+
+**Example**
+Brush
+
+
 
 ### position
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-Legend placement on the canvas.
+:::note{title=Deskripsi}
+Legend position
 
 :::
+
+**Example**
+position: 'rightTop'
+
+
 
 ### maxSize
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Max number of rows/columns to display before pagination. Direction depends on alignment.
+:::note{title=Deskripsi}
+Maximum columns or rows when there are many legend items
+
+If position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of columns displayed
+
+If position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of rows displayed
 
 :::
+
+:::warning{title=Warning}
+Interactive region selection capabilities.
+
+:::
+
+**Example**
+Brush mode; defines whether single or multiple areas can be selected.
+
+
 
 
 ## tooltip
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-Tooltip configuration (trigger, layout, styling).
+:::note{title=Deskripsi}
+Whether to enable brush selection
 
 :::
 
@@ -2609,8 +2764,8 @@ Tooltip configuration (trigger, layout, styling).
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Toggle tooltip visibility.
+:::note{title=Deskripsi}
+A fixed list of values to determine category order.
 
 :::
 
@@ -2619,8 +2774,16 @@ Toggle tooltip visibility.
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Interactive region selection capabilities.
+:::note{title=Deskripsi}
+Sorting logic for legend items.
+
+
+
+\- `polygon`: Polygonal selection, allowing the drawing of arbitrary polygons by clicking multiple points
+
+
+
+Brush selection mode: single or multiple
 
 :::
 
@@ -2629,8 +2792,8 @@ Interactive region selection capabilities.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether region selection is enabled.
+:::note{title=Deskripsi}
+Whether brush selection is enabled
 
 :::
 
@@ -2638,8 +2801,20 @@ Whether region selection is enabled.
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-The selection tool shape (rectangle, along X, along Y, or arbitrary polygon).
+:::note{title=Deskripsi}
+\- `polygon`: Polygonal selection, allowing selection by drawing an arbitrary polygon through multiple points
+
+
+
+\- `y`: Y-axis selection, restricting selection to the Y-axis direction while the X-axis remains unconstrained
+
+\- `rect`: rectangular brush selection, available in both X-axis and Y-axis directions
+
+\- `polygon`: polygon brush selection, draws an arbitrary polygon by clicking multiple points
+
+\- `x`: brush selection in the X-axis direction only; the Y-axis direction is unrestricted
+
+\- `y`: Y-axis brush selection, only constrained in the Y-axis direction
 
 :::
 
@@ -2647,8 +2822,16 @@ The selection tool shape (rectangle, along X, along Y, or arbitrary polygon).
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-Whether a new selection replaces the old one or adds to it.
+:::note{title=Deskripsi}
+\- `multiple`: Multiple mode, where multiple brush selections can coexist simultaneously
+
+
+
+The gap between adjacent columns in a group.
+
+Defines the style of data points outside the selected brush area
+
+\- `multiple`: multiple selection mode; multiple brush areas can exist at the same time
 
 :::
 
@@ -2656,8 +2839,8 @@ Whether a new selection replaces the old one or adds to it.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear the selection when clicking the empty area.
+:::note{title=Deskripsi}
+Whether to clear the brush area after selection ends
 
 :::
 
@@ -2665,8 +2848,12 @@ Whether to clear the selection when clicking the empty area.
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Visual style for markers inside the selected region.
+:::note{title=Deskripsi}
+Opacity of unselected data points, ranging from 0 to 1
+
+
+
+Defines the style of brushed data points
 
 :::
 
@@ -2675,20 +2862,43 @@ Visual style for markers inside the selected region.
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+Whether to automatically limit label length. When a label exceeds the length, it is truncated with an ellipsis and the full label is shown on hover. Only effective for discrete axes.
+
+
+
+Opacity of selected data points, range 0-1
+
+:::
+
 #### stroke
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Stroke color
+
+:::
+
 #### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Stroke width
+
+:::
 
 ### outOfBrushStyle
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
-Visual style for markers outside the selected region.
+:::note{title=Deskripsi}
+X-axis, category axis, X-axis configuration; defines the X-axis of the chart, including its position, format, style, etc.
+
+
+
+Defines the style of data points outside the brush selection
 
 :::
 
@@ -2697,21 +2907,48 @@ Visual style for markers outside the selected region.
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+Whether to automatically limit label length. When a label exceeds the length, it is truncated with an ellipsis and the full label is shown on hover. Only effective for discrete axes.
+
+
+
+Opacity of data points outside the brush selection, range 0-1
+
+:::
+
 #### stroke
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Stroke color
+
+:::
+
 #### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Stroke width
+
+:::
 
 
 ## crosshairRect
 
 **Type:** `CrosshairRect | undefined`
 
-:::note{title=Description}
-Highlighting area for the active category/axis location.
+:::note{title=Deskripsi}
+Vertical tooltip
+
+
+
+Fallback solution when code execution fails or the environment is not supported.
+
+
+
+selector = {
 
 :::
 
@@ -2720,52 +2957,113 @@ Highlighting area for the active category/axis location.
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Operator
+
+:::
+
 ### rectColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+operator: 'between'
+
+:::
 
 ### labelColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Operator
+
+:::
+
 ### labelVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Whether to show the crosshair rectangular-area label
+
+:::
+
 ### labelBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+\- Supports arbitrarily complex data filtering conditions
+
+:::
 
 
 ## sort
 
 **Type:** `Sort | undefined`
 
-:::note{title=Description}
-Sorting logic for the axes (ascending, descending, or custom).
+:::note{title=Deskripsi}
+X-axis sort configuration. Supports sorting by dimensions or measures and custom sort order.
+
+
+
+- in: Select data items where the dimension field value is in the 'value' list.
 
 :::
+
+**Example**
+Dimension field ID (the `id` of an item in `dimensions`).
+Chart animated filter configuration
+field: 'sales'
+}
+Dimension field ID (the `id` of an item in `dimensions`).
+Operator
+}
+
+const grouped = _.groupBy(data, 'area');
+Visual properties for area markers (fill color, opacity).
+_.maxBy(group, item => item.profit / item.sales)
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
+
+
 
 
 ### order
 
 **Type:** `"asc" | "desc" | undefined`
 
+:::note{title=Deskripsi}
+])
+
+:::
+
+**Example**
+"Highlight the bar with the highest profit rate in each region"
+
+
+
 ### orderBy
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-ID of the field used for sorting.
+:::note{title=Deskripsi}
+**Example**
 
 :::
+
+**Example**
+Visual properties for area markers (fill color, opacity).
+\- Input parameters: data (array), each item contains a __row_index field representing the row number
+
+
 
 ### customOrder
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-A fixed list of values to determine category order.
+:::note{title=Deskripsi}
+\- `__row_index` mewakili nomor baris item data asli, dan `field` mewakili field yang akan disorot.
 
 :::
 
@@ -2774,33 +3072,96 @@ A fixed list of values to determine category order.
 
 **Type:** `SortLegend | undefined`
 
-:::note{title=Description}
-Sorting logic for legend items.
+:::note{title=Deskripsi}
+Legend sort configuration, supporting sorting by dimension or measure and custom order
+
+
+
+Point color.
 
 :::
+
+**Example**
+Point color opacity.
+Chart animated filter configuration
+field: 'sales'
+}
+Point color opacity.
+Operator
+}
+
+const grouped = _.groupBy(data, 'area');
+Visual properties for area markers (fill color, opacity).
+_.maxBy(group, item => item.profit / item.sales)
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
+
+
 
 
 ### order
 
 **Type:** `"asc" | "desc" | undefined`
 
+:::note{title=Deskripsi}
+])
+
+:::
+
+**Example**
+"Highlight the bar with the highest profit rate in each region"
+
+
+
 ### orderBy
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+Visual properties for area markers (fill color, opacity).
+\- Input parameters: data (array), each item contains a __row_index field representing the row number
+
+
+
 ### customOrder
 
 **Type:** `string[] | undefined`
+
+:::note{title=Deskripsi}
+Line style configuration. Used to define the style of lines in the chart, including color, transparency, curvature, etc.
+
+:::
 
 
 ## theme
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Global visual theme settings. Defaults use 'light' and 'dark' variants. Custom themes can be registered via the Builder.
+:::note{title=Deskripsi}
+Chart theme. Theme is a lower-priority feature configuration that includes common settings shared by all chart types and settings shared by a single chart type. Built-in themes include light and dark, and users can customize themes through Builder.
+
+
+
+**Example**
+
+
+
+selector = 100
 
 :::
+
+**Example**
+selector = [{ profit: 100 }, { profit: 200 }]
+
+Conditional Dimension Selector:
+
+field: 'category',
+
+
 
 
 ### length
@@ -2816,8 +3177,8 @@ Global visual theme settings. Defaults use 'light' and 'dark' variants. Custom t
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Constraint for the maximum allowed column width (pixels or percentage).
+:::note{title=Deskripsi}
+Maximum column width. It can be a pixel value or a percentage string.
 
 :::
 
@@ -2826,8 +3187,8 @@ Constraint for the maximum allowed column width (pixels or percentage).
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-The gap between adjacent columns in a group.
+:::note{title=Deskripsi}
+Distance between columns in the same category. It can be a pixel value or a percentage string.
 
 :::
 
@@ -2836,8 +3197,20 @@ The gap between adjacent columns in a group.
 
 **Type:** `BarStyle | BarStyle[] | undefined`
 
-:::note{title=Description}
-Visual properties for column/bar markers (colors, borders, radius). Supports conditional styling via selectors.
+:::note{title=Deskripsi}
+Rectangle mark style
+
+
+
+Bar chart style configuration used to define bar color, border, corner radius, and related settings.
+
+Supports global style or conditional style configuration
+
+Filter data
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
 
 :::
 
@@ -2846,34 +3219,139 @@ Visual properties for column/bar markers (colors, borders, radius). Supports con
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Data filter for specific styling. Supports value-based, record-based, or dimension/measure condition mappings.
+:::note{title=Deskripsi}
+- in: Select data items where the dimension field value is in the 'value' list.
+
+
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
 
 :::
+
+**Example**
+Operator (same as operator).
+selector = "tool"
+**Example**
+true
+selector = [100, 200]
+
+Local data selector
+Bar element (rectangular element) color
+selector = [{ profit: 100 }, { profit: 200 }]
+
+Conditional dimension selector
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'in',
+value: 'tool'
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'not in',
+value: 'book'
+}
+
+Key capabilities:
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: '>=',
+value: 100
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: 'between'
+value: [100, 300]
+}
+
+
 
 
 #### field
 
 **Type:** `string`
 
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
 #### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-AI-generated logic for complex graphic styling (e.g., coloring the Max item).
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+return _.flatten(
+
+{ __row_index: item.__row_index, field: 'product' },
+
+
+
+\- Use built-in utility functions for data manipulation
+
+- Input: data array (items include __row_index).
+
+- Restricted: no eval, Function, async, DOM, or network APIs.
+
+User's filtering requirement description (natural language).
+
+
+
+**Example**
+
+
+
+  field: 'sales'
+
+
+
+Chart dynamic filter configuration
+
+
+
+AI-generated JavaScript filtering code.
 
 :::
 
@@ -2886,45 +3364,243 @@ AI-generated logic for complex graphic styling (e.g., coloring the Max item).
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+__row_index: item.__row_index,
+
+}));
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+Highlight data items meeting multiple filtering conditions:
+
+const filtered = _.filter(data, item => {
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+{ __row_index: item.__row_index, field: 'sales' }
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+return maxSales || 0;
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+return _.flatten(
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
 
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### barVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Whether the bar mark (rectangle mark) is visible
+
+:::
+
 ### barColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+Written during the prepare() phase; read-only at runtime.
+
+:::
 
 ### barColorOpacity
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
 ### barBorderColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+Border color of the bar mark (rectangle mark)
+
+:::
 
 ### barBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+'Annotation Text'
+
+:::
+
 ### barBorderStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
+:::note{title=Deskripsi}
+Text color.
+
+:::
+
+**Example**
+400
+
+dashed
+
+dotted
+
+
+
 ### barBorderOpacity
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+Text font size
+
+:::
+
+**Example**
+12
+
+[0, 0, 10, 10]
+
+
 
 ### barRadius
 
@@ -2935,8 +3611,20 @@ AI-generated logic for complex graphic styling (e.g., coloring the Max item).
 
 **Type:** `LineStyle | LineStyle[] | undefined`
 
-:::note{title=Description}
-Visual properties for line markers (color, smoothing, thickness).
+:::note{title=Deskripsi}
+Line mark style
+
+
+
+Line mark style configuration, used to define line color, opacity, curve, and related settings.
+
+Supports global style or conditional style configuration
+
+Filter data
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
 
 :::
 
@@ -2945,37 +3633,384 @@ Visual properties for line markers (color, smoothing, thickness).
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=Deskripsi}
+- in: Select data items where the dimension field value is in the 'value' list.
+
+
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
+
+:::
+
+**Example**
+Operator (same as operator).
+selector = "tool"
+**Example**
+true
+selector = [100, 200]
+
+Local data selector
+Bar element (rectangular element) color
+selector = [{ profit: 100 }, { profit: 200 }]
+
+Conditional dimension selector
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'in',
+value: 'tool'
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'not in',
+value: 'book'
+}
+
+Key capabilities:
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: '>=',
+value: 100
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: 'between'
+value: [100, 300]
+}
+
+
+
+
+#### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+#### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+#### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+#### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+return _.flatten(
+
+{ __row_index: item.__row_index, field: 'product' },
+
+
+
+\- Use built-in utility functions for data manipulation
+
+- Input: data array (items include __row_index).
+
+- Restricted: no eval, Function, async, DOM, or network APIs.
+
+User's filtering requirement description (natural language).
+
+
+
+**Example**
+
+
+
+  field: 'sales'
+
+
+
+Chart dynamic filter configuration
+
+
+
+AI-generated JavaScript filtering code.
+
+:::
+
+
+#### type
+
+**Type:** `"row-with-field"`
+
+#### description
+
+**Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+__row_index: item.__row_index,
+
+}));
+
+
+
+#### code
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+Highlight data items meeting multiple filtering conditions:
+
+const filtered = _.filter(data, item => {
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+{ __row_index: item.__row_index, field: 'sales' }
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+return maxSales || 0;
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+return _.flatten(
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
+
+#### fallback
+
+**Type:** `Selector | Selectors | undefined`
+
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
+#### result
+
+**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### lineVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Apakah segmen garis terlihat
+
+:::
+
 ### lineSmooth
 
 **Type:** `boolean | undefined`
+
+:::note{title=Deskripsi}
+Apakah segmen garis dihaluskan
+
+:::
 
 ### lineColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Warna segmen garis
+
+:::
+
 ### lineColorOpacity
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+Opasitas warna segmen garis
+
+:::
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Lebar segmen garis
+
+:::
+
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Deskripsi}
+true
+
+:::
+
+**Example**
+`lineStyle: 'solid'`
+
+
 
 
 ## pointStyle
 
 **Type:** `PointStyle | PointStyle[] | undefined`
 
-:::note{title=Description}
-Visual properties for point markers (scatter dots, line nodes).
+:::note{title=Deskripsi}
+Point mark style
+
+
+
+Point mark style configuration, used to define point mark color, border, and related settings.
+
+Supports global style or conditional style configuration
+
+Filter data
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
 
 :::
 
@@ -2984,45 +4019,421 @@ Visual properties for point markers (scatter dots, line nodes).
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=Deskripsi}
+- in: Select data items where the dimension field value is in the 'value' list.
+
+
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
+
+:::
+
+**Example**
+Operator (same as operator).
+selector = "tool"
+**Example**
+true
+selector = [100, 200]
+
+Local data selector
+Bar element (rectangular element) color
+selector = [{ profit: 100 }, { profit: 200 }]
+
+Conditional dimension selector
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'in',
+value: 'tool'
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'not in',
+value: 'book'
+}
+
+Key capabilities:
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: '>=',
+value: 100
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: 'between'
+value: [100, 300]
+}
+
+
+
+
+#### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+#### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+#### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+#### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+return _.flatten(
+
+{ __row_index: item.__row_index, field: 'product' },
+
+
+
+\- Use built-in utility functions for data manipulation
+
+- Input: data array (items include __row_index).
+
+- Restricted: no eval, Function, async, DOM, or network APIs.
+
+User's filtering requirement description (natural language).
+
+
+
+**Example**
+
+
+
+  field: 'sales'
+
+
+
+Chart dynamic filter configuration
+
+
+
+AI-generated JavaScript filtering code.
+
+:::
+
+
+#### type
+
+**Type:** `"row-with-field"`
+
+#### description
+
+**Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+__row_index: item.__row_index,
+
+}));
+
+
+
+#### code
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+Highlight data items meeting multiple filtering conditions:
+
+const filtered = _.filter(data, item => {
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+{ __row_index: item.__row_index, field: 'sales' }
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+return maxSales || 0;
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+return _.flatten(
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
+
+#### fallback
+
+**Type:** `Selector | Selectors | undefined`
+
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
+#### result
+
+**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### pointVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Whether points are visible
+
+:::
+
 ### pointSize
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Point size
+
+
+
+Point size
+
+:::
 
 ### pointColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Point mark color
+
+
+
+Point mark color
+
+:::
+
 ### pointColorOpacity
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Point mark color opacity
+
+
+
+Point mark color opacity
+
+:::
 
 ### pointBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Point mark border color
+
+
+
+Point mark border color
+
+:::
+
 ### pointBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+Point mark border width
+
+
+
+Point mark border width
+
+:::
+
 ### pointBorderStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Deskripsi}
+Point mark border style
+
+
+
+Point mark border style
+
+:::
+
+**Example**
+400
+
+dashed
+
+dotted
+
+
 
 
 ## areaStyle
 
 **Type:** `AreaStyle | AreaStyle[] | undefined`
 
-:::note{title=Description}
-Visual properties for area markers (fill color, opacity).
+:::note{title=Deskripsi}
+Area mark style
+
+
+
+Area mark style configuration, used to define area mark color, opacity, border, and related settings.
+
+Supports global style or conditional style configuration
+
+Filter data
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
 
 :::
 
@@ -3031,29 +4442,352 @@ Visual properties for area markers (fill color, opacity).
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=Deskripsi}
+- in: Select data items where the dimension field value is in the 'value' list.
+
+
+
+- not in: Select data items where the dimension field value is not within the `value` array.
+
+**Example**
+
+:::
+
+**Example**
+Operator (same as operator).
+selector = "tool"
+**Example**
+true
+selector = [100, 200]
+
+Local data selector
+Bar element (rectangular element) color
+selector = [{ profit: 100 }, { profit: 200 }]
+
+Conditional dimension selector
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'in',
+value: 'tool'
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'category',
+operator: 'not in',
+value: 'book'
+}
+
+Key capabilities:
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: '>=',
+value: 100
+}
+- Executes safely in the browser environment (Web Worker sandbox).
+field: 'profit',
+operator: 'between'
+value: [100, 300]
+}
+
+
+
+
+#### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+#### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+#### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+#### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+return _.flatten(
+
+{ __row_index: item.__row_index, field: 'product' },
+
+
+
+\- Use built-in utility functions for data manipulation
+
+- Input: data array (items include __row_index).
+
+- Restricted: no eval, Function, async, DOM, or network APIs.
+
+User's filtering requirement description (natural language).
+
+
+
+**Example**
+
+
+
+  field: 'sales'
+
+
+
+Chart dynamic filter configuration
+
+
+
+AI-generated JavaScript filtering code.
+
+:::
+
+
+#### type
+
+**Type:** `"row-with-field"`
+
+#### description
+
+**Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+__row_index: item.__row_index,
+
+}));
+
+
+
+#### code
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+Highlight data items meeting multiple filtering conditions:
+
+const filtered = _.filter(data, item => {
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+{ __row_index: item.__row_index, field: 'sales' }
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+return maxSales || 0;
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+return _.flatten(
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
+
+#### fallback
+
+**Type:** `Selector | Selectors | undefined`
+
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
+#### result
+
+**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### areaVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Whether the area mark is visible
+
+
+
+Whether the area mark is visible
+
+:::
+
 ### areaColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Area mark color
+
+
+
+Area mark color
+
+:::
+
 ### areaColorOpacity
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Area mark color opacity
+
+
+
+Area mark color opacity
+
+:::
 
 
 ## annotationPoint
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-:::note{title=Description}
-Data point annotations; highlights specific coordinates with text and markers.
+:::note{title=Deskripsi}
+Annotation point configuration. Defines chart annotation points based on selected data, including position, format, style, and related settings.
 
 :::
 
@@ -3062,83 +4796,499 @@ Data point annotations; highlights specific coordinates with text and markers.
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=Deskripsi}
+Text color.
+
+:::
+
+
+#### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+#### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+#### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+#### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
+
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+return _.flatten(
+
+{ __row_index: item.__row_index, field: 'product' },
+
+
+
+\- Use built-in utility functions for data manipulation
+
+- Input: data array (items include __row_index).
+
+- Restricted: no eval, Function, async, DOM, or network APIs.
+
+User's filtering requirement description (natural language).
+
+
+
+**Example**
+
+
+
+  field: 'sales'
+
+
+
+Chart dynamic filter configuration
+
+
+
+AI-generated JavaScript filtering code.
+
+:::
+
+
+#### type
+
+**Type:** `"row-with-field"`
+
+#### description
+
+**Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+__row_index: item.__row_index,
+
+}));
+
+
+
+#### code
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+Highlight data items meeting multiple filtering conditions:
+
+const filtered = _.filter(data, item => {
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+{ __row_index: item.__row_index, field: 'sales' }
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+return maxSales || 0;
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+return _.flatten(
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
+
+#### fallback
+
+**Type:** `Selector | Selectors | undefined`
+
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
+#### result
+
+**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
+:::note{title=Deskripsi}
+'red'
+
+:::
+
+**Example**
+'Teks penanda'
+
+
+
 ### textColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+4
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
 
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+[2, 2]
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+0
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+Recommended value is 'right', which keeps the text on the left side of the annotation point.
+
+Ukuran font teks.
+
+Text color
+
+**Contoh**
+
+:::
+
+**Example**
+'right' Teks berada di sisi kiri titik penanda
+
+
+
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
+
+:::note{title=Deskripsi}
+**Contoh**
+
+top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
+
+'top'
+
+bottom: Text is at the top of the reference line; the bottom edge aligns with the endpoint of the (vertical) annotation line.
+
+'right'
+
+:::
+
+**Example**
+Text color.
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+background corner radius
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Warna teks
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+**Contoh**
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+**Contoh**
+
+:::
+
+**Example**
+12
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Padding latar belakang
+
+:::
+
+**Example**
+12
+
+
 
 ### offsetY
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Vertical offset for the entire annotation block.
+:::note{title=Deskripsi}
+**Example**
+
+**Example**
+
+Apakah latar belakang terlihat.
 
 :::
+
+**Example**
+offsetY: 5, moves the whole annotation point down by 5 pixels
+
+
 
 ### offsetX
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Horizontal offset for the entire annotation block.
+:::note{title=Deskripsi}
+Warna latar belakang.
+
+Line style.
+
+**Contoh**
 
 :::
+
+**Example**
+offsetX: 5, moves the whole annotation point right by 5 pixels
+
+
 
 
 ## annotationVerticalLine
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
-:::note{title=Description}
-Vertical reference lines positioned at specific X values or calculated dynamically.
+:::note{title=Deskripsi}
+Dimension-value annotation line, displayed vertically. It can configure the annotation line position, style, and related settings.
 
 :::
 
@@ -3147,12 +5297,27 @@ Vertical reference lines positioned at specific X values or calculated dynamical
 
 **Type:** `string | number | (string | number)[] | undefined`
 
+:::note{title=Deskripsi}
+);
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Description}
-Calculates the line's position dynamically (e.g., current date, mean X index).
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+Background border corner radius.
+
+Line visibility.
+
+
+
+true
 
 :::
 
@@ -3165,93 +5330,362 @@ Calculates the line's position dynamically (e.g., current date, mean X index).
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+"Ambil nilai penjualan tertinggi sebagai referensi garis penanda"
+
+"Hitung rata-rata penjualan untuk garis penanda"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+**Example**
+
+'red'
+
+4
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+\- not in: Select data items where the value of the dimension field is not in the value
+```javascript
+const maxSales = _.maxBy(data, 'sales')?.sales;
+return maxSales || 0;
+```
+
+**Example**
+```javascript
+const avgSales = _.meanBy(data, 'sales');
+return _.round(avgSales, 2);
+```
+
+Calculate target value based on conditions
+```javascript
+const sorted = _.sortBy(data, 'sales');
+const index = Math.floor(sorted.length * 0.75);
+return sorted[index]?.sales || 0;
+```
+
+'solid'
+```javascript
+const currentYearTotal = _.sumBy(
+_.filter(data, item => item.year === 2024),
+'sales'
+);
+return currentYearTotal;
+```
+
+
 
 #### fallback
 
 **Type:** `string | number | undefined`
 
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `string | number | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
+:::note{title=Deskripsi}
+'red'
+
+:::
+
+**Example**
+'Teks penanda'
+
+
+
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
+
+:::note{title=Deskripsi}
+Nilai field dimensi yang dipilih; mendukung array.
+
+:::
+
+**Example**
+'outsideEnd'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+4
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+[2, 2]
+
+:::
+
+**Example**
+12
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+0
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
+
+:::note{title=Deskripsi}
+left: Teks berada di sebelah kanan area anotasi, dengan tepi kiri sejajar dengan area.
+
+center: Teks berada di tengah area anotasi.
+
+Warna teks.
+
+Annotation line label position (relative position of the label to the line).
+
+**Contoh**
+
+:::
+
+**Example**
+'red'
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
+:::note{title=Deskripsi}
+middle: Teks dipusatkan secara vertikal di area anotasi.
+
+top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
+
+- center: Text is centered in the annotation area.
+
+'Annotation Text'
+
+'center' (text is in the middle of the annotation area)
+
+:::
+
+**Example**
+'top'
+
+
+
 ### lineVisible
 
 **Type:** `boolean | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### lineColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Warna border area anotasi.
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Lebar border area anotasi.
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
+:::note{title=Deskripsi}
+Radius sudut border area anotasi.
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+background corner radius
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+Warna teks
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
 
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+**Contoh**
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+**Contoh**
+
+:::
+
+**Example**
+12
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Padding latar belakang
+
+:::
+
+**Example**
+12
+
+
 
 
 ## annotationHorizontalLine
 
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
-:::note{title=Description}
-Horizontal reference lines (e.g., Average, Target, Baseline) positioned at specific Y values.
+:::note{title=Deskripsi}
+Numeric annotation line, including average, maximum, and minimum lines. Displayed horizontally and configurable by position and style. Use this configuration to draw annotation lines for numeric values such as average lines.
 
 :::
 
@@ -3260,84 +5694,406 @@ Horizontal reference lines (e.g., Average, Target, Baseline) positioned at speci
 
 **Type:** `string | number | (string | number)[] | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ValueDynamicFilter | undefined`
+
+:::note{title=Deskripsi}
+Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+
+
+
+Background border corner radius.
+
+Line visibility.
+
+
+
+true
+
+:::
+
+
+#### type
+
+**Type:** `"value"`
+
+#### description
+
+**Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+"Ambil nilai penjualan tertinggi sebagai referensi garis penanda"
+
+"Hitung rata-rata penjualan untuk garis penanda"
+
+
+
+#### code
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+Read-only runtime result of the filter execution.
+
+
+
+])
+
+**Example**
+
+'red'
+
+4
+
+return profitRate > 0.2 && item.sales > 5000;
+
+:::
+
+**Example**
+\- not in: Select data items where the value of the dimension field is not in the value
+```javascript
+const maxSales = _.maxBy(data, 'sales')?.sales;
+return maxSales || 0;
+```
+
+**Example**
+```javascript
+const avgSales = _.meanBy(data, 'sales');
+return _.round(avgSales, 2);
+```
+
+Calculate target value based on conditions
+```javascript
+const sorted = _.sortBy(data, 'sales');
+const index = Math.floor(sorted.length * 0.75);
+return sorted[index]?.sales || 0;
+```
+
+'solid'
+```javascript
+const currentYearTotal = _.sumBy(
+_.filter(data, item => item.year === 2024),
+'sales'
+);
+return currentYearTotal;
+```
+
+
+
+#### fallback
+
+**Type:** `string | number | undefined`
+
+:::note{title=Deskripsi}
+Operator:
+
+:::
+
+#### result
+
+**Type:** `{ success: boolean; data?: number | string; } | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+\- in: Select data items where the value of the dimension field is in the value
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `string | number | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
+:::note{title=Deskripsi}
+'red'
+
+:::
+
+**Example**
+'Teks penanda'
+
+
+
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
+
+:::note{title=Deskripsi}
+2
+
+
+
+Label position of the annotation line, relative to the line.
+
+:::
+
+**Example**
+'outsideEnd'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+4
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+[2, 2]
+
+:::
+
+**Example**
+12
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+0
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
+
+:::note{title=Deskripsi}
+left: Teks berada di sebelah kanan area anotasi, dengan tepi kiri sejajar dengan area.
+
+center: Teks berada di tengah area anotasi.
+
+Recommended to set to 'top' to ensure the text is fully displayed within the chart's visible area.
+
+**Contoh**
+
+background color
+
+:::
+
+**Example**
+'red'
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
+:::note{title=Deskripsi}
+middle: Teks dipusatkan secara vertikal di area anotasi.
+
+top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
+
+warna stroke latar belakang
+
+**Contoh**
+
+**Example**
+
+:::
+
+**Example**
+'top'
+
+
+
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+background corner radius
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+Warna teks
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
 
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+**Contoh**
+
+
+
+**Contoh**
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+**Contoh**
+
+:::
+
+**Example**
+12
+
+
 
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+Padding latar belakang
+
+:::
+
+**Example**
+12
+
+
+
 ### lineVisible
 
 **Type:** `boolean | undefined`
+
+:::note{title=Deskripsi}
+**Example**
+
+
+
+**Example**
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### lineColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Warna border area anotasi.
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Lebar border area anotasi.
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
+:::note{title=Deskripsi}
+Radius sudut border area anotasi.
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### splitLine
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
-:::note{title=Description}
-Allows split coloring of a line/graphic based on whether the data is above or below this reference line.
+:::note{title=Deskripsi}
+Gaya garis putus-putus border area anotasi.
 
 :::
 
@@ -3346,17 +6102,27 @@ Allows split coloring of a line/graphic based on whether the data is above or be
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Primary color for the part greater than the annotation value
+
+:::
+
 #### negativeColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+0
+
+:::
 
 
 ## annotationArea
 
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
-:::note{title=Description}
-Highlighted background regions (ranges) based on dimension values.
+:::note{title=Deskripsi}
+Annotation region configuration. Defines chart annotation regions based on selected data, including position, style, and related settings.
 
 :::
 
@@ -3365,93 +6131,375 @@ Highlighted background regions (ranges) based on dimension values.
 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
+:::note{title=Deskripsi}
+Apakah mengaktifkan fungsi linkage dimensi ketika chart mengaktifkan perspektif atau ketika measure digabungkan.
+
+:::
+
+
+#### field
+
+**Type:** `string`
+
+:::note{title=Deskripsi}
+return _.flatten(
+
+:::
+
+#### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+:::
+
+#### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Deskripsi}
+Executes in a Web Worker sandbox. 
+
+Filter values.
+
+Color for disabled paging arrows.
+
+Dynamic filter (AI-generated code execution).
+
+:::
+
+#### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Deskripsi}
+Legend configuration, used to define the chart's legend, including position, format, and style.
+
+:::
+
 ### text
 
 **Type:** `string | string[] | undefined`
+
+:::note{title=Deskripsi}
+'red'
+
+:::
+
+**Example**
+'Teks penanda'
+
+
 
 ### textPosition
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
+:::note{title=Deskripsi}
+2
+
+:::
+
+**Example**
+'top'
+
+
+
 ### textColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+4
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
 
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+[2, 2]
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+0
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
+:::note{title=Deskripsi}
+Konfigurasi garis regresi polinomial, termasuk orde polinomial, gaya garis regresi, dll.
+
+Disarankan mengatur ke 'center' agar teks berada di tengah area penanda
+
+right: text is on the left side of the annotation area; the right edge of the text aligns with the annotation area
+
+left: text is on the right side of the annotation area; the left edge of the text aligns with the annotation area
+
+center: text is centered in the annotation area; the center of the text aligns with the annotation area
+
+:::
+
+**Example**
+'center' Teks berada di tengah area penanda
+
+
+
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
+
+:::note{title=Deskripsi}
+Text vertical alignment. Generally set it to top so text appears at the bottom of the annotation area and remains inside the visible chart area.
+
+top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
+
+top: text is at the bottom of the annotation area; the top edge of the text aligns with the annotation area
+
+middle: text is centered in the annotation area; the center of the text aligns with the annotation area
+
+Orde regresi polinomial
+
+:::
+
+**Example**
+'top' Teks berada di bagian bawah area penanda
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+**Example**
+
+:::
+
+**Example**
+**Example**
+
+
+
 ### textBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=Deskripsi}
+background corner radius
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Warna teks
+
+
+
+Warna teks
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+**Contoh**
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+**Contoh**
+
+
+
+**Contoh**
+
+:::
+
+**Example**
+12
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Padding latar belakang
+
+:::
+
+**Example**
+12
+
+
 
 ### areaColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Warna area penanda
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### areaColorOpacity
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Annotation area fill opacity
+
+:::
+
+**Example**
+0.5
+
+
 
 ### areaBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Deskripsi}
+Annotation area border color
+
+:::
+
+**Example**
+'center' Text is centered in the annotation area
+
+
+
 ### areaBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Annotation area border width
+
+:::
+
+**Example**
+**Example**
+
+
 
 ### areaBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Deskripsi}
+Annotation area border radius
+
+:::
+
+**Example**
+12
+
+
+
 ### areaLineDash
 
 **Type:** `number[] | undefined`
 
+:::note{title=Deskripsi}
+Annotation area border line style
+
+:::
+
+**Example**
+[2, 2]
+
+
+
 ### outerPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Deskripsi}
+Margin area penanda
+
+:::
+
+**Example**
+0
+
+
 
 
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
 
-:::note{title=Description}
-Coordinate dimensions between different charts. When hovering on a dimension value, related points in other charts are highlighted.
+:::note{title=Deskripsi}
+Whether to enable dimension linkage when pivot or measure grouping is enabled on the chart
+
+When hovering over a dimension value, highlight data with the same dimension value in other charts
+
+
+
+Konfigurasi tautan dimensi chart pivot
 
 :::
 
@@ -3460,20 +6508,36 @@ Coordinate dimensions between different charts. When hovering on a dimension val
 
 **Type:** `false | true`
 
+:::note{title=Deskripsi}
+Apakah mengaktifkan tautan dimensi chart pivot
+
+:::
+
 ### showTooltip
 
 **Type:** `boolean | undefined`
 
+:::note{title=Deskripsi}
+Apakah menampilkan informasi Tooltip dari sub-chart yang sesuai dengan semua dimensi
+
+:::
+
 ### showLabel
 
 **Type:** `boolean | undefined`
+
+:::note{title=Deskripsi}
+Apakah menampilkan label yang sesuai dengan crosshair
+
+:::
 
 
 ## locale
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Internationalization setting. Supports 'zh-CN' and 'en-US'. Can also be set globally via `intl.setLocale`.
+:::note{title=Deskripsi}
+Internationalization configuration. Chart language configuration supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
 
 :::
+

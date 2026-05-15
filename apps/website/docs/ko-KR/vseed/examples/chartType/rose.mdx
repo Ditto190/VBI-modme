@@ -38,9 +38,9 @@ export default () => {
 }
 ```
 
-## Rose Chart (Zero Dimensions)
+## 로즈 차트(차원 없음)
 
-A rose chart without any dimension fields.
+로즈 차트(차원 없음)
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -62,9 +62,9 @@ export default () => {
 }
 ```
 
-## Stacked Rose Chart
+## 복합 누적 로즈 차트
 
-A stacked rose chart for comparing multiple measures across different categories.
+복합 누적 로즈 차트
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -107,25 +107,25 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "날짜"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "이익",
       "parentId": "salesAndProfit",
       "location": "measure"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "수익률",
       "parentId": "ratio",
       "location": "measure"
     }
@@ -136,9 +136,9 @@ export default () => {
 }
 ```
 
-## Pivot Stacked Rose Chart
+## 피벗 누적 로즈 차트
 
-A stacked rose chart with pivot table layout.
+피벗 누적 로즈 차트
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -149,28 +149,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "카테고리"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "날짜",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "지역",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "매출",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "이익"
     }
   ],
   "dataset": [
@@ -321,9 +321,9 @@ export default () => {
 }
 ```
 
-## stackingRose Chart
+## 누적 로즈 차트
 
-stackingRose Chart
+누적 로즈 차트
 
 ```tsx preview
 import { VSeedRender } from '@components'

@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons'
 import type { VBIDimension, VBIMeasure, VBIChartBuilder } from '@visactor/vbi'
 import { Select } from 'antd'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 
 const measureAggregates = ['sum', 'count', 'countDistinct', 'avg', 'min', 'max', 'median'] as const

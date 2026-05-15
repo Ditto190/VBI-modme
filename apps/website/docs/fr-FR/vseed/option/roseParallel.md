@@ -1,14 +1,14 @@
 # RoseParallel
 
-:::info{title=Recommended}
+:::info{title=Recommandé}
 \- Recommended field configuration: `1` measure(s), `1` dimension(s)
 
 \- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
 
 :::
 
-:::info{title=Encoding Mapping}
-Group Rose Chart supports the following visual channels:
+:::info{title=Mappage des encodages}
+Le graphique rose groupe prend en charge les canaux visuels suivants:
 
 `angle`  : angle channel, supports`multiple dimensions`, maps dimension values to the angular axis
 
@@ -25,7 +25,7 @@ Group Rose Chart supports the following visual channels:
 :::
 
 :::note{title=Description}
-Group Rose Chart, suitable for multi-dimensional data comparison scenarios, displaying data size through the arc length and radius of sectors in a polar coordinate system
+Graphique rose groupe, adapte aux comparaisons de donnees multidimensionnelles; l arc de secteur et le rayon en coordonnees polaires representent la taille des donnees
 
 Applicable scenarios:
 
@@ -58,9 +58,11 @@ Features enabled by default:
 **Type:** `"roseParallel"`
 
 :::note{title=Description}
-Group Rose Chart
+Graphique rose groupe
 
-Group Rose Chart, displaying multi-dimensional data comparison relationships through a polar coordinate system
+
+
+Graphique rose groupe, affichant les relations de comparaison multidimensionnelles via un systeme de coordonnees polaires
 
 :::
 
@@ -76,6 +78,8 @@ Group Rose Chart, displaying multi-dimensional data comparison relationships thr
 
 :::note{title=Description}
 Dataset
+
+
 
 An aggregated dataset that follows TidyData specifications, used to define the chart's data source and structure. User-input datasets do not require any manual processing; VSeed features a powerful data reshaping function that automatically transforms the data. Rose Chart data is eventually converted into 2 dimensions and 1 measure.
 
@@ -93,6 +97,8 @@ An aggregated dataset that follows TidyData specifications, used to define the c
 
 :::note{title=Description}
 Dimensions
+
+
 
 The first dimension of the Rose Chart is mapped to the angular axis; other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items.
 
@@ -171,6 +177,8 @@ Channel to which the dimension is mapped
 
 :::note{title=Description}
 Measures
+
+
 
 Measures in the Rose Chart are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with other dimensions to be displayed as legend items.
 
@@ -559,7 +567,7 @@ Current pagination value; specifies the value used to determine the current page
 :::
 
 **Example**
-'2023-01-01'
+'2023\-01\-01'
 
 
 
@@ -570,6 +578,8 @@ Current pagination value; specifies the value used to determine the current page
 
 :::note{title=Description}
 Chart background color
+
+
 
 Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
 
@@ -582,6 +592,8 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 
 :::note{title=Description}
 Color
+
+
 
 Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
 
@@ -658,6 +670,8 @@ Positive/negative color configuration; defines the color for negative values in 
 
 :::note{title=Description}
 Label
+
+
 
 Label configuration for defining chart data labels, including their position, format, and style.
 
@@ -957,7 +971,7 @@ Label filtering; the default relationship between selectors is OR
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field; ID of a specific dimension item
+**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -966,11 +980,11 @@ Dimension field; ID of a specific dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -979,11 +993,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -994,7 +1008,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select dimension field values; supports arrays
+**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -1005,23 +1019,35 @@ Select dimension field values; supports arrays
 :::note{title=Description}
 Dynamic filter (AI-generated code execution)
 
-Implements complex data filtering logic via AI-generated JavaScript code
+
 
 Core capabilities:
 
-\- Supports arbitrarily complex data filtering conditions
+
 
 \- Use built-in utility functions for data manipulation
 
 \- Secure execution in the browser environment (Web Worker sandbox)
 
+
+
 Environmental requirements: Supports browser environments only; Node.js environments will use fallback
+
+
 
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
+
+
 Chart dynamic filter configuration
 
-Implements filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
+
+
+Chart dynamic filter configuration
+
+
+
+
 
 :::
 
@@ -1035,14 +1061,14 @@ Implements filtering of chart marks (bars, points, etc.) via AI-generated JavaSc
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+
 
 :::
 
 **Example**
-"Highlight columns with sales greater than 1000"
+"Highlight data items with sales greater than 1000"
 
-"Highlight the column with the highest profit margin in each area"
+**Type:** `string`
 
 
 
@@ -1051,22 +1077,24 @@ User's filtering requirement description (natural language)
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code
-
-\- Only built-in utility functions can be used (accessed via _ or R)
-
 \- Input parameters: data (array), where each item includes a __row_index field representing the row number
+
+
+
+\- __row_index represents the row number of the original data item; field represents the field to be highlighted
+
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 \- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the row number of the original data item; field represents the field to be highlighted
+**Example**
 
 \- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
 **Example**
-Highlight the sales field of data items with sales greater than 1000
+}));
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1075,7 +1103,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each area
+return _.flatten(
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1089,7 +1117,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+return _.flatten(
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1110,7 +1138,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+
 
 :::
 
@@ -1120,7 +1148,7 @@ Fallback plan when code execution fails or the environment is not supported
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field; ID of a specific dimension item
+**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1129,11 +1157,11 @@ Dimension field; ID of a specific dimension item
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1142,11 +1170,11 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -1157,7 +1185,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select dimension field values; supports arrays
+**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -1166,9 +1194,11 @@ Select dimension field values; supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution result (runtime field)
 
-Written during the prepare() phase; read-only at runtime
+
+
+
+
 
 :::
 
@@ -1190,13 +1220,13 @@ Written during the prepare() phase; read-only at runtime
 **Type:** `"arc" | "labelLine" | "edge" | undefined`
 
 :::note{title=Description}
-Label layout mode; only effective for Pie and Donut charts when labelPosition is set to outside
+Label layout mode, only effective for pie and donut charts when `labelPosition` is `outside`
 
-\- arc: Layout labels along the arc
 
-\- labelLine: Labels are aligned at both ends, connected to sector segments via leader lines
 
-\- edge: Labels are aligned at both ends, connected to sector segments via leader lines, and positioned close to the edges of the chart
+
+
+
 
 :::
 
@@ -1206,9 +1236,11 @@ Label layout mode; only effective for Pie and Donut charts when labelPosition is
 **Type:** `Legend | undefined`
 
 :::note{title=Description}
-legend
 
-Legend configuration, used to define the chart's legend, including its position, format, style, etc.
+
+
+
+
 
 :::
 
@@ -1218,7 +1250,7 @@ Legend configuration, used to define the chart's legend, including its position,
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the legend function is enabled
+
 
 :::
 
@@ -1232,12 +1264,12 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the legend border is enabled
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
@@ -1251,7 +1283,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-legendfontColor
+Legend font color
 
 :::
 
@@ -1260,7 +1292,7 @@ legendfontColor
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Pagination icon color
+Pager icon color
 
 :::
 
@@ -1269,7 +1301,7 @@ Pagination icon color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Pagination icon disabled color
+Disabled pager icon color
 
 :::
 
@@ -1278,7 +1310,7 @@ Pagination icon disabled color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Legend font size
+
 
 :::
 
@@ -1292,7 +1324,7 @@ labelFontSize: 10
 **Type:** `string | undefined`
 
 :::note{title=Description}
-legendfontColor
+Legend font color
 
 :::
 
@@ -1301,7 +1333,7 @@ legendfontColor
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Legend font weight
+
 
 :::
 
@@ -1315,12 +1347,12 @@ labelFontWeight: 400
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Description}
-Legend shape
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
@@ -1334,7 +1366,7 @@ shapeType: 'circle'
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Description}
-Legend position
+
 
 :::
 
@@ -1348,16 +1380,16 @@ position: 'rightTop'
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Maximum number of columns or rows for the legend when many items are present
+Maximum columns or rows when there are many legend items
 
-If the position is horizontal (bottom, top, etc.), maxSize controls the number of columns displayed
 
-If the position is vertical (left, right, etc.), maxSize controls the number of rows displayed
+
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
@@ -1372,9 +1404,11 @@ maxSize: 2
 **Type:** `Tooltip | undefined`
 
 :::note{title=Description}
-tooltips
 
-Tooltip configuration, used to define the chart's tooltips, including their position, format, style, etc.
+
+
+
+
 
 :::
 
@@ -1384,7 +1418,7 @@ Tooltip configuration, used to define the chart's tooltips, including their posi
 **Type:** `false | true`
 
 :::note{title=Description}
-Whether tooltips are enabled
+
 
 :::
 
@@ -1394,11 +1428,15 @@ Whether tooltips are enabled
 **Type:** `Brush | undefined`
 
 :::note{title=Description}
-Brush
-
-Brush configuration, used to enable/disable brush selection capabilities
-
 Chart brush configuration
+
+
+
+
+
+
+
+
 
 :::
 
@@ -1408,7 +1446,7 @@ Chart brush configuration
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to enable brush selection
+Whether brush selection is enabled
 
 :::
 
@@ -1417,17 +1455,19 @@ Whether to enable brush selection
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-Brush type
-
-Defines the shape and direction of the brush selection
-
-\- `rect`: Rectangular selection, allowing selection in both X and Y axis directions simultaneously
-
 \- `polygon`: Polygonal selection, allowing selection by drawing an arbitrary polygon through multiple points
 
-\- `x`: X-axis selection, restricting selection to the X-axis direction while the Y-axis remains unconstrained
+
 
 \- `y`: Y-axis selection, restricting selection to the Y-axis direction while the X-axis remains unconstrained
+
+\- `rect`: rectangular brush selection, available in both X-axis and Y-axis directions
+
+\- `polygon`: polygon brush selection, draws an arbitrary polygon by clicking multiple points
+
+**Type:** `"single" | "multiple" | undefined`
+
+\- `y`: Y-axis brush selection, only constrained in the Y-axis direction
 
 :::
 
@@ -1436,13 +1476,15 @@ Defines the shape and direction of the brush selection
 **Type:** `"single" | "multiple" | undefined`
 
 :::note{title=Description}
-Brush mode; single or multiple selection
-
-Defines the brush mode
-
-\- `single`: Single mode, where only one brush selection can exist at a time
-
 \- `multiple`: Multiple mode, where multiple brush selections can coexist simultaneously
+
+
+
+Defines the brush selection mode
+
+**Type:** `boolean | undefined`
+
+\- `multiple`: multiple selection mode; multiple brush areas can exist at the same time
 
 :::
 
@@ -1451,7 +1493,7 @@ Defines the brush mode
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to clear the selection once dragging ends
+Whether to clear the brush area after selection ends
 
 :::
 
@@ -1460,9 +1502,11 @@ Whether to clear the selection once dragging ends
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style for selected data
 
-Defines the style for selected data items
+
+
+
+
 
 :::
 
@@ -1474,7 +1518,9 @@ Defines the style for selected data items
 :::note{title=Description}
 Opacity
 
-Opacity of selected data items, range: 0-1
+
+
+Opacity of selected data points, range 0-1
 
 :::
 
@@ -1492,7 +1538,7 @@ Stroke color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Stroke width
+
 
 :::
 
@@ -1501,9 +1547,11 @@ Stroke width
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style for unselected data
 
-Defines the style for data items outside the selection
+
+
+
+
 
 :::
 
@@ -1515,7 +1563,9 @@ Defines the style for data items outside the selection
 :::note{title=Description}
 Opacity
 
-Opacity of unselected data items, range: 0-1
+
+
+Opacité des points de données non sélectionnés, plage 0-1
 
 :::
 
@@ -1533,7 +1583,262 @@ Stroke color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Stroke width
+
+
+:::
+
+
+## animation
+
+**Type:** `PieLikeAnimation | undefined`
+
+:::note{title=Description}
+Animation configuration
+
+
+
+Chart animation configuration; available effects are constrained by chart type
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether pie/donut/rose animation is enabled
+
+:::
+
+### params
+
+**Type:** `PieLikeAnimationParams | undefined`
+
+:::note{title=Description}
+Pie/donut/rose animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `PieLikeAppearAnimation | undefined`
+
+:::note{title=Description}
+Pie/donut/rose appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("radial" | "scale")[] | undefined`
+
+:::note{title=Description}
+Pie/donut/rose appear effects, supporting radial and scale animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether the current animation stage is enabled
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `PieLikeUpdateAnimation | undefined`
+
+:::note{title=Description}
+Pie/donut/rose update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"radial"[] | undefined`
+
+:::note{title=Description}
+Pie/donut/rose update effects, supporting radial animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether the current animation stage is enabled
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `PieLikeAnimationLoop | undefined`
+
+:::note{title=Description}
+Pie/donut/rose loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether loop animation is enabled
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### loop
+
+**Type:** `PieLikeLoopAnimation | undefined`
+
+:::note{title=Description}
+Pie/donut/rose loop animation configuration
+
+:::
+
+
+###### effects
+
+**Type:** `PieLikeLoopEffect[] | undefined`
+
+:::note{title=Description}
+Pie/donut/rose loop effect
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether the current animation stage is enabled
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+##### atmosphere
+
+**Type:** `NoEffectAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Pie/donut/rose atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
 
 :::
 
@@ -1543,14 +1848,19 @@ Stroke width
 **Type:** `Theme | undefined`
 
 :::note{title=Description}
-Chart theme; themes have lower priority and include common configurations shared across all chart types, as well as specific configurations for individual chart categories
+Chart theme. Theme is a lower-priority functional configuration that includes common settings shared by all chart types and by a single chart type.
 
-Built-in light and dark themes; users can define custom themes via the Builder
+
+
+Two built-in themes are provided: light and dark. Users can customize themes through Builder.
+
+
 
 Theme
 
 
-Built-in light and dark themes; new themes can be customized via registerTheme.
+
+Deux thèmes intégrés sont disponibles, light et dark. De nouveaux thèmes peuvent être personnalisés avec registerTheme.
 
 :::
 
@@ -1582,6 +1892,7 @@ Language
 
 
 
-Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to specify the language.
+Configuration de la langue du graphique. Prend en charge 'zh\-CN' et 'en\-US'; il est aussi possible d’appeler intl.setLocale('zh\-CN') pour définir la langue
 
 :::
+

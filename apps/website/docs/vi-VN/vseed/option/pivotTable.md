@@ -1,42 +1,42 @@
 # PivotTable
 
-:::info{title=Recommended}
-- Recommended field configuration: `1` measure(s), `1` dimension(s)
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
+:::info{title=Khuyến nghị}
+- Cấu hình trường khuyến nghị: `1` chỉ số, `1` chiều
+- Hỗ trợ Data Reshape: ít nhất `1` chỉ số, `0` chiều
 :::
 
-:::info{title=Encoding Mapping}
-The Pivot Table supports the following visual channels:
+:::info{title=Ánh xạ mã hóa}
+Bảng pivot hỗ trợ các kênh trực quan sau:
 
-`row`    : Row dimensions, supports `multiple dimensions`, groups data by dimension values on rows.
+`row`    : chiều hàng, hỗ trợ `nhiều chiều`, nhóm dữ liệu theo giá trị chiều trên hàng.
 
-`column` : Column dimensions, supports `multiple dimensions`, groups data by dimension values on columns.
+`column` : chiều cột, hỗ trợ `nhiều chiều`, nhóm dữ liệu theo giá trị chiều trên cột.
 
-`detail` : Detail channel, supports `multiple measures`, displays measure values within cells.
+`detail` : kênh chi tiết, hỗ trợ `nhiều chỉ số`, hiển thị giá trị chỉ số trong ô.
 
 :::
 
-:::note{title=Description}
-Pivot Table, suitable for multi-dimensional data cross-analysis scenarios, allowing flexible configuration of row/column dimensions and measure calculation methods.
+:::note{title=Mô tả}
+Bảng pivot phù hợp với phân tích chéo dữ liệu đa chiều, cho phép cấu hình linh hoạt chiều hàng/cột và cách tính chỉ số.
 
-Applicable scenarios:
+Tình huống phù hợp:
 
-- Complex multi-dimensional statistical analysis.
-- Data drilling and aggregated display.
-- Business report generation and data exploration.
+- Phân tích thống kê đa chiều phức tạp.
+- Drill-down dữ liệu và hiển thị tổng hợp.
+- Tạo báo cáo nghiệp vụ và khám phá dữ liệu.
 
 :::
 
 :::warning{title=Warning}
-Data requirements:
+Yêu cầu dữ liệu:
 
-- At least 1 row dimension, 1 column dimension, or 1 measure.
-- Data must be pre-aggregated.
-- Data must be groupable.
+- Cần ít nhất 1 chiều hàng, 1 chiều cột hoặc 1 chỉ số.
+- Dữ liệu phải được tổng hợp trước.
+- Dữ liệu phải có thể được nhóm.
 
-Features enabled by default:
+Tính năng bật mặc định:
 
-- Row/column sorting, data filtering, aggregation/subtotal calculation, and subtotal/grand total display are enabled by default.
+- Sắp xếp hàng/cột, lọc dữ liệu, tính tổng hợp/tổng phụ và hiển thị tổng phụ/tổng cộng được bật mặc định.
 
 :::
 
@@ -45,12 +45,12 @@ Features enabled by default:
 
 **Type:** `"pivotTable"`
 
-:::note{title=Description}
-Pivot Table, suitable for multi-dimensional data cross-analysis scenarios.
+:::note{title=Mô tả}
+Bảng pivot phù hợp với các tình huống phân tích chéo dữ liệu đa chiều.
 
 :::
 
-**Example**
+**Ví dụ**
 'pivotTable'
 
 
@@ -60,12 +60,12 @@ Pivot Table, suitable for multi-dimensional data cross-analysis scenarios.
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset compliant with the TidyData specification and already aggregated, defining the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Pivot Table data is ultimately converted into a corresponding tree structure, so no manual data manipulation is required.
+:::note{title=Mô tả}
+Tập dữ liệu tuân theo đặc tả TidyData và đã được tổng hợp, dùng để định nghĩa nguồn và cấu trúc dữ liệu của biểu đồ. Dữ liệu người dùng nhập không cần tiền xử lý; VSeed có khả năng Data Reshape mạnh để tự động xử lý định dạng. Dữ liệu Pivot Table cuối cùng được chuyển thành cấu trúc cây tương ứng, nên không cần xử lý thủ công.
 
 :::
 
-**Example**
+**Ví dụ**
 [{region:'East China', product:'A', sales:1000}, {region:'East China', product:'B', sales:1500}]
 
 
@@ -75,12 +75,12 @@ Dataset compliant with the TidyData specification and already aggregated, defini
 
 **Type:** `TableDimension[] | undefined`
 
-:::note{title=Description}
-Row and column dimensions for the Pivot Table. Data is automatically processed into a tree structure and mapped to row and column axes.
+:::note{title=Mô tả}
+Chiều hàng và chiều cột của Pivot Table. Dữ liệu được tự động xử lý thành cấu trúc cây và ánh xạ vào trục hàng và cột.
 
 :::
 
-**Example**
+**Ví dụ**
 [{id: 'region', alias: 'Region', isRow: true}, {id: 'product', alias: 'Product', isColumn: true}]
 
 
@@ -90,8 +90,8 @@ Row and column dimensions for the Pivot Table. Data is automatically processed i
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=Mô tả}
+ID trường tương ứng với chiều
 
 :::
 
@@ -99,8 +99,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=Mô tả}
+Bí danh chiều
 
 :::
 
@@ -108,8 +108,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=Mô tả}
+Cấu hình định dạng ngày của chiều
 
 :::
 
@@ -118,8 +118,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=Mô tả}
+Độ hạt thời gian, quyết định độ chính xác khi hiển thị ngày
 
 :::
 
@@ -127,12 +127,12 @@ Time granularity, determines the date display precision
 
 **Type:** `"row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped:
+:::note{title=Mô tả}
+Kênh mà chiều được ánh xạ tới:
 
-- row: supports mapping multiple dimensions to the row channel
+- row: hỗ trợ ánh xạ nhiều chiều vào kênh hàng
 
-- column: supports mapping multiple dimensions to the column channel
+- column: hỗ trợ ánh xạ nhiều chiều vào kênh cột
 
 :::
 
@@ -141,12 +141,12 @@ Channel to which the dimension is mapped:
 
 **Type:** `TableMeasure[] | undefined`
 
-:::note{title=Description}
-Pivot Table supports multiple dimension measures.
+:::note{title=Mô tả}
+Bảng pivot hỗ trợ nhiều chỉ số theo chiều.
 
 :::
 
-**Example**
+**Ví dụ**
 [{id: 'sales', alias: 'Sales', aggregation: 'sum'}]
 
 
@@ -156,8 +156,8 @@ Pivot Table supports multiple dimension measures.
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=Mô tả}
+ID chỉ số, không được trùng lặp
 
 :::
 
@@ -165,8 +165,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=Mô tả}
+Bí danh chỉ số, cho phép trùng lặp; nếu không đặt, alias mặc định là id
 
 :::
 
@@ -174,16 +174,16 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority.
+:::note{title=Mô tả}
+Định dạng số tự động, bật mặc định, có độ ưu tiên cao nhất.
 
-When autoFormat=true, it overrides all numFormat configurations.
+Khi autoFormat=true, toàn bộ cấu hình numFormat sẽ bị ghi đè.
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale.
+Khi bật, nhãn dữ liệu và tooltip của biểu đồ sẽ tự động chọn định dạng phù hợp theo giá trị chỉ số và locale.
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation.
+Quy tắc định dạng: số thập phân bật compact notation, tối thiểu 0 chữ số thập phân, tối đa 2 chữ số thập phân, tự động làm tròn, dùng Intl.NumberFormat của trình duyệt.
 
-For example:
+Ví dụ:
 
 - locale=zh-CN: 749740.264 → 74.45~74.45万
 
@@ -195,10 +195,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips.
+:::note{title=Mô tả}
+Định dạng số tùy chỉnh cho chỉ số; tự động áp dụng cho nhãn và tooltip.
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this configuration.
+Lưu ý: để dùng định dạng tùy chỉnh, cần đặt rõ autoFormat=false; nếu không autoFormat sẽ ghi đè cấu hình này.
 
 :::
 
@@ -207,8 +207,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Kiểu định dạng số, hỗ trợ: số (thập phân), phần trăm (%), phần nghìn (‰), ký hiệu khoa học
 
 :::
 
@@ -216,14 +216,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được là 0
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Ví dụ**
+- 100000 được chuyển thành 10W , ratio:10000, symbol:"W"
+- 100000 được chuyển thành 10K , ratio:1000, symbol:"K"
 
 
 
@@ -231,14 +231,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Ví dụ**
+- 100000 được chuyển thành 10W , ratio:10000, symbol:"W"
+- 100000 được chuyển thành 10K , ratio:1000, symbol:"K"
 
 
 
@@ -246,8 +246,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Mô tả}
+Dấu phân tách hàng nghìn cho định dạng số
 
 :::
 
@@ -255,8 +255,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -264,8 +264,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Mô tả}
+Tiền tố định dạng số
 
 :::
 
@@ -273,18 +273,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trong trình duyệt; ưu tiên thấp hơn significantDigits.
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Ví dụ**
+- 1234.5678 được chuyển thành 1235 , fractionDigits:0 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -292,20 +292,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trong trình duyệt; ưu tiên cao hơn fractionDigits.
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+- 1234.5678 được chuyển thành 1000 , significantDigits:1
+- 1234.5678 được chuyển thành 1200 , significantDigits:2
+- 1234.5678 được chuyển thành 1230 , significantDigits:3
+- 1234.5678 được chuyển thành 1234 , significantDigits:4
+- 1234.5678 được chuyển thành 1234.6 , significantDigits:5 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.57 , significantDigits:6 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.568 , significantDigits:7 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -313,14 +313,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Mô tả}
+Ưu tiên làm tròn khi cả significantDigits và fractionDigits đều được đặt; dùng Intl.NumberFormat của trình duyệt và tuân theo quy tắc giống roundingPriority.
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Ví dụ**
+- 1234.5678 được chuyển thành 1230 , significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 được chuyển thành 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -328,8 +328,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Mô tả}
+Chế độ làm tròn cho định dạng số, dùng Intl.NumberFormat của trình duyệt và tuân theo quy tắc giống roundingMode.
 
 :::
 
@@ -342,8 +342,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Kiểu định dạng số, hỗ trợ: số (thập phân), phần trăm (%), phần nghìn (‰), ký hiệu khoa học
 
 :::
 
@@ -351,14 +351,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được là 0
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Ví dụ**
+- 100000 được chuyển thành 10W , ratio:10000, symbol:"W"
+- 100000 được chuyển thành 10K , ratio:1000, symbol:"K"
 
 
 
@@ -366,14 +366,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Ví dụ**
+- 100000 được chuyển thành 10W , ratio:10000, symbol:"W"
+- 100000 được chuyển thành 10K , ratio:1000, symbol:"K"
 
 
 
@@ -381,8 +381,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Mô tả}
+Dấu phân tách hàng nghìn cho định dạng số
 
 :::
 
@@ -390,8 +390,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -399,8 +399,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Mô tả}
+Tiền tố định dạng số
 
 :::
 
@@ -408,18 +408,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trong trình duyệt; ưu tiên thấp hơn significantDigits.
 
 :::
 
-**Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Ví dụ**
+- 1234.5678 được chuyển thành 1235 , fractionDigits:0 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -427,20 +427,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trong trình duyệt; ưu tiên cao hơn fractionDigits.
 
 :::
 
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+- 1234.5678 được chuyển thành 1000 , significantDigits:1
+- 1234.5678 được chuyển thành 1200 , significantDigits:2
+- 1234.5678 được chuyển thành 1230 , significantDigits:3
+- 1234.5678 được chuyển thành 1234 , significantDigits:4
+- 1234.5678 được chuyển thành 1234.6 , significantDigits:5 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.57 , significantDigits:6 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.568 , significantDigits:7 (roundingMode:halfCeil)
+- 1234.5678 được chuyển thành 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -448,14 +448,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+:::note{title=Mô tả}
+Ưu tiên làm tròn khi cả significantDigits và fractionDigits đều được đặt; dùng Intl.NumberFormat của trình duyệt và tuân theo quy tắc giống roundingPriority.
 
 :::
 
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Ví dụ**
+- 1234.5678 được chuyển thành 1230 , significantDigits:3 (roundingPriority:lessPrecision)
+- 1234.5678 được chuyển thành 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -463,8 +463,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+:::note{title=Mô tả}
+Chế độ làm tròn cho định dạng số, dùng Intl.NumberFormat của trình duyệt và tuân theo quy tắc giống roundingMode.
 
 :::
 
@@ -472,10 +472,10 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"column" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped:
+:::note{title=Mô tả}
+Kênh mà chỉ số được ánh xạ tới:
 
-- column: measure column
+- column: cột chỉ số
 
 :::
 
@@ -483,13 +483,13 @@ Channel to which the measure is mapped:
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In a flat measure configuration, builds a tree-like measure structure. parentId points to the ID of the parent measure group, used for building the hierarchy.
+:::note{title=Mô tả}
+Trong cấu hình chỉ số phẳng, xây dựng cấu trúc chỉ số dạng cây. parentId trỏ tới ID của nhóm chỉ số cha và dùng để xây dựng phân cấp.
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is providing a flat measure list with parentId. These two methods cannot be used simultaneously.
+Có hai cách cấu hình cây chỉ số: Cách 1 cấu hình trực tiếp cây chỉ số với children; Cách 2 cung cấp danh sách chỉ số phẳng với parentId. Hai cách này không thể dùng đồng thời.
 
 :::
 
@@ -498,8 +498,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration. Specifies the field name for pagination, which must be a dimension.
+:::note{title=Mô tả}
+Cấu hình phân trang. Chỉ định tên trường phân trang, trường này phải là một chiều.
 
 :::
 
@@ -508,8 +508,8 @@ Pagination configuration. Specifies the field name for pagination, which must be
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension.
+:::note{title=Mô tả}
+Trường phân trang; chỉ định tên trường cho phân trang, phải là một chiều.
 
 :::
 
@@ -517,12 +517,12 @@ Pagination field; specifies the field name for pagination, must be a dimension.
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page.
+:::note{title=Mô tả}
+Giá trị phân trang hiện tại; chỉ định giá trị dùng để xác định trang hiện tại.
 
 :::
 
-**Example**
+**Ví dụ**
 '2023-01-01'
 
 
@@ -532,8 +532,8 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color. Default is transparent. Can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)').
+:::note{title=Mô tả}
+Màu nền biểu đồ. Mặc định là trong suốt. Có thể là chuỗi màu (ví dụ 'red', 'blue') hoặc giá trị hex, rgb, rgba (ví dụ '#ff0000', 'rgba(255,0,0,0.5)').
 
 :::
 
@@ -542,8 +542,8 @@ Chart background color. Default is transparent. Can be a color string (e.g. 'red
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Border color of the table.
+:::note{title=Mô tả}
+Màu viền của bảng.
 
 :::
 
@@ -552,8 +552,8 @@ Border color of the table.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font size of the table body.
+:::note{title=Mô tả}
+Cỡ chữ phần thân bảng.
 
 :::
 
@@ -562,8 +562,8 @@ Font size of the table body.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Font color of the table body.
+:::note{title=Mô tả}
+Màu chữ phần thân bảng.
 
 :::
 
@@ -572,8 +572,8 @@ Font color of the table body.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color of the table body.
+:::note{title=Mô tả}
+Màu nền phần thân bảng.
 
 :::
 
@@ -582,8 +582,8 @@ Background color of the table body.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Font size of row and column headers.
+:::note{title=Mô tả}
+Cỡ chữ tiêu đề hàng và cột.
 
 :::
 
@@ -592,8 +592,8 @@ Font size of row and column headers.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Font color of row and column headers.
+:::note{title=Mô tả}
+Màu chữ tiêu đề hàng và cột.
 
 :::
 
@@ -602,8 +602,8 @@ Font color of row and column headers.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color of row and column headers.
+:::note{title=Mô tả}
+Màu nền tiêu đề hàng và cột.
 
 :::
 
@@ -612,8 +612,8 @@ Background color of row and column headers.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color when hovering over a row or column header cell, used to highlight the cell at the intersection of the hovered row and column.
+:::note{title=Mô tả}
+Màu nền khi hover trên ô tiêu đề hàng hoặc cột, dùng để làm nổi bật ô tại giao điểm của hàng và cột đang hover.
 
 :::
 
@@ -622,8 +622,8 @@ Background color when hovering over a row or column header cell, used to highlig
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color when hovering over a row or column header cell, used to highlight all cells in the hovered row and column.
+:::note{title=Mô tả}
+Màu nền khi hover trên ô tiêu đề hàng hoặc cột, dùng để làm nổi bật tất cả ô trong hàng và cột đang hover.
 
 :::
 
@@ -632,8 +632,8 @@ Background color when hovering over a row or column header cell, used to highlig
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Border color of the selected cell, used for highlighting.
+:::note{title=Mô tả}
+Màu viền của ô được chọn, dùng để làm nổi bật.
 
 :::
 
@@ -642,8 +642,8 @@ Border color of the selected cell, used for highlighting.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color of the selected cell, used for highlighting.
+:::note{title=Mô tả}
+Màu nền của ô được chọn, dùng để làm nổi bật.
 
 :::
 
@@ -652,8 +652,8 @@ Background color of the selected cell, used for highlighting.
 
 **Type:** `BodyCellStyle | BodyCellStyle[] | undefined`
 
-:::note{title=Description}
-Sets special styles for cells in the table body.
+:::note{title=Mô tả}
+Đặt kiểu đặc biệt cho các ô trong phần thân bảng.
 
 :::
 
@@ -662,29 +662,29 @@ Sets special styles for cells in the table body.
 
 **Type:** `Selector | Selectors | FieldSelector | undefined`
 
-:::note{title=Description}
-Data selector.
+:::note{title=Mô tả}
+Selector dữ liệu.
 
-If `selector` is configured, it provides four types of data matching capabilities: numeric selector, local data selector, conditional dimension selector, and conditional measure selector.
+Nếu cấu hình `selector`, nó cung cấp bốn khả năng khớp dữ liệu: selector số, selector dữ liệu cục bộ, selector chiều có điều kiện và selector chỉ số có điều kiện.
 
-If `selector` is not configured, the style applies globally.
+Nếu không cấu hình `selector`, kiểu sẽ áp dụng toàn cục.
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+Lưu ý: `selector` và `dynamicFilter` không thể dùng đồng thời; `dynamicFilter` có ưu tiên cao hơn.
 
 :::
 
-**Example**
-Numeric selector:
+**Ví dụ**
+Selector số:
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Local data selector:
+Selector dữ liệu cục bộ:
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector:
+Selector chiều có điều kiện:
 selector = {
 field: 'category',
 operator: 'in',
@@ -696,7 +696,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector:
+Selector chỉ số có điều kiện:
 selector = {
 field: 'profit',
 operator: '>=',
@@ -708,7 +708,7 @@ operator: 'between'
 value: [100, 300]
 }
 
-Field column filter:
+Bộ lọc cột trường:
 selector = {
 field: 'category'
 }
@@ -723,16 +723,16 @@ field: ['category', 'profit']
 
 **Type:** `string | string[]`
 
-:::note{title=Description}
-Field name; can be a single field or an array of fields.
+:::note{title=Mô tả}
+Tên trường; có thể là một trường đơn hoặc mảng trường.
 
 :::
 
-**Example**
-Single field:
+**Ví dụ**
+Trường đơn:
 field: 'sales'
 
-Multiple fields:
+Nhiều trường:
 field: ['sales', 'profit', 'revenue']
 
 
@@ -741,12 +741,12 @@ field: ['sales', 'profit', 'revenue']
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Mô tả}
+Toán tử:
 
-- in: Select data items where the dimension field value is in the 'value' list.
+- in: Chọn các mục dữ liệu có giá trị trường chiều nằm trong danh sách 'value'.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong danh sách 'value'.
 
 :::
 
@@ -754,14 +754,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Mô tả}
+Toán tử:
 
-- in: Select data items where the dimension field value is in the 'value' list.
+- in: Chọn các mục dữ liệu có giá trị trường chiều nằm trong danh sách 'value'.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong danh sách 'value'.
 
-Same as operator.
+Giống operator.
 
 :::
 
@@ -769,8 +769,8 @@ Same as operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selective dimension values; supports arrays.
+:::note{title=Mô tả}
+Giá trị chiều cần chọn; hỗ trợ mảng.
 
 :::
 
@@ -778,27 +778,27 @@ Selective dimension values; supports arrays.
 
 **Type:** `TableDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (code-driven).
+:::note{title=Mô tả}
+Bộ lọc động (điều khiển bằng mã).
 
-Implement complex data filtering logic via AI-generated JavaScript code.
-Suitable for Top N, statistical analysis, complex conditions, and other scenarios where static selectors are insufficient.
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo.
+Phù hợp với Top N, phân tích thống kê, điều kiện phức tạp và các tình huống mà selector tĩnh không đủ.
 
-Key capabilities:
+Khả năng cốt lõi:
 
-- Supports any complex data filtering conditions.
+- Hỗ trợ mọi điều kiện lọc dữ liệu phức tạp.
 
-- Uses built-in utility functions for data operations.
+- Sử dụng các hàm tiện ích tích hợp cho thao tác dữ liệu.
 
-- Executes safely in the browser environment (Web Worker sandbox).
+- Thực thi an toàn trong môi trường trình duyệt (sandbox Web Worker).
 
-Requirements: Supports only browser environments; Node.js environments will use the fallback.
+Yêu cầu: chỉ hỗ trợ môi trường trình duyệt; môi trường Node.js sẽ dùng fallback.
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+Lưu ý: `selector` và `dynamicFilter` không thể dùng đồng thời; `dynamicFilter` có ưu tiên cao hơn.
 
-Configuration for the table dynamic filter.
+Cấu hình bộ lọc động của bảng.
 
-Implement precise cell-level filtering via AI-generated JavaScript code.
+Triển khai lọc chính xác ở cấp ô bằng mã JavaScript do AI tạo.
 
 :::
 
@@ -811,15 +811,15 @@ Implement precise cell-level filtering via AI-generated JavaScript code.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên).
 
 :::
 
-**Example**
-"Highlight cells where sales are greater than 1000."
+**Ví dụ**
+"Làm nổi bật các ô có doanh số lớn hơn 1000."
 
-"Highlight the cell with the maximum value in each row."
+"Làm nổi bật ô có giá trị lớn nhất trong mỗi hàng."
 
 
 
@@ -827,26 +827,26 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code.
+:::note{title=Mô tả}
+Mã JavaScript lọc do AI tạo.
 
-- Can only use built-in utility functions (access via _ or R).
+- Chỉ được dùng các hàm tiện ích tích hợp (truy cập qua _ hoặc R).
 
-- Input parameter: data (array); each item includes an `_index` field representing the row number.
+- Tham số đầu vào: data (mảng); mỗi mục có trường `_index` biểu thị số dòng.
 
-- Must return an array of cell selectors: Array<{ __row_index: number, field: string }>.
+- Phải trả về mảng selector ô: Array<{ __row_index: number, field: string }>.
 
-- When `field` is "*", the entire row is highlighted.
+- Khi `field` là "*", toàn bộ hàng sẽ được làm nổi bật.
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests.
+- Bị cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng.
 
 :::
 
-**Example**
-Top N filter:
+**Ví dụ**
+Bộ lọc Top N:
 dynamicFilter = {
 type: 'row-with-field',
-description: 'Highlight the top 3 products by sales',
+description: 'Làm nổi bật 3 sản phẩm có doanh số cao nhất',
 code: `
 const sorted = _.sortBy(data, 'sales');
 const reversed = [...sorted].reverse();
@@ -861,10 +861,10 @@ _.map(result, item => [
 enabled: true
 }
 
-Multi-condition filter:
+Bộ lọc nhiều điều kiện:
 dynamicFilter = {
 type: 'row-with-field',
-description: 'Highlight products with a profit margin > 20% and sales > 5000',
+description: 'Làm nổi bật sản phẩm có biên lợi nhuận > 20% và doanh số > 5000',
 code: `
 const matched = _.filter(data, item => {
 const profitRate = (item.profit / item.sales) * 100;
@@ -880,10 +880,10 @@ _.map(matched, item => [
 enabled: true
 }
 
-Relative value filter:
+Bộ lọc giá trị tương đối:
 dynamicFilter = {
 type: 'row-with-field',
-description: 'Highlight products with sales above average',
+description: 'Làm nổi bật sản phẩm có doanh số cao hơn trung bình',
 code: `
 const avgSales = _.meanBy(data, 'sales');
 const matched = _.filter(data, item => item.sales > avgSales);
@@ -897,10 +897,10 @@ _.map(matched, item => [
 enabled: true
 }
 
-Grouped filter:
+Bộ lọc theo nhóm:
 dynamicFilter = {
 type: 'row-with-field',
-description: 'Highlight the top-selling product in each region',
+description: 'Làm nổi bật sản phẩm bán chạy nhất trong mỗi khu vực',
 code: `
 const grouped = _.groupBy(data, 'region');
 const topByRegion = _.map(_.values(grouped), group => _.maxBy(group, 'sales'));
@@ -914,9 +914,9 @@ _.map(topByRegion, item => [
 enabled: true
 }
 
-Highlight entire row:
+Làm nổi bật toàn bộ hàng:
 dynamicFilter = {
-description: 'Highlight rows where sales exceed profit',
+description: 'Làm nổi bật các hàng có doanh số vượt lợi nhuận',
 code: `
 const matched = _.filter(data, item => item.sales > item.profit);
 return matched.map(item => ({
@@ -933,8 +933,8 @@ enabled: true
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ.
 
 :::
 
@@ -943,8 +943,8 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field ID.
+:::note{title=Mô tả}
+ID trường chiều.
 
 :::
 
@@ -952,12 +952,12 @@ Dimension field ID.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Mô tả}
+Toán tử:
 
-- in: Select data items where the dimension field value is in the 'value' list.
+- in: Chọn các mục dữ liệu có giá trị trường chiều nằm trong danh sách 'value'.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong danh sách 'value'.
 
 :::
 
@@ -965,14 +965,14 @@ Operator:
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator:
+:::note{title=Mô tả}
+Toán tử:
 
-- in: Select data items where the dimension field value is in the 'value' list.
+- in: Chọn các mục dữ liệu có giá trị trường chiều nằm trong danh sách 'value'.
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong danh sách 'value'.
 
-Same as operator.
+Giống operator.
 
 :::
 
@@ -980,8 +980,8 @@ Same as operator.
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selective dimension values; supports arrays.
+:::note{title=Mô tả}
+Giá trị chiều cần chọn; hỗ trợ mảng.
 
 :::
 
@@ -989,8 +989,8 @@ Selective dimension values; supports arrays.
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field). Written during the `prepare()` phase; read-only at runtime.
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime). Được ghi trong giai đoạn `prepare()`; chỉ đọc khi runtime.
 
 :::
 
@@ -1011,8 +1011,8 @@ Dynamic filter execution result (runtime field). Written during the `prepare()` 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell background color.
+:::note{title=Mô tả}
+Màu nền ô.
 
 :::
 
@@ -1020,8 +1020,8 @@ Cell background color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the color scale for cell backgrounds.
+:::note{title=Mô tả}
+Có bật thang màu cho nền ô hay không.
 
 :::
 
@@ -1029,8 +1029,8 @@ Whether to enable the color scale for cell backgrounds.
 
 **Type:** `{ minValue?: number; maxValue?: number; minColor: string; maxColor: string; } | undefined`
 
-:::note{title=Description}
-Mapping for the cell background color scale; has higher priority than `backgroundColor`.
+:::note{title=Mô tả}
+Ánh xạ thang màu nền ô; có ưu tiên cao hơn `backgroundColor`.
 
 :::
 
@@ -1039,8 +1039,8 @@ Mapping for the cell background color scale; has higher priority than `backgroun
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value; if not configured, defaults to the minimum value in the current data column.
+:::note{title=Mô tả}
+Giá trị nhỏ nhất; nếu không cấu hình, mặc định là giá trị nhỏ nhất trong cột dữ liệu hiện tại.
 
 :::
 
@@ -1048,8 +1048,8 @@ Minimum value; if not configured, defaults to the minimum value in the current d
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum value; if not configured, defaults to the maximum value in the current data column.
+:::note{title=Mô tả}
+Giá trị lớn nhất; nếu không cấu hình, mặc định là giá trị lớn nhất trong cột dữ liệu hiện tại.
 
 :::
 
@@ -1057,8 +1057,8 @@ Maximum value; if not configured, defaults to the maximum value in the current d
 
 **Type:** `string`
 
-:::note{title=Description}
-Color corresponding to the minimum value.
+:::note{title=Mô tả}
+Màu tương ứng với giá trị nhỏ nhất.
 
 :::
 
@@ -1066,8 +1066,8 @@ Color corresponding to the minimum value.
 
 **Type:** `string`
 
-:::note{title=Description}
-Color corresponding to the maximum value.
+:::note{title=Mô tả}
+Màu tương ứng với giá trị lớn nhất.
 
 :::
 
@@ -1075,8 +1075,8 @@ Color corresponding to the maximum value.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable background progress bars (a bar reflecting the cell's magnitude). Disabled by default.
+:::note{title=Mô tả}
+Có bật thanh tiến trình nền (thanh phản ánh độ lớn của ô) hay không. Mặc định tắt.
 
 :::
 
@@ -1084,8 +1084,8 @@ Whether to enable background progress bars (a bar reflecting the cell's magnitud
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the background bar when the cell value is positive.
+:::note{title=Mô tả}
+Màu của thanh nền khi giá trị ô là số dương.
 
 :::
 
@@ -1093,8 +1093,8 @@ Color of the background bar when the cell value is positive.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of the background bar when the cell value is negative.
+:::note{title=Mô tả}
+Màu của thanh nền khi giá trị ô là số âm.
 
 :::
 
@@ -1102,9 +1102,9 @@ Color of the background bar when the cell value is negative.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value for the progress bar.
-Automatically calculated from the column minimum if not configured.
+:::note{title=Mô tả}
+Giá trị nhỏ nhất cho thanh tiến trình.
+Nếu không cấu hình, tự động tính từ giá trị nhỏ nhất của cột.
 
 :::
 
@@ -1112,9 +1112,9 @@ Automatically calculated from the column minimum if not configured.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum value for the progress bar.
-Automatically calculated from the column maximum if not configured.
+:::note{title=Mô tả}
+Giá trị lớn nhất cho thanh tiến trình.
+Nếu không cấu hình, tự động tính từ giá trị lớn nhất của cột.
 
 :::
 
@@ -1122,8 +1122,8 @@ Automatically calculated from the column maximum if not configured.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Color of cell text.
+:::note{title=Mô tả}
+Màu chữ của ô.
 
 :::
 
@@ -1131,8 +1131,8 @@ Color of cell text.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Size of cell text.
+:::note{title=Mô tả}
+Cỡ chữ của ô.
 
 :::
 
@@ -1140,8 +1140,8 @@ Size of cell text.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Border color of the cell.
+:::note{title=Mô tả}
+Màu viền của ô.
 
 :::
 
@@ -1149,8 +1149,8 @@ Border color of the cell.
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Line width of the cell border.
+:::note{title=Mô tả}
+Độ rộng đường viền ô.
 
 :::
 
@@ -1159,12 +1159,12 @@ Line width of the cell border.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether measures are displayed as columns. When `true`, measures expand horizontally (columns); when `false`, they expand vertically (rows).
+:::note{title=Mô tả}
+Chỉ số có hiển thị thành cột hay không. Khi `true`, chỉ số mở rộng theo chiều ngang (cột); khi `false`, mở rộng theo chiều dọc (hàng).
 
 :::
 
-**Example**
+**Ví dụ**
 true
 
 
@@ -1174,12 +1174,12 @@ true
 
 **Type:** `PivotTableTotals | undefined`
 
-:::note{title=Description}
-Grand total and subtotal configuration for the Pivot Table.
+:::note{title=Mô tả}
+Cấu hình tổng cộng và tổng phụ cho Pivot Table.
 
 :::
 
-**Example**
+**Ví dụ**
 { row: { showGrandTotals: true, showSubTotals: true, subTotalsDimensions: ['category'] } }
 
 
@@ -1189,8 +1189,8 @@ Grand total and subtotal configuration for the Pivot Table.
 
 **Type:** `RowOrColumnTotalConfig | undefined`
 
-:::note{title=Description}
-Grand total and subtotal configuration for rows.
+:::note{title=Mô tả}
+Cấu hình tổng cộng và tổng phụ cho hàng.
 
 :::
 
@@ -1199,8 +1199,8 @@ Grand total and subtotal configuration for rows.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show grand totals (total row/column).
+:::note{title=Mô tả}
+Có hiển thị tổng cộng (hàng/cột tổng) hay không.
 
 :::
 
@@ -1208,8 +1208,8 @@ Whether to show grand totals (total row/column).
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show subtotals.
+:::note{title=Mô tả}
+Có hiển thị tổng phụ hay không.
 
 :::
 
@@ -1217,12 +1217,12 @@ Whether to show subtotals.
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Dimensions for subtotals; group subtotals by these dimensions.
+:::note{title=Mô tả}
+Chiều dùng cho tổng phụ; nhóm tổng phụ theo các chiều này.
 
 :::
 
-**Example**
+**Ví dụ**
 ['category', 'region']
 
 
@@ -1231,8 +1231,8 @@ Dimensions for subtotals; group subtotals by these dimensions.
 
 **Type:** `RowOrColumnTotalConfig | undefined`
 
-:::note{title=Description}
-Grand total and subtotal configuration for columns.
+:::note{title=Mô tả}
+Cấu hình tổng cộng và tổng phụ cho cột.
 
 :::
 
@@ -1241,8 +1241,8 @@ Grand total and subtotal configuration for columns.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show grand totals (total row/column).
+:::note{title=Mô tả}
+Có hiển thị tổng cộng (hàng/cột tổng) hay không.
 
 :::
 
@@ -1250,8 +1250,8 @@ Whether to show grand totals (total row/column).
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to show subtotals.
+:::note{title=Mô tả}
+Có hiển thị tổng phụ hay không.
 
 :::
 
@@ -1259,12 +1259,12 @@ Whether to show subtotals.
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Dimensions for subtotals; group subtotals by these dimensions.
+:::note{title=Mô tả}
+Chiều dùng cho tổng phụ; nhóm tổng phụ theo các chiều này.
 
 :::
 
-**Example**
+**Ví dụ**
 ['category', 'region']
 
 
@@ -1274,14 +1274,14 @@ Dimensions for subtotals; group subtotals by these dimensions.
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Themes are lower-priority configurations containing general settings shared across all chart types and specific settings shared within a chart category.
+:::note{title=Mô tả}
+Theme biểu đồ. Theme là cấu hình có ưu tiên thấp hơn, chứa thiết lập chung dùng cho mọi loại biểu đồ và thiết lập riêng dùng trong một nhóm biểu đồ.
 
-Light and dark themes are built-in; users can define custom themes via the Builder.
+Theme sáng và tối được tích hợp; người dùng có thể định nghĩa theme tùy chỉnh thông qua Builder.
 
 :::
 
-**Example**
+**Ví dụ**
 'dark'
 
 'light'
@@ -1304,7 +1304,7 @@ Light and dark themes are built-in; users can define custom themes via the Build
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call `intl.setLocale('zh-CN')` to set the language.
+:::note{title=Mô tả}
+Locale. Cấu hình ngôn ngữ biểu đồ; hỗ trợ 'zh-CN' và 'en-US'. Hoặc gọi `intl.setLocale('zh-CN')` để đặt ngôn ngữ.
 
 :::

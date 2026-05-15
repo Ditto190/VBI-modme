@@ -1,8 +1,8 @@
 # HierarchySankey
 
-## Regional Sales Hierarchy Sankey
+## Regionale Umsatz-Hierarchie-Sankey
 
-A hierarchy sankey chart showing sales flowing from region to country to city.
+Zeigt ein Hierarchie-Sankey-Diagramm, in dem Umsatz von Region zu Land und weiter zur Stadt fließt.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -86,9 +86,9 @@ export default () => {
 }
 ```
 
-## Multiple Hierarchy Dimensions + One Measure
+## Mehrstufige Hierarchiedimensionen + eine Kennzahl
 
-This example shows a hierarchical flow from region to country and then to channel, with a single measure controlling the flow size.
+Zeigt den hierarchischen Fluss von Großregion zu Land und weiter zum Kanal, wobei eine einzelne Kennzahl die Flussgröße steuert.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -98,37 +98,37 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
+      "region": "Nordchina",
       "country": "China",
-      "channel": "Direct",
+      "channel": "Direkt",
       "revenue": 42
     },
     {
-      "region": "North China",
+      "region": "Nordchina",
       "country": "China",
       "channel": "Partner",
       "revenue": 18
     },
     {
-      "region": "East China",
+      "region": "Ostchina",
       "country": "China",
-      "channel": "Direct",
+      "channel": "Direkt",
       "revenue": 36
     },
     {
-      "region": "East China",
+      "region": "Ostchina",
       "country": "China",
-      "channel": "E-commerce",
+      "channel": "E-Commerce",
       "revenue": 22
     },
     {
-      "region": "Southeast Asia",
-      "country": "Singapore",
-      "channel": "Direct",
+      "region": "Südostasien",
+      "country": "Singapur",
+      "channel": "Direkt",
       "revenue": 15
     },
     {
-      "region": "Southeast Asia",
+      "region": "Südostasien",
       "country": "Malaysia",
       "channel": "Partner",
       "revenue": 12
@@ -137,21 +137,21 @@ export default () => {
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Großregion"
     },
     {
       "id": "country",
-      "alias": "Country"
+      "alias": "Land"
     },
     {
       "id": "channel",
-      "alias": "Channel"
+      "alias": "Kanal"
     }
   ],
   "measures": [
     {
       "id": "revenue",
-      "alias": "Revenue"
+      "alias": "Umsatz"
     }
   ],
   "legend": {
@@ -172,9 +172,9 @@ export default () => {
 }
 ```
 
-## Measure Name As A Hierarchy Dimension + One Measure
+## Kennzahlname als Hierarchiedimension + eine Kennzahl
 
-This example places the measure name itself on the hierarchy path, so each region flows into different business metrics while a single numeric measure controls the magnitude.
+Der „Kennzahlname“ selbst wird in den Hierarchiepfad aufgenommen, um den Fluss verschiedener Geschäftskennzahlen je Großregion zu zeigen; eine einzelne numerische Kennzahl steuert die Größe.
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -184,50 +184,50 @@ export default () => {
   "chartType": "hierarchySankey",
   "dataset": [
     {
-      "region": "North China",
-      "metricName": "Revenue",
+      "region": "Nordchina",
+      "metricName": "Umsatz",
       "value": 42
     },
     {
-      "region": "North China",
-      "metricName": "Profit",
+      "region": "Nordchina",
+      "metricName": "Gewinn",
       "value": 12
     },
     {
-      "region": "East China",
-      "metricName": "Revenue",
+      "region": "Ostchina",
+      "metricName": "Umsatz",
       "value": 36
     },
     {
-      "region": "East China",
-      "metricName": "Profit",
+      "region": "Ostchina",
+      "metricName": "Gewinn",
       "value": 10
     },
     {
-      "region": "South China",
-      "metricName": "Revenue",
+      "region": "Südchina",
+      "metricName": "Umsatz",
       "value": 28
     },
     {
-      "region": "South China",
-      "metricName": "Profit",
+      "region": "Südchina",
+      "metricName": "Gewinn",
       "value": 8
     }
   ],
   "dimensions": [
     {
       "id": "region",
-      "alias": "Region"
+      "alias": "Großregion"
     },
     {
       "id": "metricName",
-      "alias": "Metric Name"
+      "alias": "Kennzahlname"
     }
   ],
   "measures": [
     {
       "id": "value",
-      "alias": "Metric Value"
+      "alias": "Kennzahlwert"
     }
   ],
   "legend": {

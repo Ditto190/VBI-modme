@@ -8,7 +8,7 @@
 prepare(): Promise<void>
 ```
 
-Asynchronously executes dynamic filter code. Call before `build()` to execute code defined in `dynamicFilter`. This is an idempotent method — multiple calls will not re-execute.
+Thực thi mã bộ lọc động theo cách bất đồng bộ. Gọi trước `build()` để thực thi `code` trong `dynamicFilter`. Đây là phương thức lũy đẳng; gọi nhiều lần sẽ không thực thi lặp lại.
 
 ### build
 
@@ -16,7 +16,7 @@ Asynchronously executes dynamic filter code. Call before `build()` to execute co
 build<T = S>(): T
 ```
 
-Generates the final chart configuration (Spec). This is the most commonly used core method. If the configuration includes a `dynamicFilter` code, call `prepare()` first.
+Sinh cấu hình biểu đồ cuối cùng (Spec). Đây là phương thức lõi được dùng phổ biến nhất. Nếu cấu hình chứa `dynamicFilter` code, cần gọi `prepare()` trước.
 
 ### buildSpec
 
@@ -24,7 +24,7 @@ Generates the final chart configuration (Spec). This is the most commonly used c
 buildSpec<T = S>(advanced: AdvancedVSeed): T
 ```
 
-Converts the intermediate-layer configuration (AdvancedVSeed) to the final Spec. Use only when you need deep customization of the intermediate-layer configuration.
+Chuyển đổi cấu hình tầng trung gian (AdvancedVSeed) thành Spec cuối cùng. Chỉ dùng khi bạn cần tùy chỉnh sâu cấu hình tầng trung gian.
 
 ### buildAdvanced
 
@@ -32,7 +32,7 @@ Converts the intermediate-layer configuration (AdvancedVSeed) to the final Spec.
 buildAdvanced(): AdvancedVSeed | null
 ```
 
-Generates the intermediate-layer configuration (AdvancedVSeed), i.e., the chart template. More detailed than the raw VSeed, exposing more chart internals.
+Sinh cấu hình tầng trung gian (AdvancedVSeed), tức là template biểu đồ. Chi tiết hơn VSeed gốc và bộc lộ nhiều chi tiết biểu đồ hơn.
 
 ### getColorItems
 
@@ -40,7 +40,7 @@ Generates the intermediate-layer configuration (AdvancedVSeed), i.e., the chart 
 getColorItems(): __type[]
 ```
 
-Gets field information related to colors in the data. Commonly used to generate chart legends or color filter UIs.
+Lấy thông tin các trường liên quan đến màu trong dữ liệu. Thường dùng để sinh chú giải biểu đồ hoặc UI bộ lọc màu.
 
 ### getColorIdMap
 
@@ -48,7 +48,7 @@ Gets field information related to colors in the data. Commonly used to generate 
 getColorIdMap(): Record
 ```
 
-Gets a detailed mapping table for color fields. Key is the color ID, Value is the detailed information.
+Lấy bảng ánh xạ chi tiết của trường màu. Key là ID màu, Value là thông tin chi tiết.
 
 ### getColorValueMap
 
@@ -56,7 +56,7 @@ Gets a detailed mapping table for color fields. Key is the color ID, Value is th
 getColorValueMap(): undefined | Record
 ```
 
-Gets the mapping from `colorId` to the final color value in a discrete color map.
+Lấy ánh xạ từ `colorId` đến giá trị màu cuối cùng trong bản đồ màu rời rạc.
 
 ## Static Methods
 
@@ -66,7 +66,7 @@ Gets the mapping from `colorId` to the final color value in a discrete color map
 static getAdvancedPipeline(chartType: ChartType): Pipe[]
 ```
 
-[Internal] Gets the template build pipeline for the specified chart type, used for debugging the VSeed → AdvancedVSeed conversion process.
+[Phương thức nội bộ] Lấy pipeline xây dựng template cho loại biểu đồ được chỉ định, dùng để debug quá trình chuyển đổi từ VSeed sang AdvancedVSeed.
 
 ### getSpecPipeline
 
@@ -74,7 +74,7 @@ static getAdvancedPipeline(chartType: ChartType): Pipe[]
 static getSpecPipeline(chartType: ChartType): SpecPipe[]
 ```
 
-[Internal] Gets the Spec build pipeline for the specified chart type, used for debugging the AdvancedVSeed → Spec conversion process.
+[Phương thức nội bộ] Lấy pipeline xây dựng Spec cho loại biểu đồ được chỉ định, dùng để debug quá trình chuyển đổi từ AdvancedVSeed sang Spec.
 
 ### getTheme
 
@@ -82,7 +82,7 @@ static getSpecPipeline(chartType: ChartType): SpecPipe[]
 static getTheme(themeKey?: string): CustomThemeConfig
 ```
 
-Gets the configuration of the specified theme. If `themeKey` is not provided, returns the `'light'` theme by default.
+Lấy cấu hình của theme được chỉ định. Nếu không truyền `themeKey`, mặc định trả về theme `'light'`.
 
 ### getThemeMap
 
@@ -90,7 +90,7 @@ Gets the configuration of the specified theme. If `themeKey` is not provided, re
 static getThemeMap(): Record<string, CustomThemeConfig>
 ```
 
-Gets all registered theme configurations.
+Lấy tất cả cấu hình theme đã đăng ký.
 
 ### from
 
@@ -98,7 +98,7 @@ Gets all registered theme configurations.
 static from<T extends Spec = Spec>(vseed: VSeed): Builder<T>
 ```
 
-Static factory method for conveniently creating a `Builder` instance.
+Phương thức factory tĩnh để tạo instance Builder một cách thuận tiện.
 
 ### registerAdvancedPipeline
 
@@ -106,7 +106,7 @@ Static factory method for conveniently creating a `Builder` instance.
 static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline): void
 ```
 
-[Extension] Registers a template build pipeline for a new chart type.
+[Phương thức mở rộng] Đăng ký pipeline xây dựng template cho loại biểu đồ mới.
 
 ### registerSpecPipeline
 
@@ -114,7 +114,7 @@ static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline
 static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 ```
 
-[Extension] Registers a Spec build pipeline for a new chart type.
+[Phương thức mở rộng] Đăng ký pipeline xây dựng Spec cho loại biểu đồ mới.
 
 ### updateAdvanced
 
@@ -122,7 +122,7 @@ static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 ```
 
-[Extension] Modifies the template build logic for an existing chart, inserting a custom Pipe to influence the generated AdvancedVSeed.
+[Phương thức mở rộng] Sửa logic xây dựng template của biểu đồ hiện có, chèn Pipe tùy chỉnh để ảnh hưởng đến AdvancedVSeed được sinh ra.
 
 ### updateSpec
 
@@ -130,7 +130,7 @@ static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 ```
 
-[Extension] Modifies the Spec build logic for an existing chart, inserting a custom Pipe to influence the final generated Spec.
+[Phương thức mở rộng] Sửa logic xây dựng Spec của biểu đồ hiện có, chèn Pipe tùy chỉnh để ảnh hưởng đến Spec cuối cùng được sinh ra.
 
 ### registerTheme
 
@@ -138,7 +138,7 @@ static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 static registerTheme(key: string, theme: CustomThemeConfig): void
 ```
 
-[Extension] Registers a custom theme.
+[Phương thức mở rộng] Đăng ký theme tùy chỉnh.
 
 ## Properties
 
@@ -148,7 +148,7 @@ static registerTheme(key: string, theme: CustomThemeConfig): void
 get locale()
 ```
 
-Gets the locale currently used by the Builder.
+Lấy locale mà Builder hiện tại đang sử dụng.
 
 ### get vseed
 
@@ -156,7 +156,7 @@ Gets the locale currently used by the Builder.
 get vseed()
 ```
 
-Gets the current VSeed input data.
+Lấy dữ liệu đầu vào VSeed hiện tại.
 
 ### set vseed
 
@@ -164,7 +164,7 @@ Gets the current VSeed input data.
 set vseed(value)
 ```
 
-Updates the VSeed input data. After updating, the cached state from `prepare()` will be cleared.
+Cập nhật dữ liệu đầu vào VSeed. Sau khi cập nhật, trạng thái cache của `prepare()` sẽ bị xóa.
 
 ### get isPrepared
 
@@ -172,7 +172,7 @@ Updates the VSeed input data. After updating, the cached state from `prepare()` 
 get isPrepared()
 ```
 
-Gets the `prepare()` state.
+Lấy trạng thái `prepare()`.
 
 ### set isPrepared
 
@@ -180,7 +180,7 @@ Gets the `prepare()` state.
 set isPrepared(value: boolean)
 ```
 
-Sets the `prepare()` state.
+Thiết lập trạng thái `prepare()`.
 
 ### get advancedVSeed
 
@@ -188,7 +188,7 @@ Sets the `prepare()` state.
 get advancedVSeed()
 ```
 
-Gets the current AdvancedVSeed intermediate configuration object.
+Lấy đối tượng cấu hình trung gian AdvancedVSeed hiện tại.
 
 ### set advancedVSeed
 
@@ -196,7 +196,7 @@ Gets the current AdvancedVSeed intermediate configuration object.
 set advancedVSeed(value)
 ```
 
-Sets the AdvancedVSeed intermediate configuration object. Typically used for caching or reusing an existing intermediate configuration.
+Thiết lập đối tượng cấu hình trung gian AdvancedVSeed. Thường dùng để cache hoặc tái sử dụng cấu hình trung gian đã có.
 
 ### get spec
 
@@ -204,7 +204,7 @@ Sets the AdvancedVSeed intermediate configuration object. Typically used for cac
 get spec()
 ```
 
-Gets the currently generated final Spec object.
+Lấy đối tượng Spec cuối cùng hiện đang được sinh ra.
 
 ### set spec
 
@@ -212,7 +212,7 @@ Gets the currently generated final Spec object.
 set spec(value)
 ```
 
-Sets the Spec object. Typically used for caching.
+Thiết lập đối tượng Spec. Thường dùng để cache.
 
 ### get performance
 
@@ -220,7 +220,7 @@ Sets the Spec object. Typically used for caching.
 get performance()
 ```
 
-Gets performance statistics from the build process, including the duration of each phase (in ms).
+Lấy thông tin thống kê hiệu năng trong quá trình build. Bao gồm thời gian của từng giai đoạn (đơn vị: ms).
 
 ### set performance
 
@@ -228,4 +228,4 @@ Gets performance statistics from the build process, including the duration of ea
 set performance(value)
 ```
 
-Sets the performance statistics.
+Thiết lập thông tin thống kê hiệu năng.

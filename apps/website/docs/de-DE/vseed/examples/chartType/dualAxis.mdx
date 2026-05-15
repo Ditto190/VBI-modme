@@ -40,11 +40,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Umsatz"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     }
   ]
 }
@@ -53,9 +53,9 @@ export default () => {
 }
 ```
 
-## Default Dual Axis Chart
+## Standarddarstellung des Doppelachsen-Diagramms
 
-Default Dual Axis Chart
+Standarddarstellung des Doppelachsen-Diagramms
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -66,11 +66,11 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "Umsatz"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Gewinn"
     }
   ],
   "dataset": [
@@ -106,9 +106,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## Doppelachsen-Diagramm
 
-Dual Axis Chart
+Doppelachsen-Diagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -119,12 +119,12 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "primaryYAxis"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "secondaryYAxis"
     }
   ],
@@ -161,9 +161,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## Kombinationsdiagramm mit Doppelachse
 
-Combined Dual Axis Chart
+Kombinationsdiagramm mit Doppelachse
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -174,25 +174,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Verhältnis",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -237,7 +237,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ]
 }
@@ -246,9 +246,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Dual Axis Chart
+## Pivot-Kombinationsdiagramm mit Doppelachse
 
-Pivot Combined Dual Axis Chart
+Pivot-Kombinationsdiagramm mit Doppelachse
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -259,11 +259,11 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     },
     {
       "id": "type",
-      "alias": "Type",
+      "alias": "Typ",
       "encoding": "row"
     },
     {
@@ -457,25 +457,25 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Verhältnis",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -486,9 +486,9 @@ export default () => {
 }
 ```
 
-## Dual Axis Chart
+## Doppelachsen-Diagramm
 
-Dual Axis Chart
+Doppelachsen-Diagramm
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -526,13 +526,13 @@ export default () => {
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "primaryYAxis",
       "chartType": "area"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "secondaryYAxis",
       "chartType": "column"
     }
@@ -543,9 +543,9 @@ export default () => {
 }
 ```
 
-## Combined Dual Axis Chart
+## Kombinationsdiagramm mit Doppelachse
 
-Combined Dual Axis Chart
+Kombinationsdiagramm mit Doppelachse
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -556,28 +556,28 @@ export default () => {
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "primaryYAxis",
       "parentId": "first",
       "chartType": "area"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "secondaryYAxis",
       "parentId": "first",
       "chartType": "scatter"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Verhältnis",
       "encoding": "primaryYAxis",
       "parentId": "second",
       "chartType": "column"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "encoding": "secondaryYAxis",
       "parentId": "second",
       "chartType": "line"
@@ -623,7 +623,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ]
 }
@@ -646,13 +646,13 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Profit"
+        "titleText": "Gewinn"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Ratio"
+        "titleText": "Verhältnis"
       }
     }
   ],
@@ -660,38 +660,38 @@ export default () => {
     {
       "title": {
         "visible": true,
-        "titleText": "Sales"
+        "titleText": "Umsatz"
       }
     },
     {
       "title": {
         "visible": true,
-        "titleText": "Return Rate"
+        "titleText": "Rendite"
       }
     }
   ],
   "measures": [
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Gewinn",
       "encoding": "primaryYAxis",
       "parentId": "first"
     },
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Umsatz",
       "encoding": "secondaryYAxis",
       "parentId": "first"
     },
     {
       "id": "ratio",
-      "alias": "Ratio",
+      "alias": "Verhältnis",
       "encoding": "primaryYAxis",
       "parentId": "second"
     },
     {
       "id": "returnRatio",
-      "alias": "Return Rate",
+      "alias": "Rendite",
       "encoding": "secondaryYAxis",
       "parentId": "second"
     }
@@ -736,7 +736,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Datum"
     }
   ]
 }

@@ -43,9 +43,9 @@ export default () => {
 }
 ```
 
-## Combined Percentage Bar Chart
+## Diagram Batang Persentase Gabungan
 
-Combined Percentage Bar Chart
+Diagram Batang Persentase Gabungan
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -61,12 +61,12 @@ export default () => {
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "Laba",
       "parentId": "sales-and-profit"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "Tingkat Pengembalian",
       "parentId": "ratio"
     }
   ],
@@ -105,7 +105,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "Tanggal"
     }
   ]
 }
@@ -114,9 +114,9 @@ export default () => {
 }
 ```
 
-## Pivot Combined Percentage Bar Chart
+## Diagram Batang Persentase Gabungan Pivot
 
-Pivot Combined Percentage Bar Chart
+Diagram Batang Persentase Gabungan Pivot
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -127,28 +127,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "Kategori"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "Tanggal",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "Wilayah",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "Penjualan",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "Laba"
     }
   ],
   "dataset": [

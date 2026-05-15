@@ -1,37 +1,37 @@
 # HierarchySankey
 
-:::info{title=Encoding Mapping}
-The Hierarchy Sankey chart supports the following visual channels:
+:::info{title=エンコーディングマッピング}
+階層サンキー図は次のビジュアルチャネルをサポートします:
 
-`hierarchy`: hierarchy channel, supports `multiple dimensions`
+`hierarchy`: 階層チャネル。`複数のディメンション`をサポートします
 
-`size`: size channel, supports `one measure`
+`size`: サイズチャネル。`1 つのメジャー`をサポートします
 
-`label`: label channel, supports `multiple dimensions` and `multiple measures`
+`label`: ラベルチャネル。`複数のディメンション`と`複数のメジャー`をサポートします
 
-`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`
+`tooltip`: ツールチップチャネル。`複数のディメンション`と`複数のメジャー`をサポートします
 
 :::
 
-:::note{title=Description}
-Hierarchy Sankey chart, used to display hierarchical flow data. Tree nodes and flow links represent hierarchical relationships and flow magnitude.
+:::note{title=説明}
+階層サンキー図は階層的な流れデータを表示するために使用し、ツリー状ノードと流れのリンクで階層関係と流量の大きさを表します
 
-Applicable scenarios:
+適用シナリオ:
 
-\- Display hierarchical flow relationships from upstream to downstream
+\- 上流から下流への階層的な流れ関係を表示する場合
 
-\- Emphasize flow allocation and path transfer in a tree structure
+\- ツリー構造における流量配分と経路伝達を強調する場合
 
 :::
 
 :::warning{title=Warning}
-Data requirements:
+データ要件:
 
-\- At least 1 dimension field is required to construct the hierarchy
+\- 階層構造を構築するために少なくとも 1 つのディメンションフィールドが必要です
 
-\- At least 1 numeric field (measure) is required to map flow size
+\- 流量の大きさをマッピングするために少なくとも 1 つの数値フィールド（メジャー）が必要です
 
-\- The advanced pipeline needs to convert tidyData into the tree-shaped children structure supported by VChart
+\- advanced pipeline では tidyData を VChart がサポートするツリー型 children 構造へ変換する必要があります
 
 :::
 
@@ -40,16 +40,16 @@ Data requirements:
 
 **Type:** `"hierarchySankey"`
 
-:::note{title=Description}
-Hierarchy Sankey chart
+:::note{title=説明}
+階層サンキー図
 
 
 
-Hierarchy Sankey chart, displaying flow relationships and flow magnitude within a hierarchical structure
+階層サンキー図。階層構造内の流れ関係と流量の大きさを表示します
 
 :::
 
-**Example**
+**例**
 'hierarchySankey'
 
 
@@ -59,17 +59,17 @@ Hierarchy Sankey chart, displaying flow relationships and flow magnitude within 
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset
+:::note{title=説明}
+TidyData仕様に準拠し、事前集計済みのデータセットで、チャートのデータソースと構造を定義します。ユーザーが入力データを手動処理する必要はありません。VSeedの強力なデータリシェイプ機能が自動的に処理します。面グラフのデータは最終的に2つのディメンションと1つのメジャーにリシェイプされます。
 
 
 
-An aggregated dataset that follows the TidyData specification, used to define the chart's data source and structure
+TidyData 仕様に準拠し、集計済みのデータセットです。グラフのデータソースと構造を定義します
 
 :::
 
-**Example**
-[{region: 'North China', province: 'Hebei', value: 30}, {region: 'South China', province: 'Guangdong', value: 70}]
+**例**
+[{region: '華北', province: '河北', value: 30}, {region: '華南', province: '広東', value: 70}]
 
 
 
@@ -78,17 +78,17 @@ An aggregated dataset that follows the TidyData specification, used to define th
 
 **Type:** `HierarchyDimension[] | undefined`
 
-:::note{title=Description}
-Dimensions
+:::note{title=説明}
+最初のディメンションはX軸にマッピングされ、残りのディメンションはメジャー名（複数メジャーがある場合）と結合されて凡例項目として表示されます。
 
 
 
-Dimension configuration, used to define the hierarchy and supporting the hierarchy / label / tooltip channels
+ディメンション設定。階層構造を定義するために使用し、hierarchy / label / tooltip チャネルをサポートします
 
 :::
 
-**Example**
-[{id: 'region', alias: 'Region'}, {id: 'province', alias: 'Province'}]
+**例**
+[{id: 'region', alias: '地域'}, {id: 'province', alias: '省'}]
 
 
 
@@ -97,8 +97,8 @@ Dimension configuration, used to define the hierarchy and supporting the hierarc
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=説明}
+ディメンションに対応するフィールド ID
 
 :::
 
@@ -106,8 +106,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=説明}
+ディメンションの別名
 
 :::
 
@@ -115,8 +115,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=説明}
+ディメンションの日付フォーマット設定
 
 :::
 
@@ -125,8 +125,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=説明}
+時間粒度。日付表示の精度を決定します
 
 :::
 
@@ -134,19 +134,19 @@ Time granularity, determines the date display precision
 
 **Type:** `"tooltip" | "label" | "hierarchy" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=説明}
+ディメンションをマッピングするチャネル
 
-\- hierarchy: supports mapping multiple dimensions to the hierarchy channel
+\- hierarchy: 複数のディメンションを階層チャネルへマッピングできます
 
-\- label: supports mapping multiple dimensions to the label channel
+\- label: 複数のディメンションをラベルチャネルへマッピングできます
 
-\- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: 複数のディメンションをツールチップチャネルへマッピングできます
 
 :::
 
 :::tip{title=Tip}
-The first dimension is directly mapped to the color channel
+最初のディメンションは color チャネルへ直接マッピングされます。
 
 :::
 
@@ -155,17 +155,17 @@ The first dimension is directly mapped to the color channel
 
 **Type:** `HierarchyMeasure[] | undefined`
 
-:::note{title=Description}
-Measures
+:::note{title=説明}
+メジャー
 
 
 
-Measure configuration, used to define flow size and supporting the size / label / tooltip channels
+メジャー設定。流量の大きさを定義するために使用し、size / label / tooltip チャネルをサポートします
 
 :::
 
-**Example**
-[{id: 'value', alias: 'Flow'}]
+**例**
+[{id: 'value', alias: 'フロー量'}]
 
 
 
@@ -174,8 +174,8 @@ Measure configuration, used to define flow size and supporting the size / label 
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=説明}
+メジャー ID。重複できません
 
 :::
 
@@ -183,8 +183,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates are allowed; when not set, alias defaults to id
+:::note{title=説明}
+メジャーの別名。重複可能。未設定の場合、alias は id になります
 
 :::
 
@@ -192,20 +192,20 @@ Measure alias, duplicates are allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+:::note{title=説明}
+自動数値フォーマット。デフォルトで有効で、優先度が最も高い
 
-When autoFormat=true, it overrides all numFormat configurations
+autoFormat=true の場合、すべての numFormat 設定を上書きします
 
-When enabled, chart data labels and tooltips automatically select an appropriate format based on measure values and locale
+有効にすると、チャートのデータラベルとツールチップは、メジャー値と言語環境に基づいて適切なフォーマットを自動選択します
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+フォーマット規則: 10進数、compact notation 有効、小数部は最小0桁・最大2桁、自動丸め、ブラウザの Intl.NumberFormat 実装を使用
 
-For example:
+例:
 
-\- locale=zh\-CN: 749740.264 → 74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-\- locale=en\-US: 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -213,10 +213,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=説明}
+メジャーのカスタム数値フォーマット。ラベルとツールチップに自動適用されます
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+注意: カスタムフォーマットを使用するには autoFormat=false を明示的に設定する必要があります。そうしないと autoFormat がこの設定を上書きします
 
 :::
 
@@ -225,8 +225,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+数値フォーマットタイプ。数値（10進数）、パーセント（%）、パーミル（‰）、科学表記をサポート
 
 :::
 
@@ -234,14 +234,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+数値フォーマットの比率。0 にはできません
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -249,14 +249,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+数値フォーマット記号。例: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -264,8 +264,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+数値フォーマットの桁区切り
 
 :::
 
@@ -273,8 +273,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -282,8 +282,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -291,18 +291,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用し、significantDigits より優先度は低いです
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1235 に変換, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.6 に変換, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -310,20 +310,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+数値フォーマットの有効桁数。ブラウザの Intl.NumberFormat の minimumSignificantDigits と maximumSignificantDigits を使用し、fractionDigits より優先度は高いです
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1000 に変換, significantDigits:1
+\- 1234.5678 は 1200 に変換, significantDigits:2
+\- 1234.5678 は 1230 に変換, significantDigits:3
+\- 1234.5678 は 1234 に変換, significantDigits:4
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -331,14 +331,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+significantDigits と fractionDigits の両方を設定した場合の数値フォーマットの丸め優先度。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingPriority と同じ規則に従います
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1230 に変換, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -346,8 +346,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -360,8 +360,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+数値フォーマットタイプ。数値（10進数）、パーセント（%）、パーミル（‰）、科学表記をサポート
 
 :::
 
@@ -369,14 +369,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+数値フォーマットの比率。0 にはできません
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -384,14 +384,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+数値フォーマット記号。例: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -399,8 +399,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+数値フォーマットの桁区切り
 
 :::
 
@@ -408,8 +408,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -417,8 +417,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -426,18 +426,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用し、significantDigits より優先度は低いです
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1235 に変換, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.6 に変換, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -445,20 +445,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+数値フォーマットの有効桁数。ブラウザの Intl.NumberFormat の minimumSignificantDigits と maximumSignificantDigits を使用し、fractionDigits より優先度は高いです
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1000 に変換, significantDigits:1
+\- 1234.5678 は 1200 に変換, significantDigits:2
+\- 1234.5678 は 1230 に変換, significantDigits:3
+\- 1234.5678 は 1234 に変換, significantDigits:4
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -466,14 +466,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+significantDigits と fractionDigits の両方を設定した場合の数値フォーマットの丸め優先度。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingPriority と同じ規則に従います
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1230 に変換, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -481,8 +481,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -490,14 +490,14 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"tooltip" | "label" | "size" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped
+:::note{title=説明}
+メジャーをマッピングするチャネル
 
-\- size: measure mapped to the size channel, used to display area or size in charts such as treemaps
+\- size: メジャーをサイズチャネルへマッピングし、Treemap や Sunburst などのチャートで面積またはサイズを表示します。
 
-\- label: measure mapped to the label channel
+\- label: メジャーをラベルチャネルへマッピング
 
-\- tooltip: measure mapped to the tooltip channel
+\- tooltip: メジャーをツールチップチャネルへマッピング
 
 :::
 
@@ -505,13 +505,13 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=説明}
+フラットなメジャー設定形式でツリー状のメジャーグループを構築します。parentId は親メジャーグループの id を指し、メジャーツリーの構築に使用されます
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+メジャーツリーの設定方法は2つあります: 方法1は children でメジャーツリーを直接設定する方法、方法2は parentId を持つフラットなメジャーリストを設定する方法です。この2つの方法は同時に使用できません
 
 :::
 
@@ -520,12 +520,12 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration
+:::note{title=説明}
 
 
 
-Used to specify the field name for pagination; must be a dimension
+
+ページネーションに使用するフィールド名を指定します。ディメンションである必要があります
 
 :::
 
@@ -534,8 +534,8 @@ Used to specify the field name for pagination; must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=説明}
+
 
 :::
 
@@ -543,12 +543,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 '2023\-01\-01'
 
 
@@ -558,12 +558,12 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color
+:::note{title=説明}
 
 
 
-Background color can be a color string, such as 'red' or 'blue', or a hex, rgb, or rgba value, such as '#ff0000' or 'rgba(255,0,0,0.5)'
+
+背景色には 'red'、'blue' などの色文字列を指定できます。また、'#ff0000' や 'rgba(255,0,0,0.5)' のような hex、rgb、rgba も使用できます
 
 :::
 
@@ -572,12 +572,12 @@ Background color can be a color string, such as 'red' or 'blue', or a hex, rgb, 
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color
+:::note{title=説明}
+色
 
 
 
-Color configuration, used to define the chart's color scheme, including color lists, color mappings, and color gradients
+色設定。色リスト、色マッピング、色グラデーションなど、グラフの配色方案を定義します
 
 :::
 
@@ -586,12 +586,12 @@ Color configuration, used to define the chart's color scheme, including color li
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -600,12 +600,12 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -614,12 +614,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Color mapping used to map data values to specific colors
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 {
  'profit': 'red',
  'sales': 'blue',
@@ -631,8 +631,8 @@ Color mapping used to map data values to specific colors
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart
+:::note{title=説明}
+
 
 :::
 
@@ -640,8 +640,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart
+:::note{title=説明}
+
 
 :::
 
@@ -650,12 +650,12 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `Label | undefined`
 
-:::note{title=Description}
-Label
+:::note{title=説明}
+チャートデータラベルを定義するラベル設定。位置、フォーマット、スタイルを含みます。
 
 
 
-Label configuration, used to define chart data labels, including position, format, style, etc.
+ラベル設定。位置、形式、スタイルなど、グラフのデータラベルを定義します
 
 :::
 
@@ -664,8 +664,8 @@ Label configuration, used to define chart data labels, including position, forma
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled
+:::note{title=説明}
+
 
 :::
 
@@ -673,8 +673,8 @@ Whether label functionality is enabled
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line
+:::note{title=説明}
+
 
 :::
 
@@ -682,12 +682,12 @@ Whether labels wrap to the next line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values
+:::note{title=説明}
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -695,12 +695,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display the percentage of measure values
+:::note{title=説明}
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -708,12 +708,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension labels
+:::note{title=説明}
 
-Display all dimension labels
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+
+
+
 
 :::
 
@@ -721,8 +721,8 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+:::note{title=説明}
+
 
 :::
 
@@ -730,8 +730,8 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+:::note{title=説明}
+
 
 :::
 
@@ -740,8 +740,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+
 
 :::
 
@@ -749,14 +749,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
+
 
 
 
@@ -764,14 +764,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
+
 
 
 
@@ -779,8 +779,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+
 
 :::
 
@@ -788,8 +788,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+
 
 :::
 
@@ -797,8 +797,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+
 
 :::
 
@@ -806,18 +806,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1234.6 に変換, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換, fractionDigits:5 (roundingMode:halfCeil)
+
 
 
 
@@ -825,20 +825,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1200 に変換, significantDigits:2
+\- 1234.5678 は 1230 に変換, significantDigits:3
+\- 1234.5678 は 1234 に変換, significantDigits:4
+\- 1234.5678 は 1234.6 に変換, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換, significantDigits:8 (roundingMode:halfCeil)
+
 
 
 
@@ -846,14 +846,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1234.5678 に変換, significantDigits:3 (roundingPriority:morePrecision)
+
 
 
 
@@ -861,8 +861,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+
 
 :::
 
@@ -870,8 +870,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=説明}
+
 
 :::
 
@@ -879,8 +879,8 @@ Label font size
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=説明}
+
 
 :::
 
@@ -888,8 +888,8 @@ Label font weight
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label background color
+:::note{title=説明}
+
 
 :::
 
@@ -897,8 +897,8 @@ Label background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label stroke color
+:::note{title=説明}
+
 
 :::
 
@@ -906,8 +906,8 @@ Label stroke color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label font color
+:::note{title=説明}
+
 
 :::
 
@@ -915,8 +915,8 @@ Label font color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label font color automatically inverts based on the graphical element color
+:::note{title=説明}
+
 
 :::
 
@@ -924,8 +924,8 @@ Whether the label font color automatically inverts based on the graphical elemen
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-Label position
+:::note{title=説明}
+
 
 :::
 
@@ -933,8 +933,8 @@ Label position
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label anti-overlap function is enabled
+:::note{title=説明}
+
 
 :::
 
@@ -942,8 +942,8 @@ Whether the label anti-overlap function is enabled
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filtering; the default relationship between selectors is OR
+:::note{title=説明}
+
 
 :::
 
@@ -952,8 +952,8 @@ Label filtering; the default relationship between selectors is OR
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; ID of a specific dimension item
+:::note{title=説明}
+
 
 :::
 
@@ -961,12 +961,12 @@ Dimension field; ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+
+
+
 
 :::
 
@@ -974,14 +974,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+
+
+
+
 
 :::
 
@@ -989,8 +989,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select dimension field values; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -998,38 +998,38 @@ Select dimension field values; supports arrays
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution)
+:::note{title=説明}
 
 
 
-Implements complex data filtering logic via AI-generated JavaScript code
 
 
 
-Core capabilities:
-
-\- Supports arbitrarily complex data filtering conditions
-
-\- Use built-in utility functions for data manipulation
-
-\- Secure execution in the browser environment (Web Worker sandbox)
 
 
 
-Environmental requirements: Supports browser environments only; Node.js environments will use fallback
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
 
 
-Chart dynamic filter configuration
 
 
 
-Implements filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :::
 
@@ -1042,15 +1042,15 @@ Implements filtering of chart marks (bars, points, etc.) via AI-generated JavaSc
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language)
+:::note{title=説明}
+
 
 :::
 
-**Example**
-"Highlight columns with sales greater than 1000"
+**例**
+"売上が1000を超える棒をハイライト"
 
-"Highlight the column with the highest profit margin in each area"
+"各地域で利益率が最も高い棒をハイライト"
 
 
 
@@ -1058,25 +1058,25 @@ User's filtering requirement description (natural language)
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code
+:::note{title=説明}
 
 
 
-\- Only built-in utility functions can be used (accessed via _ or R)
 
-\- Input parameters: data (array), where each item includes a __row_index field representing the row number
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the row number of the original data item; field represents the field to be highlighted
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+
+
+
+
+
+
 
 :::
 
-**Example**
-Highlight the sales field of data items with sales greater than 1000
+**例**
+return _.map(filtered, item => ({
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1085,7 +1085,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each area
+const maxItems = _.map(grouped, group =>
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1099,7 +1099,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+const profitRate = item.profit / item.sales;
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1119,8 +1119,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+:::note{title=説明}
+
 
 :::
 
@@ -1129,8 +1129,8 @@ Fallback plan when code execution fails or the environment is not supported
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; ID of a specific dimension item
+:::note{title=説明}
+
 
 :::
 
@@ -1138,12 +1138,12 @@ Dimension field; ID of a specific dimension item
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+
+
+
 
 :::
 
@@ -1151,14 +1151,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
 
-\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+
+
+
+
 
 :::
 
@@ -1166,8 +1166,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Select dimension field values; supports arrays
+:::note{title=説明}
+
 
 :::
 
@@ -1175,12 +1175,12 @@ Select dimension field values; supports arrays
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
 
 
 
-Written during the prepare() phase; read-only at runtime
+
+
 
 :::
 
@@ -1202,12 +1202,12 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
-Legend
+:::note{title=説明}
 
 
 
-Legend configuration, used to define the display, position, and style of the Hierarchy Sankey chart's color legend
+
+凡例設定。階層サンキー図の色凡例の表示、位置、スタイルを定義します
 
 :::
 
@@ -1216,12 +1216,12 @@ Legend configuration, used to define the display, position, and style of the Hie
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether legend functionality is enabled
+:::note{title=説明}
+
 
 :::
 
-**Example**
+**例**
 enable: true
 
 
@@ -1230,18 +1230,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether legend border is enabled
+:::note{title=説明}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
-border: true
+**例**
+
 
 
 
@@ -1249,8 +1249,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=説明}
+
 
 :::
 
@@ -1258,8 +1258,8 @@ Legend font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon color
+:::note{title=説明}
+
 
 :::
 
@@ -1267,8 +1267,8 @@ Pager icon color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon disabled color
+:::note{title=説明}
+
 
 :::
 
@@ -1276,13 +1276,13 @@ Pager icon disabled color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Legend font size
+:::note{title=説明}
+
 
 :::
 
-**Example**
-labelFontSize: 10
+**例**
+
 
 
 
@@ -1290,8 +1290,8 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=説明}
+
 
 :::
 
@@ -1299,13 +1299,13 @@ Legend font color
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Legend font weight
+:::note{title=説明}
+
 
 :::
 
-**Example**
-labelFontWeight: 400
+**例**
+
 
 
 
@@ -1313,18 +1313,18 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-Legend shape
+:::note{title=説明}
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
-shapeType: 'circle'
+**例**
+
 
 
 
@@ -1332,13 +1332,13 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-Legend position
+:::note{title=説明}
+
 
 :::
 
-**Example**
-position: 'rightTop'
+**例**
+
 
 
 
@@ -1346,22 +1346,22 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum number of columns or rows for the legend when there are many legend items
+:::note{title=説明}
 
-If position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of displayed columns
 
-If position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of displayed rows
+
+
+
 
 :::
 
 :::warning{title=Warning}
-Only effective for discrete legends
+
 
 :::
 
-**Example**
-maxSize: 2
+**例**
+
 
 
 
@@ -1370,12 +1370,12 @@ maxSize: 2
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
-Tooltip
+:::note{title=説明}
 
 
 
-Tooltip configuration, used to define the chart's tooltips, including content, format, style, etc.
+
+ツールチップ設定。内容、形式、スタイルなど、グラフのツールチップ情報を定義します
 
 :::
 
@@ -1384,8 +1384,8 @@ Tooltip configuration, used to define the chart's tooltips, including content, f
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether tooltips are enabled
+:::note{title=説明}
+
 
 :::
 
@@ -1394,24 +1394,24 @@ Whether tooltips are enabled
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme
+:::note{title=説明}
 
 
 
-Built-in light and dark themes; users can define custom themes via the Builder
+
+light と dark の 2 つのテーマを内蔵しています。ユーザーは Builder でテーマをカスタマイズできます
 
 
 
-Theme
+const maxItems = _.map(grouped, group =>
 
 
 
-Built-in light and dark themes; new themes can be customized via registerTheme.
+_.map(maxItems, item => [
 
 :::
 
-**Example**
+**例**
 'dark'
 
 'light'
@@ -1432,11 +1432,12 @@ Built-in light and dark themes; new themes can be customized via registerTheme.
 
 **Type:** `Locale | undefined`
 
-:::note{title=Description}
-Language
+:::note{title=説明}
+言語
 
 
 
-Chart language configuration, supports 'zh\-CN' and 'en\-US'
+グラフの言語設定。'zh\-CN' と 'en\-US' の 2 つの言語をサポートします
 
 :::
+

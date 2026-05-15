@@ -24,9 +24,9 @@ export default () => {
 }
 ```
 
-## Multi-Series Radar Chart
+## 複合レーダーチャート
 
-A radar chart with multiple data series.
+複合レーダーチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -69,7 +69,7 @@ export default () => {
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     }
   ],
   "measures": [
@@ -80,12 +80,12 @@ export default () => {
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "parentId": "sales-and-profit"
     },
     {
       "id": "rateOfReturn",
-      "alias": "Return Rate",
+      "alias": "収益率",
       "parentId": "ratio"
     }
   ]
@@ -95,9 +95,9 @@ export default () => {
 }
 ```
 
-## Pivot Radar Chart
+## ピボット複合レーダーチャート
 
-A radar chart with pivot table layout.
+ピボット複合レーダーチャート
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -108,28 +108,28 @@ export default () => {
   "dimensions": [
     {
       "id": "category",
-      "alias": "Category"
+      "alias": "カテゴリ"
     },
     {
       "id": "date",
-      "alias": "Date",
+      "alias": "日付",
       "encoding": "column"
     },
     {
       "id": "region",
-      "alias": "Region",
+      "alias": "地域",
       "encoding": "row"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales",
+      "alias": "売上",
       "parentId": "group-sales"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     }
   ],
   "dataset": [

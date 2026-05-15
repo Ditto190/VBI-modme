@@ -63,9 +63,9 @@ export default () => {
 }
 ```
 
-## Standard Table
+## 基本テーブル
 
-A standard table with dimension and measure definitions.
+基本テーブル
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -123,33 +123,33 @@ export default () => {
   "measures": [
     {
       "id": "goalProfit",
-      "alias": "Profit Goal"
+      "alias": "利益目標"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     },
     {
       "id": "sales",
-      "alias": "Sales Volume"
+      "alias": "販売量"
     },
     {
       "id": "leftCount",
-      "alias": "Remaining Quantity"
+      "alias": "残数"
     },
     {
       "id": "salesCount",
-      "alias": "Sales Count"
+      "alias": "販売数"
     }
   ],
   "dimensions": [
     {
       "id": "date",
-      "alias": "Date"
+      "alias": "日付"
     },
     {
       "id": "type",
-      "alias": "Type"
+      "alias": "種類"
     }
   ]
 }
@@ -158,9 +158,9 @@ export default () => {
 }
 ```
 
-## Grouped Table
+## グループ化テーブル
 
-A table with grouped dimensions and measures for hierarchical display.
+グループ化テーブル
 
 ```tsx preview
 import { VSeedRender } from '@components'
@@ -218,37 +218,37 @@ export default () => {
   "measures": [
     {
       "id": "goalProfit",
-      "alias": "Profit Goal"
+      "alias": "利益目標"
     },
     {
       "id": "profit",
-      "alias": "Profit"
+      "alias": "利益"
     },
     {
       "id": "table",
-      "alias": "Sales Measures",
+      "alias": "販売指標",
       "children": [
         {
           "id": "countInfo",
-          "alias": "Quantity Information",
+          "alias": "数量情報",
           "children": [
             {
               "id": "leftCount",
-              "alias": "Remaining Quantity"
+              "alias": "残数"
             },
             {
               "id": "salesCount",
-              "alias": "Sales Count"
+              "alias": "販売数"
             }
           ]
         },
         {
           "id": "saleInfo",
-          "alias": "Sales Information",
+          "alias": "販売情報",
           "children": [
             {
               "id": "sales",
-              "alias": "Sales Volume"
+              "alias": "販売量"
             }
           ]
         }
@@ -258,15 +258,15 @@ export default () => {
   "dimensions": [
     {
       "id": "dimensionGroup",
-      "alias": "Dimension Group",
+      "alias": "ディメンショングループ",
       "children": [
         {
           "id": "date",
-          "alias": "Date"
+          "alias": "日付"
         },
         {
           "id": "type",
-          "alias": "Type"
+          "alias": "種類"
         }
       ]
     }
@@ -307,17 +307,17 @@ export default () => {
   "dimensions": [
     {
       "id": "product",
-      "alias": "Product Name"
+      "alias": "商品名"
     }
   ],
   "measures": [
     {
       "id": "sales",
-      "alias": "Sales"
+      "alias": "売上"
     },
     {
       "id": "profit",
-      "alias": "Profit",
+      "alias": "利益",
       "numFormat": {
         "type": "number",
         "fractionDigits": 1

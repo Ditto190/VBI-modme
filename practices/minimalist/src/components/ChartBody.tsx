@@ -1,7 +1,7 @@
 import { Empty, Spin } from 'antd'
 import { useMemo } from 'react'
 import { VSeedRender } from 'src/components/Render'
-import type { MinimalLabels } from 'src/config/labels'
+import type { MinimalLabels } from 'src/i18n'
 import { useVBIStore, useVBIStoreConfig } from 'src/model'
 
 export const ChartBody = ({ labels }: { labels: MinimalLabels }) => {

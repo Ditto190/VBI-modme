@@ -1,42 +1,42 @@
 ---
-title: Publish
+title: 릴리스
 ---
 
 
-# Publish
+# 릴리스
 
-## Generate Changeset
+## changeset 생성
 
-To generate new changesets, please run `pnpm changeset` in the root directory of the repository. The resulting markdown files generated in the `.changeset` directory should be committed to the repository.
+새 changeset을 생성하려면 repository 루트 디렉터리에서 `pnpm changeset`을 실행하세요. `.changeset` 디렉터리에 생성된 markdown 파일은 repository에 커밋해야 합니다.
 ```bash
 pnpm changeset
 ```
 
-After generating the changeset, perform a `git commit`:
+changeset을 생성한 뒤 `git commit`을 실행합니다:
 ```bash
 git add .
 git commit -m "chore: commit message"
 ```
 
-The above process can be repeated multiple times. The content of each changeset will be accumulated in the final version publish.
+위 과정은 여러 번 반복할 수 있습니다. 각 changeset의 내용은 최종 버전 릴리스에 누적됩니다.
 
-## Update Version
+## 버전 업데이트
 
-Run the following command to update the version and the ChangeLog.
+다음 명령을 실행해 버전을 업데이트하고 ChangeLog를 갱신합니다.
 ```bash
 pnpm changeset version
 ```
 
-Update dependencies and the lock file:
+의존성과 lock file을 업데이트합니다:
 ```bash
 pnpm install
 ```
 
-Commit changes:
+변경 사항을 커밋합니다:
 ```bash
 git add .
 git commit -m "chore: release message"
 git push
 ```
 
-After the PR is merged into the `main` branch, the changesets workflow will be triggered automatically to perform the packaging and publishing task.
+PR이 `main` 브랜치에 병합되면 changesets workflow가 자동으로 트리거되어 패키징과 릴리스 작업을 수행합니다.

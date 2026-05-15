@@ -14,5 +14,5 @@ hero:
       link: https://github.com/visactor/vbi
   image:
     src: /logo.svg
-    alt: VBI Logo
+    alt: Github
 ---
