@@ -4,7 +4,7 @@
   "version": "0.1.48",
   "type": "module",
   "scripts": {
-    "build": "RSPRESS_SSG_WORKER_THREAD_COUNT=4 RSPRESS_SSG_WORKER_THREAD_TASK_SIZE=5 rspress build",
+    "build": "RSPRESS_SSG_CONCURRENCY=2 rspress build",
     "dev": "rspress dev",
     "format": "oxfmt .",
     "lint": "oxlint .",

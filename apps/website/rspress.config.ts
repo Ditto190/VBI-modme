@@ -69,9 +69,6 @@ export default defineConfig({
   base: '/VBI/',
   globalStyles: path.join(__dirname, 'components/styles/index.css'),
   llms: false,
-  ssg: {
-    experimentalWorker: true,
-  },
   plugins: [
     pluginPreview(),
     pluginPlayground({
