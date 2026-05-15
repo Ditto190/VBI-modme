@@ -1236,7 +1236,7 @@ Theme sáng và tối tích hợp; theme mới có thể tùy chỉnh qua regist
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Mô tả}
 Ngôn ngữ

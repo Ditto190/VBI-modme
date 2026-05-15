@@ -643,7 +643,11 @@ Positive/negative color configuration; defines the color for negative values in 
 **Type:** `Label | undefined`
 
 :::note{title=Description}
-Heatmap Chart label configuration. Used to define data labels; automatically enables label inversion to ensure readability against background colors.
+Label
+
+
+
+Label configuration for defining chart data labels, including their position, format, and style.
 
 :::
 
@@ -653,7 +657,7 @@ Heatmap Chart label configuration. Used to define data labels; automatically ena
 **Type:** `false | true`
 
 :::note{title=Description}
-Whether label functionality is enabled.
+Whether label functionality is enabled
 
 :::
 
@@ -662,7 +666,7 @@ Whether label functionality is enabled.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels wrap to the next line.
+Whether labels wrap to the next line
 
 :::
 
@@ -671,11 +675,11 @@ Whether labels wrap to the next line.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels display measure values.
+Whether labels display measure values
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
+In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+Note: encoding's label has higher priority; this config does not affect encoding's label
 
 :::
 
@@ -684,11 +688,11 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels display measure value percentages.
+Whether labels display measure values in percentage
 
-In multi-measure scenarios, there is no concern about conflicting values because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point.
+In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+Note: encoding's label has higher priority; this config does not affect encoding's label
 
 :::
 
@@ -697,11 +701,11 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether labels display dimension names.
+Whether labels display dimension labels
 
-Displays all dimension labels.
+Display all dimension labels
 
-Note: Encoding labels have higher priority; this config does not affect encoding labels.
+Note: encoding's label has higher priority; this config does not affect encoding's label
 
 :::
 
@@ -710,7 +714,7 @@ Note: Encoding labels have higher priority; this config does not affect encoding
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether label values are automatically formatted. When autoFormat is true, numFormat configuration is ignored.
+Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
 
 :::
 
@@ -719,7 +723,7 @@ Whether label values are automatically formatted. When autoFormat is true, numFo
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
 
 :::
 
@@ -743,8 +747,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -753,13 +757,13 @@ Number format ratio, cannot be 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format symbol, e.g., %, ‰
+Number format symbol, e.g. %, ‰
 
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -795,17 +799,17 @@ Number format prefix
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
 
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -814,19 +818,19 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits.
+Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1000, significantDigits:1
+\- 1234.5678 converts to 1200, significantDigits:2
+\- 1234.5678 converts to 1230, significantDigits:3
+\- 1234.5678 converts to 1234, significantDigits:4
+\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -835,13 +839,13 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority.
+Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
 
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -850,7 +854,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode.
+Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
 
 :::
 
@@ -859,7 +863,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Label font size.
+Label font size
 
 :::
 
@@ -868,7 +872,7 @@ Label font size.
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Label font weight.
+Label font weight
 
 :::
 
@@ -877,7 +881,7 @@ Label font weight.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label background color.
+Label background color
 
 :::
 
@@ -886,7 +890,7 @@ Label background color.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label stroke (outline) color.
+Label stroke color
 
 :::
 
@@ -895,7 +899,7 @@ Label stroke (outline) color.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label font color.
+Label font color
 
 :::
 
@@ -904,7 +908,7 @@ Label font color.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to automatically invert the label font color based on the graphic element color.
+Whether the label automatically inverts font color based on element color
 
 :::
 
@@ -913,7 +917,7 @@ Whether to automatically invert the label font color based on the graphic elemen
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Description}
-Label position.
+label position
 
 :::
 
@@ -922,7 +926,7 @@ Label position.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the label overlap avoidance function is enabled.
+Whether the label anti-overlap function is enabled
 
 :::
 
@@ -931,7 +935,7 @@ Whether the label overlap avoidance function is enabled.
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Label filtering; the default condition relationship between selectors is OR.
+Label filtering, default relationship between selectors is 'Or'
 
 :::
 
@@ -941,7 +945,7 @@ Label filtering; the default condition relationship between selectors is OR.
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field ID.
+Dimension field, the ID of a dimension item
 
 :::
 
@@ -950,11 +954,11 @@ Dimension field ID.
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator:
+Operator
 
-- in: Select data items where the dimension field value is in the 'value' list.
+\- in: Select data items where the dimension field value is in 'value'
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+\- not in: Select data items where the dimension field value is not in 'value'
 
 :::
 
@@ -963,13 +967,13 @@ Operator:
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator:
+Operator
 
-- in: Select data items where the dimension field value is in the 'value' list.
+\- in: Select data items where the dimension field value is in 'value'
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+\- not in: Select data items where the dimension field value is not in 'value'
 
-Same as operator.
+same as operator
 
 :::
 
@@ -978,7 +982,7 @@ Same as operator.
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Selective dimension values; supports arrays.
+Select data items based on dimension values, supports arrays
 
 :::
 
@@ -987,25 +991,25 @@ Selective dimension values; supports arrays.
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution).
+Dynamic filter (AI-generated code execution)
 
-Implement complex data filtering logic via AI-generated JavaScript code.
+Implement complex data filtering logic via AI-generated JavaScript code
 
-Key capabilities:
+Key Capabilities:
 
-- Supports any complex data filtering conditions.
+\- Supports any complex data filtering conditions
 
-- Uses built-in utility functions for data operations.
+\- Use built-in utility functions for data manipulation
 
-- Executes safely in the browser environment (Web Worker sandbox).
+\- Secure execution in browser environment (Web Worker sandbox)
 
-Requirements: Supports only browser environments; Node.js environments will use the fallback.
+Environment requirements: Only supports browser environment; Node.js environment will use fallback
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
-Configuration for the chart dynamic filter.
+Chart dynamic filter configuration
 
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+Filter chart markers (bars, points, etc.) via AI-generated JavaScript code
 
 :::
 
@@ -1019,14 +1023,14 @@ Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language).
+User requirement description (natural language)
 
 :::
 
 **Example**
-"Highlight sales columns greater than 1000."
+"Highlight columns with sales greater than 1000"
 
-"Highlight the column with the highest profit margin in each region."
+"Highlight the column with the highest profit margin in each region"
 
 
 
@@ -1035,22 +1039,22 @@ User's filtering requirement description (natural language).
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code.
+AI-generated JavaScript filtering code
 
-- Can only use built-in utility functions (access via _ or R).
+\- Only built-in utility functions (accessible via _ or R) are allowed
 
-- Input parameter: data (array); each item includes a __row_index field representing the row number.
+\- Input parameters: data (array), each item contains a __row_index field representing the row number
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>.
+\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-- __row_index represents the row number of the original data item, and field represents the field to be highlighted.
+\- __row_index represents the original row number; field represents the field to highlight
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests.
+\- Forbidden to use: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
 **Example**
-Highlight 'sales' field for data items where sales > 1000:
+Highlight the 'sales' field for data items with sales greater than 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1059,7 +1063,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region:
+Highlight the data item with the highest profit margin in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1073,7 +1077,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items meeting multiple filtering conditions:
+Highlight data items filtered by multiple conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1094,7 +1098,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+Fallback plan when code execution fails or environment is not supported
 
 :::
 
@@ -1103,24 +1107,56 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
+:::note{title=Description}
+Dimension field, the ID of a dimension item
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the dimension field value is in 'value'
+
+\- not in: Select data items where the dimension field value is not in 'value'
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the dimension field value is in 'value'
+
+\- not in: Select data items where the dimension field value is not in 'value'
+
+same as operator
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Select data items based on dimension values, supports arrays
+
+:::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution result (runtime field). Written during the prepare() phase; read-only at runtime.
+Dynamic filter execution results (runtime field)
+
+Populated during the prepare() stage, read-only at runtime
 
 :::
 
@@ -1416,7 +1452,7 @@ Light and dark themes are built-in; users can define custom themes via the Build
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call intl.setLocale('zh-CN') to set the language.

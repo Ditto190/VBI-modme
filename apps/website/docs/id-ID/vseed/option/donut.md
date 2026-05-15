@@ -1451,11 +1451,9 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1476,9 +1474,7 @@ Opasitas of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1579,7 +1575,6 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1650,7 +1645,6 @@ Efek animasi masuk diagram pai/donat/rose, mendukung animasi radial dan zoom
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
 :::
 
@@ -1705,7 +1699,6 @@ Efek pembaruan diagram pai/donat/rose, mendukung animasi radial
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
 :::
 
@@ -1742,7 +1735,6 @@ Konfigurasi animasi loop diagram pai/donat/rose
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1788,7 +1780,6 @@ Efek loop diagram pai/donat/rose
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1881,7 +1872,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Bahasa
@@ -1891,4 +1882,3 @@ Bahasa
 Konfigurasi bahasa chart, mendukung dua bahasa 'zh\-CN' dan 'en\-US'; selain itu bahasa dapat diatur dengan memanggil metode intl.setLocale('zh\-CN')
 
 :::
-

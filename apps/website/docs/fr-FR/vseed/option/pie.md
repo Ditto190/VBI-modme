@@ -1451,11 +1451,9 @@ Mode de selection par brush : simple ou multiple
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1476,9 +1474,7 @@ Opacité of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1579,7 +1575,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1650,7 +1645,6 @@ Effet d’entrée des graphiques en secteurs/en anneau/en rose, avec prise en ch
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
 :::
 
@@ -1705,7 +1699,6 @@ Effet de mise à jour des graphiques en secteurs/en anneau/en rose, avec prise e
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
 :::
 
@@ -1742,7 +1735,6 @@ Configuration de l’animation en boucle des graphiques en secteurs/en anneau/en
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1788,7 +1780,6 @@ Effet de boucle des graphiques en secteurs/en anneau/en rose
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1881,7 +1872,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Langue
@@ -1891,4 +1882,3 @@ Langue
 Configuration de la langue du graphique, prenant en charge 'zh\-CN' et 'en\-US'. Il est aussi possible d’appeler intl.setLocale('zh\-CN') pour définir la langue
 
 :::
-

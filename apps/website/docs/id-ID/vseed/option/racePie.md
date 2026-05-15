@@ -208,7 +208,6 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -250,7 +249,6 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -343,7 +341,6 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -385,7 +382,6 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -670,7 +666,6 @@ Warna tombol maju pemutar
 **Type:** `BackgroundColor`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -864,7 +859,6 @@ Konfigurasi label
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -906,7 +900,6 @@ Konfigurasi label
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1063,7 +1056,6 @@ or
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1076,7 +1068,6 @@ or
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1170,7 +1161,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1240,7 +1230,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1253,7 +1242,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1524,11 +1512,9 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1549,9 +1535,7 @@ Opasitas of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1607,7 +1591,6 @@ Opasitas of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1652,7 +1635,6 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1686,10 +1668,9 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Konfigurasi bahasa
 
 :::
-

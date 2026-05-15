@@ -357,6 +357,12 @@ Once registered, Builder supports building Rose Parallel Chart Spec and Advanced
 function registerRoseParallel(): void
 ```
 
+### registerSankey
+
+```ts
+function registerSankey(): void
+```
+
 ### registerScatter
 
 :::note{title=Description}

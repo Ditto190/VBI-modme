@@ -357,6 +357,12 @@ Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced 
 function registerRoseParallel(): void
 ```
 
+### registerSankey
+
+```ts
+function registerSankey(): void
+```
+
 ### registerScatter
 
 :::note{title=Beschreibung}
@@ -400,4 +406,3 @@ Nach der Registrierung unterstützt Builder das Erstellen von Spec und Advanced 
 ```ts
 function registerTreeMap(): void
 ```
-

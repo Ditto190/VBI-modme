@@ -1451,11 +1451,9 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1476,9 +1474,7 @@ Deckkraft of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1579,7 +1575,6 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1650,7 +1645,6 @@ Eingangseffekte für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale und Skal
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
 :::
 
@@ -1705,7 +1699,6 @@ Aktualisierungseffekt für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale An
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
 :::
 
@@ -1742,7 +1735,6 @@ Konfiguration der Schleifenanimation für Kreis-/Donut-/Rose-Diagramme
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1788,7 +1780,6 @@ Schleifeneffekt für Kreis-/Donut-/Rose-Diagramme
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1881,7 +1872,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprache
@@ -1891,4 +1882,3 @@ Sprache
 Sprachkonfiguration des Diagramms; unterstützt die beiden Sprachen 'zh\-CN' und 'en\-US'. Zusätzlich kann die Sprache über intl.setLocale('zh\-CN') gesetzt werden
 
 :::
-

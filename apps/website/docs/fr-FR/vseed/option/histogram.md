@@ -1369,11 +1369,9 @@ Mode de selection par brush : simple ou multiple
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1394,9 +1392,7 @@ Opacité of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1497,7 +1493,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1647,7 +1642,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1656,7 +1650,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -1665,7 +1658,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1674,7 +1666,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1684,7 +1675,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 est converti en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1693,7 +1683,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -1701,9 +1690,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 est converti en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -1895,7 +1882,6 @@ Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::
 
@@ -1972,7 +1958,6 @@ Mode d'arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -2011,7 +1996,6 @@ Mode d'arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2126,7 +2110,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2168,7 +2151,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2306,7 +2288,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string[] | undefined`
 
 :::
 
@@ -2343,7 +2324,6 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `brand`
 
 :::
 
@@ -2416,7 +2396,6 @@ sort order, optional values 'asc' or 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | number | undefined`
 
 :::
 
@@ -2639,7 +2618,6 @@ Indique si le primitive barre (rectangle) est visible
 
 
 
-**Type:** `string | undefined`
 
 :::
 
@@ -2653,20 +2631,15 @@ Indique si le primitive barre (rectangle) est visible
 
 
 
-**Type:** `string | undefined`
 
-**Type:** `boolean | undefined`
 
 :::
 
 **Exemple**
 Couleur du trace du primitive barre (rectangle)
 
-**Type:** `number | undefined`
 
-**Type:** `string | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -2713,7 +2686,6 @@ value: [100, 300]
 :::note{title=Description}
 
 
-**Type:** `number | number[] | undefined`
 
 
 
@@ -2728,7 +2700,6 @@ value: [100, 300]
 
 
 
-**Type:** `Selector | Selectors | undefined`
 
 4
 
@@ -2760,7 +2731,6 @@ value: [100, 300]
 
 
 
-**Type:** `"in" | "not in" | undefined`
 
 \- not in : selectionne les elements de donnees dont la valeur du champ de dimension n est PAS dans la liste de valeurs.
 
@@ -2907,7 +2877,6 @@ const profitRate = item.profit / item.sales;
 
 
 
-**Type:** `Selector | Selectors | undefined`
 
 );
 
@@ -2989,7 +2958,6 @@ const profitRate = item.profit / item.sales;
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | string[] | undefined`
 
 :::
 
@@ -3003,7 +2971,6 @@ const profitRate = item.profit / item.sales;
 :::
 
 **Exemple**
-**Type:** `string | undefined`
 
 
 
@@ -3089,7 +3056,6 @@ top : le texte est en bas du point d annotation ; le bord superieur du texte est
 
 
 
-**Type:** `boolean | undefined`
 
 :::
 
@@ -3249,7 +3215,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"value"`
 
 :::
 
@@ -3321,7 +3286,6 @@ Calculer la moyenne pour la ligne d annotation
 **Type:** `string | string[] | undefined`
 
 :::note{title=Description}
-**Type:** `string | number | undefined`
 
 :::
 
@@ -3491,7 +3455,6 @@ top : le texte est sous la ligne de reference, avec son bord superieur aligne su
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -3505,7 +3468,6 @@ top : le texte est sous la ligne de reference, avec son bord superieur aligne su
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 **Exemple**
 
@@ -3514,7 +3476,6 @@ top : le texte est sous la ligne de reference, avec son bord superieur aligne su
 :::
 
 **Exemple**
-**Type:** `number | undefined`
 
 
 
@@ -3567,7 +3528,6 @@ Ligne de repère numérique (valeur d’intervalle), affichée verticalement, pe
 
 
 
-**Type:** `string | number | (string | number)[] | undefined`
 
 
 
@@ -3731,7 +3691,6 @@ const index = Math.floor(sorted.length * 0.75);
 :::
 
 **Exemple**
-**Type:** `false | true`
 
 
 
@@ -4008,9 +3967,7 @@ Opérateur
 
 'red'
 
-**Type:** `"in" | "not in" | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4146,7 +4103,6 @@ Alignement vertical du texte ; generalement defini sur 'top' pour que le texte a
 :::
 
 **Exemple**
-**Type:** `boolean | undefined`
 
 
 
@@ -4420,7 +4376,6 @@ Couleur de la zone d annotation
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -4570,7 +4525,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4709,7 +4663,6 @@ Couleur de la zone de repère
 :::
 
 **Exemple**
-**Type:** `boolean | undefined`
 
 
 
@@ -5000,10 +4953,9 @@ Indique s’il faut afficher l’étiquette correspondant au crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Configuration de la langue du graphique, prenant en charge 'zh\-CN' et 'en\-US'. Il est aussi possible d’appeler intl.setLocale('zh\-CN') pour définir la langue
 
 :::
-

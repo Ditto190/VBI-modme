@@ -6534,10 +6534,9 @@ crosshair에 해당하는 레이블을 표시할지 여부
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=설명}
 Internationalization configuration. Chart language configuration supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
 
 :::
-

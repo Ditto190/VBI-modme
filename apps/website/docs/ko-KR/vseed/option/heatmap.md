@@ -1103,17 +1103,47 @@ _.map(filtered, item => [
 
 **Type:** `string`
 
+:::note{title=설명}
+차원 필드, dimensions 중 하나의 항목 id입니다.
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=설명}
+연산자
+
+\- in: 데이터 항목의 차원 필드 값이 value 안에 있는 데이터 항목을 선택합니다
+
+\- not in: 데이터 항목의 차원 필드 값이 value 안에 없는 데이터 항목을 선택합니다
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=설명}
+연산자
+
+\- in: 데이터 항목의 차원 필드 값이 value 안에 있는 데이터 항목을 선택합니다
+
+\- not in: 데이터 항목의 차원 필드 값이 value 안에 없는 데이터 항목을 선택합니다
+
+same as operator
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=설명}
+차원 필드 값을 기준으로 데이터 항목을 선택하며, 배열을 지원합니다.
+
+:::
 
 #### result
 
@@ -1416,7 +1446,7 @@ labelFontWeight: 400
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=설명}
 Locale. 차트 언어 설정. 'zh-CN' 및 'en-US'를 지원합니다. 또는 intl.setLocale('zh-CN')을 호출하여 언어를 설정할 수 있습니다.

@@ -265,7 +265,6 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -307,7 +306,6 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -400,7 +398,6 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -442,7 +439,6 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -814,7 +810,6 @@ Label configuration, used to define data label position, format, style, and rela
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -856,7 +851,6 @@ Label configuration, used to define data label position, format, style, and rela
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1013,7 +1007,6 @@ or
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1026,7 +1019,6 @@ or
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1120,7 +1112,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1190,7 +1181,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1203,7 +1193,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -1471,11 +1460,9 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1496,9 +1483,7 @@ Opasitas of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1554,7 +1539,6 @@ Opasitas of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1599,7 +1583,6 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1887,7 +1870,6 @@ Numeric axis. X-axis configuration used to define position, format, style, and r
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2002,7 +1984,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2044,7 +2025,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2182,7 +2162,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2265,7 +2244,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2352,7 +2330,6 @@ Mendukung gaya global atau konfigurasi gaya bersyarat.
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2385,7 +2362,6 @@ Numeric axis. Y-axis configuration used to define position, format, style, and r
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2500,7 +2476,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2542,7 +2517,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2680,7 +2654,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2763,7 +2736,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2850,7 +2822,6 @@ Mendukung gaya global atau konfigurasi gaya bersyarat.
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2983,7 +2954,6 @@ Supports global style or conditional style configuration
 
 Filter data
 
-**Type:** `string | undefined`
 
 
 
@@ -2999,7 +2969,6 @@ Filter data
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -3059,7 +3028,6 @@ value: [100, 300]
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3072,7 +3040,6 @@ value: [100, 300]
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3168,7 +3135,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3238,7 +3204,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3251,7 +3216,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3431,7 +3395,6 @@ Annotation point configuration. Defines chart annotation points based on selecte
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3444,7 +3407,6 @@ Annotation point configuration. Defines chart annotation points based on selecte
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3549,7 +3511,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3619,7 +3580,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3632,7 +3592,6 @@ _.map(filtered, item => [
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -3742,7 +3701,6 @@ Warna teks
 
 Ukuran font teks.
 
-**Type:** `string | string[] | undefined`
 
 **Contoh**
 
@@ -3794,7 +3752,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -3884,7 +3841,6 @@ true
 :::note{title=Deskripsi}
 Warna latar belakang.
 
-**Type:** `number | undefined`
 
 **Contoh**
 
@@ -3974,9 +3930,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4123,7 +4077,6 @@ center: Teks berada di tengah area anotasi.
 
 Warna teks.
 
-**Type:** `number | undefined`
 
 **Contoh**
 
@@ -4231,7 +4184,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -4375,9 +4327,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4580,7 +4530,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -4778,7 +4727,6 @@ Apakah mengaktifkan fungsi linkage dimensi ketika chart mengaktifkan perspektif 
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -4791,7 +4739,6 @@ Apakah mengaktifkan fungsi linkage dimensi ketika chart mengaktifkan perspektif 
 :::note{title=Deskripsi}
 **Contoh**
 
-**Type:** `number | undefined`
 
 
 
@@ -4941,7 +4888,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -5828,7 +5774,7 @@ Apakah menampilkan label yang sesuai dengan crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Bahasa

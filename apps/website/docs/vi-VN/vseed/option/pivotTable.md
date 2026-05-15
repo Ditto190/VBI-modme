@@ -1302,7 +1302,7 @@ Theme sáng và tối được tích hợp; người dùng có thể định ngh
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Mô tả}
 Locale. Cấu hình ngôn ngữ biểu đồ; hỗ trợ 'zh-CN' và 'en-US'. Hoặc gọi `intl.setLocale('zh-CN')` để đặt ngôn ngữ.

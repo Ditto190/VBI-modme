@@ -283,7 +283,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -292,7 +291,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -301,7 +299,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -310,7 +307,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -320,7 +316,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -329,7 +324,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -337,9 +331,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -418,7 +410,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -427,7 +418,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -436,7 +426,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -445,7 +434,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -455,7 +443,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -464,7 +451,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -472,9 +458,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -796,7 +780,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -805,7 +788,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number | undefined`
 
 :::
 
@@ -814,7 +796,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -823,7 +804,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -833,7 +813,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -842,7 +821,6 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -850,9 +828,7 @@ Longueur maximale pour la limitation des étiquettes. Lorsque la longueur du tex
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -980,7 +956,6 @@ Selection d etiquette ; les conditions entre selecteurs sont OR par defaut.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -993,7 +968,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1087,7 +1061,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1157,7 +1130,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1170,7 +1142,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1438,11 +1409,9 @@ Brush selection configuration, used to enable or disable brush selection.
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1463,9 +1432,7 @@ Brush selection configuration, used to enable or disable brush selection.
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -1521,7 +1488,6 @@ Definit le style des points de donnees hors de la selection.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1566,7 +1532,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1831,7 +1796,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -1847,7 +1811,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -1907,7 +1870,6 @@ value: [100, 300]
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -1920,7 +1882,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2016,7 +1977,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -2086,7 +2046,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2099,7 +2058,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2250,7 +2208,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -2266,7 +2223,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2326,7 +2282,6 @@ value: [100, 300]
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2339,7 +2294,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2435,7 +2389,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -2505,7 +2458,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2518,7 +2470,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2632,7 +2583,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -2648,7 +2598,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2708,7 +2657,6 @@ value: [100, 300]
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2721,7 +2669,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2817,7 +2764,6 @@ Decalage horizontal du point d annotation en pixels. Lorsque le point est a gauc
 
 Une valeur negative decale tout le composant vers la gauche (par exemple, -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -2887,7 +2833,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2900,7 +2845,6 @@ Indique si les etiquettes correspondant au crosshair sont affichees.
 :::note{title=Description}
 Indique si les etiquettes correspondant au crosshair sont affichees.
 
-**Type:** `number | undefined`
 
 
 
@@ -2985,7 +2929,7 @@ Area mark color opacity
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Langue
@@ -2995,4 +2939,3 @@ Langue
 Chart language configuration. Supports 'zh\-CN' and 'en\-US'. You can also call intl.setLocale('zh\-CN') to set the language.
 
 :::
-

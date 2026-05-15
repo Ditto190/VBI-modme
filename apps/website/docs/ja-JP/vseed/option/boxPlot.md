@@ -4620,6 +4620,15 @@ Annotation area padding
 **Type:** `DimensionLinkage | undefined`
 
 :::note{title=Description}
+チャートでピボット機能またはメジャーの組み合わせが有効な場合に、ディメンション連動を有効にするかどうか。
+
+特定のディメンション値に hover したとき、他のチャート内の同じディメンション値のデータを連動してハイライトします。
+
+
+
+ピボットチャートのディメンション連動設定
+
+:::
 
 
 ### enable
@@ -4652,7 +4661,7 @@ Whether to display the crosshair label
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, methods like intl.setLocale('zh-CN') can be used to set the language.

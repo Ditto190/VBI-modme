@@ -975,7 +975,6 @@ Label filtering; the default relationship between selectors is OR
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -988,7 +987,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1001,7 +999,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -1012,7 +1009,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -1072,7 +1068,6 @@ Chart dynamic filter configuration
 **Example**
 "Highlight data items with sales greater than 1000"
 
-**Type:** `string`
 
 
 
@@ -1152,7 +1147,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1165,7 +1159,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1178,7 +1171,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -1189,7 +1181,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -1485,7 +1476,6 @@ Whether brush selection is enabled
 
 \- `polygon`: polygon brush selection, draws an arbitrary polygon by clicking multiple points
 
-**Type:** `"single" | "multiple" | undefined`
 
 \- `y`: Y-axis brush selection, only constrained in the Y-axis direction
 
@@ -1502,7 +1492,6 @@ Whether brush selection is enabled
 
 Defines the brush selection mode
 
-**Type:** `boolean | undefined`
 
 \- `multiple`: multiple selection mode; multiple brush areas can exist at the same time
 
@@ -1891,7 +1880,6 @@ Category axis. X-axis configuration used to define position, format, style, and 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1940,7 +1928,6 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `CrosshairRect | undefined`
 
 :::
 
@@ -2050,7 +2037,6 @@ Label font weight
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2133,7 +2119,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2220,7 +2205,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2253,7 +2237,6 @@ Numeric axis. Y-axis configuration used to define position, format, style, and r
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2548,7 +2531,6 @@ Label font weight
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2631,7 +2613,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -2718,7 +2699,6 @@ Prend en charge les styles globaux ou les configurations de style conditionnelle
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2989,7 +2969,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -3005,7 +2984,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -3054,7 +3032,6 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3067,7 +3044,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3080,7 +3056,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -3091,7 +3066,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -3153,7 +3127,6 @@ Chart dynamic filter configuration
 **Example**
 "Highlight data items with sales greater than 1000"
 
-**Type:** `string`
 
 
 
@@ -3233,7 +3206,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3246,7 +3218,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3259,7 +3230,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -3270,7 +3240,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -3412,7 +3381,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -3428,7 +3396,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -3477,7 +3444,6 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3490,7 +3456,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3503,7 +3468,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -3514,7 +3478,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -3576,7 +3539,6 @@ Chart dynamic filter configuration
 **Example**
 "Highlight data items with sales greater than 1000"
 
-**Type:** `string`
 
 
 
@@ -3656,7 +3618,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3669,7 +3630,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3682,7 +3642,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -3693,7 +3652,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -3798,7 +3756,6 @@ Supports global style or conditional style configuration
 
 Filtre de donnees
 
-**Type:** `string | undefined`
 
 
 
@@ -3814,7 +3771,6 @@ Filtre de donnees
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -3863,7 +3819,6 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3876,7 +3831,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -3889,7 +3843,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -3900,7 +3853,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -3962,7 +3914,6 @@ Chart dynamic filter configuration
 **Example**
 "Highlight data items with sales greater than 1000"
 
-**Type:** `string`
 
 
 
@@ -4042,7 +3993,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -4055,7 +4005,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -4068,7 +4017,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -4079,7 +4027,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -4178,7 +4125,6 @@ Annotation point configuration. Defines chart annotation points based on selecte
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -4191,7 +4137,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -4204,7 +4149,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -4215,7 +4159,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -4286,7 +4229,6 @@ Chart dynamic filter configuration
 **Example**
 "Highlight data items with sales greater than 1000"
 
-**Type:** `string`
 
 
 
@@ -4366,7 +4308,6 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -4379,7 +4320,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -4392,7 +4332,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -4403,7 +4342,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -4500,7 +4438,6 @@ same as operator
 
 Taille de police du texte.
 
-**Type:** `string | string[] | undefined`
 
 **Exemple**
 
@@ -4552,7 +4489,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -4642,7 +4578,6 @@ true
 :::note{title=Description}
 Couleur d arriere-plan.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -4728,7 +4663,6 @@ Dynamic filter (AI-generated code execution)
 
 
 
-**Type:** `boolean | undefined`
 
 \- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
@@ -4877,7 +4811,6 @@ center : le texte est centre dans la zone d annotation.
 
 Couleur du texte.
 
-**Type:** `number | undefined`
 
 **Exemple**
 
@@ -4985,7 +4918,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -5125,7 +5057,6 @@ Dynamic filter (AI-generated code execution)
 
 
 
-**Type:** `boolean | undefined`
 
 \- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
@@ -5330,7 +5261,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -5517,7 +5447,6 @@ Indique si la fonction de liaison de dimension est activee lorsque la perspectiv
 **Type:** `string`
 
 :::note{title=Description}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -5530,7 +5459,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -5543,7 +5471,6 @@ same as operator
 
 \- in: Select data items whose dimension field value is within the specified value
 
-**Type:** `"in" | "not in" | undefined`
 
 same as operator
 
@@ -5554,7 +5481,6 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::
 
@@ -5691,7 +5617,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -5909,7 +5834,7 @@ Indique s’il faut afficher l’étiquette correspondant au crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language
@@ -5919,4 +5844,3 @@ Language
 Configuration de la langue du graphique, prend en charge 'zh-CN' et 'en-US'. Il est aussi possible d'appeler intl.setLocale('zh-CN') pour definir la langue
 
 :::
-

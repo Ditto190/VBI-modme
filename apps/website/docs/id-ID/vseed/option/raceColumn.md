@@ -686,7 +686,6 @@ Konfigurasi Filter Dinamis chart.
 **Type:** `"asc" | "desc" | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1598,11 +1597,9 @@ Konfigurasi brush, digunakan untuk mendukung interaksi brush
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1623,9 +1620,7 @@ Konfigurasi brush, digunakan untuk mendukung interaksi brush
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -1726,7 +1721,6 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1786,7 +1780,6 @@ Apakah sumbu terlihat.
 
 Sumbu Y, sumbu numerik, konfigurasi sumbu Y; mendefinisikan sumbu Y chart, termasuk posisi, format, gaya, dll.
 
-**Type:** `string | undefined`
 
 :::
 
@@ -1859,7 +1852,6 @@ Sumbu Y, sumbu numerik, konfigurasi sumbu Y; mendefinisikan sumbu Y chart, terma
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1868,7 +1860,6 @@ Sumbu Y, sumbu numerik, konfigurasi sumbu Y; mendefinisikan sumbu Y chart, terma
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1997,7 +1988,6 @@ Sumbu Y, sumbu numerik, konfigurasi sumbu Y; mendefinisikan sumbu Y chart, terma
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2038,7 +2028,6 @@ Label tick sumbu X
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -2047,7 +2036,6 @@ Label tick sumbu X
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2056,7 +2044,6 @@ Label tick sumbu X
 **Type:** `number[] | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2104,7 +2091,6 @@ Konfigurasi sumbu Y, sebagai sumbu numerik untuk menampilkan nilai metrik
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2219,7 +2205,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2261,7 +2246,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2399,7 +2383,6 @@ Tinggi maksimum persegi panjang; dapat berupa nilai piksel atau string persentas
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2482,7 +2465,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -2569,7 +2551,6 @@ Mendukung gaya global atau konfigurasi gaya bersyarat.
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2620,7 +2601,6 @@ operator: 'between'
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string`
 
 :::
 
@@ -2629,7 +2609,6 @@ operator: 'between'
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -2770,7 +2749,6 @@ Konfigurasi gaya kolom, dapat berupa satu gaya atau array
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2779,33 +2757,27 @@ Konfigurasi gaya kolom, dapat berupa satu gaya atau array
 **Contoh**
 Warna stroke primitive bar (persegi panjang)
 
-**Type:** `number | undefined`
 
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 
 Hasil eksekusi filter dinamis (field runtime)
 
 
 
-**Type:** `string | undefined`
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-**Type:** `string | undefined`
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
 
-**Type:** `string | undefined`
 field: 'profit',
 operator: '>=',
 value: 100
 }
-**Type:** `string | undefined`
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -2843,9 +2815,7 @@ value: [100, 300]
 :::note{title=Deskripsi}
 
 
-**Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-**Type:** `Selector | Selectors | undefined`
 
 
 
@@ -2885,7 +2855,6 @@ Operator
 
 
 
-**Type:** `"in" | "not in" | undefined`
 
 
 
@@ -2939,7 +2908,6 @@ Operator
 
 
 
-**Type:** `"row-with-field"`
 
 :::
 
@@ -3026,7 +2994,6 @@ Nilai X tetap untuk garis anotasi vertikal. Jika sumbu kategori berada di arah X
 
 
 
-**Type:** `ValueDynamicFilter | undefined`
 
 :::
 
@@ -3178,7 +3145,6 @@ Konfigurasi titik penanda, digunakan untuk menambahkan penanda pada titik data t
 **Type:** `string`
 
 :::note{title=Deskripsi}
-**Type:** `number | undefined`
 
 :::
 
@@ -3500,7 +3466,6 @@ Ditulis selama fase prepare(); hanya-baca saat runtime.
 
 Ukuran font teks.
 
-**Type:** `string | string[] | undefined`
 
 **Contoh**
 
@@ -3642,7 +3607,6 @@ true
 :::note{title=Deskripsi}
 Warna latar belakang.
 
-**Type:** `number | undefined`
 
 **Contoh**
 
@@ -3718,7 +3682,6 @@ Visibilitas garis.
 **Type:** `string`
 
 :::note{title=Deskripsi}
-**Type:** `string | number | (string | number)[] | undefined`
 
 
 
@@ -3747,7 +3710,6 @@ const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-**Type:** `string | undefined`
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
@@ -3877,7 +3839,6 @@ Nilai field dimensi yang dipilih; mendukung array.
 
 Warna teks.
 
-**Type:** `number | undefined`
 
 **Contoh**
 
@@ -4125,9 +4086,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4249,7 +4208,6 @@ Warna teks
 :::
 
 **Contoh**
-**Type:** `number | undefined`
 
 
 
@@ -4263,7 +4221,6 @@ Warna teks
 :::
 
 **Contoh**
-**Type:** `"left" | "right" | "center" | undefined`
 
 
 
@@ -4321,7 +4278,6 @@ warna stroke latar belakang
 :::
 
 **Contoh**
-**Type:** `string | undefined`
 
 
 
@@ -4537,7 +4493,6 @@ Apakah menampilkan tooltip untuk semua subchart yang sesuai dengan dimensi.
 :::note{title=Deskripsi}
 Apakah menampilkan label yang sesuai dengan crosshair.
 
-**Type:** `number | undefined`
 
 
 
@@ -4687,7 +4642,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-**Type:** `string | undefined`
 
 :::
 
@@ -4826,7 +4780,6 @@ Warna area penanda
 :::
 
 **Contoh**
-**Type:** `boolean | undefined`
 
 
 
@@ -4903,10 +4856,9 @@ Apakah menampilkan label yang sesuai dengan crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
 Konfigurasi bahasa
 
 :::
-

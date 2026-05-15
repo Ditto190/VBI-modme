@@ -686,7 +686,6 @@ Konfiguration des dynamischen Diagrammfilters.
 **Type:** `"asc" | "desc" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -1598,11 +1597,9 @@ Brush-Auswahlkonfiguration zur Unterstützung von Brush-Interaktionen
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1623,9 +1620,7 @@ Brush-Auswahlkonfiguration zur Unterstützung von Brush-Interaktionen
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -1726,7 +1721,6 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1786,7 +1780,6 @@ Ob die Achse sichtbar ist.
 
 Y-Achse, numerische Achse, Y-Achsenkonfiguration; definiert die Y-Achse des Diagramms einschliesslich Position, Format, Stil usw.
 
-**Type:** `string | undefined`
 
 :::
 
@@ -1859,7 +1852,6 @@ Y-Achse, numerische Achse, Y-Achsenkonfiguration; definiert die Y-Achse des Diag
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::
 
@@ -1868,7 +1860,6 @@ Y-Achse, numerische Achse, Y-Achsenkonfiguration; definiert die Y-Achse des Diag
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1997,7 +1988,6 @@ Y-Achse, numerische Achse, Y-Achsenkonfiguration; definiert die Y-Achse des Diag
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2038,7 +2028,6 @@ Beschriftung der X-Achsen-Ticks
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -2047,7 +2036,6 @@ Beschriftung der X-Achsen-Ticks
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2056,7 +2044,6 @@ Beschriftung der X-Achsen-Ticks
 **Type:** `number[] | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2104,7 +2091,6 @@ Y-Achsenkonfiguration; numerische Achse zur Anzeige von Kennzahlwerten
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2219,7 +2205,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2261,7 +2246,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2399,7 +2383,6 @@ Maximale Hohe des Rechtecks; kann ein Pixelwert oder eine Prozentzeichenfolge se
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2482,7 +2465,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2569,7 +2551,6 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2620,7 +2601,6 @@ operator: 'between'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string`
 
 :::
 
@@ -2629,7 +2609,6 @@ operator: 'between'
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"in" | "not in" | undefined`
 
 :::
 
@@ -2770,7 +2749,6 @@ Säulenstil-Konfiguration, kann ein einzelner Stil oder ein Array sein
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2779,33 +2757,27 @@ Säulenstil-Konfiguration, kann ein einzelner Stil oder ein Array sein
 **Beispiel**
 Strichfarbe des Balken-Primitives (Rechteck)
 
-**Type:** `number | undefined`
 
-**Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 
 Ausführungsergebnis des dynamischen Filters (Laufzeitfeld)
 
 
 
-**Type:** `string | undefined`
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-**Type:** `string | undefined`
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
 
-**Type:** `string | undefined`
 field: 'profit',
 operator: '>=',
 value: 100
 }
-**Type:** `string | undefined`
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -2843,9 +2815,7 @@ value: [100, 300]
 :::note{title=Beschreibung}
 
 
-**Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-**Type:** `Selector | Selectors | undefined`
 
 
 
@@ -2885,7 +2855,6 @@ Operator
 
 
 
-**Type:** `"in" | "not in" | undefined`
 
 
 
@@ -2939,7 +2908,6 @@ Operator
 
 
 
-**Type:** `"row-with-field"`
 
 :::
 
@@ -3026,7 +2994,6 @@ Fester X-Wert für die vertikale Annotationslinie. Wenn die Kategorieachse in X-
 
 
 
-**Type:** `ValueDynamicFilter | undefined`
 
 :::
 
@@ -3178,7 +3145,6 @@ Markierungspunkt-Konfiguration zum Hinzufügen von Markierungen an bestimmten Da
 **Type:** `string`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -3500,7 +3466,6 @@ Wird wahrend der prepare()-Phase geschrieben; zur Laufzeit schreibgeschutzt.
 
 Schriftgrosse des Textes.
 
-**Type:** `string | string[] | undefined`
 
 **Beispiel**
 
@@ -3642,7 +3607,6 @@ true
 :::note{title=Beschreibung}
 Hintergrundfarbe.
 
-**Type:** `number | undefined`
 
 **Beispiel**
 
@@ -3718,7 +3682,6 @@ Sichtbarkeit der Linie.
 **Type:** `string`
 
 :::note{title=Beschreibung}
-**Type:** `string | number | (string | number)[] | undefined`
 
 
 
@@ -3747,7 +3710,6 @@ const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-**Type:** `string | undefined`
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
@@ -3877,7 +3839,6 @@ Ausgewahlte Dimensionsfeldwerte; unterstutzt Arrays.
 
 Textfarbe.
 
-**Type:** `number | undefined`
 
 **Beispiel**
 
@@ -4125,9 +4086,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4249,7 +4208,6 @@ Textfarbe
 :::
 
 **Beispiel**
-**Type:** `number | undefined`
 
 
 
@@ -4263,7 +4221,6 @@ Textfarbe
 :::
 
 **Beispiel**
-**Type:** `"left" | "right" | "center" | undefined`
 
 
 
@@ -4321,7 +4278,6 @@ Strichfarbe des Hintergrunds
 :::
 
 **Beispiel**
-**Type:** `string | undefined`
 
 
 
@@ -4537,7 +4493,6 @@ Ob Tooltips fur alle dimensionsbezogenen Unterdiagramme angezeigt werden.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -4687,7 +4642,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -4826,7 +4780,6 @@ Farbe des Markierungsbereichs
 :::
 
 **Beispiel**
-**Type:** `boolean | undefined`
 
 
 
@@ -4903,10 +4856,9 @@ Ob das zum crosshair gehörende Label angezeigt wird
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprachkonfiguration
 
 :::
-

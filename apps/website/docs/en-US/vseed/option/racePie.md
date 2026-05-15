@@ -581,6 +581,24 @@ Player progress bar rail color
 
 :::
 
+### fontFamily
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Player text font family
+
+:::
+
+### fontSize
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Player text font size
+
+:::
+
 ### trackColor
 
 **Type:** `string | undefined`
@@ -1630,10 +1648,9 @@ Built-in light and dark themes are available, and new themes can be customized v
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language configuration
 
 :::
-

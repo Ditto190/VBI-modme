@@ -208,7 +208,6 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -250,7 +249,6 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -343,7 +341,6 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -385,7 +382,6 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -672,7 +668,6 @@ Farbe der Vorwärts-Taste des Players
 **Type:** `BackgroundColor`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -866,7 +861,6 @@ Beschriftungskonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -908,7 +902,6 @@ Beschriftungskonfiguration
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1065,7 +1058,6 @@ or
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1078,7 +1070,6 @@ or
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1172,7 +1163,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1242,7 +1232,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1255,7 +1244,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -1511,11 +1499,9 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1536,9 +1522,7 @@ Deckkraft of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1594,7 +1578,6 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1639,7 +1622,6 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1659,7 +1641,6 @@ X-Achsen-Konfiguration; Kategorieachse zur Anzeige von Dimensionswerten
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1708,7 +1689,6 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `CrosshairRect | undefined`
 
 :::
 
@@ -1818,7 +1798,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -1901,7 +1880,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -1988,7 +1966,6 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2017,7 +1994,6 @@ Y-Achsen-Konfiguration; Wertachse zur Anzeige von Kennzahlenwerten
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2132,7 +2108,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2174,7 +2149,6 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2312,7 +2286,6 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2395,7 +2368,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2482,7 +2454,6 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2724,7 +2695,6 @@ Stilkonfiguration fuer Punktmarken
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2784,7 +2754,6 @@ value: [100, 300]
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -2797,7 +2766,6 @@ value: [100, 300]
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -2893,7 +2861,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -2963,7 +2930,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -2976,7 +2942,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3135,7 +3100,6 @@ Stilkonfiguration fuer Linienmarken
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -3195,7 +3159,6 @@ value: [100, 300]
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3208,7 +3171,6 @@ value: [100, 300]
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3304,7 +3266,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3374,7 +3335,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3387,7 +3347,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3526,7 +3485,6 @@ Markierungspunkt-Konfiguration
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3539,7 +3497,6 @@ Markierungspunkt-Konfiguration
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3644,7 +3601,6 @@ Operator
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3714,7 +3670,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3727,7 +3682,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -3837,7 +3791,6 @@ Textfarbe
 
 Schriftgrosse des Textes.
 
-**Type:** `string | string[] | undefined`
 
 **Beispiel**
 
@@ -3889,7 +3842,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -3979,7 +3931,6 @@ true
 :::note{title=Beschreibung}
 Hintergrundfarbe.
 
-**Type:** `number | undefined`
 
 **Beispiel**
 
@@ -4065,9 +4016,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4214,7 +4163,6 @@ center: Text wird im Anmerkungsbereich zentriert.
 
 Textfarbe.
 
-**Type:** `number | undefined`
 
 **Beispiel**
 
@@ -4322,7 +4270,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -4462,9 +4409,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4667,7 +4612,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -4861,7 +4805,6 @@ Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktivi
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -4874,7 +4817,6 @@ Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktivi
 :::note{title=Beschreibung}
 **Beispiel**
 
-**Type:** `number | undefined`
 
 
 
@@ -5024,7 +4966,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -5240,10 +5181,9 @@ Ob das zum crosshair gehörende Label angezeigt wird
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprachkonfiguration
 
 :::
-

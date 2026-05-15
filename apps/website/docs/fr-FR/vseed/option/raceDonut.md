@@ -208,7 +208,6 @@ Remarque : pour utiliser un format personnalisé, définissez explicitement auto
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -250,7 +249,6 @@ Remarque : pour utiliser un format personnalisé, définissez explicitement auto
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -343,7 +341,6 @@ Ordre de tri, les valeurs optionnelles sont 'asc' ou 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -385,7 +382,6 @@ Ordre de tri, les valeurs optionnelles sont 'asc' ou 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -670,7 +666,6 @@ Couleur du bouton avance du lecteur
 **Type:** `BackgroundColor`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -864,7 +859,6 @@ Configuration des étiquettes
 **Type:** `string | undefined`
 
 :::note{title=Description}
-**Type:** `string | undefined`
 
 :::
 
@@ -906,7 +900,6 @@ Configuration des étiquettes
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1063,7 +1056,6 @@ or
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1076,7 +1068,6 @@ or
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1170,7 +1161,6 @@ Opérateur
 
 
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1240,7 +1230,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1253,7 +1242,6 @@ _.map(filtered, item => [
 :::note{title=Description}
 **Exemple**
 
-**Type:** `number | undefined`
 
 
 
@@ -1524,11 +1512,9 @@ Mode de selection par brush : simple ou multiple
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1549,9 +1535,7 @@ Opacité of selected data points, range 0-1
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `string | undefined`
 
 
 
@@ -1607,7 +1591,6 @@ Opacité of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1652,7 +1635,6 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1686,10 +1668,9 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Configuration de la langue
 
 :::
-

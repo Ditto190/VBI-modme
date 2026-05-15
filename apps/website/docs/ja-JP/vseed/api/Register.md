@@ -357,6 +357,12 @@ Rose Parallel Chart の構築パイプラインを登録します。
 function registerRoseParallel(): void
 ```
 
+### registerSankey
+
+```ts
+function registerSankey(): void
+```
+
 ### registerScatter
 
 :::note{title=説明}
@@ -400,4 +406,3 @@ TreeMap Chart の構築パイプラインを登録します。
 ```ts
 function registerTreeMap(): void
 ```
-

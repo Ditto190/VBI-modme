@@ -223,7 +223,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -232,7 +231,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -241,7 +239,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -250,7 +247,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -260,7 +256,6 @@ Beschriftung font weight
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -269,7 +264,6 @@ Beschriftung font weight
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -277,9 +271,7 @@ Beschriftung font weight
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -358,7 +350,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -367,7 +358,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -376,7 +366,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -385,7 +374,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -395,7 +383,6 @@ Beschriftung font weight
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -404,7 +391,6 @@ Beschriftung font weight
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -412,9 +398,7 @@ Beschriftung font weight
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -978,7 +962,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -987,7 +970,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -996,7 +978,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1005,7 +986,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1015,7 +995,6 @@ Beschriftung font weight
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1024,7 +1003,6 @@ Beschriftung font weight
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -1032,9 +1010,7 @@ Beschriftung font weight
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -1162,7 +1138,6 @@ Beschriftungsauswahl; Bedingungen zwischen Selektoren sind standardmassig OR.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -1175,7 +1150,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -1269,7 +1243,6 @@ Horizontaler Versatz des Anmerkungspunkts in Pixeln. Wenn der Punkt links liegt 
 
 Ein negativer Wert verschiebt die gesamte Komponente nach links (z. B. -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -1339,7 +1312,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -1352,7 +1324,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -1608,11 +1579,9 @@ Brush-Auswahlkonfiguration zur Unterstützung von Brush-Interaktionen
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `XLinearAxis | undefined`
 
 
 
-**Type:** `boolean | undefined`
 
 
 
@@ -1633,9 +1602,7 @@ Brush-Auswahlkonfiguration zur Unterstützung von Brush-Interaktionen
 
 
 
-**Type:** `number | boolean | undefined`
 
-**Type:** `number | undefined`
 
 
 
@@ -1691,7 +1658,6 @@ Definiert den Stil der Datenpunkte ausserhalb der Auswahl.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1736,7 +1702,6 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `boolean | undefined`
 
 :::
 
@@ -1756,7 +1721,6 @@ X-Achsen-Konfiguration; numerische Achse zur Anzeige des ersten Kennzahlenwerts
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -1886,7 +1850,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -1895,7 +1858,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -1904,7 +1866,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -1913,7 +1874,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -1923,7 +1883,6 @@ Beschriftung font weight
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -1932,7 +1891,6 @@ Beschriftung font weight
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -1940,9 +1898,7 @@ Beschriftung font weight
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -2051,7 +2007,6 @@ Maximale Hohe des Rechtecks; kann ein Pixelwert oder eine Prozentzeichenfolge se
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2134,7 +2089,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2221,7 +2175,6 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2250,7 +2203,6 @@ Y-Achsen-Konfiguration; numerische Achse zur Anzeige des zweiten Kennzahlenwerts
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::
 
@@ -2380,7 +2332,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2389,7 +2340,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number | undefined`
 
 :::
 
@@ -2398,7 +2348,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `number[] | undefined`
 
 :::
 
@@ -2407,7 +2356,6 @@ Maximale Länge für Beschriftungsbegrenzung. Wenn die Textlänge diesen Wert ü
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::
 
@@ -2417,7 +2365,6 @@ Beschriftung font weight
 
 \- 1234.5678 converted to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
 
-**Type:** `number | undefined`
 
 
 
@@ -2426,7 +2373,6 @@ Beschriftung font weight
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2434,9 +2380,7 @@ Beschriftung font weight
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `YBandAxis | undefined`
 
 \- 1234.5678 converted to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
@@ -2545,7 +2489,6 @@ Maximale Hohe des Rechtecks; kann ein Pixelwert oder eine Prozentzeichenfolge se
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `"asc" | "desc" | undefined`
 
 :::
 
@@ -2628,7 +2571,6 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -2715,7 +2657,6 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `Selector | Selectors | undefined`
 
 :::
 
@@ -2835,7 +2776,6 @@ Datenpunkt-Stilkonfiguration, als einzelner Stil oder Array, mit Unterstuetzung 
 
 
 
-**Type:** `string | undefined`
 
 
 
@@ -2895,7 +2835,6 @@ value: [100, 300]
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -2908,7 +2847,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3004,7 +2942,6 @@ Horizontaler Versatz des Anmerkungspunkts in Pixeln. Wenn der Punkt links liegt 
 
 Ein negativer Wert verschiebt die gesamte Komponente nach links (z. B. -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3074,7 +3011,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3087,7 +3023,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3263,7 +3198,6 @@ Markierungspunkt-Konfiguration zum Hinzufügen von Markierungen an bestimmten Da
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3276,7 +3210,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3381,7 +3314,6 @@ Horizontaler Versatz des Anmerkungspunkts in Pixeln. Wenn der Punkt links liegt 
 
 Ein negativer Wert verschiebt die gesamte Komponente nach links (z. B. -10).
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3451,7 +3383,6 @@ _.map(filtered, item => [
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3464,7 +3395,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -3574,7 +3504,6 @@ Textfarbe
 
 Schriftgrosse des Textes.
 
-**Type:** `string | string[] | undefined`
 
 **Beispiel**
 
@@ -3626,7 +3555,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -3716,7 +3644,6 @@ true
 :::note{title=Beschreibung}
 Hintergrundfarbe.
 
-**Type:** `number | undefined`
 
 **Beispiel**
 
@@ -3802,9 +3729,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -3951,7 +3876,6 @@ center: Text wird im Anmerkungsbereich zentriert.
 
 Textfarbe.
 
-**Type:** `number | undefined`
 
 **Beispiel**
 
@@ -4059,7 +3983,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -4199,9 +4122,7 @@ Operator
 
 
 
-**Type:** `boolean | undefined`
 
-**Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::
 
@@ -4404,7 +4325,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -4598,7 +4518,6 @@ Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktivi
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -4611,7 +4530,6 @@ Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 :::note{title=Beschreibung}
 Ob Beschriftungen angezeigt werden, die dem Crosshair entsprechen.
 
-**Type:** `number | undefined`
 
 
 
@@ -4761,7 +4679,6 @@ true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-**Type:** `string | undefined`
 
 :::
 
@@ -4935,10 +4852,9 @@ Randabstand des Markierungsbereichs
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
 Sprachkonfiguration
 
 :::
-

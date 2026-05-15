@@ -5750,7 +5750,7 @@ Có hiển thị nhãn tương ứng với crosshair hay không
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Mo ta}
 Language
@@ -5760,4 +5760,3 @@ Language
 Chart language configuration. Supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
 
 :::
-

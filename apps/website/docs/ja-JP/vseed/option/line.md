@@ -5750,7 +5750,7 @@ Whether to show the label corresponding to the crosshair
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=説明}
 Language
@@ -5760,4 +5760,3 @@ Language
 Chart language configuration. Supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
 
 :::
-

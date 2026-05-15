@@ -1375,6 +1375,37 @@ maxSize: 2
 
 
 
+## regionPadding
+
+**Type:** `RegionPadding | undefined`
+
+:::note{title=Description}
+Chart region padding
+
+
+
+Maps to VChart region[0].padding, used to reserve space for annotations, labels, and other elements that extend outside the chart region.
+
+:::
+
+
+### top
+
+**Type:** `number | undefined`
+
+### right
+
+**Type:** `number | undefined`
+
+### bottom
+
+**Type:** `number | undefined`
+
+### left
+
+**Type:** `number | undefined`
+
+
 ## tooltip
 
 **Type:** `Tooltip | undefined`
@@ -1550,6 +1581,270 @@ Stroke color
 
 :::note{title=Description}
 Stroke width
+
+:::
+
+
+## animation
+
+**Type:** `LineAreaAnimation | undefined`
+
+:::note{title=Description}
+Animation configuration
+
+
+
+Chart animation configuration, with available effects constrained by chart type.
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable line/area chart animation
+
+:::
+
+### params
+
+**Type:** `LineAreaAnimationParams | undefined`
+
+:::note{title=Description}
+Line/area chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `LineAreaAppearAnimation | undefined`
+
+:::note{title=Description}
+Line/area chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("load" | "growth")[] | undefined`
+
+:::note{title=Description}
+Line/area chart appear effects, supporting load and growth animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `LineAreaUpdateAnimation | undefined`
+
+:::note{title=Description}
+Line/area chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"growth"[] | undefined`
+
+:::note{title=Description}
+Line/area chart update effects, supporting growth animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `LineAreaAnimationLoop | undefined`
+
+:::note{title=Description}
+Line/area chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable loop animation
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### loop
+
+**Type:** `LineAreaLoopAnimation | undefined`
+
+:::note{title=Description}
+Line/area chart loop animation configuration
+
+:::
+
+
+###### effects
+
+**Type:** `LineAreaLoopEffect[] | undefined`
+
+:::note{title=Description}
+Line/area chart loop effects
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+##### atmosphere
+
+**Type:** `PointAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Line/area chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
+
+:::
+
+###### effect
+
+**Type:** `PointAtmosphereEffect | undefined`
+
+:::note{title=Description}
+Atmosphere animation effect, supporting ripple, fade, and breath effects
 
 :::
 
@@ -3364,6 +3659,20 @@ Line segment width
 
 :::
 
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line segment style
+
+:::
+
+**Example**
+`lineStyle: 'solid'`
+
+
+
 
 ## areaStyle
 
@@ -3759,6 +4068,15 @@ same as operator
 
 :::note{title=Description}
 Select dimension values; supports arrays
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
 
 :::
 
@@ -5345,6 +5663,223 @@ Margin for the mark area region
 
 
 
+## annotationDifferenceLine
+
+**Type:** `AnnotationDifferenceLine | AnnotationDifferenceLine[] | undefined`
+
+:::note{title=Description}
+Difference annotation line
+
+
+
+Draws a difference annotation line from two selected data points and automatically calculates the difference text.
+
+:::
+
+
+### start
+
+**Type:** `DifferenceAnchor`
+
+:::note{title=Description}
+Start anchor for the difference annotation line.
+
+
+
+Difference annotation anchor configuration, used to select the data bound to the start or end point.
+
+:::
+
+
+#### selector
+
+**Type:** `DifferenceSelector | DifferenceSelector[]`
+
+:::note{title=Description}
+Anchor selector, which must ultimately locate a logical anchor.
+
+:::
+
+**Example**
+{ year: '1930', type: 'Autocracies' }
+
+[{ field: 'year', operator: 'in', value: ['1930'] }, { field: 'type', operator: 'in', value: ['Autocracies'] }]
+
+
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Description}
+Dimension field, the id of one item in dimensions
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+same as operator
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Value of the dimension field used to select data items; arrays are supported
+
+:::
+
+### end
+
+**Type:** `DifferenceAnchor`
+
+:::note{title=Description}
+End anchor for the difference annotation line.
+
+
+
+Difference annotation anchor configuration, used to select the data bound to the start or end point.
+
+:::
+
+
+#### selector
+
+**Type:** `DifferenceSelector | DifferenceSelector[]`
+
+:::note{title=Description}
+Anchor selector, which must ultimately locate a logical anchor.
+
+:::
+
+**Example**
+{ year: '1930', type: 'Autocracies' }
+
+[{ field: 'year', operator: 'in', value: ['1930'] }, { field: 'type', operator: 'in', value: ['Autocracies'] }]
+
+
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Description}
+Dimension field, the id of one item in dimensions
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: select data items whose dimension field value is in value
+
+\- not in: select data items whose dimension field value is not in value
+
+same as operator
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Value of the dimension field used to select data items; arrays are supported
+
+:::
+
+### differenceType
+
+**Type:** `"percent" | "absolute" | undefined`
+
+:::note{title=Description}
+Difference value type.
+
+\- absolute: show the absolute difference, calculated as end \- start
+
+\- percent: show the percentage difference, calculated as (end \- start) / start
+
+:::
+
+### textFontSize
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Text font size.
+
+:::
+
+### textColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Text color.
+
+:::
+
+### textBackgroundColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Text background color.
+
+:::
+
+### lineColor
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Line color.
+
+:::
+
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
@@ -5399,7 +5934,7 @@ Whether to display crosshair labels
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language

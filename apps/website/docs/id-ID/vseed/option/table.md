@@ -1301,7 +1301,7 @@ Built-in light and dark themes; new themes can be customized using registerTheme
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, language can be set using the intl.setLocale('zh-CN') method.

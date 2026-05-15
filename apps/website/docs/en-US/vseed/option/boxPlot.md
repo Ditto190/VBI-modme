@@ -3035,6 +3035,15 @@ Value of the dimension field, supports arrays
 
 :::
 
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
+
+:::
+
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
@@ -4611,7 +4620,15 @@ Annotation area padding
 **Type:** `DimensionLinkage | undefined`
 
 :::note{title=Description}
+Whether to enable dimension linkage when the chart has pivot functionality or measure combinations enabled.
 
+When hovering over a dimension value, data with the same dimension value in other charts will be highlighted in coordination.
+
+
+
+Perspective chart dimension linkage configuration
+
+:::
 
 ### enable
 
@@ -4643,7 +4660,7 @@ Whether to display the crosshair label
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, methods like intl.setLocale('zh-CN') can be used to set the language.
@@ -4669,4 +4686,3 @@ Maximum width of the Box Plot. Can be set as an absolute pixel value or a percen
 Spacing within each group in a grouped Box Plot. Can be set as an absolute pixel value or a percentage (e.g., '10%').
 
 :::
-

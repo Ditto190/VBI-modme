@@ -1246,7 +1246,7 @@ Built-in light and dark themes; new themes can be customized via registerTheme.
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language
@@ -1254,4 +1254,3 @@ Language
 Chart language configuration. Supports 'zh-CN' and 'en-US'.
 
 :::
-

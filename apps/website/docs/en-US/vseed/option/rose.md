@@ -1579,6 +1579,260 @@ Stroke width
 
 :::
 
+## animation
+
+**Type:** `PieLikeAnimation | undefined`
+
+:::note{title=Description}
+Animation configuration
+
+
+
+Chart animation configuration, with available effects constrained by chart type.
+
+:::
+
+
+### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable pie/donut/rose chart animation
+
+:::
+
+### params
+
+**Type:** `PieLikeAnimationParams | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart animation parameters
+
+:::
+
+
+#### appear
+
+**Type:** `PieLikeAppearAnimation | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart appear animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `("radial" | "scale")[] | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart appear effects, supporting radial and scale animations
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### update
+
+**Type:** `PieLikeUpdateAnimation | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart update animation configuration
+
+:::
+
+
+##### effects
+
+**Type:** `"radial"[] | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart update effects, supporting radial animation
+
+:::
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+##### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+##### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+##### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+#### loop
+
+**Type:** `PieLikeAnimationLoop | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart loop animation configuration
+
+:::
+
+
+##### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable loop animation
+
+:::
+
+##### interval
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Loop animation interval, in milliseconds
+
+:::
+
+##### loop
+
+**Type:** `PieLikeLoopAnimation | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart loop animation configuration
+
+:::
+
+
+###### effects
+
+**Type:** `PieLikeLoopEffect[] | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart loop effects
+
+:::
+
+###### enable
+
+**Type:** `boolean | undefined`
+
+:::note{title=Description}
+Whether to enable the current animation stage
+
+:::
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation easing function
+
+:::
+
+###### duration
+
+**Type:** `number | undefined`
+
+:::note{title=Description}
+Animation duration, in milliseconds
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Animation highlight or atmosphere color
+
+:::
+
+##### atmosphere
+
+**Type:** `NoEffectAtmosphereConfig | undefined`
+
+:::note{title=Description}
+Pie/donut/rose chart atmosphere animation configuration
+
+:::
+
+
+###### ease
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation easing function
+
+:::
+
+###### color
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Atmosphere animation color
+
+:::
+
 
 ## theme
 
@@ -1619,7 +1873,7 @@ Built-in light and dark themes; new themes can be customized via registerTheme.
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Language
@@ -1629,4 +1883,3 @@ Language
 Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to specify the language.
 
 :::
-

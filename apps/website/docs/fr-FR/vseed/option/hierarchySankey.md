@@ -1430,7 +1430,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Langue
@@ -1440,4 +1440,3 @@ Langue
 Configuration de la langue du graphique, prenant en charge 'zh\-CN' et 'en\-US'
 
 :::
-

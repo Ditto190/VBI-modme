@@ -2572,9 +2572,15 @@ Light and dark themes are built-in; users can define custom themes via the Build
 **Type:** `BarStyle | BarStyle[] | undefined`
 
 :::note{title=Description}
-Bar style configuration, used to define bar colors, borders, corner radii, etc. Supports global styling or conditional styling based on selectors.
+Rectangular primitive style; used to define the bar chart style, including color, borders, corner radius, etc.
 
-If `selector` is configured, provides matching capabilities for numerical, partial data, dimension, or measure conditions. If not set, styles apply globally.
+Supports global style or conditional style configurations.
+
+Data filter
+
+If a selector is configured, it provides four types of data matching capabilities: numeric selector, local data selector, conditional dimension selector, and conditional measure selector.
+
+If no selector is configured, the style is applied globally.
 
 :::
 
@@ -2584,22 +2590,28 @@ If `selector` is configured, provides matching capabilities for numerical, parti
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
+Data selector
+
+
+
+If a selector is configured, it provides four types of data matching capabilities: numeric selector, local data selector, conditional dimension selector, and conditional measure selector.
+
+If no selector is configured, the style is applied globally.
 
 :::
 
 **Example**
-Value Selector:
+Value selector
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial Data Selector:
+Local data selector
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional Dimension Selector:
+Conditional dimension selector
 selector = {
 field: 'category',
 operator: 'in',
@@ -2611,7 +2623,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional Measure Selector:
+Conditional measure selector
 selector = {
 field: 'profit',
 operator: '>=',
@@ -2631,7 +2643,7 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field ID.
+Dimension field, the ID of a dimension item
 
 :::
 
@@ -2640,11 +2652,11 @@ Dimension field ID.
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator:
+Operator
 
-- in: Select data items where the dimension field value is in the 'value' list.
+\- in: Select data items where the value of the dimension field is in the value
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+\- not in: Select data items where the value of the dimension field is not in the value
 
 :::
 
@@ -2653,7 +2665,13 @@ Operator:
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator (same as operator).
+Operator
+
+\- in: Select data items where the value of the dimension field is in the value
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+same as operator
 
 :::
 
@@ -2662,7 +2680,7 @@ Operator (same as operator).
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Dimension values for selection; supports arrays.
+Value of the dimension field, supports arrays
 
 :::
 
@@ -2671,21 +2689,39 @@ Dimension values for selection; supports arrays.
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution).
+Animated filter (AI-generated code execution)
 
-Implement complex data filtering via AI-generated JavaScript code. Useful for scenarios like Top N, statistical analysis, or complex conditions that static selectors cannot express.
 
-Key capabilities:
 
-- Supports any complex data filtering conditions.
+Implements complex data filtering logic via AI-generated JavaScript code
 
-- Uses built-in utility functions for data operations.
+Suitable for Top N, statistical analysis, complex conditions, and other scenarios that are difficult to express with static selectors.
 
-- Executes safely in the browser environment (Web Worker sandbox).
 
-Requirements: Supports only browser environments; Node.js environments will use the fallback.
 
-Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilter` has higher priority.
+Core capabilities:
+
+\- Supports any complex data filtering conditions
+
+\- Uses built-in utility functions for data operations
+
+\- Safely executes in the browser environment (Web Worker sandbox)
+
+
+
+Environment requirements: Only supports browser environment; Node.js environment will use fallback
+
+
+
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
+
+
+
+Chart animated filter configuration
+
+
+
+Implements filtering of chart markers (bars, points, etc.) via AI-generated JavaScript code
 
 :::
 
@@ -2699,14 +2735,14 @@ Note: `selector` and `dynamicFilter` cannot be used simultaneously; `dynamicFilt
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language).
+User's filtering requirement description (natural language)
 
 :::
 
 **Example**
-"Highlight sales columns greater than 1000."
+"Highlight bars with sales > 1000"
 
-"Highlight the column with the highest profit margin in each region."
+"Highlight the bar with the highest profit rate in each region"
 
 
 
@@ -2715,22 +2751,24 @@ User's filtering requirement description (natural language).
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code.
+AI-generated JavaScript filtering code
 
-- Can only use built-in utility functions (access via _ or R).
 
-- Input parameter: data (array); each item includes a __row_index field representing the row number.
 
-- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>.
+\- Only built-in utility functions can be used (accessed via _ or R)
 
-- __row_index represents the row number of the original data item, and field represents the field to be highlighted.
+\- Input parameters: data (array), each item contains a __row_index field representing the row number
 
-- Prohibited: eval, Function, asynchronous operations, DOM API, network requests.
+\- Must return an array of row index and field pairs: Array<{ __row_index: number, field: string }>
+
+\- __row_index represents the row number of the original data item, and field represents the field to be highlighted
+
+\- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
 **Example**
-Highlight 'sales' field for data items where sales > 1000:
+Highlight the 'sales' field for items with sales > 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2739,7 +2777,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region:
+Highlight items with the highest profit rate in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2753,7 +2791,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items meeting multiple filtering conditions:
+Highlight items meeting multiple filtering conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2774,7 +2812,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+Fallback solution when code execution fails or the environment is not supported.
 
 :::
 
@@ -2784,7 +2822,7 @@ Fallback plan when code execution fails or the environment is not supported.
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field ID.
+Dimension field, the ID of a dimension item
 
 :::
 
@@ -2793,11 +2831,11 @@ Dimension field ID.
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator:
+Operator
 
-- in: Select data items where the dimension field value is in the 'value' list.
+\- in: Select data items where the value of the dimension field is in the value
 
-- not in: Select data items where the dimension field value is not in the 'value' list.
+\- not in: Select data items where the value of the dimension field is not in the value
 
 :::
 
@@ -2806,7 +2844,13 @@ Operator:
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator (same as operator).
+Operator
+
+\- in: Select data items where the value of the dimension field is in the value
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+same as operator
 
 :::
 
@@ -2815,7 +2859,7 @@ Operator (same as operator).
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Dimension values for selection; supports arrays.
+Value of the dimension field, supports arrays
 
 :::
 
@@ -2824,7 +2868,11 @@ Dimension values for selection; supports arrays.
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution result (runtime field). Written during the prepare() phase; read-only at runtime.
+Animated filter execution result (runtime field)
+
+
+
+Written during the prepare() phase, read-only at runtime
 
 :::
 
@@ -2846,7 +2894,7 @@ Dynamic filter execution result (runtime field). Written during the prepare() ph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether bar elements are visible.
+Whether the bar primitive (rectangle) is visible
 
 :::
 
@@ -2855,7 +2903,7 @@ Whether bar elements are visible.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Bar color.
+Bar primitive (rectangle) color
 
 :::
 
@@ -2864,7 +2912,7 @@ Bar color.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Bar color opacity.
+Bar primitive (rectangle) color opacity
 
 :::
 
@@ -2873,7 +2921,7 @@ Bar color opacity.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Bar border color.
+Bar primitive (rectangle) stroke color
 
 :::
 
@@ -2882,7 +2930,7 @@ Bar border color.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Bar border width.
+Bar primitive (rectangle) stroke width
 
 :::
 
@@ -2891,7 +2939,7 @@ Bar border width.
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
 :::note{title=Description}
-Bar border style.
+Bar primitive (rectangle) stroke style
 
 :::
 
@@ -2909,16 +2957,11 @@ dotted
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Bar border opacity.
+Bar primitive (rectangle) corner radius
 
-:::
 
-### barRadius
 
-**Type:** `number | number[] | undefined`
-
-:::note{title=Description}
-Bar corner radius.
+Bar primitive (rectangle) stroke opacity
 
 :::
 
@@ -2929,13 +2972,17 @@ Bar corner radius.
 
 
 
+### barRadius
+
+**Type:** `number | number[] | undefined`
+
 
 ## annotationPoint
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
 :::note{title=Description}
-Annotation point configuration, defining highlight points based on selected data, including position, format, and style.
+Annotation point configuration; defines chart annotation points based on selected data, including their position, format, style, etc.
 
 :::
 
@@ -2945,7 +2992,7 @@ Annotation point configuration, defining highlight points based on selected data
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Selector used to identify specific data points for annotation.
+Annotation point selector; used to select data points.
 
 :::
 
@@ -2954,24 +3001,95 @@ Selector used to identify specific data points for annotation.
 
 **Type:** `string`
 
+:::note{title=Description}
+Dimension field, the ID of a dimension item
+
+:::
+
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the value of the dimension field is in the value
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+:::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the value of the dimension field is in the value
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+same as operator
+
+:::
+
 #### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Value of the dimension field, supports arrays
+
+:::
+
+### measureId
+
+**Type:** `string | undefined`
+
+:::note{title=Description}
+Specifies the measure id that the annotation point belongs to. In multi-measure scenarios, it can be combined with selector to uniquely locate the annotation point for the target measure.
+
+:::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution).
+Animated filter (AI-generated code execution)
+
+
+
+Implements complex data filtering logic via AI-generated JavaScript code
+
+Suitable for Top N, statistical analysis, complex conditions, and other scenarios that are difficult to express with static selectors.
+
+
+
+Core capabilities:
+
+\- Supports any complex data filtering conditions
+
+\- Uses built-in utility functions for data operations
+
+\- Safely executes in the browser environment (Web Worker sandbox)
+
+
+
+Environment requirements: Only supports browser environment; Node.js environment will use fallback
+
+
+
+Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
+
+
+
+Chart animated filter configuration
+
+
+
+Implements filtering of chart markers (bars, points, etc.) via AI-generated JavaScript code
 
 :::
 
@@ -2984,24 +3102,167 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+User's filtering requirement description (natural language)
+
+:::
+
+**Example**
+"Highlight bars with sales > 1000"
+
+"Highlight the bar with the highest profit rate in each region"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=Description}
+AI-generated JavaScript filtering code
+
+
+
+\- Only built-in utility functions can be used (accessed via _ or R)
+
+\- Input parameters: data (array), each item contains a __row_index field representing the row number
+
+\- Must return an array of row index and field pairs: Array<{ __row_index: number, field: string }>
+
+\- __row_index represents the row number of the original data item, and field represents the field to be highlighted
+
+\- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+:::
+
+**Example**
+Highlight the 'sales' field for items with sales > 1000
+```javascript
+const filtered = _.filter(data, item => item.sales > 1000);
+return _.map(filtered, item => ({
+__row_index: item.__row_index,
+field: 'sales'
+}));
+```
+
+Highlight items with the highest profit rate in each region
+```javascript
+const grouped = _.groupBy(data, 'area');
+const maxItems = _.map(grouped, group =>
+_.maxBy(group, item => item.profit / item.sales)
+);
+return _.flatten(
+_.map(maxItems, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'profit' }
+])
+);
+```
+
+Highlight items meeting multiple filtering conditions
+```javascript
+const filtered = _.filter(data, item => {
+const profitRate = item.profit / item.sales;
+return profitRate > 0.2 && item.sales > 5000;
+});
+return _.flatten(
+_.map(filtered, item => [
+{ __row_index: item.__row_index, field: 'product' },
+{ __row_index: item.__row_index, field: 'sales' }
+])
+);
+```
+
+
 
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
+:::note{title=Description}
+Fallback solution when code execution fails or the environment is not supported.
+
+:::
+
+
+##### field
+
+**Type:** `string`
+
+:::note{title=Description}
+Dimension field, the ID of a dimension item
+
+:::
+
+##### operator
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the value of the dimension field is in the value
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+:::
+
+##### op
+
+**Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the value of the dimension field is in the value
+
+\- not in: Select data items where the value of the dimension field is not in the value
+
+same as operator
+
+:::
+
+##### value
+
+**Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Value of the dimension field, supports arrays
+
+:::
+
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
+
+:::note{title=Description}
+Animated filter execution result (runtime field)
+
+
+
+Written during the prepare() phase, read-only at runtime
+
+:::
+
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `T[] | undefined`
+
+##### error
+
+**Type:** `string | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
 :::note{title=Description}
-Annotation text.
+Annotation text
 
 :::
 
@@ -3015,125 +3276,206 @@ Annotation text.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Text color.
+Text color
 
 :::
+
+**Example**
+'red'
+
+
 
 ### textFontSize
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Text font size.
+Text font size
 
 :::
+
+**Example**
+12
+
+
 
 ### textFontWeight
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Text font weight.
+Text font weight
 
 :::
+
+**Example**
+400
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Description}
-Text alignment. Typically, setting to 'right' places text to the left of the point, keeping it within the chart area.
+Text alignment; typically set to 'right' so text appears on the left side of the annotation point, ensuring it remains within the visible area of the chart.
 
-- 'right': Text to the left of the point, right-edge aligned.
-- 'left': Text to the right of the point, left-edge aligned.
-- 'center': Centered on the point.
+Recommended set to 'right' to ensure the text is on the left side of the annotation point.
+
+right: Text is on the left side of the annotation point; the right edge of the text aligns with the point.
+
+left: Text is on the right side of the annotation point; the left edge of the text aligns with the point.
+
+center: Text is centered on the annotation point; the center of the text aligns with the point.
 
 :::
+
+**Example**
+'right' Text is on the left side of the annotation point.
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Description}
-Text vertical baseline. Typically, setting to 'top' places text below the point for visibility.
+Vertical text alignment; typically set to 'top' so text appears at the bottom of the annotation point, ensuring it remains within the visible area of the chart.
 
-- 'top': Text below the point, top-edge aligned.
-- 'middle': Centered vertically.
-- 'bottom': Text above the point, bottom-edge aligned.
+Recommended set to 'top' to ensure the text is fully displayed within the chart's visible area.
+
+top: Text is at the bottom of the annotation point; the top edge of the text aligns with the point.
+
+middle: Text is centered vertically; the middle of the text aligns with the point.
+
+bottom: Text is at the top of the annotation point; the bottom edge of the text aligns with the point.
 
 :::
+
+**Example**
+'top' Text is at the bottom of the annotation point.
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether text background is visible.
+Background visibility
 
 :::
+
+**Example**
+true
+
+
 
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Background color.
+Background color
 
 :::
+
+**Example**
+'red'
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Background border color.
+Background stroke color
 
 :::
+
+**Example**
+'red'
+
+
 
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Background border width.
+Background stroke width
 
 :::
+
+**Example**
+2
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Background corner radius.
+Background corner radius
 
 :::
+
+**Example**
+4
+
+
 
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Background padding.
+Background padding
 
 :::
+
+**Example**
+4
+
+
 
 ### offsetY
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Vertical offset for the entire annotation component. Negative values move up; positive values move down.
+Pixel offset distance for the entire annotation point in the Y direction. When the point is above the chart (larger values), a positive value is recommended; when below (smaller values), a negative value is recommended.
+
+A negative value shifts the entire component upward; for example, -10 shifts the text and background up by 10 pixels.
+
+A positive value shifts the entire component downward; for example, 10 shifts the text and background down by 10 pixels.
 
 :::
+
+**Example**
+offsetY: 5, Offset the entire annotation point downward by 5 pixels.
+
+
 
 ### offsetX
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Horizontal offset for the entire annotation component. Negative values move left; positive values move right.
+Pixel offset distance for the entire annotation point in the X direction. When the point is on the left side (start of the category axis), a positive value is recommended; when on the right (end of the axis), a negative value is recommended.
+
+A negative value shifts the entire component to the left; for example, -10 shifts the text and background left by 10 pixels.
+
+A positive value shifts the entire component to the right; for example, 10 shifts the text and background right by 10 pixels.
 
 :::
+
+**Example**
+offsetX: 5, Offset the entire annotation point to the right by 5 pixels.
+
+
 
 
 ## annotationVerticalLine
@@ -3141,7 +3483,7 @@ Horizontal offset for the entire annotation component. Negative values move left
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
 :::note{title=Description}
-Vertical annotation line, typically used for marking specific values along the X-axis (binning values). Supports custom positioning and styling.
+Dimension value annotation line; displayed vertically; allows setting the annotation line's position, style, etc.
 
 :::
 
@@ -3151,7 +3493,7 @@ Vertical annotation line, typically used for marking specific values along the X
 **Type:** `string | number | (string | number)[] | undefined`
 
 :::note{title=Description}
-Fixed X-value for the vertical annotation line. Accepts dimension values or numeric coordinates depending on the axis type.
+Fixed X value; used for marking vertical lines. If the category axis is on the X-axis, enter a dimension value; if a numeric axis is on the X-axis, enter a specific number.
 
 :::
 
@@ -3160,7 +3502,17 @@ Fixed X-value for the vertical annotation line. Accepts dimension values or nume
 **Type:** `ValueDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (AI-generated code execution). Used to calculate annotation line positions (e.g., mean, max, quantiles) dynamically based on data. Requires browser environment (Web Worker).
+Animated filter (AI-generated code execution)
+
+
+
+Calculate the annotation line value dynamically via AI-generated JavaScript code.
+
+Suitable for scenarios where the annotation line position needs to be determined dynamically based on data, such as averages, maximums, quantiles, business lines, etc.
+
+
+
+Only supports browser environments (requires Web Worker).
 
 :::
 
@@ -3173,110 +3525,353 @@ Dynamic filter (AI-generated code execution). Used to calculate annotation line 
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+User's filtering requirement description (natural language)
+
+:::
+
+**Example**
+"Get the highest sales value as an annotation line reference"
+
+"Calculate average sales for the annotation line"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=Description}
+AI-generated JavaScript filtering code
+
+
+
+\- Only built-in utility functions can be used (accessed via _ or R)
+
+\- Input parameters: data (array)
+
+\- Must return a single numeric or string value: number | string
+
+\- Use case: Dynamic values required for annotation lines (horizontal, vertical)
+
+\- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+:::
+
+**Example**
+Get the maximum sales value as the annotation line value
+```javascript
+const maxSales = _.maxBy(data, 'sales')?.sales;
+return maxSales || 0;
+```
+
+Calculate the average for the annotation line
+```javascript
+const avgSales = _.meanBy(data, 'sales');
+return _.round(avgSales, 2);
+```
+
+Get the quantile for the annotation line
+```javascript
+const sorted = _.sortBy(data, 'sales');
+const index = Math.floor(sorted.length * 0.75);
+return sorted[index]?.sales || 0;
+```
+
+Calculate the goal value based on conditions
+```javascript
+const currentYearTotal = _.sumBy(
+_.filter(data, item => item.year === 2024),
+'sales'
+);
+return currentYearTotal;
+```
+
+
 
 #### fallback
 
 **Type:** `string | number | undefined`
 
+:::note{title=Description}
+Fallback solution when code execution fails or the environment is not supported.
+
+:::
+
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
+
+:::note{title=Description}
+Animated filter execution result (runtime field)
+
+
+
+Written during the prepare() phase, read-only at runtime
+
+:::
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `string | number | undefined`
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
 :::note{title=Description}
-Annotation text.
+Annotation text
 
 :::
+
+**Example**
+'Annotation text'
+
+
 
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
 :::note{title=Description}
-Relative position of the label text to the annotation line.
+Text position; annotation line label position (relative position of the label to the line).
 
 :::
+
+**Example**
+'outsideEnd'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Text color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Text font size
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Text font weight
+
+:::
+
+**Example**
+400
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Description}
-Horizontal text alignment relative to the vertical line.
+Text alignment; generally no need to set.
+
+Recommended to set to 'right' to ensure the text is on the left of the mark line.
+
+right: Text is on the left of the reference line, its right edge aligned with the (vertical) mark line.
+
+left: Text is on the right of the reference line, its left edge aligned with the (vertical) mark line.
+
+center: Text is centered on the reference line.
 
 :::
+
+**Example**
+'right'
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Description}
-Vertical text alignment relative to the endpoint of the vertical line.
+Text vertical alignment; generally no need to set.
+
+Recommended to set to 'top' to ensure the text is displayed completely within the visible area.
+
+top: Text is below the reference line, aligned to the endpoint of the (vertical) mark line by its top edge.
+
+middle: Text is centered horizontally relative to the endpoint of the (vertical) mark line.
+
+bottom: Text is above the reference line, aligned to the endpoint of the (vertical) mark line by its bottom edge.
 
 :::
+
+**Example**
+'top'
+
+
 
 ### lineVisible
 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the annotation line is visible.
+Line visibility
 
 :::
+
+**Example**
+true
+
+
 
 ### lineColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Line color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Line width
+
+:::
+
+**Example**
+2
+
+
 
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
+:::note{title=Description}
+Line style
+
+:::
+
+**Example**
+'solid'
+
+
+
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
+
+:::note{title=Description}
+Background visibility
+
+:::
+
+**Example**
+true
+
+
 
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Background color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
+
+:::note{title=Description}
+Background stroke color
+
+:::
+
+**Example**
+'red'
+
+
 
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Background stroke width
+
+:::
+
+**Example**
+2
+
+
+
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Background corner radius
+
+:::
+
+**Example**
+4
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Background padding
+
+:::
+
+**Example**
+4
+
+
 
 
 ## annotationHorizontalLine
@@ -3284,7 +3879,7 @@ Whether the annotation line is visible.
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
 :::note{title=Description}
-Horizontal annotation line (e.g., mean, max, min), used to mark specific values along the Y-axis. Note that binned values are affected by `binValueType`.
+Measure value annotation line (including average, maximum, minimum, etc.); displayed horizontally; defines the position, style, etc. Use this for lines corresponding to numeric values like averages.
 
 :::
 
@@ -3294,7 +3889,7 @@ Horizontal annotation line (e.g., mean, max, min), used to mark specific values 
 **Type:** `string | number | (string | number)[] | undefined`
 
 :::note{title=Description}
-Fixed Y-value for the horizontal annotation line. Accepts dimension values or numeric coordinates depending on the axis type.
+Fixed Y value; used for marking horizontal lines. If the category axis is on the Y-axis, enter a dimension value; if a numeric axis is on the Y-axis, enter a specific number.
 
 :::
 
@@ -3303,7 +3898,17 @@ Fixed Y-value for the horizontal annotation line. Accepts dimension values or nu
 **Type:** `ValueDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter used to calculate the annotation line value dynamically (e.g., average sales, peak value).
+Animated filter (AI-generated code execution)
+
+
+
+Calculate the annotation line value dynamically via AI-generated JavaScript code.
+
+Suitable for scenarios where the annotation line position needs to be determined dynamically based on data, such as averages, maximums, quantiles, business lines, etc.
+
+
+
+Only supports browser environments (requires Web Worker).
 
 :::
 
@@ -3316,107 +3921,372 @@ Dynamic filter used to calculate the annotation line value dynamically (e.g., av
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+User's filtering requirement description (natural language)
+
+:::
+
+**Example**
+"Get the highest sales value as an annotation line reference"
+
+"Calculate average sales for the annotation line"
+
+
+
 #### code
 
 **Type:** `string`
+
+:::note{title=Description}
+AI-generated JavaScript filtering code
+
+
+
+\- Only built-in utility functions can be used (accessed via _ or R)
+
+\- Input parameters: data (array)
+
+\- Must return a single numeric or string value: number | string
+
+\- Use case: Dynamic values required for annotation lines (horizontal, vertical)
+
+\- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+
+:::
+
+**Example**
+Get the maximum sales value as the annotation line value
+```javascript
+const maxSales = _.maxBy(data, 'sales')?.sales;
+return maxSales || 0;
+```
+
+Calculate the average for the annotation line
+```javascript
+const avgSales = _.meanBy(data, 'sales');
+return _.round(avgSales, 2);
+```
+
+Get the quantile for the annotation line
+```javascript
+const sorted = _.sortBy(data, 'sales');
+const index = Math.floor(sorted.length * 0.75);
+return sorted[index]?.sales || 0;
+```
+
+Calculate the goal value based on conditions
+```javascript
+const currentYearTotal = _.sumBy(
+_.filter(data, item => item.year === 2024),
+'sales'
+);
+return currentYearTotal;
+```
+
+
 
 #### fallback
 
 **Type:** `string | number | undefined`
 
+:::note{title=Description}
+Fallback solution when code execution fails or the environment is not supported.
+
+:::
+
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
+:::note{title=Description}
+Animated filter execution result (runtime field)
+
+
+
+Written during the prepare() phase, read-only at runtime
+
+:::
+
+##### success
+
+**Type:** `false | true`
+
+##### data
+
+**Type:** `string | number | undefined`
+
 ### text
 
 **Type:** `string | string[] | undefined`
+
+:::note{title=Description}
+Annotation text
+
+:::
+
+**Example**
+'Annotation text'
+
+
 
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
 :::note{title=Description}
-Position of the label relative to the line.
+Text position
+
+
+
+Annotation line label position (relative position of the label to the line).
 
 :::
+
+**Example**
+'outsideEnd'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Text color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Text font size
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Text font weight
+
+:::
+
+**Example**
+400
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Description}
-Horizontal alignment relative to the endpoint of the horizontal line.
+Text alignment; typically not required.
+
+Recommended set to 'right' to ensure the text is on the left side of the annotation line.
+
+right: Text is on the left side of the reference line, right-aligned (horizontally) with the endpoint of the annotation line.
+
+left: Text is on the right side of the reference line, left-aligned (horizontally) with the endpoint of the annotation line.
+
+center: Text is centered on the reference line, center-aligned (horizontally) with the endpoint of the annotation line.
 
 :::
+
+**Example**
+'right'
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Description}
-Vertical alignment relative to the line itself.
+Vertical text alignment; typically not required.
+
+Recommended set to 'top' to ensure the text is fully displayed within the chart's visible area.
+
+top: Text is at the bottom of the reference line; the top edge aligns with the (horizontal) annotation line.
+
+middle: Text is centered on the reference line; the center aligns with the (horizontal) annotation line.
+
+bottom: Text is at the top of the reference line; the bottom edge aligns with the (horizontal) annotation line.
 
 :::
+
+**Example**
+'top'
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Description}
+background visibility
+
+:::
+
+**Example**
+true
+
+
+
 ### textBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=Description}
+background color
+
+:::
+
+**Example**
+'red'
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+background stroke color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+background stroke width
+
+
+
+background stroke width
+
+:::
+
+**Example**
+2
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+background corner radius
+
+:::
+
+**Example**
+4
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+background padding
+
+:::
+
+**Example**
+4
+
+
 
 ### lineVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Description}
+Line visibility
+
+
+
+Line visibility
+
+:::
+
+**Example**
+true
+
+
+
 ### lineColor
 
 **Type:** `string | undefined`
+
+:::note{title=Description}
+Line color
+
+:::
+
+**Example**
+'red'
+
+
 
 ### lineWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Line width
+
+:::
+
+**Example**
+2
+
+
+
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Description}
+Line style
+
+:::
+
+**Example**
+'solid'
+
+
 
 ### splitLine
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
 :::note{title=Description}
-Whether to enable splitting the main line into two segments (e.g., highlighting above/below threshold).
+Whether to enable the function to split the main line into two segments.
 
 :::
 
@@ -3426,7 +4296,7 @@ Whether to enable splitting the main line into two segments (e.g., highlighting 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Main color for segments exceeding the threshold.
+Main color for the portion greater than the mark value
 
 :::
 
@@ -3435,7 +4305,7 @@ Main color for segments exceeding the threshold.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Main color for segments below the threshold.
+Main color for parts less than the mark value
 
 :::
 
@@ -3445,7 +4315,9 @@ Main color for segments below the threshold.
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::note{title=Description}
-Annotation area configuration, defining highlighted regions based on selected data, including position, format, and style.
+Mark area
+
+Mark area configuration, according to the selected data, defines the annotation areas in the chart, including position and style.
 
 :::
 
@@ -3455,7 +4327,7 @@ Annotation area configuration, defining highlighted regions based on selected da
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
 :::note{title=Description}
-Data selector used to identify the range for the annotation area.
+Depends on the selected data for marking.
 
 :::
 
@@ -3464,137 +4336,341 @@ Data selector used to identify the range for the annotation area.
 
 **Type:** `string`
 
+:::note{title=Description}
+Dimension field, the ID of a dimension item
+
+:::
+
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the dimension field value is in 'value'
+
+\- not in: Select data items where the dimension field value is not in 'value'
+
+:::
 
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Description}
+Operator
+
+\- in: Select data items where the dimension field value is in 'value'
+
+\- not in: Select data items where the dimension field value is not in 'value'
+
+same as operator
+
+:::
+
 #### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Select dimension values; supports arrays
+
+:::
 
 ### text
 
 **Type:** `string | string[] | undefined`
 
 :::note{title=Description}
-Annotation text within the area.
+Annotation text
 
 :::
+
+**Example**
+'Annotation text'
+
+
 
 ### textPosition
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
 :::note{title=Description}
-Text position within the area.
+Text position
 
 :::
+
+**Example**
+'top'
+
+
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Text color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Text font size
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Text font weight
+
+:::
+
+**Example**
+400
+
+
 
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Description}
-Text alignment. Setting to 'center' ensures title appears centered within the area.
+Text alignment; generally set to 'right' to ensure the text is displayed in the middle of the mark area and within the visible range.
+
+Recommended to set to 'center' to ensure the text is in the center of the mark area.
+
+right: Text is on the left of the mark area, its right edge aligned with the area.
+
+left: Text is on the right of the mark area, its left edge aligned with the area.
+
+center: Text is centered within the mark area.
 
 :::
+
+**Example**
+'center' Text is in the middle of the mark area
+
+
 
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Description}
-Vertical alignment.
+Text vertical alignment; generally set to 'top' to ensure the text is at the bottom of the mark area and within the visible range.
+
+Recommended to set to 'top' to ensure the text is displayed completely within the visible area.
+
+top: Text is at the bottom of the mark area, its top edge aligned with the area.
+
+middle: Text is vertically centered within the mark area.
+
+bottom: Text is at the top of the mark area, its bottom edge aligned with the area.
 
 :::
+
+**Example**
+'top' Text is at the bottom of the mark area
+
+
 
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
+:::note{title=Description}
+Background visible
+
+:::
+
+**Example**
+true
+
+
+
 ### textBackgroundColor
 
 **Type:** `string | undefined`
+
+:::note{title=Description}
+Background color
+
+:::
+
+**Example**
+'red'
+
+
 
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Background border color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Background border width
+
+:::
+
+**Example**
+2
+
+
 
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Background border radius
+
+:::
+
+**Example**
+4
+
+
+
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Background padding
+
+:::
+
+**Example**
+4
+
+
 
 ### areaColor
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Background color of the annotation area.
+Mark area region color
 
 :::
+
+**Example**
+'red'
+
+
 
 ### areaColorOpacity
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacity of the area.
+Mark area region color opacity
 
 :::
+
+**Example**
+0.5
+
+
 
 ### areaBorderColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Mark area region border color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### areaBorderWidth
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Mark area region border width
+
+:::
+
+**Example**
+2
+
+
+
 ### areaBorderRadius
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Mark area region border radius
+
+:::
+
+**Example**
+4
+
+
 
 ### areaLineDash
 
 **Type:** `number[] | undefined`
 
 :::note{title=Description}
-Dash pattern for the area border.
+Line type for the mark area region border
 
 :::
+
+**Example**
+[2, 2]
+
+
 
 ### outerPadding
 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Outer padding for the annotation area.
+Margin for the mark area region
 
 :::
+
+**Example**
+0
 
 
 ## kdeRegressionLine
@@ -3621,7 +4697,9 @@ Whether to enable the KDE regression line.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Line color; defaults to the chart's primary color if not set.
+Regression line color
+
+Used to set the regression line color. If not set, the chart's primary color is used by default.
 
 :::
 
@@ -3630,7 +4708,9 @@ Line color; defaults to the chart's primary color if not set.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Line width in pixels. Defaults to 1.
+Regression line width
+
+Used to set the regression line width in pixels. The default value is 1.
 
 :::
 
@@ -3639,7 +4719,9 @@ Line width in pixels. Defaults to 1.
 **Type:** `number[] | undefined`
 
 :::note{title=Description}
-Line pattern (e.g., solid, dashed, dotted).
+Regression line style
+
+Used to set the regression line style, such as solid or dashed. The default value is solid.
 
 :::
 
@@ -3648,7 +4730,9 @@ Line pattern (e.g., solid, dashed, dotted).
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label text for the regression line. An empty string hides the label.
+Regression line label text
+
+Used to set the regression line label text. An empty string means the label is not displayed.
 
 :::
 
@@ -3656,13 +4740,42 @@ Label text for the regression line. An empty string hides the label.
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Text color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Text font size
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Text font weight
+
+:::
+
+**Example**
+400
+
 
 
 ## ecdfRegressionLine
@@ -3680,7 +4793,7 @@ Empirical Cumulative Distribution Function (ECDF) regression line configuration,
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to enable the ECDF regression line.
+Whether to enable
 
 :::
 
@@ -3688,29 +4801,86 @@ Whether to enable the ECDF regression line.
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Regression line color
+
+Used to set the regression line color. If not set, the chart's primary color is used by default.
+
+:::
+
 ### lineWidth
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Regression line width
+
+Used to set the regression line width in pixels. The default value is 1.
+
+:::
 
 ### lineDash
 
 **Type:** `number[] | undefined`
 
+:::note{title=Description}
+Regression line style
+
+Used to set the regression line style, such as solid or dashed. The default value is solid.
+
+:::
+
 ### text
 
 **Type:** `string | undefined`
+
+:::note{title=Description}
+Regression line label text
+
+Used to set the regression line label text. An empty string means the label is not displayed.
+
+:::
 
 ### textColor
 
 **Type:** `string | undefined`
 
+:::note{title=Description}
+Text color
+
+:::
+
+**Example**
+'red'
+
+
+
 ### textFontSize
 
 **Type:** `number | undefined`
 
+:::note{title=Description}
+Text font size
+
+:::
+
+**Example**
+12
+
+
+
 ### textFontWeight
 
 **Type:** `number | undefined`
+
+:::note{title=Description}
+Text font weight
+
+:::
+
+**Example**
+400
+
 
 
 ## dimensionLinkage
@@ -3718,7 +4888,11 @@ Whether to enable the ECDF regression line.
 **Type:** `DimensionLinkage | undefined`
 
 :::note{title=Description}
-Dimension linkage configuration. When multiple charts or measures are combined, hovering over a dimension value highlights matching data across all charts.
+Whether to enable the dimension linkage function when the chart has perspective enabled or measures are combined.
+
+When hovering over certain dimension value(s), it highlights data with the same dimension values in other sub-charts.
+
+Perspective chart dimension linkage configuration
 
 :::
 
@@ -3727,12 +4901,17 @@ Dimension linkage configuration. When multiple charts or measures are combined, 
 
 **Type:** `false | true`
 
+:::note{title=Description}
+Whether to enable perspective chart dimension linkage
+
+:::
+
 ### showTooltip
 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to show tooltips for all linked dimension points.
+Whether to display tooltips for all dimension sub-charts
 
 :::
 
@@ -3741,14 +4920,14 @@ Whether to show tooltips for all linked dimension points.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to show crosshair labels for linked points.
+Whether to display crosshair labels
 
 :::
 
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call intl.setLocale('zh-CN') to set the language.

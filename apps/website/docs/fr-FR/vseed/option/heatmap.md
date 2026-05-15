@@ -1103,17 +1103,47 @@ Plan de fallback lorsque l’exécution du code échoue ou que l’environnement
 
 **Type:** `string`
 
+:::note{title=Description}
+Champ de dimension, c'est-à-dire l'id d'un élément dans dimensions.
+
+:::
+
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
+
+:::note{title=Description}
+Opérateur
+
+\- in: sélectionne les éléments de données dont la valeur du champ de dimension est présente dans value
+
+\- not in: sélectionne les éléments de données dont la valeur du champ de dimension n'est pas présente dans value
+
+:::
 
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
+:::note{title=Description}
+Opérateur
+
+\- in: sélectionne les éléments de données dont la valeur du champ de dimension est présente dans value
+
+\- not in: sélectionne les éléments de données dont la valeur du champ de dimension n'est pas présente dans value
+
+same as operator
+
+:::
+
 ##### value
 
 **Type:** `string | number | (string | number)[]`
+
+:::note{title=Description}
+Sélectionne les éléments de données selon la valeur du champ de dimension ; les tableaux sont pris en charge.
+
+:::
 
 #### result
 
@@ -1416,7 +1446,7 @@ Les thèmes clair et sombre sont intégrés ; les utilisateurs peuvent définir 
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Locale. Configuration de la langue du graphique ; prend en charge 'zh-CN' et 'en-US'. Vous pouvez aussi appeler intl.setLocale('zh-CN') pour définir la langue.

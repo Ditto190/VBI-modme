@@ -1430,7 +1430,7 @@ _.map(maxItems, item => [
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=説明}
 言語
@@ -1440,4 +1440,3 @@ _.map(maxItems, item => [
 グラフの言語設定。'zh\-CN' と 'en\-US' の 2 つの言語をサポートします
 
 :::
-

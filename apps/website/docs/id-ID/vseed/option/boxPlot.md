@@ -4620,6 +4620,15 @@ Annotation area padding
 **Type:** `DimensionLinkage | undefined`
 
 :::note{title=Description}
+Apakah linkage dimensi diaktifkan saat chart menggunakan fungsi pivot atau kombinasi measure.
+
+Saat hover pada nilai dimensi tertentu, data dengan nilai dimensi yang sama di chart lain akan disorot secara terpadu.
+
+
+
+Konfigurasi linkage dimensi untuk chart pivot
+
+:::
 
 
 ### enable
@@ -4652,7 +4661,7 @@ Whether to display the crosshair label
 
 ## locale
 
-**Type:** `Locale | undefined`
+**Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
 Chart language configuration. Supports 'zh-CN' and 'en-US'. Additionally, methods like intl.setLocale('zh-CN') can be used to set the language.
