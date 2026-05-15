@@ -16,6 +16,11 @@ useMeasures(builder: VBIChartBuilder): UseMeasuresReturn
 
 读取并更新度量配置，提供度量增删改能力。
 
+## 推荐先看
+
+- [基础 Hooks](../examples/basicHooks)
+- [过滤条件编辑](../examples/filterMutations)
+
 ## 最小示例
 
 ```tsx

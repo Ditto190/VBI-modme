@@ -16,6 +16,11 @@ useChartType(builder: VBIChartBuilder): UseChartTypeReturn
 
 读取并更新当前图表类型，同时暴露可选图表类型列表。
 
+## 推荐先看
+
+- [基础 Hooks](../examples/basicHooks)
+- [过滤条件编辑](../examples/filterMutations)
+
 ## 最小示例
 
 ```tsx

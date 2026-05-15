@@ -13,7 +13,8 @@ function main() {
   writeJson(path.join(outputDir, '_meta.json'), buildApiMeta(hooks, components))
 
   all.forEach((item) => {
-    writeText(path.join(outputDir, `${item.slug}.md`), buildApiPage(item))
+    const extension = item.group === 'components' ? 'mdx' : 'md'
+    writeText(path.join(outputDir, `${item.slug}.${extension}`), buildApiPage(item))
   })
 
   console.log(`[build-api] generated ${all.length} api pages in ${outputDir}`)

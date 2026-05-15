@@ -1,0 +1,38 @@
+import { ThemeSelectorApiDemo } from 'vbi-react-starter'
+
+# ThemeSelector
+
+## 导入
+
+```ts
+import { ThemeSelector } from '@visactor/vbi-react/components'
+```
+
+## 签名
+
+```ts
+ThemeSelector(props: ThemeSelectorProps)
+```
+
+## 说明
+
+读取并切换当前主题配置，适合放在顶部工具栏中。
+
+## 推荐先看
+
+- [vbi-react Starter](../examples/vbi-react-starter)
+
+## Live Demo
+
+<ThemeSelectorApiDemo />
+
+## 最小示例
+
+```tsx
+import type { VBIChartBuilder } from '@visactor/vbi'
+import { ThemeSelector } from '@visactor/vbi-react/components'
+
+export function Demo({ builder }: { builder: VBIChartBuilder }) {
+  return <ThemeSelector builder={builder} />
+}
+```

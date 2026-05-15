@@ -16,6 +16,11 @@ useVSeed(builder: VBIChartBuilder, options: UseVSeedOptions =
 
 执行查询与 VSeed 生成流程，返回渲染所需状态与数据。
 
+## 推荐先看
+
+- [基础 Hooks](../examples/basicHooks)
+- [过滤条件编辑](../examples/filterMutations)
+
 ## 最小示例
 
 ```tsx
