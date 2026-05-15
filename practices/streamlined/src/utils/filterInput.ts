@@ -1,6 +1,6 @@
 import type { SchemaField } from 'src/types'
 import type { StreamFilterKind } from './filterActions'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 
 export type FilterDraftValue = string | string[] | { max?: string; min?: string }
 export type FilterInputMode = 'none' | 'number' | 'range' | 'tags' | 'text'
@@ -62,13 +62,15 @@ const operatorLabels = {
   },
 } as const
 
+const getOperatorLabelLocale = (locale: StreamLabels['locale']) => (locale === 'zh-CN' ? 'zh-CN' : 'en-US')
+
 export const getFilterOperators = (kind: StreamFilterKind, field?: SchemaField) => {
   if (kind === 'having' || field?.role === 'measure' || field?.type.toLowerCase() === 'number') return numberOperators
   return textOperators
 }
 
 export const getFilterOperatorOptions = (labels: StreamLabels, kind: StreamFilterKind, field?: SchemaField) => {
-  const localeLabels = operatorLabels[labels.locale]
+  const localeLabels = operatorLabels[getOperatorLabelLocale(labels.locale)]
   return getFilterOperators(kind, field).map((value) => ({ label: localeLabels[value], value }))
 }
 

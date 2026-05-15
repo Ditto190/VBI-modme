@@ -1,6 +1,12 @@
 import { VBIChartBuilder } from '@visactor/vbi'
 import { theme as antdTheme, Card, ConfigProvider, Flex, Spin } from 'antd'
+import deDE from 'antd/locale/de_DE'
 import enUS from 'antd/locale/en_US'
+import frFR from 'antd/locale/fr_FR'
+import idID from 'antd/locale/id_ID'
+import jaJP from 'antd/locale/ja_JP'
+import koKR from 'antd/locale/ko_KR'
+import viVN from 'antd/locale/vi_VN'
 import zhCN from 'antd/locale/zh_CN'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ShelfDndProvider } from 'src/components/Shelves/dnd'
@@ -25,10 +31,16 @@ interface APPProps {
   theme?: DemoTheme
 }
 
-const DEMO_ANTD_LOCALES = {
+const DEMO_ANTD_LOCALES: Record<DemoLocale, typeof zhCN> = {
   'zh-CN': zhCN,
   'en-US': enUS,
-} as const
+  'ja-JP': jaJP,
+  'de-DE': deDE,
+  'id-ID': idID,
+  'fr-FR': frFR,
+  'ko-KR': koKR,
+  'vi-VN': viVN,
+}
 
 const createThemeConfig = (themeMode: DemoTheme) => {
   return {

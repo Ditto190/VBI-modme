@@ -69,7 +69,9 @@ describe('DSL schemas', () => {
 
   test('parse locale, theme and full VBI chart DSL', () => {
     expect(zVBIDSLTheme.parse('dark')).toBe('dark')
-    expect(zVBIDSLLocale.parse('en-US')).toBe('en-US')
+    for (const locale of ['zh-CN', 'en-US', 'ja-JP', 'de-DE', 'id-ID', 'fr-FR', 'ko-KR', 'vi-VN']) {
+      expect(zVBIDSLLocale.parse(locale)).toBe(locale)
+    }
 
     const dsl = zVBIChartDSL.parse({
       connectorId: 'demo',

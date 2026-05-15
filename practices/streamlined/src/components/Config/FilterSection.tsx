@@ -1,5 +1,5 @@
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 import { FilterSlot } from './FilterSlot'
 

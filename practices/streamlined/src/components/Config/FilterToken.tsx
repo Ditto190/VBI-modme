@@ -1,5 +1,5 @@
 import { CloseOutlined, EditOutlined } from '@ant-design/icons'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 import type { StreamFilterCondition, StreamFilterKind } from 'src/utils/filterActions'
 

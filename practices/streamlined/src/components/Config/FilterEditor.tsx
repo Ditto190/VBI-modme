@@ -1,5 +1,5 @@
 import { Button, Input, InputNumber, Select, Space } from 'antd'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 import { aggregateFunctions, type StreamFilterKind } from 'src/utils/filterActions'
 import type { FilterDraftValue, FilterInputMode } from 'src/utils/filterInput'

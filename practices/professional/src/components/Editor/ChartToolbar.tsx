@@ -9,7 +9,12 @@ import {
 } from '@ant-design/icons'
 import { Button, InputNumber, Segmented, Select, Tooltip } from 'antd'
 import type { ProfessionalLabels } from 'src/config/labels'
-import type { ProfessionalLocale, ProfessionalTheme } from 'src/constants/builder'
+import {
+  PROFESSIONAL_LOCALE_LABELS,
+  PROFESSIONAL_SUPPORTED_LOCALES,
+  type ProfessionalLocale,
+  type ProfessionalTheme,
+} from 'src/constants/builder'
 
 type ChartToolbarProps = {
   canRedo: boolean
@@ -67,12 +72,13 @@ export const ChartToolbar = (props: ChartToolbarProps) => (
       />
     </Tooltip>
     {!props.hideLocale && (
-      <Segmented<ProfessionalLocale>
-        className='pro-toolbar-segment'
-        options={[
-          { label: props.labels.languageChinese, value: 'zh-CN' },
-          { label: props.labels.languageEnglish, value: 'en-US' },
-        ]}
+      <Select<ProfessionalLocale>
+        className='pro-locale-select'
+        options={PROFESSIONAL_SUPPORTED_LOCALES.map((value) => ({
+          label: PROFESSIONAL_LOCALE_LABELS[value],
+          value,
+        }))}
+        size='small'
         value={props.locale}
         onChange={props.onLocaleChange}
       />

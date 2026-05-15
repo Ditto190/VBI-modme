@@ -8,7 +8,7 @@ import {
   type DateAggregate,
   type MeasureAggregate,
 } from 'src/config/aggregates'
-import type { MinimalLabels } from 'src/config/labels'
+import type { MinimalLabels } from 'src/i18n'
 import type { EditorField, FieldRole } from 'src/types'
 import { removeField } from 'src/utils/fields'
 type ShelfItem = VBIDimension | VBIMeasure

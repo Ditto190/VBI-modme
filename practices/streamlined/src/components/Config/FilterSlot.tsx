@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { Popover, Select } from 'antd'
 import { type DragEvent, useState } from 'react'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 import { readDraggedField } from 'src/utils/dragDrop'
 import {

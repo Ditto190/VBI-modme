@@ -1,7 +1,7 @@
 import { FullscreenOutlined, SettingOutlined } from '@ant-design/icons'
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { Button, Popover, Tooltip } from 'antd'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import { ChartSettings } from './ChartSettings'
 
 type ChartToolbarProps = {

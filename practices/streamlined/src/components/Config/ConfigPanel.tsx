@@ -9,7 +9,7 @@ import {
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { Select } from 'antd'
 import { useState } from 'react'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
 import { ConfigSection } from './ConfigSection'
 import { FilterSection } from './FilterSection'
 import { MappingSlot } from './MappingSlot'

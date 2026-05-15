@@ -1,7 +1,8 @@
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
-import { InputNumber, Segmented } from 'antd'
+import { InputNumber, Segmented, Select } from 'antd'
 import type { ReactNode } from 'react'
-import type { StreamLabels } from 'src/config/labels'
+import type { StreamLabels } from 'src/i18n'
+import { DEMO_LOCALE_LABELS, DEMO_SUPPORTED_LOCALES, type DemoLocale } from 'src/constants/builder'
 import { normalizeLimit, readLimit } from 'src/utils/chartControlUtils'
 
 type ChartSettingsProps = {
@@ -47,14 +48,11 @@ export const ChartSettings = ({ builder, dsl, hideLocale, hideTheme, labels }: C
     )}
     {!hideLocale && (
       <SettingRow label={labels.language}>
-        <Segmented
-          onChange={(value) => builder.locale.setLocale(value === 'en-US' ? 'en-US' : 'zh-CN')}
-          options={[
-            { label: labels.languageChinese, value: 'zh-CN' },
-            { label: labels.languageEnglish, value: 'en-US' },
-          ]}
+        <Select<DemoLocale>
+          onChange={(value) => builder.locale.setLocale(value)}
+          options={DEMO_SUPPORTED_LOCALES.map((value) => ({ label: DEMO_LOCALE_LABELS[value], value }))}
           size='small'
-          value={dsl.locale === 'en-US' ? 'en-US' : 'zh-CN'}
+          value={(dsl.locale as DemoLocale | undefined) ?? 'zh-CN'}
         />
       </SettingRow>
     )}

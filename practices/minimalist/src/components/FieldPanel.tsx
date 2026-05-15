@@ -2,7 +2,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
 import { useMemo, useState } from 'react'
 import { FieldGroup } from 'src/components/FieldGroup'
-import type { MinimalLabels } from 'src/config/labels'
+import type { MinimalLabels } from 'src/i18n'
 import type { EditorField } from 'src/types'
 
 type FieldPanelProps = {
