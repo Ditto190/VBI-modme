@@ -1,12 +1,12 @@
 # ChartRenderer
 
-## Import
+## Impor
 
 ```ts
 import { ChartRenderer } from '@visactor/vbi-react/components'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 ChartRenderer(props: ChartRendererProps)
@@ -14,7 +14,7 @@ ChartRenderer(props: ChartRendererProps)
 
 ## Deskripsi
 
-Merender chart berdasarkan output builder, serta menangani status loading dan error.
+Merender chart berdasarkan output builder, serta menangani status pemuatan dan error.
 
 ## Contoh Minimal
 

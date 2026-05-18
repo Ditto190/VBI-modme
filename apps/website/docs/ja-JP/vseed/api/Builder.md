@@ -16,7 +16,7 @@ prepare(): Promise<void>
 build<T = S>(): T
 ```
 
-最終的なチャート設定（Spec）を生成します。最もよく使われる中核メソッドです。設定に `dynamicFilter` code が含まれる場合は、先に `prepare()` を呼び出す必要があります。
+最終的なグラフ設定（Spec）を生成します。最もよく使われる中核メソッドです。設定に `dynamicFilter` 内の `code` が含まれる場合は、先に `prepare()` を呼び出す必要があります。
 
 ### buildSpec
 
@@ -32,7 +32,7 @@ buildSpec<T = S>(advanced: AdvancedVSeed): T
 buildAdvanced(): AdvancedVSeed | null
 ```
 
-中間層設定（AdvancedVSeed）、つまりチャートテンプレートを生成します。元の VSeed より詳細で、より多くのチャート内部情報を公開します。
+中間層設定（AdvancedVSeed）、つまりグラフテンプレートを生成します。元の VSeed より詳細で、より多くのグラフ内部情報を公開します。
 
 ### getColorItems
 
@@ -40,7 +40,7 @@ buildAdvanced(): AdvancedVSeed | null
 getColorItems(): __type[]
 ```
 
-データ内で色に関係するフィールド情報を取得します。チャートの凡例や色フィルター UI の生成によく使われます。
+データ内で色に関係するフィールド情報を取得します。グラフの凡例や色フィルター UI の生成によく使われます。
 
 ### getColorIdMap
 
@@ -48,7 +48,7 @@ getColorItems(): __type[]
 getColorIdMap(): Record
 ```
 
-色フィールドの詳細なマッピング表を取得します。Key は色 ID、Value は詳細情報です。
+色フィールドの詳細なマッピング表を取得します。キーは色 ID、値は詳細情報です。
 
 ### getColorValueMap
 
@@ -66,7 +66,7 @@ getColorValueMap(): undefined | Record
 static getAdvancedPipeline(chartType: ChartType): Pipe[]
 ```
 
-[内部メソッド] 指定したチャートタイプのテンプレート構築パイプラインを取得します。VSeed から AdvancedVSeed への変換過程をデバッグするために使います。
+[内部メソッド] 指定したグラフタイプのテンプレート構築パイプラインを取得します。VSeed から AdvancedVSeed への変換過程をデバッグするために使います。
 
 ### getSpecPipeline
 
@@ -74,7 +74,7 @@ static getAdvancedPipeline(chartType: ChartType): Pipe[]
 static getSpecPipeline(chartType: ChartType): SpecPipe[]
 ```
 
-[内部メソッド] 指定したチャートタイプの Spec 構築パイプラインを取得します。AdvancedVSeed から Spec への変換過程をデバッグするために使います。
+[内部メソッド] 指定したグラフタイプの Spec 構築パイプラインを取得します。AdvancedVSeed から Spec への変換過程をデバッグするために使います。
 
 ### getTheme
 
@@ -106,7 +106,7 @@ Builder インスタンスを簡単に作成するための静的ファクトリ
 static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline): void
 ```
 
-[拡張メソッド] 新しいチャートタイプのテンプレート構築パイプラインを登録します。
+[拡張メソッド] 新しいグラフタイプのテンプレート構築パイプラインを登録します。
 
 ### registerSpecPipeline
 
@@ -114,7 +114,7 @@ static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline
 static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 ```
 
-[拡張メソッド] 新しいチャートタイプの Spec 構築パイプラインを登録します。
+[拡張メソッド] 新しいグラフタイプの Spec 構築パイプラインを登録します。
 
 ### updateAdvanced
 
@@ -122,7 +122,7 @@ static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 ```
 
-[拡張メソッド] 既存チャートのテンプレート構築ロジックを変更し、カスタム Pipe を挿入して生成される AdvancedVSeed に影響を与えます。
+[拡張メソッド] 既存グラフのテンプレート構築ロジックを変更し、カスタム Pipe を挿入して生成される AdvancedVSeed に影響を与えます。
 
 ### updateSpec
 
@@ -130,7 +130,7 @@ static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 ```
 
-[拡張メソッド] 既存チャートの Spec 構築ロジックを変更し、カスタム Pipe を挿入して生成される最終 Spec に影響を与えます。
+[拡張メソッド] 既存グラフの Spec 構築ロジックを変更し、カスタム Pipe を挿入して生成される最終 Spec に影響を与えます。
 
 ### registerTheme
 

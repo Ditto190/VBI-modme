@@ -1,54 +1,54 @@
 # Rose
 
 :::info{title=권장}
-\- Recommended field configuration: `1` measure(s), `1` dimension(s)
+\- 권장 필드 구성: `1`개 지표, `1`개 차원
 
-\- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
+\- 데이터 리셰이프 지원: 최소 `1`개 지표, `0`개 차원
 
 :::
 
 :::info{title=인코딩 매핑}
-stackingThe Rose Chart supports the following visual channels:
+스택형 로즈 차트는 다음 시각 채널을 지원합니다:
 
-`angle`  : angle channel, supports`multiple dimensions`, maps dimension values to the angular axis
+`angle`  : 각도 채널, `여러 차원`을 지원하며 차원 값을 각도 축에 매핑합니다
 
-`radius` : radius channel, supports`multiple measures`, maps measure values to the radius axis
+`radius` : 반지름 채널, `여러 지표`를 지원하며 지표 값을 반지름 축에 매핑합니다
 
-`detail` : detail channel, supports`multiple dimensions`, used to display more granular data within the same color series
+`detail` : 세부 채널, `여러 차원`을 지원하며 같은 색상 계열 내에서 더 세분화된 데이터를 표시할 때 사용합니다
 
-`color`  : color channel, supports`multiple dimensions`or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
+`color`  : 색상 채널, `여러 차원` 또는 `하나의 지표`를 지원합니다. 차원 색상은 데이터 계열을 구분하는 데 사용되고, 지표 색상은 지표 값을 그래픽 색상에 선형 매핑하는 데 사용됩니다
 
-`tooltip`: tooltip channel, supports`multiple dimensions` and `multiple measures`, displayed when hovering over a data point
+`tooltip`: 툴팁 채널, `여러 차원`과 `여러 지표`를 지원하며 데이터 포인트에 마우스를 올릴 때 표시됩니다
 
-`label`  : label channel, supports`multiple dimensions` and `multiple measures`, displays data labels on data points
+`label`  : 라벨 채널, `여러 차원`과 `여러 지표`를 지원하며 데이터 포인트에 데이터 라벨을 표시합니다
 
 :::
 
-:::note{title=Description}
-Rose Chart, suitable for multi-dimensional data comparison scenarios, displaying data size through the arc length and radius of sectors in a polar coordinate system
+:::note{title=설명}
+스택형 로즈 차트는 다차원 데이터 비교 시나리오에 적합하며, 극좌표계에서 섹터의 호 길이와 반지름으로 데이터 크기를 표시합니다
 
-Applicable scenarios:
+적용 시나리오:
 
-\- Distribution comparison of multi-dimensional data
+\- 다차원 데이터의 분포 비교
 
-\- Comparison of strength in periodic data
+\- 주기성 데이터의 강약 비교
 
-\- Concurrent display of numerical values and proportions for categorical data
+\- 범주형 데이터의 수치와 비율 동시 표시
 
 :::
 
 :::warning{title=Warning}
-Data requirements:
+데이터 요구 사항:
 
-\- At least 1 numerical field
+\- 최소 1개의 숫자 필드(지표)
 
-\- The first dimension is placed on the angular axis; other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items
+\- 첫 번째 차원은 각도 축에 배치되고, 나머지 차원은 지표 이름(여러 지표가 있는 경우)과 병합되어 범례 항목으로 표시됩니다
 
-\- All measures are automatically merged into one measure
+\- 모든 지표는 자동으로 하나의 지표로 병합됩니다
 
-Features enabled by default:
+기본으로 활성화되는 기능:
 
-\- Legend, polar coordinate system, data labels, tooltips, and numerical scaling are enabled by default
+\- 범례, 극좌표계, 데이터 라벨, 툴팁, 값 스케일링이 기본으로 활성화됩니다
 
 :::
 
@@ -57,16 +57,16 @@ Features enabled by default:
 
 **Type:** `"rose"`
 
-:::note{title=Description}
-stackingRose Chart
+:::note{title=설명}
+스택형 로즈 차트
 
 
 
-Rose Chart, displaying multi-dimensional data comparison relationships through a polar coordinate system
+스택형 로즈 차트, 극좌표계를 통해 다차원 데이터 비교 관계를 표시합니다
 
 :::
 
-**Example**
+**예시**
 'rose'
 
 
@@ -76,16 +76,16 @@ Rose Chart, displaying multi-dimensional data comparison relationships through a
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-Dataset
+:::note{title=설명}
+데이터셋
 
 
 
-An aggregated dataset that follows TidyData specifications, used to define the chart's data source and structure. User-input datasets do not require any manual processing; VSeed features a powerful data reshaping function that automatically transforms the data. Rose Chart data is eventually converted into 2 dimensions and 1 measure.
+TidyData 사양을 따르는 집계된 데이터셋으로, 차트의 데이터 소스와 구조를 정의하는 데 사용됩니다. 사용자가 입력한 데이터셋은 별도 처리할 필요가 없으며, VSeed의 강력한 데이터 리셰이프 기능이 데이터를 자동으로 리셰이프합니다. 로즈 차트 데이터는 최종적으로 2개의 차원과 1개의 지표로 변환됩니다.
 
 :::
 
-**Example**
+**예시**
 [{month:'Jan', value:100}, {month:'Feb', value:150}, {month:'Mar', value:120}]
 
 
@@ -95,16 +95,16 @@ An aggregated dataset that follows TidyData specifications, used to define the c
 
 **Type:** `RadarDimension[] | undefined`
 
-:::note{title=Description}
-Dimensions
+:::note{title=설명}
+차원
 
 
 
-The first dimension of the Rose Chart is mapped to the angular axis; other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items.
+로즈 차트의 첫 번째 차원은 각도 축에 매핑되고, 나머지 차원은 지표 이름(여러 지표가 있는 경우)과 병합되어 범례 항목으로 표시됩니다.
 
 :::
 
-**Example**
+**예시**
 [{id: 'category', alias: 'Category'}]
 
 
@@ -114,8 +114,8 @@ The first dimension of the Rose Chart is mapped to the angular axis; other dimen
 
 **Type:** `string`
 
-:::note{title=Description}
-Field ID corresponding to the dimension
+:::note{title=설명}
+차원에 대응하는 필드 ID
 
 :::
 
@@ -123,8 +123,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Dimension alias
+:::note{title=설명}
+차원 별칭
 
 :::
 
@@ -132,8 +132,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=설명}
+차원 날짜 형식 설정
 
 :::
 
@@ -142,8 +142,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=설명}
+시간 단위, 날짜 표시 정밀도를 결정합니다
 
 :::
 
@@ -151,22 +151,22 @@ Time granularity, determines the date display precision
 
 **Type:** `"color" | "detail" | "tooltip" | "label" | "row" | "column" | "angle" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=설명}
+차원이 매핑되는 채널
 
-\- angle: supports mapping multiple dimensions to the angle channel
+\- angle: 여러 차원을 각도 채널에 매핑할 수 있습니다
 
-\- color: supports mapping multiple dimensions to the color channel
+\- color: 여러 차원을 색상 채널에 매핑할 수 있습니다
 
-\- detail: supports mapping multiple dimensions to the detail channel
+\- detail: 여러 차원을 detail 채널에 매핑할 수 있습니다
 
-\- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: 여러 차원을 tooltip 채널에 매핑할 수 있습니다
 
-\- label: supports mapping multiple dimensions to the label channel
+\- label: 여러 차원을 label 채널에 매핑할 수 있습니다
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: 여러 차원을 행 채널에 매핑할 수 있습니다
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: 여러 차원을 열 채널에 매핑할 수 있습니다
 
 :::
 
@@ -175,16 +175,16 @@ Channel to which the dimension is mapped
 
 **Type:** `RadarMeasure[] | undefined`
 
-:::note{title=Description}
-Measures
+:::note{title=설명}
+지표
 
 
 
-Measures in the Rose Chart are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with other dimensions to be displayed as legend items.
+로즈 차트의 지표는 자동으로 하나의 지표로 병합되어 반지름 축에 매핑됩니다. 여러 지표가 있는 경우 지표 이름은 다른 차원과 병합되어 범례 항목으로 표시됩니다.
 
 :::
 
-**Example**
+**예시**
 [{id: 'value', alias: 'Value'}]
 
 
@@ -194,8 +194,8 @@ Measures in the Rose Chart are automatically merged into one measure and mapped 
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure ID, must be unique
+:::note{title=설명}
+지표 식별자, 중복될 수 없습니다
 
 :::
 
@@ -203,8 +203,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=설명}
+지표 별칭, 중복을 허용합니다. 설정하지 않으면 alias 는 id 입니다
 
 :::
 
@@ -212,20 +212,20 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+:::note{title=설명}
+자동 숫자 형식화, 기본적으로 활성화되며 우선순위가 가장 높습니다
 
-When autoFormat=true, it overrides all numFormat configurations
+autoFormat=true이면 모든 numFormat 설정을 덮어씁니다
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+활성화하면 그래프 데이터 레이블과 툴팁이 지표 값과 locale에 따라 적절한 형식을 자동으로 선택합니다
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+형식화 규칙: compact notation이 활성화된 10진수, 소수 자릿수 최소 0자리 및 최대 2자리, 자동 반올림, 브라우저의 Intl.NumberFormat 구현 사용
 
-For example:
+예:
 
-\- locale='zh-CN': 749740.264 → 74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-\- locale='en-US': 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -233,10 +233,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=설명}
+지표의 사용자 지정 숫자 형식화이며 label과 tooltip에 자동 적용됩니다
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+참고: 사용자 지정 형식을 사용하려면 autoFormat=false를 명시적으로 설정해야 합니다. 그렇지 않으면 autoFormat이 이 설정을 덮어씁니다
 
 :::
 
@@ -245,8 +245,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+숫자 형식 유형입니다. 숫자(십진수), 백분율(%), 천분율(‰), 과학적 표기법을 지원합니다
 
 :::
 
@@ -254,14 +254,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+숫자 형식 비율, 0일 수 없습니다
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000는 10万, ratio:10000, symbol:"万"
+\- 100000은 10K로 변환됩니다, ratio:1000, symbol:"K"
 
 
 
@@ -269,14 +269,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=설명}
+숫자 형식 기호, 예: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000는 10万, ratio:10000, symbol:"万"
+\- 100000은 10K로 변환됩니다, ratio:1000, symbol:"K"
 
 
 
@@ -284,8 +284,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+숫자 형식의 천 단위 구분자
 
 :::
 
@@ -293,8 +293,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+숫자 형식 접미사
 
 :::
 
@@ -302,8 +302,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+숫자 형식 접두사
 
 :::
 
@@ -311,18 +311,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=설명}
+숫자 형식의 소수 자릿수, 브라우저 Intl.NumberFormat의 minimumFractionDigits 및 maximumFractionDigits를 사용합니다. significantDigits보다 우선순위가 낮습니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678은 1235로 변환됩니다, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678은 1234.6으로 변환됩니다, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678은 1234.57로 변환됩니다, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678은 1230.568로 변환됩니다, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678은 1234.5678로 변환됩니다, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678은 1234.56780으로 변환됩니다, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -330,20 +330,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=설명}
+숫자 형식의 유효 숫자, 브라우저 Intl.NumberFormat의 minimumSignificantDigits 및 maximumSignificantDigits를 사용합니다. fractionDigits보다 우선순위가 높습니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678은 1000으로 변환됩니다, significantDigits:1
+\- 1234.5678은 1200으로 변환됩니다, significantDigits:2
+\- 1234.5678은 1230으로 변환됩니다, significantDigits:3
+\- 1234.5678은 1234로 변환됩니다, significantDigits:4
+\- 1234.5678은 1234.6으로 변환됩니다, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678은 1234.57로 변환됩니다, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678은 1234.568로 변환됩니다, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -351,14 +351,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=설명}
+significantDigits와 fractionDigits가 모두 설정된 경우의 숫자 형식 반올림 우선순위입니다. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingPriority와 동일한 규칙을 따릅니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+\- 1234.5678은 1230으로 변환됩니다, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -366,8 +366,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=설명}
+숫자 형식의 반올림 모드, 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingMode와 동일한 규칙을 따릅니다
 
 :::
 
@@ -380,8 +380,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+숫자 형식 유형입니다. 숫자(십진수), 백분율(%), 천분율(‰), 과학적 표기법을 지원합니다
 
 :::
 
@@ -389,14 +389,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+숫자 형식 비율, 0일 수 없습니다
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000는 10万, ratio:10000, symbol:"万"
+\- 100000은 10K로 변환됩니다, ratio:1000, symbol:"K"
 
 
 
@@ -404,14 +404,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=설명}
+숫자 형식 기호, 예: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000는 10万, ratio:10000, symbol:"万"
+\- 100000은 10K로 변환됩니다, ratio:1000, symbol:"K"
 
 
 
@@ -419,8 +419,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+숫자 형식의 천 단위 구분자
 
 :::
 
@@ -428,8 +428,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+숫자 형식 접미사
 
 :::
 
@@ -437,8 +437,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+숫자 형식 접두사
 
 :::
 
@@ -446,18 +446,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=설명}
+숫자 형식의 소수 자릿수, 브라우저 Intl.NumberFormat의 minimumFractionDigits 및 maximumFractionDigits를 사용합니다. significantDigits보다 우선순위가 낮습니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678은 1235로 변환됩니다, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678은 1234.6으로 변환됩니다, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678은 1234.57로 변환됩니다, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678은 1230.568로 변환됩니다, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678은 1234.5678로 변환됩니다, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678은 1234.56780으로 변환됩니다, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -465,20 +465,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=설명}
+숫자 형식의 유효 숫자, 브라우저 Intl.NumberFormat의 minimumSignificantDigits 및 maximumSignificantDigits를 사용합니다. fractionDigits보다 우선순위가 높습니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678은 1000으로 변환됩니다, significantDigits:1
+\- 1234.5678은 1200으로 변환됩니다, significantDigits:2
+\- 1234.5678은 1230으로 변환됩니다, significantDigits:3
+\- 1234.5678은 1234로 변환됩니다, significantDigits:4
+\- 1234.5678은 1234.6으로 변환됩니다, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678은 1234.57로 변환됩니다, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678은 1234.568로 변환됩니다, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -486,14 +486,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=설명}
+significantDigits와 fractionDigits가 모두 설정된 경우의 숫자 형식 반올림 우선순위입니다. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingPriority와 동일한 규칙을 따릅니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+\- 1234.5678은 1230으로 변환됩니다, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -501,8 +501,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=설명}
+숫자 형식의 반올림 모드, 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingMode와 동일한 규칙을 따릅니다
 
 :::
 
@@ -510,16 +510,16 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"color" | "tooltip" | "label" | "radius" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped
+:::note{title=설명}
+지표가 매핑되는 채널
 
-\- radius: measure mapped to the radius channel
+\- radius: 반지름 채널에 매핑되는 지표
 
-\- color: measure mapped to the color channel
+\- color: 색상 채널에 매핑되는 지표
 
-\- label: measure mapped to the label channel
+\- label: label 채널에 매핑되는 지표
 
-\- tooltip: measure mapped to the tooltip channel
+\- tooltip: tooltip 채널에 매핑되는 지표
 
 :::
 
@@ -527,13 +527,13 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=설명}
+평면 지표 설정 형식에서 트리형 지표 그룹을 구성합니다. parentId는 부모 지표 그룹의 id를 가리키며 지표 트리를 구성하는 데 사용됩니다
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+지표 트리를 설정하는 방법은 두 가지입니다. 옵션 1은 children이 있는 지표 트리를 직접 설정하는 방식이고, 옵션 2는 parentId가 있는 평면 지표 목록을 설정하는 방식입니다. 두 방식은 동시에 사용할 수 없습니다
 
 :::
 
@@ -542,8 +542,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration, used to specify the field name for pagination; must be a dimension
+:::note{title=설명}
+페이지네이션 설정으로, 페이지네이션 필드명을 지정하는 데 사용되며 해당 필드는 dimension이어야 합니다.
 
 :::
 
@@ -552,8 +552,8 @@ Pagination configuration, used to specify the field name for pagination; must be
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=설명}
+페이지네이션 필드; 페이지네이션에 사용할 필드 이름을 지정하며 반드시 차원이어야 합니다
 
 :::
 
@@ -561,12 +561,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+:::note{title=설명}
+현재 페이지네이션 값; 현재 페이지를 결정하는 데 사용할 값을 지정합니다
 
 :::
 
-**Example**
+**예시**
 '2023\-01\-01'
 
 
@@ -576,12 +576,12 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Chart background color
+:::note{title=설명}
+차트 배경색
 
 
 
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+배경색은 색상 문자열(예: 'red', 'blue') 또는 hex, rgb, rgba 값(예: '#ff0000', 'rgba(255,0,0,0.5)')일 수 있습니다
 
 :::
 
@@ -590,12 +590,12 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 
 **Type:** `Color | undefined`
 
-:::note{title=Description}
-Color
+:::note{title=설명}
+색상
 
 
 
-Color configuration for defining the chart's color scheme, including color lists, color mappings, and color gradients.
+색상 목록, 색상 매핑, 색상 그라데이션을 포함해 차트의 색상 체계를 정의하는 색상 설정입니다.
 
 :::
 
@@ -604,12 +604,12 @@ Color configuration for defining the chart's color scheme, including color lists
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Discrete color scheme used to define the colors of different elements in the chart
+:::note{title=설명}
+차트의 서로 다른 요소 색상을 정의하는 이산 색상 체계
 
 :::
 
-**Example**
+**예시**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -618,12 +618,12 @@ Discrete color scheme used to define the colors of different elements in the cha
 
 **Type:** `string[] | undefined`
 
-:::note{title=Description}
-Linear gradient color scheme used to define the colors of different elements in the chart
+:::note{title=설명}
+차트의 서로 다른 요소 색상을 정의하는 선형 그라데이션 색상 체계
 
 :::
 
-**Example**
+**예시**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -632,12 +632,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Description}
-Color mapping used to map data values to specific colors
+:::note{title=설명}
+데이터 값을 특정 색상에 매핑하는 색상 매핑
 
 :::
 
-**Example**
+**예시**
 {
  'profit': 'red',
  'sales': 'blue',
@@ -649,8 +649,8 @@ Color mapping used to map data values to specific colors
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for positive values in the chart
+:::note{title=설명}
+양수/음수 색상 설정; 차트에서 양수 값의 색상을 정의합니다
 
 :::
 
@@ -658,8 +658,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Positive/negative color configuration; defines the color for negative values in the chart
+:::note{title=설명}
+양수/음수 색상 설정; 차트에서 음수 값의 색상을 정의합니다
 
 :::
 
@@ -668,12 +668,12 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `PieLabel | undefined`
 
-:::note{title=Description}
-Label
+:::note{title=설명}
+레이블
 
 
 
-Label configuration for defining chart data labels, including their position, format, and style.
+위치, 형식, 스타일을 포함해 그래프 데이터 레이블을 정의하는 레이블 설정입니다.
 
 :::
 
@@ -682,8 +682,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Description}
-Whether label functionality is enabled
+:::note{title=설명}
+레이블 기능 활성화 여부
 
 :::
 
@@ -691,8 +691,8 @@ Whether label functionality is enabled
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels wrap to the next line
+:::note{title=설명}
+레이블을 다음 줄로 줄바꿈할지 여부
 
 :::
 
@@ -700,12 +700,12 @@ Whether labels wrap to the next line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display measure values
+:::note{title=설명}
+레이블에 지표 값을 표시할지 여부
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+다중 지표 시나리오에서는 값 충돌을 걱정할 필요가 없습니다. 플롯 관련 모든 지표는 `foldMeasures` 처리를 거쳐 단일 데이터 포인트를 나타내는 하나의 지표로 병합됩니다
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+참고: encoding의 label 우선순위가 더 높으므로 이 설정은 encoding의 label에 영향을 주지 않습니다
 
 :::
 
@@ -713,12 +713,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display the percentage of measure values
+:::note{title=설명}
+레이블에 지표 값의 백분율을 표시할지 여부
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+다중 지표 시나리오에서는 값 충돌을 걱정할 필요가 없습니다. 플롯 관련 모든 지표는 `foldMeasures` 처리를 거쳐 단일 데이터 포인트를 나타내는 하나의 지표로 병합됩니다
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+참고: encoding의 label 우선순위가 더 높으므로 이 설정은 encoding의 label에 영향을 주지 않습니다
 
 :::
 
@@ -726,12 +726,12 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether labels display dimension labels
+:::note{title=설명}
+레이블에 차원 레이블을 표시할지 여부
 
-Display all dimension labels
+모든 차원 레이블 표시
 
-Note: encoding's label has higher priority; this config does not affect encoding's label
+참고: encoding의 label 우선순위가 더 높으므로 이 설정은 encoding의 label에 영향을 주지 않습니다
 
 :::
 
@@ -739,8 +739,8 @@ Note: encoding's label has higher priority; this config does not affect encoding
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+:::note{title=설명}
+레이블 값을 자동 형식화할지 여부. autoFormat이 true이면 numFormat 설정은 무시됩니다
 
 :::
 
@@ -748,8 +748,8 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+:::note{title=설명}
+레이블 값 형식 설정입니다. `measure`의 `format`과 병합되며, `measure`의 `format` 우선순위가 더 높습니다. numFormat 우선순위는 autoFormat보다 낮습니다
 
 :::
 
@@ -758,8 +758,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=설명}
+숫자 형식 유형입니다. 숫자(십진수), 백분율(%), 천분율(‰), 과학적 표기법을 지원합니다
 
 :::
 
@@ -767,14 +767,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=설명}
+숫자 형식 비율, 0일 수 없습니다
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000는 10万, ratio:10000, symbol:"万"
+\- 100000은 10K로 변환됩니다, ratio:1000, symbol:"K"
 
 
 
@@ -782,14 +782,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=설명}
+숫자 형식 기호, 예: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**예시**
+\- 100000는 10万, ratio:10000, symbol:"万"
+\- 100000은 10K로 변환됩니다, ratio:1000, symbol:"K"
 
 
 
@@ -797,8 +797,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=설명}
+숫자 형식의 천 단위 구분자
 
 :::
 
@@ -806,8 +806,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=설명}
+숫자 형식 접미사
 
 :::
 
@@ -815,8 +815,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=설명}
+숫자 형식 접두사
 
 :::
 
@@ -824,18 +824,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=설명}
+숫자 형식의 소수 자릿수, 브라우저 Intl.NumberFormat의 minimumFractionDigits 및 maximumFractionDigits를 사용합니다. significantDigits보다 우선순위가 낮습니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678은 1235로 변환됩니다, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678은 1234.6으로 변환됩니다, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678은 1234.57로 변환됩니다, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678은 1230.568로 변환됩니다, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678은 1234.5678로 변환됩니다, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678은 1234.56780으로 변환됩니다, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -843,20 +843,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=설명}
+숫자 형식의 유효 숫자, 브라우저 Intl.NumberFormat의 minimumSignificantDigits 및 maximumSignificantDigits를 사용합니다. fractionDigits보다 우선순위가 높습니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**예시**
+\- 1234.5678은 1000으로 변환됩니다, significantDigits:1
+\- 1234.5678은 1200으로 변환됩니다, significantDigits:2
+\- 1234.5678은 1230으로 변환됩니다, significantDigits:3
+\- 1234.5678은 1234로 변환됩니다, significantDigits:4
+\- 1234.5678은 1234.6으로 변환됩니다, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678은 1234.57로 변환됩니다, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678은 1234.568로 변환됩니다, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -864,14 +864,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=설명}
+significantDigits와 fractionDigits가 모두 설정된 경우의 숫자 형식 반올림 우선순위입니다. 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingPriority와 동일한 규칙을 따릅니다
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**예시**
+\- 1234.5678은 1230으로 변환됩니다, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678은 1234.5678로 변환됩니다, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -879,8 +879,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=설명}
+숫자 형식의 반올림 모드, 브라우저 Intl.NumberFormat을 사용하며 Intl.NumberFormat의 roundingMode와 동일한 규칙을 따릅니다
 
 :::
 
@@ -888,8 +888,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Label font size
+:::note{title=설명}
+레이블 글꼴 크기
 
 :::
 
@@ -897,8 +897,8 @@ Label font size
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-Label font weight
+:::note{title=설명}
+레이블 글꼴 두께
 
 :::
 
@@ -906,8 +906,8 @@ Label font weight
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label background color
+:::note{title=설명}
+레이블 배경색
 
 :::
 
@@ -915,8 +915,8 @@ Label background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label stroke color
+:::note{title=설명}
+레이블 테두리 색상
 
 :::
 
@@ -924,8 +924,8 @@ Label stroke color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Label font color
+:::note{title=설명}
+레이블 글꼴 색상
 
 :::
 
@@ -933,8 +933,8 @@ Label font color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label font color automatically inverts based on the graphical element color
+:::note{title=설명}
+요소 색상에 따라 글꼴 색상을 자동 반전할지 여부
 
 :::
 
@@ -942,8 +942,8 @@ Whether the label font color automatically inverts based on the graphical elemen
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Description}
-label position
+:::note{title=설명}
+레이블 위치
 
 :::
 
@@ -951,8 +951,8 @@ label position
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the label anti-overlap function is enabled
+:::note{title=설명}
+레이블 겹침 방지 기능 활성화 여부
 
 :::
 
@@ -960,8 +960,8 @@ Whether the label anti-overlap function is enabled
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Label filtering; the default relationship between selectors is OR
+:::note{title=설명}
+레이블 필터링, selector 간 기본 관계는 Or입니다
 
 :::
 
@@ -970,18 +970,18 @@ Label filtering; the default relationship between selectors is OR
 
 **Type:** `string`
 
-:::note{title=Description}
-
+:::note{title=설명}
+차원 필드, dimensions 항목 중 하나의 id
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-same as operator
+:::note{title=설명}
+차원 필드, 차원 항목의 ID
 
-\- in: Select data items whose dimension field value is within the specified value
+연산자
 
 
 :::
@@ -990,13 +990,13 @@ same as operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-same as operator
+:::note{title=설명}
+\- in: 차원 필드 값이 value에 포함되는 데이터 항목을 선택합니다
 
-\- in: Select data items whose dimension field value is within the specified value
+\- not in: 차원 필드 값이 value에 포함되지 않는 데이터 항목을 선택합니다
 
 
-same as operator
+연산자
 
 :::
 
@@ -1004,92 +1004,76 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-
+:::note{title=설명}
+데이터 항목에서 차원 필드의 값을 선택합니다. 배열을 지원합니다
 :::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (AI-generated code execution)
+:::note{title=설명}
+동적 필터(AI 생성 코드 실행)
 
+AI가 생성한 JavaScript 코드로 복잡한 데이터 필터링 로직을 구현합니다
 
+핵심 기능:
 
-Core capabilities:
+- 임의의 복잡한 데이터 필터링 조건 지원
 
+- 내장 유틸리티 함수를 사용해 데이터 작업 수행
 
+- 브라우저 환경에서 안전하게 실행(Web Worker 샌드박스)
 
-\- Use built-in utility functions for data manipulation
+환경 요구사항: 브라우저 환경만 지원하며, Node.js 환경에서는 fallback을 사용합니다
 
-\- Secure execution in the browser environment (Web Worker sandbox)
+주의: selector와 dynamicFilter는 동시에 사용할 수 없으며 dynamicFilter의 우선순위가 더 높습니다
 
+차트 동적 필터 설정
 
-
-Environmental requirements: Supports browser environments only; Node.js environments will use fallback
-
-
-
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
-
-
-
-Chart dynamic filter configuration
-
-
-
-Chart dynamic filter configuration
-
-
-
-
+AI 생성 JavaScript 코드로 차트 마크(막대, 점 등)의 필터링을 구현합니다
 
 :::
-
 
 #### type
 
 **Type:** `"row-with-field"`
-
 #### description
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-
+:::note{title=설명}
+사용자의 필터링 요구사항 설명(자연어)
 
 :::
 
-**Example**
-"Highlight data items with sales greater than 1000"
+**예시**
+"sales가 1000보다 큰 막대를 강조"
 
-
+"각 지역에서 profit rate가 가장 높은 막대를 강조"
 
 
 #### code
 
 **Type:** `string`
 
-:::note{title=Description}
-\- Input parameters: data (array), where each item includes a __row_index field representing the row number
+:::note{title=설명}
+AI 생성 JavaScript 필터링 코드
 
+- 내장 유틸리티 함수만 사용할 수 있습니다(_ 또는 R로 접근)
 
+- 입력 매개변수: data(배열), 각 item에는 행 번호를 나타내는 __row_index 필드가 포함됩니다
 
-\- __row_index represents the row number of the original data item; field represents the field to be highlighted
+- 행 인덱스와 필드 조합 배열을 반환해야 합니다: Array<{ __row_index: number, field: string }>
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- __row_index는 원본 데이터 항목의 행 번호, field는 강조할 필드를 나타냅니다
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
-
-**Example**
-
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- 금지: eval, Function, 비동기 작업, DOM API, 네트워크 요청
 
 :::
 
-**Example**
-}));
+**예시**
+sales가 1000보다 큰 데이터 항목의 sales 필드 강조
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1098,7 +1082,7 @@ field: 'sales'
 }));
 ```
 
-return _.flatten(
+각 지역에서 profit rate가 가장 높은 데이터 항목 강조
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1112,7 +1096,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+여러 조건을 만족하는 데이터 항목 강조
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1127,22 +1111,21 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-
+:::note{title=설명}
+코드 실행 실패 또는 환경 미지원 시 fallback
 
 :::
-
 
 ##### field
 
 **Type:** `string`
 
-:::note{title=Description}
+:::note{title=설명}
+차원 필드, dimensions 항목 중 하나의 id
 
 :::
 
@@ -1150,11 +1133,12 @@ _.map(filtered, item => [
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-same as operator
+:::note{title=설명}
+연산자
 
-\- in: Select data items whose dimension field value is within the specified value
+- in: 차원 필드 값이 value에 포함되는 데이터 항목을 선택합니다
 
+- not in: 차원 필드 값이 value에 포함되지 않는 데이터 항목을 선택합니다
 
 :::
 
@@ -1162,13 +1146,14 @@ same as operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-same as operator
+:::note{title=설명}
+연산자
 
-\- in: Select data items whose dimension field value is within the specified value
+- in: 차원 필드 값이 value에 포함되는 데이터 항목을 선택합니다
 
+- not in: 차원 필드 값이 value에 포함되지 않는 데이터 항목을 선택합니다
 
-same as operator
+operator와 동일
 
 :::
 
@@ -1176,7 +1161,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
+:::note{title=설명}
+데이터 항목의 차원 필드 값을 선택하며 배열을 지원합니다
 
 :::
 
@@ -1184,15 +1170,12 @@ same as operator
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
+동적 필터 실행 결과(런타임 필드)
 
-
-
-
-
+prepare() 단계에서 작성되며 런타임에는 읽기 전용입니다
 
 :::
-
 
 ##### success
 
@@ -1206,12 +1189,13 @@ same as operator
 
 **Type:** `string | undefined`
 
+
 ### labelLayout
 
 **Type:** `"arc" | "labelLine" | "edge" | undefined`
 
-:::note{title=Description}
-Label layout mode, only effective for pie and donut charts when `labelPosition` is `outside`
+:::note{title=설명}
+\- 금지: eval, Function, 비동기 작업, DOM API, 네트워크 요청
 
 
 
@@ -1226,13 +1210,10 @@ Label layout mode, only effective for pie and donut charts when `labelPosition` 
 
 **Type:** `Legend | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
+범례
 
-
-
-
-
-
+차트 범례 설정으로, 범례의 위치, 형식, 스타일 등을 정의합니다.
 :::
 
 
@@ -1240,13 +1221,12 @@ Label layout mode, only effective for pie and donut charts when `labelPosition` 
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+범례 기능을 활성화할지 여부
 :::
 
-**Example**
-enable: true
+**예시**
+sales가 1000보다 큰 데이터 항목의 sales 필드를 강조합니다
 
 
 
@@ -1254,18 +1234,16 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+범례 테두리를 활성화할지 여부
 :::
 
 :::warning{title=Warning}
-
-
+이산 범례에만 적용됩니다
 :::
 
-**Example**
-border: true
+**예시**
+각 영역에서 이익률이 가장 높은 데이터 항목을 강조합니다
 
 
 
@@ -1273,8 +1251,8 @@ border: true
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=설명}
+다중 조건 필터링으로 데이터 항목을 강조합니다
 
 :::
 
@@ -1282,8 +1260,8 @@ Legend font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Pager icon color
+:::note{title=설명}
+코드 실행 실패 또는 환경 미지원 시 fallback 솔루션
 
 :::
 
@@ -1291,8 +1269,8 @@ Pager icon color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Disabled pager icon color
+:::note{title=설명}
+차원 필드, 차원 항목의 ID
 
 :::
 
@@ -1300,13 +1278,12 @@ Disabled pager icon color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+범례 글꼴 크기
 :::
 
-**Example**
-labelFontSize: 10
+**예시**
+연산자
 
 
 
@@ -1314,8 +1291,8 @@ labelFontSize: 10
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Legend font color
+:::note{title=설명}
+\- in: 차원 필드 값이 value에 포함되는 데이터 항목을 선택합니다
 
 :::
 
@@ -1323,13 +1300,12 @@ Legend font color
 
 **Type:** `string | number | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+범례 글꼴 두께
 :::
 
-**Example**
-labelFontWeight: 400
+**예시**
+\- not in: 차원 필드 값이 value에 포함되지 않는 데이터 항목을 선택합니다
 
 
 
@@ -1337,18 +1313,16 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+범례 모양
 :::
 
 :::warning{title=Warning}
-
-
+이산 범례에만 적용됩니다
 :::
 
-**Example**
-shapeType: 'circle'
+**예시**
+연산자
 
 
 
@@ -1356,13 +1330,12 @@ shapeType: 'circle'
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+범례 위치
 :::
 
-**Example**
-position: 'rightTop'
+**예시**
+\- in: 차원 필드 값이 value에 포함되는 데이터 항목을 선택합니다
 
 
 
@@ -1370,8 +1343,8 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum columns or rows when there are many legend items
+:::note{title=설명}
+\- not in: 차원 필드 값이 value에 포함되지 않는 데이터 항목을 선택합니다
 
 
 
@@ -1380,11 +1353,10 @@ Maximum columns or rows when there are many legend items
 :::
 
 :::warning{title=Warning}
-
-
+이산 범례에만 적용됩니다
 :::
 
-**Example**
+**예시**
 maxSize: 2
 
 
@@ -1394,13 +1366,10 @@ maxSize: 2
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
+툴팁
 
-
-
-
-
-
+차트 툴팁 설정으로, 툴팁의 위치, 형식, 스타일 등을 정의합니다.
 :::
 
 
@@ -1408,9 +1377,8 @@ maxSize: 2
 
 **Type:** `false | true`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+툴팁 정보를 활성화할지 여부
 :::
 
 
@@ -1418,8 +1386,8 @@ maxSize: 2
 
 **Type:** `Brush | undefined`
 
-:::note{title=Description}
-Chart brush configuration
+:::note{title=설명}
+차원 필드 값, 배열을 지원합니다
 
 
 
@@ -1436,8 +1404,8 @@ Chart brush configuration
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether brush selection is enabled
+:::note{title=설명}
+애니메이션 필터 실행 결과(런타임 필드)
 
 :::
 
@@ -1445,19 +1413,19 @@ Whether brush selection is enabled
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Description}
-\- `polygon`: Polygonal selection, allowing selection by drawing an arbitrary polygon through multiple points
+:::note{title=설명}
+prepare() 단계에서 작성되며 런타임에는 읽기 전용입니다
 
 
 
-\- `y`: Y-axis selection, restricting selection to the Y-axis direction while the X-axis remains unconstrained
+\- `y`: Y축 방향 선택, Y축 방향으로만 선택을 제한하고 X축 방향은 제한하지 않습니다
 
-\- `rect`: rectangular brush selection, available in both X-axis and Y-axis directions
+\- `rect`: 직사각형 브러시 선택, X축과 Y축 두 방향에서 모두 선택할 수 있습니다
 
-\- `polygon`: polygon brush selection, draws an arbitrary polygon by clicking multiple points
+\- `polygon`: 다각형 브러시 선택, 여러 점을 클릭해 임의의 다각형을 그려 선택합니다
 
 
-\- `y`: Y-axis brush selection, only constrained in the Y-axis direction
+\- `y`: Y축 브러시 선택, Y축 방향으로만 제한됩니다
 
 :::
 
@@ -1465,15 +1433,15 @@ Whether brush selection is enabled
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Description}
-\- `multiple`: Multiple mode, where multiple brush selections can coexist simultaneously
+:::note{title=설명}
+브러시 선택 모드, 단일 선택 또는 다중 선택
 
 
 
-Defines the brush selection mode
+브러시 선택 모드를 정의합니다
 
 
-\- `multiple`: multiple selection mode; multiple brush areas can exist at the same time
+범례 기능을 활성화할지 여부
 
 :::
 
@@ -1481,8 +1449,8 @@ Defines the brush selection mode
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to clear the brush area after selection ends
+:::note{title=설명}
+선택이 끝난 뒤 브러시 영역을 지울지 여부입니다
 
 :::
 
@@ -1490,13 +1458,10 @@ Whether to clear the brush area after selection ends
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
+브러시 영역 안 데이터의 스타일
 
-
-
-
-
-
+선택된 데이터 포인트의 스타일을 정의합니다
 :::
 
 
@@ -1504,12 +1469,12 @@ Whether to clear the brush area after selection ends
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity
+:::note{title=설명}
+불투명도
 
 
 
-Opacity of selected data points, range 0-1
+선택된 데이터 포인트의 불투명도, 범위는 0-1입니다
 
 :::
 
@@ -1517,7 +1482,7 @@ Opacity of selected data points, range 0-1
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
 Stroke color
 
 :::
@@ -1526,22 +1491,18 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+스트로크 너비
 :::
 
 ### outOfBrushStyle
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
+브러시 영역 밖 데이터의 스타일
 
-
-
-
-
-
+선택되지 않은 데이터 포인트의 스타일을 정의합니다
 :::
 
 
@@ -1549,8 +1510,8 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Opacity
+:::note{title=설명}
+legend font color
 
 
 
@@ -1562,7 +1523,7 @@ Opacity
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=설명}
 Stroke color
 
 :::
@@ -1571,9 +1532,8 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-
-
+:::note{title=설명}
+스트로크 너비
 :::
 
 
@@ -1581,12 +1541,12 @@ Stroke color
 
 **Type:** `PieLikeAnimation | undefined`
 
-:::note{title=Description}
-Animation configuration
+:::note{title=설명}
+범례 글꼴 크기
 
 
 
-Chart animation configuration; available effects are constrained by chart type
+차트 애니메이션 설정, 사용 가능한 효과는 차트 유형에 따라 제한됩니다
 
 :::
 
@@ -1595,8 +1555,8 @@ Chart animation configuration; available effects are constrained by chart type
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether pie/donut/rose animation is enabled
+:::note{title=설명}
+legend font color
 
 :::
 
@@ -1604,8 +1564,8 @@ Whether pie/donut/rose animation is enabled
 
 **Type:** `PieLikeAnimationParams | undefined`
 
-:::note{title=Description}
-Pie/donut/rose animation parameters
+:::note{title=설명}
+범례 글꼴 두께
 
 :::
 
@@ -1614,8 +1574,8 @@ Pie/donut/rose animation parameters
 
 **Type:** `PieLikeAppearAnimation | undefined`
 
-:::note{title=Description}
-Pie/donut/rose appear animation configuration
+:::note{title=설명}
+파이/도넛/로즈 차트 등장 애니메이션 설정
 
 :::
 
@@ -1624,8 +1584,8 @@ Pie/donut/rose appear animation configuration
 
 **Type:** `("radial" | "scale")[] | undefined`
 
-:::note{title=Description}
-Pie/donut/rose appear effects, supporting radial and scale animations
+:::note{title=설명}
+파이/도넛/로즈 차트 등장 효과, 방사형 및 스케일 애니메이션을 지원합니다
 
 :::
 
@@ -1633,8 +1593,8 @@ Pie/donut/rose appear effects, supporting radial and scale animations
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the current animation stage is enabled
+:::note{title=설명}
+현재 애니메이션 단계를 활성화할지 여부입니다
 
 :::
 
@@ -1642,8 +1602,8 @@ Whether the current animation stage is enabled
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=설명}
+애니메이션 easing 함수
 
 :::
 
@@ -1651,8 +1611,8 @@ Animation easing function
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration, in milliseconds
+:::note{title=설명}
+범례 위치
 
 :::
 
@@ -1660,8 +1620,8 @@ Animation duration, in milliseconds
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation highlight or atmosphere color
+:::note{title=설명}
+애니메이션 강조 또는 분위기 색상
 
 :::
 
@@ -1669,8 +1629,8 @@ Animation highlight or atmosphere color
 
 **Type:** `PieLikeUpdateAnimation | undefined`
 
-:::note{title=Description}
-Pie/donut/rose update animation configuration
+:::note{title=설명}
+파이/도넛/로즈 차트 업데이트 애니메이션 설정
 
 :::
 
@@ -1679,8 +1639,8 @@ Pie/donut/rose update animation configuration
 
 **Type:** `"radial"[] | undefined`
 
-:::note{title=Description}
-Pie/donut/rose update effects, supporting radial animation
+:::note{title=설명}
+파이/도넛/로즈 차트 업데이트 효과, 방사형 애니메이션을 지원합니다
 
 :::
 
@@ -1688,8 +1648,8 @@ Pie/donut/rose update effects, supporting radial animation
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the current animation stage is enabled
+:::note{title=설명}
+현재 애니메이션 단계를 활성화할지 여부입니다
 
 :::
 
@@ -1697,8 +1657,8 @@ Whether the current animation stage is enabled
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=설명}
+애니메이션 easing 함수
 
 :::
 
@@ -1706,8 +1666,8 @@ Animation easing function
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration, in milliseconds
+:::note{title=설명}
+애니메이션 시간, 밀리초 단위
 
 :::
 
@@ -1715,8 +1675,8 @@ Animation duration, in milliseconds
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation highlight or atmosphere color
+:::note{title=설명}
+툴팁
 
 :::
 
@@ -1724,8 +1684,8 @@ Animation highlight or atmosphere color
 
 **Type:** `PieLikeAnimationLoop | undefined`
 
-:::note{title=Description}
-Pie/donut/rose loop animation configuration
+:::note{title=설명}
+위치, 형식, 스타일 등을 포함해 차트 툴팁을 정의하는 툴팁 설정입니다.
 
 :::
 
@@ -1734,8 +1694,8 @@ Pie/donut/rose loop animation configuration
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether loop animation is enabled
+:::note{title=설명}
+툴팁 기능 활성화 여부
 
 :::
 
@@ -1743,8 +1703,8 @@ Whether loop animation is enabled
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Loop animation interval, in milliseconds
+:::note{title=설명}
+브러시 선택 상자의 모양과 선택 방향을 정의합니다
 
 :::
 
@@ -1752,8 +1712,8 @@ Loop animation interval, in milliseconds
 
 **Type:** `PieLikeLoopAnimation | undefined`
 
-:::note{title=Description}
-Pie/donut/rose loop animation configuration
+:::note{title=설명}
+\- `polygon`: 다각형 선택. 여러 점을 클릭해 임의의 다각형을 그려 선택할 수 있습니다
 
 :::
 
@@ -1762,8 +1722,8 @@ Pie/donut/rose loop animation configuration
 
 **Type:** `PieLikeLoopEffect[] | undefined`
 
-:::note{title=Description}
-Pie/donut/rose loop effect
+:::note{title=설명}
+브러시 선택 모드: 단일 또는 다중
 
 :::
 
@@ -1771,8 +1731,8 @@ Pie/donut/rose loop effect
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether the current animation stage is enabled
+:::note{title=설명}
+선택된 데이터 포인트의 스타일을 정의합니다.
 
 :::
 
@@ -1780,8 +1740,8 @@ Whether the current animation stage is enabled
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation easing function
+:::note{title=설명}
+brushtype
 
 :::
 
@@ -1789,8 +1749,8 @@ Animation easing function
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Animation duration, in milliseconds
+:::note{title=설명}
+불투명도
 
 :::
 
@@ -1798,8 +1758,8 @@ Animation duration, in milliseconds
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Animation highlight or atmosphere color
+:::note{title=설명}
+선택된 데이터 포인트의 불투명도, 범위 0-1
 
 :::
 
@@ -1807,8 +1767,8 @@ Animation highlight or atmosphere color
 
 **Type:** `NoEffectAtmosphereConfig | undefined`
 
-:::note{title=Description}
-Pie/donut/rose atmosphere animation configuration
+:::note{title=설명}
+\- `polygon`: 다각형 브러시 선택. 여러 점을 클릭해 임의의 다각형을 그려 선택합니다
 
 :::
 
@@ -1817,8 +1777,8 @@ Pie/donut/rose atmosphere animation configuration
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Atmosphere animation easing function
+:::note{title=설명}
+\- `x`: X축 방향으로만 브러시 선택합니다. Y축 방향은 제한되지 않습니다
 
 :::
 
@@ -1826,8 +1786,8 @@ Atmosphere animation easing function
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Atmosphere animation color
+:::note{title=설명}
+\- `y`: Y축 방향 브러시 선택. X축 방향은 제한하지 않습니다
 
 :::
 
@@ -1836,29 +1796,28 @@ Atmosphere animation color
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Theme is a lower-priority functional configuration that includes common settings shared by all chart types and by a single chart type.
+:::note{title=설명}
+그래프 테마입니다. 테마는 우선순위가 낮은 기능 설정으로, 모든 그래프 유형이 공유하는 공통 설정과 단일 그래프 유형의 설정을 포함합니다.
 
 
 
-Two built-in themes are provided: light and dark. Users can customize themes through Builder.
+light와 dark 두 가지 내장 테마를 제공하며, 사용자는 Builder를 통해 테마를 사용자 지정할 수 있습니다.
 
 
 
-Theme
+테마
 
 
 
-light와 dark 두 가지 내장 테마가 있습니다. 새 테마는 registerTheme을 통해 사용자 정의할 수 있습니다.
-
+light와 dark 두 가지 내장 테마를 제공하며, 새 테마는 registerTheme으로 사용자 지정할 수 있습니다.
 :::
 
-**Example**
-'dark'
+**예시**
+브러시 선택이 끝난 후 선택 영역을 지울지 여부
 
-'light'
+선택되지 않은 데이터 포인트의 불투명도, 범위 0-1
 
-'customThemeName'
+브러시 선택된 데이터 포인트의 스타일을 정의합니다
 
 
 
@@ -1876,11 +1835,11 @@ light와 dark 두 가지 내장 테마가 있습니다. 새 테마는 registerTh
 
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
-:::note{title=Description}
-Language
+:::note{title=설명}
+선택되지 않은 데이터 항목의 스타일
 
 
 
-차트 언어 설정입니다. 'zh\-CN'과 'en\-US' 두 언어를 지원하며, intl.setLocale('zh\-CN')을 호출해 언어를 설정할 수도 있습니다
+브러시 선택 밖의 데이터 포인트 스타일을 정의합니다
 
 :::

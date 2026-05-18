@@ -1,153 +1,153 @@
 # HavingFilterBuilder
 
-Builder loc Having dung de them, sua, xoa dieu kien loc sau khi nhom. Loc Having co hieu luc sau khi tong hop du lieu va dung de loc ket qua nhom
+Builder lọc Having dùng để thêm, sửa, xóa điều kiện lọc sau khi nhóm. Lọc Having có hiệu lực sau khi tổng hợp dữ liệu và dùng để lọc kết quả nhóm
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### getConditions
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getConditions(): Y.Array<any>
 ```
 
-**Tra ve**: `Y.Array<any>`
+**Trả về**: `Y.Array<any>`
 
 ### add
 
-Them mot dieu kien loc Having
+Thêm một điều kiện lọc Having
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 add(field: string, callback: (node: HavingFilterNodeBuilder) => void): HavingFilterBuilder
 ```
 
-**Tra ve**: `HavingFilterBuilder`
+**Trả về**: `HavingFilterBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `field` | string | - Ten field |
-| `callback` | (node: HavingFilterNodeBuilder) => void | - Ham callback |
+| `field` | string | - Tên field |
+| `callback` | (node: HavingFilterNodeBuilder) => void | - Hàm callback |
 
 ### addGroup
 
-Them mot nhom Having
+Thêm một nhóm Having
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 addGroup(op: 'and' | 'or', callback: (group: HavingGroupBuilder) => void): HavingFilterBuilder
 ```
 
-**Tra ve**: `HavingFilterBuilder`
+**Trả về**: `HavingFilterBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `op` | 'and' \| 'or' | - Toan tu logic |
-| `callback` | (group: HavingGroupBuilder) => void | - Ham callback |
+| `op` | 'and' \| 'or' | - Toán tử logic |
+| `callback` | (group: HavingGroupBuilder) => void | - Hàm callback |
 
 ### update
 
-Cap nhat dieu kien loc co ID chi dinh
+Cập nhật điều kiện lọc có ID chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 update(id: string, callback: (node: HavingFilterNodeBuilder) => void): HavingFilterBuilder
 ```
 
-**Tra ve**: `HavingFilterBuilder`
+**Trả về**: `HavingFilterBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `id` | string | - ID dieu kien loc |
-| `callback` | (node: HavingFilterNodeBuilder) => void | - Ham callback |
+| `id` | string | - ID điều kiện lọc |
+| `callback` | (node: HavingFilterNodeBuilder) => void | - Hàm callback |
 
 ### updateGroup
 
-Cap nhat nhom co ID chi dinh
+Cập nhật nhóm có ID chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 updateGroup(id: string, callback: (group: HavingGroupBuilder) => void): HavingFilterBuilder
 ```
 
-**Tra ve**: `HavingFilterBuilder`
+**Trả về**: `HavingFilterBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `id` | string | - ID nhom |
-| `callback` | (group: HavingGroupBuilder) => void | - Ham callback |
+| `id` | string | - ID nhóm |
+| `callback` | (group: HavingGroupBuilder) => void | - Hàm callback |
 
 ### remove
 
-Xoa dieu kien co ID chi dinh hoac muc tai index chi dinh
+Xóa điều kiện có ID chỉ định hoặc mục tại index chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 remove(idOrIndex: string | number): HavingFilterBuilder
 ```
 
-**Tra ve**: `HavingFilterBuilder`
+**Trả về**: `HavingFilterBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `idOrIndex` | string \| number | - ID hoac index |
+| `idOrIndex` | string \| number | - ID hoặc index |
 
 ### find
 
-Tim dieu kien dau tien (loc hoac nhom) theo callback, hanh vi giong Array.find
+Tìm điều kiện đầu tiên (lọc hoặc nhóm) theo callback, hành vi giống Array.find
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 find(predicate: (entry: HavingFilterNodeBuilder | HavingGroupBuilder, index: number) => boolean): HavingFilterNodeBuilder | HavingGroupBuilder | undefined
 ```
 
-**Tra ve**: `HavingFilterNodeBuilder \| HavingGroupBuilder \| undefined`
+**Trả về**: `HavingFilterNodeBuilder \| HavingGroupBuilder \| undefined`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `predicate` | (entry: HavingFilterNodeBuilder \| HavingGroupBuilder, index: number) => boolean | - Dieu kien tim kiem |
+| `predicate` | (entry: HavingFilterNodeBuilder \| HavingGroupBuilder, index: number) => boolean | - Điều kiện tìm kiếm |
 
 ### clear
 
-Xoa tat ca dieu kien loc Having
+Xóa tất cả điều kiện lọc Having
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 clear()
@@ -155,66 +155,66 @@ clear()
 
 ### toJSON
 
-Xuat cau hinh loc Having day du
+Xuất cấu hình lọc Having đầy đủ
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIHavingGroup
 ```
 
-**Tra ve**: `VBIHavingGroup`
+**Trả về**: `VBIHavingGroup`
 
 ### observe
 
-Lang nghe thay doi dieu kien loc va tra ve ham huy lang nghe
+Lắng nghe thay đổi điều kiện lọc và trả về hàm hủy lắng nghe
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveDeepCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveDeepCallback | - Ham callback |
+| `callback` | ObserveDeepCallback | - Hàm callback |
 
 ### static isGroup
 
-Xac dinh co phai node nhom hay khong
+Xác định có phải node nhóm hay không
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 static isGroup(yMap: Y.Map<any>): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### static isNode
 
-Xac dinh co phai node la hay khong
+Xác định có phải node lá hay không
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 static isNode(yMap: Y.Map<any>): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |

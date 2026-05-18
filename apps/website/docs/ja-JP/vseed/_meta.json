@@ -2,13 +2,13 @@
   {
     "type": "dir",
     "name": "guide",
-    "label": "ガイド",
+    "label": "紹介",
     "collapsed": false
   },
   {
     "type": "dir",
     "name": "examples",
-    "label": "例",
+    "label": "サンプル",
     "collapsed": true
   },
   {
@@ -26,7 +26,7 @@
   {
     "type": "dir",
     "name": "development",
-    "label": "コントリビューション",
+    "label": "貢献ガイド",
     "collapsed": true
   }
 ]

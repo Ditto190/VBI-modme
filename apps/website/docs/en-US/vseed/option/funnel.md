@@ -1,20 +1,18 @@
 # Funnel
 
 :::info{title=Recommended}
-- Recommended field configuration: `1` measure(s), `1` dimension(s)
-
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
-
+- Recommended field configuration: `1` measure, `1` dimension
+- Supports data reshaping: at least `1` measure, `0` dimensions
 :::
 
 :::info{title=Encoding Mapping}
-The Funnel Chart supports the following visual channels:
+The Funnel chart supports the following visual channels:
 
-`size`   : size channel, supports `multiple measures`, maps measures to the funnel width
+`size`   : size channel, supports `multiple measures`, maps measure values to funnel width
 
-`detail` : detail channel, supports `multiple dimensions`, used for displaying more granular data within the same color series
+`detail` : detail channel, supports `multiple dimensions`, used to display finer-grained data within the same color series
 
-`color`  : color channel, supports `multiple dimensions` or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
+`color`  : color channel, supports `multiple dimensions` or `one measure`; dimension colors distinguish data series, and measure colors linearly map measure values to graphical colors
 
 `tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point
 
@@ -23,26 +21,28 @@ The Funnel Chart supports the following visual channels:
 :::
 
 :::note{title=Description}
-Funnel Chart, used to show the proportion relationship of single dimension data.
+Funnel chart, used to show the proportional relationship of single-dimension data.
 
 Applicable scenarios:
 
-- Suitable for analyzing processes with multiple sequential, normalized steps, clearly showing data loss or conversion at each stage.
+Funnel chart applicable scenarios:
+
+\- Suitable for analyzing processes with multiple continuous, standardized steps, clearly showing data loss or conversion at each stage
 
 :::
 
 :::warning{title=Warning}
 Data requirements:
 
-- At least 1 measure field
+\- At least 1 numeric field (measure)
 
-- All dimensions will be merged with measure names (if multiple measures exist) into one dimension to be displayed as legend items.
+\- All dimensions are merged with measure names (when multiple measures exist) into one dimension and displayed as legend items
 
-- All measures are automatically merged into one measure.
+\- All measures are automatically merged into one measure
 
 Features enabled by default:
 
-- Legend, data labels, tooltips, and percentage calculations are enabled by default.
+\- Legend, data labels, tooltips, and percentage calculation are enabled by default
 
 :::
 
@@ -52,7 +52,11 @@ Features enabled by default:
 **Type:** `"funnel"`
 
 :::note{title=Description}
-Funnel Chart, shows the proportion relationship of single dimension data.
+Funnel chart
+
+
+
+Funnel chart, showing the proportional relationship of single-dimension data.
 
 :::
 
@@ -67,7 +71,7 @@ Funnel Chart, shows the proportion relationship of single dimension data.
 **Type:** `Record[]`
 
 :::note{title=Description}
-Dataset. Compliant with TidyData specification and already aggregated, defines the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Funnel Chart data is ultimately converted to 1 dimension and 1 measure.
+Dataset. A TidyData-compliant, already aggregated dataset used to define the chart data source and structure. User input does not need any preprocessing; VSeed has powerful data reshaping capabilities and reshapes the data automatically. Funnel chart data is ultimately converted into 1 dimension and 1 measure.
 
 :::
 
@@ -82,7 +86,11 @@ Dataset. Compliant with TidyData specification and already aggregated, defines t
 **Type:** `PieDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions. For Funnel Charts, all dimensions merge with measure names (if multiple exist) into one dimension to be shown as legend items.
+Dimensions
+
+
+
+For Funnel charts, all dimensions are merged with measure names (when multiple measures exist) into one dimension and displayed as legend items.
 
 :::
 
@@ -156,7 +164,11 @@ Channel to which the dimension is mapped:
 **Type:** `FunnelMeasure[] | undefined`
 
 :::note{title=Description}
-Measures. For Funnel Charts, all measures are automatically merged into one measure. If multiple measures exist, their names merge with other dimensions to serve as legend items.
+Measures
+
+
+
+For Funnel charts, all measures are automatically merged into one measure. When multiple measures exist, measure names are merged with the remaining dimensions and displayed as legend items.
 
 :::
 
@@ -199,7 +211,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=zh-CN: 749740.264 → 74.45万
 
 - locale=en-US: 749740.264 → 744.5K
 
@@ -236,8 +248,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -251,8 +263,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -293,12 +305,12 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -312,14 +324,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1000, significantDigits:1
+\- 1234.5678 converts to 1200, significantDigits:2
+\- 1234.5678 converts to 1230, significantDigits:3
+\- 1234.5678 converts to 1234, significantDigits:4
+\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -333,8 +345,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -371,8 +383,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -386,8 +398,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -428,12 +440,12 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -447,14 +459,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1000, significantDigits:1
+\- 1234.5678 converts to 1200, significantDigits:2
+\- 1234.5678 converts to 1230, significantDigits:3
+\- 1234.5678 converts to 1234, significantDigits:4
+\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -468,8 +480,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -487,15 +499,15 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `"color" | "tooltip" | "label" | "size" | undefined`
 
 :::note{title=Description}
-Channel to which the measure is mapped:
+Channel to which the measure is mapped
 
-- size: measure mapped to the size channel
+\- tooltip: measure mapped to the tooltip channel
 
-- color: measure mapped to the color channel
+\- color: measure mapped to the color channel
 
-- label: measure mapped to the label channel
+\- label: measure mapped to the label channel
 
-- tooltip: measure mapped to the tooltip channel
+\- tooltip: measure mapped to the tooltip channel
 
 :::
 
@@ -519,7 +531,7 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 **Type:** `Page | undefined`
 
 :::note{title=Description}
-Pagination configuration.
+Pagination configuration
 
 :::
 
@@ -543,7 +555,7 @@ Current pagination value; specifies the value used to determine the current page
 :::
 
 **Example**
-'2023-01-01'
+'2023\-01\-01'
 
 
 
@@ -553,9 +565,7 @@ Current pagination value; specifies the value used to determine the current page
 **Type:** `BackgroundColor`
 
 :::note{title=Description}
-Chart background color.
-
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)').
+Chart background color. Default is transparent. Can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)').
 
 :::
 
@@ -565,7 +575,7 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 **Type:** `Color | undefined`
 
 :::note{title=Description}
-Color configuration, used to define the chart's color scheme.
+Linear gradient color configuration, used to define the chart color scheme
 
 :::
 
@@ -715,7 +725,7 @@ Whether label values are automatically formatted. When autoFormat is true, numFo
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Label value format configuration. Merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
 
 :::
 
@@ -739,8 +749,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -754,8 +764,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
-- 100000 converts to 10K, ratio:1000, symbol:"K"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
+\- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -796,12 +806,12 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 :::
 
 **Example**
-- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -815,14 +825,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 :::
 
 **Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
-- 1234.5678 converts to 1234, significantDigits:4
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1000, significantDigits:1
+\- 1234.5678 converts to 1200, significantDigits:2
+\- 1234.5678 converts to 1230, significantDigits:3
+\- 1234.5678 converts to 1234, significantDigits:4
+\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -836,8 +846,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 :::
 
 **Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -900,7 +910,7 @@ Label font color.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to automatically invert the label font color based on the graphic element color.
+Whether to automatically invert the label font color based on the sector color.
 
 :::
 
@@ -1020,9 +1030,9 @@ User's filtering requirement description (natural language).
 :::
 
 **Example**
-"Highlight sales columns greater than 1000."
+"Highlight bars with sales > 1000"
 
-"Highlight the column with the highest profit margin in each region."
+"Highlight the bar with the highest profit rate in each region"
 
 
 
@@ -1046,7 +1056,7 @@ AI-generated JavaScript filtering code.
 :::
 
 **Example**
-Highlight 'sales' field for data items where sales > 1000:
+const filtered = _.filter(data, item => item.sales > 1000);
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1055,7 +1065,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region:
+const grouped = _.groupBy(data, 'area');
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1069,7 +1079,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items meeting multiple filtering conditions:
+const filtered = _.filter(data, item => {
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1146,9 +1156,7 @@ Selective dimension values; supports arrays.
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution result (runtime field).
-
-Written during the prepare() phase; read-only at runtime.
+Dynamic filter execution result (runtime field). Written during the prepare() phase; read-only at runtime.
 
 :::
 
@@ -1171,7 +1179,7 @@ Written during the prepare() phase; read-only at runtime.
 **Type:** `ColorLegend | undefined`
 
 :::note{title=Description}
-Color legend configuration, used to define the chart's legend, including position, format, and style.
+Color legend configuration, used to define the chart legend, including legend position, format, style, and more.
 
 :::
 
@@ -1303,9 +1311,7 @@ Whether region selection is enabled.
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-Brush type.
-
-Defines the selection box shape and direction:
+Brush type. Defines the selection box shape and direction:
 
 - `rect`: Rectangular selection, allows selecting in both X and Y directions.
 
@@ -1322,9 +1328,7 @@ Defines the selection box shape and direction:
 **Type:** `"single" | "multiple" | undefined`
 
 :::note{title=Description}
-Selection mode, single or multiple.
-
-Defines the selection logic:
+Selection mode, single or multiple. Defines the selection logic:
 
 - `single`: Single selection mode, only one selection box can exist at a time.
 
@@ -1348,8 +1352,6 @@ Whether to clear selection boxes after region selection ends.
 :::note{title=Description}
 Style for data within the selected region.
 
-Defines the visual appearance of selected data points.
-
 :::
 
 
@@ -1358,8 +1360,6 @@ Defines the visual appearance of selected data points.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacity.
-
 Opacity for selected data points, range 0-1.
 
 :::
@@ -1389,8 +1389,6 @@ Stroke width.
 :::note{title=Description}
 Style for data outside the selected region.
 
-Defines the visual appearance of data points not within the selection.
-
 :::
 
 
@@ -1399,8 +1397,6 @@ Defines the visual appearance of data points not within the selection.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacity.
-
 Opacity for data points outside the selection, range 0-1.
 
 :::
@@ -1459,8 +1455,6 @@ Light and dark themes are built-in; users can define custom themes via the Build
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
-Locale.
-
-Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call intl.setLocale('zh-CN') to set the language.
+Locale. Chart language configuration; supports 'zh-CN' and 'en-US'. Alternatively, call intl.setLocale('zh-CN') to set the language.
 
 :::

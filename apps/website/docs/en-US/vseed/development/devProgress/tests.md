@@ -13,7 +13,7 @@ VSeed follows a strict test-driven development workflow. **All test commands mus
   ```
 
 ### 2. Integration Tests
-- **Goal**: Test the complete chart generation flow (VSeed Spec → VChart Spec).
+- **Goal**: Test the complete chart generation flow (VSeed Spec -> VChart Spec).
 - **Mechanism**: Data-driven. Automatically generates test cases by reading JSON files under `packages/vseed/tests/integrations` and compares snapshots.
 - **Run**:
   ```bash

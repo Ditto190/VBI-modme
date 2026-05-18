@@ -1,153 +1,153 @@
 # WhereFilterNodeBuilder
 
-Builder node loc Where dung de cau hinh mot dieu kien loc Where
+Builder node lọc Where, dùng để cấu hình một điều kiện lọc Where
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getId
 
-Lay ID node
+Lấy ID node
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getId(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getField
 
-Lay ten field
+Lấy tên field
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getField(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### setField
 
-Thiet lap ten field
+Thiết lập tên field
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setField(field: string): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `field` | string | - Ten field |
+| `field` | string | - Tên field |
 
 ### getOperator
 
-Lay toan tu loc
+Lấy toán tử lọc
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getOperator(): string | undefined
 ```
 
-**Tra ve**: `string \| undefined`
+**Trả về**: `string \| undefined`
 
 ### setOperator
 
-Thiet lap toan tu loc
+Thiết lập toán tử lọc
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setOperator(operator: string): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `operator` | string | - Toan tu |
+| `operator` | string | - Toán tử |
 
 ### setValue
 
-Thiet lap gia tri loc
+Thiết lập giá trị lọc
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setValue(value: unknown): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `value` | unknown | - Gia tri loc |
+| `value` | unknown | - Giá trị lọc |
 
 ### setDate
 
-Thiet lap dieu kien loc ngay
+Thiết lập điều kiện lọc ngày
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setDate(predicate: VBIWhereDatePredicate): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `predicate` | VBIWhereDatePredicate | - Predicate ngay |
+| `predicate` | VBIWhereDatePredicate | - Predicate ngày |
 
 ### getDate
 
-Lay dieu kien loc ngay; loc khong phai ngay tra ve undefined
+Lấy điều kiện lọc ngày; lọc không phải ngày trả về undefined
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getDate(): VBIWhereDatePredicate | undefined
 ```
 
-**Tra ve**: `VBIWhereDatePredicate \| undefined`
+**Trả về**: `VBIWhereDatePredicate \| undefined`
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIWhereFilter
 ```
 
-**Tra ve**: `VBIWhereFilter`
+**Trả về**: `VBIWhereFilter`

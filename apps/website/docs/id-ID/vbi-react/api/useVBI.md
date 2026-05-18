@@ -1,12 +1,12 @@
 # useVBI
 
-## Import
+## Impor
 
 ```ts
 import { useVBI } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useVBI(builder: VBIChartBuilder): UseVBIReturn

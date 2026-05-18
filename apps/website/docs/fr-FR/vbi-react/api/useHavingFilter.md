@@ -14,7 +14,7 @@ useHavingFilter(builder: VBIChartBuilder): UseHavingFilterReturn
 
 ## Description
 
-Gère l’arbre de filtres Having et fournit des points d’entrée de mutation.
+Gère l’arbre de filtres Having et expose des points d’entrée mutation.
 
 ## Exemple minimal
 

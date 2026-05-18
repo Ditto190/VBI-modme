@@ -1,14 +1,14 @@
 # Table
 
 :::info{title=Recommended}
-\- Recommended field configuration: `Any` measure(s), `Any` dimension(s)
+\- Recommended field configuration: `any number of` measures, `any number of` dimensions
 
-\- Supports Data Reshape: at least `Any` measure(s), `Any` dimension(s)
+\- Supports data reshaping: at least `any number of` measures, `any number of` dimensions
 
 :::
 
 :::info{title=Encoding Mapping}
-Only supports configuring dimension and measure trees; defaults to encoding to columns.
+Only supports configuring dimension trees and measure trees; defaults to encoding to column.
 
 :::
 
@@ -177,7 +177,7 @@ Channel to which the dimension is mapped
 **Type:** `MeasureTree | undefined`
 
 :::note{title=Description}
-Each measure in the table corresponds to a column, and natively supports measure combinations.
+Each measure in the table corresponds to a row and natively supports measure combinations.
 
 :::
 
@@ -220,7 +220,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-\- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -257,7 +257,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -272,7 +272,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -392,7 +392,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -407,7 +407,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -805,7 +805,7 @@ Operator
 
 \- not in: Selects data items where the dimension field value is not in the value array.
 
-same as operator
+Same as operator
 
 :::
 
@@ -1031,7 +1031,7 @@ Operator
 
 \- not in: Selects data items where the dimension field value is not in the value array.
 
-same as operator
+Same as operator
 
 :::
 
@@ -1268,7 +1268,7 @@ Table summary row type
 **Type:** `Theme | undefined`
 
 :::note{title=Description}
-Chart theme. Theme is a lower-priority configuration that includes universal settings shared by all chart types and specific settings for individual chart types. Built-in themes include 'light' and 'dark'; users can customize themes via the Builder.
+Chart theme. Theme is a low-priority configuration that includes common settings shared across all chart types and specific settings for a single chart type. Built-in light and dark themes can be customized through Builder.
 
 
 
@@ -1276,7 +1276,7 @@ Theme
 
 
 
-Built-in light and dark themes; new themes can be customized using registerTheme.
+Built-in light and dark themes; new themes can be customized via registerTheme.
 
 :::
 

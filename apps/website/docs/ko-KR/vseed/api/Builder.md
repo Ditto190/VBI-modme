@@ -16,7 +16,7 @@ prepare(): Promise<void>
 build<T = S>(): T
 ```
 
-최종 차트 설정(Spec)을 생성합니다. 가장 자주 사용되는 핵심 메서드입니다. 설정에 `dynamicFilter` code가 포함되어 있다면 먼저 `prepare()`를 호출해야 합니다.
+최종 그래프 설정(Spec)을 생성합니다. 가장 자주 사용되는 핵심 메서드입니다. 설정에 `dynamicFilter` 안의 `code`가 포함되어 있다면 먼저 `prepare()`를 호출해야 합니다.
 
 ### buildSpec
 
@@ -24,7 +24,7 @@ build<T = S>(): T
 buildSpec<T = S>(advanced: AdvancedVSeed): T
 ```
 
-중간 계층 설정(AdvancedVSeed)을 최종 Spec으로 변환합니다. 중간 계층 설정을 깊게 커스터마이즈해야 할 때만 사용합니다.
+중간 계층 설정(AdvancedVSeed)을 최종 Spec으로 변환합니다. 중간 계층 설정을 깊게 사용자 지정해야 할 때만 사용합니다.
 
 ### buildAdvanced
 
@@ -32,7 +32,7 @@ buildSpec<T = S>(advanced: AdvancedVSeed): T
 buildAdvanced(): AdvancedVSeed | null
 ```
 
-중간 계층 설정(AdvancedVSeed), 즉 차트 템플릿을 생성합니다. 원본 VSeed보다 더 상세하며 더 많은 차트 세부 정보를 노출합니다.
+중간 계층 설정(AdvancedVSeed), 즉 그래프 템플릿을 생성합니다. 원본 VSeed보다 더 상세하며 더 많은 그래프 세부 정보를 노출합니다.
 
 ### getColorItems
 
@@ -40,7 +40,7 @@ buildAdvanced(): AdvancedVSeed | null
 getColorItems(): __type[]
 ```
 
-데이터에서 색상과 관련된 필드 정보를 가져옵니다. 차트 범례나 색상 필터 UI를 생성할 때 자주 사용됩니다.
+데이터에서 색상과 관련된 필드 정보를 가져옵니다. 그래프 범례나 색상 필터 UI를 생성할 때 자주 사용됩니다.
 
 ### getColorIdMap
 
@@ -48,7 +48,7 @@ getColorItems(): __type[]
 getColorIdMap(): Record
 ```
 
-색상 필드의 상세 매핑 테이블을 가져옵니다. Key는 색상 ID이고, Value는 상세 정보입니다.
+색상 필드의 상세 매핑 테이블을 가져옵니다. 키는 색상 ID이고, 값은 상세 정보입니다.
 
 ### getColorValueMap
 
@@ -66,7 +66,7 @@ getColorValueMap(): undefined | Record
 static getAdvancedPipeline(chartType: ChartType): Pipe[]
 ```
 
-[내부 메서드] 지정한 차트 타입의 템플릿 구축 파이프라인을 가져옵니다. VSeed에서 AdvancedVSeed로 변환되는 과정을 디버깅하는 데 사용합니다.
+[내부 메서드] 지정한 그래프 타입의 템플릿 구축 파이프라인을 가져옵니다. VSeed에서 AdvancedVSeed로 변환되는 과정을 디버깅하는 데 사용합니다.
 
 ### getSpecPipeline
 
@@ -74,7 +74,7 @@ static getAdvancedPipeline(chartType: ChartType): Pipe[]
 static getSpecPipeline(chartType: ChartType): SpecPipe[]
 ```
 
-[내부 메서드] 지정한 차트 타입의 Spec 구축 파이프라인을 가져옵니다. AdvancedVSeed에서 Spec으로 변환되는 과정을 디버깅하는 데 사용합니다.
+[내부 메서드] 지정한 그래프 타입의 Spec 구축 파이프라인을 가져옵니다. AdvancedVSeed에서 Spec으로 변환되는 과정을 디버깅하는 데 사용합니다.
 
 ### getTheme
 
@@ -106,7 +106,7 @@ Builder 인스턴스를 편리하게 생성하기 위한 정적 팩토리 메서
 static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline): void
 ```
 
-[확장 메서드] 새 차트 타입의 템플릿 구축 파이프라인을 등록합니다.
+[확장 메서드] 새 그래프 타입의 템플릿 구축 파이프라인을 등록합니다.
 
 ### registerSpecPipeline
 
@@ -114,7 +114,7 @@ static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline
 static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 ```
 
-[확장 메서드] 새 차트 타입의 Spec 구축 파이프라인을 등록합니다.
+[확장 메서드] 새 그래프 타입의 Spec 구축 파이프라인을 등록합니다.
 
 ### updateAdvanced
 
@@ -122,7 +122,7 @@ static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 ```
 
-[확장 메서드] 기존 차트의 템플릿 구축 로직을 수정하고 커스텀 Pipe를 삽입해 생성되는 AdvancedVSeed에 영향을 줍니다.
+[확장 메서드] 기존 그래프의 템플릿 구축 로직을 수정하고 커스텀 Pipe를 삽입해 생성되는 AdvancedVSeed에 영향을 줍니다.
 
 ### updateSpec
 
@@ -130,7 +130,7 @@ static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 ```
 
-[확장 메서드] 기존 차트의 Spec 구축 로직을 수정하고 커스텀 Pipe를 삽입해 생성되는 최종 Spec에 영향을 줍니다.
+[확장 메서드] 기존 그래프의 Spec 구축 로직을 수정하고 커스텀 Pipe를 삽입해 생성되는 최종 Spec에 영향을 줍니다.
 
 ### registerTheme
 

@@ -1,46 +1,46 @@
 # Pie
 
-:::info{title=Empfohlen}
-- Empfohlene Feldkonfiguration: `1` Kennzahl, `1` Dimension
+:::info{title=Empfehlung}
+\- Empfohlene Feldkonfiguration: `1` Kennzahl, `1` Dimension
 
-\- Unterstützt Data Reshape: mindestens `1` Kennzahl, `0` Dimensionen
+\- Unterstützt Datenumformung: mindestens `1` Kennzahl, `0` Dimensionen
 
 :::
 
 :::info{title=Encoding-Zuordnung}
 Das Kreisdiagramm unterstützt die folgenden visuellen Kanäle:
 
-`angle`  : Winkelkanal, unterstützt `mehrere Kennzahlen` und ordnet Kennzahlwerte dem Sektorwinkel zu
+`angle`  : Winkelkanal, unterstützt `mehrere Kennzahlen` und ordnet Kennzahlenwerte den Segmentwinkeln zu
 
-`detail` : Detailkanal, unterstützt `mehrere Dimensionen`, um innerhalb derselben Farbserie feiner granulare Daten anzuzeigen
+`detail` : Detailkanal, unterstützt `mehrere Dimensionen` und wird verwendet, um feinere Daten innerhalb derselben Farbserie darzustellen
 
-`color`  : Farbkanal, unterstützt `mehrere Dimensionen` oder `eine Kennzahl`; Dimensionsfarben unterscheiden Datenreihen, Kennzahlfarben bilden Kennzahlwerte linear auf Grafikfarben ab
+`color`  : Farbkanal, unterstützt `mehrere Dimensionen` oder `eine Kennzahl`. Dimensionsfarben unterscheiden Datenserien, Kennzahlenfarben ordnen Kennzahlenwerte linear grafischen Farben zu
 
-`tooltip`: Tooltip-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen`, wird beim Hover über einen Datenpunkt angezeigt
+`tooltip`: Tooltip-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen` und wird angezeigt, wenn der Mauszeiger über einem Datenpunkt liegt
 
-`label`  : Label-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen`, zeigt Datenlabels auf Datenpunkten an
+`label`  : Label-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen` und zeigt Datenlabels auf Datenpunkten an
 
 :::
 
 :::note{title=Beschreibung}
-Ein Kreisdiagramm eignet sich zur Darstellung von Anteilen einer eindimensionalen Datenverteilung; die Sektorfläche zeigt den Anteil jeder Kategorie
+Kreisdiagramm, geeignet zur Darstellung des Anteilsverhältnisses von Daten einer einzelnen Dimension; die Segmentfläche zeigt den Anteil jeder Kategorie.
 
-Geeignete Szenarien:
+Anwendungsszenarien:
 
 \- Darstellung der Anteilsverteilung kategorialer Daten
 
-\- Beziehung zwischen dem Ganzen und seinen Teilen hervorheben
+\- Hervorhebung der Beziehung zwischen Ganzem und Teilen
 
-\- Anteilsanalyse bei wenigen Kategorien (empfohlen: höchstens 6)
+\- Anteilsanalyse bei wenigen Kategorien (empfohlen höchstens 6)
 
 :::
 
 :::warning{title=Warning}
 Datenanforderungen:
 
-\- mindestens 1 numerisches Feld
+\- Mindestens 1 numerisches Feld (Kennzahl)
 
-\- Alle Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt
+\- Alle Dimensionen werden mit Kennzahlennamen zusammengeführt, wenn mehrere Kennzahlen vorhanden sind, zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt
 
 \- Alle Kennzahlen werden automatisch zu einer Kennzahl zusammengeführt
 
@@ -60,7 +60,7 @@ Kreisdiagramm
 
 
 
-Kreisdiagramm, stellt Anteilsbeziehungen eindimensionaler Daten dar
+Kreisdiagramm, das das Anteilsverhältnis von Daten einer einzelnen Dimension darstellt
 
 :::
 
@@ -75,11 +75,11 @@ Kreisdiagramm, stellt Anteilsbeziehungen eindimensionaler Daten dar
 **Type:** `Record[]`
 
 :::note{title=Beschreibung}
-Ein voraggregierter, TidyData-konformer Datensatz, der Datenquelle und Struktur des Diagramms definiert. Benutzer müssen Eingabedaten nicht manuell verarbeiten; die leistungsfähige Data-Reshape-Funktion von VSeed übernimmt dies automatisch. Daten des Flächendiagramms werden letztlich in 2 Dimensionen und 1 Kennzahl umgeformt.
+Datensatz
 
 
 
-Ein bereits aggregierter Datensatz, der der TidyData-Spezifikation entspricht und Datenquelle sowie Struktur des Diagramms definiert. Der vom Benutzer eingegebene Datensatz muss nicht weiter verarbeitet werden. VSeed verfügt über leistungsfähige Data-Reshape-Funktionen und formt die Daten automatisch um. Die Daten des Funnel-Diagramms werden schließlich in 1 Dimension und 1 Kennzahl umgewandelt.
+Ein bereits aggregierter Datensatz nach TidyData-Spezifikation, der Datenquelle und Struktur des Diagramms definiert. Benutzereingaben müssen nicht vorverarbeitet werden; VSeed verfügt über leistungsfähige Datenumformungsfunktionen und formt die Daten automatisch um. Die Daten des Kreisdiagramms werden schließlich in 1 Dimension und 1 Kennzahl umgewandelt.
 
 :::
 
@@ -94,11 +94,11 @@ Ein bereits aggregierter Datensatz, der der TidyData-Spezifikation entspricht un
 **Type:** `PieDimension[] | undefined`
 
 :::note{title=Beschreibung}
-Die erste Dimension wird der X-Achse zugeordnet; die verbleibenden Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zusammengeführt und als Legendeneinträge angezeigt.
+Dimensionen
 
 
 
-Alle Dimensionen des Kreisdiagramms werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt, dem Winkel zugeordnet und als Legendeneinträge angezeigt
+Alle Dimensionen des Kreisdiagramms werden mit Kennzahlennamen zusammengeführt, wenn mehrere Kennzahlen vorhanden sind, zu einer Dimension zusammengeführt, auf den Winkel abgebildet und als Legendeneinträge angezeigt
 
 :::
 
@@ -176,7 +176,7 @@ Kennzahlen
 
 
 
-Alle Kennzahlen des Kreisdiagramms werden automatisch zu einer Kennzahl zusammengeführt und der Radiusachse zugeordnet. Bei mehreren Kennzahlen werden die Kennzahlnamen mit den übrigen Dimensionen kombiniert und als Legendeneinträge angezeigt.
+Alle Kennzahlen im Kreisdiagramm werden automatisch zu einer Kennzahl zusammengeführt und auf die Radiusachse gemappt. Wenn mehrere Kennzahlen vorhanden sind, werden Kennzahlennamen mit den übrigen Dimensionen zusammengeführt und als Legendeneinträge angezeigt.
 
 :::
 
@@ -256,7 +256,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -271,7 +271,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -391,7 +391,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -406,7 +406,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -529,7 +529,7 @@ In flacher Kennzahlkonfiguration wird eine baumförmige Kennzahlgruppe aufgebaut
 :::
 
 :::tip{title=Tip}
-Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfiguriert den Kennzahlbaum direkt mit children; Option 2 konfiguriert eine flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
+Es gibt zwei Formen der Kennzahlbaum-Konfiguration: direkt einen Kennzahlbaum mit children konfigurieren oder eine flache Kennzahlliste mit parentId konfigurieren. Beide Formen können nicht gleichzeitig verwendet werden.
 
 :::
 
@@ -539,8 +539,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `Page | undefined`
 
 :::note{title=Beschreibung}
-
-
+Paginierungskonfiguration. Gibt den Feldnamen für die Paginierung an; dieser muss eine Dimension sein.
 :::
 
 
@@ -549,8 +548,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Paginierungsfeld; gibt den Feldnamen für die Paginierung an und muss eine Dimension sein
 :::
 
 ### currentValue
@@ -558,8 +556,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Aktueller Paginierungswert; gibt den Wert zur Bestimmung der aktuellen Seite an
 :::
 
 **Beispiel**
@@ -573,12 +570,11 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `BackgroundColor`
 
 :::note{title=Beschreibung}
+Hintergrundfarbe des Diagramms
 
 
 
-
-
-
+Die Hintergrundfarbe kann ein Farbstring sein (z. B. 'red', 'blue') oder ein hex-, rgb- oder rgba-Wert (z. B. '#ff0000', 'rgba(255,0,0,0.5)')
 :::
 
 
@@ -601,8 +597,7 @@ Farbe
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Diskretes Farbschema zur Definition der Farben verschiedener Elemente im Diagramm
 :::
 
 **Beispiel**
@@ -615,8 +610,7 @@ Farbe
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Lineares Farbverlaufsschema zur Definition der Farben verschiedener Elemente im Diagramm
 :::
 
 **Beispiel**
@@ -629,8 +623,7 @@ Farbe
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbzuordnung, ordnet Datenwerte konkreten Farben zu
 :::
 
 **Beispiel**
@@ -646,8 +639,7 @@ Farbe
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe positiver Werte im Diagramm
 :::
 
 ### negativeColor
@@ -655,8 +647,7 @@ Farbe
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe negativer Werte im Diagramm
 :::
 
 
@@ -679,8 +670,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungen aktiviert sind
 :::
 
 ### wrap
@@ -688,8 +678,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungen umbrochen werden
 :::
 
 ### showValue
@@ -697,12 +686,11 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Kennzahlwerte anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Risiko widersprüchlicher Werte, da alle zeichnungsbezogenen Kennzahlen durch `foldMeasures` verarbeitet und zu einer Kennzahl zusammengeführt werden, die einen Datenpunkt repräsentiert.
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### showValuePercent
@@ -710,12 +698,11 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Kennzahlwerte als Prozentsatz anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Risiko widersprüchlicher Werte, da alle zeichnungsbezogenen Kennzahlen durch `foldMeasures` verarbeitet und zu einer Kennzahl zusammengeführt werden, die einen Datenpunkt repräsentiert.
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### showDimension
@@ -723,12 +710,11 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Dimensionslabels anzeigen
 
+Zeigt alle Dimensionslabels an
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### autoFormat
@@ -736,8 +722,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungswerte automatisch formatiert werden. Wenn autoFormat true ist, wird numFormat ignoriert
 :::
 
 ### numFormat
@@ -745,8 +730,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-
-
+Formatierungskonfiguration für Beschriftungswerte. Sie wird mit `format` in `measure` zusammengeführt; `format` in `measure` hat höhere Priorität. numFormat hat niedrigere Priorität als autoFormat
 :::
 
 
@@ -755,8 +739,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -764,8 +747,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
@@ -779,8 +761,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
@@ -794,8 +775,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -803,8 +783,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Suffix der Zahlenformatierung
 :::
 
 #### prefix
@@ -812,8 +791,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Präfix der Zahlenformatierung
 :::
 
 #### fractionDigits
@@ -821,8 +799,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
@@ -840,8 +817,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
@@ -861,8 +837,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
@@ -876,8 +851,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### labelFontSize
@@ -885,8 +859,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Beschriftung
 :::
 
 ### labelFontWeight
@@ -894,8 +867,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Beschriftung
 :::
 
 ### labelBackgroundColor
@@ -903,8 +875,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Hintergrundfarbe der Beschriftung
 :::
 
 ### labelStroke
@@ -912,8 +883,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe der Beschriftung
 :::
 
 ### labelColor
@@ -921,8 +891,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Beschriftung
 :::
 
 ### labelColorSmartInvert
@@ -930,8 +899,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Schriftfarbe der Beschriftung automatisch anhand der Markierungsfarbe invertiert wird
 :::
 
 ### labelPosition
@@ -939,8 +907,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Position der Beschriftung
 :::
 
 ### labelOverlap
@@ -948,8 +915,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungsüberlappungen vermieden werden
 :::
 
 ### selector
@@ -957,8 +923,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschriftungsfilter. Standardmäßig ist die Bedingungsverknüpfung zwischen selectors OR
 :::
 
 
@@ -967,8 +932,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Dimensionsfeld, die id eines Eintrags in dimensions
 :::
 
 #### operator
@@ -976,12 +940,11 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
-
-
-
-
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 :::
 
 #### op
@@ -989,14 +952,13 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 
-
-
-
-
-
+identisch mit operator
 :::
 
 #### value
@@ -1004,8 +966,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wählt Werte des Dimensionsfelds in Datenpunkten aus. Arrays werden unterstützt
 :::
 
 ### dynamicFilter
@@ -1013,38 +974,25 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von AI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik durch AI-generierten JavaScript-Code
 
+Kernfunktionen:
 
+\- Unterstützt beliebig komplexe Datenfilterbedingungen
 
+\- Verwendet eingebaute Hilfsfunktionen für Datenoperationen
 
+\- Sichere Ausführung im Browser (Web-Worker-Sandbox)
 
+Umgebungsanforderung: nur in Browserumgebungen unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden. dynamicFilter hat höhere Priorität
 
+Dynamische Filterkonfiguration für Diagramme
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Filtert Diagramm-Markierungen (Balken, Punkte usw.) mit AI-generiertem JavaScript-Code
 :::
 
 
@@ -1057,8 +1005,7 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
@@ -1073,20 +1020,17 @@ Beschriftungskonfiguration für Diagramm-Datenbeschriftungen, einschließlich Po
 **Type:** `string`
 
 :::note{title=Beschreibung}
+AI-generierter JavaScript-Filtercode
 
+\- Es dürfen nur eingebaute Hilfsfunktionen verwendet werden (Zugriff über _ oder R)
 
+\- Eingabeparameter: data (Array), jedes item enthält das Feld __row_index als Zeilennummer
 
+\- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+\- __row_index ist die Zeilennummer des ursprünglichen Datenpunkts, field ist das hervorzuhebende Feld
 
-
-
-
-
-
-
-
-
-
+\- Verboten: eval, Function, asynchrone Operationen, DOM-APIs, Netzwerkanfragen
 :::
 
 **Beispiel**
@@ -1134,8 +1078,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback, wenn Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -1144,8 +1087,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Dimensionsfeld, die id eines Eintrags in dimensions
 :::
 
 ##### operator
@@ -1153,12 +1095,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
-
-
-
-
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 :::
 
 ##### op
@@ -1166,14 +1107,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 
-
-
-
-
-
+identisch mit operator
 :::
 
 ##### value
@@ -1181,8 +1121,7 @@ _.map(filtered, item => [
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wählt Werte des Dimensionsfelds in Datenpunkten aus. Arrays werden unterstützt
 :::
 
 #### result
@@ -1190,12 +1129,9 @@ _.map(filtered, item => [
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des dynamischen Filters (Laufzeitfeld)
 
-
-
-
-
-
+Wird in prepare() geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -1232,12 +1168,9 @@ Layoutmodus der Beschriftungen; gilt nur für Kreis- und Donut-Diagramme und nur
 **Type:** `Legend | undefined`
 
 :::note{title=Beschreibung}
+Legende
 
-
-
-
-
-
+Legendenkonfiguration zum Definieren der Diagrammlegende, einschließlich Position, Format und Stil.
 :::
 
 
@@ -1246,8 +1179,7 @@ Layoutmodus der Beschriftungen; gilt nur für Kreis- und Donut-Diagramme und nur
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Legende aktiviert ist
 :::
 
 **Beispiel**
@@ -1260,13 +1192,11 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Legendenrahmen aktiviert ist
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1279,8 +1209,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Legende
 :::
 
 ### pagerIconColor
@@ -1288,8 +1217,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbe des Pager-Icons
 :::
 
 ### pagerIconDisableColor
@@ -1297,8 +1225,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbe des deaktivierten Pager-Icons
 :::
 
 ### labelFontSize
@@ -1306,8 +1233,7 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Legende
 :::
 
 **Beispiel**
@@ -1320,8 +1246,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Legende
 :::
 
 ### labelFontWeight
@@ -1329,8 +1254,7 @@ enable: true
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Legende
 :::
 
 **Beispiel**
@@ -1343,13 +1267,11 @@ enable: true
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenform
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1362,8 +1284,7 @@ enable: true
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenposition
 :::
 
 **Beispiel**
@@ -1376,17 +1297,15 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Maximale Spalten- oder Zeilenzahl bei vielen Legendeneinträgen
 
+Wenn position horizontal ist (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), steuert maxSize die Anzahl der angezeigten Spalten
 
-
-
-
-
+Wenn position vertikal ist (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), steuert maxSize die Anzahl der angezeigten Zeilen
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1414,8 +1333,7 @@ Ob die Brush-Auswahl aktiviert wird
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Tooltip-Informationen aktiviert sind
 :::
 
 
@@ -1442,8 +1360,7 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Brush-Auswahl aktiviert ist
 :::
 
 ### brushType
@@ -1451,18 +1368,17 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
+Brush-Typ
 
+Definiert Form und Richtung der Brush-Auswahl.
 
+\- `rect`: rechteckige Brush-Auswahl, wählt gleichzeitig in X- und Y-Richtung aus
 
+\- `polygon`: polygonale Brush-Auswahl, zeichnet durch Klicken mehrerer Punkte ein beliebiges Polygon
 
+\- `x`: Brush-Auswahl in X-Achsenrichtung, nur in X-Richtung; Y-Richtung bleibt uneingeschränkt
 
-
-
-
-
-
-
-
+\- `y`: Brush-Auswahl in Y-Achsenrichtung, nur in Y-Richtung; X-Richtung bleibt uneingeschränkt
 :::
 
 ### brushMode
@@ -1485,8 +1401,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Brush-Bereich nach dem Ende der Auswahl gelöscht wird
 :::
 
 ### inBrushStyle
@@ -1494,12 +1409,9 @@ Deckkraft of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Beschreibung}
+Stil für Daten innerhalb des Brush-Bereichs
 
-
-
-
-
-
+Definiert den Stil ausgewählter Datenpunkte
 :::
 
 
@@ -1508,12 +1420,9 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Deckkraft
 
-
-
-
-
-
+Deckkraft ausgewählter Datenpunkte, Wertebereich 0 bis 1
 :::
 
 #### stroke
@@ -1521,8 +1430,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe
 :::
 
 #### lineWidth
@@ -1530,8 +1438,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichbreite
 :::
 
 ### outOfBrushStyle
@@ -1553,7 +1460,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 
 
 
@@ -1566,8 +1473,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe
 :::
 
 #### lineWidth
@@ -1575,7 +1481,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Strichbreite
 :::
 
 
@@ -1636,8 +1542,7 @@ Eingangseffekte für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale und Skal
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die aktuelle Animationsphase aktiviert ist
 :::
 
 ##### ease
@@ -1645,7 +1550,7 @@ Eingangseffekte für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale und Skal
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Animation-Easing-Funktion
 :::
 
 ##### duration
@@ -1653,8 +1558,7 @@ Eingangseffekte für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale und Skal
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Animationsdauer in Millisekunden
 :::
 
 ##### color
@@ -1662,8 +1566,7 @@ Eingangseffekte für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale und Skal
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Hervorhebungs- oder Atmosphärenfarbe der Animation
 :::
 
 #### update
@@ -1690,8 +1593,7 @@ Aktualisierungseffekt für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale An
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die aktuelle Animationsphase aktiviert ist
 :::
 
 ##### ease
@@ -1699,7 +1601,7 @@ Aktualisierungseffekt für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale An
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Animation-Easing-Funktion
 :::
 
 ##### duration
@@ -1707,8 +1609,7 @@ Aktualisierungseffekt für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale An
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Animationsdauer in Millisekunden
 :::
 
 ##### color
@@ -1716,8 +1617,7 @@ Aktualisierungseffekt für Kreis-/Donut-/Rose-Diagramme; unterstützt radiale An
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Hervorhebungs- oder Atmosphärenfarbe der Animation
 :::
 
 #### loop
@@ -1735,7 +1635,7 @@ Konfiguration der Schleifenanimation für Kreis-/Donut-/Rose-Diagramme
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob Loop-Animation aktiviert ist
 :::
 
 ##### interval
@@ -1743,8 +1643,7 @@ Konfiguration der Schleifenanimation für Kreis-/Donut-/Rose-Diagramme
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Loop-Animationsintervall in Millisekunden
 :::
 
 ##### loop
@@ -1771,8 +1670,7 @@ Schleifeneffekt für Kreis-/Donut-/Rose-Diagramme
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die aktuelle Animationsphase aktiviert ist
 :::
 
 ###### ease
@@ -1780,7 +1678,7 @@ Schleifeneffekt für Kreis-/Donut-/Rose-Diagramme
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Animation-Easing-Funktion
 :::
 
 ###### duration
@@ -1788,8 +1686,7 @@ Schleifeneffekt für Kreis-/Donut-/Rose-Diagramme
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Animationsdauer in Millisekunden
 :::
 
 ###### color
@@ -1797,8 +1694,7 @@ Schleifeneffekt für Kreis-/Donut-/Rose-Diagramme
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Hervorhebungs- oder Atmosphärenfarbe der Animation
 :::
 
 ##### atmosphere
@@ -1816,8 +1712,7 @@ Konfiguration der Atmosphäre-Animation für Kreis-/Donut-/Rose-Diagramme
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Easing-Funktion der Atmosphärenanimation
 :::
 
 ###### color
@@ -1825,8 +1720,7 @@ Konfiguration der Atmosphäre-Animation für Kreis-/Donut-/Rose-Diagramme
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbe der Atmosphärenanimation
 :::
 
 

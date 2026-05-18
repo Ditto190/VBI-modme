@@ -13,14 +13,14 @@ pnpm run g
 
 ## Pengembangan dan Build
 
-### Build
+### Membangun
 ```bash
 pnpm --filter=@visactor/vquery run build
 ```
 
 ## Pengujian
 
-### Menjalankan Test
+### Menjalankan pengujian
 VQuery menggunakan Rstest untuk pengujian.
 ```bash
 pnpm --filter=@visactor/vquery run test
@@ -31,7 +31,7 @@ pnpm --filter=@visactor/vquery run test
 pnpm --filter=@visactor/vquery run test:update
 ```
 
-### Coverage
+### Cakupan
 ```bash
 pnpm --filter=@visactor/vquery run test:coverage
 ```

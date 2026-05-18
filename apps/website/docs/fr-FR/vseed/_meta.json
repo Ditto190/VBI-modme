@@ -2,7 +2,7 @@
   {
     "type": "dir",
     "name": "guide",
-    "label": "Guide",
+    "label": "Introduction",
     "collapsed": false
   },
   {
@@ -26,7 +26,7 @@
   {
     "type": "dir",
     "name": "development",
-    "label": "Contribution",
+    "label": "Guide de contribution",
     "collapsed": true
   }
 ]

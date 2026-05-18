@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## area-by-order-date
 
-Bieu do vung - xu huong doanh so theo ngay
+Biểu đồ vùng - xu hướng doanh số theo ngày
 
 
 ```tsx preview
@@ -26,13 +26,13 @@ export default () => {
           "dimensions": [
             {
               "field": "order_date",
-              "alias": "Order Date"
+              "alias": "Ngày đặt hàng"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -50,7 +50,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -71,7 +71,7 @@ export default () => {
 
 ## bar-by-product-type
 
-Bieu do thanh - doanh so theo loai san pham
+Biểu đồ thanh - doanh số theo loại sản phẩm
 
 
 ```tsx preview
@@ -91,13 +91,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "Loại sản phẩm"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -115,7 +115,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -136,7 +136,7 @@ export default () => {
 
 ## chart-type-switching
 
-Chuyen doi giua bieu do duong va bieu do thanh
+Chuyển đổi giữa biểu đồ đường và biểu đồ thanh
 
 
 ```tsx preview
@@ -156,13 +156,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Tỉnh/TP"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -180,7 +180,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -201,7 +201,7 @@ export default () => {
 
 ## column-by-area
 
-Bieu do cot - doanh so theo khu vuc
+Biểu đồ cột - doanh số theo khu vực
 
 
 ```tsx preview
@@ -221,13 +221,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -245,7 +245,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -266,7 +266,7 @@ export default () => {
 
 ## donut-by-customer-type
 
-Bieu do donut - ty trong doanh so theo loai khach hang
+Biểu đồ donut - tỷ trọng doanh số theo loại khách hàng
 
 
 ```tsx preview
@@ -286,13 +286,13 @@ export default () => {
           "dimensions": [
             {
               "field": "customer_type",
-              "alias": "Customer Type"
+              "alias": "Loại khách hàng"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -310,7 +310,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -331,7 +331,7 @@ export default () => {
 
 ## line-by-province
 
-Bieu do duong - xu huong doanh so theo tinh
+Biểu đồ đường - xu hướng doanh số theo tỉnh
 
 
 ```tsx preview
@@ -351,13 +351,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Tỉnh/TP"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -375,7 +375,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -396,7 +396,7 @@ export default () => {
 
 ## line-chart
 
-Bieu do duong - xu huong doanh so theo tinh
+Biểu đồ đường - xu hướng doanh số theo tỉnh
 
 
 ```tsx preview
@@ -416,13 +416,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Tỉnh/TP"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -440,7 +440,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -461,7 +461,7 @@ export default () => {
 
 ## pie-by-area
 
-Bieu do tron - ty trong doanh so theo khu vuc
+Biểu đồ tròn - tỷ trọng doanh số theo khu vực
 
 
 ```tsx preview
@@ -481,13 +481,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -505,7 +505,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -526,7 +526,7 @@ export default () => {
 
 ## pie-chart-measure-encoding
 
-Ma hoa measure cho bieu do tron - kiem thu loai bieu do Pie trong measure-encoding.ts
+Mã hóa measure cho biểu đồ tròn - kiểm thử loại biểu đồ Pie trong measure-encoding.ts
 
 
 ```tsx preview
@@ -546,13 +546,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "Loại sản phẩm"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "angle",
               "aggregate": {
                 "func": "sum"
@@ -570,7 +570,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -591,7 +591,7 @@ export default () => {
 
 ## rose-by-city
 
-Bieu do rose - doanh so theo thanh pho
+Biểu đồ rose - doanh số theo thành phố
 
 
 ```tsx preview
@@ -611,13 +611,13 @@ export default () => {
           "dimensions": [
             {
               "field": "city",
-              "alias": "City"
+              "alias": "Thành phố"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -635,7 +635,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -656,7 +656,7 @@ export default () => {
 
 ## scatter-chart-measure-encoding
 
-Ma hoa measure cho bieu do phan tan - kiem thu loai Scatter trong measure-encoding.ts
+Mã hóa measure cho biểu đồ phân tán - kiểm thử loại Scatter trong measure-encoding.ts
 
 
 ```tsx preview
@@ -677,12 +677,12 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "xAxis"
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis"
             }
           ],
@@ -697,7 +697,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -718,7 +718,7 @@ export default () => {
 
 ## scatter-sales-profit
 
-Bieu do phan tan - quan he giua doanh so va loi nhuan
+Biểu đồ phân tán - quan hệ giữa doanh số và lợi nhuận
 
 
 ```tsx preview
@@ -739,7 +739,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -747,7 +747,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -765,7 +765,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },

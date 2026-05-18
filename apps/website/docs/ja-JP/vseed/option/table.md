@@ -1,42 +1,42 @@
 # Table
 
-:::info{title=Recommended}
-\- Recommended field configuration: `Any` measure(s), `Any` dimension(s)
+:::info{title=推奨}
+\- 推奨フィールド構成: `任意` 個の指標、`任意` 個の次元
 
-\- Supports Data Reshape: at least `Any` measure(s), `Any` dimension(s)
-
-:::
-
-:::info{title=Encoding Mapping}
-Only supports configuring dimension and measure trees; defaults to encoding to columns.
+\- データの再構成をサポート: 少なくとも `任意` 個の指標、`任意` 個の次元
 
 :::
 
-:::note{title=Description}
-Table, suitable for detailed data display scenarios, with clear rows and columns for easy viewing of specific values.
-
-Applicable scenarios:
-
-\- Display detailed data records
-
-\- Precise comparison of data items
-
-\- Display attributes of multiple dimensions
+:::info{title=エンコードマッピング}
+次元ツリーと指標ツリーの設定のみをサポートし、デフォルトでは column にエンコードされます。
 
 :::
 
-:::warning{title=Warning}
-Data requirements:
+:::note{title=説明}
+テーブルは詳細データの表示に適しており、行と列が明確で具体的な値を確認しやすくなります。
 
-\- At least 1 dimension field
+適用シーン:
 
-\- At least 1 measure field
+\- 詳細なデータ明細を表示する
 
-\- Dimension fields will be used as table column headers
+\- データ項目を正確に比較する
 
-Features enabled by default:
+\- 複数次元の属性を表示する
 
-\- Sorting, filtering, and pagination are enabled by default
+:::
+
+:::warning{title=注意}
+データ要件:
+
+\- 少なくとも 1 つの次元フィールド
+
+\- 少なくとも1つの指標フィールド
+
+\- 次元フィールドはテーブルの列見出しとして使用されます
+
+デフォルトで有効な機能:
+
+\- 並べ替え、フィルタリング、ページネーションがデフォルトで有効です
 
 :::
 
@@ -45,12 +45,12 @@ Features enabled by default:
 
 **Type:** `"table"`
 
-:::note{title=Description}
-Standard table component for displaying detailed data
+:::note{title=説明}
+詳細データを表示する標準テーブルコンポーネント
 
 :::
 
-**Example**
+**例**
 'table'
 
 
@@ -60,12 +60,12 @@ Standard table component for displaying detailed data
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-A dataset that conforms to the TidyData specification and is already aggregated, used to define the chart's data source and structure. The dataset provided by the user does not need any preprocessing; each field corresponds to a column, and each record corresponds to a row.
+:::note{title=説明}
+TidyData 仕様に準拠した集計済みデータセットです。グラフのデータソースと構造を定義します。ユーザーが提供するデータセットに前処理は不要で、各フィールドが 1 列に、各レコードが 1 行に対応します。
 
 :::
 
-**Example**
+**例**
 [{id: 1, name: "A", value: 100}, {id: 2, name: "B", value: 200}]
 
 
@@ -75,12 +75,12 @@ A dataset that conforms to the TidyData specification and is already aggregated,
 
 **Type:** `DimensionTree | undefined`
 
-:::note{title=Description}
-Each dimension in the table corresponds to a column.
+:::note{title=説明}
+テーブル内の各次元は 1 つの列に対応します。
 
 :::
 
-**Example**
+**例**
 [{id: "name", alias: "Name"}]
 
 
@@ -98,8 +98,8 @@ Each dimension in the table corresponds to a column.
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=説明}
+次元の日付フォーマット設定
 
 :::
 
@@ -108,8 +108,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=説明}
+時間粒度。日付の表示精度を決定します
 
 :::
 
@@ -117,12 +117,12 @@ Time granularity, determines the date display precision
 
 **Type:** `"row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=説明}
+次元をマッピングするチャネル
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: 複数の次元を行チャネルにマッピングできます
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: 複数の次元を列チャネルにマッピングできます
 
 :::
 
@@ -143,8 +143,8 @@ Channel to which the dimension is mapped
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=説明}
+次元の日付フォーマット設定
 
 :::
 
@@ -153,8 +153,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=説明}
+時間粒度。日付の表示精度を決定します
 
 :::
 
@@ -162,12 +162,12 @@ Time granularity, determines the date display precision
 
 **Type:** `"row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=説明}
+次元をマッピングするチャネル
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: 複数の次元を行チャネルにマッピングできます
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: 複数の次元を列チャネルにマッピングできます
 
 :::
 
@@ -176,12 +176,12 @@ Channel to which the dimension is mapped
 
 **Type:** `MeasureTree | undefined`
 
-:::note{title=Description}
-Each measure in the table corresponds to a column, and natively supports measure combinations.
+:::note{title=説明}
+テーブル内の各指標は 1 つの行に対応し、指標の組み合わせをネイティブにサポートします。
 
 :::
 
-**Example**
+**例**
 [{id: "value", alias: "Value"}]
 
 
@@ -191,8 +191,8 @@ Each measure in the table corresponds to a column, and natively supports measure
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure group ID, must be unique.
+:::note{title=説明}
+指標グループ ID。一意である必要があります。
 
 :::
 
@@ -200,8 +200,8 @@ Measure group ID, must be unique.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure group alias, can be duplicate; defaults to the ID if not specified.
+:::note{title=説明}
+指標グループの別名。重複可能です。未指定の場合は ID が既定値になります。
 
 :::
 
@@ -209,18 +209,18 @@ Measure group alias, can be duplicate; defaults to the ID if not specified.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+:::note{title=説明}
+数値の自動フォーマット。デフォルトで有効で、最優先です
 
-When autoFormat=true, it overrides all numFormat configurations
+autoFormat=true の場合、numFormat のすべての設定を上書きします
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+有効にすると、グラフのデータラベルとツールチップは指標値と言語環境に応じて適切なフォーマットを自動選択します
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+フォーマット規則: 10進数値で compact notation を有効にし、小数部は最小0桁、最大2桁、自動丸めを行い、ブラウザの Intl.NumberFormat 実装を使用します
 
-For example:
+例:
 
-\- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -230,10 +230,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=説明}
+指標のカスタム数値フォーマット。label と tooltip に自動適用されます
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+注意: カスタムフォーマットを使うには autoFormat=false を明示する必要があります。そうしないと autoFormat がこの設定を上書きします
 
 :::
 
@@ -242,8 +242,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+数値フォーマットのタイプ。数値（10進数）、パーセント（%）、パーミル（‰）、科学表記をサポートします
 
 :::
 
@@ -251,14 +251,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+数値フォーマットの倍率。0にはできません
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -266,14 +266,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+数値フォーマットの記号。例: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -281,8 +281,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+数値フォーマットの桁区切り
 
 :::
 
@@ -290,8 +290,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -299,8 +299,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -308,18 +308,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用します。significantDigits より優先度は低くなります
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1235 に変換されます。fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.6 に変換されます。fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換されます。fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換されます。fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換されます。fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換されます。fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -327,20 +327,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+数値フォーマットの有効数字。ブラウザの Intl.NumberFormat の minimumSignificantDigits と maximumSignificantDigits を使用します。fractionDigits より優先度が高くなります
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1000 に変換されます。significantDigits:1
+\- 1234.5678 は 1200 に変換されます。significantDigits:2
+\- 1234.5678 は 1230 に変換されます。significantDigits:3
+\- 1234.5678 は 1234 に変換されます。significantDigits:4
+\- 1234.5678 は 1234.6 に変換されます。significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換されます。significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換されます。significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換されます。significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -348,14 +348,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+significantDigits と fractionDigits の両方が設定された場合の数値フォーマットの丸め優先度。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingPriority と同じ規則に従います
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1230 に変換されます。significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 は 1234.5678 に変換されます。significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -363,8 +363,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -377,8 +377,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=説明}
+数値フォーマットのタイプ。数値（10進数）、パーセント（%）、パーミル（‰）、科学表記をサポートします
 
 :::
 
@@ -386,14 +386,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=説明}
+数値フォーマットの倍率。0にはできません
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -401,14 +401,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=説明}
+数値フォーマットの記号。例: %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**例**
+\- 100000 は 10万 に変換, ratio:10000, symbol:"万"
+\- 100000 は 10K に変換, ratio:1000, symbol:"K"
 
 
 
@@ -416,8 +416,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=説明}
+数値フォーマットの桁区切り
 
 :::
 
@@ -425,8 +425,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=説明}
+数値フォーマットの接尾辞
 
 :::
 
@@ -434,8 +434,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=説明}
+数値フォーマットの接頭辞
 
 :::
 
@@ -443,18 +443,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=説明}
+数値フォーマットの小数桁数。ブラウザの Intl.NumberFormat の minimumFractionDigits と maximumFractionDigits を使用します。significantDigits より優先度は低くなります
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1235 に変換されます。fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.6 に変換されます。fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換されます。fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 は 1230.568 に変換されます。fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換されます。fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.56780 に変換されます。fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -462,20 +462,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=説明}
+数値フォーマットの有効数字。ブラウザの Intl.NumberFormat の minimumSignificantDigits と maximumSignificantDigits を使用します。fractionDigits より優先度が高くなります
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**例**
+\- 1234.5678 は 1000 に変換されます。significantDigits:1
+\- 1234.5678 は 1200 に変換されます。significantDigits:2
+\- 1234.5678 は 1230 に変換されます。significantDigits:3
+\- 1234.5678 は 1234 に変換されます。significantDigits:4
+\- 1234.5678 は 1234.6 に変換されます。significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.57 に変換されます。significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.568 に変換されます。significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 は 1234.5678 に変換されます。significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -483,14 +483,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=説明}
+significantDigits と fractionDigits の両方が設定された場合の数値フォーマットの丸め優先度。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingPriority と同じ規則に従います
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**例**
+\- 1234.5678 は 1230 に変換されます。significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 は 1234.5678 に変換されます。significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -498,8 +498,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=説明}
+数値フォーマットの丸めモード。ブラウザの Intl.NumberFormat を使用し、Intl.NumberFormat の roundingMode と同じ規則に従います
 
 :::
 
@@ -507,10 +507,10 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"column" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped
+:::note{title=説明}
+指標をマッピングするチャネル
 
-\- column: Measure column
+\- column: 指標列
 
 :::
 
@@ -518,13 +518,13 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=説明}
+フラットな指標設定形式でツリー状の指標グループを構築します。parentId は親指標グループの id を指し、指標ツリーの構築に使います
 
 :::
 
-:::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+:::tip{title=ヒント}
+指標ツリーの設定方法は2つあります。方法1は children を持つ指標ツリーを直接設定すること、方法2は parentId を持つフラットな指標リストを設定することです。この2つは同時に使用できません
 
 :::
 
@@ -532,8 +532,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `(TableMeasure | MeasureGroup)[] | undefined`
 
-:::note{title=Description}
-Child measures or measure groups within the measure group.
+:::note{title=説明}
+指標グループ内の子指標または指標グループ。
 
 :::
 
@@ -542,8 +542,8 @@ Child measures or measure groups within the measure group.
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration, used to specify the pagination field name, which must be a dimension.
+:::note{title=説明}
+ページネーション設定。ページネーションに使用するフィールド名を指定します。このフィールドは次元である必要があります。
 
 :::
 
@@ -552,8 +552,8 @@ Pagination configuration, used to specify the pagination field name, which must 
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=説明}
+ページネーションフィールド。ページネーションに使うフィールド名を指定します。必ず次元である必要があります
 
 :::
 
@@ -561,12 +561,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+:::note{title=説明}
+現在のページネーション値。現在のページを判定するための値を指定します
 
 :::
 
-**Example**
+**例**
 '2023\-01\-01'
 
 
@@ -576,8 +576,8 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+:::note{title=説明}
+背景色は色名文字列（例: 'red', 'blue'）、または hex、rgb、rgba 値（例: '#ff0000', 'rgba(255,0,0,0.5)'）で指定できます
 
 :::
 
@@ -586,8 +586,8 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Table border color
+:::note{title=説明}
+テーブルの境界線色
 
 :::
 
@@ -596,8 +596,8 @@ Table border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Table body font size
+:::note{title=説明}
+テーブル本文のフォントサイズ
 
 :::
 
@@ -606,8 +606,8 @@ Table body font size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Table body font color
+:::note{title=説明}
+テーブル本文のフォント色
 
 :::
 
@@ -616,8 +616,8 @@ Table body font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Table body background color
+:::note{title=説明}
+テーブル本文の背景色
 
 :::
 
@@ -626,7 +626,7 @@ Table body background color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=説明}
 Header font size
 
 :::
@@ -636,8 +636,8 @@ Header font size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Header font color
+:::note{title=説明}
+ヘッダーのフォント色
 
 :::
 
@@ -646,8 +646,8 @@ Header font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Header background color
+:::note{title=説明}
+ヘッダーの背景色
 
 :::
 
@@ -656,8 +656,8 @@ Header background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color when the mouse hovers over a header cell, used to highlight the hovered cell.
+:::note{title=説明}
+ヘッダーセルにマウスをホバーしたときの背景色。ホバー中のセルを強調表示するために使用します。
 
 :::
 
@@ -666,8 +666,8 @@ Background color when the mouse hovers over a header cell, used to highlight the
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color of the entire row when the mouse hovers over the header, used to highlight the hovered row.
+:::note{title=説明}
+ヘッダーにマウスをホバーしたときの行全体の背景色。ホバー中の行を強調表示するために使用します。
 
 :::
 
@@ -676,8 +676,8 @@ Background color of the entire row when the mouse hovers over the header, used t
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Border color for selected cells, used to highlight the selection.
+:::note{title=説明}
+選択セルの境界線色。選択状態を強調表示するために使用します。
 
 :::
 
@@ -686,8 +686,8 @@ Border color for selected cells, used to highlight the selection.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color for selected cells, used to highlight the selection.
+:::note{title=説明}
+選択セルの背景色。選択状態を強調表示するために使用します。
 
 :::
 
@@ -696,8 +696,8 @@ Background color for selected cells, used to highlight the selection.
 
 **Type:** `BodyCellStyle | BodyCellStyle[] | undefined`
 
-:::note{title=Description}
-Sets special styles for cells in the table body.
+:::note{title=説明}
+テーブル本文部分のセルに特殊なスタイルを設定します。
 
 :::
 
@@ -706,29 +706,29 @@ Sets special styles for cells in the table body.
 
 **Type:** `Selector | Selectors | FieldSelector | undefined`
 
-:::note{title=Description}
-Data selector
+:::note{title=説明}
+- not in: 次元フィールド値が `value` 配列に含まれないデータ項目を選択します。
 
-If a selector is configured, it provides four types of data matching capabilities: numeric selectors, partial data selectors, conditional dimension selectors, and conditional measure selectors.
+selector を設定すると、数値セレクター、部分データセレクター、条件付き次元セレクター、条件付き指標セレクターの 4 種類のデータマッチングを利用できます。
 
-If no selector is configured, the style applies globally.
+selector が設定されていない場合、このスタイルは全体に適用されます。
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+注意: selector と dynamicFilter は同時に使用できません。dynamicFilter の優先度が高くなります。
 
 :::
 
-**Example**
-Numeric selector
+**例**
+数値セレクター
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
+部分データセレクター
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+条件付き次元セレクター
 selector = {
 field: 'category',
 operator: 'in',
@@ -740,7 +740,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+条件付き指標セレクター
 selector = {
 field: 'profit',
 operator: '>=',
@@ -752,7 +752,7 @@ operator: 'between'
 value: [100, 300]
 }
 
-Field column filtering
+フィールド列フィルタリング
 selector = {
 field: 'category'
 }
@@ -767,16 +767,16 @@ field: ['category', 'profit']
 
 **Type:** `string | string[]`
 
-:::note{title=Description}
-Field name, can be a single field or an array of multiple fields.
+:::note{title=説明}
+フィールド名。単一フィールドまたは複数フィールドの配列を指定できます。
 
 :::
 
-**Example**
-Single field
+**例**
+単一フィールド
 field: 'sales'
 
-Multiple fields
+複数フィールド
 field: ['sales', 'profit', 'revenue']
 
 
@@ -785,12 +785,12 @@ field: ['sales', 'profit', 'revenue']
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+テキストの垂直揃え。通常は 'top' に設定し、テキストを注釈点の下側に表示して、グラフの可視領域内に収めます。
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: 次元フィールドの値が value 配列に含まれるデータ項目を選択します。
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: 次元フィールドの値が value 配列に含まれないデータ項目を選択します。
 
 :::
 
@@ -798,14 +798,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+テキストの垂直揃え。通常は 'top' に設定し、テキストを注釈点の下側に表示して、グラフの可視領域内に収めます。
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: 次元フィールドの値が value 配列に含まれるデータ項目を選択します。
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: 次元フィールドの値が value 配列に含まれないデータ項目を選択します。
 
-same as operator
+operator と同じ
 
 :::
 
@@ -813,8 +813,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selects dimension field values; supports arrays.
+:::note{title=説明}
+次元フィールドの値を選択します。配列をサポートします。
 
 :::
 
@@ -822,40 +822,40 @@ Selects dimension field values; supports arrays.
 
 **Type:** `TableDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (code-driven)
+:::note{title=説明}
+動的フィルター（コード駆動）
 
 
 
-Implements complex data filtering logic via AI-generated JavaScript code.
+AI が生成した JavaScript コードで複雑なデータフィルタリングロジックを実装します。
 
-Suitable for scenarios where static selectors are difficult to express, such as Top N, statistical analysis, and complex conditions.
-
-
-
-Key capabilities:
-
-\- Supports arbitrarily complex data filtering conditions.
-
-\- Uses built-in utility functions for data manipulation.
-
-\- Safely executed in the browser environment (Web Worker sandbox).
+Top N、統計分析、複雑な条件など、静的 selector では表現しにくいシナリオに適しています。
 
 
 
-Environmental requirements: Only supports browser environments; Node.js environments will use the fallback.
+主な機能:
+
+\- 任意に複雑なデータフィルタリング条件をサポートします。
+
+\- データ操作に組み込みユーティリティ関数を使用します。
+
+\- ブラウザー環境（Web Worker サンドボックス）で安全に実行されます。
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+環境要件: ブラウザー環境のみをサポートします。Node.js 環境ではフォールバックを使用します。
 
 
 
-Table dynamic filter configuration
+注意: selector と dynamicFilter は同時に使用できません。dynamicFilter の優先度が高くなります。
 
 
 
-Implements precise cell-level filtering in tables via AI-generated JavaScript code.
+テーブル動的フィルター設定
+
+
+
+AI が生成した JavaScript コードで、テーブルのセル単位の精密なフィルタリングを実装します。
 
 :::
 
@@ -868,15 +868,15 @@ Implements precise cell-level filtering in tables via AI-generated JavaScript co
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=説明}
+ユーザーのフィルタリング要件説明（自然言語）。
 
 :::
 
-**Example**
-"Highlight cells with sales greater than 1000"
+**例**
+"売上が1000を超えるセルをハイライト"
 
-"Highlight the cell with the maximum value in each row"
+"各行で最大値のセルをハイライト"
 
 
 
@@ -884,28 +884,28 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code.
+:::note{title=説明}
+AI 生成の JavaScript フィルタリングコード。
 
 
 
-\- Can only use built-in utility functions (accessible via _ or R).
+\- 組み込みユーティリティ関数（_ または R からアクセス可能）のみ使用できます。
 
-\- Input parameters: data (array), where each item includes an _index field representing the row number.
+\- 入力パラメーター: data（配列）。各項目には行番号を表す _index フィールドが含まれます。
 
-\- Must return an array of cell selectors: Array<{ __row_index: number, field: string }>.
+\- セルセレクターの配列 Array<{ __row_index: number, field: string }> を返す必要があります。
 
-\- When field is "*", it indicates highlighting the entire row.
+\- field が "*" の場合、行全体を強調表示することを示します。
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, and network requests.
+\- 禁止事項: eval、Function、非同期処理、DOM API、ネットワークリクエスト。
 
 :::
 
-**Example**
-Top N filtering
+**例**
+Top N フィルタリング
 dynamicFilter = {
 type: 'row\-with\-field',
-description: 'Highlight the top 3 products by sales',
+description: '売上上位3製品を強調表示',
 code: `
 const sorted = _.sortBy(data, 'sales');
 const reversed = [...sorted].reverse();
@@ -920,7 +920,7 @@ _.map(result, item => [
 enabled: true
 }
 
-Multi-condition filtering
+複数条件フィルタリング
 dynamicFilter = {
 type: 'row\-with\-field',
 description: 'Highlight products with profit margin > 20% and sales > 5000',
@@ -939,10 +939,10 @@ _.map(matched, item => [
 enabled: true
 }
 
-Relative value filtering
+相対値フィルタリング
 dynamicFilter = {   *
 type: 'row\-with\-field',
-description: 'Highlight products with sales above average',
+description: '平均を上回る売上の製品を強調表示',
 code: `
 const avgSales = _.meanBy(data, 'sales');
 const matched = _.filter(data, item => item.sales > avgSales);
@@ -956,7 +956,7 @@ _.map(matched, item => [
 enabled: true
 }
 
-Grouped filtering
+グループ別フィルタリング
 dynamicFilter = {
 type: 'row\-with\-field',
 description: 'Highlight the product with the highest sales in each region',
@@ -973,7 +973,7 @@ _.map(topByRegion, item => [
 enabled: true
 }
 
-Highlight entire row
+行全体を強調表示
 dynamicFilter = {
 description: 'Highlight rows where sales are greater than profit',
 code: `
@@ -992,8 +992,8 @@ enabled: true
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=説明}
+コード実行に失敗した場合、または環境がサポートされない場合のフォールバック案。
 
 :::
 
@@ -1002,8 +1002,8 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; ID of an item in dimensions.
+:::note{title=説明}
+次元フィールド。dimensions 内の項目 ID。
 
 :::
 
@@ -1011,12 +1011,12 @@ Dimension field; ID of an item in dimensions.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+テキストの垂直揃え。通常は 'top' に設定し、テキストを注釈点の下側に表示して、グラフの可視領域内に収めます。
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: 次元フィールドの値が value 配列に含まれるデータ項目を選択します。
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: 次元フィールドの値が value 配列に含まれないデータ項目を選択します。
 
 :::
 
@@ -1024,14 +1024,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=説明}
+テキストの垂直揃え。通常は 'top' に設定し、テキストを注釈点の下側に表示して、グラフの可視領域内に収めます。
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: 次元フィールドの値が value 配列に含まれるデータ項目を選択します。
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: 次元フィールドの値が value 配列に含まれないデータ項目を選択します。
 
-same as operator
+operator と同じ
 
 :::
 
@@ -1039,8 +1039,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selects dimension field values; supports arrays.
+:::note{title=説明}
+次元フィールドの値を選択します。配列をサポートします。
 
 :::
 
@@ -1048,12 +1048,12 @@ Selects dimension field values; supports arrays.
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=説明}
+動的フィルタ実行結果（ランタイムフィールド）
 
 
 
-Written during the prepare() phase; read-only at runtime
+prepare() フェーズで書き込まれ、実行時は読み取り専用
 
 :::
 
@@ -1074,8 +1074,8 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell background color
+:::note{title=説明}
+セルの背景色
 
 :::
 
@@ -1083,8 +1083,8 @@ Cell background color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable color scale configuration for background colors
+:::note{title=説明}
+背景色のカラースケール設定を有効にするかどうか
 
 :::
 
@@ -1092,8 +1092,8 @@ Whether to enable color scale configuration for background colors
 
 **Type:** `{ minValue?: number; maxValue?: number; minColor: string; maxColor: string; } | undefined`
 
-:::note{title=Description}
-Cell background color scale mapping; takes priority over backgroundColor
+:::note{title=説明}
+セル背景色のカラースケールマッピング。backgroundColor より優先されます
 
 :::
 
@@ -1102,8 +1102,8 @@ Cell background color scale mapping; takes priority over backgroundColor
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value; defaults to the minimum value in the current data column if not configured
+:::note{title=説明}
+最小値。未設定の場合は現在のデータ列の最小値が既定値になります
 
 :::
 
@@ -1111,8 +1111,8 @@ Minimum value; defaults to the minimum value in the current data column if not c
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum value; defaults to the maximum value in the current data column if not configured
+:::note{title=説明}
+最大値。未設定の場合は現在のデータ列の最大値が既定値になります
 
 :::
 
@@ -1120,8 +1120,8 @@ Maximum value; defaults to the maximum value in the current data column if not c
 
 **Type:** `string`
 
-:::note{title=Description}
-Color corresponding to the minimum value
+:::note{title=説明}
+最小値に対応する色
 
 :::
 
@@ -1129,8 +1129,8 @@ Color corresponding to the minimum value
 
 **Type:** `string`
 
-:::note{title=Description}
-Color corresponding to the maximum value
+:::note{title=説明}
+最大値に対応する色
 
 :::
 
@@ -1138,8 +1138,8 @@ Color corresponding to the maximum value
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the progress bar feature (a bar showing the relative size of the cell value); disabled by default
+:::note{title=説明}
+進捗バー機能（セル値の相対的な大きさを示すバー）を有効にするかどうか。デフォルトでは無効です
 
 :::
 
@@ -1147,8 +1147,8 @@ Whether to enable the progress bar feature (a bar showing the relative size of t
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Progress bar color when the cell value is positive
+:::note{title=説明}
+セル値が正の場合の進捗バー色
 
 :::
 
@@ -1156,8 +1156,8 @@ Progress bar color when the cell value is positive
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Progress bar color when the cell value is negative
+:::note{title=説明}
+セル値が負の場合の進捗バー色
 
 :::
 
@@ -1165,12 +1165,12 @@ Progress bar color when the cell value is negative
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Progress bar minimum value
+:::note{title=説明}
+進捗バーの最小値
 
 
 
-Automatically calculates the column minimum if not configured
+未設定の場合は列の最小値を自動計算します
 
 :::
 
@@ -1178,12 +1178,12 @@ Automatically calculates the column minimum if not configured
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Progress bar maximum value
+:::note{title=説明}
+進捗バーの最大値
 
 
 
-Automatically calculates the column maximum if not configured
+未設定の場合は列の最大値を自動計算します
 
 :::
 
@@ -1191,8 +1191,8 @@ Automatically calculates the column maximum if not configured
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell text color
+:::note{title=説明}
+セルテキスト色
 
 :::
 
@@ -1200,8 +1200,8 @@ Cell text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Cell text font size
+:::note{title=説明}
+セルテキストのフォントサイズ
 
 :::
 
@@ -1209,8 +1209,8 @@ Cell text font size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell border color
+:::note{title=説明}
+セルの境界線色
 
 :::
 
@@ -1218,8 +1218,8 @@ Cell border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Cell border line width
+:::note{title=説明}
+セル境界線の線幅
 
 :::
 
@@ -1228,8 +1228,8 @@ Cell border line width
 
 **Type:** `TotalType | undefined`
 
-:::note{title=Description}
-The type of summary row to display; only applicable to measure columns
+:::note{title=説明}
+表示する集計行のタイプ。指標列にのみ適用されます
 
 \- 'sum': Displays the sum row
 
@@ -1243,7 +1243,7 @@ The type of summary row to display; only applicable to measure columns
 
 
 
-Table summary row type
+テーブル集計行タイプ
 
 \- 'sum': Sum
 
@@ -1257,7 +1257,7 @@ Table summary row type
 
 :::
 
-**Example**
+**例**
 'sum'
 
 
@@ -1267,20 +1267,20 @@ Table summary row type
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Theme is a lower-priority configuration that includes universal settings shared by all chart types and specific settings for individual chart types. Built-in themes include 'light' and 'dark'; users can customize themes via the Builder.
+:::note{title=説明}
+グラフテーマ。テーマは優先度の低い設定で、すべてのグラフタイプで共有される共通設定と、各グラフタイプ固有の設定を含みます。組み込みテーマには 'light' と 'dark' があり、Builder でカスタマイズできます。
 
 
 
-Theme
+テーマ
 
 
 
-Built-in light and dark themes; new themes can be customized using registerTheme.
+組み込みの light / dark テーマがあります。新しいテーマは registerTheme でカスタマイズできます。
 
 :::
 
-**Example**
+**例**
 'dark'
 
 'light'
@@ -1303,7 +1303,7 @@ Built-in light and dark themes; new themes can be customized using registerTheme
 
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
-:::note{title=Description}
-Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, language can be set using the intl.setLocale('zh-CN') method.
+:::note{title=説明}
+グラフの言語設定。'zh-CN' と 'en-US' をサポートします。また、intl.setLocale('zh-CN') メソッドで言語を設定できます。
 
 :::

@@ -36,7 +36,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -67,7 +67,7 @@ export default () => {
 
 ## add-measure-encoding
 
-Ajouter une mesure et definir l encodage
+Ajouter une mesure et définir l'encodage
 
 
 ```tsx preview
@@ -97,7 +97,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -124,7 +124,7 @@ export default () => {
 
 ## measure-with-custom-and-auto-format
 
-Formatage des mesures : les ventes utilisent un format personnalise en unites de 10 000 (prefixe ¥, deux decimales), le profit utilise le format automatique et la remise utilise un pourcentage
+Formatage des mesures : les ventes utilisent un format personnalisé en unités de 10 000 (préfixe ¥, deux décimales), le taux de profit utilise le format automatique et la remise utilise un pourcentage
 
 
 ```tsx preview
@@ -144,7 +144,7 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Categorie"
+              "alias": "Catégorie"
             }
           ],
           "measures": [],
@@ -159,7 +159,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -256,7 +256,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -265,7 +265,7 @@ export default () => {
       const applyBuilder = (builder: VBIChartBuilder) => {
   const measureId = builder.measures.toJSON().find(item => item.field === 'sales')?.id
   if (measureId) {
-    builder.measures.update(measureId, n => n.setAlias('Ventes a supprimer'))
+    builder.measures.update(measureId, n => n.setAlias('Ventes à supprimer'))
     builder.measures.remove(measureId)
   }
 }
@@ -283,7 +283,7 @@ export default () => {
 
 ## update-measure
 
-Mettre a jour une mesure
+Mettre à jour une mesure
 
 
 ```tsx preview
@@ -322,7 +322,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -333,7 +333,7 @@ export default () => {
   if (measureId) {
     const measure = builder.measures.find((node) => node.getId() === measureId)
     if (measure) {
-      measure.setAlias('Ventes a ajuster').setEncoding('yAxis')
+      measure.setAlias('Ventes à ajuster').setEncoding('yAxis')
     }
     builder.measures.update(measureId, n => n.setAlias('Nouvelles ventes').setAggregate({ func: 'avg' }))
   }

@@ -14,7 +14,7 @@ BuilderLayout(props: BuilderLayoutProps)
 
 ## 説明
 
-標準化された 3 カラム/2 カラムの builder レイアウトコンテナを提供します。
+標準化された 3 カラム/2 カラムのビルダーレイアウトコンテナを提供します。
 
 ## 最小例
 

@@ -5,7 +5,7 @@
 ### registerCustomTheme
 
 :::note{title=Beschreibung}
-Registriert ein benutzerdefiniertes Theme.
+Registriert ein benutzerdefiniertes Thema.
 :::
 
 ```ts
@@ -16,20 +16,20 @@ function registerCustomTheme(key: string, themeConfig:
 
 **Parameter:**
 
-- Eindeutiger Bezeichner des Themes
-- Theme-Konfigurationsobjekt oder eine Funktion, die ein Konfigurationsobjekt zurückgibt
-Wenn es eine Funktion ist, erhält sie ein Objekt mit lightTheme und darkTheme als Parameter, sodass bestehende Themes einfach erweitert werden können.
+- Eindeutiger Bezeichner des Themas
+- Themakonfigurationsobjekt oder eine Funktion, die ein Konfigurationsobjekt zurückgibt
+Wenn es eine Funktion ist, erhält sie ein Objekt mit lightTheme und darkTheme als Parameter, sodass bestehende Themen einfach erweitert werden können.
 
 **Beispiel:**
 
 registerCustomTheme('myTheme', { ... });
-// Oder auf Basis des Light-Themes ändern
+// Oder auf Basis des hellen Themas ändern
 registerCustomTheme('myTheme', ({ lightTheme }) => ({ ...lightTheme, ... }));
 
 ### registerDarkTheme
 
 :::note{title=Beschreibung}
-Registriert das dunkle Theme (Dark Theme).
+Registriert das dunkle Thema (Dark Theme).
 Nach der Registrierung kann es über Builder.getTheme('dark') abgerufen werden.
 :::
 
@@ -40,7 +40,7 @@ function registerDarkTheme(): void
 ### registerLightTheme
 
 :::note{title=Beschreibung}
-Registriert das helle Theme (Light Theme).
+Registriert das helle Thema (Light Theme).
 Nach der Registrierung kann es über Builder.getTheme('light') abgerufen werden.
 :::
 

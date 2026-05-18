@@ -1,85 +1,85 @@
-# Development Workflow
+# Quy trình phát triển
 
-## Start the Project
+## Khởi động dự án
 
-```bash title="Start Project"
+```bash title="Khởi động dự án"
 pnpm install && pnpm dev
 ```
 
-## Understand Requirements and Write Code
+## Hiểu yêu cầu và viết code
 
-This is a complex process, but generally involves three things:
-1. Define the input: `vseed`
-2. Define the output: `vseed` → `advancedVSeed`, or `advancedVSeed` → `spec`
-3. Write code to ensure new inputs produce the expected outputs
-
-:::tip
-The `playground` (`apps/website/docs/zh-CN/playground/index.mdx`) can be used for debugging and development.
-:::
-
-## Create New Test Cases
-
-If necessary, consider creating new test cases.
+Đây là một quá trình phức tạp, nhưng thông thường gồm ba việc:
+1. Làm rõ input: `vseed`
+2. Làm rõ output: `vseed` chuyển thành `advancedVSeed`, hoặc `advancedVSeed` chuyển thành `spec`
+3. Viết code để đảm bảo input mới có output đúng như mong đợi
 
 :::tip
-When test coverage decreases, new test cases are required.
+`playground` (`apps/website/docs/vi-VN/playground/index.mdx`) có thể dùng để debug và phát triển.
 :::
 
-In the `packages/vseed/tests/*` directory, create a new `testName.json` file and write a VSeed DSL.
+## Tạo test case mới
 
-Then run:
+Nếu cần, có thể cân nhắc tạo test case mới.
 
-```bash title="Create Test Case"
+:::tip
+Khi coverage giảm, cần tạo test case mới.
+:::
+
+Trong thư mục `packages/vseed/tests/*`, tạo một file `testName.json` mới và viết VSeed DSL vào đó.
+
+Thực thi:
+
+```bash title="Tạo test case"
 pnpm build:canvasTest
 ```
 
-## Run Unit Tests and Update Coverage
+## Chạy unit test và cập nhật coverage
 
-```bash title="Run Unit Tests and Update Coverage"
+```bash title="Chạy unit test và cập nhật coverage"
 pnpm test:coverage
 ```
 
-Ensure three things:
-1. All tests pass
-2. Snapshot changes are as expected
-3. Coverage has not decreased
+Đảm bảo ba việc:
+1. Tất cả test đều pass
+2. Thay đổi snapshot đúng như mong đợi
+3. Coverage không giảm
 
-> Coverage changes will be automatically updated to README.md
+> Thay đổi coverage sẽ được tự động cập nhật vào README.md
 
-## Update Options Documentation
+## Cập nhật tài liệu tùy chọn cấu hình
 
-If you modify TypeScript definitions for chart types, please update the options documentation.
+Nếu đã sửa định nghĩa TypeScript của loại chart, vui lòng cập nhật tài liệu tùy chọn cấu hình.
 
 :::tip
-All type definitions under `packages/vseed/src/types/chartType` correspond to the options documentation for each chart. If changes are made, please update accordingly.
+Tất cả định nghĩa type dưới `packages/vseed/src/types/chartType` tương ứng với tài liệu tùy chọn cấu hình của từng chart. Nếu có thay đổi, hãy chắc chắn cập nhật.
 :::
 
-```bash title="Update Options Documentation"
+```bash title="Cập nhật tài liệu tùy chọn cấu hình"
 pnpm build:docs
 ```
 
-## Publish and Submit
+## Phát hành và gửi thay đổi
 
-```bash title="Describe Changes"
+```bash title="Mô tả nội dung thay đổi"
 pnpm changeset
 ```
 
-After running `pnpm changeset`, follow the prompts to:
-1. Select the packages to change — in most cases, only vseed
-2. Follow semantic versioning: press Enter twice to skip `major` and `minor`, then select `patch`
-3. Enter a change description, e.g.: `fix: chart render error caused by only one measure`
+Sau khi chạy lệnh `pnpm changeset`, làm theo prompt để thực hiện các thao tác sau:
+1. Chọn package cần thay đổi; thông thường chỉ có `vseed`
+2. Tuân theo semantic versioning và chọn loại thay đổi. Trong hầu hết trường hợp, nhấn Enter hai lần để bỏ qua `major` và `minor`, rồi chọn `patch`
+3. Nhập mô tả thay đổi, ví dụ: `fix: chart render error caused by only one measure`
 
-:::tip Recommendation
-One feature or bugfix → one `changeset` → one `commit`
+:::tip Khuyến nghị
+Một chức năng hoặc Bugfix tương ứng với một `changeset` và một `commit`
 
-One `Pull Request` → one `issue`
+Một `Pull Request` tương ứng với một `issue`
 
-One `Pull Request` can contain multiple features or bugfixes → multiple `changeset`s → multiple `commit`s
+Một `Pull Request` chứa nhiều chức năng hoặc nhiều Bugfix tương ứng với nhiều `changeset` và nhiều `commit`
 :::
 
 ## Commit
 
-```bash title="Commit Everything"
+```bash title="Commit toàn bộ nội dung"
 git add .
 git commit -m "fix: chart render error caused by only one measure"
 git push

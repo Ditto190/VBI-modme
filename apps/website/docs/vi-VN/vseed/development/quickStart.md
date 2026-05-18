@@ -1,6 +1,6 @@
-# Quick Start
+# Bắt đầu nhanh
 
-## Environment Setup
+## Chuẩn bị môi trường
 
 [Node Download](https://nodejs.org/en/download)
 ```bash title="node"
@@ -9,32 +9,32 @@ nvm use 24
 ```
 
 [Pnpm Download](https://pnpm.io/installation#using-corepack)
-> `package.json` configures `packageManager` as `pnpm@10.13.1`; `corepack` will automatically install this version.
+> `package.json` cấu hình `packageManager` là `pnpm@10.13.1`; `corepack` sẽ tự động cài đặt phiên bản này.
 ```bash title="pnpm"
 corepack enable pnpm
 ```
 
-Check pnpm version, expected to be 10.26.1:
+Kiểm tra phiên bản pnpm. Phiên bản mong đợi là 10.26.1.
 ```bash title="pnpm version"
 pnpm -v # expected 10.26.1
 ```
 
-## Start the Project
+## Khởi động dự án
 
-Start the documentation site (supports simultaneous development and debugging of vseed):
-```bash title="Development"
+Khởi động trang tài liệu, đồng thời có thể phát triển và debug vseed.
+```bash title="Phát triển"
 pnpm install
 
 pnpm dev
 ```
 
-Build:
+Build
 ```bash title="Build"
 pnpm build
 ```
 
-Analyze the build output with `rsdoctor`:
-```bash title="Analyze"
+Phân tích sản phẩm build bằng `rsdoctor`.
+```bash title="Phân tích"
 pnpm build:rsdoctor
 # or
 pnpm dev:rsdoctor

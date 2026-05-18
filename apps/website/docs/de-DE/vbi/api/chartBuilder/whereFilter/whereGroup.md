@@ -28,7 +28,7 @@ constructor(yMap: Y.Map<any>)
 getConditions(): Y.Array<any>
 ```
 
-**Rueckgabe**: `Y.Array<any>`
+**Rückgabe**: `Y.Array<any>`
 
 ### getId
 
@@ -40,7 +40,7 @@ Gruppen-ID abrufen
 getId(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getOperator
 
@@ -52,7 +52,7 @@ Logischen Operator abrufen
 getOperator(): 'and' | 'or'
 ```
 
-**Rueckgabe**: `'and' \| 'or'`
+**Rückgabe**: `'and' \| 'or'`
 
 ### setOperator
 
@@ -64,7 +64,7 @@ Logischen Operator setzen
 setOperator(op: 'and' | 'or'): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -74,7 +74,7 @@ setOperator(op: 'and' | 'or'): this
 
 ### add
 
-Eine Where-Filterbedingung zur Gruppe hinzufuegen
+Eine Where-Filterbedingung zur Gruppe hinzufügen
 
 **Definition**:
 
@@ -82,7 +82,7 @@ Eine Where-Filterbedingung zur Gruppe hinzufuegen
 add(field: string, callback: (node: WhereFilterNodeBuilder) => void): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -93,7 +93,7 @@ add(field: string, callback: (node: WhereFilterNodeBuilder) => void): this
 
 ### addGroup
 
-Eine verschachtelte Gruppe zur aktuellen Gruppe hinzufuegen
+Eine verschachtelte Gruppe zur aktuellen Gruppe hinzufügen
 
 **Definition**:
 
@@ -101,7 +101,7 @@ Eine verschachtelte Gruppe zur aktuellen Gruppe hinzufuegen
 addGroup(op: 'and' | 'or', callback: (group: WhereGroupBuilder) => void): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -120,7 +120,7 @@ Bedingung mit angegebener ID oder Element an angegebenem Index entfernen
 remove(idOrIndex: string | number): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -138,7 +138,7 @@ Alle Bedingungen in der Gruppe leeren
 clear(): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 ### toJSON
 
@@ -150,4 +150,4 @@ Als JSON exportieren
 toJSON(): VBIWhereGroup
 ```
 
-**Rueckgabe**: `VBIWhereGroup`
+**Rückgabe**: `VBIWhereGroup`

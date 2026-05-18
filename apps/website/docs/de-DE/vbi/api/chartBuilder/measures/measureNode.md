@@ -30,7 +30,7 @@ Knoten-ID abrufen
 getId(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getField
 
@@ -42,7 +42,7 @@ Feldname abrufen
 getField(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getEncoding
 
@@ -54,7 +54,7 @@ Diagramm-Encoding-Position abrufen
 getEncoding(): VBIMeasure['encoding'] | undefined
 ```
 
-**Rueckgabe**: `VBIMeasure['encoding'] \| undefined`
+**Rückgabe**: `VBIMeasure['encoding'] \| undefined`
 
 ### getSort
 
@@ -66,7 +66,7 @@ Sortierkonfiguration abrufen
 getSort(): VBISort | undefined
 ```
 
-**Rueckgabe**: `VBISort \| undefined`
+**Rückgabe**: `VBISort \| undefined`
 
 ### setAlias
 
@@ -78,7 +78,7 @@ Anzeigenamen setzen
 setAlias(alias: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -96,7 +96,7 @@ Diagramm-Encoding-Position setzen
 setEncoding(encoding: NonNullable<VBIMeasure['encoding']>): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -114,7 +114,7 @@ Sortierkonfiguration setzen
 setSort(sort: VBISort): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -132,7 +132,7 @@ Aggregationsfunktion setzen
 setAggregate(aggregate: VBIMeasure['aggregate']): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -150,7 +150,7 @@ Zahlenformat setzen
 setFormat(format: VBIMeasureFormat): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -168,11 +168,11 @@ Zahlenformat abrufen
 getFormat(): VBIMeasureFormat | undefined
 ```
 
-**Rueckgabe**: `VBIMeasureFormat \| undefined`
+**Rückgabe**: `VBIMeasureFormat \| undefined`
 
 ### clearFormat
 
-Zahlenformatkonfiguration loeschen
+Zahlenformatkonfiguration löschen
 
 **Definition**:
 
@@ -180,11 +180,11 @@ Zahlenformatkonfiguration loeschen
 clearFormat(): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 ### clearSort
 
-Sortierkonfiguration loeschen
+Sortierkonfiguration löschen
 
 **Definition**:
 
@@ -192,7 +192,7 @@ Sortierkonfiguration loeschen
 clearSort(): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 ### toJSON
 
@@ -204,4 +204,4 @@ Als JSON exportieren
 toJSON(): VBIMeasure
 ```
 
-**Rueckgabe**: `VBIMeasure`
+**Rückgabe**: `VBIMeasure`

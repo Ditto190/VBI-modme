@@ -14,7 +14,7 @@ useHavingFilter(builder: VBIChartBuilder): UseHavingFilterReturn
 
 ## 説明
 
-Having フィルターツリーを管理し、mutation 入口を提供します。
+Having フィルターツリーを管理し、mutation の入口を提供します。
 
 ## 最小例
 

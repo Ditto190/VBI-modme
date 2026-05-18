@@ -4,7 +4,7 @@
 TidyData reduziert durch das Kernprinzip „Variablen als Spalten, Beobachtungen als Zeilen“ die Komplexität der Datenbereinigung erheblich, sodass wir uns stärker auf Geschäftsprobleme statt auf Datenformatumwandlungen konzentrieren können.
 :::
 
-## Paper
+## Fachartikel
 
 Der Autor des Papers ist `Hadley Wickham`. Das Paper behandelt einen kleinen Teilbereich der Datenverarbeitung, die Datenaufbereitung, weil aufgeräumte Datensätze einfacher zu bearbeiten, zu modellieren und zu visualisieren sind und eine bestimmte Struktur besitzen.
 

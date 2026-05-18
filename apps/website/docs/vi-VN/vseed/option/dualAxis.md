@@ -1,60 +1,59 @@
 # DualAxis
 
-:::info{title=Khuyen nghi}
-- Recommended field configuration: `2` measure(s), `2` dimension(s)
+:::info{title=Khuyến nghị}
+\- Cấu hình trường được khuyến nghị: `2` chỉ số, `2` chiều
 
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
-
-:::
-
-:::info{title=Anh xa ma hoa}
-Dual-axis charts support the following visual channels:
-
-`xAxis`          : x-axis channel, supports `multiple dimensions`, mapped to the x-axis by dimension value
-
-`primaryYAxis`   : primary y-axis channel, supports `multiple measures`, maps measures to the primary axis
-
-`secondaryYAxis` : secondary y-axis channel, supports `multiple measures`, maps measures to the secondary axis
-
-`detail`         : detail channel, supports `multiple dimensions`, used for displaying more granular data within the same color series
-
-`color`          : color channel, supports `multiple dimensions` or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
-
-`tooltip`        : tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point
-
-`label`          : label channel, supports `multiple dimensions` and `multiple measures`, displays data labels on data points
+\- Hỗ trợ reshape dữ liệu: ít nhất `1` chỉ số, `0` chiều
 
 :::
 
-:::note{title=Mo ta}
-Dual Axis Chart, suitable for comparing the relationship between two measures of different magnitudes or units, including primary and secondary axes.
+:::info{title=Ánh xạ mã hóa}
+Biểu đồ hai trục hỗ trợ các kênh trực quan sau:
 
-Applicable scenarios:
+`xAxis`          : kênh trục X, hỗ trợ `nhiều chiều`, ánh xạ lên trục X theo giá trị chiều
 
-- Comparative analysis of measures with different magnitudes
+`primaryYAxis`   : kênh trục Y chính, hỗ trợ `nhiều chỉ số`, ánh xạ chỉ số lên trục chính
 
-- Trend comparison of correlated measures
+`secondaryYAxis` : kênh trục Y phụ, hỗ trợ `nhiều chỉ số`, ánh xạ chỉ số lên trục phụ
 
-- Simultaneously displaying composite measures like values and growth rates
+`detail`         : kênh chi tiết, hỗ trợ `nhiều chiều`, dùng để hiển thị dữ liệu chi tiết hơn trong cùng một chuỗi màu
 
-- Supports combinations of different chart types (e.g., Line + Bar / Line + Area / Area + Bar)
+`color`          : kênh màu, hỗ trợ `nhiều chiều` hoặc `một chỉ số`; màu theo chiều dùng để phân biệt các chuỗi dữ liệu, màu theo chỉ số dùng để ánh xạ tuyến tính giá trị chỉ số sang màu đồ họa
+
+`tooltip`        : kênh tooltip, hỗ trợ `nhiều chiều` và `nhiều chỉ số`, hiển thị khi rê chuột lên điểm dữ liệu
+
+`label`          : kênh label, hỗ trợ `nhiều chiều` và `nhiều chỉ số`, hiển thị nhãn dữ liệu trên điểm dữ liệu
 
 :::
 
-:::warning{title=Warning}
-Data requirements:
+:::note{title=Mô tả}
+Biểu đồ hai trục, phù hợp để hiển thị quan hệ so sánh giữa hai chỉ số có quy mô hoặc đơn vị khác nhau, bao gồm trục tọa độ chính và trục tọa độ phụ
 
-- At least 1 measure field
+Kịch bản áp dụng:
 
-- Supports measure groups; the first group is placed on the primary (left) axis, the second on the secondary (right) axis
+\- Phân tích so sánh các chỉ số có quy mô khác nhau
 
-- The first dimension is placed on the X-axis; other dimensions merge with measure names (if multiple measures exist) to form legend items.
+\- So sánh xu hướng của các chỉ số có tương quan
 
-- Two measure groups can be mapped to the left and right Y-axes respectively; all measures within a group are automatically combined.
+\- Cần hiển thị đồng thời giá trị, tỷ lệ tăng trưởng và các chỉ số tổng hợp khác
 
-Features enabled by default:
+\- Hỗ trợ kết hợp nhiều loại biểu đồ khác nhau (ví dụ: biểu đồ đường + biểu đồ cột / biểu đồ đường + biểu đồ vùng / biểu đồ vùng + biểu đồ cột)
+:::
 
-- Axes, legend, data labels, and tooltips are enabled by default.
+:::warning{title=Cảnh báo}
+Yêu cầu dữ liệu:
+
+- Ít nhất 1 trường chỉ số
+
+- Hỗ trợ nhóm chỉ số; nhóm đầu tiên đặt trên trục chính (bên trái), nhóm thứ hai đặt trên trục phụ (bên phải)
+
+- Chiều đầu tiên được đặt trên trục X; các chiều khác được gộp với tên chỉ số khi có nhiều chỉ số để tạo mục chú giải.
+
+- Hai nhóm chỉ số có thể lần lượt ánh xạ vào hai trục Y trái và phải; tất cả chỉ số trong cùng một nhóm sẽ tự động được gộp lại.
+
+Các tính năng bật mặc định:
+
+- Trục, chú giải, nhãn dữ liệu và tooltip được bật mặc định.
 
 :::
 
@@ -63,12 +62,12 @@ Features enabled by default:
 
 **Type:** `"dualAxis"`
 
-:::note{title=Mo ta}
-Dual Axis Chart, a composite chart showing the comparison between two measures of different magnitudes.
+:::note{title=Mô tả}
+Biểu đồ hai trục, biểu đồ kết hợp thể hiện quan hệ so sánh giữa hai chỉ số có quy mô khác nhau
 
 :::
 
-**Example**
+**Ví dụ**
 'dualAxis'
 
 
@@ -78,13 +77,13 @@ Dual Axis Chart, a composite chart showing the comparison between two measures o
 
 **Type:** `Record[]`
 
-:::note{title=Mo ta}
-Dataset, compliant with TidyData specification and already aggregated, defines the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Dual Axis Chart data is ultimately converted to 2 dimensions and 1 or 2 measure(s) (depending on if measure groups are configured).
+:::note{title=Mô tả}
+Dataset đã được tổng hợp và tuân theo chuẩn TidyData, dùng để xác định nguồn dữ liệu và cấu trúc của biểu đồ. Dataset do người dùng nhập không cần xử lý trước. VSeed có năng lực reshape dữ liệu mạnh mẽ và sẽ tự thực hiện reshape dữ liệu; dữ liệu biểu đồ cột cuối cùng sẽ được chuyển thành 2 chiều và 1 chỉ số.
 
 :::
 
-**Example**
-[{month:'Jan', value:100, growth:0.2}, {month:'Feb', value:150, growth:0.5}]
+**Ví dụ**
+[{category:'A', value:100}, {category:'B', value:200}]
 
 
 
@@ -93,13 +92,13 @@ Dataset, compliant with TidyData specification and already aggregated, defines t
 
 **Type:** `ColumnDimension[] | undefined`
 
-:::note{title=Mo ta}
-Dimensions; the first dimension is placed on the X-axis, while other dimensions merge with measure names (if multiple exist) to form legend items.
+:::note{title=Mô tả}
+Chiều đầu tiên của biểu đồ cột được ánh xạ vào trục X. Các chiều còn lại sẽ được gộp với tên chỉ số khi có nhiều chỉ số, rồi hiển thị dưới dạng mục chú giải.
 
 :::
 
-**Example**
-[{id: 'month', alias: 'Month'}]
+**Ví dụ**
+[{id: "category", alias: "category"}]
 
 
 
@@ -108,8 +107,8 @@ Dimensions; the first dimension is placed on the X-axis, while other dimensions 
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Field ID corresponding to the dimension
+:::note{title=Mô tả}
+ID trường tương ứng với chiều
 
 :::
 
@@ -117,8 +116,8 @@ Field ID corresponding to the dimension
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Dimension alias
+:::note{title=Mô tả}
+Bí danh của chiều
 
 :::
 
@@ -126,8 +125,8 @@ Dimension alias
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Mo ta}
-Dimension date format configuration
+:::note{title=Mô tả}
+Cấu hình định dạng ngày của chiều
 
 :::
 
@@ -136,8 +135,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Mo ta}
-Time granularity, determines the date display precision
+:::note{title=Mô tả}
+Độ hạt thời gian, quyết định độ chính xác hiển thị ngày
 
 :::
 
@@ -145,22 +144,22 @@ Time granularity, determines the date display precision
 
 **Type:** `"xAxis" | "color" | "detail" | "tooltip" | "label" | "row" | "column" | undefined`
 
-:::note{title=Mo ta}
-Channel to which the dimension is mapped
+:::note{title=Mô tả}
+Kênh mà chiều được ánh xạ tới
 
-- xAxis: supports mapping multiple dimensions to the x-axis
+\- xAxis: hỗ trợ ánh xạ nhiều chiều vào trục X
 
-- color: supports mapping multiple dimensions to the color channel
+\- color: hỗ trợ ánh xạ nhiều chiều tới kênh màu
 
-- detail: supports mapping multiple dimensions to the detail channel
+\- detail: hỗ trợ ánh xạ nhiều chiều tới kênh detail
 
-- tooltip: supports mapping multiple dimensions to the tooltip channel
+\- tooltip: hỗ trợ ánh xạ nhiều chiều vào kênh tooltip
 
-- label: supports mapping multiple dimensions to the label channel
+\- label: hỗ trợ ánh xạ nhiều chiều vào kênh label
 
-- row: supports mapping multiple dimensions to the row channel
+\- row: hỗ trợ ánh xạ nhiều chiều tới kênh hàng
 
-- column: supports mapping multiple dimensions to the column channel
+\- column: hỗ trợ ánh xạ nhiều chiều tới kênh cột
 
 :::
 
@@ -169,18 +168,13 @@ Channel to which the dimension is mapped
 
 **Type:** `DualAxisMeasure[] | undefined`
 
-:::note{title=Mo ta}
-Dual Axis Chart measures.
+:::note{title=Mô tả}
+Chỉ số của biểu đồ hai trục.
 
-Measures mapped to primaryYAxis and secondaryYAxis through encoding can be grouped by setting the `parentId` property. Measures in different groups will be displayed in different sub-charts. You can also set the `chartType` property to specify the chart type for each measure group.
-
-Measures can be grouped by setting the `parentId` property. Measures in different groups are displayed in different subcharts.
-
-**Example**
-
+Với các chỉ số được ánh xạ tới `primaryYAxis` và `secondaryYAxis` trong `encoding`, bạn có thể đặt thuộc tính `parentId` để nhóm chỉ số. Chỉ số ở các nhóm khác nhau sẽ hiển thị trong các biểu đồ con khác nhau. Bạn cũng có thể đặt thuộc tính `chartType` để chỉ định loại biểu đồ cho từng nhóm chỉ số.
 :::
 
-**Example**
+**Ví dụ**
 [{ id: 'value', encoding: 'primaryYAxis' }, { id: 'growth', encoding: 'secondaryYAxis' }]
 
 
@@ -190,8 +184,8 @@ Measures can be grouped by setting the `parentId` property. Measures in differen
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Measure ID, must be unique
+:::note{title=Mô tả}
+ID chỉ số, không được trùng
 
 :::
 
@@ -199,8 +193,8 @@ Measure ID, must be unique
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Measure alias, duplicates allowed; when not set, alias defaults to id
+:::note{title=Mô tả}
+Bí danh measure, cho phép trùng; nếu không đặt thì alias mặc định là id
 
 :::
 
@@ -208,20 +202,20 @@ Measure alias, duplicates allowed; when not set, alias defaults to id
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale.
+:::note{title=Mô tả}
+Tự động định dạng số, bật mặc định và có độ ưu tiên cao nhất
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation.
+Khi autoFormat=true, cấu hình này ghi đè toàn bộ cấu hình numFormat
 
-For example:
+Khi bật, nhãn dữ liệu và tooltip của biểu đồ sẽ tự động chọn định dạng phù hợp theo giá trị measure và locale
 
-- locale=en-US: 749740.264 → 744.5K
+Quy tắc định dạng: số thập phân bật compact notation, tối thiểu 0 chữ số thập phân, tối đa 2 chữ số thập phân, tự động làm tròn, dùng triển khai Intl.NumberFormat của trình duyệt
 
-- locale=en-US: 749740.264 → 744.5K
+Ví dụ:
 
-\- locale='zh-CN': 749740.264 -> 744.5K
+\- locale=zh-CN: 749740.264 → 74.45万
 
-\- locale='en-US': 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -229,10 +223,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Mo ta}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=Mô tả}
+Định dạng số tùy chỉnh cho measure; tự động áp dụng cho label và tooltip
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+Lưu ý: Để dùng định dạng tùy chỉnh, phải đặt rõ autoFormat=false; nếu không autoFormat sẽ ghi đè cấu hình này
 
 :::
 
@@ -241,8 +235,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Mo ta}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Loại định dạng số, hỗ trợ: number (thập phân), percent (%), permille (‰), ký pháp khoa học
 
 :::
 
@@ -250,14 +244,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được bằng 0
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
+\- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
 
 
 
@@ -265,14 +259,14 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
+\- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
 
 
 
@@ -280,8 +274,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Dấu phân tách hàng nghìn cho định dạng số
 
 :::
 
@@ -289,8 +283,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -298,8 +292,8 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Tiền tố định dạng số
 
 :::
 
@@ -307,18 +301,18 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -326,20 +320,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1000, significantDigits:1
+\- 1234.5678 được chuyển thành 1200, significantDigits:2
+\- 1234.5678 được chuyển thành 1230, significantDigits:3
+\- 1234.5678 được chuyển thành 1234, significantDigits:4
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -347,14 +341,14 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ưu tiên làm tròn khi định dạng số nếu đồng thời đặt significantDigits và fractionDigits; dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingPriority
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-Label font size.
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -362,8 +356,8 @@ Label font size.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Mo ta}
-Label font weight.
+:::note{title=Mô tả}
+Chế độ làm tròn khi định dạng số, dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingMode
 
 :::
 
@@ -376,8 +370,8 @@ Label font weight.
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Mo ta}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Loại định dạng số, hỗ trợ: number (thập phân), percent (%), permille (‰), ký pháp khoa học
 
 :::
 
@@ -385,14 +379,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được bằng 0
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
+\- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
 
 
 
@@ -400,14 +394,14 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
+\- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
 
 
 
@@ -415,8 +409,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Dấu phân tách hàng nghìn cho định dạng số
 
 :::
 
@@ -424,8 +418,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -433,8 +427,8 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Tiền tố định dạng số
 
 :::
 
@@ -442,18 +436,18 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -461,20 +455,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1000, significantDigits:1
+\- 1234.5678 được chuyển thành 1200, significantDigits:2
+\- 1234.5678 được chuyển thành 1230, significantDigits:3
+\- 1234.5678 được chuyển thành 1234, significantDigits:4
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -482,14 +476,14 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ưu tiên làm tròn khi định dạng số nếu đồng thời đặt significantDigits và fractionDigits; dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingPriority
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-Label font size.
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -497,8 +491,8 @@ Label font size.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Mo ta}
-Label font weight.
+:::note{title=Mô tả}
+Chế độ làm tròn khi định dạng số, dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingMode
 
 :::
 
@@ -506,18 +500,18 @@ Label font weight.
 
 **Type:** `"color" | "tooltip" | "label" | "primaryYAxis" | "secondaryYAxis" | undefined`
 
-:::note{title=Mo ta}
-- secondaryYAxis: Measure mapped to the secondary Y-axis.
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
-- color: Measure mapped to the color channel.
+- color: chỉ số được ánh xạ tới kênh màu.
 
-- label: Measure mapped to the label channel.
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
-- tooltip: Measure mapped to the tooltip channel.
+- tooltip: chỉ số được ánh xạ tới kênh tooltip.
 
-\- label: measure mapped to the label channel
+Ưu tiên làm tròn khi định dạng số nếu đồng thời đặt significantDigits và fractionDigits; dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingPriority
 
-\- tooltip: measure mapped to the tooltip channel
+\- tooltip: chỉ số được ánh xạ tới kênh tooltip
 
 :::
 
@@ -525,36 +519,37 @@ Label font weight.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=Mô tả}
+Ở dạng cấu hình chỉ số phẳng, xây dựng nhóm chỉ số dạng cây. parentId trỏ tới id của nhóm chỉ số cha, dùng để xây dựng cây chỉ số
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+Có hai cách cấu hình cây chỉ số: Cách 1 là cấu hình trực tiếp cây chỉ số với children; Cách 2 là cấu hình danh sách chỉ số phẳng với parentId. Hai cách này không thể dùng đồng thời
 
 :::
+
 
 ### chartType
 
 **Type:** `"area" | "column" | "areaPercent" | "columnParallel" | "columnPercent" | "line" | "scatter" | undefined`
 
-:::note{title=Mo ta}
-- column: Bar (Column) Chart
+:::note{title=Mô tả}
+- column: biểu đồ thanh/cột
 
-- columnParallel: Parallel Column Chart
+- columnParallel: biểu đồ cột song song
 
-- columnPercent: Percent Column Chart
+\- color: chỉ số được ánh xạ tới kênh màu
 
-- area: Area Chart
+\- label: chỉ số ánh xạ vào kênh label
 
-- areaPercent: Percent Area Chart
+\- tooltip: chỉ số ánh xạ vào kênh tooltip
 
-- scatter: Scatter Chart
+Ở dạng cấu hình chỉ số phẳng, xây dựng nhóm chỉ số dạng cây. parentId trỏ tới id của nhóm chỉ số cha, dùng để xây dựng cây chỉ số
 
-\- areaPercent: percentage area chart
+Có hai cách cấu hình cây chỉ số: Cách 1 là cấu hình trực tiếp cây chỉ số với children; Cách 2 là cấu hình danh sách chỉ số phẳng với parentId. Hai cách này không thể dùng đồng thời
 
-\- scatter: scatter chart
+\- scatter: biểu đồ phân tán
 
 :::
 
@@ -563,8 +558,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `Page | undefined`
 
-:::note{title=Mo ta}
-Pagination configuration
+:::note{title=Mô tả}
+Cấu hình phân trang, dùng để chỉ định tên trường phân trang; trường này phải là dimension.
 
 :::
 
@@ -573,8 +568,8 @@ Pagination configuration
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=Mô tả}
+Trường phân trang; chỉ định tên trường cho phân trang, phải là một chiều
 
 :::
 
@@ -582,12 +577,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Giá trị phân trang hiện tại; chỉ định giá trị dùng để xác định trang hiện tại
 
 :::
 
-**Example**
+**Ví dụ**
 '2023\-01\-01'
 
 
@@ -597,12 +592,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `boolean | boolean[] | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chỉ định id chỉ số mà điểm chú thích thuộc về. Trong kịch bản nhiều chỉ số, có thể kết hợp với selector để định vị duy nhất điểm chú thích của chỉ số mục tiêu.
 
 :::
 
-**Example**
+**Ví dụ**
 {"chartType":"dualAxis","dataset":[{"date":"2019","profit":10,"sales":100},{"date":"2020","profit":30,"sales":200},{"date":"2021","profit":30,"sales":300},{"date":"2022","profit":50,"sales":500}],"alignTicks":[false,true],"dualMeasures":[{"primaryMeasures":[{"id":"profit"}],"secondaryMeasures":[{"id":"sales"}]},{"primaryMeasures":[{"id":"profit"}],"secondaryMeasures":[{"id":"sales"}]}]}
 
 
@@ -612,8 +607,8 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `YLinearAxis | YLinearAxis[] | undefined`
 
-:::note{title=Mo ta}
-Primary Y-axis configuration for the dual-axis chart, including position, style, and related settings. When measures have multiple groups, primaryYAxis can be configured as an array, with each item corresponding to one primary Y-axis.
+:::note{title=Mô tả}
+Cấu hình trục Y chính của biểu đồ hai trục, bao gồm vị trí, kiểu và các thiết lập liên quan. Khi các chỉ số có nhiều nhóm, primaryYAxis có thể cấu hình dưới dạng mảng, mỗi mục tương ứng với một trục Y chính.
 
 :::
 
@@ -622,8 +617,8 @@ Primary Y-axis configuration for the dual-axis chart, including position, style,
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Grid line type
+:::note{title=Mô tả}
+Định dạng số cho trục số. Chỉ có hiệu lực với trục số. Ưu tiên thấp hơn `autoFormat`.
 
 :::
 
@@ -631,8 +626,8 @@ Grid line type
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Đường trục width
+:::note{title=Mô tả}
+Axis line width
 
 :::
 
@@ -640,8 +635,8 @@ Grid line type
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Mo ta}
-Tick trục X
+:::note{title=Mô tả}
+X-axis ticks
 
 :::
 
@@ -649,8 +644,8 @@ Tick trục X
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Có sử dụng trục logarit hay không, chỉ có hiệu lực với trục số
+:::note{title=Mô tả}
+Có dùng trục logarit hay không; chỉ áp dụng cho trục số
 
 :::
 
@@ -658,8 +653,8 @@ Có sử dụng trục logarit hay không, chỉ có hiệu lực với trục s
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Hàm easing của hoạt ảnh.
+:::note{title=Mô tả}
+Base of the logarithmic axis; only applies to numeric axes
 
 :::
 
@@ -667,8 +662,8 @@ Hàm easing của hoạt ảnh.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Cấu hình trục Y (trục danh mục) dùng để định nghĩa trục Y, bao gồm vị trí, định dạng, kiểu dáng, v.v.
+:::note{title=Mô tả}
+Có tự động điều chỉnh khoảng tick của trục để label tick dễ đọc hơn hay không. Tùy chọn này bị tắt khi đã cấu hình min và max, và chỉ áp dụng cho trục số.
 
 :::
 
@@ -676,8 +671,8 @@ Cấu hình trục Y (trục danh mục) dùng để định nghĩa trục Y, ba
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-sortLegend: {
+:::note{title=Mô tả}
+Cấu hình hoạt ảnh trục X
 
 :::
 
@@ -685,8 +680,8 @@ sortLegend: {
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
+:::note{title=Mô tả}
+Cấu hình trục số (trục Y), dùng để xác định trục Y của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 :::
 
@@ -694,8 +689,8 @@ Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, includin
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether to automatically format numeric-axis tick labels. Only applies to numeric axes. When autoFormat is true, numFormat is ignored.
+:::note{title=Mô tả}
+Có tự động định dạng label tick của trục số hay không. Chỉ áp dụng cho trục số. Khi autoFormat là true, numFormat bị bỏ qua.
 
 :::
 
@@ -703,8 +698,8 @@ Whether to automatically format numeric-axis tick labels. Only applies to numeri
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Mo ta}
-Number formatting for numeric axes. Only applies to numeric axes and has lower priority than autoFormat.
+:::note{title=Mô tả}
+Định dạng số cho trục số. Chỉ áp dụng cho trục số và có mức ưu tiên thấp hơn autoFormat.
 
 :::
 
@@ -713,8 +708,8 @@ Number formatting for numeric axes. Only applies to numeric axes and has lower p
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Mo ta}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Loại định dạng số, hỗ trợ: decimal, percent (%), permille (‰), ký hiệu khoa học
 
 :::
 
@@ -722,14 +717,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không thể là 0
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
+Hậu tố định dạng số
 
 
 
@@ -737,14 +732,14 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
+Hậu tố định dạng số
 
 
 
@@ -752,8 +747,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Custom sorting order; this order will be directly applied to the legend. Ascending follows left-to-right or top-to-bottom; descending follows right-to-left or bottom-to-top.
 
 :::
 
@@ -761,8 +756,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -770,8 +765,8 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
@@ -779,18 +774,18 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -798,20 +793,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1000, significantDigits:1
+\- 1234.5678 được chuyển thành 1200, significantDigits:2
+\- 1234.5678 được chuyển thành 1230, significantDigits:3
+\- 1234.5678 được chuyển thành 1234, significantDigits:4
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -819,14 +814,14 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+value: [100, 300]
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-Label font size.
+**Ví dụ**
+\- 1234.5678 chuyển thành 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Cỡ chữ nhãn.
 
 
 
@@ -834,8 +829,8 @@ Label font size.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Mo ta}
-Label font weight.
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
@@ -843,8 +838,8 @@ Label font weight.
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+\- orderBy:'date'
 
 :::
 
@@ -853,8 +848,8 @@ Label font weight.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Custom sort order, which will be applied directly to the category axis
+:::note{title=Mô tả}
+Chủ đề
 
 :::
 
@@ -862,8 +857,8 @@ Custom sort order, which will be applied directly to the category axis
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Định dạng số cho trục số. Chỉ có hiệu lực với trục số. Ưu tiên thấp hơn `autoFormat`.
 
 :::
 
@@ -871,8 +866,8 @@ Custom sort order, which will be applied directly to the category axis
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label background color.
+:::note{title=Mô tả}
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
 
@@ -880,8 +875,8 @@ Label background color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label stroke (outline) color.
+:::note{title=Mô tả}
+Cấu hình định dạng giá trị nhãn; được gộp với `format` trong `measure`, trong đó `format` của `measure` có ưu tiên cao hơn. numFormat có ưu tiên thấp hơn autoFormat
 
 :::
 
@@ -889,8 +884,8 @@ Label stroke (outline) color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên).
 
 :::
 
@@ -898,8 +893,8 @@ Label stroke (outline) color.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+4
 
 :::
 
@@ -908,7 +903,7 @@ Label stroke (outline) color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 \- orderBy:'date'
 
 :::
@@ -917,8 +912,8 @@ Label stroke (outline) color.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Văn bản tiêu đề. Theo mặc định, giá trị này theo cấu hình trường.
 
 :::
 
@@ -926,8 +921,8 @@ Label stroke (outline) color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Maximum column width. It can be a pixel value or a percentage string.
 
 :::
 
@@ -935,8 +930,8 @@ Label stroke (outline) color.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Decimal places for numeric formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
@@ -945,8 +940,8 @@ Label stroke (outline) color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format suffix
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -954,8 +949,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Thứ tự sắp xếp; có thể là 'asc' hoặc 'desc'
 
 :::
 
@@ -963,8 +958,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
+:::note{title=Mô tả}
+Cấu hình sắp xếp chú giải; hỗ trợ sắp xếp theo chiều hoặc chỉ số, cũng như thứ tự sắp xếp tùy chỉnh. Mảng sort tuân theo thứ tự từ trái sang phải hoặc từ trên xuống dưới.
 
 :::
 
@@ -972,8 +967,8 @@ Data selector. If configured, provides matching capabilities for numerical value
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-selector = [100, 200]
+:::note{title=Mô tả}
+Cấu hình hoạt ảnh trục X
 
 :::
 
@@ -981,8 +976,8 @@ selector = [100, 200]
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Mo ta}
-operator: 'in',
+:::note{title=Mô tả}
+\- Chỉ được dùng các hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
 :::
 
@@ -991,8 +986,8 @@ operator: 'in',
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-selector = {
+:::note{title=Mô tả}
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
 
 :::
 
@@ -1000,8 +995,8 @@ selector = {
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Màu đường trục
 
 :::
 
@@ -1009,7 +1004,7 @@ selector = {
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 \- orderBy:'profit'
 
 :::
@@ -1018,8 +1013,8 @@ selector = {
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực tiếp cho chú giải. Tăng dần theo trái-sang-phải hoặc trên-xuống-dưới; giảm dần theo phải-sang-trái hoặc dưới-lên-trên.
+:::note{title=Mô tả}
+Màu viền nhãn
 
 :::
 
@@ -1027,8 +1022,8 @@ Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực 
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-  ])
+:::note{title=Mô tả}
+Rectangle graphic element style
 
 :::
 
@@ -1036,8 +1031,8 @@ Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực 
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Mo ta}
-Bao gồm các theme tích hợp `light` và `dark`. Có thể thêm theme tùy chỉnh qua `registerTheme`.
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
@@ -1050,8 +1045,8 @@ Bao gồm các theme tích hợp `light` và `dark`. Có thể thêm theme tùy 
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Dynamic filter (AI-generated code execution).
+:::note{title=Mô tả}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -1059,8 +1054,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong mảng `value`.
+:::note{title=Mô tả}
+selector = 100
 
 :::
 
@@ -1068,8 +1063,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `number[] | undefined`
 
-:::note{title=Mo ta}
-Hỗ trợ kiểu toàn cục hoặc cấu hình kiểu có điều kiện.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -1077,7 +1072,7 @@ Hỗ trợ kiểu toàn cục hoặc cấu hình kiểu có điều kiện.
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
@@ -1087,8 +1082,8 @@ selector = [{ profit: 100 }, { profit: 200 }]
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-operator: 'not in',
+:::note{title=Mô tả}
+value: [100, 300]
 
 :::
 
@@ -1096,8 +1091,8 @@ operator: 'not in',
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- Can only use built-in utility functions (access via _ or R).
+:::note{title=Mô tả}
+Văn bản tiêu đề. Theo mặc định, giá trị này theo cấu hình trường.
 
 :::
 
@@ -1106,8 +1101,8 @@ operator: 'not in',
 
 **Type:** `YLinearAxis | YLinearAxis[] | undefined`
 
-:::note{title=Mo ta}
-Secondary Y-axis configuration for the dual-axis chart, including position, style, and related settings. When measures have multiple groups, secondaryYAxis can be configured as an array, with each item corresponding to one secondary Y-axis.
+:::note{title=Mô tả}
+Cấu hình trục Y phụ của biểu đồ hai trục, bao gồm vị trí, kiểu và các thiết lập liên quan. Khi các chỉ số có nhiều nhóm, secondaryYAxis có thể cấu hình dưới dạng mảng, mỗi mục tương ứng với một trục Y phụ.
 
 :::
 
@@ -1116,8 +1111,8 @@ Secondary Y-axis configuration for the dual-axis chart, including position, styl
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Grid line type
+:::note{title=Mô tả}
+Màu đường trục
 
 :::
 
@@ -1125,8 +1120,8 @@ Grid line type
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Đường trục width
+:::note{title=Mô tả}
+Axis line width
 
 :::
 
@@ -1134,8 +1129,8 @@ Grid line type
 
 **Type:** `number | boolean | undefined`
 
-:::note{title=Mo ta}
-Tick trục X
+:::note{title=Mô tả}
+X-axis ticks
 
 :::
 
@@ -1143,8 +1138,8 @@ Tick trục X
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Có sử dụng trục logarit hay không, chỉ có hiệu lực với trục số
+:::note{title=Mô tả}
+Có dùng trục logarit hay không; chỉ áp dụng cho trục số
 
 :::
 
@@ -1152,8 +1147,8 @@ Có sử dụng trục logarit hay không, chỉ có hiệu lực với trục s
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Hàm easing của hoạt ảnh.
+:::note{title=Mô tả}
+Base of the logarithmic axis; only applies to numeric axes
 
 :::
 
@@ -1161,8 +1156,8 @@ Hàm easing của hoạt ảnh.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Cấu hình trục Y (trục danh mục) dùng để định nghĩa trục Y, bao gồm vị trí, định dạng, kiểu dáng, v.v.
+:::note{title=Mô tả}
+Có tự động điều chỉnh khoảng tick của trục để label tick dễ đọc hơn hay không. Tùy chọn này bị tắt khi đã cấu hình min và max, và chỉ áp dụng cho trục số.
 
 :::
 
@@ -1170,8 +1165,8 @@ Cấu hình trục Y (trục danh mục) dùng để định nghĩa trục Y, ba
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-sortLegend: {
+:::note{title=Mô tả}
+Cấu hình hoạt ảnh trục X
 
 :::
 
@@ -1179,8 +1174,8 @@ sortLegend: {
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
+:::note{title=Mô tả}
+Cấu hình trục số (trục Y), dùng để xác định trục Y của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 :::
 
@@ -1188,8 +1183,8 @@ Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, includin
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether to automatically format numeric-axis tick labels. Only applies to numeric axes. When autoFormat is true, numFormat is ignored.
+:::note{title=Mô tả}
+Có tự động định dạng label tick của trục số hay không. Chỉ áp dụng cho trục số. Khi autoFormat là true, numFormat bị bỏ qua.
 
 :::
 
@@ -1197,8 +1192,8 @@ Whether to automatically format numeric-axis tick labels. Only applies to numeri
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Mo ta}
-Number formatting for numeric axes. Only applies to numeric axes and has lower priority than autoFormat.
+:::note{title=Mô tả}
+Định dạng số cho trục số. Chỉ áp dụng cho trục số và có mức ưu tiên thấp hơn autoFormat.
 
 :::
 
@@ -1207,8 +1202,8 @@ Number formatting for numeric axes. Only applies to numeric axes and has lower p
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Mo ta}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Loại định dạng số, hỗ trợ: decimal, percent (%), permille (‰), ký hiệu khoa học
 
 :::
 
@@ -1216,14 +1211,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không thể là 0
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
+Hậu tố định dạng số
 
 
 
@@ -1231,14 +1226,14 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
+Hậu tố định dạng số
 
 
 
@@ -1246,8 +1241,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được bằng 0
 
 :::
 
@@ -1255,8 +1250,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -1264,8 +1259,8 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
@@ -1273,18 +1268,18 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -1292,20 +1287,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1000, significantDigits:1
+\- 1234.5678 được chuyển thành 1200, significantDigits:2
+\- 1234.5678 được chuyển thành 1230, significantDigits:3
+\- 1234.5678 được chuyển thành 1234, significantDigits:4
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -1313,14 +1308,14 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-Label font size.
+**Ví dụ**
+\- 1234.5678 chuyển thành 1230, significantDigits:3 (roundingPriority:lessPrecision)
+Cỡ chữ nhãn.
 
 
 
@@ -1328,8 +1323,8 @@ Label font size.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Mo ta}
-Label font weight.
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
@@ -1337,8 +1332,8 @@ Label font weight.
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+\- orderBy:'date'
 
 :::
 
@@ -1347,8 +1342,8 @@ Label font weight.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Custom sort order, which will be applied directly to the category axis
+:::note{title=Mô tả}
+Ưu tiên làm tròn khi định dạng số nếu đồng thời đặt significantDigits và fractionDigits; dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingPriority
 
 :::
 
@@ -1356,8 +1351,8 @@ Custom sort order, which will be applied directly to the category axis
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Định dạng số cho trục số. Chỉ có hiệu lực với trục số. Ưu tiên thấp hơn `autoFormat`.
 
 :::
 
@@ -1365,8 +1360,8 @@ Custom sort order, which will be applied directly to the category axis
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label background color.
+:::note{title=Mô tả}
+Chế độ làm tròn khi định dạng số, dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingMode
 
 :::
 
@@ -1374,8 +1369,8 @@ Label background color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label stroke (outline) color.
+:::note{title=Mô tả}
+Có xóa vùng brush sau khi kết thúc brush hay không
 
 :::
 
@@ -1383,8 +1378,8 @@ Label stroke (outline) color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 
 :::
 
@@ -1392,8 +1387,8 @@ Label stroke (outline) color.
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+4
 
 :::
 
@@ -1402,7 +1397,7 @@ Label stroke (outline) color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 \- orderBy:'date'
 
 :::
@@ -1411,8 +1406,8 @@ Label stroke (outline) color.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Văn bản tiêu đề. Theo mặc định, giá trị này theo cấu hình trường.
 
 :::
 
@@ -1420,8 +1415,8 @@ Label stroke (outline) color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Cỡ chữ nhãn
 
 :::
 
@@ -1429,8 +1424,8 @@ Label stroke (outline) color.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Độ đậm chữ nhãn
 
 :::
 
@@ -1439,8 +1434,8 @@ Label stroke (outline) color.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format suffix
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -1448,8 +1443,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Thứ tự sắp xếp; có thể là 'asc' hoặc 'desc'
 
 :::
 
@@ -1457,8 +1452,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
+:::note{title=Mô tả}
+Cấu hình sắp xếp chú giải; hỗ trợ sắp xếp theo chiều hoặc chỉ số, cũng như thứ tự sắp xếp tùy chỉnh. Mảng sort tuân theo thứ tự từ trái sang phải hoặc từ trên xuống dưới.
 
 :::
 
@@ -1466,8 +1461,8 @@ Data selector. If configured, provides matching capabilities for numerical value
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-selector = [100, 200]
+:::note{title=Mô tả}
+sortLegend: {
 
 :::
 
@@ -1475,8 +1470,8 @@ selector = [100, 200]
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Mo ta}
-operator: 'in',
+:::note{title=Mô tả}
+Chỉ định id chỉ số mà điểm chú thích thuộc về. Trong kịch bản nhiều chỉ số, có thể kết hợp với selector để định vị duy nhất điểm chú thích của chỉ số mục tiêu.
 
 :::
 
@@ -1485,8 +1480,8 @@ operator: 'in',
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-selector = {
+:::note{title=Mô tả}
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
 
 :::
 
@@ -1494,7 +1489,7 @@ selector = {
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 }
 
 :::
@@ -1503,7 +1498,7 @@ selector = {
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 \- orderBy:'profit'
 
 :::
@@ -1512,8 +1507,8 @@ selector = {
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực tiếp cho chú giải. Tăng dần theo trái-sang-phải hoặc trên-xuống-dưới; giảm dần theo phải-sang-trái hoặc dưới-lên-trên.
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được bằng 0
 
 :::
 
@@ -1521,8 +1516,8 @@ Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực 
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-  ])
+:::note{title=Mô tả}
+Rectangle graphic element style
 
 :::
 
@@ -1530,8 +1525,8 @@ Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực 
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Mo ta}
-Bao gồm các theme tích hợp `light` và `dark`. Có thể thêm theme tùy chỉnh qua `registerTheme`.
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
@@ -1544,8 +1539,8 @@ Bao gồm các theme tích hợp `light` và `dark`. Có thể thêm theme tùy 
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Dynamic filter (AI-generated code execution).
+:::note{title=Mô tả}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -1553,8 +1548,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong mảng `value`.
+:::note{title=Mô tả}
+selector = 100
 
 :::
 
@@ -1562,8 +1557,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `number[] | undefined`
 
-:::note{title=Mo ta}
-Hỗ trợ kiểu toàn cục hoặc cấu hình kiểu có điều kiện.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -1571,7 +1566,7 @@ Hỗ trợ kiểu toàn cục hoặc cấu hình kiểu có điều kiện.
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
@@ -1581,8 +1576,8 @@ selector = [{ profit: 100 }, { profit: 200 }]
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-operator: 'not in',
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
@@ -1590,8 +1585,8 @@ operator: 'not in',
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- Can only use built-in utility functions (access via _ or R).
+:::note{title=Mô tả}
+}
 
 :::
 
@@ -1600,8 +1595,8 @@ operator: 'not in',
 
 **Type:** `XBandAxis | undefined`
 
-:::note{title=Mo ta}
-X-axis category-axis configuration, used to define the chart X-axis, including position, format, style, and related settings.
+:::note{title=Mô tả}
+Cấu hình trục X dạng danh mục, dùng để xác định trục X của biểu đồ, bao gồm vị trí, định dạng, kiểu và các thiết lập liên quan.
 
 :::
 
@@ -1610,8 +1605,8 @@ X-axis category-axis configuration, used to define the chart X-axis, including p
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Grid line type
+:::note{title=Mô tả}
+Màu đường trục
 
 :::
 
@@ -1619,8 +1614,8 @@ Grid line type
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-sortLegend: {
+:::note{title=Mô tả}
+Cấu hình hoạt ảnh trục X
 
 :::
 
@@ -1628,8 +1623,8 @@ sortLegend: {
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, including position, format, style, etc.
+:::note{title=Mô tả}
+Cấu hình trục số (trục Y), dùng để xác định trục Y của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 :::
 
@@ -1637,8 +1632,8 @@ Numeric axis (Y-axis) configuration, used to define the chart's Y-axis, includin
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-order: 'asc'
+:::note{title=Mô tả}
+Axis label auto-hide. If two labels overlap, with spacing smaller than autoHideGap, the overlapping label is hidden automatically. Only applies to category axes.
 
 :::
 
@@ -1646,7 +1641,7 @@ order: 'asc'
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Axis label auto-hide gap. If the gap between two labels is smaller than autoHideGap, the overlapping label is hidden automatically. Only applies to category axes.
 
 Y-axis, numeric axis, Y-axis configuration; defines the Y-axis of the chart, including its position, format, style, etc.
@@ -1659,7 +1654,7 @@ When autoHide is disabled, use sampling and configure it through minGap.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Axis label auto-rotation. When label width exceeds axis length, labels are rotated automatically. Only applies to category axes.
 
 :::
@@ -1668,8 +1663,8 @@ Axis label auto-rotation. When label width exceeds axis length, labels are rotat
 
 **Type:** `number[] | undefined`
 
-:::note{title=Mo ta}
-'dark'
+:::note{title=Mô tả}
+Axis label auto-rotation angle range. Used when auto-rotation is enabled. Only applies to category axes.
 
 :::
 
@@ -1677,7 +1672,7 @@ Axis label auto-rotation. When label width exceeds axis length, labels are rotat
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Axis label auto-limit. When label width exceeds axis length, overflow is shown with ellipsis and the full label is visible on hover. Only applies to category axes.
 
 :::
@@ -1686,7 +1681,7 @@ Axis label auto-limit. When label width exceeds axis length, overflow is shown w
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Maximum length for axis label auto-limit. When label text exceeds this length, overflow is shown with ellipsis and the full label is visible on hover. Only applies to category axes.
 
 :::
@@ -1695,8 +1690,8 @@ Maximum length for axis label auto-limit. When label text exceeds this length, o
 
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+\- orderBy:'date'
 
 :::
 
@@ -1705,8 +1700,8 @@ Maximum length for axis label auto-limit. When label text exceeds this length, o
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Custom sort order, which will be applied directly to the category axis
+:::note{title=Mô tả}
+Thứ tự sắp xếp tùy chỉnh, được áp dụng trực tiếp cho trục danh mục
 
 :::
 
@@ -1714,8 +1709,8 @@ Custom sort order, which will be applied directly to the category axis
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Định dạng số cho trục số. Chỉ có hiệu lực với trục số. Ưu tiên thấp hơn `autoFormat`.
 
 :::
 
@@ -1723,8 +1718,8 @@ Custom sort order, which will be applied directly to the category axis
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label background color.
+:::note{title=Mô tả}
+Cỡ chữ label
 
 :::
 
@@ -1732,8 +1727,8 @@ Label background color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label stroke (outline) color.
+:::note{title=Mô tả}
+Cỡ chữ nhãn
 
 :::
 
@@ -1741,27 +1736,24 @@ Label stroke (outline) color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Góc xoay nhãn
 
 :::
-
 ### line
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Đường trục X
 
 :::
-
-
 #### visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-\- orderBy:'date'
+:::note{title=Mô tả}
+Độ đậm chữ nhãn
 
 :::
 
@@ -1769,7 +1761,7 @@ Label stroke (outline) color.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 }
 
 :::
@@ -1778,8 +1770,8 @@ Label stroke (outline) color.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
 
 :::
 
@@ -1787,18 +1779,16 @@ Label stroke (outline) color.
 
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Vạch chia trục X
 
 :::
-
-
 #### visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format suffix
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -1806,8 +1796,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Thứ tự sắp xếp; có thể là 'asc' hoặc 'desc'
 
 :::
 
@@ -1815,8 +1805,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Data selector. If configured, provides matching capabilities for numerical values, partial data items, dimensions, or measures. If not set, styles apply globally.
+:::note{title=Mô tả}
+Legend sorting configuration; supports sorting based on dimensions or measures, as well as custom sorting orders; the sort array follows the order from left to right or top to bottom.
 
 :::
 
@@ -1824,8 +1814,8 @@ Data selector. If configured, provides matching capabilities for numerical value
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-selector = [100, 200]
+:::note{title=Mô tả}
+sortLegend: {
 
 :::
 
@@ -1833,18 +1823,16 @@ selector = [100, 200]
 
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
-:::note{title=Mo ta}
-operator: 'in',
+:::note{title=Mô tả}
+Tiêu đề trục X
 
 :::
-
-
 #### visible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-selector = {
+:::note{title=Mô tả}
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
 
 :::
 
@@ -1852,8 +1840,8 @@ selector = {
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-}
+:::note{title=Mô tả}
+Văn bản tiêu đề. Theo mặc định, giá trị này theo cấu hình trường.
 
 :::
 
@@ -1861,7 +1849,7 @@ selector = {
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 \- orderBy:'profit'
 
 :::
@@ -1870,8 +1858,8 @@ selector = {
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực tiếp cho chú giải. Tăng dần theo trái-sang-phải hoặc trên-xuống-dưới; giảm dần theo phải-sang-trái hoặc dưới-lên-trên.
+:::note{title=Mô tả}
+Custom sorting order; this order will be directly applied to the legend. Ascending follows left-to-right or top-to-bottom; descending follows right-to-left or bottom-to-top.
 
 :::
 
@@ -1879,8 +1867,8 @@ Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực 
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-  ])
+:::note{title=Mô tả}
+Rectangle graphic element style
 
 :::
 
@@ -1888,8 +1876,8 @@ Thứ tự sắp xếp tùy chỉnh; thứ tự này được áp dụng trực 
 
 **Type:** `{ visible?: boolean; gridColor?: string; gridWidth?: number; gridLineDash?: number[]; } | undefined`
 
-:::note{title=Mo ta}
-Bao gồm các theme tích hợp `light` và `dark`. Có thể thêm theme tùy chỉnh qua `registerTheme`.
+:::note{title=Mô tả}
+Includes built-in `light` and `dark` themes. Custom themes can be added via `registerTheme`.
 
 :::
 
@@ -1902,8 +1890,8 @@ Bao gồm các theme tích hợp `light` và `dark`. Có thể thêm theme tùy 
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Dynamic filter (AI-generated code execution).
+:::note{title=Mô tả}
+selector = [{ profit: 100 }, { profit: 200 }]
 
 :::
 
@@ -1911,8 +1899,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong mảng `value`.
+:::note{title=Mô tả}
+selector = 100
 
 :::
 
@@ -1920,17 +1908,16 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `number[] | undefined`
 
-:::note{title=Mo ta}
-Hỗ trợ kiểu toàn cục hoặc cấu hình kiểu có điều kiện.
+:::note{title=Mô tả}
+Kiểu đường lưới
 
 :::
-
 ### animation
 
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
-:::note{title=Mo ta}
-X-axis animation configuration
+:::note{title=Mô tả}
+Cấu hình hoạt ảnh trục X
 
 :::
 
@@ -1939,8 +1926,8 @@ X-axis animation configuration
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-operator: 'not in',
+:::note{title=Mô tả}
+value: [100, 300]
 
 :::
 
@@ -1948,8 +1935,8 @@ operator: 'not in',
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- Can only use built-in utility functions (access via _ or R).
+:::note{title=Mô tả}
+}
 
 :::
 
@@ -1958,8 +1945,8 @@ operator: 'not in',
 
 **Type:** `BackgroundColor`
 
-:::note{title=Mo ta}
-Chart background color. It can be a color string, such as 'red' or 'blue'. It can also be hex, rgb, or rgba, such as '#ff0000' or 'rgba(255,0,0,0.5)'.
+:::note{title=Mô tả}
+Màu nền của biểu đồ. Màu nền có thể là chuỗi màu và mặc định là nền trong suốt, ví dụ 'red' hoặc 'blue'. Cũng hỗ trợ hex, rgb hoặc rgba như '#ff0000' và 'rgba(255,0,0,0.5)'.
 
 :::
 
@@ -1968,8 +1955,8 @@ Chart background color. It can be a color string, such as 'red' or 'blue'. It ca
 
 **Type:** `Color | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Cấu hình màu để xác định bảng màu của biểu đồ, bao gồm danh sách màu, ánh xạ màu và gradient màu.
 
 :::
 
@@ -1978,12 +1965,12 @@ Chart background color. It can be a color string, such as 'red' or 'blue'. It ca
 
 **Type:** `string[] | undefined`
 
-:::note{title=Mo ta}
-Linear gradient color scheme used to define the colors of different elements in the chart.
+:::note{title=Mô tả}
+Bảng màu rời rạc dùng để xác định màu của các phần tử khác nhau trong biểu đồ
 
 :::
 
-**Example**
+**Ví dụ**
 ['#FFCDD2,#F8BBD0,#E1BEE7,#D1C4E9,#C5CAE9,#BBDEFB,#B3E5FC,#B2EBF2,#B2DFDB,#C8E6C9,#DCEDC8,#F0F4C3,#FFF9C4,#FFECB3,#FFE0B2']
 
 
@@ -1992,12 +1979,12 @@ Linear gradient color scheme used to define the colors of different elements in 
 
 **Type:** `string[] | undefined`
 
-:::note{title=Mo ta}
-Color mapping used to map data values to specific colors.
+:::note{title=Mô tả}
+Bảng màu gradient tuyến tính dùng để xác định màu của các phần tử khác nhau trong biểu đồ
 
 :::
 
-**Example**
+**Ví dụ**
 ['#FFCDD2, #F8BBD0]
 
 
@@ -2006,12 +1993,12 @@ Color mapping used to map data values to specific colors.
 
 **Type:** `Record<string, string> | undefined`
 
-:::note{title=Mo ta}
- 'profit': 'red',
+:::note{title=Mô tả}
+Ánh xạ màu dùng để ánh xạ giá trị dữ liệu tới màu cụ thể
 
 :::
 
-**Example**
+**Ví dụ**
 {
  'sales': 'blue',
 }
@@ -2023,8 +2010,8 @@ Color mapping used to map data values to specific colors.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Positive/negative color configuration; defines the color for positive values in the chart
+:::note{title=Mô tả}
+Cấu hình màu dương/âm; xác định màu cho giá trị dương trong biểu đồ
 
 :::
 
@@ -2032,8 +2019,8 @@ Positive/negative color configuration; defines the color for positive values in 
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Positive/negative color configuration; defines the color for negative values in the chart
+:::note{title=Mô tả}
+Cấu hình màu dương/âm; xác định màu cho giá trị âm trong biểu đồ
 
 :::
 
@@ -2042,8 +2029,8 @@ Positive/negative color configuration; defines the color for negative values in 
 
 **Type:** `Label | undefined`
 
-:::note{title=Mo ta}
-Label configuration for defining chart data labels, including their position, format, and style.
+:::note{title=Mô tả}
+Cấu hình nhãn dữ liệu biểu đồ, bao gồm vị trí, định dạng và kiểu.
 
 :::
 
@@ -2052,8 +2039,8 @@ Label configuration for defining chart data labels, including their position, fo
 
 **Type:** `false | true`
 
-:::note{title=Mo ta}
-Whether labels display measure values.
+:::note{title=Mô tả}
+Có bật chức năng nhãn hay không
 
 :::
 
@@ -2061,8 +2048,8 @@ Whether labels display measure values.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether labels wrap to the next line
+:::note{title=Mô tả}
+Nhãn có xuống dòng hay không
 
 :::
 
@@ -2070,12 +2057,12 @@ Whether labels wrap to the next line
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether labels display measure values
+:::note{title=Mô tả}
+Nhãn có hiển thị giá trị measure hay không
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+Trong tình huống nhiều chỉ số, không cần lo xung đột giá trị, vì mọi chỉ số liên quan tới phần vẽ đều đi qua xử lý `foldMeasures` và được gộp thành một chỉ số đại diện cho một điểm dữ liệu
 
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+Lưu ý: label trong encoding có ưu tiên cao hơn; cấu hình này không ảnh hưởng tới label trong encoding
 
 :::
 
@@ -2083,12 +2070,12 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether labels display the percentage of measure values
+:::note{title=Mô tả}
+Nhãn có hiển thị phần trăm của giá trị measure hay không
 
-In multi-measure scenarios, there is no concern about conflicting values, because all plot-related measures go through `foldMeasures` processing and are merged into one measure representing a single data point
+Trong tình huống nhiều chỉ số, không cần lo xung đột giá trị, vì mọi chỉ số liên quan tới phần vẽ đều đi qua xử lý `foldMeasures` và được gộp thành một chỉ số đại diện cho một điểm dữ liệu
 
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+Lưu ý: label trong encoding có ưu tiên cao hơn; cấu hình này không ảnh hưởng tới label trong encoding
 
 :::
 
@@ -2096,12 +2083,12 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether labels display dimension labels
+:::note{title=Mô tả}
+Nhãn có hiển thị nhãn chiều hay không
 
-Display all dimension labels
+Hiển thị tất cả nhãn chiều
 
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat.
+Lưu ý: label trong encoding có ưu tiên cao hơn; cấu hình này không ảnh hưởng tới label trong encoding
 
 :::
 
@@ -2109,8 +2096,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether label values are automatically formatted; when autoFormat is true, numFormat configuration is ignored
+:::note{title=Mô tả}
+Giá trị nhãn có được tự động định dạng hay không; khi autoFormat là true, cấu hình numFormat bị bỏ qua
 
 :::
 
@@ -2118,8 +2105,8 @@ Whether label values are automatically formatted; when autoFormat is true, numFo
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Mo ta}
-Label value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+:::note{title=Mô tả}
+Cấu hình định dạng giá trị nhãn; được gộp với `format` trong `measure`, trong đó `format` của `measure` có ưu tiên cao hơn. numFormat có ưu tiên thấp hơn autoFormat
 
 :::
 
@@ -2128,8 +2115,8 @@ Label value format configuration; merged with the `format` in `measure`, where `
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Mo ta}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Mô tả}
+Loại định dạng số, hỗ trợ: number (thập phân), percent (%), permille (‰), ký pháp khoa học
 
 :::
 
@@ -2137,14 +2124,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tỷ lệ định dạng số, không được bằng 0
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
+\- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
 
 
 
@@ -2152,14 +2139,14 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ký hiệu định dạng số, ví dụ %, ‰
 
 :::
 
-**Example**
-- 100000 converts to 10K, ratio:1000, symbol:"K"
-Number format suffix
+**Ví dụ**
+\- 100000 được chuyển thành 10万, ratio:10000, symbol:"万"
+\- 100000 được chuyển thành 10K, ratio:1000, symbol:"K"
 
 
 
@@ -2167,8 +2154,8 @@ Number format suffix
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Number format prefix
+:::note{title=Mô tả}
+Dấu phân tách hàng nghìn cho định dạng số
 
 :::
 
@@ -2176,8 +2163,8 @@ Number format prefix
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
+:::note{title=Mô tả}
+Hậu tố định dạng số
 
 :::
 
@@ -2185,8 +2172,8 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+:::note{title=Mô tả}
+Tiền tố định dạng số
 
 :::
 
@@ -2194,18 +2181,18 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Số chữ số thập phân cho định dạng số, dùng minimumFractionDigits và maximumFractionDigits của Intl.NumberFormat trên trình duyệt; ưu tiên thấp hơn significantDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1000, significantDigits:1
-- 1234.5678 converts to 1200, significantDigits:2
-- 1234.5678 converts to 1230, significantDigits:3
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -2213,20 +2200,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chữ số có nghĩa cho định dạng số, dùng minimumSignificantDigits và maximumSignificantDigits của Intl.NumberFormat trên trình duyệt; ưu tiên cao hơn fractionDigits
 
 :::
 
-**Example**
-- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
-**Example**
-- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1000, significantDigits:1
+\- 1234.5678 được chuyển thành 1200, significantDigits:2
+\- 1234.5678 được chuyển thành 1230, significantDigits:3
+\- 1234.5678 được chuyển thành 1234, significantDigits:4
+\- 1234.5678 được chuyển thành 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -2234,14 +2221,14 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Ưu tiên làm tròn khi định dạng số nếu đồng thời đặt significantDigits và fractionDigits; dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingPriority
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-Label font size.
+**Ví dụ**
+\- 1234.5678 được chuyển thành 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 được chuyển thành 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -2249,8 +2236,8 @@ Label font size.
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Mo ta}
-Label font weight.
+:::note{title=Mô tả}
+Chế độ làm tròn khi định dạng số, dùng Intl.NumberFormat của trình duyệt và tuân theo cùng quy tắc với roundingMode
 
 :::
 
@@ -2258,8 +2245,8 @@ Label font weight.
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Label background color.
+:::note{title=Mô tả}
+Cỡ chữ nhãn
 
 :::
 
@@ -2267,8 +2254,8 @@ Label background color.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Mo ta}
-Label stroke (outline) color.
+:::note{title=Mô tả}
+Độ đậm chữ nhãn
 
 :::
 
@@ -2276,8 +2263,8 @@ Label stroke (outline) color.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Label font color.
+:::note{title=Mô tả}
+Màu nền nhãn
 
 :::
 
@@ -2285,8 +2272,8 @@ Label font color.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Whether to automatically invert the label font color based on the graphic element color.
+:::note{title=Mô tả}
+Màu viền nhãn
 
 :::
 
@@ -2294,8 +2281,8 @@ Whether to automatically invert the label font color based on the graphic elemen
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Label position.
+:::note{title=Mô tả}
+Màu chữ nhãn
 
 :::
 
@@ -2303,8 +2290,8 @@ Label position.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether the label overlap avoidance function is enabled.
+:::note{title=Mô tả}
+Có tự động đảo màu chữ dựa trên màu phần tử hay không
 
 :::
 
@@ -2312,8 +2299,8 @@ Whether the label overlap avoidance function is enabled.
 
 **Type:** `"inside" | "outside" | undefined`
 
-:::note{title=Mo ta}
-Label filtering; the default condition relationship between selectors is OR.
+:::note{title=Mô tả}
+Vị trí nhãn
 
 :::
 
@@ -2321,8 +2308,8 @@ Label filtering; the default condition relationship between selectors is OR.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether the label anti-overlap function is enabled
+:::note{title=Mô tả}
+Có bật chức năng chống chồng lấn nhãn hay không
 
 :::
 
@@ -2330,8 +2317,8 @@ Whether the label anti-overlap function is enabled
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Label filtering; the default relationship between selectors is OR
+:::note{title=Mô tả}
+Lọc nhãn, quan hệ mặc định giữa các selector là Or
 
 :::
 
@@ -2340,8 +2327,8 @@ Label filtering; the default relationship between selectors is OR
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 
 :::
 
@@ -2349,12 +2336,12 @@ return _.flatten(
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+\- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
 
@@ -2362,14 +2349,14 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+\- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -2377,8 +2364,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 
 :::
 
@@ -2386,38 +2373,38 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
 
 
-return _.flatten(
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo
 
 
 
-\- Use built-in utility functions for data manipulation
+Năng lực chính:
 
-- Input: data array (items include __row_index).
+\- Hỗ trợ mọi điều kiện lọc dữ liệu phức tạp
 
-- Restricted: no eval, Function, async, DOM, or network APIs.
+\- Sử dụng các hàm tiện ích tích hợp cho thao tác dữ liệu
 
-User's filtering requirement description (natural language).
-
-
-
-**Example**
+\- Thực thi an toàn trong môi trường trình duyệt (sandbox Web Worker)
 
 
 
-  field: 'sales'
+Yêu cầu môi trường: Chỉ hỗ trợ môi trường trình duyệt; môi trường Node.js sẽ dùng fallback
 
 
 
-Chart dynamic filter configuration
+Lưu ý: selector và dynamicFilter không thể dùng đồng thời; dynamicFilter có ưu tiên cao hơn
 
 
 
-AI-generated JavaScript filtering code.
+Cấu hình bộ lọc động của biểu đồ
+
+
+
+Triển khai lọc marker của biểu đồ (cột, điểm, v.v.) bằng mã JavaScript do AI tạo
 
 :::
 
@@ -2430,15 +2417,15 @@ AI-generated JavaScript filtering code.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên)
 
 :::
 
-**Example**
-__row_index: item.__row_index,
+**Ví dụ**
+"Highlight bars whose sales are greater than 1000"
 
-}));
+"Tô sáng cột có tỷ lệ lợi nhuận cao nhất trong từng khu vực"
 
 
 
@@ -2446,25 +2433,25 @@ __row_index: item.__row_index,
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Mã lọc JavaScript do AI tạo
 
 
 
-])
+\- Chỉ được dùng các hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+\- Tham số đầu vào: data (mảng), mỗi mục chứa trường __row_index biểu thị số dòng
 
-Highlight data items meeting multiple filtering conditions:
+\- Phải trả về mảng tổ hợp chỉ số dòng và trường: Array<{ __row_index: number, field: string }>
 
-const filtered = _.filter(data, item => {
+\- __row_index biểu thị số dòng của mục dữ liệu gốc, field biểu thị trường cần làm nổi bật
 
-return profitRate > 0.2 && item.sales > 5000;
+\- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-{ __row_index: item.__row_index, field: 'sales' }
+**Ví dụ**
+Làm nổi bật trường sales cho các mục dữ liệu có sales lớn hơn 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2473,7 +2460,7 @@ field: 'sales'
 }));
 ```
 
-return maxSales || 0;
+Làm nổi bật mục dữ liệu có biên lợi nhuận cao nhất trong từng khu vực
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2487,7 +2474,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+Làm nổi bật mục dữ liệu bằng lọc nhiều điều kiện
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2507,8 +2494,8 @@ _.map(filtered, item => [
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Operator:
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 
 :::
 
@@ -2517,8 +2504,8 @@ Operator:
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 
 :::
 
@@ -2526,12 +2513,12 @@ return _.flatten(
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+\- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
 
@@ -2539,14 +2526,14 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+\- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -2554,8 +2541,8 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 
 :::
 
@@ -2563,13 +2550,10 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
-
-
-\- in: Select data items where the value of the dimension field is in the value
-
+Được ghi trong giai đoạn prepare(); chỉ đọc khi runtime
 :::
 
 
@@ -2590,8 +2574,8 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `Legend | undefined`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including its position, format, style, etc.
+:::note{title=Mô tả}
+Cấu hình chú giải để định nghĩa chú giải của biểu đồ, bao gồm vị trí, định dạng và kiểu.
 
 :::
 
@@ -2600,12 +2584,12 @@ Legend configuration, used to define the chart's legend, including its position,
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether legend functionality is enabled
+:::note{title=Mô tả}
+Có bật chức năng chú giải hay không
 
 :::
 
-**Example**
+**Ví dụ**
 enable: true
 
 
@@ -2614,18 +2598,18 @@ enable: true
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether the legend border is enabled
+:::note{title=Mô tả}
+Có bật viền chú giải hay không..
 
 :::
 
 :::warning{title=Warning}
-Interactive region selection capabilities.
+Applies only to discrete legends.
 
 :::
 
-**Example**
-**Example**
+**Ví dụ**
+Độ đậm chữ chú giải
 
 
 
@@ -2633,8 +2617,8 @@ Interactive region selection capabilities.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Legend font color
+:::note{title=Mô tả}
+legend font color
 
 :::
 
@@ -2642,8 +2626,8 @@ Legend font color
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Pager icon color
+:::note{title=Mô tả}
+Pagination icon color.
 
 :::
 
@@ -2651,8 +2635,8 @@ Pager icon color
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Disabled pager icon color
+:::note{title=Mô tả}
+Pagination icon disabled/grayed-out color.
 
 :::
 
@@ -2660,13 +2644,13 @@ Disabled pager icon color
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Legend font size
+:::note{title=Mô tả}
+Cỡ chữ chú giải
 
 :::
 
-**Example**
-Visual style for markers inside the selected region.
+**Ví dụ**
+labelFontSize: 10
 
 
 
@@ -2674,8 +2658,8 @@ Visual style for markers inside the selected region.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Legend font color
+:::note{title=Mô tả}
+legend font color
 
 :::
 
@@ -2683,12 +2667,12 @@ Legend font color
 
 **Type:** `string | number | undefined`
 
-:::note{title=Mo ta}
-Legend font weight
+:::note{title=Mô tả}
+Độ đậm chữ chú giải
 
 :::
 
-**Example**
+**Ví dụ**
 labelFontWeight: 400
 
 
@@ -2697,17 +2681,16 @@ labelFontWeight: 400
 
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
-:::note{title=Mo ta}
-Legend shape
-
+:::note{title=Mô tả}
+Hình dạng chú giải
 :::
 
 :::warning{title=Warning}
-Interactive region selection capabilities.
+Applies only to discrete legends.
 
 :::
 
-**Example**
+**Ví dụ**
 Brush
 
 
@@ -2716,12 +2699,12 @@ Brush
 
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
-:::note{title=Mo ta}
-Legend position
+:::note{title=Mô tả}
+Vị trí chú giải
 
 :::
 
-**Example**
+**Ví dụ**
 position: 'rightTop'
 
 
@@ -2730,22 +2713,22 @@ position: 'rightTop'
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Maximum columns or rows when there are many legend items
+:::note{title=Mô tả}
+Maximum number of columns or rows when there are many legend items.
 
-If position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of columns displayed
+If position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of columns shown.
 
-If position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of rows displayed
+If position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of rows shown.
 
 :::
 
 :::warning{title=Warning}
-Interactive region selection capabilities.
+Applies only to discrete legends.
 
 :::
 
-**Example**
-Brush mode; defines whether single or multiple areas can be selected.
+**Ví dụ**
+Chế độ brush; xác định có thể chọn một hay nhiều vùng.
 
 
 
@@ -2754,8 +2737,8 @@ Brush mode; defines whether single or multiple areas can be selected.
 
 **Type:** `Tooltip | undefined`
 
-:::note{title=Mo ta}
-Whether to enable brush selection
+:::note{title=Mô tả}
+Cấu hình tooltip của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 :::
 
@@ -2764,8 +2747,8 @@ Whether to enable brush selection
 
 **Type:** `false | true`
 
-:::note{title=Mo ta}
-A fixed list of values to determine category order.
+:::note{title=Mô tả}
+Có bật chức năng tooltip hay không
 
 :::
 
@@ -2774,16 +2757,16 @@ A fixed list of values to determine category order.
 
 **Type:** `Brush | undefined`
 
-:::note{title=Mo ta}
-Sorting logic for legend items.
+:::note{title=Mô tả}
+Định nghĩa hình dạng và hướng của vùng chọn brush
 
 
 
-\- `polygon`: Polygonal selection, allowing the drawing of arbitrary polygons by clicking multiple points
+\- `polygon`: chọn đa giác, cho phép vẽ đa giác bất kỳ bằng cách nhấp nhiều điểm
 
 
 
-Brush selection mode: single or multiple
+Chế độ chọn brush: đơn hoặc nhiều
 
 :::
 
@@ -2792,8 +2775,8 @@ Brush selection mode: single or multiple
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether brush selection is enabled
+:::note{title=Mô tả}
+Định nghĩa kiểu dáng của các điểm dữ liệu được chọn.
 
 :::
 
@@ -2801,20 +2784,20 @@ Whether brush selection is enabled
 
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
-:::note{title=Mo ta}
-\- `polygon`: Polygonal selection, allowing selection by drawing an arbitrary polygon through multiple points
+:::note{title=Mô tả}
+brushtype
 
 
 
-\- `y`: Y-axis selection, restricting selection to the Y-axis direction while the X-axis remains unconstrained
+Độ mờ
 
-\- `rect`: rectangular brush selection, available in both X-axis and Y-axis directions
+Độ mờ của điểm dữ liệu được chọn, phạm vi 0-1
 
-\- `polygon`: polygon brush selection, draws an arbitrary polygon by clicking multiple points
+\- `polygon`: chọn brush đa giác; nhấp nhiều điểm để vẽ đa giác bất kỳ làm vùng chọn
 
-\- `x`: brush selection in the X-axis direction only; the Y-axis direction is unrestricted
+\- `x`: chỉ chọn brush theo hướng trục X; hướng trục Y không bị giới hạn
 
-\- `y`: Y-axis brush selection, only constrained in the Y-axis direction
+\- `y`: chọn brush theo hướng trục Y; không giới hạn theo hướng trục X
 
 :::
 
@@ -2822,16 +2805,16 @@ Whether brush selection is enabled
 
 **Type:** `"single" | "multiple" | undefined`
 
-:::note{title=Mo ta}
-\- `multiple`: Multiple mode, where multiple brush selections can coexist simultaneously
+:::note{title=Mô tả}
+Độ mờ của điểm dữ liệu được chọn, phạm vi 0-1
 
 
 
-The gap between adjacent columns in a group.
+Kiểu cho mục dữ liệu chưa được chọn
 
-Defines the style of data points outside the selected brush area
+Định nghĩa kiểu dáng điểm dữ liệu ngoài vùng brush đã chọn
 
-\- `multiple`: multiple selection mode; multiple brush areas can exist at the same time
+\- `multiple`: chế độ chọn nhiều; có thể tồn tại nhiều vùng brush cùng lúc
 
 :::
 
@@ -2839,8 +2822,8 @@ Defines the style of data points outside the selected brush area
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether to clear the brush area after selection ends
+:::note{title=Mô tả}
+Có xóa vùng brush sau khi kết thúc brush hay không
 
 :::
 
@@ -2848,12 +2831,12 @@ Whether to clear the brush area after selection ends
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Mo ta}
-Opacity of unselected data points, ranging from 0 to 1
+:::note{title=Mô tả}
+Độ mờ của điểm dữ liệu chưa được chọn, phạm vi 0-1
 
 
 
-Defines the style of brushed data points
+Định nghĩa kiểu dáng điểm dữ liệu được brush
 
 :::
 
@@ -2862,12 +2845,12 @@ Defines the style of brushed data points
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Whether to automatically limit label length. When a label exceeds the length, it is truncated with an ellipsis and the full label is shown on hover. Only effective for discrete axes.
+:::note{title=Mô tả}
+Kiểu cho mục dữ liệu chưa được chọn
 
 
 
-Opacity of selected data points, range 0-1
+Định nghĩa kiểu dáng điểm dữ liệu ngoài vùng chọn brush
 
 :::
 
@@ -2875,8 +2858,8 @@ Opacity of selected data points, range 0-1
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Stroke color
+:::note{title=Mô tả}
+Cấu hình trục danh mục (trục X), dùng để xác định trục X của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 :::
 
@@ -2884,8 +2867,8 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Stroke width
+:::note{title=Mô tả}
+Độ rộng viền
 
 :::
 
@@ -2893,12 +2876,12 @@ Stroke width
 
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
-:::note{title=Mo ta}
-X-axis, category axis, X-axis configuration; defines the X-axis of the chart, including its position, format, style, etc.
+:::note{title=Mô tả}
+Trục X, trục danh mục, cấu hình trục X; xác định trục X của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 
 
-Defines the style of data points outside the brush selection
+Định nghĩa kiểu dáng điểm dữ liệu ngoài vùng chọn brush
 
 :::
 
@@ -2907,12 +2890,12 @@ Defines the style of data points outside the brush selection
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Whether to automatically limit label length. When a label exceeds the length, it is truncated with an ellipsis and the full label is shown on hover. Only effective for discrete axes.
+:::note{title=Mô tả}
+Kiểu cho mục dữ liệu chưa được chọn
 
 
 
-Opacity of data points outside the brush selection, range 0-1
+Độ mờ của điểm dữ liệu ngoài vùng chọn brush, phạm vi 0-1
 
 :::
 
@@ -2920,8 +2903,8 @@ Opacity of data points outside the brush selection, range 0-1
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Stroke color
+:::note{title=Mô tả}
+Cấu hình trục danh mục (trục X), dùng để xác định trục X của biểu đồ, bao gồm vị trí, định dạng, kiểu, v.v.
 
 :::
 
@@ -2929,8 +2912,8 @@ Stroke color
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Stroke width
+:::note{title=Mô tả}
+Độ rộng viền
 
 :::
 
@@ -2939,16 +2922,12 @@ Stroke width
 
 **Type:** `CrosshairRect | undefined`
 
-:::note{title=Mo ta}
-Vertical tooltip
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ.
 
 
 
-Fallback solution when code execution fails or the environment is not supported.
-
-
-
-selector = {
+Chủ đề biểu đồ. Theme là cấu hình có độ ưu tiên thấp hơn, bao gồm các thiết lập chung cho mọi loại biểu đồ và các thiết lập riêng cho từng loại. Theme tích hợp gồm 'light' và 'dark'; người dùng có thể tùy chỉnh theme thông qua Builder.
 
 :::
 
@@ -2957,8 +2936,8 @@ selector = {
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Operator
+:::note{title=Mô tả}
+Chủ đề
 
 :::
 
@@ -2966,8 +2945,8 @@ Operator
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-operator: 'between'
+:::note{title=Mô tả}
+Có sẵn chủ đề sáng và tối; có thể tùy chỉnh chủ đề mới qua registerTheme.
 
 :::
 
@@ -2975,8 +2954,8 @@ operator: 'between'
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Operator
+:::note{title=Mô tả}
+Toán tử
 
 :::
 
@@ -2984,8 +2963,8 @@ Operator
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether to show the crosshair rectangular-area label
+:::note{title=Mô tả}
+Có hiển thị nhãn vùng chữ nhật của crosshair hay không
 
 :::
 
@@ -2993,7 +2972,7 @@ Whether to show the crosshair rectangular-area label
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 \- Supports arbitrarily complex data filtering conditions
 
 :::
@@ -3003,28 +2982,27 @@ Whether to show the crosshair rectangular-area label
 
 **Type:** `Sort | undefined`
 
-:::note{title=Mo ta}
-X-axis sort configuration. Supports sorting by dimensions or measures and custom sort order.
+:::note{title=Mô tả}
+Cấu hình sắp xếp trục X; hỗ trợ sắp xếp theo chiều hoặc measure, cũng như thứ tự sắp xếp tùy chỉnh
 
 
 
-- in: Select data items where the dimension field value is in the 'value' list.
-
+Cấu hình sắp xếp trục phân loại; hỗ trợ sắp xếp theo chiều hoặc measure, cũng như thứ tự sắp xếp tùy chỉnh
 :::
 
-**Example**
-Dimension field ID (the `id` of an item in `dimensions`).
-Chart animated filter configuration
+**Ví dụ**
+ID trường chiều (`id` của một mục trong `dimensions`).
+Cấu hình bộ lọc động của biểu đồ.
 field: 'sales'
 }
-Dimension field ID (the `id` of an item in `dimensions`).
-Operator
+ID trường chiều (`id` của một mục trong `dimensions`).
+Toán tử
 }
 
 const grouped = _.groupBy(data, 'area');
-Visual properties for area markers (fill color, opacity).
-_.maxBy(group, item => item.profit / item.sales)
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
+Cấu hình bộ lọc động của biểu đồ.
+Lưu ý: không thể sử dụng selector và dynamicFilter đồng thời; dynamicFilter có mức ưu tiên cao hơn.
 
 
 
@@ -3033,13 +3011,13 @@ Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter ha
 
 **Type:** `"asc" | "desc" | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 ])
 
 :::
 
-**Example**
-"Highlight the bar with the highest profit rate in each region"
+**Ví dụ**
+"Tô sáng cột có tỷ lệ lợi nhuận cao nhất trong từng khu vực"
 
 
 
@@ -3047,14 +3025,14 @@ Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter ha
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tô sáng mục dữ liệu có tỷ lệ lợi nhuận cao nhất trong từng khu vực
 
 :::
 
-**Example**
-Visual properties for area markers (fill color, opacity).
-\- Input parameters: data (array), each item contains a __row_index field representing the row number
+**Ví dụ**
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
+\- Tham số đầu vào: data (mảng), mỗi mục chứa trường __row_index biểu thị số dòng
 
 
 
@@ -3062,8 +3040,8 @@ Visual properties for area markers (fill color, opacity).
 
 **Type:** `string[] | undefined`
 
-:::note{title=Mo ta}
-\- `__row_index` biểu thị số dòng của mục dữ liệu gốc, còn `field` biểu thị trường cần làm nổi bật.
+:::note{title=Mô tả}
+\- `__row_index` biểu thị số dòng của mục dữ liệu gốc, và `field` biểu thị field cần tô nổi bật.
 
 :::
 
@@ -3072,28 +3050,28 @@ Visual properties for area markers (fill color, opacity).
 
 **Type:** `SortLegend | undefined`
 
-:::note{title=Mo ta}
-Legend sort configuration, supporting sorting by dimension or measure and custom order
+:::note{title=Mô tả}
+return _.map(filtered, item => ({
 
 
 
-Point color.
+Cấu hình bộ lọc động của biểu đồ
 
 :::
 
-**Example**
-Point color opacity.
-Chart animated filter configuration
+**Ví dụ**
+return _.map(filtered, item => ({
+Cấu hình bộ lọc động của biểu đồ.
 field: 'sales'
 }
-Point color opacity.
-Operator
+return _.map(filtered, item => ({
+Toán tử
 }
 
 const grouped = _.groupBy(data, 'area');
-Visual properties for area markers (fill color, opacity).
-_.maxBy(group, item => item.profit / item.sales)
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
+Cấu hình bộ lọc động của biểu đồ.
+Lưu ý: không thể sử dụng selector và dynamicFilter đồng thời; dynamicFilter có mức ưu tiên cao hơn.
 
 
 
@@ -3102,13 +3080,13 @@ Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter ha
 
 **Type:** `"asc" | "desc" | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 ])
 
 :::
 
-**Example**
-"Highlight the bar with the highest profit rate in each region"
+**Ví dụ**
+"Tô sáng cột có tỷ lệ lợi nhuận cao nhất trong từng khu vực"
 
 
 
@@ -3116,14 +3094,14 @@ Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter ha
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Tô sáng mục dữ liệu có tỷ lệ lợi nhuận cao nhất trong từng khu vực
 
 :::
 
-**Example**
-Visual properties for area markers (fill color, opacity).
-\- Input parameters: data (array), each item contains a __row_index field representing the row number
+**Ví dụ**
+\- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
+\- Tham số đầu vào: data (mảng), mỗi mục chứa trường __row_index biểu thị số dòng
 
 
 
@@ -3131,8 +3109,8 @@ Visual properties for area markers (fill color, opacity).
 
 **Type:** `string[] | undefined`
 
-:::note{title=Mo ta}
-Line style configuration. Used to define the style of lines in the chart, including color, transparency, curvature, etc.
+:::note{title=Mô tả}
+Custom sort order. The order is applied directly to the legend. Ascending order goes left-to-right or top-to-bottom; descending order goes right-to-left or bottom-to-top.
 
 :::
 
@@ -3141,25 +3119,25 @@ Line style configuration. Used to define the style of lines in the chart, includ
 
 **Type:** `Theme | undefined`
 
-:::note{title=Mo ta}
-Chart theme. Theme is a lower-priority feature configuration that includes common settings shared by all chart types and settings shared by a single chart type. Built-in themes include light and dark, and users can customize themes through Builder.
+:::note{title=Mô tả}
+Theme biểu đồ. Theme là cấu hình chức năng có mức ưu tiên thấp hơn, gồm các thiết lập chung cho mọi loại biểu đồ và các thiết lập dùng chung trong một nhóm biểu đồ. Theme tích hợp gồm light và dark, người dùng có thể tùy chỉnh theme qua Builder.
 
 
 
-**Example**
+Toán tử
 
 
 
-selector = 100
+\- not in: Chọn các mục dữ liệu có giá trị field chiều KHÔNG nằm trong danh sách giá trị.
 
 :::
 
-**Example**
-selector = [{ profit: 100 }, { profit: 200 }]
+**Ví dụ**
+Toán tử
 
-Conditional Dimension Selector:
+Highlight items meeting multiple filtering conditions
 
-field: 'category',
+const filtered = _.filter(data, item => {
 
 
 
@@ -3177,7 +3155,7 @@ field: 'category',
 
 **Type:** `string | number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Maximum column width. It can be a pixel value or a percentage string.
 
 :::
@@ -3187,7 +3165,7 @@ Maximum column width. It can be a pixel value or a percentage string.
 
 **Type:** `string | number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Distance between columns in the same category. It can be a pixel value or a percentage string.
 
 :::
@@ -3197,165 +3175,135 @@ Distance between columns in the same category. It can be a pixel value or a perc
 
 **Type:** `BarStyle | BarStyle[] | undefined`
 
-:::note{title=Mo ta}
-Rectangle mark style
+:::note{title=Mô tả}
+Kiểu mark hình chữ nhật cho biểu đồ cột, gồm màu, viền, bo góc, v.v.
 
+Hỗ trợ kiểu toàn cục hoặc kiểu theo điều kiện
 
+Bộ lọc dữ liệu
 
-Bar chart style configuration used to define bar color, border, corner radius, and related settings.
+Nếu cấu hình selector, có bốn khả năng khớp dữ liệu: selector số, selector dữ liệu cục bộ, selector chiều có điều kiện và selector chỉ số có điều kiện
 
-Supports global style or conditional style configuration
-
-Bo loc du lieu
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-**Example**
+Nếu không cấu hình selector, kiểu áp dụng toàn cục.
 
 :::
-
-
 ### selector
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-- in: Select data items where the dimension field value is in the 'value' list.
+:::note{title=Mô tả}
+Bộ chọn dữ liệu
 
+Nếu cấu hình selector, có bốn khả năng khớp dữ liệu: selector số, selector dữ liệu cục bộ, selector chiều có điều kiện và selector chỉ số có điều kiện
 
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-**Example**
+Nếu không cấu hình selector, kiểu áp dụng toàn cục.
 
 :::
 
-**Example**
-Operator (same as operator).
+**Ví dụ**
+Selector số
 selector = "tool"
-**Example**
-true
+selector = ["tool", "book"]
+selector = 100
 selector = [100, 200]
 
-Local data selector
-Bar element (rectangular element) color
+Selector dữ liệu cục bộ
+selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
-- Executes safely in the browser environment (Web Worker sandbox).
+Selector chiều có điều kiện
+selector = {
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
-Key capabilities:
-- Executes safely in the browser environment (Web Worker sandbox).
+Selector chỉ số có điều kiện
+selector = {
 field: 'profit',
 operator: '>=',
 value: 100
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'profit',
 operator: 'between'
 value: [100, 300]
 }
-
-
-
-
 #### field
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều; id của một mục trong dimensions
 
 :::
-
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
-
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+Giống operator
 
 :::
-
 #### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Chọn giá trị trường chiều trong mục dữ liệu; hỗ trợ mảng
 
 :::
-
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo.
 
+Phù hợp với Top N, phân tích thống kê, điều kiện phức tạp và các trường hợp khó biểu đạt bằng selector tĩnh.
 
-return _.flatten(
+Khả năng chính:
 
-{ __row_index: item.__row_index, field: 'product' },
+- Hỗ trợ điều kiện lọc dữ liệu phức tạp tùy ý
 
+- Dùng hàm tiện ích tích hợp cho thao tác dữ liệu
 
+- Thực thi an toàn trong trình duyệt (sandbox Web Worker)
 
-\- Use built-in utility functions for data manipulation
+Yêu cầu môi trường: chỉ hỗ trợ trình duyệt; môi trường Node.js dùng fallback.
 
-- Input: data array (items include __row_index).
+Lưu ý: selector và dynamicFilter không thể dùng đồng thời; dynamicFilter có độ ưu tiên cao hơn.
 
-- Restricted: no eval, Function, async, DOM, or network APIs.
+Cấu hình bộ lọc động của biểu đồ
 
-User's filtering requirement description (natural language).
-
-
-
-**Example**
-
-
-
-  field: 'sales'
-
-
-
-Chart dynamic filter configuration
-
-
-
-AI-generated JavaScript filtering code.
+Lọc mark của biểu đồ (cột, điểm, v.v.) bằng mã JavaScript do AI tạo
 
 :::
-
-
 #### type
 
 **Type:** `"row-with-field"`
@@ -3364,41 +3312,36 @@ AI-generated JavaScript filtering code.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên)
 
 :::
 
-**Example**
-__row_index: item.__row_index,
+**Ví dụ**
+"Làm nổi bật cột có sales > 1000"
 
-}));
-
-
-
+"Làm nổi bật cột có tỷ suất lợi nhuận cao nhất trong mỗi khu vực"
 #### code
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Mã lọc JavaScript do AI tạo
 
+- Chỉ được dùng hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
+- Tham số đầu vào: data (mảng), mỗi item chứa trường __row_index biểu thị số dòng
 
-])
+- Phải trả về mảng tổ hợp chỉ số dòng và field: Array<{ __row_index: number, field: string }>
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- __row_index là số dòng của mục dữ liệu gốc, field là trường cần làm nổi bật
 
-Highlight data items meeting multiple filtering conditions:
-
-const filtered = _.filter(data, item => {
-
-return profitRate > 0.2 && item.sales > 5000;
+- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-{ __row_index: item.__row_index, field: 'sales' }
+**Ví dụ**
+Làm nổi bật trường sales của mục dữ liệu có sales lớn hơn 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -3407,7 +3350,7 @@ field: 'sales'
 }));
 ```
 
-return maxSales || 0;
+Làm nổi bật mục dữ liệu có tỷ suất lợi nhuận cao nhất trong mỗi khu vực
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -3421,7 +3364,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+Làm nổi bật các mục dữ liệu được lọc theo nhiều điều kiện
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -3435,78 +3378,66 @@ _.map(filtered, item => [
 );
 ```
 
-
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Operator:
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 
 :::
-
-
 ##### field
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều; id của một mục trong dimensions
 
 :::
-
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
-
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+Giống operator
 
 :::
-
 ##### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Chọn giá trị trường chiều trong mục dữ liệu; hỗ trợ mảng
 
 :::
-
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
-
-
-\- in: Select data items where the value of the dimension field is in the value
+Được ghi trong giai đoạn prepare() và chỉ đọc khi runtime
 
 :::
-
-
 ##### success
 
 **Type:** `false | true`
@@ -3523,85 +3454,72 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether the bar mark (rectangle mark) is visible
+:::note{title=Mô tả}
+Có hiển thị phần tử cột (hình chữ nhật) hay không
 
 :::
-
 ### barColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Written during the prepare() phase; read-only at runtime.
+:::note{title=Mô tả}
+Màu phần tử cột (hình chữ nhật)
 
 :::
-
 ### barColorOpacity
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Độ trong suốt màu của phần tử cột (hình chữ nhật)
 
 :::
-
 ### barBorderColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Border color of the bar mark (rectangle mark)
+:::note{title=Mô tả}
+Màu viền phần tử cột (hình chữ nhật)
 
 :::
-
 ### barBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-'Annotation Text'
+:::note{title=Mô tả}
+Độ rộng viền phần tử cột (hình chữ nhật)
 
 :::
-
 ### barBorderStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Mo ta}
-Text color.
+:::note{title=Mô tả}
+Kiểu viền phần tử cột (hình chữ nhật)
 
 :::
 
-**Example**
-400
+**Ví dụ**
+solid
 
 dashed
 
 dotted
-
-
-
 ### barBorderOpacity
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Bo góc phần tử cột (hình chữ nhật)
 
-
-
-Text font size
+Độ trong suốt nét viền của phần tử cột (hình chữ nhật)
 
 :::
 
-**Example**
-12
+**Ví dụ**
+4
 
 [0, 0, 10, 10]
-
-
-
 ### barRadius
 
 **Type:** `number | number[] | undefined`
@@ -3611,20 +3529,15 @@ Text font size
 
 **Type:** `LineStyle | LineStyle[] | undefined`
 
-:::note{title=Mo ta}
-Line mark style
+:::note{title=Mô tả}
+Cấu hình kiểu mark đường, dùng để xác định màu, độ trong suốt, đường cong và các thiết lập liên quan của mark đường.
+
+Hỗ trợ cấu hình kiểu toàn cục hoặc kiểu có điều kiện
+
+Bộ lọc dữ liệu
 
 
 
-Line mark style configuration, used to define line color, opacity, curve, and related settings.
-
-Supports global style or conditional style configuration
-
-Bo loc du lieu
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-**Example**
 
 :::
 
@@ -3633,47 +3546,46 @@ Bo loc du lieu
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-- in: Select data items where the dimension field value is in the 'value' list.
+:::note{title=Mô tả}
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong mảng `value`.
 
 
 
-- not in: Select data items where the dimension field value is not within the `value` array.
 
-**Example**
+
 
 :::
 
-**Example**
-Operator (same as operator).
+**Ví dụ**
+Màu nét primitive cột (hình chữ nhật)
 selector = "tool"
-**Example**
-true
+selector = ["tool", "book"]
+selector = 100
 selector = [100, 200]
 
-Local data selector
-Bar element (rectangular element) color
+
+selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
-- Executes safely in the browser environment (Web Worker sandbox).
+
+selector = {
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
-Key capabilities:
-- Executes safely in the browser environment (Web Worker sandbox).
+
+selector = {
 field: 'profit',
 operator: '>=',
 value: 100
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -3686,21 +3598,19 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
-
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
 :::
 
@@ -3708,14 +3618,13 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -3723,50 +3632,36 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
-
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 :::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo.
 
+Phù hợp với Top N, phân tích thống kê, điều kiện phức tạp và các tình huống khác khó biểu đạt bằng selector tĩnh.
 
-return _.flatten(
+Khả năng chính:
 
-{ __row_index: item.__row_index, field: 'product' },
+- Hỗ trợ mọi điều kiện lọc dữ liệu phức tạp
 
+- Sử dụng các hàm tiện ích tích hợp cho thao tác dữ liệu
 
+- Thực thi an toàn trong môi trường trình duyệt (sandbox Web Worker)
 
-\- Use built-in utility functions for data manipulation
+Yêu cầu môi trường: chỉ hỗ trợ môi trường trình duyệt; môi trường Node.js sẽ dùng fallback
 
-- Input: data array (items include __row_index).
+Lưu ý: selector và dynamicFilter không thể dùng đồng thời; dynamicFilter có ưu tiên cao hơn
 
-- Restricted: no eval, Function, async, DOM, or network APIs.
+Cấu hình bộ lọc động của biểu đồ
 
-User's filtering requirement description (natural language).
-
-
-
-**Example**
-
-
-
-  field: 'sales'
-
-
-
-Chart dynamic filter configuration
-
-
-
-AI-generated JavaScript filtering code.
-
+Lọc các mark của biểu đồ (vùng, điểm, v.v.) bằng mã JavaScript do AI tạo
 :::
 
 
@@ -3778,15 +3673,13 @@ AI-generated JavaScript filtering code.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
-
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên)
 :::
 
-**Example**
-__row_index: item.__row_index,
+**Ví dụ**
+"Highlight data items with sales greater than 1000"
 
-}));
 
 
 
@@ -3794,25 +3687,25 @@ __row_index: item.__row_index,
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Mã lọc JavaScript do AI tạo
 
 
 
-])
+- Chỉ được dùng các hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Tham số đầu vào: data (mảng), mỗi item chứa trường __row_index biểu thị số dòng
 
-Highlight data items meeting multiple filtering conditions:
+- Phải trả về mảng kết hợp chỉ số dòng và field: Array<{ __row_index: number, field: string }>
 
-const filtered = _.filter(data, item => {
+- __row_index biểu thị số dòng của mục dữ liệu gốc, field biểu thị trường cần làm nổi bật
 
-return profitRate > 0.2 && item.sales > 5000;
+- Không được dùng: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-{ __row_index: item.__row_index, field: 'sales' }
+**Ví dụ**
+Làm nổi bật trường sales của các mục dữ liệu có sales lớn hơn 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -3821,7 +3714,7 @@ field: 'sales'
 }));
 ```
 
-return maxSales || 0;
+Làm nổi bật mục dữ liệu có biên lợi nhuận cao nhất trong mỗi khu vực
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -3835,7 +3728,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+Làm nổi bật các mục dữ liệu được lọc theo nhiều điều kiện
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -3850,14 +3743,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Operator:
-
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 :::
 
 
@@ -3865,21 +3756,19 @@ Operator:
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
-
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 :::
 
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
 :::
 
@@ -3887,14 +3776,13 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -3902,22 +3790,20 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
-
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 :::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
 
 
-\- in: Select data items where the value of the dimension field is in the value
-
+Được ghi trong giai đoạn prepare(), chỉ đọc khi runtime
 :::
 
 
@@ -3937,8 +3823,8 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Doan duong co hien thi hay khong
+:::note{title=Mô tả}
+Đoạn đường co hiển thị hay không
 
 :::
 
@@ -3946,8 +3832,8 @@ Doan duong co hien thi hay khong
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Doan duong co duoc lam muot hay khong
+:::note{title=Mô tả}
+Đoạn đường có được làm mượt hay không
 
 :::
 
@@ -3955,8 +3841,8 @@ Doan duong co duoc lam muot hay khong
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Mau doan duong
+:::note{title=Mô tả}
+Màu doan đường
 
 :::
 
@@ -3964,8 +3850,8 @@ Mau doan duong
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Do trong suot mau doan duong
+:::note{title=Mô tả}
+Độ trong suốt màu đoạn đường
 
 :::
 
@@ -3973,8 +3859,8 @@ Do trong suot mau doan duong
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Do rong doan duong
+:::note{title=Mô tả}
+Độ rộng doan đường
 
 :::
 
@@ -3982,12 +3868,12 @@ Do rong doan duong
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Mo ta}
-true
+:::note{title=Mô tả}
+Kiểu doan đường
 
 :::
 
-**Example**
+**Ví dụ**
 `lineStyle: 'solid'`
 
 
@@ -3997,20 +3883,15 @@ true
 
 **Type:** `PointStyle | PointStyle[] | undefined`
 
-:::note{title=Mo ta}
-Point mark style
+:::note{title=Mô tả}
+Cấu hình kiểu mark điểm, dùng để xác định màu, viền và các thiết lập liên quan của mark điểm.
+
+Hỗ trợ cấu hình kiểu toàn cục hoặc kiểu có điều kiện
+
+Bộ lọc dữ liệu
 
 
 
-Point mark style configuration, used to define point mark color, border, and related settings.
-
-Supports global style or conditional style configuration
-
-Bo loc du lieu
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-**Example**
 
 :::
 
@@ -4019,47 +3900,46 @@ Bo loc du lieu
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-- in: Select data items where the dimension field value is in the 'value' list.
+:::note{title=Mô tả}
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong mảng `value`.
 
 
 
-- not in: Select data items where the dimension field value is not within the `value` array.
 
-**Example**
+
 
 :::
 
-**Example**
-Operator (same as operator).
+**Ví dụ**
+Màu nét primitive cột (hình chữ nhật)
 selector = "tool"
-**Example**
-true
+selector = ["tool", "book"]
+selector = 100
 selector = [100, 200]
 
-Local data selector
-Bar element (rectangular element) color
+
+selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
-- Executes safely in the browser environment (Web Worker sandbox).
+
+selector = {
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
-Key capabilities:
-- Executes safely in the browser environment (Web Worker sandbox).
+
+selector = {
 field: 'profit',
 operator: '>=',
 value: 100
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -4072,21 +3952,19 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
-
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
 :::
 
@@ -4094,14 +3972,13 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -4109,50 +3986,36 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
-
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 :::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo.
 
+Phù hợp với Top N, phân tích thống kê, điều kiện phức tạp và các tình huống khác khó biểu đạt bằng selector tĩnh.
 
-return _.flatten(
+Khả năng chính:
 
-{ __row_index: item.__row_index, field: 'product' },
+- Hỗ trợ mọi điều kiện lọc dữ liệu phức tạp
 
+- Sử dụng các hàm tiện ích tích hợp cho thao tác dữ liệu
 
+- Thực thi an toàn trong môi trường trình duyệt (sandbox Web Worker)
 
-\- Use built-in utility functions for data manipulation
+Yêu cầu môi trường: chỉ hỗ trợ môi trường trình duyệt; môi trường Node.js sẽ dùng fallback
 
-- Input: data array (items include __row_index).
+Lưu ý: selector và dynamicFilter không thể dùng đồng thời; dynamicFilter có ưu tiên cao hơn
 
-- Restricted: no eval, Function, async, DOM, or network APIs.
+Cấu hình bộ lọc động của biểu đồ
 
-User's filtering requirement description (natural language).
-
-
-
-**Example**
-
-
-
-  field: 'sales'
-
-
-
-Chart dynamic filter configuration
-
-
-
-AI-generated JavaScript filtering code.
-
+Lọc các mark của biểu đồ (vùng, điểm, v.v.) bằng mã JavaScript do AI tạo
 :::
 
 
@@ -4164,15 +4027,13 @@ AI-generated JavaScript filtering code.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
-
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên)
 :::
 
-**Example**
-__row_index: item.__row_index,
+**Ví dụ**
+"Highlight data items with sales greater than 1000"
 
-}));
 
 
 
@@ -4180,25 +4041,25 @@ __row_index: item.__row_index,
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Mã lọc JavaScript do AI tạo
 
 
 
-])
+- Chỉ được dùng các hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Tham số đầu vào: data (mảng), mỗi item chứa trường __row_index biểu thị số dòng
 
-Highlight data items meeting multiple filtering conditions:
+- Phải trả về mảng kết hợp chỉ số dòng và field: Array<{ __row_index: number, field: string }>
 
-const filtered = _.filter(data, item => {
+- __row_index biểu thị số dòng của mục dữ liệu gốc, field biểu thị trường cần làm nổi bật
 
-return profitRate > 0.2 && item.sales > 5000;
+- Không được dùng: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-{ __row_index: item.__row_index, field: 'sales' }
+**Ví dụ**
+Làm nổi bật trường sales của các mục dữ liệu có sales lớn hơn 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -4207,7 +4068,7 @@ field: 'sales'
 }));
 ```
 
-return maxSales || 0;
+Làm nổi bật mục dữ liệu có biên lợi nhuận cao nhất trong mỗi khu vực
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -4221,7 +4082,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+Làm nổi bật các mục dữ liệu được lọc theo nhiều điều kiện
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -4236,14 +4097,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Operator:
-
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 :::
 
 
@@ -4251,21 +4110,19 @@ Operator:
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
-
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 :::
 
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
 :::
 
@@ -4273,14 +4130,13 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -4288,22 +4144,20 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
-
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 :::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
 
 
-\- in: Select data items where the value of the dimension field is in the value
-
+Được ghi trong giai đoạn prepare(), chỉ đọc khi runtime
 :::
 
 
@@ -4323,8 +4177,8 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether points are visible
+:::note{title=Mô tả}
+Điểm có hiển thị hay không
 
 :::
 
@@ -4332,12 +4186,12 @@ Whether points are visible
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Point size
+:::note{title=Mô tả}
+Kich thuoc diem
 
 
 
-Point size
+Kich thuoc diem
 
 :::
 
@@ -4345,12 +4199,12 @@ Point size
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Point mark color
+:::note{title=Mô tả}
+Màu dấu điểm
 
 
 
-Point mark color
+Màu dấu điểm
 
 :::
 
@@ -4358,12 +4212,12 @@ Point mark color
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Point mark color opacity
+:::note{title=Mô tả}
+Độ trong suốt màu dấu điểm
 
 
 
-Point mark color opacity
+Độ trong suốt màu dấu điểm
 
 :::
 
@@ -4371,12 +4225,12 @@ Point mark color opacity
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Point mark border color
+:::note{title=Mô tả}
+Màu viền dấu điểm
 
 
 
-Point mark border color
+Màu viền dấu điểm
 
 :::
 
@@ -4384,12 +4238,12 @@ Point mark border color
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Point mark border width
+:::note{title=Mô tả}
+Độ rộng viền dấu điểm
 
 
 
-Point mark border width
+Độ rộng viền dấu điểm
 
 :::
 
@@ -4397,17 +4251,17 @@ Point mark border width
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Mo ta}
-Point mark border style
+:::note{title=Mô tả}
+Kiểu viền dấu điểm
 
 
 
-Point mark border style
+Kiểu viền dấu điểm
 
 :::
 
-**Example**
-400
+**Ví dụ**
+solid
 
 dashed
 
@@ -4420,20 +4274,15 @@ dotted
 
 **Type:** `AreaStyle | AreaStyle[] | undefined`
 
-:::note{title=Mo ta}
-Area mark style
+:::note{title=Mô tả}
+Cấu hình kiểu mark vùng, dùng để xác định màu, độ trong suốt, viền và các thiết lập liên quan của mark vùng.
+
+Hỗ trợ cấu hình kiểu toàn cục hoặc kiểu có điều kiện
+
+Bộ lọc dữ liệu
 
 
 
-Area mark style configuration, used to define area mark color, opacity, border, and related settings.
-
-Supports global style or conditional style configuration
-
-Bo loc du lieu
-
-- not in: Select data items where the dimension field value is not within the `value` array.
-
-**Example**
 
 :::
 
@@ -4442,47 +4291,46 @@ Bo loc du lieu
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-- in: Select data items where the dimension field value is in the 'value' list.
+:::note{title=Mô tả}
+- not in: Chọn các mục dữ liệu có giá trị trường chiều không nằm trong mảng `value`.
 
 
 
-- not in: Select data items where the dimension field value is not within the `value` array.
 
-**Example**
+
 
 :::
 
-**Example**
-Operator (same as operator).
+**Ví dụ**
+Màu nét primitive cột (hình chữ nhật)
 selector = "tool"
-**Example**
-true
+selector = ["tool", "book"]
+selector = 100
 selector = [100, 200]
 
-Local data selector
-Bar element (rectangular element) color
+
+selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
-- Executes safely in the browser environment (Web Worker sandbox).
+
+selector = {
 field: 'category',
 operator: 'in',
 value: 'tool'
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'category',
 operator: 'not in',
 value: 'book'
 }
 
-Key capabilities:
-- Executes safely in the browser environment (Web Worker sandbox).
+
+selector = {
 field: 'profit',
 operator: '>=',
 value: 100
 }
-- Executes safely in the browser environment (Web Worker sandbox).
+selector = {
 field: 'profit',
 operator: 'between'
 value: [100, 300]
@@ -4495,21 +4343,19 @@ value: [100, 300]
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
-
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 :::
 
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
 :::
 
@@ -4517,14 +4363,13 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -4532,50 +4377,36 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
-
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 :::
 
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo.
 
+Phù hợp với Top N, phân tích thống kê, điều kiện phức tạp và các tình huống khác khó biểu đạt bằng selector tĩnh.
 
-return _.flatten(
+Khả năng chính:
 
-{ __row_index: item.__row_index, field: 'product' },
+- Hỗ trợ mọi điều kiện lọc dữ liệu phức tạp
 
+- Sử dụng các hàm tiện ích tích hợp cho thao tác dữ liệu
 
+- Thực thi an toàn trong môi trường trình duyệt (sandbox Web Worker)
 
-\- Use built-in utility functions for data manipulation
+Yêu cầu môi trường: chỉ hỗ trợ môi trường trình duyệt; môi trường Node.js sẽ dùng fallback
 
-- Input: data array (items include __row_index).
+Lưu ý: selector và dynamicFilter không thể dùng đồng thời; dynamicFilter có ưu tiên cao hơn
 
-- Restricted: no eval, Function, async, DOM, or network APIs.
+Cấu hình bộ lọc động của biểu đồ
 
-User's filtering requirement description (natural language).
-
-
-
-**Example**
-
-
-
-  field: 'sales'
-
-
-
-Chart dynamic filter configuration
-
-
-
-AI-generated JavaScript filtering code.
-
+Lọc các mark của biểu đồ (vùng, điểm, v.v.) bằng mã JavaScript do AI tạo
 :::
 
 
@@ -4587,15 +4418,13 @@ AI-generated JavaScript filtering code.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
-
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên)
 :::
 
-**Example**
-__row_index: item.__row_index,
+**Ví dụ**
+"Highlight data items with sales greater than 1000"
 
-}));
 
 
 
@@ -4603,25 +4432,25 @@ __row_index: item.__row_index,
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Mã lọc JavaScript do AI tạo
 
 
 
-])
+- Chỉ được dùng các hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Tham số đầu vào: data (mảng), mỗi item chứa trường __row_index biểu thị số dòng
 
-Highlight data items meeting multiple filtering conditions:
+- Phải trả về mảng kết hợp chỉ số dòng và field: Array<{ __row_index: number, field: string }>
 
-const filtered = _.filter(data, item => {
+- __row_index biểu thị số dòng của mục dữ liệu gốc, field biểu thị trường cần làm nổi bật
 
-return profitRate > 0.2 && item.sales > 5000;
+- Không được dùng: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-{ __row_index: item.__row_index, field: 'sales' }
+**Ví dụ**
+Làm nổi bật trường sales của các mục dữ liệu có sales lớn hơn 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -4630,7 +4459,7 @@ field: 'sales'
 }));
 ```
 
-return maxSales || 0;
+Làm nổi bật mục dữ liệu có biên lợi nhuận cao nhất trong mỗi khu vực
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -4644,7 +4473,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+Làm nổi bật các mục dữ liệu được lọc theo nhiều điều kiện
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -4659,14 +4488,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Operator:
-
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 :::
 
 
@@ -4674,21 +4501,19 @@ Operator:
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
-
+:::note{title=Mô tả}
+Trường chiều, ID của một mục chiều
 :::
 
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
 :::
 
@@ -4696,14 +4521,13 @@ Color for disabled paging arrows.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+giống operator
 
-Filter values.
+\- in: Chọn các mục dữ liệu có giá trị field chiều nằm trong giá trị đã chỉ định
 
-Color for disabled paging arrows.
 
-Dynamic filter (AI-generated code execution).
+giống operator
 
 :::
 
@@ -4711,22 +4535,20 @@ Dynamic filter (AI-generated code execution).
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
-
+:::note{title=Mô tả}
+Giá trị của trường chiều, hỗ trợ mảng
 :::
 
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
 
 
-\- in: Select data items where the value of the dimension field is in the value
-
+Được ghi trong giai đoạn prepare(), chỉ đọc khi runtime
 :::
 
 
@@ -4746,12 +4568,12 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Whether the area mark is visible
+:::note{title=Mô tả}
+Có hiển thị mark vùng hay không
 
 
 
-Whether the area mark is visible
+Có hiển thị mark vùng hay không
 
 :::
 
@@ -4759,26 +4581,20 @@ Whether the area mark is visible
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Area mark color
+:::note{title=Mô tả}
+Màu mark vùng
 
-
-
-Area mark color
-
+Màu mark vùng
 :::
 
 ### areaColorOpacity
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Area mark color opacity
+:::note{title=Mô tả}
+Độ mờ màu mark vùng
 
-
-
-Area mark color opacity
-
+Độ mờ màu mark vùng
 :::
 
 
@@ -4786,119 +4602,96 @@ Area mark color opacity
 
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
-:::note{title=Mo ta}
-Annotation point configuration. Defines chart annotation points based on selected data, including position, format, style, and related settings.
+:::note{title=Mô tả}
+Cấu hình điểm chú thích; dựa trên dữ liệu được chọn để định nghĩa vị trí, định dạng, kiểu, v.v.
 
 :::
-
-
 ### selector
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Text color.
+:::note{title=Mô tả}
+Selector của điểm chú thích, dùng để chọn điểm dữ liệu.
 
 :::
-
-
 #### field
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều; id của một mục trong dimensions
 
 :::
-
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
-
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+Giống operator
 
 :::
-
 #### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Chọn giá trị trường chiều trong mục dữ liệu; hỗ trợ mảng
 
 :::
-
 ### measureId
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Chỉ định id chỉ số mà điểm chú thích thuộc về. Trong trường hợp nhiều measure, có thể kết hợp với selector để định vị duy nhất điểm chú thích của chỉ số mục tiêu.
 
 :::
-
 ### dynamicFilter
 
 **Type:** `ChartDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Triển khai logic lọc dữ liệu phức tạp bằng mã JavaScript do AI tạo.
 
+Phù hợp với Top N, phân tích thống kê, điều kiện phức tạp và các trường hợp khó biểu đạt bằng selector tĩnh.
 
-return _.flatten(
+Khả năng chính:
 
-{ __row_index: item.__row_index, field: 'product' },
+- Hỗ trợ điều kiện lọc dữ liệu phức tạp tùy ý
 
+- Dùng hàm tiện ích tích hợp cho thao tác dữ liệu
 
+- Thực thi an toàn trong trình duyệt (sandbox Web Worker)
 
-\- Use built-in utility functions for data manipulation
+Yêu cầu môi trường: chỉ hỗ trợ trình duyệt; môi trường Node.js dùng fallback.
 
-- Input: data array (items include __row_index).
+Lưu ý: selector và dynamicFilter không thể dùng đồng thời; dynamicFilter có độ ưu tiên cao hơn.
 
-- Restricted: no eval, Function, async, DOM, or network APIs.
+Cấu hình bộ lọc động của biểu đồ
 
-User's filtering requirement description (natural language).
-
-
-
-**Example**
-
-
-
-  field: 'sales'
-
-
-
-Chart dynamic filter configuration
-
-
-
-AI-generated JavaScript filtering code.
+Lọc mark của biểu đồ (cột, điểm, v.v.) bằng mã JavaScript do AI tạo
 
 :::
-
-
 #### type
 
 **Type:** `"row-with-field"`
@@ -4907,41 +4700,36 @@ AI-generated JavaScript filtering code.
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên)
 
 :::
 
-**Example**
-__row_index: item.__row_index,
+**Ví dụ**
+"Làm nổi bật cột có sales > 1000"
 
-}));
-
-
-
+"Làm nổi bật cột có tỷ suất lợi nhuận cao nhất trong mỗi khu vực"
 #### code
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Mã lọc JavaScript do AI tạo
 
+- Chỉ được dùng hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
+- Tham số đầu vào: data (mảng), mỗi item chứa trường __row_index biểu thị số dòng
 
-])
+- Phải trả về mảng tổ hợp chỉ số dòng và field: Array<{ __row_index: number, field: string }>
 
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- __row_index là số dòng của mục dữ liệu gốc, field là trường cần làm nổi bật
 
-Highlight data items meeting multiple filtering conditions:
-
-const filtered = _.filter(data, item => {
-
-return profitRate > 0.2 && item.sales > 5000;
+- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-{ __row_index: item.__row_index, field: 'sales' }
+**Ví dụ**
+Làm nổi bật trường sales của mục dữ liệu có sales lớn hơn 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -4950,7 +4738,7 @@ field: 'sales'
 }));
 ```
 
-return maxSales || 0;
+Làm nổi bật mục dữ liệu có tỷ suất lợi nhuận cao nhất trong mỗi khu vực
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -4964,7 +4752,7 @@ _.map(maxItems, item => [
 );
 ```
 
-return _.flatten(
+Làm nổi bật các mục dữ liệu được lọc theo nhiều điều kiện
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -4978,78 +4766,66 @@ _.map(filtered, item => [
 );
 ```
 
-
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Mo ta}
-Operator:
+:::note{title=Mô tả}
+Phương án fallback khi thực thi mã thất bại hoặc môi trường không được hỗ trợ
 
 :::
-
-
 ##### field
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều; id của một mục trong dimensions
 
 :::
-
 ##### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
-
 ##### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+Giống operator
 
 :::
-
 ##### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Chọn giá trị trường chiều trong mục dữ liệu; hỗ trợ mảng
 
 :::
-
 #### result
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
-
-
-\- in: Select data items where the value of the dimension field is in the value
+Được ghi trong giai đoạn prepare() và chỉ đọc khi runtime
 
 :::
-
-
 ##### success
 
 **Type:** `false | true`
@@ -5066,262 +4842,216 @@ Legend configuration, used to define the chart's legend, including position, for
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Mo ta}
-'red'
+:::note{title=Mô tả}
+Nội dung văn bản
 
 :::
 
-**Example**
-'Văn bản đánh dấu'
-
-
-
+**Ví dụ**
+'Annotation text'
 ### textColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-4
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### textFontSize
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-[2, 2]
-
-:::
-
-**Example**
-12
-
-
-
-### textFontWeight
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-0
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textAlign
-
-**Type:** `"left" | "right" | "center" | undefined`
-
-:::note{title=Mo ta}
-**Example**
-
-Recommended value is 'right', which keeps the text on the left side of the annotation point.
-
-Cỡ chữ văn bản.
-
-Text color
-
-**Ví dụ**
-
-:::
-
-**Example**
-'right' Văn bản nằm bên trái điểm đánh dấu
-
-
-
-### textBaseline
-
-**Type:** `"top" | "bottom" | "middle" | undefined`
-
-:::note{title=Mo ta}
-**Ví dụ**
-
-top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
-
-'top'
-
-bottom: Text is at the top of the reference line; the bottom edge aligns with the endpoint of the (vertical) annotation line.
-
-'right'
-
-:::
-
-**Example**
-Text color.
-
-
-
-### textBackgroundVisible
-
-**Type:** `boolean | undefined`
-
-:::note{title=Mo ta}
-**Example**
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textBackgroundColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
-background corner radius
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### textBackgroundBorderColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Màu văn bản
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
+**Ví dụ**
+'red'
+### textFontSize
 
+**Type:** `number | undefined`
 
+:::note{title=Mô tả}
+Cỡ chữ văn bản
 
+:::
+
+**Ví dụ**
+12
+### textFontWeight
+
+**Type:** `number | undefined`
+
+:::note{title=Mô tả}
+Độ đậm chữ văn bản
+
+:::
+
+**Ví dụ**
+400
+### textAlign
+
+**Type:** `"left" | "right" | "center" | undefined`
+
+:::note{title=Mô tả}
+Căn chỉnh văn bản, thường không cần thiết lập
+
+Khuyến nghị đặt right để văn bản nằm bên trái đường chú thích
+
+right: văn bản nằm bên trái đường tham chiếu, mép phải căn với đường chú thích dọc
+
+left: văn bản nằm bên phải đường tham chiếu, mép trái căn với đường chú thích dọc
+
+center: văn bản nằm ở giữa đường tham chiếu
+
+:::
+
+**Ví dụ**
+'right'
+### textBaseline
+
+**Type:** `"top" | "bottom" | "middle" | undefined`
+
+:::note{title=Mô tả}
+Căn chỉnh dọc của văn bản. Thường dùng top để văn bản hiển thị dưới điểm chú thích và nằm trong vùng biểu đồ nhìn thấy được
+
+Khuyến nghị dùng top để hiển thị đầy đủ văn bản
+
+top: văn bản nằm dưới điểm chú thích
+
+middle: văn bản căn với tâm điểm chú thích
+
+bottom: văn bản nằm trên điểm chú thích
+
+:::
+
+**Ví dụ**
+'top'
+### textBackgroundVisible
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mô tả}
+Có hiển thị nền hay không
+
+:::
+
+**Ví dụ**
+true
+### textBackgroundColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu nền
+
+:::
+
+**Ví dụ**
+'red'
+### textBackgroundBorderColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu viền nền
+
+:::
+
+**Ví dụ**
+'red'
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
+:::note{title=Mô tả}
+Độ rộng viền nền
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+2
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
+:::note{title=Mô tả}
+Bo góc viền nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Padding nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### offsetY
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Décalage Y en pixels de tout le point d’annotation. Valeur positive recommandée au-dessus du graphique, négative en dessous.
 
-**Example**
+Une valeur négative déplace tout le composant vers le haut, par exemple -10 de 10 px
 
-Nền có hiển thị hay không.
+Une valeur positive le déplace vers le bas, par exemple 10 de 10 px
 
 :::
 
-**Example**
-offsetY: 5, moves the whole annotation point down by 5 pixels
-
-
-
+**Ví dụ**
+offsetY: 5
 ### offsetX
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Màu nền.
+:::note{title=Mô tả}
+Décalage X en pixels de tout le point d’annotation. Valeur positive à gauche du graphique, négative à droite.
 
-Line style.
+Une valeur négative déplace tout le composant vers la gauche, par exemple -10 de 10 px
 
-**Ví dụ**
+Une valeur positive le déplace vers la droite, par exemple 10 de 10 px
 
 :::
 
-**Example**
-offsetX: 5, moves the whole annotation point right by 5 pixels
-
-
-
-
+**Ví dụ**
+offsetX: 5
 ## annotationVerticalLine
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
-:::note{title=Mo ta}
-Dimension-value annotation line, displayed vertically. It can configure the annotation line position, style, and related settings.
+:::note{title=Mô tả}
+Configuration des lignes d’annotation verticales.
 
 :::
-
-
 ### xValue
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Mo ta}
-);
+:::note{title=Mô tả}
+Valeur X fixe pour la ligne verticale; utilisez une valeur de dimension pour un axe catégoriel, une valeur numérique concrète pour un axe numérique
 
 :::
-
 ### dynamicFilter
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Mã lọc JavaScript do AI tạo
 
+- Chỉ được dùng hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-Background border corner radius.
+- Tham số đầu vào: data (mảng)
 
-Line visibility.
+- Doit retourner une seule valeur number ou string: number | string
 
+- Cas d’usage: valeurs dynamiques nécessaires aux lignes d’annotation (horizontales/verticales)
 
-
-true
+- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
-
-
 #### type
 
 **Type:** `"value"`
@@ -5330,60 +5060,57 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Description du besoin de valeur dynamique (langage naturel)
 
 :::
 
-**Example**
-"Lấy giá trị doanh số cao nhất làm tham chiếu cho đường đánh dấu"
+**Ví dụ**
+"Obtenir la valeur maximale de sales comme référence de ligne d’annotation"
 
-"Tính doanh số trung bình cho đường đánh dấu"
-
-
-
+"Calculer la moyenne de sales pour la ligne d’annotation"
 #### code
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Mã lọc JavaScript do AI tạo
 
+- Chỉ được dùng hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-])
+- Tham số đầu vào: data (mảng)
 
-**Example**
+- Doit retourner une seule valeur number ou string: number | string
 
-'red'
+- Cas d’usage: valeurs dynamiques nécessaires aux lignes d’annotation (horizontales/verticales)
 
-4
-
-return profitRate > 0.2 && item.sales > 5000;
+- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-\- not in: Select data items where the value of the dimension field is not in the value
+**Ví dụ**
+Obtenir la valeur maximale de sales comme valeur de ligne d’annotation
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-**Example**
+Calculer la moyenne pour la ligne d’annotation
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Calculate target value based on conditions
+Obtenir un quantile comme ligne d’annotation
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-'solid'
+Calculer une valeur cible selon une condition
 ```javascript
 const currentYearTotal = _.sumBy(
 _.filter(data, item => item.year === 2024),
@@ -5392,31 +5119,24 @@ _.filter(data, item => item.year === 2024),
 return currentYearTotal;
 ```
 
-
-
 #### fallback
 
 **Type:** `string | number | undefined`
 
-:::note{title=Mo ta}
-Operator:
+:::note{title=Mô tả}
+Valeur fallback si l’exécution du code échoue ou si l’environnement n’est pas pris en charge
 
 :::
-
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
-
-
-\- in: Select data items where the value of the dimension field is in the value
+Được ghi trong giai đoạn prepare() và chỉ đọc khi runtime
 
 :::
-
-
 ##### success
 
 **Type:** `false | true`
@@ -5429,296 +5149,243 @@ Operator:
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Mo ta}
-'red'
+:::note{title=Mô tả}
+Nội dung văn bản
 
 :::
 
-**Example**
-'Văn bản đánh dấu'
-
-
-
+**Ví dụ**
+'Annotation text'
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Mo ta}
-Các giá trị trường dimension đã chọn; hỗ trợ mảng.
+:::note{title=Mô tả}
+Position du texte
+
+Position du libellé de la ligne d’annotation par rapport à la ligne.
 
 :::
 
-**Example**
+**Ví dụ**
 'outsideEnd'
-
-
-
 ### textColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-4
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### textFontSize
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-[2, 2]
-
-:::
-
-**Example**
-12
-
-
-
-### textFontWeight
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-0
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textAlign
-
-**Type:** `"left" | "right" | "center" | undefined`
-
-:::note{title=Mo ta}
-left: Văn bản nằm bên phải vùng chú thích, mép trái căn với vùng.
-
-center: Văn bản được căn giữa trong vùng chú thích.
-
-Màu văn bản.
-
-Annotation line label position (relative position of the label to the line).
-
-**Ví dụ**
-
-:::
-
-**Example**
-'red'
-
-
-
-### textBaseline
-
-**Type:** `"top" | "bottom" | "middle" | undefined`
-
-:::note{title=Mo ta}
-middle: Văn bản được căn giữa theo chiều dọc trong vùng chú thích.
-
-top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
-
-- center: Text is centered in the annotation area.
-
-'Annotation Text'
-
-'center' (text is in the middle of the annotation area)
-
-:::
-
-**Example**
-'top'
-
-
-
-### lineVisible
-
-**Type:** `boolean | undefined`
-
-:::note{title=Mo ta}
-**Example**
-
-:::
-
-**Example**
-**Example**
-
-
-
-### lineColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
-Màu viền vùng chú thích.
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### lineWidth
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-Độ rộng viền vùng chú thích.
-
-:::
-
-**Example**
-**Example**
-
-
-
-### lineStyle
-
-**Type:** `"solid" | "dashed" | "dotted" | undefined`
-
-:::note{title=Mo ta}
-Bán kính bo góc viền vùng chú thích.
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textBackgroundVisible
-
-**Type:** `boolean | undefined`
-
-:::note{title=Mo ta}
-**Example**
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textBackgroundColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
-background corner radius
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### textBackgroundBorderColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Màu văn bản
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
+**Ví dụ**
+'red'
+### textFontSize
 
+**Type:** `number | undefined`
 
+:::note{title=Mô tả}
+Cỡ chữ văn bản
 
+:::
+
+**Ví dụ**
+12
+### textFontWeight
+
+**Type:** `number | undefined`
+
+:::note{title=Mô tả}
+Độ đậm chữ văn bản
+
+:::
+
+**Ví dụ**
+400
+### textAlign
+
+**Type:** `"left" | "right" | "center" | undefined`
+
+:::note{title=Mô tả}
+Căn chỉnh văn bản, thường không cần thiết lập
+
+Khuyến nghị đặt right để văn bản nằm bên trái đường chú thích
+
+right: văn bản nằm bên trái đường tham chiếu, mép phải căn với đường chú thích dọc
+
+left: văn bản nằm bên phải đường tham chiếu, mép trái căn với đường chú thích dọc
+
+center: văn bản nằm ở giữa đường tham chiếu
+
+:::
+
+**Ví dụ**
+'right'
+### textBaseline
+
+**Type:** `"top" | "bottom" | "middle" | undefined`
+
+:::note{title=Mô tả}
+Căn chỉnh dọc của văn bản, thường không cần thiết lập
+
+Khuyến nghị dùng top để toàn bộ văn bản nằm trong vùng biểu đồ nhìn thấy được
+
+top: văn bản nằm dưới đường tham chiếu và căn với điểm cuối đường chú thích dọc
+
+middle: văn bản nằm ở giữa đường tham chiếu
+
+bottom: văn bản nằm trên đường tham chiếu
+
+:::
+
+**Ví dụ**
+'top'
+### lineVisible
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mô tả}
+Có hiển thị đường hay không
+
+:::
+
+**Ví dụ**
+true
+### lineColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu đường
+
+:::
+
+**Ví dụ**
+'red'
+### lineWidth
+
+**Type:** `number | undefined`
+
+:::note{title=Mô tả}
+Độ rộng đường
+
+:::
+
+**Ví dụ**
+2
+### lineStyle
+
+**Type:** `"solid" | "dashed" | "dotted" | undefined`
+
+:::note{title=Mô tả}
+Kiểu đường
+
+:::
+
+**Ví dụ**
+'solid'
+### textBackgroundVisible
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mô tả}
+Có hiển thị nền hay không
+
+:::
+
+**Ví dụ**
+true
+### textBackgroundColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu nền
+
+:::
+
+**Ví dụ**
+'red'
+### textBackgroundBorderColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu viền nền
+
+:::
+
+**Ví dụ**
+'red'
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
+:::note{title=Mô tả}
+Độ rộng viền nền
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+2
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
+:::note{title=Mô tả}
+Bo góc viền nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Padding nền
 
 :::
 
-**Example**
-12
-
-
-
-
+**Ví dụ**
+4
 ## annotationHorizontalLine
 
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
-:::note{title=Mo ta}
-Numeric annotation line, including average, maximum, and minimum lines. Displayed horizontally and configurable by position and style. Use this configuration to draw annotation lines for numeric values such as average lines.
+:::note{title=Mô tả}
+Configuration des lignes d’annotation horizontales.
 
 :::
-
-
 ### yValue
 
 **Type:** `string | number | (string | number)[] | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Valeur Y fixe pour la ligne horizontale; utilisez une valeur de dimension pour un axe catégoriel, une valeur numérique concrète pour un axe numérique
 
 :::
-
 ### dynamicFilter
 
 **Type:** `ValueDynamicFilter | undefined`
 
-:::note{title=Mo ta}
-Filter chart marks (columns, points, etc.) via AI-generated JavaScript code.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Mã lọc JavaScript do AI tạo
 
+- Chỉ được dùng hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-Background border corner radius.
+- Tham số đầu vào: data (mảng)
 
-Line visibility.
+- Doit retourner une seule valeur number ou string: number | string
 
+- Cas d’usage: valeurs dynamiques nécessaires aux lignes d’annotation (horizontales/verticales)
 
-
-true
+- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
-
-
 #### type
 
 **Type:** `"value"`
@@ -5727,15 +5394,15 @@ true
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Mô tả yêu cầu lọc của người dùng (ngôn ngữ tự nhiên).
 
 :::
 
-**Example**
-"Lấy giá trị doanh số cao nhất làm tham chiếu cho đường đánh dấu"
+**Ví dụ**
+"Lấy giá trị doanh số cao nhất làm tham chiếu cho đường chú thích"
 
-"Tính doanh số trung bình cho đường đánh dấu"
+"Tính doanh số trung bình cho đường chú thích"
 
 
 
@@ -5743,44 +5410,44 @@ true
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-Read-only runtime result of the filter execution.
+:::note{title=Mô tả}
+Bộ lọc động (thực thi mã do AI tạo)
 
+Mã lọc JavaScript do AI tạo
 
+- Chỉ được dùng hàm tiện ích tích hợp (truy cập qua _ hoặc R)
 
-])
+- Tham số đầu vào: data (mảng)
 
-**Example**
+- Doit retourner une seule valeur number ou string: number | string
 
-'red'
+- Cas d’usage: valeurs dynamiques nécessaires aux lignes d’annotation (horizontales/verticales)
 
-4
-
-return profitRate > 0.2 && item.sales > 5000;
+- Cấm: eval, Function, thao tác bất đồng bộ, DOM API, yêu cầu mạng
 
 :::
 
-**Example**
-\- not in: Select data items where the value of the dimension field is not in the value
+**Ví dụ**
+Obtenir la valeur maximale de sales comme valeur de ligne d’annotation
 ```javascript
 const maxSales = _.maxBy(data, 'sales')?.sales;
 return maxSales || 0;
 ```
 
-**Example**
+Calculer la moyenne pour la ligne d’annotation
 ```javascript
 const avgSales = _.meanBy(data, 'sales');
 return _.round(avgSales, 2);
 ```
 
-Calculate target value based on conditions
+Obtenir un quantile comme ligne d’annotation
 ```javascript
 const sorted = _.sortBy(data, 'sales');
 const index = Math.floor(sorted.length * 0.75);
 return sorted[index]?.sales || 0;
 ```
 
-'solid'
+Calculer une valeur cible selon une condition
 ```javascript
 const currentYearTotal = _.sumBy(
 _.filter(data, item => item.year === 2024),
@@ -5789,31 +5456,24 @@ _.filter(data, item => item.year === 2024),
 return currentYearTotal;
 ```
 
-
-
 #### fallback
 
 **Type:** `string | number | undefined`
 
-:::note{title=Mo ta}
-Operator:
+:::note{title=Mô tả}
+Valeur fallback si l’exécution du code échoue ou si l’environnement n’est pas pris en charge
 
 :::
-
 #### result
 
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Kết quả thực thi bộ lọc động (trường runtime)
 
-
-
-\- in: Select data items where the value of the dimension field is in the value
+Được ghi trong giai đoạn prepare() và chỉ đọc khi runtime
 
 :::
-
-
 ##### success
 
 **Type:** `false | true`
@@ -5826,681 +5486,531 @@ Operator:
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Mo ta}
-'red'
+:::note{title=Mô tả}
+Nội dung văn bản
 
 :::
 
-**Example**
-'Văn bản đánh dấu'
-
-
-
+**Ví dụ**
+'Annotation text'
 ### textPosition
 
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
-:::note{title=Mo ta}
-2
+:::note{title=Mô tả}
+Position du texte
 
-
-
-Label position of the annotation line, relative to the line.
+Position du libellé de la ligne d’annotation par rapport à la ligne.
 
 :::
 
-**Example**
+**Ví dụ**
 'outsideEnd'
-
-
-
 ### textColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-4
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### textFontSize
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-[2, 2]
-
-:::
-
-**Example**
-12
-
-
-
-### textFontWeight
-
-**Type:** `number | undefined`
-
-:::note{title=Mo ta}
-0
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textAlign
-
-**Type:** `"left" | "right" | "center" | undefined`
-
-:::note{title=Mo ta}
-left: Văn bản nằm bên phải vùng chú thích, mép trái căn với vùng.
-
-center: Văn bản được căn giữa trong vùng chú thích.
-
-Recommended to set to 'top' to ensure the text is fully displayed within the chart's visible area.
-
-**Ví dụ**
-
-background color
-
-:::
-
-**Example**
-'red'
-
-
-
-### textBaseline
-
-**Type:** `"top" | "bottom" | "middle" | undefined`
-
-:::note{title=Mo ta}
-middle: Văn bản được căn giữa theo chiều dọc trong vùng chú thích.
-
-top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
-
-màu nét nền
-
-**Ví dụ**
-
-**Example**
-
-:::
-
-**Example**
-'top'
-
-
-
-### textBackgroundVisible
-
-**Type:** `boolean | undefined`
-
-:::note{title=Mo ta}
-**Example**
-
-:::
-
-**Example**
-**Example**
-
-
-
-### textBackgroundColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
-background corner radius
-
-:::
-
-**Example**
-'center' Text is centered in the annotation area
-
-
-
-### textBackgroundBorderColor
-
-**Type:** `string | undefined`
-
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Màu văn bản
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
+**Ví dụ**
+'red'
+### textFontSize
 
+**Type:** `number | undefined`
 
+:::note{title=Mô tả}
+Cỡ chữ văn bản
 
+:::
+
+**Ví dụ**
+12
+### textFontWeight
+
+**Type:** `number | undefined`
+
+:::note{title=Mô tả}
+Độ đậm chữ văn bản
+
+:::
+
+**Ví dụ**
+400
+### textAlign
+
+**Type:** `"left" | "right" | "center" | undefined`
+
+:::note{title=Mô tả}
+Căn chỉnh văn bản, thường không cần thiết lập
+
+Khuyến nghị đặt right để văn bản nằm bên trái đường chú thích
+
+right: văn bản nằm bên trái đường tham chiếu, mép phải căn với đường chú thích dọc
+
+left: văn bản nằm bên phải đường tham chiếu, mép trái căn với đường chú thích dọc
+
+center: văn bản nằm ở giữa đường tham chiếu
+
+:::
+
+**Ví dụ**
+'right'
+### textBaseline
+
+**Type:** `"top" | "bottom" | "middle" | undefined`
+
+:::note{title=Mô tả}
+Căn chỉnh dọc của văn bản, thường không cần thiết lập
+
+Khuyến nghị dùng top để toàn bộ văn bản nằm trong vùng biểu đồ nhìn thấy được
+
+top: văn bản nằm dưới đường tham chiếu và căn với đường chú thích ngang
+
+middle: văn bản nằm ở giữa đường tham chiếu
+
+bottom: văn bản nằm trên đường tham chiếu
+
+:::
+
+**Ví dụ**
+'top'
+### textBackgroundVisible
+
+**Type:** `boolean | undefined`
+
+:::note{title=Mô tả}
+Có hiển thị nền hay không
+
+:::
+
+**Ví dụ**
+true
+### textBackgroundColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu nền
+
+:::
+
+**Ví dụ**
+'red'
+### textBackgroundBorderColor
+
+**Type:** `string | undefined`
+
+:::note{title=Mô tả}
+Màu viền nền
+
+:::
+
+**Ví dụ**
+'red'
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
-
-
-
-**Ví dụ**
+:::note{title=Mô tả}
+Độ rộng viền nền
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+2
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
+:::note{title=Mô tả}
+Bo góc viền nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Padding nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### lineVisible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-**Example**
-
-
-
-**Example**
+:::note{title=Mô tả}
+Có hiển thị đường hay không
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+true
 ### lineColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Màu viền vùng chú thích.
+:::note{title=Mô tả}
+Màu đường
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
-
-
-
+**Ví dụ**
+'red'
 ### lineWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Độ rộng viền vùng chú thích.
+:::note{title=Mô tả}
+Độ rộng đường
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+2
 ### lineStyle
 
 **Type:** `"solid" | "dashed" | "dotted" | undefined`
 
-:::note{title=Mo ta}
-Bán kính bo góc viền vùng chú thích.
+:::note{title=Mô tả}
+Kiểu đường
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+'solid'
 ### splitLine
 
 **Type:** `boolean | { positiveColor?: string; negativeColor?: string; } | undefined`
 
-:::note{title=Mo ta}
-Kiểu gạch của viền vùng chú thích.
+:::note{title=Mô tả}
+Configuration de ligne de séparation; les parties au-dessus et au-dessous de la valeur d’annotation peuvent utiliser des couleurs différentes.
 
 :::
-
-
 #### positiveColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Primary color for the part greater than the annotation value
+:::note{title=Mô tả}
+Couleur principale de la partie supérieure à la valeur d’annotation
 
 :::
-
 #### negativeColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-0
+:::note{title=Mô tả}
+Couleur principale de la partie inférieure à la valeur d’annotation
 
 :::
-
-
 ## annotationArea
 
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
-:::note{title=Mo ta}
-Annotation region configuration. Defines chart annotation regions based on selected data, including position, style, and related settings.
+:::note{title=Mô tả}
+Cấu hình vùng chú thích; dựa trên dữ liệu được chọn để định nghĩa vị trí và kiểu của vùng.
 
 :::
-
-
 ### selector
 
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
-:::note{title=Mo ta}
-Có bật chức năng liên kết dimension khi biểu đồ bật perspective hoặc khi các measure được gộp hay không.
+:::note{title=Mô tả}
+Sélecteur de la zone d’annotation.
 
 :::
-
-
 #### field
 
 **Type:** `string`
 
-:::note{title=Mo ta}
-return _.flatten(
+:::note{title=Mô tả}
+Trường chiều; id của một mục trong dimensions
 
 :::
-
 #### operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
 :::
-
 #### op
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Mo ta}
-Executes in a Web Worker sandbox. 
+:::note{title=Mô tả}
+Toán tử
 
-Filter values.
+- in: Chọn mục dữ liệu có giá trị trường chiều nằm trong value
 
-Color for disabled paging arrows.
+- not in: Chọn mục dữ liệu có giá trị trường chiều không nằm trong value
 
-Dynamic filter (AI-generated code execution).
+Giống operator
 
 :::
-
 #### value
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Mo ta}
-Legend configuration, used to define the chart's legend, including position, format, and style.
+:::note{title=Mô tả}
+Chọn giá trị trường chiều trong mục dữ liệu; hỗ trợ mảng
 
 :::
-
 ### text
 
 **Type:** `string | string[] | undefined`
 
-:::note{title=Mo ta}
-'red'
+:::note{title=Mô tả}
+Nội dung văn bản
 
 :::
 
-**Example**
-'Văn bản đánh dấu'
-
-
-
+**Ví dụ**
+'Annotation text'
 ### textPosition
 
 **Type:** `"left" | "top" | "topLeft" | "topRight" | "right" | "bottom" | "bottomLeft" | "bottomRight" | undefined`
 
-:::note{title=Mo ta}
-2
+:::note{title=Mô tả}
+Position du texte
 
 :::
 
-**Example**
+**Ví dụ**
 'top'
-
-
-
 ### textColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-4
+:::note{title=Mô tả}
+Màu văn bản
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
-
-
-
+**Ví dụ**
+'red'
 ### textFontSize
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-[2, 2]
+:::note{title=Mô tả}
+Cỡ chữ văn bản
 
 :::
 
-**Example**
+**Ví dụ**
 12
-
-
-
 ### textFontWeight
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-0
+:::note{title=Mô tả}
+Độ đậm chữ văn bản
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+400
 ### textAlign
 
 **Type:** `"left" | "right" | "center" | undefined`
 
-:::note{title=Mo ta}
-Cấu hình đường hồi quy đa thức, bao gồm bậc đa thức, kiểu đường hồi quy, v.v.
+:::note{title=Mô tả}
+Căn chỉnh văn bản, thường không cần thiết lập
 
-Nên đặt thành 'center' để đảm bảo văn bản nằm ở giữa vùng đánh dấu
+center: le texte est centré dans la zone d’annotation
 
-right: text is on the left side of the annotation area; the right edge of the text aligns with the annotation area
+left: le texte est à gauche dans la zone d’annotation
 
-left: text is on the right side of the annotation area; the left edge of the text aligns with the annotation area
-
-center: text is centered in the annotation area; the center of the text aligns with the annotation area
+right: le texte est à droite dans la zone d’annotation
 
 :::
 
-**Example**
-'center' Văn bản nằm ở giữa vùng đánh dấu
-
-
-
+**Ví dụ**
+'center'
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
-:::note{title=Mo ta}
-Text vertical alignment. Generally set it to top so text appears at the bottom of the annotation area and remains inside the visible chart area.
+:::note{title=Mô tả}
+Căn chỉnh dọc của văn bản, thường không cần thiết lập
 
-top: Text is at the bottom of the reference line; the top edge aligns with the endpoint of the (vertical) annotation line.
+top: le texte est en haut de la zone d’annotation
 
-top: text is at the bottom of the annotation area; the top edge of the text aligns with the annotation area
+middle: le texte est au centre de la zone d’annotation
 
-middle: text is centered in the annotation area; the center of the text aligns with the annotation area
-
-Bậc của hồi quy đa thức
+bottom: le texte est en bas de la zone d’annotation
 
 :::
 
-**Example**
-'top' Văn bản nằm phía dưới vùng đánh dấu
-
-
-
+**Ví dụ**
+'middle'
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-**Example**
+:::note{title=Mô tả}
+Có hiển thị nền hay không
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+true
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-background corner radius
+:::note{title=Mô tả}
+Màu nền
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
-
-
-
+**Ví dụ**
+'red'
 ### textBackgroundBorderColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Màu văn bản
-
-
-
-Màu văn bản
+:::note{title=Mô tả}
+Màu viền nền
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
-
-
-
+**Ví dụ**
+'red'
 ### textBackgroundBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
+:::note{title=Mô tả}
+Độ rộng viền nền
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+2
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-**Ví dụ**
-
-
-
-**Ví dụ**
+:::note{title=Mô tả}
+Bo góc viền nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Padding nền
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### areaColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Màu vùng đánh dấu
+:::note{title=Mô tả}
+Màu vùng chú thích
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
-
-
-
+**Ví dụ**
+'rgba(255,0,0,0.1)'
 ### areaColorOpacity
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Annotation area fill opacity
+:::note{title=Mô tả}
+Độ trong suốt vùng chú thích
 
 :::
 
-**Example**
-0.5
-
-
-
+**Ví dụ**
+0.2
 ### areaBorderColor
 
 **Type:** `string | undefined`
 
-:::note{title=Mo ta}
-Annotation area border color
+:::note{title=Mô tả}
+Màu viền vùng chú thích
 
 :::
 
-**Example**
-'center' Text is centered in the annotation area
-
-
-
+**Ví dụ**
+'red'
 ### areaBorderWidth
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Annotation area border width
+:::note{title=Mô tả}
+Độ rộng viền vùng chú thích
 
 :::
 
-**Example**
-**Example**
-
-
-
+**Ví dụ**
+2
 ### areaBorderRadius
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Annotation area border radius
+:::note{title=Mô tả}
+Bo góc viền vùng chú thích
 
 :::
 
-**Example**
-12
-
-
-
+**Ví dụ**
+4
 ### areaLineDash
 
 **Type:** `number[] | undefined`
 
-:::note{title=Mo ta}
-Annotation area border line style
+:::note{title=Mô tả}
+Thiết lập nét đứt viền vùng chú thích
 
 :::
 
-**Example**
-[2, 2]
-
-
-
+**Ví dụ**
+[4, 4]
 ### outerPadding
 
 **Type:** `number | undefined`
 
-:::note{title=Mo ta}
-Lề của vùng đánh dấu
+:::note{title=Mô tả}
+Padding bên ngoài
 
 :::
 
-**Example**
-0
-
-
-
-
+**Ví dụ**
+8
 ## dimensionLinkage
 
 **Type:** `DimensionLinkage | undefined`
 
-:::note{title=Mo ta}
-Whether to enable dimension linkage when pivot or measure grouping is enabled on the chart
+:::note{title=Mô tả}
+Khi biểu đồ bật chức năng pivot hoặc tổ hợp chỉ số, có bật chức năng liên kết dimension hay không.
 
-When hovering over a dimension value, highlight data with the same dimension value in other charts
+Khi hover vào một giá trị dimension, dữ liệu có cùng giá trị dimension trong các biểu đồ khác sẽ được highlight liên kết.
 
-
-
-Cấu hình liên kết chiều của biểu đồ pivot
-
+Cấu hình liên kết dimension của biểu đồ pivot
 :::
 
 
@@ -6508,27 +6018,24 @@ Cấu hình liên kết chiều của biểu đồ pivot
 
 **Type:** `false | true`
 
-:::note{title=Mo ta}
-Có bật liên kết chiều của biểu đồ pivot hay không
-
+:::note{title=Mô tả}
+Có bật liên kết dimension của biểu đồ pivot hay không
 :::
 
 ### showTooltip
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
-Có hiển thị thông tin Tooltip của các biểu đồ con tương ứng với tất cả các chiều hay không
-
+:::note{title=Mô tả}
+Có hiển thị thông tin Tooltip của các biểu đồ con tương ứng với tất cả dimension hay không
 :::
 
 ### showLabel
 
 **Type:** `boolean | undefined`
 
-:::note{title=Mo ta}
+:::note{title=Mô tả}
 Có hiển thị nhãn tương ứng với crosshair hay không
-
 :::
 
 
@@ -6536,7 +6043,6 @@ Có hiển thị nhãn tương ứng với crosshair hay không
 
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
-:::note{title=Mo ta}
-Internationalization configuration. Chart language configuration supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
-
+:::note{title=Mô tả}
+Cấu hình ngôn ngữ biểu đồ. Hỗ trợ hai ngôn ngữ 'zh-CN' và 'en-US'. Ngoài ra có thể gọi intl.setLocale('zh-CN') để đặt ngôn ngữ
 :::

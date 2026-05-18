@@ -3,7 +3,7 @@
   {
     "type": "dir",
     "name": "devProgress",
-    "label": "Tiến độ phát triển",
+    "label": "Quy trình phát triển",
     "collapsed": false
   },
   "architecture",

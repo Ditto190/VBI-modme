@@ -1,28 +1,28 @@
-# Architecture
+# Desain Arsitektur
 
-VSeed is a chart generator based on semantic configuration, designed to connect user intent with underlying rendering engines (VChart/VTable).
+VSeed adalah generator chart berbasis konfigurasi semantik yang dirancang untuk menghubungkan maksud pengguna dengan rendering engine di bawahnya (VChart/VTable).
 
 > [Deep Wiki](https://deepwiki.com/VisActor/VSeed)
 
-## Core Concepts
+## Konsep Inti
 
-### 1. Pipeline Architecture
-VSeed uses a pipeline pattern to progressively build the chart Spec. The process consists of two main stages:
+### 1. Arsitektur Pipeline (Pipeline Architecture)
+VSeed menggunakan pola pipeline untuk membangun Spec chart secara bertahap. Seluruh proses dibagi menjadi dua tahap utama:
 
 - **AdvancedPipeline**:
-  - Input: Initial `VSeed` object.
-  - Responsibilities: Data reshaping, applying themes, inferring default configurations.
-  - Output: `AdvancedVSeed` (intermediate template).
+  - Masukan: objek awal `VSeed`.
+  - Tanggung jawab: reshape data (Data Reshape), menerapkan theme, menginferensi konfigurasi default.
+  - Keluaran: `AdvancedVSeed` (template state antara).
 
 - **SpecPipeline**:
-  - Input: `AdvancedVSeed`.
-  - Responsibilities: Convert the intermediate template into concrete VChart/VTable configuration.
-  - Output: Final renderable Spec.
+  - Masukan: `AdvancedVSeed`.
+  - Tanggung jawab: mengubah template state antara menjadi item konfigurasi VChart/VTable yang konkret.
+  - Keluaran: Spec final yang dapat dirender.
 
-### 2. Builder Pattern
-The `VSeedBuilder` class is the core coordinator, responsible for managing Context, registering plugins, and executing the pipeline.
+### 2. Pola Builder
+Kelas `VSeedBuilder` adalah koordinator inti yang bertanggung jawab mengelola Context, mendaftarkan plugin, dan mengeksekusi pipeline.
 
-### 3. Plugin-based Extensibility
-VSeed's core capabilities (such as supported chart types) are fully implemented via a plugin registration mechanism.
-- **Chart Type Registration**: Each chart type (e.g., `bar`, `line`) is a registered plugin.
-- **Theme Registration**: Custom themes can be registered.
+### 3. Ekstensi Berbasis Plugin (Extensibility)
+Kemampuan inti VSeed, seperti jenis chart yang didukung, sepenuhnya diimplementasikan melalui mekanisme registrasi plugin.
+- **Chart Type Registration**: Setiap jenis chart (misalnya `bar`, `line`) adalah plugin yang diregistrasikan.
+- **Theme Registration**: Mendukung registrasi theme kustom.

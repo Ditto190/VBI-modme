@@ -5,7 +5,7 @@ This example demonstrates `BuilderLayout` + `FieldPanel` + `ChartRenderer` + `Ch
 ## Dependencies
 
 - Packages: `@visactor/vbi-react/components`, `@visactor/vbi`, `react`
-- Props: `builder` should have available dimension/measure fields for `FieldPanel` add/remove demos
+- Input constraint: `builder` should have available dimension/measure fields for `FieldPanel` add/remove demos
 
 ## Code Snippet
 

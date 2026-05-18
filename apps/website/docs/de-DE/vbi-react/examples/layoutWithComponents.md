@@ -34,4 +34,4 @@ export function LayoutDemo({ builder }: { builder: VBIChartBuilder }) {
 
 - Oben kann der Chart-Typ gewechselt werden, links lassen sich Dimensionen/Kennzahlen hinzufügen oder entfernen, und der Hauptbereich zeigt die Chart-DSL-Vorschau.
 - Nach Feldoperationen aktualisiert sich der Hauptbereich automatisch, ohne manuellen Trigger.
-- Wenn der Build fehlschlägt, zeigt `ChartRenderer` die Standardfehlermeldung und einen Retry-Button.
+- Wenn der Build fehlschlägt, zeigt `ChartRenderer` die Standardfehlermeldung und einen Button zum erneuten Versuch.

@@ -4,12 +4,12 @@ VQuery menggunakan framework `rstest` untuk pengujian. **Semua perintah harus di
 
 ## Mekanisme Pengujian
 Pengujian VQuery mencakup:
-- **Unit**: Fungsi utilitas dan logika compiler.
-- **Examples**: Alur lengkap pembuatan SQL dan query data.
+- **Unit**: Fungsi utilitas dan logika kompilator.
+- **examples**: Alur lengkap pembuatan SQL dan kueri data.
 
 ## Perintah Umum
 
-### Menjalankan Semua Test
+### Menjalankan semua pengujian
 ```bash
 pnpm --filter=@visactor/vquery run test
 ```
@@ -20,8 +20,8 @@ Jika perubahan logika pembuatan SQL sudah sesuai harapan, perbarui snapshot:
 pnpm --filter=@visactor/vquery run test:update
 ```
 
-### Laporan Coverage
-Membuat dan meninjau coverage pengujian:
+### Laporan cakupan
+Buat dan tinjau cakupan pengujian:
 ```bash
 pnpm --filter=@visactor/vquery run test:coverage
 ```

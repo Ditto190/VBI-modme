@@ -10,7 +10,7 @@
 ## 포지셔닝
 
 - React 18+를 위한 상태 구독과 렌더링 래퍼
-- `VBIChartBuilder`를 Single Source of Truth (SSOT)로 사용하며 별도의 비즈니스 상태 복사본을 유지하지 않습니다
+- `VBIChartBuilder`를 Single Source of Truth (SSOT)로 사용하며 별도의 업무 상태 복사본을 유지하지 않습니다
 - BI 설정 패널, 차트 미리보기 영역, DSL 디버그 패널을 구축하는 데 적합합니다
 
 ## 설치
@@ -29,7 +29,7 @@ pnpm --filter=<your-app> add @visactor/vbi-react@workspace:* @visactor/vbi@works
 
 ## 빠른 시작
 
-아래 예제는 `useVBI` + `useVSeed`의 최소 폐쇄 흐름을 보여줍니다.
+아래 예제는 `useVBI` + `useVSeed`의 최소 구성 전체 흐름을 보여줍니다.
 
 ```tsx
 import { useMemo } from 'react'

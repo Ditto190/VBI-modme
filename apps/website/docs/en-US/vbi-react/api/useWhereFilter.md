@@ -14,7 +14,7 @@ useWhereFilter(builder: VBIChartBuilder): UseWhereFilterReturn
 
 ## Description
 
-Manages the Where filter tree and provides mutation entry points.
+Manages the Where filter tree and exposes mutation entry points.
 
 ## Minimal Example
 

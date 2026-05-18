@@ -30,7 +30,7 @@ Knoten-ID abrufen
 getId(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getField
 
@@ -42,7 +42,7 @@ Feldname abrufen
 getField(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getOperator
 
@@ -54,7 +54,7 @@ Filteroperator abrufen
 getOperator(): string | undefined
 ```
 
-**Rueckgabe**: `string \| undefined`
+**Rückgabe**: `string \| undefined`
 
 ### getAggregate
 
@@ -66,7 +66,7 @@ Aggregationskonfiguration abrufen
 getAggregate(): VBIHavingAggregate | undefined
 ```
 
-**Rueckgabe**: `VBIHavingAggregate \| undefined`
+**Rückgabe**: `VBIHavingAggregate \| undefined`
 
 ### setValue
 
@@ -78,7 +78,7 @@ Wert der Filterbedingung setzen
 setValue(value: unknown): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -96,7 +96,7 @@ Filteroperator setzen
 setOperator(operator: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -114,7 +114,7 @@ Aggregationskonfiguration setzen
 setAggregate(aggregate: VBIHavingAggregate): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -132,4 +132,4 @@ Als JSON exportieren
 toJSON(): VBIHavingFilter
 ```
 
-**Rueckgabe**: `VBIHavingFilter`
+**Rückgabe**: `VBIHavingFilter`

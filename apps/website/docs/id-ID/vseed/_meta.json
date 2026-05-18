@@ -2,7 +2,7 @@
   {
     "type": "dir",
     "name": "guide",
-    "label": "Panduan",
+    "label": "Pengantar",
     "collapsed": false
   },
   {
@@ -26,7 +26,7 @@
   {
     "type": "dir",
     "name": "development",
-    "label": "Kontribusi",
+    "label": "Panduan Kontribusi",
     "collapsed": true
   }
 ]

@@ -26,13 +26,13 @@ export default () => {
           "dimensions": [
             {
               "field": "order_date",
-              "alias": "Order Date"
+              "alias": "주문일"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -50,7 +50,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -91,13 +91,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "제품 유형"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -115,7 +115,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -156,13 +156,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "시/도"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -180,7 +180,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -221,13 +221,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "지역"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -245,7 +245,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -286,13 +286,13 @@ export default () => {
           "dimensions": [
             {
               "field": "customer_type",
-              "alias": "Customer Type"
+              "alias": "고객 유형"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -310,7 +310,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -351,13 +351,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "시/도"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -375,7 +375,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -416,13 +416,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "시/도"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -440,7 +440,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -481,13 +481,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "지역"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -505,7 +505,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -526,7 +526,7 @@ export default () => {
 
 ## pie-chart-measure-encoding
 
-파이 차트 메저 인코딩 - measure-encoding.ts의 Pie 차트 유형 테스트
+파이 차트 지표 인코딩 - measure-encoding.ts의 Pie 차트 유형 테스트
 
 
 ```tsx preview
@@ -546,13 +546,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "제품 유형"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "angle",
               "aggregate": {
                 "func": "sum"
@@ -570,7 +570,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -611,13 +611,13 @@ export default () => {
           "dimensions": [
             {
               "field": "city",
-              "alias": "City"
+              "alias": "도시"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -635,7 +635,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -656,7 +656,7 @@ export default () => {
 
 ## scatter-chart-measure-encoding
 
-산점도 메저 인코딩 - measure-encoding.ts의 Scatter 차트 유형 테스트
+산점도 지표 인코딩 - measure-encoding.ts의 Scatter 차트 유형 테스트
 
 
 ```tsx preview
@@ -677,12 +677,12 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "xAxis"
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "이익",
               "encoding": "yAxis"
             }
           ],
@@ -697,7 +697,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },
@@ -739,7 +739,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "매출",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -747,7 +747,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "이익",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -765,7 +765,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ko-KR",
           "version": 1,
           "limit": 10
         },

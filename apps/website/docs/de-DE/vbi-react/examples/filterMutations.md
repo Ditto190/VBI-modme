@@ -1,6 +1,6 @@
 # Filterbedingungen bearbeiten
 
-Dieses Beispiel zeigt die Mutation-Einstiege für `useWhereFilter` und `useHavingFilter`.
+Dieses Beispiel zeigt die Mutation-Einstiegspunkte für `useWhereFilter` und `useHavingFilter`.
 
 ## Abhängigkeiten
 

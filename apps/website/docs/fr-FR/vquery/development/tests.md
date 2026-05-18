@@ -5,7 +5,7 @@ VQuery utilise le framework `rstest` pour les tests. **Toutes les commandes doiv
 ## Mécanisme de test
 Les tests de VQuery couvrent :
 - **Unit** : fonctions utilitaires et logique du compilateur.
-- **Examples** : flux complet de génération SQL et de requête de données.
+- **examples** : flux complet de génération SQL et de requête de données.
 
 ## Commandes courantes
 

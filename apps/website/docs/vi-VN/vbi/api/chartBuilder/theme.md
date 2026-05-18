@@ -1,82 +1,82 @@
 # ThemeBuilder
 
-Builder theme dung de thiet lap va lay theme hien tai
+Builder chủ đề, dùng để thiết lập và lấy chủ đề hiện tại
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-Ham khoi tao
+Hàm khởi tạo
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `_doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Lang nghe thay doi theme va tra ve ham huy lang nghe
+Lắng nghe thay đổi chủ đề và trả về hàm hủy lắng nghe
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveCallback | - Ham callback |
+| `callback` | ObserveCallback | - Hàm callback |
 
 ### setTheme
 
-Thiet lap theme
+Thiết lập chủ đề
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setTheme(theme: string)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `theme` | string | - Ten theme |
+| `theme` | string | - Tên chủ đề |
 
 ### getTheme
 
-Lay theme hien tai
+Lấy chủ đề hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getTheme(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`

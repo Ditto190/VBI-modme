@@ -10,7 +10,7 @@
 ## 位置づけ
 
 - React 18+ 向けの状態購読とレンダリングのラッパー
-- `VBIChartBuilder` を Single Source of Truth (SSOT) とし、追加の業務状態コピーを持たない
+- `VBIChartBuilder` を Single Source of Truth (SSOT) とし、追加の業務状態コピーを保持しない
 - BI 設定パネル、チャートプレビュー領域、DSL デバッグパネルの構築に適している
 
 ## インストール
@@ -29,7 +29,7 @@ pnpm --filter=<your-app> add @visactor/vbi-react@workspace:* @visactor/vbi@works
 
 ## クイックスタート
 
-次の例では、`useVBI` + `useVSeed` の最小の閉じた流れを示します。
+次の例では、`useVBI` + `useVSeed` による最小構成の一連の流れを示します。
 
 ```tsx
 import { useMemo } from 'react'

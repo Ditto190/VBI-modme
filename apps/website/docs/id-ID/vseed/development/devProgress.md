@@ -1,85 +1,85 @@
-# Development Workflow
+# Alur Pengembangan
 
-## Start the Project
+## Menjalankan Proyek
 
-```bash title="Start Project"
+```bash title="Menjalankan Proyek"
 pnpm install && pnpm dev
 ```
 
-## Understand Requirements and Write Code
+## Memahami Kebutuhan dan Menulis Kode
 
-This is a complex process, but generally involves three things:
-1. Define the input: `vseed`
-2. Define the output: `vseed` → `advancedVSeed`, or `advancedVSeed` → `spec`
-3. Write code to ensure new inputs produce the expected outputs
-
-:::tip
-The `playground` (`apps/website/docs/zh-CN/playground/index.mdx`) can be used for debugging and development.
-:::
-
-## Create New Test Cases
-
-If necessary, consider creating new test cases.
+Ini adalah proses yang kompleks, tetapi umumnya mencakup tiga hal:
+1. Menentukan input: `vseed`
+2. Menentukan output: `vseed` menjadi `advancedVSeed`, atau `advancedVSeed` menjadi `spec`
+3. Menulis kode dan memastikan input baru menghasilkan output sesuai harapan
 
 :::tip
-When test coverage decreases, new test cases are required.
+`playground` (`apps/website/docs/id-ID/playground/index.mdx`) dapat digunakan untuk debugging dan pengembangan.
 :::
 
-In the `packages/vseed/tests/*` directory, create a new `testName.json` file and write a VSeed DSL.
+## Membuat Test Case Baru
 
-Then run:
+Jika diperlukan, pertimbangkan untuk membuat test case baru.
 
-```bash title="Create Test Case"
+:::tip
+Ketika coverage turun, test case baru perlu dibuat.
+:::
+
+Di direktori `packages/vseed/tests/*`, buat file `testName.json` baru dan tulis VSeed DSL di dalamnya.
+
+Jalankan:
+
+```bash title="Membuat Test Case"
 pnpm build:canvasTest
 ```
 
-## Run Unit Tests and Update Coverage
+## Menjalankan Unit Test dan Memperbarui Coverage
 
-```bash title="Run Unit Tests and Update Coverage"
+```bash title="Menjalankan Unit Test dan Memperbarui Coverage"
 pnpm test:coverage
 ```
 
-Ensure three things:
-1. All tests pass
-2. Snapshot changes are as expected
-3. Coverage has not decreased
+Pastikan tiga hal:
+1. Semua test lulus
+2. Perubahan snapshot sesuai harapan
+3. Coverage tidak turun
 
-> Coverage changes will be automatically updated to README.md
+> Perubahan coverage akan otomatis diperbarui ke README.md
 
-## Update Options Documentation
+## Memperbarui Dokumentasi Opsi Konfigurasi
 
-If you modify TypeScript definitions for chart types, please update the options documentation.
+Jika mengubah definisi TypeScript untuk jenis chart, harap perbarui dokumentasi opsi konfigurasi.
 
 :::tip
-All type definitions under `packages/vseed/src/types/chartType` correspond to the options documentation for each chart. If changes are made, please update accordingly.
+Semua definisi tipe di bawah `packages/vseed/src/types/chartType` sesuai dengan dokumentasi opsi konfigurasi setiap chart. Jika ada perubahan, pastikan untuk memperbaruinya.
 :::
 
-```bash title="Update Options Documentation"
+```bash title="Memperbarui Dokumentasi Opsi Konfigurasi"
 pnpm build:docs
 ```
 
-## Publish and Submit
+## Rilis dan Submit
 
-```bash title="Describe Changes"
+```bash title="Mendeskripsikan Perubahan"
 pnpm changeset
 ```
 
-After running `pnpm changeset`, follow the prompts to:
-1. Select the packages to change — in most cases, only vseed
-2. Follow semantic versioning: press Enter twice to skip `major` and `minor`, then select `patch`
-3. Enter a change description, e.g.: `fix: chart render error caused by only one measure`
+Setelah menjalankan perintah `pnpm changeset`, ikuti prompt untuk melakukan langkah berikut:
+1. Pilih package yang berubah; umumnya hanya `vseed`
+2. Ikuti semantic versioning dan pilih tipe perubahan. Dalam sebagian besar kasus, tekan Enter dua kali untuk melewati `major` dan `minor`, lalu pilih `patch`
+3. Masukkan deskripsi perubahan, misalnya: `fix: chart render error caused by only one measure`
 
-:::tip Recommendation
-One feature or bugfix → one `changeset` → one `commit`
+:::tip Rekomendasi
+Satu fitur atau Bugfix sesuai dengan satu `changeset` dan satu `commit`
 
-One `Pull Request` → one `issue`
+Satu `Pull Request` sesuai dengan satu `issue`
 
-One `Pull Request` can contain multiple features or bugfixes → multiple `changeset`s → multiple `commit`s
+Satu `Pull Request` dengan beberapa fitur atau beberapa Bugfix sesuai dengan beberapa `changeset` dan beberapa `commit`
 :::
 
 ## Commit
 
-```bash title="Commit Everything"
+```bash title="Commit Semua Konten"
 git add .
 git commit -m "fix: chart render error caused by only one measure"
 git push

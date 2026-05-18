@@ -12,7 +12,7 @@ Python and R languages already have tools that support dimension reshaping:
 1. Python Pandas provides `pivot` and `melt` for data reshaping
 2. R tidyverse provides `pivot_longer` and `pivot_wider` for data reshaping
 
-## Dimension Increase (Upsampling) and Reduction
+## Dimension Increase and Reduction
 
 Dimension increase and reduction philosophically align with category theory (objects and morphisms, isomorphisms), but are not strictly implemented following category theory.
 

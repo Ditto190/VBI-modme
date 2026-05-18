@@ -11,12 +11,12 @@
 | [chart-type-switching](./chartType#chart-type-switching) | 라인 차트와 막대 차트 유형 전환 | - |
 | [column-by-area](./chartType#column-by-area) | 세로 막대 차트 - 지역별 매출 | - |
 | [donut-by-customer-type](./chartType#donut-by-customer-type) | 도넛 차트 - 고객 유형별 매출 비중 | - |
-| [line-by-province](./chartType#line-by-province) | 라인 차트 - 성별 매출 추세 | - |
-| [line-chart](./chartType#line-chart) | 라인 차트 - 성별 매출 추세 | - |
+| [line-by-province](./chartType#line-by-province) | 라인 차트 - 시/도별 매출 추세 | - |
+| [line-chart](./chartType#line-chart) | 라인 차트 - 시/도별 매출 추세 | - |
 | [pie-by-area](./chartType#pie-by-area) | 파이 차트 - 지역별 매출 비중 | - |
-| [pie-chart-measure-encoding](./chartType#pie-chart-measure-encoding) | 파이 차트 메저 인코딩 - measure-encoding.ts의 Pie 차트 유형 테스트 | - |
+| [pie-chart-measure-encoding](./chartType#pie-chart-measure-encoding) | 파이 차트 지표 인코딩 - measure-encoding.ts의 Pie 차트 유형 테스트 | - |
 | [rose-by-city](./chartType#rose-by-city) | 로즈 차트 - 도시별 매출 | - |
-| [scatter-chart-measure-encoding](./chartType#scatter-chart-measure-encoding) | 산점도 메저 인코딩 - measure-encoding.ts의 Scatter 차트 유형 테스트 | - |
+| [scatter-chart-measure-encoding](./chartType#scatter-chart-measure-encoding) | 산점도 지표 인코딩 - measure-encoding.ts의 Scatter 차트 유형 테스트 | - |
 | [scatter-sales-profit](./chartType#scatter-sales-profit) | 산점도 - 매출과 이익의 관계 | - |
 
 ## Dimensions
@@ -38,23 +38,23 @@
 | [add-having-filter](./havingFilter#add-having-filter) | 지역으로 그룹화한 뒤 매출이 100만을 넘는 고성과 지역 필터링 | - |
 | [add-multiple-having-filter](./havingFilter#add-multiple-having-filter) | 여러 Having 조건을 체인으로 추가해 매출과 이익이 높은 지역 필터링 | - |
 | [clear-having-filter](./havingFilter#clear-having-filter) | 모든 Having 필터 조건을 비우고 전체 그룹 집계 결과 표시 | - |
-| [having-array-value-with-in-operator](./havingFilter#having-array-value-with-in-operator) | Having filter with array value that triggers 'in' operator conversion | - |
-| [having-array-value-with-not-in-operator](./havingFilter#having-array-value-with-not-in-operator) | Having filter with array value that triggers 'not in' operator conversion | - |
-| [having-clear-and-rebuild](./havingFilter#having-clear-and-rebuild) | Clear existing having conditions and rebuild new grouped filters, simulating a user resetting and reconfiguring the filter panel | - |
-| [having-deeply-nested-groups](./havingFilter#having-deeply-nested-groups) | Three-level nested grouping: OR(AND(sales > 500K, profit > 50K), AND(quantity > 100, average discount < 0.3)), simulating complex business filtering | - |
-| [having-empty-dsl-compose-target](./havingFilter#having-empty-dsl-compose-target) | Start from an empty DSL and use builder to assemble where, having, measures, and dimensions, including a having condition combination with sum and countDistinct aggregations | - |
-| [having-field-not-in-measures-and-dimensions](./havingFilter#having-field-not-in-measures-and-dimensions) | 빈 DSL을 초기화하고 builder로 area 차원과 sales 메저만 추가한 뒤, measures/dimensions에 없는 profit 필드를 having에서 사용합니다(SUM(profit) > 100000) | - |
-| [having-find-and-update](./havingFilter#having-find-and-update) | Add having conditions first, then locate them with find and dynamically update thresholds and operators to simulate interactive filter adjustment | - |
-| [having-group-add-to-existing](./havingFilter#having-group-add-to-existing) | Append a new condition to an existing having group, simulating progressive filter refinement | - |
-| [having-group-remove-condition](./havingFilter#having-group-remove-condition) | Remove a specific condition from an existing having group, simulating a user canceling a filter item | - |
-| [having-mix-filters-and-groups](./havingFilter#having-mix-filters-and-groups) | Mix standalone filter conditions and an OR group: sales > 500K AND (profit > 100K OR quantity >= 30) | - |
-| [having-multi-dimension-aggregate](./havingFilter#having-multi-dimension-aggregate) | Group by category and region, filter combinations with average discount below 20% and total sales over 100K, and analyze high-value low-discount business | - |
-| [having-nested-groups](./havingFilter#having-nested-groups) | Nested grouping: AND(sales > 1M, OR(profit > 200K, quantity >= 50)) | - |
-| [having-or-group](./havingFilter#having-or-group) | Use an OR group to filter regions with high sales or high profit | - |
-| [having-scatter-profit-analysis](./havingFilter#having-scatter-profit-analysis) | Scatter chart analysis: group by category and filter categories with high profit ratio and more than 20 transactions to identify high-quality business | - |
-| [having-update-group-operator](./havingFilter#having-update-group-operator) | Update an existing Having group operator from AND to OR | - |
-| [having-with-where-combined](./havingFilter#having-with-where-combined) | Combined where and having filtering: first use where to filter Office Supplies, then use having to filter provinces with sales over 50K or profit over 10K | - |
-| [remove-having-filter](./havingFilter#remove-having-filter) | Remove redundant Having filters and keep only the profit filter | - |
+| [having-array-value-with-in-operator](./havingFilter#having-array-value-with-in-operator) | 배열 값을 가진 Having 필터가 'in' 연산자 변환을 유발하는 예제 | - |
+| [having-array-value-with-not-in-operator](./havingFilter#having-array-value-with-not-in-operator) | 배열 값을 가진 Having 필터가 'not in' 연산자 변환을 유발하는 예제 | - |
+| [having-clear-and-rebuild](./havingFilter#having-clear-and-rebuild) | 기존 having 조건을 지우고 새 그룹 필터를 다시 구성해 사용자가 필터 패널을 재설정하는 흐름을 재현 | - |
+| [having-deeply-nested-groups](./havingFilter#having-deeply-nested-groups) | 3단계 중첩 그룹: OR(AND(매출 > 50만, 이익 > 5만), AND(수량 > 100, 평균 할인 < 0.3))으로 복잡한 비즈니스 필터 구성 | - |
+| [having-empty-dsl-compose-target](./havingFilter#having-empty-dsl-compose-target) | 빈 DSL에서 builder로 where/having/measures/dimensions를 조립하고 sum 및 countDistinct 집계가 포함된 having 조건을 구성 | - |
+| [having-field-not-in-measures-and-dimensions](./havingFilter#having-field-not-in-measures-and-dimensions) | 빈 DSL을 초기화하고 builder로 area 차원과 sales 지표만 추가한 뒤 measures/dimensions에 없는 profit 필드를 having에서 사용 | - |
+| [having-find-and-update](./havingFilter#having-find-and-update) | having 조건을 먼저 추가한 뒤 find로 찾아 임계값과 연산자를 동적으로 업데이트 | - |
+| [having-group-add-to-existing](./havingFilter#having-group-add-to-existing) | 기존 having 그룹에 새 조건을 추가해 필터 규칙을 단계적으로 세분화 | - |
+| [having-group-remove-condition](./havingFilter#having-group-remove-condition) | 기존 having 그룹에서 특정 조건 제거 | - |
+| [having-mix-filters-and-groups](./havingFilter#having-mix-filters-and-groups) | 독립 조건과 OR 그룹 혼합: 매출 > 50만 AND (이익 > 10만 OR 수량 >= 30) | - |
+| [having-multi-dimension-aggregate](./havingFilter#having-multi-dimension-aggregate) | 카테고리와 지역 두 차원으로 그룹화하고 평균 할인 20% 미만, 총매출 10만 초과 조합 필터링 | - |
+| [having-nested-groups](./havingFilter#having-nested-groups) | 중첩 그룹: AND(매출 > 100만, OR(이익 > 20만, 수량 >= 50)) | - |
+| [having-or-group](./havingFilter#having-or-group) | OR 그룹으로 매출 또는 이익이 높은 지역 필터링 | - |
+| [having-scatter-profit-analysis](./havingFilter#having-scatter-profit-analysis) | 산점도 분석: 카테고리별로 고이익률 및 거래 20건 초과 카테고리를 필터링해 우수 비즈니스 식별 | - |
+| [having-update-group-operator](./havingFilter#having-update-group-operator) | 기존 Having 그룹의 논리 연산자를 AND에서 OR로 업데이트 | - |
+| [having-with-where-combined](./havingFilter#having-with-where-combined) | where와 having 결합: where로 사무용품 카테고리를 먼저 필터링한 뒤 having으로 매출 5만 초과 또는 이익 1만 초과 시/도 필터링 | - |
+| [remove-having-filter](./havingFilter#remove-having-filter) | 불필요한 Having 필터 조건을 제거하고 이익 필터만 유지 | - |
 
 ## Locale
 
@@ -67,11 +67,11 @@
 
 | 예제 | 설명 | 레이블 |
 | --- | --- | --- |
-| [add-measure](./measures#add-measure) | 메저 추가 | - |
-| [add-measure-encoding](./measures#add-measure-encoding) | 메저를 추가하고 인코딩 설정 | - |
-| [measure-with-custom-and-auto-format](./measures#measure-with-custom-and-auto-format) | 메저 서식: 매출은 만 단위 사용자 지정 서식(¥ 접두사, 소수 2자리), 이익률은 자동 서식, 할인은 퍼센트 서식 사용 | - |
-| [remove-measure](./measures#remove-measure) | 메저 제거 | - |
-| [update-measure](./measures#update-measure) | 메저 업데이트 | - |
+| [add-measure](./measures#add-measure) | 지표 추가 | - |
+| [add-measure-encoding](./measures#add-measure-encoding) | 지표를 추가하고 인코딩 설정 | - |
+| [measure-with-custom-and-auto-format](./measures#measure-with-custom-and-auto-format) | 지표 서식: 매출은 만 단위 사용자 지정 서식(¥ 접두사, 소수 2자리), 이익률은 자동 서식, 할인은 퍼센트 서식 사용 | - |
+| [remove-measure](./measures#remove-measure) | 지표 제거 | - |
+| [update-measure](./measures#update-measure) | 지표 업데이트 | - |
 
 ## Theme
 
@@ -90,21 +90,21 @@
 
 | 예제 | 설명 | 레이블 |
 | --- | --- | --- |
-| [between-sales-range-analysis](./whereFilter#between-sales-range-analysis) | Sales range analysis: use between to filter orders from 1000 to 10000 and summarize profit by category | - |
-| [clear-and-rebuild-filters](./whereFilter#clear-and-rebuild-filters) | Clear and rebuild filters: clear old simple filters and rebuild complex grouped conditions | - |
-| [date-filter-period-and-range-combo](./whereFilter#date-filter-period-and-range-combo) | Date-period and range filtering: use period to filter 2024 Q1 data while range limits the profit interval, then cross-analyze by category and ship mode | - |
-| [date-filter-relative-with-nested-conditions](./whereFilter#date-filter-relative-with-nested-conditions) | Date filtering with nested conditions: filter high-value orders from Consumer or Corporate customers in the last 30 days and summarize sales and profit by province | - |
-| [deeply-nested-or-and-groups](./whereFilter#deeply-nested-or-and-groups) | Multi-level nested grouping: high-value orders with Same Day shipping for Consumer customers or First Class shipping for Corporate customers, using three levels of AND/OR nesting | - |
-| [high-discount-tech-profit-analysis](./whereFilter#high-discount-tech-profit-analysis) | High-discount Technology product profit analysis: filter Technology orders with discount greater than 0.5 and compare profit by region | - |
-| [in-operator-multi-area-delivery](./whereFilter#in-operator-multi-area-delivery) | Multi-region delivery efficiency comparison: use in to filter East China, North China, and Central South, then count orders by ship mode | - |
-| [nested-group-region-product-filter](./whereFilter#nested-group-region-product-filter) | Office Supplies or Furniture sales in East China: use nested grouping with AND connecting the region condition and OR category conditions | - |
-| [not-between-sales-range](./whereFilter#not-between-sales-range) | Not between filter: exclude sales between 1000~10000 | - |
-| [not-between-with-explicit-operators](./whereFilter#not-between-with-explicit-operators) | Not between filter with explicit leftOp/rightOp to test invert functions | - |
-| [office-supplies-sales-by-province](./whereFilter#office-supplies-sales-by-province) | Office Supplies sales ranking by province: filter the Office Supplies category and summarize sales by province | - |
-| [or-group-product-category-comparison](./whereFilter#or-group-product-category-comparison) | Office Supplies versus Technology category comparison: use an OR group to filter two categories and compare sales by region | - |
-| [remove-condition-from-group](./whereFilter#remove-condition-from-group) | Remove a condition from a group: the preset OR group contains three categories, and updateGroup removes one of them | - |
-| [remove-filter-by-index](./whereFilter#remove-filter-by-index) | Remove a filter by index: remove the first category filter and keep only the region condition | - |
-| [update-filter-switch-province](./whereFilter#update-filter-switch-province) | Dynamically modify a filter: update the province filter from Zhejiang to Guangdong and observe sales changes | - |
-| [update-group-or-to-and](./whereFilter#update-group-or-to-and) | Modify group logic: switch the preset OR category group to AND to narrow the filter scope | - |
-| [where-filter-array-value-converts-to-in](./whereFilter#where-filter-array-value-converts-to-in) | Where filter with array value using '=' operator should convert to 'in' | - |
-| [where-filter-array-value-converts-to-not-in](./whereFilter#where-filter-array-value-converts-to-not-in) | Where filter with array value using '!=' operator should convert to 'not in' | - |
+| [between-sales-range-analysis](./whereFilter#between-sales-range-analysis) | 매출 구간 분석: between으로 1000~10000 단일 주문을 필터링하고 카테고리별 이익 집계 | - |
+| [clear-and-rebuild-filters](./whereFilter#clear-and-rebuild-filters) | 필터 비우기 및 재구성: 기존 단순 필터를 지우고 그룹이 포함된 복잡 조건 재구성 | - |
+| [date-filter-period-and-range-combo](./whereFilter#date-filter-period-and-range-combo) | 날짜 구간 조합 필터: period로 2024년 Q1 데이터를 필터링하고 range로 이익 구간을 제한해 카테고리와 배송 방식별 교차 분석 | - |
+| [date-filter-relative-with-nested-conditions](./whereFilter#date-filter-relative-with-nested-conditions) | 날짜 필터와 중첩 조건 조합: 최근 30일 내 소비자 또는 기업 고객의 고액 주문을 필터링하고 시/도별 매출과 이익 집계 | - |
+| [deeply-nested-or-and-groups](./whereFilter#deeply-nested-or-and-groups) | 다단계 중첩 그룹: 소비자 고객의 당일 배송 고액 주문 또는 기업 고객의 1급 배송 고액 주문을 3단계 AND/OR로 표현 | - |
+| [high-discount-tech-profit-analysis](./whereFilter#high-discount-tech-profit-analysis) | 고할인 기술 제품 이익 분석: 기술 카테고리이고 할인율이 0.5보다 큰 주문을 필터링하고 지역별 이익 비교 | - |
+| [in-operator-multi-area-delivery](./whereFilter#in-operator-multi-area-delivery) | 다지역 배송 효율 비교: in으로 화동, 화북, 중남을 필터링하고 배송 방식별 주문 수 집계 | - |
+| [nested-group-region-product-filter](./whereFilter#nested-group-region-product-filter) | 화동 지역의 사무용품 또는 가구 매출: 중첩 그룹으로 지역 조건과 카테고리 OR 조건을 AND 연결 | - |
+| [not-between-sales-range](./whereFilter#not-between-sales-range) | not between 필터: 1000~10000 매출 제외 | - |
+| [not-between-with-explicit-operators](./whereFilter#not-between-with-explicit-operators) | 명시적 leftOp/rightOp가 있는 not between 필터로 invert 함수 테스트 | - |
+| [office-supplies-sales-by-province](./whereFilter#office-supplies-sales-by-province) | 시/도별 사무용품 매출 순위: 사무용품 카테고리를 필터링하고 시/도별 매출 집계 | - |
+| [or-group-product-category-comparison](./whereFilter#or-group-product-category-comparison) | 사무용품과 기술 비교: OR 그룹으로 두 카테고리를 필터링하고 지역별 매출 비교 | - |
+| [remove-condition-from-group](./whereFilter#remove-condition-from-group) | 그룹에서 조건 제거: 세 카테고리가 있는 OR 그룹에서 updateGroup으로 하나 제거 | - |
+| [remove-filter-by-index](./whereFilter#remove-filter-by-index) | index로 필터 제거: 첫 번째 카테고리 필터를 제거하고 지역 조건만 유지 | - |
+| [update-filter-switch-province](./whereFilter#update-filter-switch-province) | 필터 동적 수정: 시/도 필터를 저장성에서 광둥성으로 업데이트하고 매출 변화 확인 | - |
+| [update-group-or-to-and](./whereFilter#update-group-or-to-and) | 그룹 로직 수정: 사전 설정된 OR 카테고리 그룹을 AND로 전환해 필터 범위 축소 | - |
+| [where-filter-array-value-converts-to-in](./whereFilter#where-filter-array-value-converts-to-in) | 배열 값과 '=' 연산자를 가진 where 필터가 'in'으로 변환되는 예제 | - |
+| [where-filter-array-value-converts-to-not-in](./whereFilter#where-filter-array-value-converts-to-not-in) | 배열 값과 '!=' 연산자를 가진 where 필터가 'not in'으로 변환되는 예제 | - |

@@ -1,6 +1,6 @@
 # ChartTypeBuilder
 
-Builder fuer Diagrammtypen zum Wechseln und Abrufen des Diagrammtyps. Unterstuetzt Tabelle, Balken, Linie, Kreis, Streuung und weitere Diagrammtypen
+Builder für Diagrammtypen zum Wechseln und Abrufen des Diagrammtyps. Unterstützt Tabellen, Balken-, Linien-, Kreis- und Streudiagramme sowie weitere Diagrammtypen
 
 ## Eigenschaften
 
@@ -25,7 +25,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 ### observe
 
-Aenderungen des Diagrammtyps beobachten
+Änderungen des Diagrammtyps beobachten
 
 **Definition**:
 
@@ -33,7 +33,7 @@ Aenderungen des Diagrammtyps beobachten
 observe(callback: ObserveCallback): () => void
 ```
 
-**Rueckgabe**: `() => void`
+**Rückgabe**: `() => void`
 
 **Parameter**:
 
@@ -67,11 +67,11 @@ Aktuellen Diagrammtyp abrufen
 getChartType(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getSupportedDimensionEncodings
 
-Vom aktuellen Diagrammtyp unterstuetzte Dimensions-Encodings abrufen
+Vom aktuellen Diagrammtyp unterstützte Dimensions-Encodings abrufen
 
 **Definition**:
 
@@ -81,7 +81,7 @@ getSupportedDimensionEncodings()
 
 ### getRecommendedDimensionEncodings
 
-Empfohlene Dimensions-Encodings anhand des aktuellen Diagrammtyps in Dimensionsreihenfolge zurueckgeben
+Empfohlene Dimensions-Encodings anhand des aktuellen Diagrammtyps in Dimensionsreihenfolge zurückgeben
 
 **Definition**:
 
@@ -93,11 +93,11 @@ getRecommendedDimensionEncodings(dimensionCount: number)
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `dimensionCount` | number | - Anzahl der Dimensionen; standardmaessig die Dimensionsanzahl in der aktuellen DSL |
+| `dimensionCount` | number | - Anzahl der Dimensionen; standardmäßig die Dimensionsanzahl in der aktuellen DSL |
 
 ### getSupportedMeasureEncodings
 
-Vom aktuellen Diagrammtyp unterstuetzte Kennzahlen-Encodings abrufen
+Vom aktuellen Diagrammtyp unterstützte Kennzahlen-Encodings abrufen
 
 **Definition**:
 
@@ -107,7 +107,7 @@ getSupportedMeasureEncodings()
 
 ### getRecommendedMeasureEncodings
 
-Empfohlene Kennzahlen-Encodings anhand des aktuellen Diagrammtyps in Kennzahlenreihenfolge zurueckgeben
+Empfohlene Kennzahlen-Encodings anhand des aktuellen Diagrammtyps in Kennzahlenreihenfolge zurückgeben
 
 **Definition**:
 
@@ -119,7 +119,7 @@ getRecommendedMeasureEncodings(measureCount: number)
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `measureCount` | number | - Anzahl der Kennzahlen; standardmaessig die Kennzahlenanzahl in der aktuellen DSL |
+| `measureCount` | number | - Anzahl der Kennzahlen; standardmäßig die Kennzahlenanzahl in der aktuellen DSL |
 
 ### toJSON
 
@@ -131,11 +131,11 @@ Als JSON exportieren
 toJSON(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getAvailableChartTypes
 
-Alle unterstuetzten Diagrammtypen abrufen
+Alle unterstützten Diagrammtypen abrufen
 
 **Definition**:
 
@@ -143,4 +143,4 @@ Alle unterstuetzten Diagrammtypen abrufen
 getAvailableChartTypes(): string[]
 ```
 
-**Rueckgabe**: `string[]`
+**Rückgabe**: `string[]`

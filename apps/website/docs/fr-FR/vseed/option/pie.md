@@ -1,52 +1,52 @@
 # Pie
 
-:::info{title=Recommandé}
-- Configuration de champs recommandée : `1` mesure, `1` dimension
+:::info{title=Recommandation}
+\- Configuration de champs recommandée : `1` mesure, `1` dimension
 
-\- Prend en charge Data Reshape : au moins `1` mesure, `0` dimension
+\- Prend en charge la restructuration des données : au moins `1` mesure, `0` dimension
 
 :::
 
-:::info{title=Mappage Encoding}
+:::info{title=Mappage d’encodage}
 Le graphique en secteurs prend en charge les canaux visuels suivants :
 
-`angle`  : canal d’angle, prend en charge `plusieurs mesures` et mappe les valeurs de mesure à l’angle des secteurs
+`angle`  : canal d’angle, prend en charge `plusieurs mesures` et mappe les valeurs de mesure sur l’angle des secteurs
 
-`detail` : canal de détail, prend en charge `plusieurs dimensions`, utilisé pour afficher des données plus granulaires dans une même série de couleurs
+`detail` : canal de détail, prend en charge `plusieurs dimensions` et sert à afficher des données plus granulaires dans la même série de couleurs
 
-`color`  : canal de couleur, prend en charge `plusieurs dimensions` ou `une mesure`; les couleurs de dimension distinguent les séries, les couleurs de mesure mappent linéairement les valeurs sur les couleurs graphiques
+`color`  : canal de couleur, prend en charge `plusieurs dimensions` ou `une mesure`; les couleurs de dimension distinguent les séries de données, tandis que les couleurs de mesure mappent linéairement les valeurs de mesure sur les couleurs graphiques
 
 `tooltip`: canal d’infobulle, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiché au survol d’un point de données
 
-`label`  : canal d’étiquette, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiche les étiquettes sur les points de données
+`label`  : canal de libellé, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiche les libellés de données sur les points de données
 
 :::
 
 :::note{title=Description}
-Le graphique en secteurs convient à l’affichage des proportions d’une dimension unique, la surface des secteurs représentant la part de chaque catégorie
+Graphique en secteurs, adapté à l’affichage des proportions de données d’une seule dimension, en représentant la part de chaque catégorie par la surface des secteurs.
 
-Scenarios applicables :
+Scénarios d’utilisation :
 
-\- Afficher la distribution des proportions des données catégorielles
+\- Afficher la distribution proportionnelle de données catégorielles
 
 \- Mettre en évidence la relation entre le tout et ses parties
 
-\- Analyse des proportions avec un petit nombre de catégories (recommandé : pas plus de 6)
+\- Analyse de proportions avec un petit nombre de catégories (6 au maximum recommandé)
 
 :::
 
 :::warning{title=Warning}
-Exigences de donnees :
+Exigences de données :
 
-\- au moins 1 champ numerique
+\- Au moins 1 champ numérique (mesure)
 
-\- Toutes les dimensions sont combinées avec les noms de mesures (s’il existe plusieurs mesures) en une seule dimension et affichées comme éléments de légende
+\- Toutes les dimensions sont fusionnées avec les noms de mesures s’il existe plusieurs mesures pour former une seule dimension, puis affichées comme éléments de légende
 
-\- Toutes les mesures sont automatiquement fusionnees en une seule mesure
+\- Toutes les mesures sont automatiquement fusionnées en une seule mesure
 
-Fonctionnalites activees par defaut :
+Fonctionnalités activées par défaut :
 
-\- Active par défaut la légende, les étiquettes de données, les infobulles et le calcul des proportions
+\- La légende, les libellés de données, les infobulles et le calcul de proportion sont activés par défaut
 
 :::
 
@@ -60,7 +60,7 @@ Graphique en secteurs
 
 
 
-Graphique en secteurs, affiche les proportions de données sur une dimension unique
+Graphique en secteurs, affichant les proportions de données d’une seule dimension
 
 :::
 
@@ -75,11 +75,11 @@ Graphique en secteurs, affiche les proportions de données sur une dimension uni
 **Type:** `Record[]`
 
 :::note{title=Description}
-Jeu de données préagrégé conforme à TidyData, définissant la source et la structure des données du graphique. Les utilisateurs n'ont pas besoin de traiter manuellement les données d'entrée ; la puissante capacité Data Reshape de VSeed s'en charge automatiquement. Les données du graphique Area sont finalement remodelées en 2 dimensions et 1 mesure.
+Jeu de données
 
 
 
-Jeu de données déjà agrégé et conforme à la spécification TidyData, utilisé pour définir la source et la structure des données du graphique. Le jeu de données saisi par l’utilisateur ne nécessite aucun traitement. VSeed dispose de puissantes capacités de remodelage des données et effectue ce remodelage automatiquement. Les données du graphique en entonnoir sont finalement converties en 1 dimension et 1 mesure.
+Jeu de données déjà agrégé et conforme à la spécification TidyData, utilisé pour définir la source et la structure des données du graphique. Les données saisies par l’utilisateur ne nécessitent aucun prétraitement ; VSeed dispose de puissantes capacités de restructuration des données et effectue cette restructuration automatiquement. Les données du graphique en secteurs sont finalement converties en 1 dimension et 1 mesure.
 
 :::
 
@@ -94,11 +94,11 @@ Jeu de données déjà agrégé et conforme à la spécification TidyData, utili
 **Type:** `PieDimension[] | undefined`
 
 :::note{title=Description}
-La première dimension est mappée sur l'axe X ; les dimensions restantes sont fusionnées avec les noms de mesures (lorsqu'il y a plusieurs mesures) et affichées comme éléments de légende.
+Champs de dimension
 
 
 
-Toutes les dimensions du graphique en secteurs sont combinées avec les noms de mesures (s’il existe plusieurs mesures) en une seule dimension, mappées à l’angle et affichées comme éléments de légende
+Toutes les dimensions du graphique en secteurs sont fusionnées avec les noms de mesures s’il existe plusieurs mesures pour former une seule dimension, mappée sur l’angle, puis affichées comme éléments de légende
 
 :::
 
@@ -176,7 +176,7 @@ Mesures
 
 
 
-Toutes les mesures du graphique en secteurs sont automatiquement fusionnées en une seule mesure et mappées à l’axe du rayon. Lorsqu’il existe plusieurs mesures, leurs noms sont combinés avec les autres dimensions et affichés comme éléments de légende.
+Toutes les mesures du graphique en secteurs sont automatiquement fusionnées en une seule mesure et mappées sur l’axe radial. S’il existe plusieurs mesures, leurs noms sont fusionnés avec les autres dimensions et affichés comme éléments de légende.
 
 :::
 
@@ -256,7 +256,7 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -271,7 +271,7 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -391,7 +391,7 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -406,7 +406,7 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -539,8 +539,7 @@ Il existe deux façons de configurer l'arbre des mesures : l'option 1 configure 
 **Type:** `Page | undefined`
 
 :::note{title=Description}
-
-
+Configuration de pagination, utilisée pour spécifier le nom du champ de pagination, qui doit être une dimension.
 :::
 
 
@@ -549,8 +548,7 @@ Il existe deux façons de configurer l'arbre des mesures : l'option 1 configure 
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Champ de pagination ; indique le nom du champ utilisé pour la pagination et doit être une dimension
 :::
 
 ### currentValue
@@ -558,8 +556,7 @@ Il existe deux façons de configurer l'arbre des mesures : l'option 1 configure 
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Valeur de pagination actuelle ; indique la valeur utilisée pour déterminer la page courante
 :::
 
 **Exemple**
@@ -573,12 +570,11 @@ Il existe deux façons de configurer l'arbre des mesures : l'option 1 configure 
 **Type:** `BackgroundColor`
 
 :::note{title=Description}
+Couleur d'arrière-plan du graphique
 
 
 
-
-
-
+La couleur d'arrière-plan peut être une chaîne de couleur (par ex. 'red', 'blue') ou une valeur hex, rgb ou rgba (par ex. '#ff0000', 'rgba(255,0,0,0.5)')
 :::
 
 
@@ -601,8 +597,7 @@ Couleur
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-
-
+Palette de couleurs discrètes utilisée pour définir les couleurs des différents éléments du graphique
 :::
 
 **Exemple**
@@ -615,8 +610,7 @@ Couleur
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-
-
+Palette de couleurs en dégradé linéaire utilisée pour définir les couleurs des différents éléments du graphique
 :::
 
 **Exemple**
@@ -629,8 +623,7 @@ Couleur
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Description}
-
-
+Mappage de couleurs, utilisé pour associer les valeurs de données à des couleurs précises
 :::
 
 **Exemple**
@@ -646,8 +639,7 @@ Couleur
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Configuration des couleurs positif/négatif ; définit la couleur des valeurs positives dans le graphique
 :::
 
 ### negativeColor
@@ -655,8 +647,7 @@ Couleur
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Configuration des couleurs positif/négatif ; définit la couleur des valeurs négatives dans le graphique
 :::
 
 
@@ -679,8 +670,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `false | true`
 
 :::note{title=Description}
-
-
+Indique si les étiquettes sont activées
 :::
 
 ### wrap
@@ -688,8 +678,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si les étiquettes passent à la ligne
 :::
 
 ### showValue
@@ -697,12 +686,11 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
+Indique si les étiquettes affichent les valeurs de mesure
 
+Dans les scénarios à plusieurs mesures, il n’y a pas de risque de valeurs contradictoires, car toutes les mesures liées au rendu sont traitées par `foldMeasures` et fusionnées en une seule mesure représentant un point de données.
 
-
-
-
-
+Remarque : encoding.label a une priorité plus élevée ; cette configuration n’affecte pas encoding.label
 :::
 
 ### showValuePercent
@@ -710,12 +698,11 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
+Indique si les étiquettes affichent le pourcentage des valeurs de mesure
 
+Dans les scénarios à plusieurs mesures, il n’y a pas de risque de valeurs contradictoires, car toutes les mesures liées au rendu sont traitées par `foldMeasures` et fusionnées en une seule mesure représentant un point de données.
 
-
-
-
-
+Remarque : encoding.label a une priorité plus élevée ; cette configuration n’affecte pas encoding.label
 :::
 
 ### showDimension
@@ -723,12 +710,11 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
+Indique si les étiquettes affichent les libellés de dimension
 
+Affiche tous les libellés de dimension
 
-
-
-
-
+Remarque : encoding.label a une priorité plus élevée ; cette configuration n’affecte pas encoding.label
 :::
 
 ### autoFormat
@@ -736,8 +722,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si les valeurs d’étiquette sont formatées automatiquement. Lorsque autoFormat vaut true, la configuration numFormat est ignorée
 :::
 
 ### numFormat
@@ -745,8 +730,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-
-
+Configuration du format des valeurs d’étiquette. Elle est fusionnée avec `format` dans `measure` ; `format` dans `measure` a une priorité plus élevée. numFormat a une priorité inférieure à autoFormat
 :::
 
 
@@ -755,8 +739,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-
-
+Type de format numérique. Prend en charge nombre (décimal), pourcentage (%), pour mille (‰) et notation scientifique
 :::
 
 #### ratio
@@ -764,8 +747,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Ratio de formatage numérique. Ne peut pas être 0
 :::
 
 **Exemple**
@@ -779,8 +761,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Symbole de formatage numérique, par exemple % ou ‰
 :::
 
 **Exemple**
@@ -794,8 +775,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Séparateur de milliers pour le formatage numérique
 :::
 
 #### suffix
@@ -803,8 +783,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Suffixe de formatage numérique
 :::
 
 #### prefix
@@ -812,8 +791,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Préfixe de formatage numérique
 :::
 
 #### fractionDigits
@@ -821,8 +799,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Décimales du formatage numérique, avec minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur. Priorité inférieure à significantDigits
 :::
 
 **Exemple**
@@ -840,8 +817,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Chiffres significatifs du formatage numérique, avec minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur. Priorité supérieure à fractionDigits
 :::
 
 **Exemple**
@@ -861,8 +837,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-
-
+Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingPriority
 :::
 
 **Exemple**
@@ -876,8 +851,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-
-
+Mode d’arrondi du formatage numérique, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingMode
 :::
 
 ### labelFontSize
@@ -885,8 +859,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Taille de police de l’étiquette
 :::
 
 ### labelFontWeight
@@ -894,8 +867,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-
-
+Graisse de police de l’étiquette
 :::
 
 ### labelBackgroundColor
@@ -903,8 +875,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur d’arrière-plan de l’étiquette
 :::
 
 ### labelStroke
@@ -912,8 +883,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur du contour de l’étiquette
 :::
 
 ### labelColor
@@ -921,8 +891,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de police de l’étiquette
 :::
 
 ### labelColorSmartInvert
@@ -930,8 +899,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la couleur de police de l’étiquette est automatiquement inversée selon la couleur du marqueur
 :::
 
 ### labelPosition
@@ -939,8 +907,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Description}
-
-
+Position de l’étiquette
 :::
 
 ### labelOverlap
@@ -948,8 +915,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si l’évitement du chevauchement des étiquettes est activé
 :::
 
 ### selector
@@ -957,8 +923,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-
-
+Filtre d’étiquette. Par défaut, la relation entre selectors est OR
 :::
 
 
@@ -967,8 +932,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Champ de dimension, id d’un élément de dimensions
 :::
 
 #### operator
@@ -976,12 +940,11 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
-
-
-
-
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 :::
 
 #### op
@@ -989,14 +952,13 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 
-
-
-
-
-
+identique à operator
 :::
 
 #### value
@@ -1004,8 +966,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-
-
+Sélectionne les valeurs du champ de dimension dans les éléments de données. Les tableaux sont pris en charge
 :::
 
 ### dynamicFilter
@@ -1013,38 +974,25 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
+Filtre dynamique (exécution de code généré par IA)
 
+Implémente une logique complexe de filtrage des données via du code JavaScript généré par IA
 
+Capacités clés :
 
+\- Prend en charge des conditions de filtrage de données arbitrairement complexes
 
+\- Utilise des fonctions utilitaires intégrées pour les opérations sur les données
 
+\- S’exécute en toute sécurité dans l’environnement navigateur (sandbox Web Worker)
 
+Exigence d’environnement : uniquement pris en charge dans le navigateur ; les environnements Node.js utilisent fallback
 
+Remarque : selector et dynamicFilter ne peuvent pas être utilisés simultanément. dynamicFilter a une priorité plus élevée
 
+Configuration du filtre dynamique du graphique
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Utilise du code JavaScript généré par IA pour filtrer les marques du graphique (barres, points, etc.)
 :::
 
 
@@ -1057,8 +1005,7 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Description du besoin de filtrage utilisateur (langage naturel)
 :::
 
 **Exemple**
@@ -1073,20 +1020,17 @@ Configuration des étiquettes pour définir les étiquettes de données du graph
 **Type:** `string`
 
 :::note{title=Description}
+Code de filtrage JavaScript généré par IA
 
+\- Seules les fonctions utilitaires intégrées peuvent être utilisées (via _ ou R)
 
+\- Paramètre d’entrée : data (tableau), chaque item contient le champ __row_index indiquant le numéro de ligne
 
+\- Doit retourner un tableau de combinaisons index de ligne et champ : Array<{ __row_index: number, field: string }>
 
+\- __row_index indique le numéro de ligne de l’élément de données original, field indique le champ à mettre en évidence
 
-
-
-
-
-
-
-
-
-
+\- Interdit : eval, Function, opérations asynchrones, API DOM, requêtes réseau
 :::
 
 **Exemple**
@@ -1134,8 +1078,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-
-
+Fallback lorsque l’exécution du code échoue ou que l’environnement n’est pas pris en charge
 :::
 
 
@@ -1144,8 +1087,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Champ de dimension, id d’un élément de dimensions
 :::
 
 ##### operator
@@ -1153,12 +1095,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
-
-
-
-
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 :::
 
 ##### op
@@ -1166,14 +1107,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 
-
-
-
-
-
+identique à operator
 :::
 
 ##### value
@@ -1181,8 +1121,7 @@ _.map(filtered, item => [
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-
-
+Sélectionne les valeurs du champ de dimension dans les éléments de données. Les tableaux sont pris en charge
 :::
 
 #### result
@@ -1190,12 +1129,9 @@ _.map(filtered, item => [
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
+Résultat d’exécution du filtre dynamique (champ runtime)
 
-
-
-
-
-
+Écrit pendant prepare(); en lecture seule à l’exécution
 :::
 
 
@@ -1232,12 +1168,9 @@ Mode de disposition des étiquettes, actif uniquement pour les graphiques en sec
 **Type:** `Legend | undefined`
 
 :::note{title=Description}
+Légende
 
-
-
-
-
-
+Configuration de la légende du graphique, incluant sa position, son format et son style.
 :::
 
 
@@ -1246,8 +1179,7 @@ Mode de disposition des étiquettes, actif uniquement pour les graphiques en sec
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la légende est activée
 :::
 
 **Exemple**
@@ -1260,13 +1192,11 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la bordure de légende est activée
 :::
 
 :::warning{title=Warning}
-
-
+Efficace uniquement pour les légendes discrètes
 :::
 
 **Exemple**
@@ -1279,8 +1209,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de police de la légende
 :::
 
 ### pagerIconColor
@@ -1288,8 +1217,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de l’icône du pager
 :::
 
 ### pagerIconDisableColor
@@ -1297,8 +1225,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de l’icône du pager désactivée
 :::
 
 ### labelFontSize
@@ -1306,8 +1233,7 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Taille de police de la légende
 :::
 
 **Exemple**
@@ -1320,8 +1246,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de police de la légende
 :::
 
 ### labelFontWeight
@@ -1329,8 +1254,7 @@ enable: true
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-
-
+Graisse de police de la légende
 :::
 
 **Exemple**
@@ -1343,13 +1267,11 @@ enable: true
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Description}
-
-
+Forme de la légende
 :::
 
 :::warning{title=Warning}
-
-
+Efficace uniquement pour les légendes discrètes
 :::
 
 **Exemple**
@@ -1362,8 +1284,7 @@ enable: true
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Description}
-
-
+Position de la légende
 :::
 
 **Exemple**
@@ -1376,17 +1297,15 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Description}
+Nombre maximal de colonnes ou de lignes lorsqu’il y a beaucoup d’éléments de légende
 
+Si position est horizontale (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize contrôle le nombre de colonnes affichées
 
-
-
-
-
+Si position est verticale (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize contrôle le nombre de lignes affichées
 :::
 
 :::warning{title=Warning}
-
-
+Efficace uniquement pour les légendes discrètes
 :::
 
 **Exemple**
@@ -1414,8 +1333,7 @@ Indique si la sélection brush est activée
 **Type:** `false | true`
 
 :::note{title=Description}
-
-
+Indique si les infobulles sont activées
 :::
 
 
@@ -1442,8 +1360,7 @@ Mode de selection par brush : simple ou multiple
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la sélection par brush est activée
 :::
 
 ### brushType
@@ -1451,18 +1368,17 @@ Mode de selection par brush : simple ou multiple
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
+Type de brush
 
+Définit la forme de la zone de sélection et la direction de sélection.
 
+\- `rect` : sélection rectangulaire, possible simultanément dans les directions X et Y
 
+\- `polygon` : sélection polygonale, dessine un polygone libre en cliquant plusieurs points
 
+\- `x` : sélection dans la direction de l’axe X uniquement, sans contrainte sur Y
 
-
-
-
-
-
-
-
+\- `y` : sélection dans la direction de l’axe Y uniquement, sans contrainte sur X
 :::
 
 ### brushMode
@@ -1485,8 +1401,7 @@ Opacité of selected data points, range 0-1
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la zone de brush est effacée à la fin de la sélection
 :::
 
 ### inBrushStyle
@@ -1494,12 +1409,9 @@ Opacité of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
+Style des données dans la zone de brush
 
-
-
-
-
-
+Définit le style des points de données sélectionnés
 :::
 
 
@@ -1508,12 +1420,9 @@ Opacité of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Description}
+Opacité
 
-
-
-
-
-
+Opacité des points de données sélectionnés, valeur comprise entre 0 et 1
 :::
 
 #### stroke
@@ -1521,8 +1430,7 @@ Opacité of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur du trait
 :::
 
 #### lineWidth
@@ -1530,8 +1438,7 @@ Opacité of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Largeur du trait
 :::
 
 ### outOfBrushStyle
@@ -1553,7 +1460,7 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 
 
 
@@ -1566,8 +1473,7 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur du trait
 :::
 
 #### lineWidth
@@ -1575,7 +1481,7 @@ Axe X, axe categoriel, configuration de l axe X ; definit l axe X du graphique, 
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
+Largeur du trait
 :::
 
 
@@ -1636,8 +1542,7 @@ Effet d’entrée des graphiques en secteurs/en anneau/en rose, avec prise en ch
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si l’étape d’animation actuelle est activée
 :::
 
 ##### ease
@@ -1645,7 +1550,7 @@ Effet d’entrée des graphiques en secteurs/en anneau/en rose, avec prise en ch
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
+Fonction easing de l’animation
 :::
 
 ##### duration
@@ -1653,8 +1558,7 @@ Effet d’entrée des graphiques en secteurs/en anneau/en rose, avec prise en ch
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Durée de l’animation, en millisecondes
 :::
 
 ##### color
@@ -1662,8 +1566,7 @@ Effet d’entrée des graphiques en secteurs/en anneau/en rose, avec prise en ch
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de surbrillance ou d’ambiance de l’animation
 :::
 
 #### update
@@ -1690,8 +1593,7 @@ Effet de mise à jour des graphiques en secteurs/en anneau/en rose, avec prise e
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si l’étape d’animation actuelle est activée
 :::
 
 ##### ease
@@ -1699,7 +1601,7 @@ Effet de mise à jour des graphiques en secteurs/en anneau/en rose, avec prise e
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
+Fonction easing de l’animation
 :::
 
 ##### duration
@@ -1707,8 +1609,7 @@ Effet de mise à jour des graphiques en secteurs/en anneau/en rose, avec prise e
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Durée de l’animation, en millisecondes
 :::
 
 ##### color
@@ -1716,8 +1617,7 @@ Effet de mise à jour des graphiques en secteurs/en anneau/en rose, avec prise e
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de surbrillance ou d’ambiance de l’animation
 :::
 
 #### loop
@@ -1735,7 +1635,7 @@ Configuration de l’animation en boucle des graphiques en secteurs/en anneau/en
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
+Indique si l’animation en boucle est activée
 :::
 
 ##### interval
@@ -1743,8 +1643,7 @@ Configuration de l’animation en boucle des graphiques en secteurs/en anneau/en
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Intervalle de l’animation en boucle, en millisecondes
 :::
 
 ##### loop
@@ -1771,8 +1670,7 @@ Effet de boucle des graphiques en secteurs/en anneau/en rose
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si l’étape d’animation actuelle est activée
 :::
 
 ###### ease
@@ -1780,7 +1678,7 @@ Effet de boucle des graphiques en secteurs/en anneau/en rose
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
+Fonction easing de l’animation
 :::
 
 ###### duration
@@ -1788,8 +1686,7 @@ Effet de boucle des graphiques en secteurs/en anneau/en rose
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Durée de l’animation, en millisecondes
 :::
 
 ###### color
@@ -1797,8 +1694,7 @@ Effet de boucle des graphiques en secteurs/en anneau/en rose
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de surbrillance ou d’ambiance de l’animation
 :::
 
 ##### atmosphere
@@ -1816,8 +1712,7 @@ Configuration de l’animation d’ambiance des graphiques en secteurs/en anneau
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Fonction easing de l’animation d’ambiance
 :::
 
 ###### color
@@ -1825,8 +1720,7 @@ Configuration de l’animation d’ambiance des graphiques en secteurs/en anneau
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de l’animation d’ambiance
 :::
 
 

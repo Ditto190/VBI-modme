@@ -1,6 +1,6 @@
 # ChartTypeBuilder
 
-Builder tipe chart untuk mengganti dan mengambil tipe chart. Mendukung table, bar, line, pie, scatter, dan berbagai tipe chart lain
+Builder jenis chart untuk mengganti dan mengambil jenis chart. Mendukung tabel, bar, line, pie, scatter, dan berbagai jenis chart lain
 
 ## Properti
 
@@ -25,7 +25,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 ### observe
 
-Memantau perubahan tipe chart
+Memantau perubahan jenis chart
 
 **Definisi**:
 
@@ -43,7 +43,7 @@ observe(callback: ObserveCallback): () => void
 
 ### changeChartType
 
-Mengatur tipe chart
+Mengatur jenis chart
 
 **Definisi**:
 
@@ -55,11 +55,11 @@ changeChartType(chartType: string)
 
 | Parameter | Tipe | Deskripsi |
 | --- | --- | --- |
-| `chartType` | string | - Tipe chart |
+| `chartType` | string | - Jenis chart |
 
 ### getChartType
 
-Mengambil tipe chart saat ini
+Mengambil jenis chart saat ini
 
 **Definisi**:
 
@@ -71,7 +71,7 @@ getChartType(): string
 
 ### getSupportedDimensionEncodings
 
-Mengambil encoding dimensi yang didukung tipe chart saat ini
+Mengambil encoding dimensi yang didukung jenis chart saat ini
 
 **Definisi**:
 
@@ -81,7 +81,7 @@ getSupportedDimensionEncodings()
 
 ### getRecommendedDimensionEncodings
 
-Mengembalikan encoding dimensi yang direkomendasikan menurut urutan dimensi berdasarkan tipe chart saat ini
+Mengembalikan encoding dimensi yang direkomendasikan menurut urutan dimensi berdasarkan jenis chart saat ini
 
 **Definisi**:
 
@@ -97,7 +97,7 @@ getRecommendedDimensionEncodings(dimensionCount: number)
 
 ### getSupportedMeasureEncodings
 
-Mengambil encoding measure yang didukung tipe chart saat ini
+Mengambil encoding measure yang didukung jenis chart saat ini
 
 **Definisi**:
 
@@ -107,7 +107,7 @@ getSupportedMeasureEncodings()
 
 ### getRecommendedMeasureEncodings
 
-Mengembalikan encoding measure yang direkomendasikan menurut urutan measure berdasarkan tipe chart saat ini
+Mengembalikan encoding measure yang direkomendasikan menurut urutan measure berdasarkan jenis chart saat ini
 
 **Definisi**:
 
@@ -135,7 +135,7 @@ toJSON(): string
 
 ### getAvailableChartTypes
 
-Mengambil semua tipe chart yang didukung
+Mengambil semua jenis chart yang didukung
 
 **Definisi**:
 

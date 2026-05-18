@@ -14,7 +14,7 @@ useHavingFilter(builder: VBIChartBuilder): UseHavingFilterReturn
 
 ## Beschreibung
 
-Verwaltet den Having-Filterbaum und stellt Mutation-Einstiege bereit.
+Verwaltet den Having-Filterbaum und stellt Einstiegspunkte für Mutationen bereit.
 
 ## Minimales Beispiel
 

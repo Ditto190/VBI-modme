@@ -14,7 +14,7 @@ useChartType(builder: VBIChartBuilder): UseChartTypeReturn
 
 ## 説明
 
-現在のチャートタイプを読み取り、更新し、利用可能なチャートタイプ一覧も公開します。
+現在のチャートタイプを読み取り・更新し、利用可能なチャートタイプ一覧も公開します。
 
 ## 最小例
 

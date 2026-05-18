@@ -45,7 +45,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },
@@ -106,7 +106,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },
@@ -167,13 +167,13 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },
         connectorId: DEMO_CONNECTOR_ID,
       })
-      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('商品タイプ')).add('province', n => n.setAlias('省')); }
+      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('商品タイプ')).add('province', n => n.setAlias('都道府県')); }
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -227,7 +227,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },
@@ -280,7 +280,7 @@ export default () => {
             },
             {
               "field": "province",
-              "alias": "省"
+              "alias": "都道府県"
             }
           ],
           "measures": [],
@@ -295,7 +295,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },
@@ -368,7 +368,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },
@@ -435,7 +435,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "ja-JP",
           "version": 1,
           "limit": 20
         },

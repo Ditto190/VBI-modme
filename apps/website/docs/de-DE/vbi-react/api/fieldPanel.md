@@ -14,7 +14,7 @@ FieldPanel(props: FieldPanelProps)
 
 ## Beschreibung
 
-Stellt ein Dimensions-/Kennzahlenfeld-Panel mit grundlegenden Bearbeitungsinteraktionen bereit.
+Stellt ein Feldpanel für Dimensionen/Kennzahlen mit grundlegenden Bearbeitungsinteraktionen bereit.
 
 ## Minimales Beispiel
 

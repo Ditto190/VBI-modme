@@ -14,7 +14,7 @@ useMeasures(builder: VBIChartBuilder): UseMeasuresReturn
 
 ## 説明
 
-メジャー設定を読み取り、更新し、メジャーの追加・削除・変更機能を提供します。
+メジャー設定を読み取り・更新し、メジャーの追加・削除・変更機能を提供します。
 
 ## 最小例
 

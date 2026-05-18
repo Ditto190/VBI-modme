@@ -1,11 +1,11 @@
-# Filter Mutations
+# Filter Condition Editing
 
 This example demonstrates the mutation entry points for `useWhereFilter` and `useHavingFilter`.
 
 ## Dependencies
 
 - Packages: `@visactor/vbi-react`, `@visactor/vbi`, `react`
-- Props: `builder` should contain at least `region` and `sales` fields for demonstrating Where/Having mutations
+- Input constraint: `builder` should contain at least `region` and `sales` fields for demonstrating Where/Having mutations
 
 ## Code Snippet
 

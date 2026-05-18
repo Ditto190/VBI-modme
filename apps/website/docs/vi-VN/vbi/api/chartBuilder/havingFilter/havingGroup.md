@@ -1,153 +1,153 @@
 # HavingGroupBuilder
 
-Builder nhom Having dung de cau hinh quan he logic (AND/OR) cua mot nhom dieu kien
+Builder nhóm Having dùng để cấu hình quan hệ logic (AND/OR) của một nhóm điều kiện
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getConditions
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getConditions(): Y.Array<any>
 ```
 
-**Tra ve**: `Y.Array<any>`
+**Trả về**: `Y.Array<any>`
 
 ### getId
 
-Lay ID nhom
+Lấy ID nhóm
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getId(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getOperator
 
-Lay toan tu logic
+Lấy toán tử logic
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getOperator(): 'and' | 'or'
 ```
 
-**Tra ve**: `'and' \| 'or'`
+**Trả về**: `'and' \| 'or'`
 
 ### setOperator
 
-Thiet lap toan tu logic
+Thiết lập toán tử logic
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setOperator(op: 'and' | 'or'): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `op` | 'and' \| 'or' | - Toan tu logic |
+| `op` | 'and' \| 'or' | - Toán tử logic |
 
 ### add
 
-Them mot dieu kien loc Having vao nhom
+Thêm một điều kiện lọc Having vào nhóm
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 add(field: string, callback: (node: HavingFilterNodeBuilder) => void): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `field` | string | - Ten field |
-| `callback` | (node: HavingFilterNodeBuilder) => void | - Ham callback |
+| `field` | string | - Tên field |
+| `callback` | (node: HavingFilterNodeBuilder) => void | - Hàm callback |
 
 ### addGroup
 
-Them mot nhom long vao nhom hien tai
+Thêm một nhóm lồng vào nhóm hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 addGroup(op: 'and' | 'or', callback: (group: HavingGroupBuilder) => void): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `op` | 'and' \| 'or' | - Toan tu logic |
-| `callback` | (group: HavingGroupBuilder) => void | - Ham callback |
+| `op` | 'and' \| 'or' | - Toán tử logic |
+| `callback` | (group: HavingGroupBuilder) => void | - Hàm callback |
 
 ### remove
 
-Xoa dieu kien co ID chi dinh hoac muc tai index chi dinh
+Xóa điều kiện có ID chỉ định hoặc mục tại index chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 remove(idOrIndex: string | number): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `idOrIndex` | string \| number | - ID hoac index |
+| `idOrIndex` | string \| number | - ID hoặc index |
 
 ### clear
 
-Xoa tat ca dieu kien trong nhom
+Xóa tất cả điều kiện trong nhóm
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 clear(): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIHavingGroup
 ```
 
-**Tra ve**: `VBIHavingGroup`
+**Trả về**: `VBIHavingGroup`

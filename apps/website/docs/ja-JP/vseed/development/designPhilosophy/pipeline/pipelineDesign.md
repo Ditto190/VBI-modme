@@ -1,45 +1,47 @@
-# Pipeline Design
+# pipeline 設計
 
-:::info Why Pipeline?
-1. A choice made by senior team members.
-2. Pipeline's advantage: it allows `VSeed` to independently control the execution flow for each chart type. With good design, each chart type's implementation is both decoupled and locally reusable, giving each chart type perfect control over every detail — this is what Pipeline brings, and exactly what `VSeed` needs most.
-3. The downsides of the Pipeline pattern can all be avoided at design time — by keeping individual `Pipe` sizes small and minimizing dependencies between `Pipe`s.
-4. After four generations of Pipeline design and optimization, this is the fifth version — the pitfalls have already been navigated.
+:::info なぜ Pipeline なのか？
+1. チーム内の先輩たちによる選択です。
+2. Pipeline の利点は、`VSeed` が各チャートタイプの実行フローを独立して制御できることです。適切に設計すれば、各チャートタイプの実装を疎結合にしながら局所的に再利用でき、各チャートタイプがあらゆる細部を精密に制御できます。これは Pipeline がもたらすものであり、`VSeed` が最も必要としているものです。
+3. それに比べれば、Pipeline パターンの欠点は設計時に回避できます。`Pipe` 単体の規模を小さくし、`Pipe` 間の依存を減らせば、このパターンによる欠点を大きく避けられます。
+4. 4 世代にわたる Pipeline の設計と最適化を経て、VSeed ではすでに 5 つ目のバージョンです。踏むべき落とし穴はすでに踏んできました。
+
 :::
 
-## What is a Pipeline?
+## Pipeline とは？
 
-Pipeline is a powerful abstraction and engineering practice that decomposes a complex task into a series of connected, sequentially executed smaller steps. Its design philosophy is deeply influenced by the core ideas of functional programming (FP).
+Pipeline は強力な抽象であり、エンジニアリングプラクティスです。複雑なタスクを、接続され順番に実行される一連の小さなステップへ分解します。その設計思想と実装方式は、関数型プログラミング（FP）の核心的な考え方から深い影響を受けています。
 
-### Pipeline Advantages:
-- **Modularity**: Atomic implementation — compose atoms into modules.
-- **Automation**: Simply define the input to automatically get the output, without worrying about internal implementation.
-- **Pure functions**: Given a specified input, the expected output is always produced — a characteristic of pure functions.
-- **Parallelism**: Naturally supports concurrency.
-- **Reusability**: Every module can be reused.
-- **Testability**: In theory, every module is independent and can be tested individually to ensure quality.
-- **Traceability**: Clear inputs and outputs at each stage make it easy to locate issues and monitor process state.
-- **Cacheability**: In theory, the output of individual `Pipe`s can be cached, avoiding redundant computation and improving efficiency.
+### Pipeline の利点:
+- モジュール化: 原子的に実装し、原子を組み合わせてモジュールを得ます。
+- 自動化: 入力を決めるだけで自動的に出力を得られ、内部実装を気にする必要がありません。
+- 純粋関数: 指定された入力から必ず期待される出力が得られることは、純粋関数の特徴です。
+- 並行性: 自然に並行処理をサポートします。
+- 再利用性: すべてのモジュールを再利用できます。
+- テスト容易性: 理論上、各モジュールは独立しており、単独でテストして品質を保証できます。
+- 追跡容易性: 各段階の入力と出力が明確で、問題の特定やフロー状態の監視がしやすくなります。
+- キャッシュ容易性: 理論上、単一の `Pipe` の出力を個別にキャッシュできるため、重複計算を避けて効率を高められます。
 
-### Pipeline Disadvantages:
-- **Sequential dependencies**: When Pipes have ordering dependencies, the cognitive cost increases — you need to understand earlier stages to understand later ones. Deep overall understanding is needed to quickly locate issues.
-- **Debugging cost**: Since Pipeline executes sequentially, a failure at any stage causes the entire Pipeline to fail. This makes debugging harder, as you need to locate the failing stage and fix it.
-- **Performance**: Since Pipeline executes sequentially, each stage's output must wait for the previous stage to complete, which can cause performance issues — especially when one stage takes a long time.
-- **Functional programming**: Requires learning new concepts, which carries some onboarding cost. As a result, design principles and implementation details need to be documented in the contribution guide for other developers.
+### Pipeline の欠点:
+- 順序依存: `Pipe` 間に順序依存がある場合、前段を理解してからでないと後段を理解できないため、理解コストが増えます。問題をすばやく特定するには、全体フローへの深い理解が必要です。
+- デバッグコスト: Pipeline は順番に実行されるため、どこかの段階が失敗すると Pipeline 全体が失敗します。失敗した段階を特定して修正する必要があり、デバッグが難しくなります。
+- パフォーマンス問題: Pipeline は順番に実行されるため、各段階の出力は前段の完了を待つ必要があり、パフォーマンス問題につながることがあります。特にある段階の実行時間が長い場合、Pipeline 全体の効率に影響します。
+- 関数型プログラミング: 新しい概念を理解する必要があり、一定の学習コストがあります。そのため、設計原理と実装詳細を貢献ガイドに書き、他の開発者が理解して使えるようにして欠点を補う必要があります。
 
-## How to Write Pipelines in VSeed?
+## VSeed では Pipeline をどう書くべきか？
 
-### Pipe Composition Pattern
+### Pipe 合成パターン
 
-Multiple functional Pipes can be composed into a larger functional Pipe, or combined into a more complex Pipeline.
+複数の機能 `Pipe` は、より大きな機能 `Pipe` に合成することも、より複雑な Pipeline に合成することもできます。
 
-In VSeed, a complete Pipeline corresponds to the implementation of one chart type. By describing the composition of Pipes, different chart types can be created. During the Pipeline composition phase, you don't need to worry about each pipe's specific implementation.
+VSeed では、完全な Pipeline が 1 つのチャートタイプの実装に対応します。`Pipe` の合成関係を記述することで、異なるチャートタイプを作れます。Pipeline の合成段階では、各 `pipe` の具体的な実装を気にする必要はありません。
 
-#### Composition for Differences
 
-Example:
+#### 合成の差異
 
-Line charts and area charts share many reusable features — labels, legends, axes, etc. — but area charts have area mark styles while line charts don't. The pipeline resolves this difference through functional Pipe composition, with no if statements needed.
+例:
+
+折れ線グラフと面グラフは、ラベル、凡例、軸など多くの機能を再利用できます。しかし折れ線グラフには面図形スタイルがないため、pipeline は機能 `Pipe` を合成することでこの差異を解決します。この過程に `if` 文はありません。
 
 ```ts
 const lineChartPipeline = [
@@ -59,22 +61,23 @@ const areaChartPipeline = [
   lineStyle,
   pointStyle,
 
-  // Only area charts have area mark style
+  // 面グラフだけが面図形スタイルを持つ
   areaStyle,
 ]
 ```
 
-### Pipe Adapter Pattern
 
-Beyond composition, building Pipes often involves conditions. To handle different conditional Pipe combinations, VSeed makes heavy use of Pipe adapters.
+### Pipe アダプターパターン
 
-#### Conditional Composition
+合成パターンに加えて、`Pipe` の構築には一定の条件が伴うことがよくあります。異なる条件下での `Pipe` 合成を満たすため、VSeed では多くの `Pipe` アダプターを使用します。
 
-Example:
+#### 合成条件
 
-Line charts support pivot mode — without pivot, rendered by VChart (output VChart spec); with pivot, rendered by VTable (output VTable spec).
+例:
 
-Pivot line charts need to reuse most basic line chart features (labels, legends, axes, etc.), so the adapter pattern adapts regular line chart Pipes into pivot line chart Pipes.
+折れ線グラフにはピボット機能があります。ピボットなしでは VChart によってレンダリングされ、VChart spec を出力します。ピボットありでは VTable によってレンダリングされ、VTable spec を出力します。
+
+ピボット折れ線グラフは、ラベル、凡例、軸など、折れ線グラフの基本機能をほぼ再利用する必要があります。そのためアダプターパターンによって、折れ線グラフの `Pipe` をピボット折れ線グラフの `Pipe` に適配します。
 
 ```ts
 const pivotLineChartPipeline = [
@@ -103,36 +106,71 @@ const lineChartPipeline = [
 ]
 ```
 
-In summary, each adapter is essentially an if-else — hidden conditions inside a pipe are abstracted into an adapter, pushing the if-else to the top level. This results in a Pipeline with clearer dependencies and lower maintenance cost.
+まとめると、各 adapter は 1 つの `if else` です。`pipe` 内に隠れた条件を adapter として抽象化できるため、`if else` を最上位へ前置できます。これにより依存関係がより明確で、保守コストの低い Pipeline が得られます。
 
-### The Most Basic Unit: Functional Pipe
+### Pipeline の最小単位: 機能 Pipe
 
-VSeed expects all chart types to use **features** as the most basic unit, providing sufficient reusability and extensibility — building a chart type's pipeline bottom-up. Each functional Pipe should be an independent, testable, and reusable module.
+VSeed は、すべてのチャートタイプが機能を最小単位として使い、十分な再利用性と拡張性を提供することを期待しています。チャートタイプの pipeline はボトムアップに構築します。各機能 `Pipe` は、独立し、テスト可能で、再利用可能なモジュールであるべきです。
 
-The most critical point: **abstract differences into different Pipes** (write fewer if-else statements), rather than writing one large, all-in-one Pipe.
+最も重要なのは、機能差異を異なる `Pipe` として抽象化すること（つまり `if else` を少なく書くこと）であり、大きく万能な `Pipe` を書くことではありません。
 
-#### Flat Functional Pipes
+#### フラットな機能 Pipe
 
-Example:
+例:
 
-Bar, column, line, area, and scatter charts all have X and Y axes — similar but slightly different. If you write one large `axes` pipe, it might look like this:
+横棒グラフ、縦棒グラフ、折れ線グラフ、面グラフ、散布図はいずれも X 軸と Y 軸を持ちます。これらは似ていますが少しずつ異なります。大きく万能な `axes` pipe を書くと、次のようになるかもしれません。
 
 ```ts
-// ... (see zh-CN for full example)
+const lineChartPipeline = [
+  axes
+]
+const barChartPipeline = [
+  axes
+]
+const areaChartPipeline = [
+  axes
+]
+const scatterChartPipeline = [
+  axes
+]
 const axes = (spec, context) => {
   if (isLine || isArea || isColumn){
+    // 折れ線グラフ、面グラフ、縦棒グラフには離散軸 1 つと連続軸 1 つがある
     return xy(spec, context)
   }
   if (isScatter){
+    // 散布図には 2 つの連続軸がある
     return yy(spec, context)
   }
   if (isBar){
+    // 横棒グラフには離散軸 1 つと連続軸 1 つがあるが、軸方向は折れ線、面、縦棒グラフと異なる
     return yx(spec, context)
   }
 }
+
+const xy = (spec, context) => {
+  linearAxis(spec, context, {orient: 'left'})
+  bandAxis(spec, context, {orient: 'bottom'})
+}
+
+const yx = (spec, context) => {
+  linearAxis(spec, context, {orient: 'bottom'})
+  bandAxis(spec, context, {orient: 'left'})
+}
+
+const yy = (spec, context) => {
+  linearAxis(spec, context, {orient: 'bottom'})
+  linearAxis(spec, context, {orient: 'left'})
+}
 ```
 
-The better approach is to abstract the differences into separate Pipes and compose them at the pipeline level:
+上記のロジックは、1 つの機能 `Pipe` の中で、チャートタイプに応じて異なる子機能 `pipe` を選択しています。これにより次の問題が生じます。
+1. `xy`、`yx`、`yy` の中で重複する機能をどう再利用するのか。似ているが異なる大量のサブ関数を、異なる子機能 `pipe` の中で重複して呼び出す必要があります。依存関係が複雑になりやすく、保守コストが増えます。
+2. 折れ線グラフや面グラフの機能を変更するとき、ロジックが分岐しているため横棒グラフを見落としやすくなります。そのため新機能を実装するときに差異を考慮する必要があります。
+
+spec pipeline 全体の規模が数百個の `pipe` まで拡大すると、このような書き方は非常に高い保守コストをもたらします。そのため、チャートタイプに応じて異なる子機能 `pipe` を選択する、より単純な方法が必要です。
+
+上の例を続けると、差異を異なる `Pipe` として抽象化し、より細かい機能粒度で差異をカプセル化し、最後に pipeline 内で直接合成すれば、上記の問題を避けられます。
 
 ```ts
 const lineChartPipeline = [
@@ -151,8 +189,19 @@ const scatterChartPipeline = [
   xLinearAxis,
   yLinearAxis,
 ]
+
+const xBandAxis = (spec, context) => {
+}
+const yBandAxis = (spec, context) => {
+}
+const xLinearAxis = (spec, context) => {
+}
+const yLinearAxis = (spec, context) => {
+}
 ```
 
-All chart type divergences should occur **above** the Pipeline level. Unless absolutely necessary, Pipelines should not branch based on chart type.
+上記の例では `axes` pipe を実装せず、`xBandAxis`、`yBandAxis`、`xLinearAxis`、`yLinearAxis` という 4 つの pipe を直接合成しています。これにより、`axes` pipe の中でチャートタイプに応じて異なる子機能 `pipe` を選択する問題を避け、チャートタイプによる分岐を避け、`if else` の使用を減らせます。
 
-This composition approach aligns with VSeed's design philosophy: use a flatter composition of functional Pipes instead of if-else conditions in a single large Pipe.
+すべてのチャートタイプ差異による分岐は Pipeline の上に置くべきです。やむを得ない場合を除き、Pipeline 内でチャートタイプに応じて異なる子機能 `pipe` を選択する必要はありません。
+
+この合成方式は VSeed の設計哲学に合っています。つまり、`if else` 条件判断で大きく万能な機能 `Pipe` を作るのではなく、よりフラットな機能 `Pipe` の合成を使います。

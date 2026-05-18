@@ -45,7 +45,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
@@ -106,7 +106,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
@@ -114,12 +114,12 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.dimensions.add('product_type', node => {
-    node.setAlias('Tipe Barang')
+    node.setAlias('Jenis Barang')
   })
   const dimensionId = builder.dimensions.find(node => node.getField() === 'product_type')?.getId()
   if (dimensionId) {
     builder.dimensions.update(dimensionId, node => {
-      node.setAlias('Tipe Produk')
+      node.setAlias('Jenis Produk')
     })
   }
 }
@@ -167,13 +167,13 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
         connectorId: DEMO_CONNECTOR_ID,
       })
-      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('Tipe Produk')).add('province', n => n.setAlias('Provinsi')); }
+      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('Jenis Produk')).add('province', n => n.setAlias('Provinsi')); }
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -227,7 +227,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
@@ -276,7 +276,7 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Tipe Produk"
+              "alias": "Jenis Produk"
             },
             {
               "field": "province",
@@ -295,7 +295,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
@@ -305,7 +305,7 @@ export default () => {
   const dimensionId = builder.dimensions.toJSON().find(item => item.field === 'product_type')?.id
   if (dimensionId) {
     builder.dimensions.update(dimensionId, node => {
-      node.setAlias('Tipe Produk untuk Dihapus')
+      node.setAlias('Jenis Produk untuk Dihapus')
     })
     builder.dimensions.remove(dimensionId)
   }
@@ -368,7 +368,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
@@ -420,7 +420,7 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Tipe Produk Awal"
+              "alias": "Jenis Produk Awal"
             }
           ],
           "measures": [],
@@ -435,7 +435,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 20
         },
@@ -446,9 +446,9 @@ export default () => {
   if (dimensionId) {
     const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
     if (dimension) {
-      dimension.setAlias('Tipe Produk untuk Diubah')
+      dimension.setAlias('Jenis Produk untuk Diubah')
     }
-    builder.dimensions.update(dimensionId, n => n.setAlias('Tipe Produk Baru'))
+    builder.dimensions.update(dimensionId, n => n.setAlias('Jenis Produk Baru'))
   }
 }
       applyBuilder(builder)

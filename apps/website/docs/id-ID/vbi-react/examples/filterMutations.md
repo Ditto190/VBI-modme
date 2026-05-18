@@ -1,6 +1,6 @@
-# Edit Kondisi Filter
+# Pengeditan Kondisi Filter
 
-Contoh ini menunjukkan entry mutation untuk `useWhereFilter` dan `useHavingFilter`.
+Contoh ini menunjukkan titik masuk mutation untuk `useWhereFilter` dan `useHavingFilter`.
 
 ## Dependensi
 

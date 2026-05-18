@@ -1,6 +1,6 @@
 # MeasuresBuilder
 
-Kennzahlen-Builder zum Hinzufuegen, Aendern und Entfernen von Kennzahlenkonfigurationen. Kennzahlen sind numerische Datenfelder wie Umsatz, Gewinn oder Menge
+Kennzahlen-Builder zum Hinzufügen, Ändern und Entfernen von Kennzahlenkonfigurationen. Kennzahlen sind numerische Datenfelder wie Umsatz, Gewinn oder Menge
 
 ## Eigenschaften
 
@@ -23,7 +23,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 ### add
 
-Eine Kennzahl hinzufuegen
+Eine Kennzahl hinzufügen
 
 **Definition**:
 
@@ -31,7 +31,7 @@ Eine Kennzahl hinzufuegen
 add(field: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilder
 ```
 
-**Rueckgabe**: `MeasuresBuilder`
+**Rückgabe**: `MeasuresBuilder`
 
 **Parameter**:
 
@@ -50,7 +50,7 @@ Kennzahl mit angegebener ID entfernen
 remove(id: string): MeasuresBuilder
 ```
 
-**Rueckgabe**: `MeasuresBuilder`
+**Rückgabe**: `MeasuresBuilder`
 
 **Parameter**:
 
@@ -68,7 +68,7 @@ Kennzahlenkonfiguration aktualisieren
 update(id: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilder
 ```
 
-**Rueckgabe**: `MeasuresBuilder`
+**Rückgabe**: `MeasuresBuilder`
 
 **Parameter**:
 
@@ -87,7 +87,7 @@ Erste Kennzahl nach Callback-Bedingung finden, Verhalten wie Array.find
 find(predicate: (node: MeasureNodeBuilder, index: number) => boolean): MeasureNodeBuilder | undefined
 ```
 
-**Rueckgabe**: `MeasureNodeBuilder \| undefined`
+**Rückgabe**: `MeasureNodeBuilder \| undefined`
 
 **Parameter**:
 
@@ -105,7 +105,7 @@ Alle Kennzahlen abrufen
 findAll(): MeasureNodeBuilder[]
 ```
 
-**Rueckgabe**: `MeasureNodeBuilder[]`
+**Rückgabe**: `MeasureNodeBuilder[]`
 
 ### toJSON
 
@@ -117,11 +117,11 @@ Alle Kennzahlen als JSON-Array exportieren
 toJSON(): VBIMeasure[]
 ```
 
-**Rueckgabe**: `VBIMeasure[]`
+**Rückgabe**: `VBIMeasure[]`
 
 ### observe
 
-Kennzahlenaenderungen beobachten
+Kennzahlenänderungen beobachten
 
 **Definition**:
 
@@ -129,7 +129,7 @@ Kennzahlenaenderungen beobachten
 observe(callback: ObserveDeepCallback): () => void
 ```
 
-**Rueckgabe**: `() => void`
+**Rückgabe**: `() => void`
 
 **Parameter**:
 
@@ -145,7 +145,7 @@ observe(callback: ObserveDeepCallback): () => void
 static isMeasureNode(node: VBIMeasureTree[0]): node is VBIMeasure
 ```
 
-**Rueckgabe**: `node is VBIMeasure`
+**Rückgabe**: `node is VBIMeasure`
 
 **Parameter**:
 
@@ -161,7 +161,7 @@ static isMeasureNode(node: VBIMeasureTree[0]): node is VBIMeasure
 static isMeasureGroup(node: VBIMeasureTree[0]): node is VBIMeasureGroup
 ```
 
-**Rueckgabe**: `node is VBIMeasureGroup`
+**Rückgabe**: `node is VBIMeasureGroup`
 
 **Parameter**:
 

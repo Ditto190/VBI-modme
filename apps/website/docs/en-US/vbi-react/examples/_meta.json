@@ -22,6 +22,6 @@
   {
     "type": "file",
     "name": "filterMutations",
-    "label": "Filter Mutations"
+    "label": "Filter Condition Editing"
   }
 ]

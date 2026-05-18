@@ -1,20 +1,20 @@
 # ReportPageCollectionBuilder
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `parent` | VBIReportBuilder<TQueryDSL, TSeedDSL> | - |
 | `doc` | Y.Doc | - |
@@ -22,66 +22,66 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Ma
 
 ### add
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
-**Tra ve**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
+**Trả về**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `title` | string | - |
 | `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### remove
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 remove(pageId: string): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
-**Tra ve**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
+**Trả về**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `pageId` | string | - |
 
 ### update
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 update(pageId: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
-**Tra ve**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
+**Trả về**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `pageId` | string | - |
 | `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### get
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 get(pageId: string): ReportPageBuilder<TQueryDSL, TSeedDSL> | undefined
 ```
 
-**Tra ve**: `ReportPageBuilder<TQueryDSL, TSeedDSL> \| undefined`
+**Trả về**: `ReportPageBuilder<TQueryDSL, TSeedDSL> \| undefined`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `pageId` | string | - |

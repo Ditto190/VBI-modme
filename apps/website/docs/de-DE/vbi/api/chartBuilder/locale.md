@@ -25,7 +25,7 @@ constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 
 ### observe
 
-Locale-Aenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
+Locale-Änderungen beobachten und eine Funktion zum Abbestellen zurückgeben
 
 **Definition**:
 
@@ -33,7 +33,7 @@ Locale-Aenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
 observe(callback: ObserveCallback): () => void
 ```
 
-**Rueckgabe**: `() => void`
+**Rückgabe**: `() => void`
 
 **Parameter**:
 
@@ -67,7 +67,7 @@ Aktuelle Locale abrufen
 getLocale(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### toJSON
 
@@ -79,4 +79,4 @@ Als JSON exportieren
 toJSON(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`

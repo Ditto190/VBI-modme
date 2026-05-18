@@ -1,8 +1,8 @@
 # VBIReportBuilder
 
-## Thuoc tinh
+## Thuộc tính
 
-| Thuoc tinh | Kieu | Mo ta |
+| Thuộc tính | Kiểu | Mô tả |
 | --- | --- | --- |
 | **doc** | `Y.Doc` | - |
 | **dsl** | `Y.Map<any>` | - |
@@ -10,19 +10,19 @@
 | **page** | `ReportPageCollectionBuilder<TQueryDSL, TSeedDSL>` | - |
 
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, resourceRegistry: VBIResourceRegistry<TQueryDSL, TSeedDSL>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `options` | VBIReportBuilderOptions<TQueryDSL, TSeedDSL> | - |
@@ -30,105 +30,105 @@ constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, r
 
 ### applyUpdate
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 applyUpdate(update: Uint8Array, transactionOrigin: any): any
 ```
 
-**Tra ve**: `any`
+**Trả về**: `any`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
 | `transactionOrigin` | any | - |
 
 ### encodeStateAsUpdate
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 encodeStateAsUpdate(targetStateVector: Uint8Array): any
 ```
 
-**Tra ve**: `any`
+**Trả về**: `any`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `targetStateVector` | Uint8Array | - |
 
 ### getUUID
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getUUID(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getChartBuilder
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getChartBuilder(chartId: string): VBIChartBuilder<TQueryDSL, TSeedDSL> | undefined
 ```
 
-**Tra ve**: `VBIChartBuilder<TQueryDSL, TSeedDSL> \| undefined`
+**Trả về**: `VBIChartBuilder<TQueryDSL, TSeedDSL> \| undefined`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `chartId` | string | - |
 
 ### getInsightBuilder
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getInsightBuilder(insightId: string): VBIInsightBuilder | undefined
 ```
 
-**Tra ve**: `VBIInsightBuilder \| undefined`
+**Trả về**: `VBIInsightBuilder \| undefined`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `insightId` | string | - |
 
 ### build
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 build(): VBIReportDSL
 ```
 
-**Tra ve**: `VBIReportDSL`
+**Trả về**: `VBIReportDSL`
 
 ### snapshot
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 snapshot(): VBIReportSnapshotDSL
 ```
 
-**Tra ve**: `VBIReportSnapshotDSL`
+**Trả về**: `VBIReportSnapshotDSL`
 
 ### isEmpty
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 isEmpty(): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`

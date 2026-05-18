@@ -1,32 +1,32 @@
 # UndoManager
 
-Gestionnaire annuler/retablir fournissant des fonctions basees sur YJS, avec gestion des piles et effacement de l historique
+Gestionnaire annuler/rétablir fournissant des fonctions basées sur YJS, avec gestion des piles et effacement de l'historique
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
 Constructeur
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(scope: any)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `scope` | any | - Document YJS ou portee de type definissant la plage de suivi annuler/retablir |
+| `scope` | any | - Document YJS ou portée de type définissant la plage de suivi annuler/rétablir |
 
 ### undo
 
-Annuler la derniere modification
+Annuler la dernière modification
 
-**Definition**:
+**Définition**:
 
 ```typescript
 undo(): boolean
@@ -36,9 +36,9 @@ undo(): boolean
 
 ### redo
 
-Retablir une modification annulee
+Rétablir une modification annulée
 
-**Definition**:
+**Définition**:
 
 ```typescript
 redo(): boolean
@@ -48,9 +48,9 @@ redo(): boolean
 
 ### canUndo
 
-Verifier s il existe des operations annulables
+Vérifier s'il existe des opérations annulables
 
-**Definition**:
+**Définition**:
 
 ```typescript
 canUndo(): boolean
@@ -60,9 +60,9 @@ canUndo(): boolean
 
 ### canRedo
 
-Verifier s il existe des operations retablissables
+Vérifier s'il existe des opérations rétablissables
 
-**Definition**:
+**Définition**:
 
 ```typescript
 canRedo(): boolean
@@ -72,9 +72,9 @@ canRedo(): boolean
 
 ### clear
 
-Effacer l historique
+Effacer l'historique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 clear(clearUndoStack: boolean, clearRedoStack: boolean): void
@@ -82,9 +82,9 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 **Retour**: `void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Indique s il faut effacer la pile undo, true par defaut |
-| `clearRedoStack` | boolean | - Indique s il faut effacer la pile redo, true par defaut |
+| `clearUndoStack` | boolean | - Indique s'il faut effacer la pile undo, true par défaut |
+| `clearRedoStack` | boolean | - Indique s'il faut effacer la pile redo, true par défaut |

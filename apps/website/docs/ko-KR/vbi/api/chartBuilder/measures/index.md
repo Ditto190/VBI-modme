@@ -1,6 +1,6 @@
 # MeasuresBuilder
 
-메저 설정을 추가, 수정, 삭제하는 메저 빌더입니다. 메저는 매출, 이익, 수량처럼 데이터의 숫자 필드입니다
+지표 설정을 추가, 수정, 삭제하는 지표 빌더입니다. 지표는 매출, 이익, 수량처럼 데이터의 숫자 필드입니다
 
 ## 속성
 
@@ -23,7 +23,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 ### add
 
-메저 추가
+지표 추가
 
 **정의**:
 
@@ -42,7 +42,7 @@ add(field: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilde
 
 ### remove
 
-지정한 ID의 메저 삭제
+지정한 ID의 지표 삭제
 
 **정의**:
 
@@ -56,11 +56,11 @@ remove(id: string): MeasuresBuilder
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `id` | string | - 메저 ID |
+| `id` | string | - 지표 ID |
 
 ### update
 
-메저 설정 업데이트
+지표 설정 업데이트
 
 **정의**:
 
@@ -74,12 +74,12 @@ update(id: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilde
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `id` | string | - 메저 ID |
+| `id` | string | - 지표 ID |
 | `callback` | (node: MeasureNodeBuilder) => void | - 콜백 함수 |
 
 ### find
 
-콜백 조건으로 첫 번째 메저를 찾으며 동작은 Array.find와 같습니다
+콜백 조건으로 첫 번째 지표를 찾으며 동작은 Array.find와 같습니다
 
 **정의**:
 
@@ -97,7 +97,7 @@ find(predicate: (node: MeasureNodeBuilder, index: number) => boolean): MeasureNo
 
 ### findAll
 
-모든 메저 가져오기
+모든 지표 가져오기
 
 **정의**:
 
@@ -109,7 +109,7 @@ findAll(): MeasureNodeBuilder[]
 
 ### toJSON
 
-모든 메저를 JSON 배열로 내보내기
+모든 지표를 JSON 배열로 내보내기
 
 **정의**:
 
@@ -121,7 +121,7 @@ toJSON(): VBIMeasure[]
 
 ### observe
 
-메저 변경 감시
+지표 변경 감시
 
 **정의**:
 

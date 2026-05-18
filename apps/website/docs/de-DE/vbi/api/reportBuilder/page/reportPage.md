@@ -27,7 +27,7 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, page: Y.Map<any>)
 getId(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### setTitle
 
@@ -37,7 +37,7 @@ getId(): string
 setTitle(title: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -53,7 +53,7 @@ setTitle(title: string): this
 setChartId(chart: ResourceReference): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -69,7 +69,7 @@ setChartId(chart: ResourceReference): this
 setInsightId(insight: ResourceReference): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -85,4 +85,4 @@ setInsightId(insight: ResourceReference): this
 toJSON(): VBIReportPageDSL
 ```
 
-**Rueckgabe**: `VBIReportPageDSL`
+**Rückgabe**: `VBIReportPageDSL`

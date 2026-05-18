@@ -30,7 +30,7 @@ pnpm --filter=@visactor/vseed run test
 ```
 
 ### Schritt 2: Snapshot-Änderungen behandeln
-Wenn Codeänderungen dazu führen, dass sich die Ausgabe-Spec ändert (zum Beispiel durch eine Bugfix oder ein neues Feature):
+Wenn Codeänderungen dazu führen, dass sich die Ausgabe-Spec ändert (zum Beispiel durch einen Bugfix oder ein neues Feature):
 1. Prüfen Sie den Diff in der Konsolenausgabe und bestätigen Sie, ob die Änderungen erwartet sind.
 2. Wenn sie erwartet sind, führen Sie den Aktualisierungsbefehl aus:
    ```bash

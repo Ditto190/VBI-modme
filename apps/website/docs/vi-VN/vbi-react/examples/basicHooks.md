@@ -4,7 +4,7 @@ Ví dụ này minh họa cách dùng kết hợp `useVBI` và `useVSeed`.
 
 ## Mô tả phụ thuộc
 
-- Phụ thuộc package: `@visactor/vbi-react`, `@visactor/vbi`, `@visactor/vseed`, `react`
+- Phụ thuộc gói: `@visactor/vbi-react`, `@visactor/vbi`, `@visactor/vseed`, `react`
 - Ràng buộc đầu vào: cần một `VBIChartBuilder` đã khởi tạo và đã gắn connector khả dụng
 
 ## Đoạn mã

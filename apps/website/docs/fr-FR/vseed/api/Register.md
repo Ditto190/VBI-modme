@@ -53,7 +53,7 @@ function registerLightTheme(): void
 ### registerArea
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Area Chart.
+Enregistre le pipeline de construction de Area Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Area Chart.
 :::
 
@@ -64,7 +64,7 @@ function registerArea(): void
 ### registerAreaPercent
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Area Percent Chart.
+Enregistre le pipeline de construction de Area Percent Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Area Percent Chart.
 :::
 
@@ -75,7 +75,7 @@ function registerAreaPercent(): void
 ### registerBar
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Bar Chart.
+Enregistre le pipeline de construction de Bar Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Bar Chart.
 :::
 
@@ -86,7 +86,7 @@ function registerBar(): void
 ### registerBarParallel
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Bar Parallel Chart.
+Enregistre le pipeline de construction de Bar Parallel Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Bar Parallel Chart.
 :::
 
@@ -97,7 +97,7 @@ function registerBarParallel(): void
 ### registerBarPercent
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Bar Percent Chart.
+Enregistre le pipeline de construction de Bar Percent Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Bar Percent Chart.
 :::
 
@@ -108,7 +108,7 @@ function registerBarPercent(): void
 ### registerBoxPlot
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Box Plot Chart.
+Enregistre le pipeline de construction de Box Plot Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Box Plot Chart.
 :::
 
@@ -119,7 +119,7 @@ function registerBoxPlot(): void
 ### registerCirclePacking
 
 :::note{title=Description}
-Enregistre la pipeline de construction de CirclePacking Chart.
+Enregistre le pipeline de construction de CirclePacking Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de CirclePacking Chart.
 :::
 
@@ -130,7 +130,7 @@ function registerCirclePacking(): void
 ### registerColumn
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Column Chart.
+Enregistre le pipeline de construction de Column Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Column Chart.
 :::
 
@@ -141,7 +141,7 @@ function registerColumn(): void
 ### registerColumnParallel
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Column Parallel Chart.
+Enregistre le pipeline de construction de Column Parallel Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Column Parallel Chart.
 :::
 
@@ -152,7 +152,7 @@ function registerColumnParallel(): void
 ### registerColumnPercent
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Column Percent Chart.
+Enregistre le pipeline de construction de Column Percent Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Column Percent Chart.
 :::
 
@@ -163,7 +163,7 @@ function registerColumnPercent(): void
 ### registerDonut
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Donut Chart.
+Enregistre le pipeline de construction de Donut Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Donut Chart.
 :::
 
@@ -174,7 +174,7 @@ function registerDonut(): void
 ### registerDualAxis
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Dual Axis Chart.
+Enregistre le pipeline de construction de Dual Axis Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Dual Axis Chart.
 :::
 
@@ -185,7 +185,7 @@ function registerDualAxis(): void
 ### registerFunnel
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Funnel Chart.
+Enregistre le pipeline de construction de Funnel Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Funnel Chart.
 :::
 
@@ -196,7 +196,7 @@ function registerFunnel(): void
 ### registerHeatmap
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Heatmap Chart.
+Enregistre le pipeline de construction de Heatmap Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Heatmap Chart.
 :::
 
@@ -207,7 +207,7 @@ function registerHeatmap(): void
 ### registerHierarchySankey
 
 :::note{title=Description}
-Enregistre la pipeline de construction de HierarchySankey Chart.
+Enregistre le pipeline de construction de HierarchySankey Chart.
 :::
 
 ```ts
@@ -217,7 +217,7 @@ function registerHierarchySankey(): void
 ### registerHistogram
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Histogram Chart.
+Enregistre le pipeline de construction de Histogram Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Histogram Chart.
 :::
 
@@ -228,7 +228,7 @@ function registerHistogram(): void
 ### registerLine
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Line Chart.
+Enregistre le pipeline de construction de Line Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Line Chart.
 :::
 
@@ -239,7 +239,7 @@ function registerLine(): void
 ### registerPie
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Pie Chart.
+Enregistre le pipeline de construction de Pie Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Pie Chart.
 :::
 
@@ -250,7 +250,7 @@ function registerPie(): void
 ### registerPivotTable
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Pivot Table Chart.
+Enregistre le pipeline de construction de Pivot Table Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Pivot Table Chart.
 :::
 
@@ -261,7 +261,7 @@ function registerPivotTable(): void
 ### registerRaceBar
 
 :::note{title=Description}
-Enregistre la pipeline de construction de RaceBar Chart.
+Enregistre le pipeline de construction de RaceBar Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec de RaceBar Chart.
 :::
 
@@ -272,7 +272,7 @@ function registerRaceBar(): void
 ### registerRaceColumn
 
 :::note{title=Description}
-Enregistre la pipeline de construction de RaceColumn Chart.
+Enregistre le pipeline de construction de RaceColumn Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec de RaceColumn Chart.
 :::
 
@@ -283,7 +283,7 @@ function registerRaceColumn(): void
 ### registerRaceDonut
 
 :::note{title=Description}
-Enregistre la pipeline de construction de RaceDonut Chart.
+Enregistre le pipeline de construction de RaceDonut Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec de RaceDonut Chart.
 :::
 
@@ -294,7 +294,7 @@ function registerRaceDonut(): void
 ### registerRaceLine
 
 :::note{title=Description}
-Enregistre la pipeline de construction de RaceLine Chart.
+Enregistre le pipeline de construction de RaceLine Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec de RaceLine Chart.
 :::
 
@@ -305,7 +305,7 @@ function registerRaceLine(): void
 ### registerRacePie
 
 :::note{title=Description}
-Enregistre la pipeline de construction de RacePie Chart.
+Enregistre le pipeline de construction de RacePie Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec de RacePie Chart.
 :::
 
@@ -316,7 +316,7 @@ function registerRacePie(): void
 ### registerRaceScatter
 
 :::note{title=Description}
-Enregistre la pipeline de construction de RaceScatter Chart.
+Enregistre le pipeline de construction de RaceScatter Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec de RaceScatter Chart.
 :::
 
@@ -327,7 +327,7 @@ function registerRaceScatter(): void
 ### registerRadar
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Radar Chart.
+Enregistre le pipeline de construction de Radar Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Radar Chart.
 :::
 
@@ -338,7 +338,7 @@ function registerRadar(): void
 ### registerRose
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Rose Chart.
+Enregistre le pipeline de construction de Rose Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Rose Chart.
 :::
 
@@ -349,7 +349,7 @@ function registerRose(): void
 ### registerRoseParallel
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Rose Parallel Chart.
+Enregistre le pipeline de construction de Rose Parallel Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Rose Parallel Chart.
 :::
 
@@ -366,7 +366,7 @@ function registerSankey(): void
 ### registerScatter
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Scatter Chart.
+Enregistre le pipeline de construction de Scatter Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Scatter Chart.
 :::
 
@@ -377,7 +377,7 @@ function registerScatter(): void
 ### registerSunburst
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Sunburst Chart.
+Enregistre le pipeline de construction de Sunburst Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Sunburst Chart.
 :::
 
@@ -388,7 +388,7 @@ function registerSunburst(): void
 ### registerTable
 
 :::note{title=Description}
-Enregistre la pipeline de construction de Table Chart.
+Enregistre le pipeline de construction de Table Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de Table Chart.
 :::
 
@@ -399,7 +399,7 @@ function registerTable(): void
 ### registerTreeMap
 
 :::note{title=Description}
-Enregistre la pipeline de construction de TreeMap Chart.
+Enregistre le pipeline de construction de TreeMap Chart.
 Après enregistrement, Builder prendra en charge la construction de la Spec et de l’Advanced Config de TreeMap Chart.
 :::
 

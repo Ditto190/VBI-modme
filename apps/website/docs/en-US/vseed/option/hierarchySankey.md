@@ -1,7 +1,7 @@
 # HierarchySankey
 
 :::info{title=Encoding Mapping}
-The Hierarchy Sankey chart supports the following visual channels:
+The hierarchical Sankey chart supports the following visual channels:
 
 `hierarchy`: hierarchy channel, supports `multiple dimensions`
 
@@ -14,11 +14,11 @@ The Hierarchy Sankey chart supports the following visual channels:
 :::
 
 :::note{title=Description}
-Hierarchy Sankey chart, used to display hierarchical flow data. Tree nodes and flow links represent hierarchical relationships and flow magnitude.
+Hierarchical Sankey chart, used to show hierarchical flow data. Tree nodes and flow links represent hierarchical relationships and flow magnitude.
 
 Applicable scenarios:
 
-\- Display hierarchical flow relationships from upstream to downstream
+\- Show hierarchical flow relationships from upstream to downstream
 
 \- Emphasize flow allocation and path transfer in a tree structure
 
@@ -29,9 +29,9 @@ Data requirements:
 
 \- At least 1 dimension field is required to construct the hierarchy
 
-\- At least 1 numeric field (measure) is required to map flow size
+\- At least 1 numeric field (measure) is required to map flow magnitude
 
-\- The advanced pipeline needs to convert tidyData into the tree-shaped children structure supported by VChart
+\- advanced pipeline needs to convert tidyData into the tree-shaped children structure supported by VChart
 
 :::
 
@@ -41,11 +41,11 @@ Data requirements:
 **Type:** `"hierarchySankey"`
 
 :::note{title=Description}
-Hierarchy Sankey chart
+Hierarchical Sankey chart
 
 
 
-Hierarchy Sankey chart, displaying flow relationships and flow magnitude within a hierarchical structure
+Hierarchical Sankey chart, showing flow relationships and flow magnitude in a hierarchy
 
 :::
 
@@ -64,7 +64,7 @@ Dataset
 
 
 
-An aggregated dataset that follows the TidyData specification, used to define the chart's data source and structure
+A TidyData-compliant, already aggregated dataset used to define the chart data source and structure
 
 :::
 
@@ -83,7 +83,7 @@ Dimensions
 
 
 
-Dimension configuration, used to define the hierarchy and supporting the hierarchy / label / tooltip channels
+Dimension configuration, used to define the hierarchy structure and supporting the hierarchy / label / tooltip channels
 
 :::
 
@@ -160,7 +160,7 @@ Measures
 
 
 
-Measure configuration, used to define flow size and supporting the size / label / tooltip channels
+Measure configuration, used to define flow magnitude and supporting the size / label / tooltip channels
 
 :::
 
@@ -240,7 +240,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -255,7 +255,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -375,7 +375,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -390,7 +390,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -755,7 +755,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -770,7 +770,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -981,7 +981,7 @@ Operator
 
 \- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 
@@ -1158,7 +1158,7 @@ Operator
 
 \- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 

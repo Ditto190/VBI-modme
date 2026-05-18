@@ -14,7 +14,7 @@ ChartRenderer(props: ChartRendererProps)
 
 ## 説明
 
-builder の出力に基づいてチャートをレンダリングし、読み込み状態とエラー状態を処理します。
+builder の出力に基づいてチャートをレンダリングし、ローディング状態とエラー状態を処理します。
 
 ## 最小例
 

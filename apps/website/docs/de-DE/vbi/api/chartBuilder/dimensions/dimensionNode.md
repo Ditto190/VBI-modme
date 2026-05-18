@@ -30,7 +30,7 @@ Knoten-ID abrufen
 getId(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getField
 
@@ -42,7 +42,7 @@ Feldname abrufen
 getField(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getEncoding
 
@@ -54,7 +54,7 @@ Diagramm-Encoding-Position abrufen
 getEncoding(): VBIDimension['encoding'] | undefined
 ```
 
-**Rueckgabe**: `VBIDimension['encoding'] \| undefined`
+**Rückgabe**: `VBIDimension['encoding'] \| undefined`
 
 ### getSort
 
@@ -66,7 +66,7 @@ Sortierkonfiguration abrufen
 getSort(): VBISort | undefined
 ```
 
-**Rueckgabe**: `VBISort \| undefined`
+**Rückgabe**: `VBISort \| undefined`
 
 ### setAlias
 
@@ -78,7 +78,7 @@ Anzeigenamen setzen
 setAlias(alias: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -96,7 +96,7 @@ Diagramm-Encoding-Position setzen
 setEncoding(encoding: NonNullable<VBIDimension['encoding']>): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -114,7 +114,7 @@ Sortierkonfiguration setzen
 setSort(sort: VBISort): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -132,7 +132,7 @@ Datumsaggregationsfunktion setzen
 setAggregate(aggregate: NonNullable<VBIDimension['aggregate']>): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -142,7 +142,7 @@ setAggregate(aggregate: NonNullable<VBIDimension['aggregate']>): this
 
 ### clearAggregate
 
-Datumsaggregationsfunktion loeschen
+Datumsaggregationsfunktion löschen
 
 **Definition**:
 
@@ -150,11 +150,11 @@ Datumsaggregationsfunktion loeschen
 clearAggregate(): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 ### clearSort
 
-Sortierkonfiguration loeschen
+Sortierkonfiguration löschen
 
 **Definition**:
 
@@ -162,7 +162,7 @@ Sortierkonfiguration loeschen
 clearSort(): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 ### toJSON
 
@@ -174,4 +174,4 @@ Als JSON exportieren
 toJSON(): VBIDimension
 ```
 
-**Rueckgabe**: `VBIDimension`
+**Rückgabe**: `VBIDimension`

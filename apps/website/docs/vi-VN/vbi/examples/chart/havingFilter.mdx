@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## add-having-filter
 
-Nhom theo khu vuc roi loc cac khu vuc hieu qua cao co doanh so tren mot trieu
+Nhóm theo khu vực rồi lọc các khu vực hiệu quả cao có doanh số trên một triệu
 
 
 ```tsx preview
@@ -26,13 +26,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -50,7 +50,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -71,7 +71,7 @@ export default () => {
 
 ## add-multiple-having-filter
 
-Them nhieu dieu kien Having dang chuoi de loc khu vuc co doanh so va loi nhuan cao
+Thêm nhiều điều kiện Having dạng chuỗi để lọc khu vực có doanh số và lợi nhuận cao
 
 
 ```tsx preview
@@ -91,13 +91,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -105,7 +105,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -123,7 +123,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -144,7 +144,7 @@ export default () => {
 
 ## clear-having-filter
 
-Xoa tat ca dieu kien loc Having va hien thi ket qua tong hop nhom day du
+Xóa tất cả điều kiện lọc Having và hiển thị kết quả tổng hợp nhóm đầy đủ
 
 
 ```tsx preview
@@ -164,13 +164,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -178,7 +178,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -215,7 +215,7 @@ export default () => {
             ]
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -236,7 +236,7 @@ export default () => {
 
 ## having-array-value-with-in-operator
 
-Having filter voi gia tri mang kich hoat chuyen doi toan tu 'in'
+Bộ lọc Having với giá trị mảng kích hoạt chuyển đổi toán tử 'in'
 
 
 ```tsx preview
@@ -256,13 +256,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -280,7 +280,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -305,7 +305,7 @@ export default () => {
 
 ## having-array-value-with-not-in-operator
 
-Having filter voi gia tri mang kich hoat chuyen doi toan tu 'not in'
+Bộ lọc Having với giá trị mảng kích hoạt chuyển đổi toán tử 'not in'
 
 
 ```tsx preview
@@ -325,13 +325,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -349,7 +349,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -374,7 +374,7 @@ export default () => {
 
 ## having-clear-and-rebuild
 
-Xoa cac dieu kien having hien co roi xay dung lai bo loc nhom moi nhu khi nguoi dung dat lai bang loc
+Xóa các điều kiện having hiện có rồi xây dựng lại bộ lọc nhóm mới như khi người dùng đặt lại bảng lọc
 
 
 ```tsx preview
@@ -394,13 +394,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -408,7 +408,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -416,7 +416,7 @@ export default () => {
             },
             {
               "field": "amount",
-              "alias": "Quantity",
+              "alias": "Số lượng",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -444,7 +444,7 @@ export default () => {
             ]
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -465,7 +465,7 @@ export default () => {
 
 ## having-deeply-nested-groups
 
-Nhom long ba tang: OR(AND(doanh so > 500K, loi nhuan > 50K), AND(so luong > 100, chiet khau TB < 0.3)) cho bo loc nghiep vu phuc tap
+Nhóm lồng ba tầng: OR(AND(doanh số > 500K, lợi nhuận > 50K), AND(số lượng > 100, chiết khấu TB < 0.3)) cho bộ lọc nghiệp vụ phức tạp
 
 
 ```tsx preview
@@ -485,13 +485,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Tỉnh/TP"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -499,7 +499,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -507,7 +507,7 @@ export default () => {
             },
             {
               "field": "amount",
-              "alias": "Quantity",
+              "alias": "Số lượng",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -515,7 +515,7 @@ export default () => {
             },
             {
               "field": "discount",
-              "alias": "Avg Discount",
+              "alias": "Chiết khấu TB",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "avg"
@@ -533,7 +533,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -554,7 +554,7 @@ export default () => {
 
 ## having-empty-dsl-compose-target
 
-Bat dau tu DSL trong va dung builder lap rap where/having/measures/dimensions, gom to hop having voi sum va countDistinct
+Bắt đầu từ DSL trống và dùng builder lắp ráp where/having/measures/dimensions, gồm tổ hợp having với sum và countDistinct
 
 
 ```tsx preview
@@ -584,7 +584,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1
         },
         connectorId: DEMO_CONNECTOR_ID,
@@ -604,7 +604,7 @@ export default () => {
 
 ## having-field-not-in-measures-and-dimensions
 
-Khoi tao DSL trong, chi them dimension area va measure sales bang builder, roi dung field profit trong having khi field nay khong co trong measures/dimensions
+Khởi tạo DSL trống, chỉ thêm chiều area và chỉ số sales bằng builder, rồi dùng field profit trong having khi field này không có trong measures/dimensions
 
 
 ```tsx preview
@@ -634,7 +634,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1
         },
         connectorId: DEMO_CONNECTOR_ID,
@@ -654,7 +654,7 @@ export default () => {
 
 ## having-find-and-update
 
-Them dieu kien having truoc, sau do dung find de tim va cap nhat dong nguong cung toan tu
+Thêm điều kiện having trước, sau đó dùng find để tìm và cập nhật động ngưỡng cùng toán tử
 
 
 ```tsx preview
@@ -674,13 +674,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Category"
+              "alias": "Danh mục"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -688,7 +688,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -706,7 +706,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -727,7 +727,7 @@ export default () => {
 
 ## having-group-add-to-existing
 
-Them dieu kien moi vao nhom having hien co de tinh chinh quy tac loc theo tung buoc
+Thêm điều kiện mới vào nhóm having hiện có để tinh chỉnh quy tắc lọc theo từng bước
 
 
 ```tsx preview
@@ -747,13 +747,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -761,7 +761,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -769,7 +769,7 @@ export default () => {
             },
             {
               "field": "amount",
-              "alias": "Quantity",
+              "alias": "Số lượng",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -803,7 +803,7 @@ export default () => {
             ]
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -824,7 +824,7 @@ export default () => {
 
 ## having-group-remove-condition
 
-Xoa mot dieu kien cu the khoi nhom having hien co
+Xóa một điều kiện cụ thể khỏi nhóm having hiện có
 
 
 ```tsx preview
@@ -844,13 +844,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Category"
+              "alias": "Danh mục"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -858,7 +858,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -901,7 +901,7 @@ export default () => {
             ]
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -922,7 +922,7 @@ export default () => {
 
 ## having-mix-filters-and-groups
 
-Ket hop dieu kien doc lap va nhom OR: doanh so > 500K AND (loi nhuan > 100K OR so luong >= 30)
+Kết hợp điều kiện độc lập và nhóm OR: doanh số > 500K AND (lợi nhuận > 100K OR số lượng >= 30)
 
 
 ```tsx preview
@@ -942,13 +942,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -956,7 +956,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -964,7 +964,7 @@ export default () => {
             },
             {
               "field": "amount",
-              "alias": "Quantity",
+              "alias": "Số lượng",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -982,7 +982,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -1003,7 +1003,7 @@ export default () => {
 
 ## having-multi-dimension-aggregate
 
-Nhom theo danh muc va khu vuc, loc cac to hop co chiet khau TB duoi 20% va tong doanh so tren 100K
+Nhóm theo danh mục và khu vực, lọc các tổ hợp có chiết khấu TB dưới 20% và tổng doanh số trên 100K
 
 
 ```tsx preview
@@ -1023,17 +1023,17 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Category"
+              "alias": "Danh mục"
             },
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1041,7 +1041,7 @@ export default () => {
             },
             {
               "field": "discount",
-              "alias": "Avg Discount",
+              "alias": "Chiết khấu TB",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "avg"
@@ -1059,7 +1059,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -1080,7 +1080,7 @@ export default () => {
 
 ## having-nested-groups
 
-Nhom long nhau: AND(doanh so > 1M, OR(loi nhuan > 200K, so luong >= 50))
+Nhóm lồng nhau: AND(doanh số > 1M, OR(lợi nhuận > 200K, số lượng >= 50))
 
 
 ```tsx preview
@@ -1100,13 +1100,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1114,7 +1114,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1122,7 +1122,7 @@ export default () => {
             },
             {
               "field": "amount",
-              "alias": "Quantity",
+              "alias": "Số lượng",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1140,7 +1140,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -1161,7 +1161,7 @@ export default () => {
 
 ## having-or-group
 
-Dung nhom OR de loc khu vuc co doanh so hoac loi nhuan cao
+Dùng nhóm OR để lọc khu vực có doanh số hoặc lợi nhuận cao
 
 
 ```tsx preview
@@ -1181,13 +1181,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1195,7 +1195,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1213,7 +1213,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -1234,7 +1234,7 @@ export default () => {
 
 ## having-scatter-profit-analysis
 
-Phan tich scatter: nhom theo danh muc va loc danh muc co ty le loi nhuan cao voi hon 20 giao dich
+Phân tích biểu đồ phân tán: nhóm theo danh mục và lọc danh mục có tỷ lệ lợi nhuận cao với hơn 20 giao dịch
 
 
 ```tsx preview
@@ -1254,13 +1254,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_sub_type",
-              "alias": "Sub-Category"
+              "alias": "Danh mục con"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -1268,7 +1268,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1276,7 +1276,7 @@ export default () => {
             },
             {
               "field": "amount",
-              "alias": "Quantity",
+              "alias": "Số lượng",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -1294,7 +1294,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
@@ -1315,7 +1315,7 @@ export default () => {
 
 ## having-update-group-operator
 
-Cap nhat toan tu logic cua nhom Having hien co tu AND sang OR
+Cập nhật toán tử logic của nhóm Having hiện có từ AND sang OR
 
 
 ```tsx preview
@@ -1335,13 +1335,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1349,7 +1349,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1392,7 +1392,7 @@ export default () => {
             ]
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },
@@ -1413,7 +1413,7 @@ export default () => {
 
 ## having-with-where-combined
 
-Ket hop where va having: loc Office Supplies bang where truoc, roi loc tinh co doanh so > 50K hoac loi nhuan > 10K bang having
+Kết hợp where và having: lọc danh mục văn phòng phẩm bằng where trước, rồi lọc tỉnh/thành có doanh số > 50K hoặc lợi nhuận > 10K bằng having
 
 
 ```tsx preview
@@ -1433,13 +1433,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Tỉnh/TP"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1447,7 +1447,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1465,13 +1465,13 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 10
         },
         connectorId: DEMO_CONNECTOR_ID,
       })
-      const applyBuilder = (builder: VBIChartBuilder) => { builder.whereFilter.add('product_type', n => n.setOperator('=').setValue('Office Supplies')); builder.havingFilter.addGroup('or', g => { g.add('sales', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(50000)); g.add('profit', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(10000)); }); }
+      const applyBuilder = (builder: VBIChartBuilder) => { builder.whereFilter.add('product_type', n => n.setOperator('=').setValue('办公用品')); builder.havingFilter.addGroup('or', g => { g.add('sales', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(50000)); g.add('profit', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(10000)); }); }
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -1486,7 +1486,7 @@ export default () => {
 
 ## remove-having-filter
 
-Xoa cac dieu kien loc Having thua va chi giu bo loc loi nhuan
+Xóa các điều kiện lọc Having thừa và chỉ giữ bộ lọc lợi nhuận
 
 
 ```tsx preview
@@ -1506,13 +1506,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Khu vực"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Doanh số",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1520,7 +1520,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Lợi nhuận",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -1557,7 +1557,7 @@ export default () => {
             ]
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "vi-VN",
           "version": 1,
           "limit": 20
         },

@@ -1,6 +1,6 @@
 # BuilderLayout
 
-## Import
+## Nhập
 
 ```ts
 import { BuilderLayout } from '@visactor/vbi-react/components'
@@ -14,7 +14,7 @@ BuilderLayout(props: BuilderLayoutProps)
 
 ## Mô tả
 
-Cung cấp container bố cục builder ba cột/hai cột được chuẩn hóa.
+Cung cấp vùng chứa bố cục builder ba cột/hai cột được chuẩn hóa.
 
 ## Ví dụ tối thiểu
 

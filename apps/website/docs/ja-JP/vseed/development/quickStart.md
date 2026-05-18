@@ -1,6 +1,6 @@
-# Quick Start
+# クイックスタート
 
-## Environment Setup
+## 環境準備
 
 [Node Download](https://nodejs.org/en/download)
 ```bash title="node"
@@ -9,32 +9,32 @@ nvm use 24
 ```
 
 [Pnpm Download](https://pnpm.io/installation#using-corepack)
-> `package.json` configures `packageManager` as `pnpm@10.13.1`; `corepack` will automatically install this version.
+> `package.json` では `packageManager` が `pnpm@10.13.1` に設定されており、`corepack` がこのバージョンを自動でインストールします。
 ```bash title="pnpm"
 corepack enable pnpm
 ```
 
-Check pnpm version, expected to be 10.26.1:
+pnpm のバージョンを確認します。期待値は 10.26.1 です。
 ```bash title="pnpm version"
 pnpm -v # expected 10.26.1
 ```
 
-## Start the Project
+## プロジェクトの起動
 
-Start the documentation site (supports simultaneous development and debugging of vseed):
-```bash title="Development"
+ドキュメントサイトを起動し、同時に vseed の開発とデバッグもできます。
+```bash title="開発"
 pnpm install
 
 pnpm dev
 ```
 
-Build:
-```bash title="Build"
+ビルド
+```bash title="ビルド"
 pnpm build
 ```
 
-Analyze the build output with `rsdoctor`:
-```bash title="Analyze"
+`rsdoctor` で成果物を分析します。
+```bash title="分析"
 pnpm build:rsdoctor
 # or
 pnpm dev:rsdoctor

@@ -1,42 +1,42 @@
 # Table
 
-:::info{title=Recommended}
-\- Recommended field configuration: `Any` measure(s), `Any` dimension(s)
+:::info{title=Recommandé}
+\- Configuration de champs recommandée : `n’importe quel` nombre de mesures, `n’importe quel` nombre de dimensions
 
-\- Supports Data Reshape: at least `Any` measure(s), `Any` dimension(s)
+\- Prend en charge la restructuration des données: au moins `n’importe quel` nombre de mesures, `n’importe quel` nombre de dimensions
 
 :::
 
-:::info{title=Encoding Mapping}
-Only supports configuring dimension and measure trees; defaults to encoding to columns.
+:::info{title=Mappage d’encodage}
+Prend uniquement en charge la configuration de l’arbre des dimensions et de l’arbre des mesures; l’encodage par défaut se fait en colonnes.
 
 :::
 
 :::note{title=Description}
-Table, suitable for detailed data display scenarios, with clear rows and columns for easy viewing of specific values.
+Tableau adapté aux scénarios d’affichage détaillé des données, avec des lignes et colonnes claires pour consulter facilement les valeurs précises.
 
-Applicable scenarios:
+Scénarios adaptés:
 
-\- Display detailed data records
+\- Afficher les enregistrements détaillés
 
-\- Precise comparison of data items
+\- Comparer précisément les éléments de données
 
-\- Display attributes of multiple dimensions
+\- Afficher les attributs de plusieurs dimensions
 
 :::
 
-:::warning{title=Warning}
-Data requirements:
+:::warning{title=Avertissement}
+Exigences de données:
 
-\- At least 1 dimension field
+\- Au moins 1 champ de dimension
 
-\- At least 1 measure field
+\- Au moins 1 champ d’indicateur
 
-\- Dimension fields will be used as table column headers
+\- Les champs de dimension sont utilisés comme en-têtes de colonnes du tableau
 
-Features enabled by default:
+Fonctionnalités activées par défaut :
 
-\- Sorting, filtering, and pagination are enabled by default
+\- Le tri, le filtrage et la pagination sont activés par défaut
 
 :::
 
@@ -46,11 +46,11 @@ Features enabled by default:
 **Type:** `"table"`
 
 :::note{title=Description}
-Standard table component for displaying detailed data
+Composant de tableau standard pour afficher des données détaillées
 
 :::
 
-**Example**
+**Exemple**
 'table'
 
 
@@ -61,11 +61,11 @@ Standard table component for displaying detailed data
 **Type:** `Record[]`
 
 :::note{title=Description}
-A dataset that conforms to the TidyData specification and is already aggregated, used to define the chart's data source and structure. The dataset provided by the user does not need any preprocessing; each field corresponds to a column, and each record corresponds to a row.
+Jeu de données agrégé conforme à la spécification TidyData, utilisé pour définir la source et la structure des données du graphique. Le jeu de données fourni par l’utilisateur ne nécessite aucun prétraitement; chaque champ correspond à une colonne et chaque enregistrement à une ligne.
 
 :::
 
-**Example**
+**Exemple**
 [{id: 1, name: "A", value: 100}, {id: 2, name: "B", value: 200}]
 
 
@@ -76,11 +76,11 @@ A dataset that conforms to the TidyData specification and is already aggregated,
 **Type:** `DimensionTree | undefined`
 
 :::note{title=Description}
-Each dimension in the table corresponds to a column.
+Chaque dimension du tableau correspond à une colonne.
 
 :::
 
-**Example**
+**Exemple**
 [{id: "name", alias: "Name"}]
 
 
@@ -99,7 +99,7 @@ Each dimension in the table corresponds to a column.
 **Type:** `TimeFormat | undefined`
 
 :::note{title=Description}
-Dimension date format configuration
+Configuration du format de date de la dimension
 
 :::
 
@@ -109,7 +109,7 @@ Dimension date format configuration
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
 :::note{title=Description}
-Time granularity, determines the date display precision
+Granularité temporelle, détermine la précision d'affichage de la date
 
 :::
 
@@ -118,11 +118,11 @@ Time granularity, determines the date display precision
 **Type:** `"row" | "column" | undefined`
 
 :::note{title=Description}
-Channel to which the dimension is mapped
+Canal auquel la dimension est mappée
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: prend en charge le mapping de plusieurs dimensions vers le canal ligne
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: prend en charge le mapping de plusieurs dimensions vers le canal colonne
 
 :::
 
@@ -144,7 +144,7 @@ Channel to which the dimension is mapped
 **Type:** `TimeFormat | undefined`
 
 :::note{title=Description}
-Dimension date format configuration
+Configuration du format de date de la dimension
 
 :::
 
@@ -154,7 +154,7 @@ Dimension date format configuration
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
 :::note{title=Description}
-Time granularity, determines the date display precision
+Granularité temporelle, détermine la précision d'affichage de la date
 
 :::
 
@@ -163,11 +163,11 @@ Time granularity, determines the date display precision
 **Type:** `"row" | "column" | undefined`
 
 :::note{title=Description}
-Channel to which the dimension is mapped
+Canal auquel la dimension est mappée
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: prend en charge le mapping de plusieurs dimensions vers le canal ligne
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: prend en charge le mapping de plusieurs dimensions vers le canal colonne
 
 :::
 
@@ -177,11 +177,11 @@ Channel to which the dimension is mapped
 **Type:** `MeasureTree | undefined`
 
 :::note{title=Description}
-Each measure in the table corresponds to a column, and natively supports measure combinations.
+Chaque mesure du tableau correspond à une ligne et prend nativement en charge les combinaisons de mesures.
 
 :::
 
-**Example**
+**Exemple**
 [{id: "value", alias: "Value"}]
 
 
@@ -192,7 +192,7 @@ Each measure in the table corresponds to a column, and natively supports measure
 **Type:** `string`
 
 :::note{title=Description}
-Measure group ID, must be unique.
+ID du groupe de mesures, doit être unique.
 
 :::
 
@@ -201,7 +201,7 @@ Measure group ID, must be unique.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Measure group alias, can be duplicate; defaults to the ID if not specified.
+Alias du groupe de mesures, peut être dupliqué; par défaut l’ID est utilisé s’il n’est pas défini.
 
 :::
 
@@ -210,17 +210,17 @@ Measure group alias, can be duplicate; defaults to the ID if not specified.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+Formatage automatique des nombres, activé par défaut avec la priorité la plus élevée
 
-When autoFormat=true, it overrides all numFormat configurations
+Lorsque autoFormat=true, toutes les configurations numFormat sont remplacées
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+Une fois activé, les libellés de données et les infobulles choisissent automatiquement le format adapté selon les valeurs de mesure et la locale
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+Règles de formatage: nombres décimaux avec compact notation activée, 0 décimale minimum, 2 décimales maximum, arrondi automatique, via l'implémentation Intl.NumberFormat du navigateur
 
-For example:
+Par exemple :
 
-\- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -231,9 +231,9 @@ For example:
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+Formatage numérique personnalisé des mesures; appliqué automatiquement aux labels et tooltips
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+Remarque: pour utiliser un formatage personnalisé, vous devez définir explicitement autoFormat=false; sinon autoFormat remplacera cette configuration
 
 :::
 
@@ -243,7 +243,7 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+Type de format numérique. Prend en charge les nombres (décimaux), les pourcentages (%), les pourmilles (‰) et la notation scientifique
 
 :::
 
@@ -252,13 +252,13 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Number format ratio, cannot be 0
+Ratio de format numérique, ne peut pas être 0
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Exemple**
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -267,13 +267,13 @@ Number format ratio, cannot be 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format symbol, e.g. %, ‰
+Symbole de format numérique, par ex. %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Exemple**
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -282,7 +282,7 @@ Number format symbol, e.g. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Thousands separator for number formatting
+Séparateur de milliers pour le formatage numérique
 
 :::
 
@@ -291,7 +291,7 @@ Thousands separator for number formatting
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format suffix
+Suffixe du format numérique
 
 :::
 
@@ -300,7 +300,7 @@ Number format suffix
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format prefix
+Préfixe du format numérique
 
 :::
 
@@ -309,17 +309,17 @@ Number format prefix
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+Nombre de décimales du format numérique, utilise minimumFractionDigits et maximumFractionDigits d'Intl.NumberFormat du navigateur; priorité inférieure à significantDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Exemple**
+\- 1234.5678 se convertit en 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -328,19 +328,19 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+Chiffres significatifs du format numérique, utilise minimumSignificantDigits et maximumSignificantDigits d'Intl.NumberFormat du navigateur; priorité supérieure à fractionDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Exemple**
+\- 1234.5678 se convertit en 1000, significantDigits:1
+\- 1234.5678 se convertit en 1200, significantDigits:2
+\- 1234.5678 se convertit en 1230, significantDigits:3
+\- 1234.5678 se convertit en 1234, significantDigits:4
+\- 1234.5678 se convertit en 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -349,13 +349,13 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+Priorité d'arrondi du format numérique lorsque significantDigits et fractionDigits sont tous deux définis; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Exemple**
+\- 1234.5678 se convertit en 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 se convertit en 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -364,7 +364,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+Mode d'arrondi du format numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode
 
 :::
 
@@ -378,7 +378,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+Type de format numérique. Prend en charge les nombres (décimaux), les pourcentages (%), les pourmilles (‰) et la notation scientifique
 
 :::
 
@@ -387,13 +387,13 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Number format ratio, cannot be 0
+Ratio de format numérique, ne peut pas être 0
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Exemple**
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -402,13 +402,13 @@ Number format ratio, cannot be 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format symbol, e.g. %, ‰
+Symbole de format numérique, par ex. %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Exemple**
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -417,7 +417,7 @@ Number format symbol, e.g. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Thousands separator for number formatting
+Séparateur de milliers pour le formatage numérique
 
 :::
 
@@ -426,7 +426,7 @@ Thousands separator for number formatting
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format suffix
+Suffixe du format numérique
 
 :::
 
@@ -435,7 +435,7 @@ Number format suffix
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Number format prefix
+Préfixe du format numérique
 
 :::
 
@@ -444,17 +444,17 @@ Number format prefix
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+Nombre de décimales du format numérique, utilise minimumFractionDigits et maximumFractionDigits d'Intl.NumberFormat du navigateur; priorité inférieure à significantDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Exemple**
+\- 1234.5678 se convertit en 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -463,19 +463,19 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+Chiffres significatifs du format numérique, utilise minimumSignificantDigits et maximumSignificantDigits d'Intl.NumberFormat du navigateur; priorité supérieure à fractionDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Exemple**
+\- 1234.5678 se convertit en 1000, significantDigits:1
+\- 1234.5678 se convertit en 1200, significantDigits:2
+\- 1234.5678 se convertit en 1230, significantDigits:3
+\- 1234.5678 se convertit en 1234, significantDigits:4
+\- 1234.5678 se convertit en 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 se convertit en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -484,13 +484,13 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+Priorité d'arrondi du format numérique lorsque significantDigits et fractionDigits sont tous deux définis; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Exemple**
+\- 1234.5678 se convertit en 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 se convertit en 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -499,7 +499,7 @@ Rounding priority for number formatting when both significantDigits and fraction
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+Mode d'arrondi du format numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode
 
 :::
 
@@ -508,9 +508,9 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 **Type:** `"column" | undefined`
 
 :::note{title=Description}
-Channel to which the measure is mapped
+Canal auquel la mesure est mappée
 
-\- column: Measure column
+\- column: colonne de mesure
 
 :::
 
@@ -519,12 +519,12 @@ Channel to which the measure is mapped
 **Type:** `string | undefined`
 
 :::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+Dans la forme de configuration plate des mesures, construit un groupe de mesures en arbre. parentId pointe vers l'id du groupe parent, utilisé pour construire l'arbre de mesures
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+Deux façons existent pour configurer l'arbre de mesures: l'option 1 consiste à configurer directement un arbre avec children; l'option 2 consiste à configurer une liste plate avec parentId. Ces deux méthodes ne peuvent pas être utilisées simultanément
 
 :::
 
@@ -533,7 +533,7 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 **Type:** `(TableMeasure | MeasureGroup)[] | undefined`
 
 :::note{title=Description}
-Child measures or measure groups within the measure group.
+Mesures enfants ou groupes de mesures dans le groupe de mesures.
 
 :::
 
@@ -543,7 +543,7 @@ Child measures or measure groups within the measure group.
 **Type:** `Page | undefined`
 
 :::note{title=Description}
-Pagination configuration, used to specify the pagination field name, which must be a dimension.
+Configuration de pagination, utilisée pour indiquer le nom du champ de pagination, qui doit être une dimension.
 
 :::
 
@@ -553,7 +553,7 @@ Pagination configuration, used to specify the pagination field name, which must 
 **Type:** `string`
 
 :::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+Champ de pagination; spécifie le nom du champ de pagination, qui doit être une dimension
 
 :::
 
@@ -562,11 +562,11 @@ Pagination field; specifies the field name for pagination, must be a dimension
 **Type:** `string`
 
 :::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+Valeur de pagination actuelle; spécifie la valeur utilisée pour déterminer la page courante
 
 :::
 
-**Example**
+**Exemple**
 '2023\-01\-01'
 
 
@@ -577,7 +577,7 @@ Current pagination value; specifies the value used to determine the current page
 **Type:** `BackgroundColor`
 
 :::note{title=Description}
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+La couleur d'arrière-plan peut être une chaîne de couleur (par ex. 'red', 'blue') ou une valeur hex, rgb ou rgba (par ex. '#ff0000', 'rgba(255,0,0,0.5)')
 
 :::
 
@@ -587,7 +587,7 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Table border color
+Couleur de bordure du tableau
 
 :::
 
@@ -597,7 +597,7 @@ Table border color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Table body font size
+Taille de police du corps du tableau
 
 :::
 
@@ -607,7 +607,7 @@ Table body font size
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Table body font color
+Couleur de police du corps du tableau
 
 :::
 
@@ -617,7 +617,7 @@ Table body font color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Table body background color
+Couleur d’arrière-plan du corps du tableau
 
 :::
 
@@ -637,7 +637,7 @@ Header font size
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Header font color
+Couleur de police de l’en-tête
 
 :::
 
@@ -647,7 +647,7 @@ Header font color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Header background color
+Couleur d’arrière-plan de l’en-tête
 
 :::
 
@@ -667,7 +667,7 @@ Background color when the mouse hovers over a header cell, used to highlight the
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Background color of the entire row when the mouse hovers over the header, used to highlight the hovered row.
+Couleur d’arrière-plan de toute la ligne lorsque la souris survole l’en-tête, utilisée pour mettre en évidence la ligne survolée.
 
 :::
 
@@ -677,7 +677,7 @@ Background color of the entire row when the mouse hovers over the header, used t
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Border color for selected cells, used to highlight the selection.
+Couleur de bordure des cellules sélectionnées, utilisée pour mettre en évidence la sélection.
 
 :::
 
@@ -687,7 +687,7 @@ Border color for selected cells, used to highlight the selection.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Background color for selected cells, used to highlight the selection.
+Couleur d’arrière-plan des cellules sélectionnées, utilisée pour mettre en évidence la sélection.
 
 :::
 
@@ -697,7 +697,7 @@ Background color for selected cells, used to highlight the selection.
 **Type:** `BodyCellStyle | BodyCellStyle[] | undefined`
 
 :::note{title=Description}
-Sets special styles for cells in the table body.
+Définit une apparence spéciale pour les cellules du corps du tableau.
 
 :::
 
@@ -707,28 +707,28 @@ Sets special styles for cells in the table body.
 **Type:** `Selector | Selectors | FieldSelector | undefined`
 
 :::note{title=Description}
-Data selector
+Sélecteur de données
 
-If a selector is configured, it provides four types of data matching capabilities: numeric selectors, partial data selectors, conditional dimension selectors, and conditional measure selectors.
+Si un sélecteur est configuré, il fournit quatre types de capacités de correspondance des données : sélecteurs numériques, sélecteurs de données partielles, sélecteurs conditionnels de dimension et sélecteurs conditionnels de mesure.
 
-If no selector is configured, the style applies globally.
+Si aucun sélecteur n’est configuré, cette apparence s’applique globalement.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+Remarque : selector et dynamicFilter ne peuvent pas être utilisés simultanément ; dynamicFilter a une priorité plus élevée.
 
 :::
 
-**Example**
-Numeric selector
+**Exemple**
+Sélecteur numérique
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
+Sélecteur de données partielles
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+Sélecteur conditionnel de dimension
 selector = {
 field: 'category',
 operator: 'in',
@@ -740,7 +740,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+Sélecteur conditionnel de mesure
 selector = {
 field: 'profit',
 operator: '>=',
@@ -752,7 +752,7 @@ operator: 'between'
 value: [100, 300]
 }
 
-Field column filtering
+Filtrage par colonne de champ
 selector = {
 field: 'category'
 }
@@ -768,15 +768,15 @@ field: ['category', 'profit']
 **Type:** `string | string[]`
 
 :::note{title=Description}
-Field name, can be a single field or an array of multiple fields.
+Nom du champ, peut être un champ unique ou un tableau de plusieurs champs.
 
 :::
 
-**Example**
-Single field
+**Exemple**
+Champ unique
 field: 'sales'
 
-Multiple fields
+Plusieurs champs
 field: ['sales', 'profit', 'revenue']
 
 
@@ -786,11 +786,11 @@ field: ['sales', 'profit', 'revenue']
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Opérateur
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Sélectionne les éléments de données dont la valeur du champ de dimension est dans le tableau value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans le tableau value.
 
 :::
 
@@ -799,13 +799,13 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Opérateur
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Sélectionne les éléments de données dont la valeur du champ de dimension est dans le tableau value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans le tableau value.
 
-same as operator
+identique à operator
 
 :::
 
@@ -814,7 +814,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Selects dimension field values; supports arrays.
+Sélectionne les valeurs du champ de dimension ; prend en charge les tableaux.
 
 :::
 
@@ -823,39 +823,39 @@ Selects dimension field values; supports arrays.
 **Type:** `TableDynamicFilter | undefined`
 
 :::note{title=Description}
-Dynamic filter (code-driven)
+Filtre dynamique (piloté par code)
 
 
 
-Implements complex data filtering logic via AI-generated JavaScript code.
+Implémente une logique de filtrage de données complexe via du code JavaScript généré par IA.
 
-Suitable for scenarios where static selectors are difficult to express, such as Top N, statistical analysis, and complex conditions.
-
-
-
-Key capabilities:
-
-\- Supports arbitrarily complex data filtering conditions.
-
-\- Uses built-in utility functions for data manipulation.
-
-\- Safely executed in the browser environment (Web Worker sandbox).
+Convient aux scénarios difficiles à exprimer avec des selectors statiques, comme le Top N, l’analyse statistique et les conditions complexes.
 
 
 
-Environmental requirements: Only supports browser environments; Node.js environments will use the fallback.
+Fonctionnalités principales :
+
+\- Prend en charge des conditions de filtrage de données arbitrairement complexes.
+
+\- Utilise des fonctions utilitaires intégrées pour manipuler les données.
+
+\- S’exécute de manière sûre dans l’environnement du navigateur (sandbox Web Worker).
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+Exigences d’environnement : seuls les environnements navigateur sont pris en charge ; les environnements Node.js utilisent le fallback.
 
 
 
-Table dynamic filter configuration
+Remarque : selector et dynamicFilter ne peuvent pas être utilisés simultanément ; dynamicFilter a une priorité plus élevée.
 
 
 
-Implements precise cell-level filtering in tables via AI-generated JavaScript code.
+Configuration du filtre dynamique du tableau
+
+
+
+Implémente un filtrage précis au niveau des cellules du tableau via du code JavaScript généré par IA.
 
 :::
 
@@ -869,14 +869,14 @@ Implements precise cell-level filtering in tables via AI-generated JavaScript co
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language).
+Description des besoins de filtrage de l’utilisateur (langage naturel).
 
 :::
 
-**Example**
-"Highlight cells with sales greater than 1000"
+**Exemple**
+"Mettre en évidence les cellules dont les ventes sont supérieures à 1000"
 
-"Highlight the cell with the maximum value in each row"
+"Mettre en évidence la cellule ayant la valeur maximale dans chaque ligne"
 
 
 
@@ -885,27 +885,27 @@ User's filtering requirement description (natural language).
 **Type:** `string`
 
 :::note{title=Description}
-AI-generated JavaScript filtering code.
+Code JavaScript de filtrage généré par IA.
 
 
 
-\- Can only use built-in utility functions (accessible via _ or R).
+\- Peut uniquement utiliser les fonctions utilitaires intégrées (accessibles via _ ou R).
 
-\- Input parameters: data (array), where each item includes an _index field representing the row number.
+\- Paramètres d’entrée : data (array), chaque item contient un champ _index représentant le numéro de ligne.
 
-\- Must return an array of cell selectors: Array<{ __row_index: number, field: string }>.
+\- Doit retourner un tableau de sélecteurs de cellule : Array<{ __row_index: number, field: string }>.
 
-\- When field is "*", it indicates highlighting the entire row.
+\- Lorsque field vaut "*", cela indique que toute la ligne est mise en évidence.
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, and network requests.
+\- Interdit : eval, Function, opérations asynchrones, DOM API et requêtes réseau.
 
 :::
 
-**Example**
+**Exemple**
 Top N filtering
 dynamicFilter = {
 type: 'row\-with\-field',
-description: 'Highlight the top 3 products by sales',
+description: 'Mettre en évidence les 3 meilleurs produits par ventes',
 code: `
 const sorted = _.sortBy(data, 'sales');
 const reversed = [...sorted].reverse();
@@ -920,7 +920,7 @@ _.map(result, item => [
 enabled: true
 }
 
-Multi-condition filtering
+Filtrage multi-condition
 dynamicFilter = {
 type: 'row\-with\-field',
 description: 'Highlight products with profit margin > 20% and sales > 5000',
@@ -939,10 +939,10 @@ _.map(matched, item => [
 enabled: true
 }
 
-Relative value filtering
+Filtrage par valeur relative
 dynamicFilter = {   *
 type: 'row\-with\-field',
-description: 'Highlight products with sales above average',
+description: 'Mettre en évidence les produits dont les ventes sont supérieures à la moyenne',
 code: `
 const avgSales = _.meanBy(data, 'sales');
 const matched = _.filter(data, item => item.sales > avgSales);
@@ -973,7 +973,7 @@ _.map(topByRegion, item => [
 enabled: true
 }
 
-Highlight entire row
+Mettre toute la ligne en évidence
 dynamicFilter = {
 description: 'Highlight rows where sales are greater than profit',
 code: `
@@ -993,7 +993,7 @@ enabled: true
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+Plan de fallback lorsque l’exécution du code échoue ou que l’environnement n’est pas pris en charge.
 
 :::
 
@@ -1003,7 +1003,7 @@ Fallback plan when code execution fails or the environment is not supported.
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field; ID of an item in dimensions.
+Champ de dimension ; ID d’un élément dans dimensions.
 
 :::
 
@@ -1012,11 +1012,11 @@ Dimension field; ID of an item in dimensions.
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Opérateur
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Sélectionne les éléments de données dont la valeur du champ de dimension est dans le tableau value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans le tableau value.
 
 :::
 
@@ -1025,13 +1025,13 @@ Operator
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Operator
+Opérateur
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Sélectionne les éléments de données dont la valeur du champ de dimension est dans le tableau value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans le tableau value.
 
-same as operator
+identique à operator
 
 :::
 
@@ -1040,7 +1040,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Selects dimension field values; supports arrays.
+Sélectionne les valeurs du champ de dimension ; prend en charge les tableaux.
 
 :::
 
@@ -1049,11 +1049,11 @@ Selects dimension field values; supports arrays.
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution result (runtime field)
+Résultat d'exécution du filtre dynamique (champ runtime)
 
 
 
-Written during the prepare() phase; read-only at runtime
+Écrit pendant la phase prepare() ; lecture seule à l'exécution
 
 :::
 
@@ -1075,7 +1075,7 @@ Written during the prepare() phase; read-only at runtime
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Cell background color
+Couleur d’arrière-plan de la cellule
 
 :::
 
@@ -1084,7 +1084,7 @@ Cell background color
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to enable color scale configuration for background colors
+Indique s’il faut activer la configuration de l’échelle de couleurs pour les arrière-plans
 
 :::
 
@@ -1093,7 +1093,7 @@ Whether to enable color scale configuration for background colors
 **Type:** `{ minValue?: number; maxValue?: number; minColor: string; maxColor: string; } | undefined`
 
 :::note{title=Description}
-Cell background color scale mapping; takes priority over backgroundColor
+Mapping de l’échelle de couleurs d’arrière-plan des cellules; prioritaire sur backgroundColor
 
 :::
 
@@ -1103,7 +1103,7 @@ Cell background color scale mapping; takes priority over backgroundColor
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Minimum value; defaults to the minimum value in the current data column if not configured
+Valeur minimale ; utilise par défaut la valeur minimale de la colonne de données actuelle si elle n’est pas configurée
 
 :::
 
@@ -1112,7 +1112,7 @@ Minimum value; defaults to the minimum value in the current data column if not c
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Maximum value; defaults to the maximum value in the current data column if not configured
+Valeur maximale ; utilise par défaut la valeur maximale de la colonne de données actuelle si elle n’est pas configurée
 
 :::
 
@@ -1121,7 +1121,7 @@ Maximum value; defaults to the maximum value in the current data column if not c
 **Type:** `string`
 
 :::note{title=Description}
-Color corresponding to the minimum value
+Couleur correspondant à la valeur minimale
 
 :::
 
@@ -1130,7 +1130,7 @@ Color corresponding to the minimum value
 **Type:** `string`
 
 :::note{title=Description}
-Color corresponding to the maximum value
+Couleur correspondant à la valeur maximale
 
 :::
 
@@ -1139,7 +1139,7 @@ Color corresponding to the maximum value
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to enable the progress bar feature (a bar showing the relative size of the cell value); disabled by default
+Indique s’il faut activer la barre de progression (barre affichant la taille relative de la valeur de cellule); désactivée par défaut
 
 :::
 
@@ -1148,7 +1148,7 @@ Whether to enable the progress bar feature (a bar showing the relative size of t
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Progress bar color when the cell value is positive
+Couleur de la barre de progression lorsque la valeur de cellule est positive
 
 :::
 
@@ -1157,7 +1157,7 @@ Progress bar color when the cell value is positive
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Progress bar color when the cell value is negative
+Couleur de la barre de progression lorsque la valeur de cellule est négative
 
 :::
 
@@ -1166,11 +1166,11 @@ Progress bar color when the cell value is negative
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Progress bar minimum value
+Valeur minimale de la barre de progression
 
 
 
-Automatically calculates the column minimum if not configured
+Calcule automatiquement le minimum de la colonne si non configuré
 
 :::
 
@@ -1179,11 +1179,11 @@ Automatically calculates the column minimum if not configured
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Progress bar maximum value
+Valeur maximale de la barre de progression
 
 
 
-Automatically calculates the column maximum if not configured
+Calcule automatiquement le maximum de la colonne si non configuré
 
 :::
 
@@ -1192,7 +1192,7 @@ Automatically calculates the column maximum if not configured
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Cell text color
+Couleur du texte de la cellule
 
 :::
 
@@ -1201,7 +1201,7 @@ Cell text color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Cell text font size
+Taille de police du texte de la cellule
 
 :::
 
@@ -1210,7 +1210,7 @@ Cell text font size
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Cell border color
+Couleur de bordure de la cellule
 
 :::
 
@@ -1219,7 +1219,7 @@ Cell border color
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Cell border line width
+Largeur de ligne de bordure de la cellule
 
 :::
 
@@ -1229,35 +1229,35 @@ Cell border line width
 **Type:** `TotalType | undefined`
 
 :::note{title=Description}
-The type of summary row to display; only applicable to measure columns
+Type de ligne de synthèse à afficher ; applicable uniquement aux colonnes de mesure
 
-\- 'sum': Displays the sum row
+\- 'sum': Affiche la ligne de somme
 
-\- 'avg': Displays the average row
+\- 'avg': Affiche la ligne de moyenne
 
-\- 'max': Displays the maximum row
+\- 'max': Affiche la ligne de maximum
 
-\- 'min': Displays the minimum row
+\- 'min': Affiche la ligne de minimum
 
-\- 'count': Displays the count row
+\- 'count': Affiche la ligne de comptage
 
 
 
-Table summary row type
+Type de ligne de synthèse du tableau
 
-\- 'sum': Sum
+\- 'sum': Somme
 
-\- 'avg': Average
+\- 'avg': Moyenne
 
 \- 'max': Maximum
 
 \- 'min': Minimum
 
-\- 'count': Count
+\- 'count': Nombre
 
 :::
 
-**Example**
+**Exemple**
 'sum'
 
 
@@ -1268,19 +1268,19 @@ Table summary row type
 **Type:** `Theme | undefined`
 
 :::note{title=Description}
-Chart theme. Theme is a lower-priority configuration that includes universal settings shared by all chart types and specific settings for individual chart types. Built-in themes include 'light' and 'dark'; users can customize themes via the Builder.
+Thème du graphique. Le thème est une configuration fonctionnelle de priorité plus faible. Il comprend les paramètres communs à tous les types de graphiques et les paramètres propres à un seul type de graphique. Les thèmes intégrés light et dark peuvent être personnalisés via Builder.
 
 
 
-Theme
+Thème
 
 
 
-Built-in light and dark themes; new themes can be customized using registerTheme.
+Thèmes light et dark intégrés ; de nouveaux thèmes peuvent être personnalisés via registerTheme.
 
 :::
 
-**Example**
+**Exemple**
 'dark'
 
 'light'
@@ -1304,6 +1304,6 @@ Built-in light and dark themes; new themes can be customized using registerTheme
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
-Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, language can be set using the intl.setLocale('zh-CN') method.
+Configuration de la langue du graphique; prend en charge 'zh-CN' et 'en-US'. La langue peut aussi être définie avec la méthode intl.setLocale('zh-CN').
 
 :::

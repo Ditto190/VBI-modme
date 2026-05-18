@@ -7,10 +7,10 @@ Current exports are split into two layers:
 - Root export `@visactor/vbi-react`: `useVBI`, `useVSeed`, `useChartType`, `useDimensions`, `useMeasures`, `useWhereFilter`, `useHavingFilter`
 - Sub-path export `@visactor/vbi-react/components`: `BuilderLayout`, `ChartRenderer`, `ChartTypeSelector`, `FieldPanel`
 
-## Purpose
+## Positioning
 
 - State subscription and rendering encapsulation for React 18+
-- Uses `VBIChartBuilder` as the Single Source of Truth (SSOT) — no additional business state copies
+- Uses `VBIChartBuilder` as the Single Source of Truth (SSOT), without keeping an additional business-state copy
 - Ideal for building BI configuration panels, chart preview areas, and DSL debug panels
 
 ## Installation
@@ -29,7 +29,7 @@ pnpm --filter=<your-app> add @visactor/vbi-react@workspace:* @visactor/vbi@works
 
 ## Quick Start
 
-The example below demonstrates the minimal closed loop with `useVBI` + `useVSeed`:
+The example below demonstrates the minimal end-to-end flow with `useVBI` + `useVSeed`:
 
 ```tsx
 import { useMemo } from 'react'

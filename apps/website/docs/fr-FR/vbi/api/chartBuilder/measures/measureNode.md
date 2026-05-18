@@ -1,30 +1,30 @@
 # MeasureNodeBuilder
 
-Builder de noeud de mesure pour configurer une seule mesure
+Builder de nœud de mesure pour configurer une seule mesure
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getId
 
-Obtenir l ID du noeud
+Obtenir l'ID du nœud
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getId(): string
@@ -36,7 +36,7 @@ getId(): string
 
 Obtenir le nom du champ
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getField(): string
@@ -46,9 +46,9 @@ getField(): string
 
 ### getEncoding
 
-Obtenir la position d encodage du graphique
+Obtenir la position d'encodage du graphique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getEncoding(): VBIMeasure['encoding'] | undefined
@@ -60,7 +60,7 @@ getEncoding(): VBIMeasure['encoding'] | undefined
 
 Obtenir la configuration de tri
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getSort(): VBISort | undefined
@@ -70,9 +70,9 @@ getSort(): VBISort | undefined
 
 ### setAlias
 
-Definir le nom affiche
+Définir le nom affiché
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setAlias(alias: string): this
@@ -80,17 +80,17 @@ setAlias(alias: string): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `alias` | string | - Nom affiche |
+| `alias` | string | - Nom affiché |
 
 ### setEncoding
 
-Definir la position d encodage du graphique
+Définir la position d'encodage du graphique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setEncoding(encoding: NonNullable<VBIMeasure['encoding']>): this
@@ -98,17 +98,17 @@ setEncoding(encoding: NonNullable<VBIMeasure['encoding']>): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `encoding` | NonNullable<VBIMeasure['encoding']> | - Position d encodage de mesure |
+| `encoding` | NonNullable<VBIMeasure['encoding']> | - Position d'encodage de mesure |
 
 ### setSort
 
-Definir la configuration de tri
+Définir la configuration de tri
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setSort(sort: VBISort): this
@@ -116,17 +116,17 @@ setSort(sort: VBISort): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `sort` | VBISort | - Configuration de tri |
 
 ### setAggregate
 
-Definir la fonction d agregation
+Définir la fonction d'agrégation
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setAggregate(aggregate: VBIMeasure['aggregate']): this
@@ -134,17 +134,17 @@ setAggregate(aggregate: VBIMeasure['aggregate']): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `aggregate` | VBIMeasure['aggregate'] | - Configuration d agregation |
+| `aggregate` | VBIMeasure['aggregate'] | - Configuration d'agrégation |
 
 ### setFormat
 
-Definir le format numerique
+Définir le format numérique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setFormat(format: VBIMeasureFormat): this
@@ -152,17 +152,17 @@ setFormat(format: VBIMeasureFormat): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `format` | VBIMeasureFormat | - Configuration de format |
 
 ### getFormat
 
-Obtenir le format numerique
+Obtenir le format numérique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getFormat(): VBIMeasureFormat | undefined
@@ -172,9 +172,9 @@ getFormat(): VBIMeasureFormat | undefined
 
 ### clearFormat
 
-Effacer la configuration de format numerique
+Effacer la configuration de format numérique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 clearFormat(): this
@@ -186,7 +186,7 @@ clearFormat(): this
 
 Effacer la configuration de tri
 
-**Definition**:
+**Définition**:
 
 ```typescript
 clearSort(): this
@@ -198,7 +198,7 @@ clearSort(): this
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIMeasure

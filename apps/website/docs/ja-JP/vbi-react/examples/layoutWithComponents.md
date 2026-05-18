@@ -5,7 +5,7 @@
 ## 依存関係
 
 - パッケージ依存: `@visactor/vbi-react/components`、`@visactor/vbi`、`react`
-- 入力制約: `FieldPanel` の追加・削除操作を示せるように、`builder` には選択可能なディメンション/メジャーフィールドが必要です
+- 入力制約: `FieldPanel` の追加・削除操作を示せるように、`builder` には選択可能なディメンション/メジャーのフィールドが必要です
 
 ## コードスニペット
 

@@ -14,7 +14,7 @@ useVBI(builder: VBIChartBuilder): UseVBIReturn
 
 ## Beschreibung
 
-Abonniert Änderungen am DSL-Snapshot des builders und gibt das aktuelle `dsl` sowie den ursprünglichen `builder` zurück.
+Abonniert Änderungen am DSL-Snapshot des Builders und gibt das aktuelle `dsl` sowie den ursprünglichen `builder` zurück.
 
 ## Minimales Beispiel
 

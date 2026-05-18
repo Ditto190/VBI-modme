@@ -16,7 +16,7 @@ Exécute le code de filtre dynamique de manière asynchrone. À appeler avant `b
 build<T = S>(): T
 ```
 
-Génère la configuration finale du graphique (Spec). C'est la méthode centrale la plus utilisée. Si la configuration contient du `dynamicFilter` code, il faut d'abord appeler `prepare()`.
+Génère la configuration finale du graphique (Spec). C'est la méthode centrale la plus utilisée. Si la configuration contient du `code` dans `dynamicFilter`, il faut d'abord appeler `prepare()`.
 
 ### buildSpec
 
@@ -48,7 +48,7 @@ Récupère les informations de champs liées aux couleurs dans les données. Sou
 getColorIdMap(): Record
 ```
 
-Récupère la table de mapping détaillée des champs de couleur. Key est l'ID de couleur, Value correspond aux informations détaillées.
+Récupère la table de correspondance détaillée des champs de couleur. La clé est l'ID de couleur, La valeur correspond aux informations détaillées.
 
 ### getColorValueMap
 
@@ -56,7 +56,7 @@ Récupère la table de mapping détaillée des champs de couleur. Key est l'ID d
 getColorValueMap(): undefined | Record
 ```
 
-Récupère le mapping de `colorId` vers la valeur de couleur finale dans une carte de couleurs discrète.
+Récupère la correspondance de `colorId` vers la valeur de couleur finale dans une carte de couleurs discrète.
 
 ## Static Methods
 
@@ -98,7 +98,7 @@ Récupère toutes les configurations de thème enregistrées.
 static from<T extends Spec = Spec>(vseed: VSeed): Builder<T>
 ```
 
-Méthode factory statique permettant de créer facilement une instance Builder.
+Méthode de fabrique statique permettant de créer facilement une instance Builder.
 
 ### registerAdvancedPipeline
 

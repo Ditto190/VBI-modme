@@ -9,7 +9,7 @@ Các export hiện tại được chia thành hai lớp:
 
 ## Định vị
 
-- Bọc phần đăng ký trạng thái và kết xuất cho React 18+
+- Bọc phần đăng ký theo dõi trạng thái và kết xuất cho React 18+
 - Dùng `VBIChartBuilder` làm Single Source of Truth (SSOT), không duy trì thêm bản sao trạng thái nghiệp vụ
 - Phù hợp để xây dựng bảng cấu hình BI, khu vực xem trước biểu đồ và bảng debug DSL
 
@@ -29,7 +29,7 @@ pnpm --filter=<your-app> add @visactor/vbi-react@workspace:* @visactor/vbi@works
 
 ## Bắt đầu nhanh
 
-Ví dụ dưới đây minh họa vòng khép kín tối thiểu với `useVBI` + `useVSeed`:
+Ví dụ dưới đây minh họa luồng tối thiểu từ đầu đến cuối với `useVBI` + `useVSeed`:
 
 ```tsx
 import { useMemo } from 'react'

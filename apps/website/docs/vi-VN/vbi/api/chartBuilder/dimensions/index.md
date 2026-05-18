@@ -1,170 +1,170 @@
 # DimensionsBuilder
 
-Builder dimension dung de them, sua, xoa cau hinh dimension. Dimension la field phan loai trong du lieu, nhu thoi gian, khu vuc, danh muc san pham
+Builder dimension dùng để thêm, sửa, xóa cấu hình dimension. Dimension là field phân loại trong dữ liệu, như thời gian, khu vực, danh mục sản phẩm
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### add
 
-Them mot dimension
+Thêm một dimension
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 add(field: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBuilder
 ```
 
-**Tra ve**: `DimensionsBuilder`
+**Trả về**: `DimensionsBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `field` | string | - Ten field |
-| `callback` | (node: DimensionNodeBuilder) => void | - Ham callback |
+| `field` | string | - Tên field |
+| `callback` | (node: DimensionNodeBuilder) => void | - Hàm callback |
 
 ### remove
 
-Xoa dimension co ID chi dinh
+Xóa dimension có ID chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 remove(id: string): DimensionsBuilder
 ```
 
-**Tra ve**: `DimensionsBuilder`
+**Trả về**: `DimensionsBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `id` | string | - ID dimension |
 
 ### update
 
-Cap nhat cau hinh cua dimension ID chi dinh
+Cập nhật cấu hình của dimension ID chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 update(id: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBuilder
 ```
 
-**Tra ve**: `DimensionsBuilder`
+**Trả về**: `DimensionsBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `id` | string | - ID dimension |
-| `callback` | (node: DimensionNodeBuilder) => void | - Ham callback |
+| `callback` | (node: DimensionNodeBuilder) => void | - Hàm callback |
 
 ### find
 
-Tim dimension dau tien theo dieu kien callback, hanh vi giong Array.find
+Tìm dimension đầu tiên theo điều kiện callback, hành vi giống Array.find
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 find(predicate: (node: DimensionNodeBuilder, index: number) => boolean): DimensionNodeBuilder | undefined
 ```
 
-**Tra ve**: `DimensionNodeBuilder \| undefined`
+**Trả về**: `DimensionNodeBuilder \| undefined`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `predicate` | (node: DimensionNodeBuilder, index: number) => boolean | - Dieu kien tim kiem |
+| `predicate` | (node: DimensionNodeBuilder, index: number) => boolean | - Điều kiện tìm kiếm |
 
 ### findAll
 
-Lay tat ca dimension
+Lấy tất cả dimension
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 findAll(): DimensionNodeBuilder[]
 ```
 
-**Tra ve**: `DimensionNodeBuilder[]`
+**Trả về**: `DimensionNodeBuilder[]`
 
 ### toJSON
 
-Xuat tat ca dimension thanh mang JSON
+Xuất tất cả dimension thành mảng JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIDimension[]
 ```
 
-**Tra ve**: `VBIDimension[]`
+**Trả về**: `VBIDimension[]`
 
 ### observe
 
-Lang nghe thay doi dimension va tra ve ham huy lang nghe
+Lắng nghe thay đổi dimension và trả về hàm hủy lắng nghe
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveDeepCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveDeepCallback | - Ham callback |
+| `callback` | ObserveDeepCallback | - Hàm callback |
 
 ### static isDimensionNode
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 static isDimensionNode(node: VBIDimensionTree[0]): node is VBIDimension
 ```
 
-**Tra ve**: `node is VBIDimension`
+**Trả về**: `node is VBIDimension`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `node` | VBIDimensionTree[0] | - |
 
 ### static isDimensionGroup
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 static isDimensionGroup(node: VBIDimensionTree[0]): node is VBIDimensionGroup
 ```
 
-**Tra ve**: `node is VBIDimensionGroup`
+**Trả về**: `node is VBIDimensionGroup`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `node` | VBIDimensionTree[0] | - |

@@ -1,7 +1,7 @@
 # RaceLine
 
 :::note{title=Beschreibung}
-Animiertes Liniendiagramm (Race Line Chart)
+Dynamisches Liniendiagramm (Race Line Chart)
 
 Geeignet, um Trends von Daten im Zeitverlauf darzustellen; Datenpunkte werden durch Liniensegmente zu einer Trendlinie verbunden
 
@@ -9,20 +9,20 @@ Anwendungsszenarien:
 
 \- Trends mehrerer Datenreihen im Zeitverlauf darstellen
 
-\- Wachstums- oder Rueckgangsmuster verschiedener Kategorien vergleichen
+\- Wachstums- oder Rückgangsmuster verschiedener Kategorien vergleichen
 
 \- Schwankungen der Daten entlang der Zeitdimension beobachten
 
 :::
 
 :::note{title=Note}
-Animiertes Liniendiagramm:
+Dynamisches Liniendiagramm:
 
 \- Die X-Achse ist normalerweise eine Zeit- oder Kategorieachse und zeigt Dimensionswerte
 
 \- Die Y-Achse ist eine Wertachse und zeigt Kennzahlenwerte
 
-\- Die Zeitdimension kann ueber den Player gesteuert werden, um das Fortschreiben der Linie dynamisch darzustellen
+\- Die Zeitdimension kann über den Player gesteuert werden, um das Fortschreiben der Linie dynamisch darzustellen
 
 :::
 
@@ -32,7 +32,7 @@ Animiertes Liniendiagramm:
 **Type:** `"raceLine"`
 
 :::note{title=Beschreibung}
-Animiertes Liniendiagramm, geeignet zur Darstellung von Datentrends im Zeitverlauf
+Dynamisches Liniendiagramm, geeignet zur Darstellung von Datentrends im Zeitverlauf
 
 :::
 
@@ -46,23 +46,21 @@ Datenquelle
 
 :::
 
-
 ## dimensions
 
 **Type:** `ColumnDimension[] | undefined`
 
 :::note{title=Beschreibung}
-Die erste Dimension wird der X-Achse zugeordnet; die verbleibenden Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zusammengeführt und als Legendeneinträge angezeigt.
+Dimensionen
 
 :::
-
 
 ### id
 
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Feld-ID, die der Dimension entspricht
+Feld-ID der Dimension
 
 :::
 
@@ -80,7 +78,7 @@ Dimensionsalias
 **Type:** `TimeFormat | undefined`
 
 :::note{title=Beschreibung}
-Datumsformatkonfiguration der Dimension
+Datumsformat-Konfiguration der Dimension
 
 :::
 
@@ -90,7 +88,7 @@ Datumsformatkonfiguration der Dimension
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
 :::note{title=Beschreibung}
-Zeitgranularität; bestimmt die Genauigkeit der Datumsanzeige
+Zeitgranularität, bestimmt die Genauigkeit der Datumsanzeige
 
 :::
 
@@ -107,9 +105,9 @@ Kanal, dem die Dimension zugeordnet wird
 
 \- detail: unterstützt die Zuordnung mehrerer Dimensionen zum Detailkanal
 
-\- tooltip: unterstützt das Zuordnen mehrerer Dimensionen zum Tooltip-Kanal
+\- tooltip: unterstützt die Zuordnung mehrerer Dimensionen zum Tooltip-Kanal
 
-\- label: unterstützt das Zuordnen mehrerer Dimensionen zum Beschriftungskanal
+\- label: unterstützt die Zuordnung mehrerer Dimensionen zum Label-Kanal
 
 \- row: unterstützt die Zuordnung mehrerer Dimensionen zum Zeilenkanal
 
@@ -127,7 +125,6 @@ Kennzahlen
 
 :::
 
-
 ### id
 
 **Type:** `string`
@@ -142,7 +139,7 @@ Kennzahl-ID, muss eindeutig sein
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht alias der id
+Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht der Alias standardmäßig der id
 
 :::
 
@@ -153,17 +150,17 @@ Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht alias der 
 :::note{title=Beschreibung}
 Automatische Zahlenformatierung, standardmäßig aktiviert, höchste Priorität
 
-Wenn autoFormat=true ist, werden alle numFormat-Konfigurationen überschrieben
+Wenn autoFormat=true ist, überschreibt dies alle numFormat-Konfigurationen
 
-Wenn aktiviert, wählen Diagramm-Datenbeschriftungen und Tooltips automatisch die passende Formatierung anhand von Kennzahlwerten und Gebietsschema aus
+Wenn aktiviert, wählen Diagramm-Datenlabels und Tooltips anhand von Kennzahlwerten und Locale automatisch die passende Formatierung aus
 
-Formatierungsregeln: Dezimalzahlen mit aktivierter compact notation, mindestens 0 und höchstens 2 Dezimalstellen, automatische Rundung, umgesetzt mit Intl.NumberFormat des Browsers
+Formatierungsregeln: Dezimalzahlen mit aktivierter kompakter Schreibweise, mindestens 0 Dezimalstellen, höchstens 2 Dezimalstellen, automatische Rundung und Nutzung der Intl.NumberFormat-Implementierung des Browsers
 
-Zum Beispiel:
+Beispiel:
 
-\- locale=zh-CN: 749740.264 → 74.45万
+\- locale='zh-CN': 749740.264 → 74.45万
 
-\- locale=en-US: 749740.264 → 744.5K
+\- locale='en-US': 749740.264 → 744.5K
 
 :::
 
@@ -172,7 +169,7 @@ Zum Beispiel:
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-Benutzerdefinierte Zahlenformatierung für Kennzahlen; wird automatisch auf Beschriftungen und Tooltips angewendet
+Benutzerdefinierte Zahlenformatierung für Kennzahlen; wird automatisch auf Labels und Tooltips angewendet
 
 Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit gesetzt werden; andernfalls überschreibt autoFormat diese Konfiguration
 
@@ -184,7 +181,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformattyp, unterstützt: number (Dezimalzahl), percent (%), permille (‰), wissenschaftliche Notation
 
 :::
 
@@ -193,13 +190,13 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformatverhältnis, darf nicht 0 sein
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -208,12 +205,13 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
+Zahlenformatsymbol, z. B. %, ‰
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -222,7 +220,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Tausendertrennzeichen für Zahlenformatierung
 
 :::
 
@@ -231,7 +229,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Suffix der Zahlenformatierung
 
 :::
 
@@ -240,7 +238,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Präfix der Zahlenformatierung
 
 :::
 
@@ -249,16 +247,17 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Dezimalstellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumFractionDigits und maximumFractionDigits des Browsers; niedrigere Priorität als significantDigits
 
 :::
 
 **Beispiel**
-
-
-Easing-Funktion der Animation
-
-
-
+\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -267,19 +266,19 @@ Easing-Funktion der Animation
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
+Signifikante Stellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumSignificantDigits und maximumSignificantDigits des Browsers; höhere Priorität als fractionDigits
 
 :::
 
 **Beispiel**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
-
+\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -288,13 +287,13 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungspriorität für die Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingPriority
 
 :::
 
 **Beispiel**
-Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
-
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -303,7 +302,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungsmodus für die Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingMode
 
 :::
 
@@ -317,7 +316,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformattyp, unterstützt: number (Dezimalzahl), percent (%), permille (‰), wissenschaftliche Notation
 
 :::
 
@@ -326,13 +325,13 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformatverhältnis, darf nicht 0 sein
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -341,12 +340,13 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
+Zahlenformatsymbol, z. B. %, ‰
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -355,7 +355,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Tausendertrennzeichen für Zahlenformatierung
 
 :::
 
@@ -364,7 +364,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Suffix der Zahlenformatierung
 
 :::
 
@@ -373,7 +373,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Präfix der Zahlenformatierung
 
 :::
 
@@ -382,16 +382,17 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Dezimalstellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumFractionDigits und maximumFractionDigits des Browsers; niedrigere Priorität als significantDigits
 
 :::
 
 **Beispiel**
-
-
-Easing-Funktion der Animation
-
-
-
+\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -400,19 +401,19 @@ Easing-Funktion der Animation
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
+Signifikante Stellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumSignificantDigits und maximumSignificantDigits des Browsers; höhere Priorität als fractionDigits
 
 :::
 
 **Beispiel**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
-
+\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -421,13 +422,13 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungspriorität für die Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingPriority
 
 :::
 
 **Beispiel**
-Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
-
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -436,7 +437,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungsmodus für die Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingMode
 
 :::
 
@@ -449,13 +450,13 @@ Kanal, dem die Kennzahl zugeordnet wird
 
 \- yAxis: Kennzahl wird der Y-Achse zugeordnet
 
-\- detail: Measure mapped to the detail channel
+\- detail: Kennzahl, die dem Detailkanal zugeordnet wird
 
-\- color: Kennzahl wird dem Farbkanal zugeordnet
+\- color: measure wird dem Farbkanal zugeordnet
 
-\- label: Kennzahl, die dem Beschriftungskanal zugeordnet wird
+\- label: measure wird dem label-Kanal zugeordnet
 
-\- tooltip: Kennzahl, die dem Tooltip-Kanal zugeordnet wird
+\- tooltip: measure wird dem tooltip-Kanal zugeordnet
 
 :::
 
@@ -464,12 +465,12 @@ Kanal, dem die Kennzahl zugeordnet wird
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-In flacher Kennzahlkonfiguration wird eine baumförmige Kennzahlgruppe aufgebaut. parentId verweist auf die id der übergeordneten Kennzahlgruppe und dient zum Aufbau des Kennzahlbaums
+Erstellt in flacher Kennzahlkonfiguration eine baumförmige Kennzahlgruppe. parentId verweist auf die id der übergeordneten Kennzahlgruppe und dient zum Aufbau des Kennzahlbaums
 
 :::
 
 :::tip{title=Tip}
-Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfiguriert den Kennzahlbaum direkt mit children; Option 2 konfiguriert eine flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
+Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: erstens direkt als Kennzahlbaum mit children; zweitens als flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
 
 :::
 
@@ -479,7 +480,11 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `Page | undefined`
 
 :::note{title=Beschreibung}
+Paginierung
 
+
+
+Paginierung-Konfiguration für Diagrammseiten
 
 :::
 
@@ -489,7 +494,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
+Paginierungsfeld; gibt den Feldnamen für die Paginierung an und muss eine Dimension sein
 
 :::
 
@@ -498,7 +503,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
+Aktueller Paginierungswert; gibt den Wert zur Bestimmung der aktuellen Seite an
 
 :::
 
@@ -513,7 +518,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `Player | undefined`
 
 :::note{title=Beschreibung}
-Player-Konfiguration zur Angabe der Zeitdimension; Kernkonfiguration des animierten Liniendiagramms
+Player-Konfiguration zur Angabe der Zeitdimension; Kernkonfiguration des dynamischen Balkendiagramms
 
 
 
@@ -668,6 +673,11 @@ Farbe der Vorwärts-Taste des Players
 **Type:** `BackgroundColor`
 
 :::note{title=Beschreibung}
+Diagramm-Hintergrundfarbe
+
+
+
+Die Hintergrundfarbe kann eine Farbzeichenfolge sein (z. B. 'red', 'blue') oder ein hex-, rgb- oder rgba-Wert (z. B. '#ff0000', 'rgba(255,0,0,0.5)')
 
 :::
 
@@ -677,7 +687,11 @@ Farbe der Vorwärts-Taste des Players
 **Type:** `Color | undefined`
 
 :::note{title=Beschreibung}
-Farbkonfiguration
+Farbe
+
+
+
+Farbkonfiguration zur Definition des Farbschemas des Diagramms, einschließlich Farblisten, Farbzuordnungen und Farbverläufen.
 
 :::
 
@@ -687,7 +701,7 @@ Farbkonfiguration
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
+Diskretes Farbschema zur Definition der Farben verschiedener Elemente im Diagramm
 
 :::
 
@@ -701,7 +715,7 @@ Farbkonfiguration
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
+Lineares Farbverlaufsschema zur Definition der Farben verschiedener Elemente im Diagramm
 
 :::
 
@@ -715,7 +729,7 @@ Farbkonfiguration
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Beschreibung}
-
+Farbzuordnung zur Abbildung von Datenwerten auf bestimmte Farben
 
 :::
 
@@ -732,7 +746,7 @@ Farbkonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe positiver Werte im Diagramm
 
 :::
 
@@ -741,7 +755,7 @@ Farbkonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe negativer Werte im Diagramm
 
 :::
 
@@ -751,7 +765,11 @@ Farbkonfiguration
 **Type:** `Label | undefined`
 
 :::note{title=Beschreibung}
-Beschriftungskonfiguration
+Label
+
+
+
+Label-Konfiguration zur Definition von Datenlabels im Diagramm, einschließlich Position, Format und Stil.
 
 :::
 
@@ -761,7 +779,7 @@ Beschriftungskonfiguration
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
+Ob die Label-Funktion aktiviert ist
 
 :::
 
@@ -770,7 +788,7 @@ Beschriftungskonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob Labels in die nächste Zeile umbrechen
 
 :::
 
@@ -779,11 +797,11 @@ Beschriftungskonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Labels Kennzahlwerte anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Konfliktrisiko, da alle darstellungsbezogenen Kennzahlen die `foldMeasures`-Verarbeitung durchlaufen und zu einer Kennzahl zusammengeführt werden, die einen einzelnen Datenpunkt repräsentiert
 
-
-
-
+Hinweis: Das label von encoding hat höhere Priorität; diese Konfiguration wirkt sich nicht auf das label von encoding aus
 
 :::
 
@@ -792,11 +810,11 @@ Beschriftungskonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Labels den Prozentanteil von Kennzahlwerten anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Konfliktrisiko, da alle darstellungsbezogenen Kennzahlen die `foldMeasures`-Verarbeitung durchlaufen und zu einer Kennzahl zusammengeführt werden, die einen einzelnen Datenpunkt repräsentiert
 
-
-
-
+Hinweis: Das label von encoding hat höhere Priorität; diese Konfiguration wirkt sich nicht auf das label von encoding aus
 
 :::
 
@@ -805,11 +823,11 @@ Beschriftungskonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Labels Dimensionslabels anzeigen
 
+Alle Dimensionslabels anzeigen
 
-
-
-
+Hinweis: Das label von encoding hat höhere Priorität; diese Konfiguration wirkt sich nicht auf das label von encoding aus
 
 :::
 
@@ -818,7 +836,7 @@ Beschriftungskonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob Labelwerte automatisch formatiert werden; wenn autoFormat true ist, wird die numFormat-Konfiguration ignoriert
 
 :::
 
@@ -827,7 +845,7 @@ Beschriftungskonfiguration
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-
+Formatkonfiguration für Labelwerte; wird mit `format` in `measure` zusammengeführt, wobei `format` in `measure` höhere Priorität hat. numFormat hat niedrigere Priorität als autoFormat
 
 :::
 
@@ -837,7 +855,7 @@ Beschriftungskonfiguration
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformattyp, unterstützt: number (Dezimalzahl), percent (%), permille (‰), wissenschaftliche Notation
 
 :::
 
@@ -846,13 +864,13 @@ Beschriftungskonfiguration
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformatverhältnis, darf nicht 0 sein
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -861,12 +879,13 @@ Beschriftungskonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
+Zahlenformatsymbol, z. B. %, ‰
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -875,7 +894,7 @@ Beschriftungskonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Tausendertrennzeichen für Zahlenformatierung
 
 :::
 
@@ -884,7 +903,7 @@ Beschriftungskonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Suffix der Zahlenformatierung
 
 :::
 
@@ -893,7 +912,7 @@ Beschriftungskonfiguration
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Präfix der Zahlenformatierung
 
 :::
 
@@ -902,16 +921,17 @@ Beschriftungskonfiguration
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Dezimalstellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumFractionDigits und maximumFractionDigits des Browsers; niedrigere Priorität als significantDigits
 
 :::
 
 **Beispiel**
-
-
-Easing-Funktion der Animation
-
-
-
+\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -920,19 +940,19 @@ Easing-Funktion der Animation
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
+Signifikante Stellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumSignificantDigits und maximumSignificantDigits des Browsers; höhere Priorität als fractionDigits
 
 :::
 
 **Beispiel**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
-
+\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -941,13 +961,13 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungspriorität für die Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingPriority
 
 :::
 
 **Beispiel**
-Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
-
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -956,7 +976,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungsmodus für die Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingMode
 
 :::
 
@@ -965,7 +985,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-  orderBy: 'profit',
+Label-Schriftgröße
 
 :::
 
@@ -974,7 +994,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-or
+Label-Schriftstärke
 
 :::
 
@@ -983,7 +1003,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Label-Hintergrundfarbe
 
 :::
 
@@ -992,7 +1012,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Label-Konturfarbe
 
 :::
 
@@ -1001,7 +1021,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Label-Schriftfarbe
 
 :::
 
@@ -1010,7 +1030,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob die Label-Schriftfarbe abhängig von der Farbe des grafischen Elements automatisch invertiert wird
 
 :::
 
@@ -1019,7 +1039,7 @@ or
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Beschreibung}
-
+Labelposition
 
 :::
 
@@ -1028,7 +1048,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob die Label-Überlappungsvermeidung aktiviert ist
 
 :::
 
@@ -1037,7 +1057,7 @@ or
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
+Label-Filterung; die Standardbeziehung zwischen Selektoren ist OR
 
 :::
 
@@ -1047,8 +1067,7 @@ or
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 #### operator
@@ -1056,9 +1075,9 @@ or
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -1068,12 +1087,12 @@ or
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -1082,8 +1101,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 ### dynamicFilter
@@ -1091,38 +1109,25 @@ same as operator
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von KI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik über KI-generierten JavaScript-Code.
 
+Kernfunktionen:
 
+- Unterstützt beliebig komplexe Datenfilterbedingungen
 
-Strichfarbe des Hintergrunds
+- Verwendet integrierte Hilfsfunktionen für Datenoperationen
 
+- Führt sicher in der Browserumgebung aus (Web-Worker-Sandbox)
 
+Umgebungsanforderung: Nur Browserumgebungen werden unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden; dynamicFilter hat höhere Priorität
 
+Konfiguration des dynamischen Diagrammfilters
 
-
-
-
-
-
-
-
-
-'red'
-
-
-
-
-
-
-
-
-
-
-
-Eckenradius des Hintergrunds
-
+Filtert Diagrammmarkierungen (Flächen, Punkte usw.) über KI-generierten JavaScript-Code
 :::
 
 
@@ -1135,14 +1140,12 @@ Eckenradius des Hintergrunds
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
-"Datenelemente mit Umsatz ueber 1000 hervorheben"
+"Highlight data items with sales greater than 1000"
 
-"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -1151,23 +1154,24 @@ Eckenradius des Hintergrunds
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Operator
+KI-generierter JavaScript-Filtercode
 
 
 
-\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
+- Es dürfen nur integrierte Hilfsfunktionen verwendet werden (zugänglich über _ oder R)
 
-**Beispiel**
+- Eingabeparameter: data (Array), jedes item enthält ein __row_index-Feld als Zeilennummer
 
+- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+- __row_index bezeichnet die Zeilennummer des ursprünglichen Datenelements, field das hervorzuhebende Feld
 
-
-
+- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
 
 :::
 
 **Beispiel**
-sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
+Das sales-Feld von Datenelementen mit sales größer als 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1176,7 +1180,7 @@ field: 'sales'
 }));
 ```
 
-Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
+Das Datenelement mit der höchsten Gewinnmarge je Bereich hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1190,7 +1194,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
+Datenelemente hervorheben, die mehrere Bedingungen erfüllen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1205,14 +1209,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback-Lösung, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -1221,8 +1223,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 ##### operator
@@ -1230,9 +1231,9 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -1242,12 +1243,12 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -1256,8 +1257,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 #### result
@@ -1265,12 +1265,11 @@ same as operator
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des animierten Filters (Laufzeitfeld)
 
 
 
-
-Textfarbe
-
+Wird während der prepare()-Phase geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -1292,8 +1291,9 @@ Textfarbe
 **Type:** `Legend | undefined`
 
 :::note{title=Beschreibung}
-Legendenkonfiguration
+Legende
 
+Legendenkonfiguration zum Definieren der Diagrammlegende, einschließlich Position, Format und Stil.
 :::
 
 
@@ -1302,8 +1302,7 @@ Legendenkonfiguration
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Legendenfunktion aktiviert ist.
 :::
 
 **Beispiel**
@@ -1316,13 +1315,11 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Legendenrahmen aktiviert ist.
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1335,7 +1332,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Legenden-Schriftfarbe
 
 :::
 
@@ -1344,7 +1341,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Pager-Icon-Farbe
 
 :::
 
@@ -1353,7 +1350,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Farbe deaktivierter Pager-Icons
 
 :::
 
@@ -1362,8 +1359,7 @@ border: true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Legende
 :::
 
 **Beispiel**
@@ -1376,7 +1372,7 @@ labelFontSize: 10
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Legenden-Schriftfarbe
 
 :::
 
@@ -1385,8 +1381,7 @@ labelFontSize: 10
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Legende
 :::
 
 **Beispiel**
@@ -1399,13 +1394,11 @@ labelFontWeight: 400
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenform
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1418,8 +1411,7 @@ shapeType: 'circle'
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenposition
 :::
 
 **Beispiel**
@@ -1432,7 +1424,7 @@ position: 'rightTop'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Maximale Spalten oder Zeilen bei vielen Legendeneinträgen
 
 
 
@@ -1441,8 +1433,7 @@ position: 'rightTop'
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1456,8 +1447,9 @@ maxSize: 2
 **Type:** `Tooltip | undefined`
 
 :::note{title=Beschreibung}
-Tooltip-Konfiguration
+Tooltips
 
+Tooltip-Konfiguration zur Definition der Tooltips des Diagramms, einschließlich Position, Format, Stil usw.
 :::
 
 
@@ -1466,8 +1458,7 @@ Tooltip-Konfiguration
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Tooltip aktiviert ist
 :::
 
 
@@ -1476,11 +1467,15 @@ Tooltip-Konfiguration
 **Type:** `Brush | undefined`
 
 :::note{title=Beschreibung}
-Brush-Auswahlkonfiguration
+Diagramm-Brush-Konfiguration
 
 
 
-Brush-Auswahlmodus: einzeln oder mehrfach
+
+
+
+
+
 
 :::
 
@@ -1490,7 +1485,7 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob Brush-Auswahl aktiviert ist
 
 :::
 
@@ -1499,18 +1494,17 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
+Brush-Typ
 
+Definiert Form und Auswahlrichtung des Brush
 
+\- `rect`: rechteckige Brush-Auswahl; Auswahl gleichzeitig in X- und Y-Achsenrichtung möglich
 
+\- `polygon`: Polygon-Brush-Auswahl; zeichnet durch Klicken auf mehrere Punkte ein beliebiges Polygon zur Auswahl
 
+\- `x`: X-Achsen-Brush-Auswahl; wählt nur in X-Achsenrichtung aus, Y-Achse ist nicht beschränkt
 
-
-
-
-
-
-
-
+\- `y`: Y-Achsen-Brush-Auswahl; wählt nur in Y-Achsenrichtung aus, X-Achse ist nicht beschränkt
 :::
 
 ### brushMode
@@ -1518,13 +1512,14 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"single" | "multiple" | undefined`
 
 :::note{title=Beschreibung}
-Deckkraft of selected data points, range 0-1
+\- `multiple`: Mehrfachmodus, in dem mehrere brush-Auswahlen gleichzeitig bestehen können
 
 
 
+Definiert den Brush-Auswahlmodus
 
 
-
+\- `multiple`: Mehrfachauswahlmodus; mehrere brush-Bereiche können gleichzeitig existieren
 
 :::
 
@@ -1533,7 +1528,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob der Brush-Bereich nach Ende der Auswahl gelöscht wird
 
 :::
 
@@ -1542,12 +1537,11 @@ Deckkraft of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Beschreibung}
+Deckkraft nicht ausgewählter Datenpunkte, Bereich 0-1
 
 
 
-
-
-
+Definiert den Stil der mit Brush ausgewählten Datenpunkte
 :::
 
 
@@ -1556,11 +1550,11 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+Deckkraft
 
 
 
-
+Deckkraft ausgewählter Datenpunkte, Bereich 0-1
 
 :::
 
@@ -1569,7 +1563,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Konturfarbe
 
 :::
 
@@ -1578,7 +1572,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Strichbreite
 :::
 
 ### outOfBrushStyle
@@ -1586,12 +1580,11 @@ Deckkraft of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Beschreibung}
-X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagramms einschliesslich Position, Format, Stil usw.
+X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagramms einschließlich Position, Format, Stil usw.
 
 
 
-
-
+Definiert den Stil der Datenpunkte außerhalb der Brush-Auswahl
 :::
 
 
@@ -1600,11 +1593,11 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+Deckkraft
 
 
 
-
+Deckkraft nicht ausgewählter Datenpunkte, Wertebereich 0-1
 
 :::
 
@@ -1613,7 +1606,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Konturfarbe
 
 :::
 
@@ -1622,7 +1615,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Strichbreite
 :::
 
 
@@ -1631,7 +1624,11 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `XBandAxis | undefined`
 
 :::note{title=Beschreibung}
-X-Achsen-Konfiguration; Kategorieachse zur Anzeige von Dimensionswerten
+X-Achse
+
+
+
+Kategorieachse. X-Achsen-Konfiguration zur Definition von Position, Format, Stil und zugehörigen Einstellungen.
 
 :::
 
@@ -1641,7 +1638,7 @@ X-Achsen-Konfiguration; Kategorieachse zur Anzeige von Dimensionswerten
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob die Achse sichtbar ist
 :::
 
 ### inverse
@@ -1649,8 +1646,7 @@ X-Achsen-Konfiguration; Kategorieachse zur Anzeige von Dimensionswerten
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-sortLegend: {
-
+Ob die Achse umgekehrt angezeigt wird; nur fuer numerische Achsen wirksam
 :::
 
 ### zero
@@ -1658,8 +1654,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Wert 0 auf der Achse erzwungen angezeigt wird; ist min und max gesetzt, ist diese Option unwirksam. Nur fuer numerische Achsen wirksam.
 :::
 
 ### labelAutoHide
@@ -1667,8 +1662,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Achsenlabel automatisch ausblenden: Ueberlappen zwei Labels, wird das ueberlappende Label automatisch ausgeblendet. Nur fuer Kategorieachsen wirksam.
 :::
 
 ### labelAutoHideGap
@@ -1676,12 +1670,11 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Intervall fuer automatisches Ausblenden von Achsenlabels: Ist der Abstand zwischen zwei Textlabels kleiner als autoHideGap, wird das ueberlappende Label automatisch ausgeblendet. Nur fuer Kategorieachsen wirksam.
 
+Wenn autoHide aktiviert ist, wird autoHide verwendet und ueber autoHideSeparation konfiguriert.
 
-
-
-
-
+Wenn autoHide deaktiviert ist, wird Sampling verwendet und ueber minGap konfiguriert.
 :::
 
 ### labelAutoRotate
@@ -1689,7 +1682,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Achsenlabel automatisch drehen: Wenn die Labelbreite die Achsenlaenge ueberschreitet, wird das Label automatisch gedreht. Nur fuer Kategorieachsen wirksam.
 :::
 
 ### labelAutoRotateAngleRange
@@ -1697,8 +1690,7 @@ sortLegend: {
 **Type:** `number[] | undefined`
 
 :::note{title=Beschreibung}
-'dark'
-
+Winkelbereich fuer die automatische Drehung von Achsenlabels. Nur fuer Kategorieachsen wirksam.
 :::
 
 ### labelAutoLimit
@@ -1706,8 +1698,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Achsenlabel automatisch begrenzen: Wenn die Labelbreite die Achsenlaenge ueberschreitet, wird der Ueberlauf mit Auslassungspunkten angezeigt; beim Hover ist das vollstaendige Label sichtbar. Nur fuer Kategorieachsen wirksam.
 :::
 
 ### labelAutoLimitLength
@@ -1715,8 +1706,7 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Maximale Laenge fuer die automatische Begrenzung von Achsenlabels: Wenn der Labeltext diese Laenge ueberschreitet, wird der Ueberlauf mit Auslassungspunkten angezeigt und beim Hover vollstaendig sichtbar. Nur fuer Kategorieachsen wirksam.
 :::
 
 ### label
@@ -1724,8 +1714,7 @@ sortLegend: {
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+Skalenlabels der X-Achse
 :::
 
 
@@ -1734,8 +1723,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Labels sichtbar sind
 :::
 
 #### labelColor
@@ -1743,8 +1731,7 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-value: 'tool'
-
+Labelfarbe
 :::
 
 #### labelFontSize
@@ -1752,8 +1739,7 @@ value: 'tool'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-  orderBy: 'profit',
-
+Label-Schriftgroesse
 :::
 
 #### labelFontWeight
@@ -1761,8 +1747,7 @@ value: 'tool'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-or
-
+Label-Schriftstaerke
 :::
 
 #### labelAngle
@@ -1770,8 +1755,7 @@ or
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Label-Drehwinkel
 :::
 
 ### line
@@ -1779,8 +1763,7 @@ or
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
-
+X-Achsenlinie
 :::
 
 
@@ -1789,8 +1772,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-\- orderBy:'date'
-
+Ob die Achsenlinie sichtbar ist
 :::
 
 #### lineColor
@@ -1798,7 +1780,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Achsenlinienfarbe
 :::
 
 #### lineWidth
@@ -1806,8 +1788,7 @@ or
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Achsenlinienbreite
 :::
 
 ### tick
@@ -1815,8 +1796,7 @@ or
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+X-Achsen-Ticks
 :::
 
 
@@ -1825,8 +1805,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Ticks sichtbar sind
 :::
 
 #### tickInside
@@ -1834,8 +1813,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Ticks nach innen zeigen
 :::
 
 #### tickColor
@@ -1843,8 +1821,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Legenden-Sortierkonfiguration; unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolgen; das sort-Array folgt der Reihenfolge von links nach rechts oder von oben nach unten.
-
+Tick-Farbe
 :::
 
 #### tickSize
@@ -1852,8 +1829,7 @@ Legenden-Sortierkonfiguration; unterstutzt Sortierung nach Dimensionen oder Kenn
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-sortLegend: {
-
+Tick-Groesse
 :::
 
 ### title
@@ -1861,8 +1837,7 @@ sortLegend: {
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+X-Achsentitel
 :::
 
 
@@ -1871,8 +1846,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Titel sichtbar ist
 :::
 
 #### titleText
@@ -1880,7 +1854,7 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Titeltext; folgt standardmaessig der Feldkonfiguration
 :::
 
 #### titleColor
@@ -1888,8 +1862,7 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-\- orderBy:'profit'
-
+Titelfarbe
 :::
 
 #### titleFontSize
@@ -1897,8 +1870,7 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Benutzerdefinierte Sortierreihenfolge; diese Reihenfolge wird direkt auf die Legende angewendet. Aufsteigend folgt links-nach-rechts oder oben-nach-unten; absteigend folgt rechts-nach-links oder unten-nach-oben.
-
+Titel-Schriftgroesse
 :::
 
 #### titleFontWeight
@@ -1906,8 +1878,7 @@ Benutzerdefinierte Sortierreihenfolge; diese Reihenfolge wird direkt auf die Leg
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-  ])
-
+Titel-Schriftstaerke
 :::
 
 ### grid
@@ -1929,8 +1900,7 @@ Enthalt die integrierten Themes `light` und `dark`. Benutzerdefinierte Themes ko
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+selector = [{ profit: 100 }, { profit: 200 }]
 :::
 
 #### gridWidth
@@ -1938,7 +1908,7 @@ Enthalt die integrierten Themes `light` und `dark`. Benutzerdefinierte Themes ko
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
+- not in: Wählt Datenelemente aus, bei denen der Dimensionenfeldwert nicht im `value`-Array enthalten ist.
 
 :::
 
@@ -1956,8 +1926,7 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+X-Achsen-Animationskonfiguration
 :::
 
 
@@ -1966,7 +1935,7 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+value: [100, 300]
 :::
 
 #### easing
@@ -1974,8 +1943,7 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+}
 :::
 
 
@@ -1984,7 +1952,11 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `YLinearAxis | undefined`
 
 :::note{title=Beschreibung}
-Y-Achsen-Konfiguration; Wertachse zur Anzeige von Kennzahlenwerten
+Y-Achse
+
+
+
+Numerische Achse. Y-Achsen-Konfiguration zur Definition von Position, Format, Stil und zugehörigen Einstellungen.
 
 :::
 
@@ -1994,7 +1966,7 @@ Y-Achsen-Konfiguration; Wertachse zur Anzeige von Kennzahlenwerten
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Ob die Achse sichtbar ist
 :::
 
 ### min
@@ -2047,8 +2019,7 @@ Y-Achsen-Einstellung (Kategorieachse) zur Definition der Y-Achse, einschließlic
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-sortLegend: {
-
+Ob die Achse umgekehrt angezeigt wird; nur fuer numerische Achsen wirksam
 :::
 
 ### zero
@@ -2056,8 +2027,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Wert 0 auf der Achse erzwungen angezeigt wird; ist min und max gesetzt, ist diese Option unwirksam. Nur fuer numerische Achsen wirksam.
 :::
 
 ### autoFormat
@@ -2065,8 +2035,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Tick-Labels der numerischen Achse automatisch formatiert werden. Gilt nur für numerische Achsen. Wenn autoFormat true ist, wird numFormat ignoriert.
 :::
 
 ### numFormat
@@ -2074,8 +2043,7 @@ sortLegend: {
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierung für numerische Achsen. Gilt nur für numerische Achsen und hat niedrigere Priorität als autoFormat.
 :::
 
 
@@ -2084,7 +2052,7 @@ sortLegend: {
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformattyp, unterstützt: number (Dezimalzahl), percent (%), permille (‰), wissenschaftliche Notation
 
 :::
 
@@ -2093,13 +2061,13 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Zahlenformatverhältnis, darf nicht 0 sein
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -2108,12 +2076,13 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
+Zahlenformatsymbol, z. B. %, ‰
 
 :::
 
 **Beispiel**
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
+\- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
 
@@ -2122,7 +2091,7 @@ sortLegend: {
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Tausendertrennzeichen für Zahlenformatierung
 
 :::
 
@@ -2131,7 +2100,7 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Suffix der Zahlenformatierung
 
 :::
 
@@ -2140,7 +2109,7 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Präfix der Zahlenformatierung
 
 :::
 
@@ -2149,16 +2118,17 @@ sortLegend: {
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Dezimalstellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumFractionDigits und maximumFractionDigits des Browsers; niedrigere Priorität als significantDigits
 
 :::
 
 **Beispiel**
-
-
-Easing-Funktion der Animation
-
-
-
+\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -2167,19 +2137,19 @@ Easing-Funktion der Animation
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Sortierkonfiguration der Kategorieachse, unterstutzt Sortierung nach Dimensionen oder Kennzahlen sowie benutzerdefinierte Sortierreihenfolge
+Signifikante Stellen für die Zahlenformatierung; verwendet Intl.NumberFormat minimumSignificantDigits und maximumSignificantDigits des Browsers; höhere Priorität als fractionDigits
 
 :::
 
 **Beispiel**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
-
+\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
+\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
+\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -2188,13 +2158,13 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungspriorität für die Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingPriority
 
 :::
 
 **Beispiel**
-Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
-
+\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -2203,7 +2173,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
+Rundungsmodus für die Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie Intl.NumberFormat roundingMode
 
 :::
 
@@ -2212,8 +2182,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `{ visible?: boolean; labelColor?: string; labelFontSize?: number; labelFontWeight?: number; labelAngle?: number; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+Skalenlabels der X-Achse
 :::
 
 
@@ -2222,8 +2191,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Labels sichtbar sind
 :::
 
 #### labelColor
@@ -2231,8 +2199,7 @@ Sortierreihenfolge, optionale Werte sind 'asc' oder 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-value: 'tool'
-
+Labelfarbe
 :::
 
 #### labelFontSize
@@ -2240,7 +2207,7 @@ value: 'tool'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-  orderBy: 'profit',
+Label-Schriftgröße
 
 :::
 
@@ -2249,7 +2216,7 @@ value: 'tool'
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-or
+Label-Schriftstärke
 
 :::
 
@@ -2258,20 +2225,17 @@ or
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Rotationswinkel des Labels
 
 :::
-
 ### line
 
 **Type:** `{ visible?: boolean; lineColor?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+X-Achsenlinie
 
 :::
-
-
 #### visible
 
 **Type:** `boolean | undefined`
@@ -2286,7 +2250,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+}
 :::
 
 #### lineWidth
@@ -2294,8 +2258,7 @@ or
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 :::
 
 ### tick
@@ -2303,8 +2266,7 @@ or
 **Type:** `{ visible?: boolean; tickInside?: boolean; tickColor?: string; tickSize?: number; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+order: 'asc',
 :::
 
 
@@ -2313,8 +2275,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Suffix des Zahlenformats
 :::
 
 #### tickInside
@@ -2322,8 +2283,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Ticks nach innen zeigen
 :::
 
 #### tickColor
@@ -2340,8 +2300,7 @@ Legenden-Sortierkonfiguration; unterstutzt Sortierung nach Dimensionen oder Kenn
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-sortLegend: {
-
+Tick-Groesse
 :::
 
 ### title
@@ -2349,18 +2308,15 @@ sortLegend: {
 **Type:** `{ visible?: boolean; titleText?: string; titleColor?: string; titleFontSize?: number; titleFontWeight?: number; } | undefined`
 
 :::note{title=Beschreibung}
-
+X-Achsentitel
 
 :::
-
-
 #### visible
 
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
 :::
 
 #### titleText
@@ -2368,7 +2324,7 @@ sortLegend: {
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Titeltext; folgt standardmaessig der Feldkonfiguration
 :::
 
 #### titleColor
@@ -2417,8 +2373,7 @@ Enthalt die integrierten Themes `light` und `dark`. Benutzerdefinierte Themes ko
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+selector = [{ profit: 100 }, { profit: 200 }]
 :::
 
 #### gridWidth
@@ -2426,7 +2381,7 @@ Enthalt die integrierten Themes `light` und `dark`. Benutzerdefinierte Themes ko
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
+- not in: Wählt Datenelemente aus, bei denen der Dimensionenfeldwert nicht im `value`-Array enthalten ist.
 
 :::
 
@@ -2444,8 +2399,7 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `{ duration?: number; easing?: string; } | undefined`
 
 :::note{title=Beschreibung}
-
-
+selector = [{ profit: 100 }, { profit: 200 }]
 :::
 
 
@@ -2454,7 +2408,7 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+value: [100, 300]
 :::
 
 #### easing
@@ -2462,8 +2416,7 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+}
 :::
 
 
@@ -2472,12 +2425,11 @@ Unterstutzt globale Stile oder bedingte Stilkonfigurationen.
 **Type:** `CrosshairLine | undefined`
 
 :::note{title=Beschreibung}
-Konfiguration der vertikalen Hilfslinie
+Vertikale Hilfslinie
 
+Vertikale Hilfslinie, die angezeigt wird, wenn die Maus ueber das Diagramm bewegt wird.
 
-
-Crosshair-Linienkonfiguration; ein Konfigurationstyp zum Anzeigen einer Crosshair-Linie (Hilfslinie) im Diagramm
-
+Crosshair-Konfiguration zum Anzeigen von Crosshair-Linien (Hilfslinien) im Diagramm.
 :::
 
 
@@ -2532,15 +2484,20 @@ Hintergrundfarbe der Crosshair-Linienbeschriftung
 **Type:** `Sort | undefined`
 
 :::note{title=Beschreibung}
-Sortierkonfiguration der X-Achse
+X-Achsen-Sortierkonfiguration, unterstuetzt Sortierung nach Dimension oder Kennzahl sowie benutzerdefinierte Reihenfolge
 
-
-
-
-
+Kategorieachsen-Sortierung, unterstuetzt Sortierung nach Dimension oder Kennzahl sowie benutzerdefinierte Reihenfolge
 :::
 
 **Beispiel**
+sort: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sort: {
+  customOrder:['2019', '2020', '2021']
+}
+
 \- order:'asc'
 \- orderBy:'date'
 
@@ -2554,8 +2511,7 @@ Sortierkonfiguration der X-Achse
 **Type:** `"asc" | "desc" | undefined`
 
 :::note{title=Beschreibung}
-])
-
+Sortierreihenfolge; moegliche Werte sind 'asc' oder 'desc'
 :::
 
 **Beispiel**
@@ -2568,8 +2524,7 @@ order:'asc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Datenelement mit der höchsten Gewinnrate in jeder Region hervorheben
 :::
 
 **Beispiel**
@@ -2583,8 +2538,7 @@ order:'asc'
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-\- `__row_index` steht fur die Zeilennummer des ursprunglichen Datenelements, `field` fur das hervorzuhebende Feld.
-
+Benutzerdefinierte Reihenfolge, die direkt auf die Kategorieachse angewendet wird
 :::
 
 
@@ -2593,15 +2547,20 @@ order:'asc'
 **Type:** `SortLegend | undefined`
 
 :::note{title=Beschreibung}
-Legenden-Sortierkonfiguration
+Legendensortierung, unterstuetzt Sortierung nach Dimension oder Kennzahl sowie benutzerdefinierte Reihenfolge
 
-
-
-Dynamische Filtereinstellung des Diagramms: Filtert Diagrammmarken (Balken, Punkte usw.) über KI-generierten JavaScript-Code.
-
+Legendensortierung; das Sortierarray folgt der Reihenfolge von links nach rechts oder von oben nach unten.
 :::
 
 **Beispiel**
+sortLegend: {
+  orderBy: 'profit',
+  order: 'asc',
+}
+sortLegend: {
+  customOrder:['2019', '2020', '2021']
+}
+
 \- order:'asc'
 \- orderBy:'date'
 
@@ -2615,8 +2574,7 @@ Dynamische Filtereinstellung des Diagramms: Filtert Diagrammmarken (Balken, Punk
 **Type:** `"asc" | "desc" | undefined`
 
 :::note{title=Beschreibung}
-])
-
+Sortierreihenfolge; moegliche Werte sind 'asc' oder 'desc'
 :::
 
 **Beispiel**
@@ -2629,8 +2587,7 @@ order:'asc'
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Datenelement mit der höchsten Gewinnrate in jeder Region hervorheben
 :::
 
 **Beispiel**
@@ -2644,8 +2601,7 @@ order:'asc'
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-  _.maxBy(group, item => item.profit / item.sales)
-
+Benutzerdefinierte Reihenfolge, die direkt auf die Legende angewendet wird; aufsteigend von links nach rechts oder von oben nach unten, absteigend von rechts nach links oder von unten nach oben
 :::
 
 
@@ -2656,16 +2612,11 @@ order:'asc'
 :::note{title=Beschreibung}
 Theme-Konfiguration
 
+Theme
 
-
-const maxItems = _.map(grouped, group =>
-
-
-
-_.map(maxItems, item => [
+Es gibt die integrierten Themes light und dark; neue Themes können über registerTheme als eigene Themes definiert werden.
 
 :::
-
 
 ### length
 
@@ -2681,7 +2632,14 @@ _.map(maxItems, item => [
 **Type:** `PointStyle | PointStyle[] | undefined`
 
 :::note{title=Beschreibung}
-Stilkonfiguration fuer Punktmarken
+Punktmarkierungs-Stilkonfiguration, mit der Farbe, Rahmen und zugehörige Einstellungen der Punktmarkierung definiert werden.
+
+Unterstützt globale Stilkonfiguration oder bedingte Stilkonfiguration
+
+Datenfilter
+
+
+
 
 :::
 
@@ -2691,7 +2649,7 @@ Stilkonfiguration fuer Punktmarken
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
+- not in: Wählt Datenelemente aus, bei denen der Dimensionenfeldwert nicht im `value`-Array enthalten ist.
 
 
 
@@ -2743,8 +2701,7 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 #### operator
@@ -2752,9 +2709,9 @@ value: [100, 300]
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -2764,12 +2721,12 @@ value: [100, 300]
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -2778,8 +2735,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 ### dynamicFilter
@@ -2787,40 +2743,27 @@ same as operator
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von KI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik über KI-generierten JavaScript-Code.
 
+Geeignet für Top N, statistische Analysen, komplexe Bedingungen und andere Szenarien, die sich mit einem statischen selector nur schwer ausdrücken lassen.
 
+Kernfunktionen:
 
-Strichfarbe des Hintergrunds
+- Unterstützt beliebig komplexe Datenfilterbedingungen
 
+- Verwendet integrierte Hilfsfunktionen für Datenoperationen
 
+- Führt sicher in der Browserumgebung aus (Web-Worker-Sandbox)
 
+Umgebungsanforderung: Nur Browserumgebungen werden unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden; dynamicFilter hat höhere Priorität
 
+Konfiguration des dynamischen Diagrammfilters
 
-
-
-
-
-
-
-
-
-
-'red'
-
-
-
-
-
-
-
-
-
-
-
-Eckenradius des Hintergrunds
-
+Filtert Diagrammmarkierungen (Flächen, Punkte usw.) über KI-generierten JavaScript-Code
 :::
 
 
@@ -2833,14 +2776,12 @@ Eckenradius des Hintergrunds
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
-"Datenelemente mit Umsatz ueber 1000 hervorheben"
+"Highlight data items with sales greater than 1000"
 
-"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -2849,23 +2790,24 @@ Eckenradius des Hintergrunds
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Operator
+KI-generierter JavaScript-Filtercode
 
 
 
-\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
+- Es dürfen nur integrierte Hilfsfunktionen verwendet werden (zugänglich über _ oder R)
 
-**Beispiel**
+- Eingabeparameter: data (Array), jedes item enthält ein __row_index-Feld als Zeilennummer
 
+- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+- __row_index bezeichnet die Zeilennummer des ursprünglichen Datenelements, field das hervorzuhebende Feld
 
-
-
+- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
 
 :::
 
 **Beispiel**
-sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
+Das sales-Feld von Datenelementen mit sales größer als 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -2874,7 +2816,7 @@ field: 'sales'
 }));
 ```
 
-Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
+Das Datenelement mit der höchsten Gewinnmarge je Bereich hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2888,7 +2830,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
+Datenelemente hervorheben, die mehrere Bedingungen erfüllen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2903,14 +2845,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback-Lösung, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -2919,8 +2859,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 ##### operator
@@ -2928,9 +2867,9 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -2940,12 +2879,12 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -2954,8 +2893,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 #### result
@@ -2963,12 +2901,11 @@ same as operator
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des animierten Filters (Laufzeitfeld)
 
 
 
-
-Textfarbe
-
+Wird während der prepare()-Phase geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -3086,7 +3023,14 @@ dotted
 **Type:** `LineStyle | LineStyle[] | undefined`
 
 :::note{title=Beschreibung}
-Stilkonfiguration fuer Linienmarken
+Linienmarkierungs-Stilkonfiguration, mit der Farbe, Transparenz, Kurve und zugehörige Einstellungen der Linienmarkierung definiert werden.
+
+Unterstützt globale Stilkonfiguration oder bedingte Stilkonfiguration
+
+Datenfilter
+
+
+
 
 :::
 
@@ -3096,7 +3040,7 @@ Stilkonfiguration fuer Linienmarken
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-- not in: Wählt Datenelemente aus, bei denen der Dimensionsfeldwert nicht im `value`-Array enthalten ist.
+- not in: Wählt Datenelemente aus, bei denen der Dimensionenfeldwert nicht im `value`-Array enthalten ist.
 
 
 
@@ -3148,8 +3092,7 @@ value: [100, 300]
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 #### operator
@@ -3157,9 +3100,9 @@ value: [100, 300]
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -3169,12 +3112,12 @@ value: [100, 300]
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -3183,8 +3126,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 ### dynamicFilter
@@ -3192,40 +3134,27 @@ same as operator
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von KI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik über KI-generierten JavaScript-Code.
 
+Geeignet für Top N, statistische Analysen, komplexe Bedingungen und andere Szenarien, die sich mit einem statischen selector nur schwer ausdrücken lassen.
 
+Kernfunktionen:
 
-Strichfarbe des Hintergrunds
+- Unterstützt beliebig komplexe Datenfilterbedingungen
 
+- Verwendet integrierte Hilfsfunktionen für Datenoperationen
 
+- Führt sicher in der Browserumgebung aus (Web-Worker-Sandbox)
 
+Umgebungsanforderung: Nur Browserumgebungen werden unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden; dynamicFilter hat höhere Priorität
 
+Konfiguration des dynamischen Diagrammfilters
 
-
-
-
-
-
-
-
-
-
-'red'
-
-
-
-
-
-
-
-
-
-
-
-Eckenradius des Hintergrunds
-
+Filtert Diagrammmarkierungen (Flächen, Punkte usw.) über KI-generierten JavaScript-Code
 :::
 
 
@@ -3238,14 +3167,12 @@ Eckenradius des Hintergrunds
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
-"Datenelemente mit Umsatz ueber 1000 hervorheben"
+"Highlight data items with sales greater than 1000"
 
-"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -3254,23 +3181,24 @@ Eckenradius des Hintergrunds
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Operator
+KI-generierter JavaScript-Filtercode
 
 
 
-\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
+- Es dürfen nur integrierte Hilfsfunktionen verwendet werden (zugänglich über _ oder R)
 
-**Beispiel**
+- Eingabeparameter: data (Array), jedes item enthält ein __row_index-Feld als Zeilennummer
 
+- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+- __row_index bezeichnet die Zeilennummer des ursprünglichen Datenelements, field das hervorzuhebende Feld
 
-
-
+- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
 
 :::
 
 **Beispiel**
-sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
+Das sales-Feld von Datenelementen mit sales größer als 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -3279,7 +3207,7 @@ field: 'sales'
 }));
 ```
 
-Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
+Das Datenelement mit der höchsten Gewinnmarge je Bereich hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -3293,7 +3221,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
+Datenelemente hervorheben, die mehrere Bedingungen erfüllen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -3308,14 +3236,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback-Lösung, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -3324,8 +3250,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 ##### operator
@@ -3333,9 +3258,9 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -3345,12 +3270,12 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -3359,8 +3284,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 #### result
@@ -3368,12 +3292,11 @@ same as operator
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des animierten Filters (Laufzeitfeld)
 
 
 
-
-Textfarbe
-
+Wird während der prepare()-Phase geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -3454,7 +3377,7 @@ Liniensegmentstil
 **Type:** `AnnotationPoint | AnnotationPoint[] | undefined`
 
 :::note{title=Beschreibung}
-Markierungspunkt-Konfiguration
+Konfiguration von Anmerkungspunkten. Definiert Diagramm-Anmerkungspunkte auf Basis ausgewählter Daten, einschließlich Position, Format, Stil und zugehöriger Einstellungen.
 
 :::
 
@@ -3464,8 +3387,7 @@ Markierungspunkt-Konfiguration
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Selektor fuer Annotationspunkte, zum Auswaehlen von Datenpunkten.
 :::
 
 
@@ -3474,8 +3396,7 @@ Markierungspunkt-Konfiguration
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 #### operator
@@ -3483,9 +3404,9 @@ Markierungspunkt-Konfiguration
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -3495,12 +3416,12 @@ Markierungspunkt-Konfiguration
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -3509,8 +3430,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 ### measureId
@@ -3518,8 +3438,7 @@ same as operator
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Gibt die Kennzahlen-ID an, zu der der Markierungspunkt gehoert. In Szenarien mit mehreren Measures kann sie mit selector kombiniert werden, um den Markierungspunkt der Zielkennzahl eindeutig zu bestimmen.
-
+Gibt die measure id an, zu der der Annotationspunkt gehört. In Szenarien mit mehreren Kennzahlen kann sie mit selector kombiniert werden, um den Annotationspunkt der Zielkennzahl eindeutig zu lokalisieren.
 :::
 
 ### dynamicFilter
@@ -3527,40 +3446,27 @@ Gibt die Kennzahlen-ID an, zu der der Markierungspunkt gehoert. In Szenarien mit
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von KI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik über KI-generierten JavaScript-Code.
 
+Geeignet für Top N, statistische Analysen, komplexe Bedingungen und andere Szenarien, die sich mit einem statischen selector nur schwer ausdrücken lassen.
 
+Kernfunktionen:
 
-Strichfarbe des Hintergrunds
+- Unterstützt beliebig komplexe Datenfilterbedingungen
 
+- Verwendet integrierte Hilfsfunktionen für Datenoperationen
 
+- Führt sicher in der Browserumgebung aus (Web-Worker-Sandbox)
 
+Umgebungsanforderung: Nur Browserumgebungen werden unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden; dynamicFilter hat höhere Priorität
 
+Konfiguration des dynamischen Diagrammfilters
 
-
-
-
-
-
-
-
-
-
-'red'
-
-
-
-
-
-
-
-
-
-
-
-Eckenradius des Hintergrunds
-
+Filtert Diagrammmarkierungen (Flächen, Punkte usw.) über KI-generierten JavaScript-Code
 :::
 
 
@@ -3573,14 +3479,12 @@ Eckenradius des Hintergrunds
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
-"Datenelemente mit Umsatz ueber 1000 hervorheben"
+"Highlight data items with sales greater than 1000"
 
-"Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben"
 
 
 
@@ -3589,23 +3493,24 @@ Eckenradius des Hintergrunds
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Operator
+KI-generierter JavaScript-Filtercode
 
 
 
-\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
+- Es dürfen nur integrierte Hilfsfunktionen verwendet werden (zugänglich über _ oder R)
 
-**Beispiel**
+- Eingabeparameter: data (Array), jedes item enthält ein __row_index-Feld als Zeilennummer
 
+- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+- __row_index bezeichnet die Zeilennummer des ursprünglichen Datenelements, field das hervorzuhebende Feld
 
-
-
+- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
 
 :::
 
 **Beispiel**
-sales-Feld der Datenelemente mit Umsatz ueber 1000 hervorheben
+Das sales-Feld von Datenelementen mit sales größer als 1000 hervorheben
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -3614,7 +3519,7 @@ field: 'sales'
 }));
 ```
 
-Datenelement mit der hoechsten Gewinnrate in jeder Region hervorheben
+Das Datenelement mit der höchsten Gewinnmarge je Bereich hervorheben
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -3628,7 +3533,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Datenelemente hervorheben, die mehrere Filterbedingungen erfuellen
+Datenelemente hervorheben, die mehrere Bedingungen erfüllen
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -3643,14 +3548,12 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback-Lösung, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -3659,8 +3562,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 ##### operator
@@ -3668,9 +3570,9 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -3680,12 +3582,12 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -3694,8 +3596,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 #### result
@@ -3703,12 +3604,11 @@ same as operator
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des animierten Filters (Laufzeitfeld)
 
 
 
-
-Textfarbe
-
+Wird während der prepare()-Phase geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -3785,64 +3685,56 @@ Textfarbe
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Beschreibung}
+Textausrichtung. In der Regel auf right setzen, damit der Text links vom Annotationspunkt erscheint und im sichtbaren Diagrammbereich bleibt
 
+Empfohlen ist 'right', damit der Text links vom Annotationspunkt liegt
 
+right: Text links vom Annotationspunkt, rechte Textkante am Annotationspunkt ausgerichtet
 
+left: Text rechts vom Annotationspunkt, linke Textkante am Annotationspunkt ausgerichtet
 
-Schriftgrosse des Textes.
-
-
-**Beispiel**
+center: Text zentriert auf dem Annotationspunkt
 
 :::
 
 **Beispiel**
-'right' Text befindet sich links vom Markierungspunkt
-
-
-
+'right' Text liegt links vom Annotationspunkt
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Vertikale Textausrichtung. In der Regel auf top setzen, damit der Text unter dem Annotationspunkt erscheint und im sichtbaren Diagrammbereich bleibt
 
+Empfohlen ist 'top', damit der Text vollständig im sichtbaren Bereich angezeigt wird
 
+top: Text unter dem Annotationspunkt, obere Textkante am Annotationspunkt ausgerichtet
 
+middle: Text zentriert auf dem Annotationspunkt
 
-
-
-
-
+bottom: Text über dem Annotationspunkt, untere Textkante am Annotationspunkt ausgerichtet
 
 :::
 
 **Beispiel**
-'top' Text befindet sich unterhalb des Markierungspunkts
-
-
-
+'top' Text liegt unter dem Annotationspunkt
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrund sichtbar
 
 :::
 
 **Beispiel**
 true
-
-
-
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrundfarbe
 :::
 
 **Beispiel**
@@ -3869,29 +3761,23 @@ Textfarbe
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Breite des Hintergrundrahmens
 
 :::
 
 **Beispiel**
 2
-
-
-
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Radius der Hintergrundrahmen-Ecken
 
 :::
 
 **Beispiel**
 4
-
-
-
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
@@ -3929,25 +3815,22 @@ true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Hintergrundfarbe.
+Pixelversatz des gesamten Annotationspunkts in X-Richtung. Liegt der Punkt links im Diagramm (Start der Kategorieachse), wird ein positiver Wert empfohlen; liegt er rechts (Ende der Kategorieachse), ein negativer Wert.
 
+Negative Werte verschieben die gesamte Komponente nach links, z. B. verschiebt -10 Text und Hintergrund zusammen um 10 Pixel nach links
 
-**Beispiel**
+Positive Werte verschieben die gesamte Komponente nach rechts, z. B. verschiebt 10 Text und Hintergrund zusammen um 10 Pixel nach rechts
 
 :::
 
 **Beispiel**
-2
-
-
-
-
+offsetX: 5, der gesamte Annotationspunkt wird um 5 Pixel nach rechts verschoben
 ## annotationVerticalLine
 
 **Type:** `AnnotationVerticalLine | AnnotationVerticalLine[] | undefined`
 
 :::note{title=Beschreibung}
-Konfiguration der Markierungslinie fuer Dimensionswerte
+Annotationslinie für Dimensionswerte, vertikal angezeigt, mit konfigurierbarer Position und Stil
 
 :::
 
@@ -3957,8 +3840,7 @@ Konfiguration der Markierungslinie fuer Dimensionswerte
 **Type:** `string | number | (string | number)[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+);
 :::
 
 ### dynamicFilter
@@ -3966,18 +3848,13 @@ Konfiguration der Markierungslinie fuer Dimensionswerte
 **Type:** `ValueDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von KI-generiertem Code)
 
+Berechnet den Wert der Annotationslinie dynamisch über KI-generierten JavaScript-Code.
 
+Geeignet, wenn die Position der Annotationslinie datenabhängig dynamisch bestimmt werden muss, z. B. Durchschnitt, Maximum, Quantil oder Geschäftslinie.
 
-
-
-
-
-
-
-
-
-
+Nur Browserumgebungen werden unterstützt (Web Worker erforderlich).
 :::
 
 
@@ -3990,8 +3867,7 @@ Konfiguration der Markierungslinie fuer Dimensionswerte
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
@@ -4006,17 +3882,18 @@ Konfiguration der Markierungslinie fuer Dimensionswerte
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Operator
+\- Eingabeparameter: data (Array), wobei jedes Element ein __row_index-Feld für die Zeilennummer enthält
 
 
 
-\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
+\- __row_index steht für die Zeilennummer des ursprünglichen Datenobjekts; field steht für das hervorzuhebende Feld
 
 
 
 
 
 
+\- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
 
 :::
 
@@ -4056,8 +3933,7 @@ return currentYearTotal;
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback-Lösung, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 #### result
@@ -4065,12 +3941,11 @@ return currentYearTotal;
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des animierten Filters (Laufzeitfeld)
 
 
 
-
-Textfarbe
-
+Wird während der prepare()-Phase geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -4101,7 +3976,7 @@ Textfarbe
 **Type:** `"outsideStart" | "outsideEnd" | "outsideMiddle" | "insideStart" | "insideMiddle" | "insideEnd" | undefined`
 
 :::note{title=Beschreibung}
-Ausgewahlte Dimensionsfeldwerte; unterstutzt Arrays.
+Ausgewahlte Dimensionenfeldwerte; unterstutzt Arrays.
 
 :::
 
@@ -4157,22 +4032,20 @@ Ausgewahlte Dimensionsfeldwerte; unterstutzt Arrays.
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Beschreibung}
-left: Text befindet sich rechts vom Anmerkungsbereich, die linke Kante ist am Bereich ausgerichtet.
+Textausrichtung. In der Regel nicht erforderlich
 
-center: Text wird im Anmerkungsbereich zentriert.
+Empfohlen ist 'right', damit der Text links von der Annotationslinie liegt
 
-Textfarbe.
+right: Text links von der Referenzlinie, rechte Textkante an der vertikalen Annotationslinie ausgerichtet
 
+left: Text rechts von der Referenzlinie, linke Textkante an der vertikalen Annotationslinie ausgerichtet
 
-**Beispiel**
+center: Text zentriert auf der Referenzlinie
 
 :::
 
 **Beispiel**
 'right'
-
-
-
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
@@ -4200,8 +4073,7 @@ middle: Text wird vertikal im Anmerkungsbereich zentriert.
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Deckkraft der Markierungsbereichsfarbe
 :::
 
 **Beispiel**
@@ -4256,21 +4128,18 @@ Eckenradius des Rahmens des Anmerkungsbereichs.
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrund sichtbar
 
 :::
 
 **Beispiel**
 true
-
-
-
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrundfarbe
 :::
 
 **Beispiel**
@@ -4297,29 +4166,23 @@ Textfarbe
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Breite des Hintergrundrahmens
 
 :::
 
 **Beispiel**
 2
-
-
-
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Radius der Hintergrundrahmen-Ecken
 
 :::
 
 **Beispiel**
 4
-
-
-
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
@@ -4340,7 +4203,7 @@ Innenabstand des Hintergrunds
 **Type:** `AnnotationHorizontalLine | AnnotationHorizontalLine[] | undefined`
 
 :::note{title=Beschreibung}
-Konfiguration der numerischen Markierungslinie
+Numerische Anmerkungslinie, einschließlich Durchschnitts-, Maximum- und Minimumlinien. Sie wird horizontal angezeigt und kann nach Position und Stil konfiguriert werden. Verwenden Sie diese Konfiguration, um Anmerkungslinien für numerische Werte wie Durchschnittslinien zu zeichnen.
 
 :::
 
@@ -4350,27 +4213,21 @@ Konfiguration der numerischen Markierungslinie
 **Type:** `string | number | (string | number)[] | undefined`
 
 :::note{title=Beschreibung}
-
+Fester Y-Wert zum Markieren einer horizontalen Linie. Wenn die Kategorieachse in Y-Richtung liegt, kann ein Dimensionswert eingegeben werden; bei einer numerischen Achse ein konkreter Zahlenwert.
 
 :::
-
 ### dynamicFilter
 
 **Type:** `ValueDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von KI-generiertem Code)
 
+Berechnet den Wert der Annotationslinie dynamisch über KI-generierten JavaScript-Code.
 
+Geeignet, wenn die Position der Annotationslinie datenabhängig dynamisch bestimmt werden muss, z. B. Durchschnitt, Maximum, Quantil oder Geschäftslinie.
 
-
-
-
-
-
-
-
-
-
+Nur Browserumgebungen werden unterstützt (Web Worker erforderlich).
 :::
 
 
@@ -4383,8 +4240,7 @@ Konfiguration der numerischen Markierungslinie
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
@@ -4399,17 +4255,18 @@ Konfiguration der numerischen Markierungslinie
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Operator
+\- Eingabeparameter: data (Array), wobei jedes Element ein __row_index-Feld für die Zeilennummer enthält
 
 
 
-\- not in: Wahlt Datenelemente aus, deren Dimensionsfeldwert nicht im Wert enthalten ist
+\- __row_index steht für die Zeilennummer des ursprünglichen Datenobjekts; field steht für das hervorzuhebende Feld
 
 
 
 
 
 
+\- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
 
 :::
 
@@ -4449,8 +4306,7 @@ return currentYearTotal;
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback-Lösung, wenn die Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 #### result
@@ -4458,12 +4314,11 @@ return currentYearTotal;
 **Type:** `{ success: boolean; data?: number | string; } | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des animierten Filters (Laufzeitfeld)
 
 
 
-
-Textfarbe
-
+Wird während der prepare()-Phase geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -4554,65 +4409,56 @@ Textfarbe
 **Type:** `"left" | "right" | "center" | undefined`
 
 :::note{title=Beschreibung}
-left: Text befindet sich rechts vom Anmerkungsbereich, die linke Kante ist am Bereich ausgerichtet.
+Textausrichtung. In der Regel nicht erforderlich
 
-center: Text wird im Anmerkungsbereich zentriert.
+Empfohlen ist 'right', damit der Text links von der Annotationslinie liegt
 
+right: Text links von der Referenzlinie, rechte Textkante am Endpunkt der horizontalen Annotationslinie ausgerichtet
 
+left: Text rechts von der Referenzlinie, linke Textkante am Endpunkt der horizontalen Annotationslinie ausgerichtet
 
-**Beispiel**
-
-
+center: Text zentriert auf der Referenzlinie
 
 :::
 
 **Beispiel**
 'right'
-
-
-
 ### textBaseline
 
 **Type:** `"top" | "bottom" | "middle" | undefined`
 
 :::note{title=Beschreibung}
-middle: Text wird vertikal im Anmerkungsbereich zentriert.
+Vertikale Textausrichtung. In der Regel nicht erforderlich
 
+Empfohlen ist 'top', damit der Text vollständig im sichtbaren Diagrammbereich angezeigt wird
 
+top: Text unter der Referenzlinie, obere Textkante an der horizontalen Annotationslinie ausgerichtet
 
-Strichfarbe des Hintergrunds
+middle: Text zentriert auf der Referenzlinie
 
-**Beispiel**
-
-
+bottom: Text über der Referenzlinie, untere Textkante an der horizontalen Annotationslinie ausgerichtet
 
 :::
 
 **Beispiel**
 'top'
-
-
-
 ### textBackgroundVisible
 
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrund sichtbar
 
 :::
 
 **Beispiel**
 true
-
-
-
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrundfarbe
 :::
 
 **Beispiel**
@@ -4639,33 +4485,27 @@ Textfarbe
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Breite des Hintergrundrahmens
 
 
 
-**Beispiel**
+Breite des Hintergrundrahmens
 
 :::
 
 **Beispiel**
 2
-
-
-
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Radius der Hintergrundrahmen-Ecken
 
 :::
 
 **Beispiel**
 4
-
-
-
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
@@ -4685,12 +4525,11 @@ Innenabstand des Hintergrunds
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Deckkraft der Markierungsbereichsfarbe
 
 
 
-
-
-
+Deckkraft der Markierungsbereichsfarbe
 :::
 
 **Beispiel**
@@ -4755,8 +4594,7 @@ Strichelstil des Rahmens des Anmerkungsbereichs.
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Primärfarbe für den Teil größer als der Markierungswert
 :::
 
 #### negativeColor
@@ -4774,8 +4612,9 @@ Strichelstil des Rahmens des Anmerkungsbereichs.
 **Type:** `AnnotationArea | AnnotationArea[] | undefined`
 
 :::note{title=Beschreibung}
-Markierungsbereich-Konfiguration
+Annotationsbereich
 
+Annotationsbereich-Konfiguration, die anhand der ausgewaehlten Daten Position und Stil des Annotationsbereichs definiert.
 :::
 
 
@@ -4784,7 +4623,7 @@ Markierungsbereich-Konfiguration
 **Type:** `AreaSelector | AreaSelectors | undefined`
 
 :::note{title=Beschreibung}
-Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktiviert ist oder Kennzahlen kombiniert sind.
+Ob die Dimensionenverknupfung aktiviert wird, wenn im Diagramm Perspektive aktiviert ist oder Kennzahlen kombiniert sind.
 
 :::
 
@@ -4794,8 +4633,7 @@ Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktivi
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+return _.flatten(
 :::
 
 #### operator
@@ -4803,9 +4641,9 @@ Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktivi
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
 
-
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
 :::
@@ -4815,12 +4653,12 @@ Ob die Dimensionsverknupfung aktiviert wird, wenn im Diagramm Perspektive aktivi
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+identisch mit operator
+
+\- in: Wählt Datenobjekte aus, deren Dimensionsfeldwert im angegebenen Wert enthalten ist
 
 
-
-
-same as operator
+identisch mit operator
 
 :::
 
@@ -4829,8 +4667,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wert des Dimensionsfelds, unterstützt Arrays
 :::
 
 ### text
@@ -4952,21 +4789,18 @@ Ordnung der polynomialen Regression
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrund sichtbar
 
 :::
 
 **Beispiel**
 true
-
-
-
 ### textBackgroundColor
 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
+Hintergrundfarbe
 :::
 
 **Beispiel**
@@ -4997,33 +4831,27 @@ Textfarbe
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Breite des Hintergrundrahmens
 
 :::
 
 **Beispiel**
 2
-
-
-
 ### textBackgroundBorderRadius
 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-**Beispiel**
+Radius der Hintergrundrahmen-Ecken
 
 
 
-**Beispiel**
+Radius der Hintergrundrahmen-Ecken
 
 :::
 
 **Beispiel**
 4
-
-
-
 ### textBackgroundPadding
 
 **Type:** `number | undefined`
@@ -5057,8 +4885,7 @@ Farbe des Markierungsbereichs
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Deckkraft der Markierungsbereichsfüllung
 :::
 
 **Beispiel**
@@ -5071,8 +4898,7 @@ Farbe des Markierungsbereichs
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rahmenfarbe des Markierungsbereichs
 :::
 
 **Beispiel**
@@ -5085,8 +4911,7 @@ Farbe des Markierungsbereichs
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rahmenbreite des Markierungsbereichs
 :::
 
 **Beispiel**
@@ -5099,8 +4924,7 @@ Farbe des Markierungsbereichs
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Eckenradius des Markierungsbereichsrahmens
 :::
 
 **Beispiel**
@@ -5113,8 +4937,7 @@ Farbe des Markierungsbereichs
 **Type:** `number[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Linienstil des Markierungsbereichsrahmens
 :::
 
 **Beispiel**
@@ -5142,11 +4965,13 @@ Randabstand des Markierungsbereichs
 **Type:** `DimensionLinkage | undefined`
 
 :::note{title=Beschreibung}
-Dimensionsverknüpfungskonfiguration
+Ob die Dimensionsverknüpfung aktiviert wird, wenn Pivot oder Kennzahlgruppierung im Diagramm aktiviert ist
+
+Beim Hover über einen Dimensionswert werden Daten mit demselben Dimensionswert in anderen Diagrammen hervorgehoben
 
 
 
-Konfiguration der Dimensionsverknüpfung für Pivot-Diagramme
+Konfiguration der Dimensionenverknüpfung für Pivot-Diagramme
 
 :::
 
@@ -5156,7 +4981,7 @@ Konfiguration der Dimensionsverknüpfung für Pivot-Diagramme
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-Ob die Dimensionsverknüpfung für Pivot-Diagramme aktiviert wird
+Ob die Dimensionenverknüpfung für Pivot-Diagramme aktiviert wird
 
 :::
 
@@ -5184,6 +5009,10 @@ Ob das zum crosshair gehörende Label angezeigt wird
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Beschreibung}
-Sprachkonfiguration
+Language
+
+
+
+Sprachkonfiguration des Diagramms. Unterstützt 'zh\-CN' und 'en\-US'; zusätzlich kann die Sprache über intl.setLocale('zh\-CN') gesetzt werden
 
 :::

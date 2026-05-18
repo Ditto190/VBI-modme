@@ -14,7 +14,7 @@ ChartTypeSelector(props: ChartTypeSelectorProps)
 
 ## 설명
 
-차트 유형 드롭다운 선택기를 제공합니다.
+차트 유형 드롭다운 셀렉터를 제공합니다.
 
 ## 최소 예제
 

@@ -1,6 +1,6 @@
-# Advanced Pipeline
+# advanced Pipeline
 
-## Advanced pipeline
+## advanced pipeline
 
 The `advanced pipeline` receives a VSeed DSL and outputs an advancedVSeed DSL.
 

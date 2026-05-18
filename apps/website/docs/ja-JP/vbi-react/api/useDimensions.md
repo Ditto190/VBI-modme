@@ -14,7 +14,7 @@ useDimensions(builder: VBIChartBuilder): UseDimensionsReturn
 
 ## 説明
 
-ディメンション設定を読み取り、更新し、ディメンションの追加・削除・変更機能を提供します。
+ディメンション設定を読み取り・更新し、ディメンションの追加・削除・変更機能を提供します。
 
 ## 最小例
 

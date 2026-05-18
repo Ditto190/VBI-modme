@@ -1,6 +1,6 @@
 # MeasureNodeBuilder
 
-단일 메저를 설정하는 메저 노드 빌더입니다
+단일 지표를 설정하는 지표 노드 빌더입니다
 
 ## 속성
 
@@ -102,11 +102,11 @@ setEncoding(encoding: NonNullable<VBIMeasure['encoding']>): this
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `encoding` | NonNullable<VBIMeasure['encoding']> | - 메저 인코딩 위치 |
+| `encoding` | NonNullable<VBIMeasure['encoding']> | - 지표 인코딩 위치 |
 
 ### setSort
 
-정렬 설정 설정
+정렬 설정하기
 
 **정의**:
 

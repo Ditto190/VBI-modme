@@ -4,7 +4,7 @@ Ví dụ này minh họa các điểm vào mutation của `useWhereFilter` và `
 
 ## Mô tả phụ thuộc
 
-- Phụ thuộc package: `@visactor/vbi-react`, `@visactor/vbi`, `react`
+- Phụ thuộc gói: `@visactor/vbi-react`, `@visactor/vbi`, `react`
 - Ràng buộc đầu vào: `builder` cần chứa ít nhất các trường `region` và `sales` để minh họa thay đổi Where/Having
 
 ## Đoạn mã

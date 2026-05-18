@@ -1,6 +1,6 @@
 # LimitBuilder
 
-Builder fuer Datenlimits zum Setzen und Abrufen des aktuellen limit
+Builder für Datenlimits zum Setzen und Abrufen des aktuellen limit
 
 ## Eigenschaften
 
@@ -25,7 +25,7 @@ constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 
 ### observe
 
-limit-Aenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
+limit-Änderungen beobachten und eine Funktion zum Abbestellen zurückgeben
 
 **Definition**:
 
@@ -33,7 +33,7 @@ limit-Aenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
 observe(callback: ObserveCallback): () => void
 ```
 
-**Rueckgabe**: `() => void`
+**Rückgabe**: `() => void`
 
 **Parameter**:
 
@@ -67,7 +67,7 @@ Aktuelles limit abrufen
 getLimit(): number | undefined
 ```
 
-**Rueckgabe**: `number \| undefined`
+**Rückgabe**: `number \| undefined`
 
 ### toJSON
 
@@ -79,4 +79,4 @@ Als JSON exportieren
 toJSON(): number | undefined
 ```
 
-**Rueckgabe**: `number \| undefined`
+**Rückgabe**: `number \| undefined`

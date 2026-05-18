@@ -1,6 +1,6 @@
 # ChartRenderer
 
-## Import
+## Nhập
 
 ```ts
 import { ChartRenderer } from '@visactor/vbi-react/components'
@@ -14,7 +14,7 @@ ChartRenderer(props: ChartRendererProps)
 
 ## Mô tả
 
-Kết xuất biểu đồ dựa trên output của builder, đồng thời xử lý trạng thái loading và lỗi.
+Kết xuất biểu đồ dựa trên đầu ra của builder, đồng thời xử lý trạng thái tải và lỗi.
 
 ## Ví dụ tối thiểu
 

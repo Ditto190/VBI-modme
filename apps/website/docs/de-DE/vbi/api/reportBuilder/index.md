@@ -36,7 +36,7 @@ constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, r
 applyUpdate(update: Uint8Array, transactionOrigin: any): any
 ```
 
-**Rueckgabe**: `any`
+**Rückgabe**: `any`
 
 **Parameter**:
 
@@ -53,7 +53,7 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 encodeStateAsUpdate(targetStateVector: Uint8Array): any
 ```
 
-**Rueckgabe**: `any`
+**Rückgabe**: `any`
 
 **Parameter**:
 
@@ -69,7 +69,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 getUUID(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getChartBuilder
 
@@ -79,7 +79,7 @@ getUUID(): string
 getChartBuilder(chartId: string): VBIChartBuilder<TQueryDSL, TSeedDSL> | undefined
 ```
 
-**Rueckgabe**: `VBIChartBuilder<TQueryDSL, TSeedDSL> \| undefined`
+**Rückgabe**: `VBIChartBuilder<TQueryDSL, TSeedDSL> \| undefined`
 
 **Parameter**:
 
@@ -95,7 +95,7 @@ getChartBuilder(chartId: string): VBIChartBuilder<TQueryDSL, TSeedDSL> | undefin
 getInsightBuilder(insightId: string): VBIInsightBuilder | undefined
 ```
 
-**Rueckgabe**: `VBIInsightBuilder \| undefined`
+**Rückgabe**: `VBIInsightBuilder \| undefined`
 
 **Parameter**:
 
@@ -111,7 +111,7 @@ getInsightBuilder(insightId: string): VBIInsightBuilder | undefined
 build(): VBIReportDSL
 ```
 
-**Rueckgabe**: `VBIReportDSL`
+**Rückgabe**: `VBIReportDSL`
 
 ### snapshot
 
@@ -121,7 +121,7 @@ build(): VBIReportDSL
 snapshot(): VBIReportSnapshotDSL
 ```
 
-**Rueckgabe**: `VBIReportSnapshotDSL`
+**Rückgabe**: `VBIReportSnapshotDSL`
 
 ### isEmpty
 
@@ -131,4 +131,4 @@ snapshot(): VBIReportSnapshotDSL
 isEmpty(): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`

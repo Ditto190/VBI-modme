@@ -2,7 +2,7 @@
   {
     "type": "dir",
     "name": "guide",
-    "label": "Handbuch",
+    "label": "Einführung",
     "collapsed": false
   },
   {
@@ -26,7 +26,7 @@
   {
     "type": "dir",
     "name": "development",
-    "label": "Mitwirken",
+    "label": "Beitragsleitfaden",
     "collapsed": true
   }
 ]

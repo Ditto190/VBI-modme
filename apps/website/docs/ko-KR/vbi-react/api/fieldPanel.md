@@ -14,7 +14,7 @@ FieldPanel(props: FieldPanelProps)
 
 ## 설명
 
-dimension/measure 필드 패널과 기본 편집 상호작용을 제공합니다.
+차원/측정값 필드 패널과 기본 편집 상호작용을 제공합니다.
 
 ## 최소 예제
 

@@ -1,46 +1,52 @@
 # Pie
 
 :::info{title=Recommended}
-- Recommended field configuration: `1` measure(s), `1` dimension(s)
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
+\- Recommended field configuration: `1` measure, `1` dimension
+
+\- Supports data reshaping: at least `1` measure, `0` dimensions
+
 :::
 
 :::info{title=Encoding Mapping}
-The Pie Chart supports the following visual channels:
+The pie chart supports the following visual channels:
 
-`angle`  : angle channel, supports `multiple measures`, mapping measure values to sector angles.
+`angle`  : angle channel, supports `multiple measures`, maps measure values to sector angles
 
-`detail` : subdivision channel, supports `multiple dimensions`, used for displaying finer granularity data within the same color series.
+`detail` : detail channel, supports `multiple dimensions`, used to display finer-grained data within the same color series
 
-`color`  : color channel, supports `multiple dimensions` or `one measure`. Dimension colors are used to distinguish different data series, while measure colors are used for linear mapping of values to graphical colors.
+`color`  : color channel, supports `multiple dimensions` or `one measure`; dimension colors distinguish data series, and measure colors linearly map measure values to graphical colors
 
-`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point.
+`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point
 
-`label`  : label channel, supports `multiple dimensions` and `multiple measures`, displaying data labels on data points.
+`label`  : label channel, supports `multiple dimensions` and `multiple measures`, displays data labels on data points
 
 :::
 
 :::note{title=Description}
-Pie Chart, suitable for showing the proportional relationship of single-dimension data using sector areas to represent category shares.
+Pie chart, suitable for showing the proportional relationship of single-dimension data, using sector area to represent each category's share.
 
 Applicable scenarios:
 
-- Showing the proportional distribution of categorical data.
-- Emphasizing the relationship between parts and the whole.
-- Proportional analysis with a small number of categories (recommended not to exceed 6).
+\- Show the proportional distribution of categorical data
+
+\- Emphasize the relationship between parts and the whole
+
+\- Proportional analysis with a small number of categories (recommended no more than 6)
 
 :::
 
 :::warning{title=Warning}
 Data requirements:
 
-- At least 1 numeric field.
-- All dimensions are merged with measure names (when multiple measures exist) into a single dimension to serve as legend items.
-- All measures are automatically merged into one measure.
+\- At least 1 numeric field (measure)
+
+\- All dimensions are merged with measure names when multiple measures exist into one dimension and displayed as legend items
+
+\- All measures are automatically merged into one measure
 
 Features enabled by default:
 
-- Legend, data labels, tooltips, and percentage calculations are enabled by default.
+\- Legend, data labels, tooltips, and percentage calculation are enabled by default
 
 :::
 
@@ -50,7 +56,11 @@ Features enabled by default:
 **Type:** `"pie"`
 
 :::note{title=Description}
-Pie Chart. Shows the proportional relationship of single-dimension data.
+Pie chart
+
+
+
+Pie chart, showing the proportional relationship of single-dimension data
 
 :::
 
@@ -65,7 +75,11 @@ Pie Chart. Shows the proportional relationship of single-dimension data.
 **Type:** `Record[]`
 
 :::note{title=Description}
-Dataset. Compliant with TidyData specification and already aggregated, defines the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Pie Chart data is ultimately converted to 1 dimension and 1 measure.
+Dataset
+
+
+
+A TidyData-compliant, already aggregated dataset used to define the chart data source and structure. User input does not need any preprocessing; VSeed has powerful data reshaping capabilities and reshapes the data automatically. Pie chart data is ultimately converted into 1 dimension and 1 measure.
 
 :::
 
@@ -80,7 +94,11 @@ Dataset. Compliant with TidyData specification and already aggregated, defines t
 **Type:** `PieDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions. All dimensions of the Pie Chart are merged with measure names (if multiple measures exist) into a single dimension, mapped to the angle channel, and served as legend items.
+Dimensions
+
+
+
+All dimensions of a pie chart are merged with measure names when multiple measures exist into one dimension, mapped to angle, and displayed as legend items
 
 :::
 
@@ -154,7 +172,11 @@ Channel to which the dimension is mapped:
 **Type:** `PieMeasure[] | undefined`
 
 :::note{title=Description}
-Measures. All measures in a Pie Chart are automatically merged into one measure and mapped to the sector radius. When multiple measures exist, measure names are merged with remaining dimensions to serve as legend items.
+Measures
+
+
+
+All measures in a pie chart are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with the remaining dimensions and displayed as legend items.
 
 :::
 
@@ -197,7 +219,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=zh-CN: 749740.264 → 74.45万
 
 - locale=en-US: 749740.264 → 744.5K
 
@@ -234,7 +256,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -249,7 +271,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -369,7 +391,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -384,7 +406,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -735,7 +757,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -750,7 +772,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -1164,7 +1186,7 @@ Dynamic filter execution result (runtime field). Written during the prepare() ph
 **Type:** `"arc" | "labelLine" | "edge" | undefined`
 
 :::note{title=Description}
-Label layout mode. Only effective for Pie Chart and Donut Chart when `labelPosition` is `outside`.
+Label layout mode. Only effective for pie chart and donut chart when `labelPosition` is `outside`.
 
 - arc: Layout labels along the arc.
 

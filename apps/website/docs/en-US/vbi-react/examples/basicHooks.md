@@ -5,7 +5,7 @@ This example demonstrates combining `useVBI` with `useVSeed`.
 ## Dependencies
 
 - Packages: `@visactor/vbi-react`, `@visactor/vbi`, `@visactor/vseed`, `react`
-- Props: requires an initialized `VBIChartBuilder` (with a bound connector)
+- Input constraint: requires an initialized `VBIChartBuilder` (with an available connector bound)
 
 ## Code Snippet
 

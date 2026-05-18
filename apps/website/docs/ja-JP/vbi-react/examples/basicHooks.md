@@ -5,7 +5,7 @@
 ## 依存関係
 
 - パッケージ依存: `@visactor/vbi-react`、`@visactor/vbi`、`@visactor/vseed`、`react`
-- 入力制約: 初期化済みの `VBIChartBuilder`（利用可能な connector がバインド済み）が必要です
+- 入力制約: 初期化済みの `VBIChartBuilder`（利用可能な connector をバインド済み）が必要です
 
 ## コードスニペット
 

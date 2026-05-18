@@ -1,6 +1,6 @@
 # useVSeed
 
-## Import
+## Nhập
 
 ```ts
 import { useVSeed } from '@visactor/vbi-react'

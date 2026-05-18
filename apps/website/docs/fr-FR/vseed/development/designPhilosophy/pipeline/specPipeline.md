@@ -1,8 +1,8 @@
-# Pipeline spec
+# spec pipeline
 
-## Pipeline spec
+## spec pipeline
 
-Le `spec pipeline` reçoit une DSL advancedVSeed et produit une spec.
+Le `spec pipeline` reçoit une advancedVSeed DSL et produit une spec.
 
 Une `spec` est la structure de données d'entrée de VChart ou VTable, utilisée pour décrire les options de configuration d'un graphique.
 

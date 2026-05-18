@@ -1,6 +1,6 @@
 # useVBI
 
-## Import
+## Nhập
 
 ```ts
 import { useVBI } from '@visactor/vbi-react'

@@ -1,12 +1,12 @@
 # useMeasures
 
-## Import
+## Impor
 
 ```ts
 import { useMeasures } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useMeasures(builder: VBIChartBuilder): UseMeasuresReturn
@@ -14,7 +14,7 @@ useMeasures(builder: VBIChartBuilder): UseMeasuresReturn
 
 ## Deskripsi
 
-Membaca dan memperbarui konfigurasi measure, serta menyediakan kemampuan untuk menambah, menghapus, dan mengubah measure.
+Membaca dan memperbarui konfigurasi metrik, serta menyediakan kemampuan untuk menambah, menghapus, dan mengubah metrik.
 
 ## Contoh Minimal
 

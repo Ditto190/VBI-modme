@@ -15,4 +15,3 @@ hero:
   image:
     src: /logo.svg
     alt: Github
----

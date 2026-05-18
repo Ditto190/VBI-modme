@@ -5,7 +5,7 @@ VQuery uses the `rstest` framework for testing. **All commands must be run from 
 ## Test Mechanisms
 VQuery's tests cover:
 - **Unit**: Utility functions and compiler logic.
-- **Examples**: Complete SQL generation and data query flows.
+- **examples**: Complete SQL generation and data query flows.
 
 ## Common Commands
 

@@ -1,54 +1,54 @@
 # Heatmap
 
-:::info{title=Recommandé}
-- Configuration de champs recommandée : `1` mesure, `2` dimensions
+:::info{title=Recommandation}
+\- Configuration de champs recommandée : `1` mesure, `2` dimensions
 
-- Prend en charge Data Reshape : au moins `1` mesure, `0` dimension
+\- Prend en charge la restructuration des données : au moins `1` mesure, `0` dimension
 
 :::
 
-:::info{title=Mappage d'encodage}
-Le graphique Heatmap prend en charge les canaux visuels suivants :
+:::info{title=Mappage d’encodage}
+La carte thermique prend en charge les canaux visuels suivants :
 
-`xAxis`      : canal de l'axe x, prend en charge `plusieurs dimensions`, mappées sur l'axe x selon la valeur de dimension
+`xAxis`      : canal de l’axe X, prend en charge `plusieurs dimensions` et mappe les valeurs de dimension sur l’axe X
 
-`yAxis`      : canal de l'axe y, prend en charge `plusieurs dimensions`, mappées sur l'axe y selon la valeur de dimension
+`yAxis`      : canal de l’axe Y, prend en charge `plusieurs dimensions` et mappe les valeurs de dimension sur l’axe Y
 
-`detail`     : canal de détail, prend en charge `plusieurs dimensions`, utilisé pour afficher des données plus granulaires dans la même série de couleurs
+`detail` : canal de détail, prend en charge `plusieurs dimensions` et s’utilise pour afficher des données plus granulaires dans la même série de couleurs
 
-`color`      : canal de couleur, prend en charge `une mesure`, mappe les valeurs de mesure à l'intensité de couleur
+`color`  : canal de couleur, prend en charge `une mesure` et mappe les valeurs de mesure sur la couleur
 
-`tooltip`    : canal d'infobulle, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiché au survol d'un point de données
+`tooltip`: canal d’infobulle, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiché au survol d’un point de données
 
-`label`      : canal d'étiquette, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiche les étiquettes de données sur les points de données
+`label`  : canal de libellé, prend en charge `plusieurs dimensions` et `plusieurs mesures`, affiche les libellés de données sur les points de données
 
 :::
 
 :::note{title=Description}
-Graphique Heatmap, affichant la distribution et les relations d'intensité des données par profondeur de couleur dans une matrice bidimensionnelle.
+Carte thermique, affichant la distribution et l’intensité des données par profondeur de couleur dans une matrice bidimensionnelle.
 
-Scénarios applicables :
+Scénarios d’utilisation :
 
-- Affichage de la densité et de l'intensité de données bidimensionnelles à grande échelle
+\- Affichage de la densité et de l’intensité de données bidimensionnelles à grande échelle
 
-- Analyse de corrélation entre catégories et valeurs numériques
+\- Analyse de corrélation entre catégories et valeurs numériques
 
-- Comparaison croisée entre séries temporelles et catégories
+\- Comparaison croisée entre séries temporelles et catégories
 
 :::
 
 :::warning{title=Warning}
 Exigences de données :
 
-- Au moins 2 champs de dimension, utilisés pour déterminer les lignes et colonnes du graphique Heatmap
+\- Au moins 2 champs de dimension pour déterminer les lignes et les colonnes de la carte thermique
 
-- Au moins 1 champ numérique, utilisé pour mapper la profondeur de couleur
+\- Au moins 1 champ numérique (mesure), utilisé pour mapper la profondeur de couleur
 
-- Lorsque plusieurs mesures sont prises en charge, une mesure est généralement sélectionnée pour le mapping de couleur
+\- Lorsque plusieurs mesures sont prises en charge, une mesure est généralement sélectionnée pour le mappage de couleur
 
 Fonctionnalités activées par défaut :
 
-- La légende, les axes, les étiquettes de données, les infobulles et la mise à l'échelle numérique sont activés par défaut.
+\- La légende, les axes, les libellés de données, les infobulles et la mise à l’échelle numérique sont activés par défaut
 
 :::
 
@@ -58,7 +58,11 @@ Fonctionnalités activées par défaut :
 **Type:** `"heatmap"`
 
 :::note{title=Description}
-Graphique Heatmap, affichant la distribution et les relations d'intensité des données par profondeur de couleur dans une matrice bidimensionnelle.
+Carte thermique
+
+
+
+Carte thermique, affichant la distribution et l’intensité des données par profondeur de couleur dans une matrice bidimensionnelle.
 
 :::
 
@@ -73,7 +77,11 @@ Graphique Heatmap, affichant la distribution et les relations d'intensité des d
 **Type:** `Record[]`
 
 :::note{title=Description}
-Dataset. Jeu de données déjà agrégé et conforme à la spécification TidyData, définissant la source et la structure des données du graphique. L'entrée utilisateur ne nécessite aucun prétraitement ; VSeed dispose de puissantes capacités Data Reshape qui gèrent automatiquement le formatage. Les données du graphique Heatmap sont finalement converties en 2 dimensions et 1 mesure.
+Jeu de données
+
+
+
+Jeu de données déjà agrégé et conforme à la spécification TidyData, utilisé pour définir la source et la structure des données du graphique. Le jeu de données fourni par l’utilisateur ne nécessite aucun traitement supplémentaire. VSeed dispose de puissantes capacités de restructuration des données et restructure automatiquement les données. Les données de la carte thermique sont finalement converties en 2 dimensions et 1 mesure.
 
 :::
 
@@ -88,8 +96,11 @@ Dataset. Jeu de données déjà agrégé et conforme à la spécification TidyDa
 **Type:** `HeatmapDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions. Pour les graphiques Heatmap, la première dimension est généralement mappée sur l'axe X, tandis que les autres dimensions sont fusionnées avec les noms de mesures (s'il y en a plusieurs) pour servir d'éléments de légende.
+Champs de dimension
 
+
+
+Dans une carte thermique, la première dimension est mappée sur l’axe angulaire ; les autres dimensions sont fusionnées avec les noms de mesures (s’il existe plusieurs mesures) et affichées comme éléments de légende.
 :::
 
 **Exemple**
@@ -103,7 +114,7 @@ Dimensions. Pour les graphiques Heatmap, la première dimension est généraleme
 **Type:** `string`
 
 :::note{title=Description}
-ID de champ correspondant à la dimension
+ID du champ correspondant à la dimension
 
 :::
 
@@ -140,19 +151,19 @@ Granularité temporelle, détermine la précision d'affichage de la date
 **Type:** `"xAxis" | "tooltip" | "label" | "row" | "column" | "yAxis" | undefined`
 
 :::note{title=Description}
-Canal auquel la dimension est mappée :
+Canal auquel la dimension est mappée
 
-- xAxis : prend en charge le mapping de plusieurs dimensions sur l'axe x
+\- xAxis : prend en charge le mappage de plusieurs dimensions sur l’axe X
 
-- yAxis : prend en charge le mapping de plusieurs dimensions sur l'axe y
+\- yAxis : prend en charge le mappage de plusieurs dimensions sur l’axe Y
 
-- tooltip : prend en charge le mapping de plusieurs dimensions vers le canal d'infobulle
+\- tooltip: permet de mapper plusieurs dimensions au canal d'infobulle
 
-- label : prend en charge le mapping de plusieurs dimensions vers le canal d'étiquette
+\- label: permet de mapper plusieurs dimensions au canal de libellé
 
-- row : prend en charge le mapping de plusieurs dimensions vers le canal de ligne
+\- row: prend en charge le mapping de plusieurs dimensions vers le canal ligne
 
-- column : prend en charge le mapping de plusieurs dimensions vers le canal de colonne
+\- column: prend en charge le mapping de plusieurs dimensions vers le canal colonne
 
 :::
 
@@ -162,7 +173,11 @@ Canal auquel la dimension est mappée :
 **Type:** `HeatmapMeasure[] | undefined`
 
 :::note{title=Description}
-Mesures. Les mesures du graphique Heatmap sont automatiquement fusionnées en une seule mesure et mappées sur l'échelle de couleur. Si plusieurs mesures existent, leurs noms sont fusionnés avec d'autres dimensions pour servir d'éléments de légende.
+Mesures
+
+
+
+Les mesures de la carte thermique sont automatiquement fusionnées en une seule mesure et mappées sur l’axe radial. S’il existe plusieurs mesures, leurs noms sont fusionnés avec les autres dimensions et affichés comme éléments de légende.
 
 :::
 
@@ -186,7 +201,7 @@ ID de mesure, doit être unique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Alias de mesure, doublons autorisés ; s'il n'est pas défini, alias vaut id
+Alias de mesure, les doublons sont autorisés; si non défini, alias vaut id
 
 :::
 
@@ -195,19 +210,19 @@ Alias de mesure, doublons autorisés ; s'il n'est pas défini, alias vaut id
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Formatage numérique automatique, activé par défaut, priorité la plus élevée.
+Formatage automatique des nombres, activé par défaut avec la priorité la plus élevée
 
-Lorsque autoFormat=true, toutes les configurations numFormat sont remplacées.
+Lorsque autoFormat=true, toutes les configurations numFormat sont remplacées
 
-Lorsqu’il est activé, les étiquettes de données et les infobulles choisissent automatiquement le format adapté selon les valeurs de mesure et la locale.
+Une fois activé, les libellés de données et les infobulles choisissent automatiquement le format adapté selon les valeurs de mesure et la locale
 
-Règles de formatage : nombres décimaux avec compact notation activée, minimum 0 décimale, maximum 2 décimales, arrondi automatique, via l’implémentation Intl.NumberFormat du navigateur.
+Règles de formatage: nombres décimaux avec compact notation activée, 0 décimale minimum, 2 décimales maximum, arrondi automatique, via l'implémentation Intl.NumberFormat du navigateur
 
-Par exemple :
+Exemple:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-- locale=en-US: 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -216,9 +231,9 @@ Par exemple :
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Formatage numérique personnalisé pour les mesures ; appliqué automatiquement aux étiquettes et infobulles.
+Formatage numérique personnalisé des mesures; appliqué automatiquement aux labels et tooltips
 
-Remarque : pour utiliser un format personnalisé, définissez explicitement autoFormat=false ; sinon autoFormat remplacera cette configuration.
+Remarque: pour utiliser un formatage personnalisé, vous devez définir explicitement autoFormat=false; sinon autoFormat remplacera cette configuration
 
 :::
 
@@ -228,7 +243,7 @@ Remarque : pour utiliser un format personnalisé, définissez explicitement auto
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Type de format numérique, prend en charge : nombre (décimal), pourcentage (%), pour mille (‰), notation scientifique
+Type de format numérique, prend en charge: decimal, percent (%), permille (‰), notation scientifique
 
 :::
 
@@ -237,13 +252,13 @@ Type de format numérique, prend en charge : nombre (décimal), pourcentage (%),
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Ratio de format numérique, ne peut pas être 0
+Ratio du format numérique, ne peut pas être 0
 
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -252,13 +267,13 @@ Ratio de format numérique, ne peut pas être 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Symbole de format numérique, par exemple %, ‰
+Symbole du format numérique, par ex. %, ‰
 
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -267,7 +282,7 @@ Symbole de format numérique, par exemple %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Séparateur des milliers pour le formatage numérique
+Ratio du format numérique, ne peut pas être 0
 
 :::
 
@@ -276,7 +291,7 @@ Séparateur des milliers pour le formatage numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Suffixe de format numérique
+Suffixe du format numérique
 
 :::
 
@@ -285,7 +300,7 @@ Suffixe de format numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Préfixe de format numérique
+Symbole du format numérique, par ex. %, ‰
 
 :::
 
@@ -294,17 +309,17 @@ Préfixe de format numérique
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur ; priorité inférieure à significantDigits.
+Decimal places for numeric formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1235 , fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -313,19 +328,19 @@ Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Chiffres significatifs pour le formatage numérique, utilise minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur ; priorité supérieure à fractionDigits.
+Suffixe du format numérique
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1000 , significantDigits:1
-- 1234.5678 est converti en 1200 , significantDigits:2
-- 1234.5678 est converti en 1230 , significantDigits:3
-- 1234.5678 est converti en 1234 , significantDigits:4
-- 1234.5678 est converti en 1234.6 , significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.57 , significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.568 , significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1000, significantDigits:1
+\- 1234.5678 est converti en 1200, significantDigits:2
+\- 1234.5678 est converti en 1230, significantDigits:3
+\- 1234.5678 est converti en 1234, significantDigits:4
+\- 1234.5678 est converti en 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -334,13 +349,13 @@ Chiffres significatifs pour le formatage numérique, utilise minimumSignificantD
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis ; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority.
+Decimal places for numeric formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1230 , significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 est converti en 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 est converti en 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 est converti en 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -349,7 +364,7 @@ Priorité d’arrondi du formatage numérique lorsque significantDigits et fract
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Mode d’arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode.
+Suffixe du format numérique
 
 :::
 
@@ -363,7 +378,7 @@ Mode d’arrondi du formatage numérique, utilise Intl.NumberFormat du navigateu
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Type de format numérique, prend en charge : nombre (décimal), pourcentage (%), pour mille (‰), notation scientifique
+Type de format numérique, prend en charge: decimal, percent (%), permille (‰), notation scientifique
 
 :::
 
@@ -372,13 +387,13 @@ Type de format numérique, prend en charge : nombre (décimal), pourcentage (%),
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Ratio de format numérique, ne peut pas être 0
+Ratio du format numérique, ne peut pas être 0
 
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -387,13 +402,13 @@ Ratio de format numérique, ne peut pas être 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Symbole de format numérique, par exemple %, ‰
+Symbole du format numérique, par ex. %, ‰
 
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -402,7 +417,7 @@ Symbole de format numérique, par exemple %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Séparateur des milliers pour le formatage numérique
+Ratio de format numérique, ne peut pas être 0
 
 :::
 
@@ -411,7 +426,7 @@ Séparateur des milliers pour le formatage numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Suffixe de format numérique
+Suffixe du format numérique
 
 :::
 
@@ -420,7 +435,7 @@ Suffixe de format numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Préfixe de format numérique
+Symbole de format numérique, par ex. %, ‰
 
 :::
 
@@ -429,17 +444,17 @@ Préfixe de format numérique
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur ; priorité inférieure à significantDigits.
+Decimal places for numeric formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits.
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1235 , fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -448,19 +463,19 @@ Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Chiffres significatifs pour le formatage numérique, utilise minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur ; priorité supérieure à fractionDigits.
+Suffixe du format numérique
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1000 , significantDigits:1
-- 1234.5678 est converti en 1200 , significantDigits:2
-- 1234.5678 est converti en 1230 , significantDigits:3
-- 1234.5678 est converti en 1234 , significantDigits:4
-- 1234.5678 est converti en 1234.6 , significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.57 , significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.568 , significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1000, significantDigits:1
+\- 1234.5678 est converti en 1200, significantDigits:2
+\- 1234.5678 est converti en 1230, significantDigits:3
+\- 1234.5678 est converti en 1234, significantDigits:4
+\- 1234.5678 est converti en 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -469,13 +484,13 @@ Chiffres significatifs pour le formatage numérique, utilise minimumSignificantD
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis ; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority.
+Nombre de décimales du format numérique, utilise minimumFractionDigits et maximumFractionDigits d'Intl.NumberFormat du navigateur; priorité inférieure à significantDigits
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1230 , significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 est converti en 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 est converti en 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 est converti en 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -484,7 +499,7 @@ Priorité d’arrondi du formatage numérique lorsque significantDigits et fract
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Mode d’arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode.
+Chiffres significatifs du format numérique, utilise minimumSignificantDigits et maximumSignificantDigits d'Intl.NumberFormat du navigateur; priorité supérieure à fractionDigits
 
 :::
 
@@ -493,13 +508,13 @@ Mode d’arrondi du formatage numérique, utilise Intl.NumberFormat du navigateu
 **Type:** `"color" | "tooltip" | "label" | undefined`
 
 :::note{title=Description}
-Canal auquel la mesure est mappée :
+Canal auquel la mesure est mappée
 
-- color : mesure mappée vers le canal de couleur
+\- color : mesure mappée au canal de couleur
 
-- label : mesure mappée vers le canal d'étiquette
+\- label: mesure mappée au canal label
 
-- tooltip : mesure mappée vers le canal d'infobulle
+\- tooltip: mesure mappée au canal tooltip
 
 :::
 
@@ -508,12 +523,12 @@ Canal auquel la mesure est mappée :
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Dans une configuration de mesures plate, construit une structure de mesures en arbre. parentId pointe vers l’ID du groupe de mesures parent et sert à construire la hiérarchie.
+Dans la forme de configuration plate des mesures, construit un groupe de mesures en arbre. parentId pointe vers l'id du groupe parent, utilisé pour construire l'arbre de mesures
 
 :::
 
-:::tip{title=Astuce}
-Il existe deux façons de configurer l’arbre des mesures : l’option 1 configure directement un arbre de mesures avec children ; l’option 2 fournit une liste plate de mesures avec parentId. Ces deux méthodes ne peuvent pas être utilisées simultanément.
+:::tip{title=Tip}
+Deux façons existent pour configurer l'arbre de mesures: l'option 1 consiste à configurer directement un arbre avec children; l'option 2 consiste à configurer une liste plate avec parentId. Ces deux méthodes ne peuvent pas être utilisées simultanément
 
 :::
 
@@ -523,7 +538,7 @@ Il existe deux façons de configurer l’arbre des mesures : l’option 1 config
 **Type:** `Page | undefined`
 
 :::note{title=Description}
-Configuration de pagination.
+Configuration de pagination
 
 :::
 
@@ -533,7 +548,7 @@ Configuration de pagination.
 **Type:** `string`
 
 :::note{title=Description}
-Champ de pagination ; spécifie le nom du champ pour la pagination, doit être une dimension.
+Champ de pagination; spécifie le nom du champ de pagination, qui doit être une dimension
 
 :::
 
@@ -542,34 +557,40 @@ Champ de pagination ; spécifie le nom du champ pour la pagination, doit être u
 **Type:** `string`
 
 :::note{title=Description}
-Valeur de pagination actuelle ; spécifie la valeur utilisée pour déterminer la page courante.
+Valeur de pagination actuelle; spécifie la valeur utilisée pour déterminer la page courante
 
 :::
 
 **Exemple**
-'2023-01-01'
+'2023\-01\-01'
 
 
 
 
 ## backgroundColor
 
-**Type:** `BackgroundCouleur`
+**Type:** `BackgroundColor`
 
 :::note{title=Description}
-Couleur d'arrière-plan du graphique.
+Couleur d'arrière-plan du graphique
 
-Background color can be a color string (e.g., 'red', 'blue'), or a hex, rgb, or rgba value (e.g., '#ff0000', 'rgba(255,0,0,0.5)').
+
+
+La couleur d'arrière-plan peut être une chaîne de couleur (par ex. 'red', 'blue') ou une valeur hex, rgb ou rgba (par ex. '#ff0000', 'rgba(255,0,0,0.5)')
 
 :::
 
 
 ## color
 
-**Type:** `Couleur | undefined`
+**Type:** `Color | undefined`
 
 :::note{title=Description}
-Configuration des couleurs pour définir la palette du graphique, y compris les listes, mappages et dégradés de couleurs.
+Color
+
+
+
+Configuration des couleurs pour définir le schéma du graphique, y compris listes de couleurs, mappings de couleurs et dégradés.
 
 :::
 
@@ -579,7 +600,7 @@ Configuration des couleurs pour définir la palette du graphique, y compris les 
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-Palette de couleurs discrète utilisée pour définir les couleurs des différents éléments du graphique.
+Schéma de couleurs discret utilisé pour définir les couleurs des différents éléments du graphique
 
 :::
 
@@ -593,7 +614,7 @@ Palette de couleurs discrète utilisée pour définir les couleurs des différen
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-Palette de dégradé linéaire utilisée pour définir les couleurs des différents éléments du graphique.
+Schéma de couleurs en dégradé linéaire utilisé pour définir les couleurs des différents éléments du graphique
 
 :::
 
@@ -607,7 +628,7 @@ Palette de dégradé linéaire utilisée pour définir les couleurs des différe
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Description}
-Mapping de couleur utilisé pour associer des valeurs de données à des couleurs spécifiques.
+Mapping de couleurs utilisé pour associer des valeurs de données à des couleurs spécifiques
 
 :::
 
@@ -624,7 +645,7 @@ Mapping de couleur utilisé pour associer des valeurs de données à des couleur
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Configuration de couleur positive/négative ; définit la couleur des valeurs positives dans le graphique.
+Configuration des couleurs positives/négatives; définit la couleur des valeurs positives dans le graphique
 
 :::
 
@@ -633,17 +654,17 @@ Configuration de couleur positive/négative ; définit la couleur des valeurs po
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Configuration de couleur positive/négative ; définit la couleur des valeurs négatives dans le graphique.
+Configuration des couleurs positives/négatives; définit la couleur des valeurs négatives dans le graphique
 
 :::
 
 
 ## label
 
-**Type:** `Étiquette | undefined`
+**Type:** `Label | undefined`
 
 :::note{title=Description}
-Configuration des étiquettes du graphique Heatmap. Utilisée pour définir les étiquettes de données ; active automatiquement l'inversion des étiquettes afin d'assurer leur lisibilité sur les couleurs d'arrière-plan.
+Configuration des libellés de la carte thermique, utilisée pour définir les libellés de données. L’inversion de couleur des libellés est automatiquement activée afin de garantir leur lisibilité.
 
 :::
 
@@ -653,7 +674,7 @@ Configuration des étiquettes du graphique Heatmap. Utilisée pour définir les 
 **Type:** `false | true`
 
 :::note{title=Description}
-Indique si la fonctionnalité d'étiquette est activée.
+Indique si la fonction de libellé est activée
 
 :::
 
@@ -662,7 +683,7 @@ Indique si la fonctionnalité d'étiquette est activée.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique si les étiquettes passent à la ligne suivante.
+Indique si les libellés passent à la ligne
 
 :::
 
@@ -671,11 +692,11 @@ Indique si les étiquettes passent à la ligne suivante.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique si les étiquettes affichent les valeurs de mesure.
+Indique si les libellés affichent les valeurs de mesure
 
-Dans les scénarios à plusieurs mesures, il n'y a pas de risque de valeurs conflictuelles, car toutes les mesures liées au tracé passent par le traitement `foldMeasures` et sont fusionnées en une seule mesure représentant un point de données.
+Dans les scénarios à plusieurs mesures, il n'y a pas de conflit de valeurs, car toutes les mesures liées au tracé passent par `foldMeasures` et sont fusionnées en une mesure représentant un seul point de données
 
-Remarque : les étiquettes d'encodage ont une priorité plus élevée ; cette configuration n'affecte pas les étiquettes d'encodage.
+Remarque: le label dans encoding a une priorité plus élevée; cette configuration n'affecte pas le label dans encoding
 
 :::
 
@@ -684,11 +705,11 @@ Remarque : les étiquettes d'encodage ont une priorité plus élevée ; cette co
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique si les étiquettes affichent les pourcentages des valeurs de mesure.
+Indique si les libellés affichent le pourcentage des valeurs de mesure
 
-Dans les scénarios à plusieurs mesures, il n'y a pas de risque de valeurs conflictuelles, car toutes les mesures liées au tracé passent par le traitement `foldMeasures` et sont fusionnées en une seule mesure représentant un point de données.
+Dans les scénarios à plusieurs mesures, il n'y a pas de conflit de valeurs, car toutes les mesures liées au tracé passent par `foldMeasures` et sont fusionnées en une mesure représentant un seul point de données
 
-Remarque : les étiquettes d'encodage ont une priorité plus élevée ; cette configuration n'affecte pas les étiquettes d'encodage.
+Remarque: le label dans encoding a une priorité plus élevée; cette configuration n'affecte pas le label dans encoding
 
 :::
 
@@ -697,11 +718,11 @@ Remarque : les étiquettes d'encodage ont une priorité plus élevée ; cette co
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique si les étiquettes affichent les noms de dimension.
+Indique si les libellés affichent les libellés de dimension
 
-Displays all dimension labels.
+Afficher tous les libellés de dimension
 
-Remarque : les étiquettes d'encodage ont une priorité plus élevée ; cette configuration n'affecte pas les étiquettes d'encodage.
+Remarque: le label dans encoding a une priorité plus élevée; cette configuration n'affecte pas le label dans encoding
 
 :::
 
@@ -710,7 +731,7 @@ Remarque : les étiquettes d'encodage ont une priorité plus élevée ; cette co
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique si les valeurs d'étiquette sont formatées automatiquement. Lorsque autoFormat vaut true, la configuration numFormat est ignorée.
+Indique si les valeurs de libellé sont formatées automatiquement; lorsque autoFormat vaut true, la configuration numFormat est ignorée
 
 :::
 
@@ -719,7 +740,7 @@ Indique si les valeurs d'étiquette sont formatées automatiquement. Lorsque aut
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Configuration du format des valeurs d'étiquette ; fusionnée avec le `format` dans `measure`, où le `format` de `measure` a une priorité plus élevée. La priorité de numFormat est inférieure à autoFormat.
+Configuration du format des valeurs de libellé; fusionnée avec `format` dans `measure`, où `format` de `measure` a une priorité plus élevée. numFormat a une priorité inférieure à autoFormat
 
 :::
 
@@ -729,7 +750,7 @@ Configuration du format des valeurs d'étiquette ; fusionnée avec le `format` d
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Type de format numérique, prend en charge : nombre (décimal), pourcentage (%), pour mille (‰), notation scientifique
+Type de format numérique, prend en charge: decimal, percent (%), permille (‰), notation scientifique
 
 :::
 
@@ -743,8 +764,8 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -753,13 +774,13 @@ Ratio de format numérique, ne peut pas être 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Symbole de format numérique, par exemple %, ‰
+Symbole de format numérique, par ex. %, ‰
 
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
+\- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -768,7 +789,7 @@ Symbole de format numérique, par exemple %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Séparateur des milliers pour le formatage numérique
+Ratio de format numérique, ne peut pas être 0
 
 :::
 
@@ -777,7 +798,7 @@ Séparateur des milliers pour le formatage numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Suffixe de format numérique
+Suffixe du format numérique
 
 :::
 
@@ -786,7 +807,7 @@ Suffixe de format numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Préfixe de format numérique
+Symbole de format numérique, par ex. %, ‰
 
 :::
 
@@ -795,17 +816,17 @@ Préfixe de format numérique
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur ; priorité inférieure à significantDigits.
+Nombre de décimales du format numérique, utilise minimumFractionDigits et maximumFractionDigits d'Intl.NumberFormat du navigateur; priorité inférieure à significantDigits
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1235 , fractionDigits:0 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -814,19 +835,19 @@ Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Chiffres significatifs pour le formatage numérique, utilise minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur ; priorité supérieure à fractionDigits.
+Chiffres significatifs du format numérique, utilise minimumSignificantDigits et maximumSignificantDigits d'Intl.NumberFormat du navigateur; priorité supérieure à fractionDigits
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1000 , significantDigits:1
-- 1234.5678 est converti en 1200 , significantDigits:2
-- 1234.5678 est converti en 1230 , significantDigits:3
-- 1234.5678 est converti en 1234 , significantDigits:4
-- 1234.5678 est converti en 1234.6 , significantDigits:5 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.57 , significantDigits:6 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.568 , significantDigits:7 (roundingMode:halfCeil)
-- 1234.5678 est converti en 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1000, significantDigits:1
+\- 1234.5678 est converti en 1200, significantDigits:2
+\- 1234.5678 est converti en 1230, significantDigits:3
+\- 1234.5678 est converti en 1234, significantDigits:4
+\- 1234.5678 est converti en 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 est converti en 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -835,13 +856,13 @@ Chiffres significatifs pour le formatage numérique, utilise minimumSignificantD
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis ; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority.
+Nombre de décimales du format numérique, utilise minimumFractionDigits et maximumFractionDigits d'Intl.NumberFormat du navigateur; priorité inférieure à significantDigits
 
 :::
 
 **Exemple**
-- 1234.5678 est converti en 1230 , significantDigits:3 (roundingPriority:lessPrecision)
-- 1234.5678 est converti en 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 est converti en 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 est converti en 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -850,7 +871,7 @@ Priorité d’arrondi du formatage numérique lorsque significantDigits et fract
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Mode d’arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode.
+Chiffres significatifs du format numérique, utilise minimumSignificantDigits et maximumSignificantDigits d'Intl.NumberFormat du navigateur; priorité supérieure à fractionDigits
 
 :::
 
@@ -859,7 +880,7 @@ Mode d’arrondi du formatage numérique, utilise Intl.NumberFormat du navigateu
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Taille de police de l'étiquette.
+Mode d'arrondi du format numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode
 
 :::
 
@@ -868,7 +889,7 @@ Taille de police de l'étiquette.
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Graisse de police de l'étiquette.
+Graisse de police du label
 
 :::
 
@@ -877,7 +898,7 @@ Graisse de police de l'étiquette.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur d'arrière-plan de l'étiquette.
+Couleur d'arrière-plan du libellé
 
 :::
 
@@ -886,7 +907,7 @@ Couleur d'arrière-plan de l'étiquette.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur du contour de l'étiquette.
+Couleur du contour du libellé
 
 :::
 
@@ -895,7 +916,7 @@ Couleur du contour de l'étiquette.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur de police de l'étiquette.
+Couleur de police du libellé
 
 :::
 
@@ -904,7 +925,7 @@ Couleur de police de l'étiquette.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to automatically invert the label font color based on the graphic element color.
+Indique si la couleur de police est inversée automatiquement selon la couleur de l'élément
 
 :::
 
@@ -913,7 +934,7 @@ Whether to automatically invert the label font color based on the graphic elemen
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Description}
-Position de l'étiquette.
+Position du libellé
 
 :::
 
@@ -922,7 +943,7 @@ Position de l'étiquette.
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the label overlap avoidance function is enabled.
+Indique si l'anti-chevauchement des libellés est activé
 
 :::
 
@@ -931,7 +952,7 @@ Whether the label overlap avoidance function is enabled.
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Filtrage des étiquettes ; la relation de condition par défaut entre les sélecteurs est OR.
+Filtrage des libellés, la relation par défaut entre les sélecteurs est Or
 
 :::
 
@@ -941,7 +962,7 @@ Filtrage des étiquettes ; la relation de condition par défaut entre les sélec
 **Type:** `string`
 
 :::note{title=Description}
-ID du champ de dimension.
+Champ de dimension; ID d un élément dans dimensions.
 
 :::
 
@@ -950,11 +971,11 @@ ID du champ de dimension.
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Opérateur :
+Operator
 
-- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans la liste 'value'.
+\- in: sélectionne les éléments de données dont la valeur du champ de dimension se trouve dans la liste de valeurs.
 
-- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans la liste 'value'.
+\- not in: sélectionne les éléments de données dont la valeur du champ de dimension ne se trouve PAS dans la liste de valeurs.
 
 :::
 
@@ -963,13 +984,13 @@ Opérateur :
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Opérateur :
+Operator
 
-- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans la liste 'value'.
+\- in: sélectionne les éléments de données dont la valeur du champ de dimension se trouve dans la liste de valeurs.
 
-- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans la liste 'value'.
+\- not in: sélectionne les éléments de données dont la valeur du champ de dimension ne se trouve PAS dans la liste de valeurs.
 
-Identique à operator.
+identique à operator
 
 :::
 
@@ -978,8 +999,7 @@ Identique à operator.
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Valeurs de dimension à sélectionner ; prend en charge les tableaux.
-
+Sélectionne les valeurs du champ de dimension ; les tableaux sont pris en charge
 :::
 
 ### dynamicFilter
@@ -987,25 +1007,37 @@ Valeurs de dimension à sélectionner ; prend en charge les tableaux.
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Filtre dynamique (exécution de code généré par IA).
+Filtre animé (exécution de code généré par IA)
 
-Implémente une logique complexe de filtrage de données via du code JavaScript généré par IA.
 
-Fonctionnalités principales :
 
-- Prend en charge toute condition complexe de filtrage des données.
+Implémente une logique complexe de filtrage des données via du code JavaScript généré par IA
 
-- Utilise les fonctions utilitaires intégrées pour les opérations sur les données.
 
-- Exécution sécurisée dans l’environnement navigateur (bac à sable Web Worker).
 
-Exigences : prend uniquement en charge les environnements navigateur ; les environnements Node.js utilisent fallback.
+Capacités principales:
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+\- Prend en charge toute condition complexe de filtrage des données
 
-Configuration du filtre dynamique du graphique.
+\- Utilise les fonctions utilitaires intégrées pour les opérations de données
 
-Filtre les marques du graphique (colonnes, points, etc.) via du code JavaScript généré par IA.
+\- S'exécute de façon sûre dans l'environnement navigateur (sandbox Web Worker)
+
+
+
+Exigences d’environnement : seuls les environnements navigateur sont pris en charge ; les environnements Node.js utilisent le fallback.
+
+
+
+Remarque: selector et dynamicFilter ne peuvent pas être utilisés simultanément; dynamicFilter a une priorité plus élevée
+
+
+
+Configuration du filtre animé du graphique
+
+
+
+Implémente le filtrage des marqueurs du graphique (barres, points, etc.) via du code JavaScript généré par IA
 
 :::
 
@@ -1019,14 +1051,14 @@ Filtre les marques du graphique (colonnes, points, etc.) via du code JavaScript 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Description des besoins de filtrage de l’utilisateur (langage naturel).
+Description de la demande de filtrage de l’utilisateur (langage naturel).
 
 :::
 
 **Exemple**
-"Mettre en évidence les colonnes de ventes supérieures à 1000."
+\- Supports any complex data filtering conditions
 
-"Mettre en évidence la colonne avec la marge bénéficiaire la plus élevée dans chaque région."
+\- Uses built-in utility functions for data operations
 
 
 
@@ -1035,22 +1067,24 @@ Description des besoins de filtrage de l’utilisateur (langage naturel).
 **Type:** `string`
 
 :::note{title=Description}
-Code JavaScript de filtrage généré par IA.
+Capacités principales:
 
-- Seules les fonctions utilitaires intégrées peuvent être utilisées (accessibles via _ ou R).
 
-- Paramètre d'entrée : data (tableau) ; chaque élément inclut un champ __row_index représentant le numéro de ligne.
 
-- Doit retourner un tableau de combinaisons d'index de ligne et de champ : Array<{ __row_index: number, field: string }>.
+\- Prend en charge toute condition complexe de filtrage des données
 
-- __row_index represents the row number of the original data item, and field represents the field to be highlighted.
+\- Utilise les fonctions utilitaires intégrées pour les opérations de données
 
-- Interdit : eval, Function, opérations asynchrones, API DOM, requêtes réseau.
+\- S'exécute de façon sûre dans l'environnement navigateur (sandbox Web Worker)
+
+Exigences d’environnement : seuls les environnements navigateur sont pris en charge ; les environnements Node.js utilisent le fallback.
+
+Remarque: selector et dynamicFilter ne peuvent pas être utilisés simultanément; dynamicFilter a une priorité plus élevée
 
 :::
 
 **Exemple**
-Mettre en évidence le champ 'sales' pour les éléments de données où sales > 1000 :
+Mettre en évidence le champ sales pour les éléments dont sales est supérieur à 1000
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1059,7 +1093,7 @@ field: 'sales'
 }));
 ```
 
-Mettre en évidence les éléments de données avec la marge bénéficiaire la plus élevée dans chaque région :
+Mettre en évidence l'élément ayant la marge bénéficiaire la plus élevée dans chaque zone
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1073,7 +1107,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Mettre en évidence les éléments de données répondant à plusieurs conditions de filtrage :
+Mettre en évidence les éléments avec un filtrage multi-conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1094,7 +1128,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Plan de fallback lorsque l’exécution du code échoue ou que l’environnement n’est pas pris en charge.
+Fallback strategy when code execution fails or the environment is not supported.
 
 :::
 
@@ -1104,7 +1138,7 @@ Plan de fallback lorsque l’exécution du code échoue ou que l’environnement
 **Type:** `string`
 
 :::note{title=Description}
-Champ de dimension, c'est-à-dire l'id d'un élément dans dimensions.
+Champ de dimension; ID d un élément dans dimensions.
 
 :::
 
@@ -1113,11 +1147,11 @@ Champ de dimension, c'est-à-dire l'id d'un élément dans dimensions.
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Opérateur
+Operator
 
-\- in: sélectionne les éléments de données dont la valeur du champ de dimension est présente dans value
+\- in: sélectionne les éléments de données dont la valeur du champ de dimension se trouve dans la liste de valeurs.
 
-\- not in: sélectionne les éléments de données dont la valeur du champ de dimension n'est pas présente dans value
+\- not in: sélectionne les éléments de données dont la valeur du champ de dimension ne se trouve PAS dans la liste de valeurs.
 
 :::
 
@@ -1126,13 +1160,13 @@ Opérateur
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
-Opérateur
+Operator
 
-\- in: sélectionne les éléments de données dont la valeur du champ de dimension est présente dans value
+\- in: sélectionne les éléments de données dont la valeur du champ de dimension se trouve dans la liste de valeurs.
 
-\- not in: sélectionne les éléments de données dont la valeur du champ de dimension n'est pas présente dans value
+\- not in: sélectionne les éléments de données dont la valeur du champ de dimension ne se trouve PAS dans la liste de valeurs.
 
-same as operator
+identique à operator
 
 :::
 
@@ -1141,8 +1175,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Sélectionne les éléments de données selon la valeur du champ de dimension ; les tableaux sont pris en charge.
-
+Sélectionne les valeurs du champ de dimension ; les tableaux sont pris en charge
 :::
 
 #### result
@@ -1150,8 +1183,9 @@ Sélectionne les éléments de données selon la valeur du champ de dimension ; 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Résultat d'exécution du filtre dynamique (champ runtime). Écrit pendant la phase prepare() ; en lecture seule à l'exécution.
+Résultat d’exécution du filtre dynamique (champ d’exécution)
 
+Écrit pendant la phase prepare() ; en lecture seule à l’exécution
 :::
 
 
@@ -1173,7 +1207,11 @@ Résultat d'exécution du filtre dynamique (champ runtime). Écrit pendant la ph
 **Type:** `ColorLegend | undefined`
 
 :::note{title=Description}
-Légende. Configuration de la légende de couleur pour les graphiques Heatmap, utilisée pour définir la légende du graphique, notamment la position, le format et le style.
+legend
+
+
+
+Configuration de la légende de couleurs de la carte thermique, utilisée pour définir la légende du graphique, notamment sa position, son format et son style.
 
 :::
 
@@ -1183,7 +1221,7 @@ Légende. Configuration de la légende de couleur pour les graphiques Heatmap, u
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Description}
-Position de la légende.
+Position de la légende
 
 :::
 
@@ -1197,7 +1235,7 @@ position: 'rightTop'
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether legend functionality is enabled.
+Indique si la fonction de légende est activée
 
 :::
 
@@ -1211,7 +1249,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur de police de la légende.
+legend font color
 
 :::
 
@@ -1220,7 +1258,7 @@ Couleur de police de la légende.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur de police de la légende.
+legend font color
 
 :::
 
@@ -1229,7 +1267,7 @@ Couleur de police de la légende.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Taille de police de la légende.
+Taille de police de la légende
 
 :::
 
@@ -1243,7 +1281,7 @@ labelFontSize: 10
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Graisse de police de la légende.
+Graisse de police de la légende
 
 :::
 
@@ -1266,7 +1304,11 @@ labelFontWeight: 400
 **Type:** `Tooltip | undefined`
 
 :::note{title=Description}
-Configuration des infobulles, utilisée pour définir les infobulles du graphique, notamment la position, le format et le style.
+Informations Tooltip
+
+
+
+Configuration des infobulles de la carte thermique, utilisée pour définir les infobulles du graphique, notamment leur position, leur format et leur style.
 
 :::
 
@@ -1276,7 +1318,7 @@ Configuration des infobulles, utilisée pour définir les infobulles du graphiqu
 **Type:** `false | true`
 
 :::note{title=Description}
-Indique si la fonctionnalité d'infobulle est activée.
+Indique si la fonction d'infobulle est activée
 
 :::
 
@@ -1286,7 +1328,15 @@ Indique si la fonctionnalité d'infobulle est activée.
 **Type:** `Brush | undefined`
 
 :::note{title=Description}
-Configuration de brush, utilisée pour activer ou désactiver les capacités de sélection de région.
+Définit la forme et l’orientation de la zone de sélection brush
+
+
+
+\- `polygon` : sélection polygonale, permettant de tracer un polygone libre en cliquant sur plusieurs points
+
+
+
+Mode de sélection brush: unique ou multiple
 
 :::
 
@@ -1296,7 +1346,7 @@ Configuration de brush, utilisée pour activer ou désactiver les capacités de 
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique si la sélection de région est activée.
+Définit le style des points de données sélectionnés.
 
 :::
 
@@ -1305,15 +1355,19 @@ Indique si la sélection de région est activée.
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-Type de brush. Définit la forme et la direction de la zone de sélection :
+brushtype
 
-- `rect` : sélection rectangulaire, permet de sélectionner dans les directions X et Y.
 
-- `polygon` : sélection polygonale, permet de dessiner des formes arbitraires en cliquant sur plusieurs points.
 
-- `x` : sélection horizontale, limite la sélection à la direction de l'axe X.
+Opacité
 
-- `y` : sélection verticale, limite la sélection à la direction de l'axe Y.
+Opacité des points de données sélectionnés, de 0 à 1
+
+\- `polygon` : sélection brush polygonale ; cliquez sur plusieurs points pour tracer un polygone de sélection
+
+\- `x`: sélection brush uniquement dans la direction de l'axe X; la direction de l'axe Y n'est pas limitée
+
+\- `y` : sélection brush dans la direction de l’axe Y uniquement ; la direction de l’axe X n’est pas limitée
 
 :::
 
@@ -1322,11 +1376,15 @@ Type de brush. Définit la forme et la direction de la zone de sélection :
 **Type:** `"single" | "multiple" | undefined`
 
 :::note{title=Description}
-Mode de sélection, simple ou multiple. Définit la logique de sélection :
+Opacité des points de données sélectionnés, plage 0-1
 
-- `single` : mode de sélection simple, une seule zone de sélection peut exister à la fois.
 
-- `multiple` : mode de sélection multiple, plusieurs zones de sélection peuvent exister simultanément.
+
+Style des éléments de données non sélectionnés
+
+Définit le style des points de données en dehors de la zone brush sélectionnée
+
+\- `multiple` : mode de sélection multiple ; plusieurs zones brush peuvent exister en même temps
 
 :::
 
@@ -1335,7 +1393,7 @@ Mode de sélection, simple ou multiple. Définit la logique de sélection :
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Indique s'il faut effacer les zones de sélection après la fin de la sélection de région.
+Indique si la zone brush est effacée à la fin de la sélection
 
 :::
 
@@ -1344,7 +1402,11 @@ Indique s'il faut effacer les zones de sélection après la fin de la sélection
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style des données dans la région sélectionnée.
+Opacité des points de données non sélectionnés, de 0 à 1
+
+
+
+Définit le style des points de données sélectionnés par brush
 
 :::
 
@@ -1354,7 +1416,11 @@ Style des données dans la région sélectionnée.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacité des points de données sélectionnés, plage 0-1.
+Style des éléments de données non sélectionnés
+
+
+
+Définit le style des points de données hors de la sélection brush
 
 :::
 
@@ -1363,7 +1429,7 @@ Opacité des points de données sélectionnés, plage 0-1.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur de contour.
+Configuration de l'axe de catégorie (axe X), utilisée pour définir l'axe X du graphique, y compris position, format, style, etc.
 
 :::
 
@@ -1372,7 +1438,7 @@ Couleur de contour.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Largeur de contour.
+Largeur du contour
 
 :::
 
@@ -1381,7 +1447,11 @@ Largeur de contour.
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style des données hors de la région sélectionnée.
+Axe X, axe de catégorie, configuration de l'axe X; définit l'axe X du graphique, y compris position, format, style, etc.
+
+
+
+Définit le style des points de données hors de la sélection brush
 
 :::
 
@@ -1391,7 +1461,11 @@ Style des données hors de la région sélectionnée.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Opacité des points de données hors sélection, plage 0-1.
+Style des éléments de données non sélectionnés
+
+
+
+Opacité des points de données hors sélection brush, plage 0-1
 
 :::
 
@@ -1400,7 +1474,7 @@ Opacité des points de données hors sélection, plage 0-1.
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Couleur de contour.
+Configuration de l'axe de catégorie (axe X), utilisée pour définir l'axe X du graphique, y compris position, format, style, etc.
 
 :::
 
@@ -1409,19 +1483,29 @@ Couleur de contour.
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Largeur de contour.
+Largeur du contour
 
 :::
 
 
 ## theme
 
-**Type:** `Thème | undefined`
+**Type:** `Theme | undefined`
 
 :::note{title=Description}
-Thème du graphique. Les thèmes sont des configurations de priorité plus faible contenant les paramètres généraux partagés par tous les types de graphiques et les paramètres spécifiques partagés dans une catégorie.
+Thème du graphique. Le thème est une configuration fonctionnelle de faible priorité, contenant les configurations générales communes à tous les types de graphiques et les configurations communes propres à un type de graphique.
 
-Les thèmes clair et sombre sont intégrés ; les utilisateurs peuvent définir des thèmes personnalisés via le Builder.
+
+
+Thèmes clair et sombre intégrés; les utilisateurs peuvent personnaliser les thèmes via Builder.
+
+
+
+Thème
+
+
+
+Thèmes clair et sombre intégrés; de nouveaux thèmes peuvent être personnalisés via registerTheme.
 
 :::
 
@@ -1449,6 +1533,10 @@ Les thèmes clair et sombre sont intégrés ; les utilisateurs peuvent définir 
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
-Locale. Configuration de la langue du graphique ; prend en charge 'zh-CN' et 'en-US'. Vous pouvez aussi appeler intl.setLocale('zh-CN') pour définir la langue.
+language
+
+
+
+Configuration de la langue du graphique. Prend en charge 'zh-CN' et 'en-US'. Vous pouvez également appeler intl.setLocale('zh-CN') pour définir la langue.
 
 :::

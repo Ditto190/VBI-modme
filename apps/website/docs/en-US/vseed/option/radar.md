@@ -1,9 +1,9 @@
 # Radar
 
 :::info{title=Recommended}
-\- Recommended field configuration: `1` measure(s), `1` dimension(s)
+\- Recommended field configuration: `1` measure, `1` dimension
 
-\- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
+\- Supports data reshaping: at least `1` measure, `0` dimensions
 
 :::
 
@@ -23,28 +23,28 @@ The Radar Chart supports the following visual channels:
 :::
 
 :::note{title=Description}
-Radar Chart: Suitable for comparative analysis of multi-dimensional data, displaying the distribution of each dimension through a multi-axis coordinate system.
+Radar chart, suitable for comparative analysis of multidimensional data, showing the value distribution of each dimension through a multi-axis coordinate system.
 
-**Applicable scenarios:**
+Applicable scenarios:
 
-\- Comparative analysis of comprehensive performance across multiple dimensions.
+\- Compare overall performance across multiple dimensions.
 
-\- Performance evaluation of multiple subjects across multiple measures.
+\- Evaluate multiple objects across multiple measures.
 
-\- Visualizing multi-dimensional characteristics of categorical data.
+\- Show multidimensional characteristics of categorical data.
 
 :::
 
 :::warning{title=Warning}
 Data requirements:
 
-\- At least one numeric field.
+\- At least one numeric field (measure).
 
-\- The first dimension(s) serve as the radar chart's axis dimensions, while other dimensions distinguish different data series for comparison.
+\- The first dimension is used as each dimension axis of the radar chart, and other dimensions are compared as different series.
 
 \- Supports multiple measures displayed as different data series.
 
-**Features enabled by default:**
+Features enabled by default:
 
 \- Legend, radar coordinate system, data labels, tooltips, and numeric scaling are enabled by default.
 
@@ -56,7 +56,7 @@ Data requirements:
 **Type:** `"radar"`
 
 :::note{title=Description}
-Radar Chart: Displays comparative relationships of multi-dimensional data through a multi-axis coordinate system.
+Radar chart, showing multidimensional data comparisons through a multi-axis coordinate system.
 
 :::
 
@@ -71,7 +71,9 @@ Radar Chart: Displays comparative relationships of multi-dimensional data throug
 **Type:** `Record[]`
 
 :::note{title=Description}
-Dataset: An aggregated dataset conforming to the TidyData specification, defining the data source and structure. VSeed features powerful data reshaping capabilities and will automatically process the input data. Radar chart data is ultimately converted to two dimensions and one measure for mapping.
+Dataset
+
+An aggregated dataset conforming to the TidyData specification, used to define the chart data source and structure. User input data does not need preprocessing; VSeed has powerful data reshaping capabilities and reshapes data automatically. Radar chart data is ultimately converted to two dimensions and one measure.
 
 :::
 
@@ -86,7 +88,9 @@ Dataset: An aggregated dataset conforming to the TidyData specification, definin
 **Type:** `RadarDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions: The first dimension is mapped to the angle axis. Remaining dimensions are combined with measure names (if multiple measures exist) to serve as legend items for series differentiation.
+Dimensions
+
+The first dimension of the radar chart is mapped to the angle axis. The remaining dimensions are merged with measure names (when multiple measures exist) and displayed as legend items.
 
 :::
 
@@ -162,7 +166,9 @@ Channel to which the dimension is mapped
 **Type:** `RadarMeasure[] | undefined`
 
 :::note{title=Description}
-Measures: Radar chart measures are automatically merged into one composite measure and mapped to the radius axis. When multiple measures exist, their names are combined with dimensions to serve as legend items for series differentiation.
+Measures
+
+Radar chart measures are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with the remaining dimensions and displayed as legend items.
 
 :::
 
@@ -205,7 +211,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-\- locale=zh-CN: 749740.264 → 744.5万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -242,7 +248,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -257,7 +263,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -377,7 +383,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -392,7 +398,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -755,7 +761,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -770,7 +776,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -981,7 +987,7 @@ Operator
 
 \- not in: Select data items where the value of the dimension field is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -1001,49 +1007,35 @@ Select the value of the dimension field in the data item, supports arrays
 :::note{title=Description}
 Dynamic filter (AI-generated code execution)
 
-
-
 Implement complex data filtering logic via AI-generated JavaScript code
-
-
 
 Core capabilities:
 
-\- Supports any complex data filtering conditions
+- Supports any complex data filtering conditions
 
-\- Use built-in utility functions for data operations
+- Use built-in utility functions for data operations
 
-\- Execute safely in the browser environment (Web Worker sandbox)
-
-
+- Execute safely in the browser environment (Web Worker sandbox)
 
 Environment requirements: Only supports browser environment; Node.js environment will use fallback
 
-
-
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
-
-
 Chart dynamic filter configuration
-
-
 
 Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
 
 :::
 
-
 #### type
 
 **Type:** `"row-with-field"`
-
 #### description
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+User filtering requirement description (natural language)
 
 :::
 
@@ -1053,7 +1045,6 @@ User's filtering requirement description (natural language)
 "Highlight the bar with the highest profit margin in each region"
 
 
-
 #### code
 
 **Type:** `string`
@@ -1061,17 +1052,15 @@ User's filtering requirement description (natural language)
 :::note{title=Description}
 AI-generated JavaScript filtering code
 
+- Can only use built-in utility functions (accessed via _ or R)
 
+- Input parameter: data (array), each item contains __row_index representing the row number
 
-\- Can only use built-in utility functions (accessed via _ or R)
+- Must return an array of row-index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- Input parameters: data (array), each item contains __row_index field representing line number
+- __row_index represents the original data item row number, and field represents the field to highlight
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
-
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
-
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
@@ -1085,7 +1074,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+Highlight the data item with the highest profit margin in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1099,7 +1088,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+Highlight data items that match multiple conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1114,23 +1103,21 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+Fallback when code execution fails or the environment is unsupported
 
 :::
-
 
 ##### field
 
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+Dimension field, the id of an item in dimensions
 
 :::
 
@@ -1141,9 +1128,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 :::
 
@@ -1154,9 +1141,9 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 same as operator
 
@@ -1167,7 +1154,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+Selects the value of the dimension field in the data item; arrays are supported
 
 :::
 
@@ -1176,14 +1163,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+Dynamic filter execution result (runtime field)
 
-
-
-Written during the prepare() phase, read-only at runtime
+Written during prepare(); read-only at runtime
 
 :::
-
 
 ##### success
 
@@ -1909,7 +1893,7 @@ Operator
 
 \- not in: Select data items where the value of the dimension field is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -1929,51 +1913,37 @@ Select the value of the dimension field in the data item, supports arrays
 :::note{title=Description}
 Dynamic filter (AI-generated code execution)
 
-
-
 Implement complex data filtering logic via AI-generated JavaScript code
 
 Suitable for scenarios that are difficult to express with static selectors, such as Top N, statistical analysis, and complex conditions
 
-
-
 Core capabilities:
 
-\- Supports any complex data filtering conditions
+- Supports any complex data filtering conditions
 
-\- Use built-in utility functions for data manipulation
+- Use built-in utility functions for data operations
 
-\- Safely executed in the browser environment (Web Worker sandbox)
-
-
+- Execute safely in the browser environment (Web Worker sandbox)
 
 Environment requirements: Only supports browser environment; Node.js environment will use fallback
 
-
-
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
-
-
 
 Chart dynamic filter configuration
 
-
-
-Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaScript code
+Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
 
 :::
-
 
 #### type
 
 **Type:** `"row-with-field"`
-
 #### description
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+User filtering requirement description (natural language)
 
 :::
 
@@ -1983,7 +1953,6 @@ User's filtering requirement description (natural language)
 "Highlight the bar with the highest profit margin in each region"
 
 
-
 #### code
 
 **Type:** `string`
@@ -1991,17 +1960,15 @@ User's filtering requirement description (natural language)
 :::note{title=Description}
 AI-generated JavaScript filtering code
 
+- Can only use built-in utility functions (accessed via _ or R)
 
+- Input parameter: data (array), each item contains __row_index representing the row number
 
-\- Can only use built-in utility functions (accessed via _ or R)
+- Must return an array of row-index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- Input parameters: data (array), each item contains __row_index field representing the row number
+- __row_index represents the original data item row number, and field represents the field to highlight
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
-
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
-
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
@@ -2015,7 +1982,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+Highlight the data item with the highest profit margin in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2029,7 +1996,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+Highlight data items that match multiple conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2044,23 +2011,21 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+Fallback when code execution fails or the environment is unsupported
 
 :::
-
 
 ##### field
 
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+Dimension field, the id of an item in dimensions
 
 :::
 
@@ -2071,9 +2036,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 :::
 
@@ -2084,9 +2049,9 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 same as operator
 
@@ -2097,7 +2062,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+Selects the value of the dimension field in the data item; arrays are supported
 
 :::
 
@@ -2106,14 +2071,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+Dynamic filter execution result (runtime field)
 
-
-
-Written during the prepare() phase, read-only at runtime
+Written during prepare(); read-only at runtime
 
 :::
-
 
 ##### success
 
@@ -2332,7 +2294,7 @@ Operator
 
 \- not in: Select data items where the value of the dimension field is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -2352,51 +2314,37 @@ Select the value of the dimension field in the data item, supports arrays
 :::note{title=Description}
 Dynamic filter (AI-generated code execution)
 
-
-
 Implement complex data filtering logic via AI-generated JavaScript code
 
 Suitable for scenarios that are difficult to express with static selectors, such as Top N, statistical analysis, and complex conditions
 
-
-
 Core capabilities:
 
-\- Supports any complex data filtering conditions
+- Supports any complex data filtering conditions
 
-\- Use built-in utility functions for data manipulation
+- Use built-in utility functions for data operations
 
-\- Safely executed in the browser environment (Web Worker sandbox)
-
-
+- Execute safely in the browser environment (Web Worker sandbox)
 
 Environment requirements: Only supports browser environment; Node.js environment will use fallback
 
-
-
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
-
-
 
 Chart dynamic filter configuration
 
-
-
-Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaScript code
+Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
 
 :::
-
 
 #### type
 
 **Type:** `"row-with-field"`
-
 #### description
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+User filtering requirement description (natural language)
 
 :::
 
@@ -2406,7 +2354,6 @@ User's filtering requirement description (natural language)
 "Highlight the bar with the highest profit margin in each region"
 
 
-
 #### code
 
 **Type:** `string`
@@ -2414,17 +2361,15 @@ User's filtering requirement description (natural language)
 :::note{title=Description}
 AI-generated JavaScript filtering code
 
+- Can only use built-in utility functions (accessed via _ or R)
 
+- Input parameter: data (array), each item contains __row_index representing the row number
 
-\- Can only use built-in utility functions (accessed via _ or R)
+- Must return an array of row-index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- Input parameters: data (array), each item contains __row_index field representing the row number
+- __row_index represents the original data item row number, and field represents the field to highlight
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
-
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
-
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
@@ -2438,7 +2383,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+Highlight the data item with the highest profit margin in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2452,7 +2397,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+Highlight data items that match multiple conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2467,23 +2412,21 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+Fallback when code execution fails or the environment is unsupported
 
 :::
-
 
 ##### field
 
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+Dimension field, the id of an item in dimensions
 
 :::
 
@@ -2494,9 +2437,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 :::
 
@@ -2507,9 +2450,9 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 same as operator
 
@@ -2520,7 +2463,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+Selects the value of the dimension field in the data item; arrays are supported
 
 :::
 
@@ -2529,14 +2472,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+Dynamic filter execution result (runtime field)
 
-
-
-Written during the prepare() phase, read-only at runtime
+Written during prepare(); read-only at runtime
 
 :::
-
 
 ##### success
 
@@ -2717,7 +2657,7 @@ Operator
 
 \- not in: Select data items where the value of the dimension field is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -2737,51 +2677,37 @@ Select the value of the dimension field in the data item, supports arrays
 :::note{title=Description}
 Dynamic filter (AI-generated code execution)
 
-
-
 Implement complex data filtering logic via AI-generated JavaScript code
 
 Suitable for scenarios that are difficult to express with static selectors, such as Top N, statistical analysis, and complex conditions
 
-
-
 Core capabilities:
 
-\- Supports any complex data filtering conditions
+- Supports any complex data filtering conditions
 
-\- Use built-in utility functions for data manipulation
+- Use built-in utility functions for data operations
 
-\- Safely executed in the browser environment (Web Worker sandbox)
-
-
+- Execute safely in the browser environment (Web Worker sandbox)
 
 Environment requirements: Only supports browser environment; Node.js environment will use fallback
 
-
-
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
-
-
 
 Chart dynamic filter configuration
 
-
-
-Implement filtering of chart marks (bars, points, etc.) using AI-generated JavaScript code
+Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
 
 :::
-
 
 #### type
 
 **Type:** `"row-with-field"`
-
 #### description
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+User filtering requirement description (natural language)
 
 :::
 
@@ -2791,7 +2717,6 @@ User's filtering requirement description (natural language)
 "Highlight the bar with the highest profit margin in each region"
 
 
-
 #### code
 
 **Type:** `string`
@@ -2799,17 +2724,15 @@ User's filtering requirement description (natural language)
 :::note{title=Description}
 AI-generated JavaScript filtering code
 
+- Can only use built-in utility functions (accessed via _ or R)
 
+- Input parameter: data (array), each item contains __row_index representing the row number
 
-\- Can only use built-in utility functions (accessed via _ or R)
+- Must return an array of row-index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- Input parameters: data (array), each item contains __row_index field representing the row number
+- __row_index represents the original data item row number, and field represents the field to highlight
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
-
-\- __row_index represents the original data item's row number, field represents the field to be highlighted
-
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
@@ -2823,7 +2746,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each region
+Highlight the data item with the highest profit margin in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -2837,7 +2760,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+Highlight data items that match multiple conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -2852,23 +2775,21 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+Fallback when code execution fails or the environment is unsupported
 
 :::
-
 
 ##### field
 
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+Dimension field, the id of an item in dimensions
 
 :::
 
@@ -2879,9 +2800,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 :::
 
@@ -2892,9 +2813,9 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in 'value'
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items where the value of the dimension field is not in 'value'
+- not in: selects data items where the dimension field value is not in value
 
 same as operator
 
@@ -2905,7 +2826,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select the value of the dimension field in the data item, supports arrays
+Selects the value of the dimension field in the data item; arrays are supported
 
 :::
 
@@ -2914,14 +2835,11 @@ Select the value of the dimension field in the data item, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Dynamic filter execution results (runtime field)
+Dynamic filter execution result (runtime field)
 
-
-
-Written during the prepare() phase, read-only at runtime
+Written during prepare(); read-only at runtime
 
 :::
-
 
 ##### success
 

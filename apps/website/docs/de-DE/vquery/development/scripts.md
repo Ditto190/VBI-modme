@@ -31,7 +31,7 @@ pnpm --filter=@visactor/vquery run test
 pnpm --filter=@visactor/vquery run test:update
 ```
 
-### Coverage
+### Testabdeckung
 ```bash
 pnpm --filter=@visactor/vquery run test:coverage
 ```

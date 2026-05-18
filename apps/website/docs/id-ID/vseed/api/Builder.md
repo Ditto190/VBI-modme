@@ -16,7 +16,7 @@ Menjalankan kode filter dinamis secara asinkron. Dipanggil sebelum `build()` unt
 build<T = S>(): T
 ```
 
-Menghasilkan konfigurasi chart final (Spec). Ini adalah metode inti yang paling sering digunakan. Jika konfigurasi berisi `dynamicFilter` code, panggil `prepare()` terlebih dahulu.
+Menghasilkan konfigurasi diagram final (Spec). Ini adalah metode inti yang paling sering digunakan. Jika konfigurasi berisi `code` di dalam `dynamicFilter`, panggil `prepare()` terlebih dahulu.
 
 ### buildSpec
 
@@ -32,7 +32,7 @@ Mengubah konfigurasi lapisan tengah (AdvancedVSeed) menjadi Spec final. Gunakan 
 buildAdvanced(): AdvancedVSeed | null
 ```
 
-Menghasilkan konfigurasi lapisan tengah (AdvancedVSeed), yaitu template chart. Lebih detail daripada VSeed asli dan mengekspos lebih banyak detail chart.
+Menghasilkan konfigurasi lapisan tengah (AdvancedVSeed), yaitu templat diagram. Lebih detail daripada VSeed asli dan mengekspos lebih banyak detail diagram.
 
 ### getColorItems
 
@@ -40,7 +40,7 @@ Menghasilkan konfigurasi lapisan tengah (AdvancedVSeed), yaitu template chart. L
 getColorItems(): __type[]
 ```
 
-Mengambil informasi field yang terkait dengan warna dalam data. Sering digunakan untuk membuat legenda chart atau UI filter warna.
+Mengambil informasi field yang terkait dengan warna dalam data. Sering digunakan untuk membuat legenda diagram atau UI filter warna.
 
 ### getColorIdMap
 
@@ -48,7 +48,7 @@ Mengambil informasi field yang terkait dengan warna dalam data. Sering digunakan
 getColorIdMap(): Record
 ```
 
-Mengambil tabel pemetaan detail untuk field warna. Key adalah ID warna, Value adalah informasi detail.
+Mengambil tabel pemetaan detail untuk field warna. Kunci adalah ID warna, sedangkan nilai berisi informasi detail.
 
 ### getColorValueMap
 
@@ -66,7 +66,7 @@ Mengambil pemetaan dari `colorId` ke nilai warna final dalam peta warna diskret.
 static getAdvancedPipeline(chartType: ChartType): Pipe[]
 ```
 
-[Metode internal] Mengambil pipeline pembuatan template untuk tipe chart tertentu, digunakan untuk men-debug proses konversi dari VSeed ke AdvancedVSeed.
+[Metode internal] Mengambil pipeline pembuatan templat untuk tipe diagram tertentu, digunakan untuk men-debug proses konversi dari VSeed ke AdvancedVSeed.
 
 ### getSpecPipeline
 
@@ -74,7 +74,7 @@ static getAdvancedPipeline(chartType: ChartType): Pipe[]
 static getSpecPipeline(chartType: ChartType): SpecPipe[]
 ```
 
-[Metode internal] Mengambil pipeline pembuatan Spec untuk tipe chart tertentu, digunakan untuk men-debug proses konversi dari AdvancedVSeed ke Spec.
+[Metode internal] Mengambil pipeline pembuatan Spec untuk tipe diagram tertentu, digunakan untuk men-debug proses konversi dari AdvancedVSeed ke Spec.
 
 ### getTheme
 
@@ -98,7 +98,7 @@ Mengambil semua konfigurasi tema yang sudah terdaftar.
 static from<T extends Spec = Spec>(vseed: VSeed): Builder<T>
 ```
 
-Metode factory statis untuk membuat instance Builder dengan mudah.
+Metode pabrik statis untuk membuat instance Builder dengan mudah.
 
 ### registerAdvancedPipeline
 
@@ -106,7 +106,7 @@ Metode factory statis untuk membuat instance Builder dengan mudah.
 static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline): void
 ```
 
-[Metode ekstensi] Mendaftarkan pipeline pembuatan template untuk tipe chart baru.
+[Metode ekstensi] Mendaftarkan pipeline pembuatan templat untuk tipe diagram baru.
 
 ### registerSpecPipeline
 
@@ -114,7 +114,7 @@ static registerAdvancedPipeline(chartType: ChartType, pipeline: AdvancedPipeline
 static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 ```
 
-[Metode ekstensi] Mendaftarkan pipeline pembuatan Spec untuk tipe chart baru.
+[Metode ekstensi] Mendaftarkan pipeline pembuatan Spec untuk tipe diagram baru.
 
 ### updateAdvanced
 
@@ -122,7 +122,7 @@ static registerSpecPipeline(chartType: ChartType, pipeline: SpecPipeline): void
 static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 ```
 
-[Metode ekstensi] Mengubah logika pembuatan template chart yang sudah ada, menyisipkan Pipe kustom untuk memengaruhi AdvancedVSeed yang dihasilkan.
+[Metode ekstensi] Mengubah logika pembuatan templat diagram yang sudah ada, menyisipkan Pipe kustom untuk memengaruhi AdvancedVSeed yang dihasilkan.
 
 ### updateSpec
 
@@ -130,7 +130,7 @@ static updateAdvanced(chartType: ChartType, pipe: AdvancedPipe): void
 static updateSpec(chartType: ChartType, pipe: SpecPipe): void
 ```
 
-[Metode ekstensi] Mengubah logika pembuatan Spec chart yang sudah ada, menyisipkan Pipe kustom untuk memengaruhi Spec final yang dihasilkan.
+[Metode ekstensi] Mengubah logika pembuatan Spec diagram yang sudah ada, menyisipkan Pipe kustom untuk memengaruhi Spec final yang dihasilkan.
 
 ### registerTheme
 
@@ -164,7 +164,7 @@ Mengambil data input VSeed saat ini.
 set vseed(value)
 ```
 
-Memperbarui data input VSeed. Setelah diperbarui, status cache dari `prepare()` akan dihapus.
+Memperbarui data input VSeed. Setelah diperbarui, status tembolok dari `prepare()` akan dihapus.
 
 ### get isPrepared
 
@@ -196,7 +196,7 @@ Mengambil objek konfigurasi tengah AdvancedVSeed saat ini.
 set advancedVSeed(value)
 ```
 
-Mengatur objek konfigurasi tengah AdvancedVSeed. Biasanya digunakan untuk cache atau menggunakan ulang konfigurasi tengah yang sudah ada.
+Mengatur objek konfigurasi tengah AdvancedVSeed. Biasanya digunakan untuk tembolok atau menggunakan ulang konfigurasi tengah yang sudah ada.
 
 ### get spec
 
@@ -212,7 +212,7 @@ Mengambil objek Spec final yang saat ini dihasilkan.
 set spec(value)
 ```
 
-Mengatur objek Spec. Biasanya digunakan untuk cache.
+Mengatur objek Spec. Biasanya digunakan untuk tembolok.
 
 ### get performance
 

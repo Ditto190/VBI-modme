@@ -1,207 +1,207 @@
 # MeasureNodeBuilder
 
-Builder node measure dung de cau hinh mot measure
+Builder node measure dùng để cấu hình một measure
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getId
 
-Lay ID node
+Lấy ID node
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getId(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getField
 
-Lay ten field
+Lấy tên field
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getField(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getEncoding
 
-Lay vi tri encoding chart
+Lấy vị trí encoding chart
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getEncoding(): VBIMeasure['encoding'] | undefined
 ```
 
-**Tra ve**: `VBIMeasure['encoding'] \| undefined`
+**Trả về**: `VBIMeasure['encoding'] \| undefined`
 
 ### getSort
 
-Lay cau hinh sap xep
+Lấy cấu hình sắp xếp
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getSort(): VBISort | undefined
 ```
 
-**Tra ve**: `VBISort \| undefined`
+**Trả về**: `VBISort \| undefined`
 
 ### setAlias
 
-Thiet lap ten hien thi
+Thiết lập tên hiển thị
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setAlias(alias: string): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `alias` | string | - Ten hien thi |
+| `alias` | string | - Tên hiển thị |
 
 ### setEncoding
 
-Thiet lap vi tri encoding chart
+Thiết lập vị trí encoding chart
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setEncoding(encoding: NonNullable<VBIMeasure['encoding']>): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `encoding` | NonNullable<VBIMeasure['encoding']> | - Vi tri encoding measure |
+| `encoding` | NonNullable<VBIMeasure['encoding']> | - Vị trí encoding measure |
 
 ### setSort
 
-Thiet lap cau hinh sap xep
+Thiết lập cấu hình sắp xếp
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setSort(sort: VBISort): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `sort` | VBISort | - Cau hinh sap xep |
+| `sort` | VBISort | - Cấu hình sắp xếp |
 
 ### setAggregate
 
-Thiet lap ham tong hop
+Thiết lập hàm tổng hợp
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setAggregate(aggregate: VBIMeasure['aggregate']): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `aggregate` | VBIMeasure['aggregate'] | - Cau hinh tong hop |
+| `aggregate` | VBIMeasure['aggregate'] | - Cấu hình tổng hợp |
 
 ### setFormat
 
-Thiet lap dinh dang so
+Thiết lập định dạng số
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setFormat(format: VBIMeasureFormat): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `format` | VBIMeasureFormat | - Cau hinh dinh dang |
+| `format` | VBIMeasureFormat | - Cấu hình định dạng |
 
 ### getFormat
 
-Lay dinh dang so
+Lấy định dạng số
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getFormat(): VBIMeasureFormat | undefined
 ```
 
-**Tra ve**: `VBIMeasureFormat \| undefined`
+**Trả về**: `VBIMeasureFormat \| undefined`
 
 ### clearFormat
 
-Xoa cau hinh dinh dang so
+Xóa cấu hình định dạng số
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 clearFormat(): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
 ### clearSort
 
-Xoa cau hinh sap xep
+Xóa cấu hình sắp xếp
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 clearSort(): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIMeasure
 ```
 
-**Tra ve**: `VBIMeasure`
+**Trả về**: `VBIMeasure`

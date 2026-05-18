@@ -1,12 +1,12 @@
 # useVSeed
 
-## Import
+## Impor
 
 ```ts
 import { useVSeed } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useVSeed(builder: VBIChartBuilder, options: UseVSeedOptions =

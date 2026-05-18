@@ -11,9 +11,9 @@ pnpm run g
 1. `build:test` : compiler les ressources de test.
 2. `build:docs` : générer la documentation d'API.
 
-## Développement et build
+## Développement et compilation
 
-### Build
+### Compiler
 ```bash
 pnpm --filter=@visactor/vquery run build
 ```

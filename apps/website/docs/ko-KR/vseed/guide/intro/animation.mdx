@@ -206,13 +206,14 @@ export default () => {
 
 루프 애니메이션은 최초 렌더링 후 지속적으로 반복되는 움직임으로, 강조나 동적인 리듬을 유지하는 데 유용합니다.
 
-#### 2.1 highlight(그룹 강조) + atmo(분위기 효과)
+#### 2.1 highlight(그룹 강조) + atmosphere(분위기 효과)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
 import { VSeedRender } from '@components'
 import { registerTokenThemes } from '@visactor/vseed'
 
+const THEME_URL = 'https://lf9-dp-fe-cms-tos.byteorg.com/obj/bit-cloud/theme.json'
 const DATASET = [
   {
     10001: 'Sales',
@@ -354,7 +355,7 @@ export default () => {
           enable: true,
           interval: 3,
           loop: { enable: true, effects: ['highLight'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear', color: '#4A90E2' },
+          atmosphere: { effect: 'breath', ease: 'linear', color: '#4A90E2' },
         },
       },
     },
@@ -384,7 +385,7 @@ export default () => {
 }
 ```
 
-#### 2.2 growth(루프) + atmo(분위기 효과)
+#### 2.2 growth(루프) + atmosphere(분위기 효과)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -562,7 +563,7 @@ export default () => {
 }
 ```
 
-#### 2.3 moveIn(루프) + atmo(분위기 효과)
+#### 2.3 moveIn(루프) + atmosphere(분위기 효과)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1130,7 +1131,7 @@ export default () => {
 
 루프 애니메이션은 장시간 표시 상태에서 차트를 주기적으로 움직이게 합니다.
 
-#### 2.1 load(루프) + atmo(breath)
+#### 2.1 load(루프) + atmosphere(breath)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1290,7 +1291,7 @@ export default () => {
           enable: true,
           interval: 2,
           loop: { enable: true, effects: ['load'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear' },
+          atmosphere: { effect: 'breath', ease: 'linear' },
         },
       },
     },
@@ -1320,7 +1321,7 @@ export default () => {
 }
 ```
 
-#### 2.2 load(루프) + atmo(ripple)
+#### 2.2 load(루프) + atmosphere(ripple)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1480,7 +1481,7 @@ export default () => {
           enable: true,
           interval: 3,
           loop: { enable: true, effects: ['load'], ease: 'circInOut', duration: 1 },
-          atmo: { effect: 'ripple', ease: 'linear' },
+          atmosphere: { effect: 'ripple', ease: 'linear' },
         },
       },
     },
@@ -2608,9 +2609,9 @@ export default () => {
 
 ### 2. 루프 애니메이션
 
-레이더 차트 루프 애니메이션은 `atmo.effect`를 통해 지속적인 분위기 움직임으로 표현됩니다.
+레이더 차트 루프 애니메이션은 `atmosphere.effect`를 통해 지속적인 분위기 움직임으로 표현됩니다.
 
-#### 2.1 none(루프) + atmo(ripple)
+#### 2.1 none(루프) + atmosphere(ripple)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -2771,7 +2772,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['radial'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'ripple', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'ripple', ease: 'linear' } },
       },
     },
   }
@@ -2800,7 +2801,7 @@ export default () => {
 }
 ```
 
-#### 2.2 none(루프) + atmo(reveal)
+#### 2.2 none(루프) + atmosphere(reveal)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -2961,7 +2962,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 3, atmo: { effect: 'reveal', ease: 'linear' } },
+        loop: { enable: true, interval: 3, atmosphere: { effect: 'reveal', ease: 'linear' } },
       },
     },
   }
@@ -2990,7 +2991,7 @@ export default () => {
 }
 ```
 
-#### 2.3 none(루프) + atmo(breath)
+#### 2.3 none(루프) + atmosphere(breath)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3151,7 +3152,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'breath', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'breath', ease: 'linear' } },
       },
     },
   }
@@ -3538,9 +3539,9 @@ export default () => {
 
 ### 2. 루프 애니메이션
 
-산점도 루프 애니메이션은 일반적으로 지속적인 리듬을 위해 `atmo`로 표현됩니다.
+산점도 루프 애니메이션은 일반적으로 지속적인 리듬을 위해 `atmosphere`로 표현됩니다.
 
-#### 2.1 none(루프) + atmo(ripple)
+#### 2.1 none(루프) + atmosphere(ripple)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3681,7 +3682,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'ripple', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'ripple', ease: 'linear' } },
       },
     },
   }
@@ -3710,7 +3711,7 @@ export default () => {
 }
 ```
 
-#### 2.2 none(루프) + atmo(breath)
+#### 2.2 none(루프) + atmosphere(breath)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3851,7 +3852,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['fadeIn'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'breath', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'breath', ease: 'linear' } },
       },
     },
   }
@@ -3880,7 +3881,7 @@ export default () => {
 }
 ```
 
-#### 2.3 none(루프) + atmo(reveal)
+#### 2.3 none(루프) + atmosphere(reveal)
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -4021,7 +4022,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 3, atmo: { effect: 'reveal', ease: 'linear' } },
+        loop: { enable: true, interval: 3, atmosphere: { effect: 'reveal', ease: 'linear' } },
       },
     },
   }

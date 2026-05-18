@@ -97,7 +97,7 @@ getRecommendedDimensionEncodings(dimensionCount: number)
 
 ### getSupportedMeasureEncodings
 
-현재 차트 타입이 지원하는 메저 인코딩 가져오기
+현재 차트 타입이 지원하는 지표 인코딩 가져오기
 
 **정의**:
 
@@ -107,7 +107,7 @@ getSupportedMeasureEncodings()
 
 ### getRecommendedMeasureEncodings
 
-현재 차트 타입에 따라 메저 순서대로 권장 메저 인코딩 반환
+현재 차트 타입에 따라 지표 순서대로 권장 지표 인코딩 반환
 
 **정의**:
 
@@ -119,7 +119,7 @@ getRecommendedMeasureEncodings(measureCount: number)
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `measureCount` | number | - 메저 수. 기본값은 현재 DSL의 메저 수 |
+| `measureCount` | number | - 지표 수. 기본값은 현재 DSL의 지표 수 |
 
 ### toJSON
 

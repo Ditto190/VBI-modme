@@ -1,6 +1,6 @@
 # DimensionsBuilder
 
-Dimensions-Builder zum Hinzufuegen, Aendern und Entfernen von Dimensionskonfigurationen. Dimensionen sind kategoriale Datenfelder wie Zeit, Region oder Produktkategorie
+Dimensions-Builder zum Hinzufügen, Ändern und Entfernen von Dimensionskonfigurationen. Dimensionen sind kategoriale Datenfelder wie Zeit, Region oder Produktkategorie
 
 ## Eigenschaften
 
@@ -23,7 +23,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 ### add
 
-Eine Dimension hinzufuegen
+Eine Dimension hinzufügen
 
 **Definition**:
 
@@ -31,7 +31,7 @@ Eine Dimension hinzufuegen
 add(field: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBuilder
 ```
 
-**Rueckgabe**: `DimensionsBuilder`
+**Rückgabe**: `DimensionsBuilder`
 
 **Parameter**:
 
@@ -50,7 +50,7 @@ Dimension mit angegebener ID entfernen
 remove(id: string): DimensionsBuilder
 ```
 
-**Rueckgabe**: `DimensionsBuilder`
+**Rückgabe**: `DimensionsBuilder`
 
 **Parameter**:
 
@@ -68,7 +68,7 @@ Konfiguration der Dimension mit angegebener ID aktualisieren
 update(id: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBuilder
 ```
 
-**Rueckgabe**: `DimensionsBuilder`
+**Rückgabe**: `DimensionsBuilder`
 
 **Parameter**:
 
@@ -87,7 +87,7 @@ Erste Dimension nach Callback-Bedingung finden, Verhalten wie Array.find
 find(predicate: (node: DimensionNodeBuilder, index: number) => boolean): DimensionNodeBuilder | undefined
 ```
 
-**Rueckgabe**: `DimensionNodeBuilder \| undefined`
+**Rückgabe**: `DimensionNodeBuilder \| undefined`
 
 **Parameter**:
 
@@ -105,7 +105,7 @@ Alle Dimensionen abrufen
 findAll(): DimensionNodeBuilder[]
 ```
 
-**Rueckgabe**: `DimensionNodeBuilder[]`
+**Rückgabe**: `DimensionNodeBuilder[]`
 
 ### toJSON
 
@@ -117,11 +117,11 @@ Alle Dimensionen als JSON-Array exportieren
 toJSON(): VBIDimension[]
 ```
 
-**Rueckgabe**: `VBIDimension[]`
+**Rückgabe**: `VBIDimension[]`
 
 ### observe
 
-Dimensionsaenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
+Dimensionsänderungen beobachten und eine Funktion zum Abbestellen zurückgeben
 
 **Definition**:
 
@@ -129,7 +129,7 @@ Dimensionsaenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
 observe(callback: ObserveDeepCallback): () => void
 ```
 
-**Rueckgabe**: `() => void`
+**Rückgabe**: `() => void`
 
 **Parameter**:
 
@@ -145,7 +145,7 @@ observe(callback: ObserveDeepCallback): () => void
 static isDimensionNode(node: VBIDimensionTree[0]): node is VBIDimension
 ```
 
-**Rueckgabe**: `node is VBIDimension`
+**Rückgabe**: `node is VBIDimension`
 
 **Parameter**:
 
@@ -161,7 +161,7 @@ static isDimensionNode(node: VBIDimensionTree[0]): node is VBIDimension
 static isDimensionGroup(node: VBIDimensionTree[0]): node is VBIDimensionGroup
 ```
 
-**Rueckgabe**: `node is VBIDimensionGroup`
+**Rückgabe**: `node is VBIDimensionGroup`
 
 **Parameter**:
 
