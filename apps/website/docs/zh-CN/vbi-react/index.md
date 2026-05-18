@@ -5,7 +5,7 @@
 当前导出分为两层：
 
 - 根导出 `@visactor/vbi-react`：`useVBI`、`useVSeed`、`useChartType`、`useDimensions`、`useMeasures`、`useWhereFilter`、`useHavingFilter`
-- 子路径导出 `@visactor/vbi-react/components`：`BuilderLayout`、`ChartRenderer`、`ChartTypeSelector`、`FieldPanel`
+- 子路径导出 `@visactor/vbi-react/components`：`BuilderLayout`、`ChartRenderer`、`ChartTypeSelector`、`FieldPanel`、`FilterPanel`、`ThemeSelector`
 
 ## 定位
 
@@ -80,5 +80,6 @@ export function App() {
 
 ## 文档导航
 
+- [vbi-react Starter](./examples/vbi-react-starter)
 - [API 总览](./api/index)
 - [示例](./examples/index)

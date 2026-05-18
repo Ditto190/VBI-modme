@@ -1,0 +1,38 @@
+import { FilterPanelApiDemo } from 'vbi-react-starter'
+
+# FilterPanel
+
+## 导入
+
+```ts
+import { FilterPanel } from '@visactor/vbi-react/components'
+```
+
+## 签名
+
+```ts
+FilterPanel(props: FilterPanelProps)
+```
+
+## 说明
+
+提供 Where / Having 过滤条件的新增、编辑、删除与分组展示能力。
+
+## 推荐先看
+
+- [vbi-react Starter](../examples/vbi-react-starter)
+
+## Live Demo
+
+<FilterPanelApiDemo />
+
+## 最小示例
+
+```tsx
+import type { VBIChartBuilder } from '@visactor/vbi'
+import { FilterPanel } from '@visactor/vbi-react/components'
+
+export function Demo({ builder }: { builder: VBIChartBuilder }) {
+  return <FilterPanel builder={builder} />
+}
+```

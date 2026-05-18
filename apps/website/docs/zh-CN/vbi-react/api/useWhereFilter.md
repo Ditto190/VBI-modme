@@ -16,6 +16,11 @@ useWhereFilter(builder: VBIChartBuilder): UseWhereFilterReturn
 
 管理 Where 过滤树，并提供 mutation 入口。
 
+## 推荐先看
+
+- [基础 Hooks](../examples/basicHooks)
+- [过滤条件编辑](../examples/filterMutations)
+
 ## 最小示例
 
 ```tsx

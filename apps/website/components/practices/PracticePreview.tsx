@@ -14,7 +14,7 @@ type PracticeAppProps = {
 }
 
 type PracticePreviewProps = {
-  App: ComponentType<PracticeAppProps>
+  App: ComponentType<any>
 }
 
 const supportedPracticeLocales = new Set<string>(SUPPORTED_PRACTICE_LOCALES)

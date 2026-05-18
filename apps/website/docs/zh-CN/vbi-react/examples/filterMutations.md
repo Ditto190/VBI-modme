@@ -1,13 +1,13 @@
 # 过滤条件编辑
 
-该示例展示 `useWhereFilter` 与 `useHavingFilter` 的 mutation 入口。
+这个示例展示 `useWhereFilter` 和 `useHavingFilter` 的 mutation 入口。
 
 ## 依赖说明
 
 - 包依赖：`@visactor/vbi-react`、`@visactor/vbi`、`react`
-- 入参约束：`builder` 至少包含 `region` 和 `sales` 字段，便于演示 Where/Having 变更
+- 入参约束：`builder` 中至少应包含 `region` 和 `sales` 字段，方便演示 Where / Having 的变化。
 
-## 代码片段
+## 代码示例
 
 ```tsx
 import type { VBIChartBuilder } from '@visactor/vbi'
@@ -26,7 +26,7 @@ export function FilterDemo({ builder }: { builder: VBIChartBuilder }) {
           })
         }
       >
-        添加 Where 条件
+        Add Where Condition
       </button>
       <button
         onClick={() =>
@@ -35,10 +35,10 @@ export function FilterDemo({ builder }: { builder: VBIChartBuilder }) {
           })
         }
       >
-        添加 Having 条件
+        Add Having Condition
       </button>
-      <button onClick={clearWhereFilter}>清空 Where</button>
-      <button onClick={clearHavingFilter}>清空 Having</button>
+      <button onClick={clearWhereFilter}>Clear Where</button>
+      <button onClick={clearHavingFilter}>Clear Having</button>
       <pre>{JSON.stringify({ whereFilter, havingFilter }, null, 2)}</pre>
     </div>
   )
@@ -47,6 +47,6 @@ export function FilterDemo({ builder }: { builder: VBIChartBuilder }) {
 
 ## 预期效果
 
-- 点击按钮后，Where/Having 条件分别追加到 builder 的过滤树。
-- 清空按钮会立即移除对应过滤条件。
-- 页面底部 JSON 可用于确认当前过滤 DSL 结构。
+- 点击按钮后，Where / Having 条件会被追加到 builder 的过滤树中。
+- `Clear` 按钮会立即移除对应的过滤条件。
+- 页面底部的 JSON 可以用来确认当前过滤 DSL 的结构。

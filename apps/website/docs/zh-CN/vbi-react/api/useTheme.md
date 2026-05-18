@@ -1,20 +1,20 @@
-# useDimensions
+# useTheme
 
 ## 导入
 
 ```ts
-import { useDimensions } from '@visactor/vbi-react'
+import { useTheme } from '@visactor/vbi-react'
 ```
 
 ## 签名
 
 ```ts
-useDimensions(builder: VBIChartBuilder): UseDimensionsReturn
+useTheme(builder: VBIChartBuilder): UseThemeReturn
 ```
 
 ## 说明
 
-读取并更新维度配置，提供维度增删改能力。
+读取并切换当前主题配置。
 
 ## 推荐先看
 
@@ -25,10 +25,10 @@ useDimensions(builder: VBIChartBuilder): UseDimensionsReturn
 
 ```tsx
 import type { VBIChartBuilder } from '@visactor/vbi'
-import { useDimensions } from '@visactor/vbi-react'
+import { useTheme } from '@visactor/vbi-react'
 
 export function Demo({ builder }: { builder: VBIChartBuilder }) {
-  const result = useDimensions(builder)
+  const result = useTheme(builder)
   return <pre>{JSON.stringify(result, null, 2)}</pre>
 }
 ```

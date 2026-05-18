@@ -16,12 +16,12 @@
   },
   {
     "type": "file",
-    "name": "vbi-react-starter",
-    "label": "Starter Demo"
+    "name": "filterMutations",
+    "label": "过滤条件编辑"
   },
   {
     "type": "file",
-    "name": "filterMutations",
-    "label": "过滤条件编辑"
+    "name": "vbi-react-starter",
+    "label": "Starter Demo"
   }
 ]

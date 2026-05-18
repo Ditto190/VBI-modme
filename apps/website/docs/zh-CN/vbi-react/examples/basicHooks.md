@@ -1,13 +1,13 @@
 # 基础 Hooks
 
-该示例展示 `useVBI` 与 `useVSeed` 的组合使用。
+这个示例展示如何把 `useVBI` 和 `useVSeed` 组合成最小闭环。
 
 ## 依赖说明
 
 - 包依赖：`@visactor/vbi-react`、`@visactor/vbi`、`@visactor/vseed`、`react`
-- 入参约束：需要一个已初始化的 `VBIChartBuilder`（已绑定可用 connector）
+- 入参约束：需要一个已经初始化、且绑定了可用 connector 的 `VBIChartBuilder`
 
-## 代码片段
+## 代码示例
 
 ```tsx
 import type { VBIChartBuilder } from '@visactor/vbi'
@@ -18,7 +18,7 @@ export function BasicHooksDemo({ builder }: { builder: VBIChartBuilder }) {
   const { vseed, loading, error, refetch } = useVSeed(builder, { debounce: 100 })
 
   if (error) {
-    return <button onClick={() => void refetch()}>重试：{error.message}</button>
+    return <button onClick={() => void refetch()}>Retry: {error.message}</button>
   }
 
   if (loading || !vseed) {
@@ -36,6 +36,6 @@ export function BasicHooksDemo({ builder }: { builder: VBIChartBuilder }) {
 
 ## 预期效果
 
-- 当 builder 变化时，`dsl` 与 `vseed` 同步更新。
-- 首次或更新中显示 `Loading...`，失败时可手动重试。
-- 成功后看到当前 `chartType` 和最新 VSeed JSON。
+- 当 builder 发生变化时，`dsl` 和 `vseed` 会一起更新。
+- 首次渲染或正在刷新时会显示 `Loading...`；如果失败，可以手动重试。
+- 成功后可以直接看到当前 `chartType` 和最新的 VSeed JSON。

@@ -6,10 +6,22 @@ const descriptions = {
   useMeasures: '读取并更新度量配置，提供度量增删改能力。',
   useWhereFilter: '管理 Where 过滤树，并提供 mutation 入口。',
   useHavingFilter: '管理 Having 过滤树，并提供 mutation 入口。',
+  useTheme: '读取并切换当前主题配置。',
   BuilderLayout: '提供标准化三栏/双栏构建器布局容器。',
   ChartRenderer: '根据 builder 输出渲染图表，并处理加载与错误状态。',
   ChartTypeSelector: '提供图表类型下拉选择器。',
   FieldPanel: '提供维度/度量字段面板与基础编辑交互。',
+  FilterPanel: '提供 Where / Having 过滤条件的新增、编辑、删除与分组展示能力。',
+  ThemeSelector: '读取并切换当前主题配置，适合放在顶部工具栏中。',
+}
+
+const liveDemoExports = {
+  BuilderLayout: 'BuilderLayoutApiDemo',
+  ChartRenderer: 'ChartRendererApiDemo',
+  ChartTypeSelector: 'ChartTypeSelectorApiDemo',
+  FieldPanel: 'FieldPanelApiDemo',
+  FilterPanel: 'FilterPanelApiDemo',
+  ThemeSelector: 'ThemeSelectorApiDemo',
 }
 
 const exampleOverrides = {
@@ -34,6 +46,23 @@ function buildImportCode(item) {
   return `import { ${item.name} } from '${item.importPath}'`
 }
 
+function buildRelatedLinks(item) {
+  if (item.group === 'hooks') {
+    return ['- [基础 Hooks](../examples/basicHooks)', '- [过滤条件编辑](../examples/filterMutations)'].join('\n')
+  }
+
+  const links = ['- [vbi-react Starter](../examples/vbi-react-starter)']
+  if (
+    item.name === 'BuilderLayout' ||
+    item.name === 'ChartRenderer' ||
+    item.name === 'ChartTypeSelector' ||
+    item.name === 'FieldPanel'
+  ) {
+    links.unshift('- [组件化布局](../examples/layoutWithComponents)')
+  }
+  return links.join('\n')
+}
+
 function buildExampleCode(item) {
   const override = exampleOverrides[item.name]
   if (override) return override
@@ -56,7 +85,17 @@ export function Demo({ builder }: { builder: VBIChartBuilder }) {
 
 export function buildApiPage(item) {
   const description = descriptions[item.name] ?? '该能力由脚本根据公开导出自动生成，请结合源码使用。'
-  return `# ${item.name}
+  const liveDemoExport = liveDemoExports[item.name]
+  const importSection = liveDemoExport ? `import { ${liveDemoExport} } from 'vbi-react-starter'\n\n` : ''
+  const liveDemoSection = liveDemoExport
+    ? `## Live Demo
+
+<${liveDemoExport} />
+
+`
+    : ''
+
+  return `${importSection}# ${item.name}
 
 ## 导入
 
@@ -74,7 +113,11 @@ ${item.signature}
 
 ${description}
 
-## 最小示例
+## 推荐先看
+
+${buildRelatedLinks(item)}
+
+${liveDemoSection}## 最小示例
 
 \`\`\`tsx
 ${buildExampleCode(item)}
@@ -95,6 +138,12 @@ export function buildApiOverview(hooks, components) {
 | Components | \`@visactor/vbi-react/components\` | ${componentNames} |
 
 所有 hooks/components 都围绕 \`VBIChartBuilder\` 工作，不额外维护业务状态源。
+
+## 建议阅读顺序
+
+1. 先看 [示例总览](../examples/index)，确定你是从 hooks 还是从组件进入。
+2. 单个组件页已经内嵌 live demo，可以直接在对应 API 页面里操作。
+3. 想看完整拼装方式时，再看 [vbi-react Starter](../examples/vbi-react-starter)。
 `
 }
 

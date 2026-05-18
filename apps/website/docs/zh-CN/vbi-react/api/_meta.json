@@ -26,6 +26,11 @@
   },
   {
     "type": "file",
+    "name": "useTheme",
+    "label": "useTheme"
+  },
+  {
+    "type": "file",
     "name": "useVBI",
     "label": "useVBI"
   },
@@ -58,5 +63,15 @@
     "type": "file",
     "name": "fieldPanel",
     "label": "FieldPanel"
+  },
+  {
+    "type": "file",
+    "name": "filterPanel",
+    "label": "FilterPanel"
+  },
+  {
+    "type": "file",
+    "name": "themeSelector",
+    "label": "ThemeSelector"
   }
 ]

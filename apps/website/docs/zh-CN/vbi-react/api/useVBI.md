@@ -16,6 +16,11 @@ useVBI(builder: VBIChartBuilder): UseVBIReturn
 
 订阅 builder 的 DSL 快照变化，返回最新 `dsl` 与原始 `builder`。
 
+## 推荐先看
+
+- [基础 Hooks](../examples/basicHooks)
+- [过滤条件编辑](../examples/filterMutations)
+
 ## 最小示例
 
 ```tsx

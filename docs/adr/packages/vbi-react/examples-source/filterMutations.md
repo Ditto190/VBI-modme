@@ -1,13 +1,13 @@
-# Filter Mutations
+# 过滤条件编辑
 
-This example shows the mutation entry points for `useWhereFilter` and `useHavingFilter`.
+这个示例展示 `useWhereFilter` 和 `useHavingFilter` 的 mutation 入口。
 
-## Dependency Notes
+## 依赖说明
 
-- Package dependencies: `@visactor/vbi-react`, `@visactor/vbi`, `react`
-- Input constraint: `builder` should contain at least the `region` and `sales` fields to demonstrate Where/Having changes.
+- 包依赖：`@visactor/vbi-react`、`@visactor/vbi`、`react`
+- 入参约束：`builder` 中至少应包含 `region` 和 `sales` 字段，方便演示 Where / Having 的变化。
 
-## Code Snippet
+## 代码示例
 
 ```tsx
 import type { VBIChartBuilder } from '@visactor/vbi'
@@ -45,8 +45,8 @@ export function FilterDemo({ builder }: { builder: VBIChartBuilder }) {
 }
 ```
 
-## Expected Result
+## 预期效果
 
-- After the buttons are clicked, Where/Having conditions are appended to the builder's filter tree.
-- Clear buttons immediately remove the corresponding filter conditions.
-- The JSON at the bottom of the page can be used to confirm the current filter DSL structure.
+- 点击按钮后，Where / Having 条件会被追加到 builder 的过滤树中。
+- `Clear` 按钮会立即移除对应的过滤条件。
+- 页面底部的 JSON 可以用来确认当前过滤 DSL 的结构。

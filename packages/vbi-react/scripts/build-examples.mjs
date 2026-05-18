@@ -6,13 +6,40 @@ const sourceDir = path.resolve(repoDir, 'docs/adr/packages/vbi-react/examples-so
 const manifestPath = path.join(sourceDir, 'manifest.json')
 const outputDir = path.resolve(repoDir, 'apps/website/docs/zh-CN/vbi-react/examples')
 
+function resolveSourceFile(slug) {
+  const mdxFile = path.join(sourceDir, `${slug}.mdx`)
+  const mdFile = path.join(sourceDir, `${slug}.md`)
+  if (fs.existsSync(mdxFile)) {
+    return { sourceFile: mdxFile, extension: '.mdx' }
+  }
+  if (fs.existsSync(mdFile)) {
+    return { sourceFile: mdFile, extension: '.md' }
+  }
+  throw new Error(`[build-examples] missing source file for ${slug}`)
+}
+
 function buildIndexPage(items) {
-  const links = items.map((item) => `- [${item.label}](./${item.slug})`).join('\n')
+  const grouped = new Map()
+  items.forEach((item) => {
+    const group = item.group ?? '其他'
+    if (!grouped.has(group)) {
+      grouped.set(group, [])
+    }
+    grouped.get(group).push(item)
+  })
+
+  const sections = Array.from(grouped.entries())
+    .map(([group, groupItems]) => {
+      const links = groupItems.map((item) => `- [${item.label}](./${item.slug})`).join('\n')
+      return `## ${group}\n\n${links}`
+    })
+    .join('\n\n')
+
   return `# 示例总览
 
-以下示例都可以直接复制到 \`.tsx\` 文件运行。
+这里的示例分成三类：先理解 hooks、再理解单个组件、最后看完整页面。
 
-${links}
+${sections}
 `
 }
 
@@ -21,11 +48,8 @@ function main() {
   ensureCleanDir(outputDir)
 
   manifest.forEach((item) => {
-    const sourceFile = path.join(sourceDir, `${item.slug}.md`)
-    if (!fs.existsSync(sourceFile)) {
-      throw new Error(`[build-examples] missing source file: ${sourceFile}`)
-    }
-    writeText(path.join(outputDir, `${item.slug}.md`), readText(sourceFile))
+    const { sourceFile, extension } = resolveSourceFile(item.slug)
+    writeText(path.join(outputDir, `${item.slug}${extension}`), readText(sourceFile))
   })
 
   writeText(path.join(outputDir, 'index.md'), buildIndexPage(manifest))
