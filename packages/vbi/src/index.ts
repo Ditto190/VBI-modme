@@ -12,7 +12,13 @@ export {
 } from './chart-builder'
 export { defaultVBIChartBuilderAdapters, resolveVBIChartBuilderAdapters } from './chart-builder/adapters'
 export { buildVQuery } from './chart-builder/pipeline'
-export { DashboardChartBuilder, DashboardChartCollectionBuilder, VBIDashboardBuilder } from './dashboard-builder'
+export {
+  DashboardChartBuilder,
+  DashboardChartCollectionBuilder,
+  DashboardInsightBuilder,
+  DashboardInsightCollectionBuilder,
+  VBIDashboardBuilder,
+} from './dashboard-builder'
 export { VBIInsightBuilder } from './insight-builder'
 export { ReportPageBuilder, ReportPageCollectionBuilder, VBIReportBuilder } from './report-builder'
 export * from './types'

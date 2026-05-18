@@ -11,6 +11,8 @@ export const createDashboardWidgetYMap = (widget: VBIDashboardWidget): Y.Map<any
 
   if (widget.type === 'chart') {
     yMap.set('chartId', widget.chartId)
+  } else if (widget.type === 'insight') {
+    yMap.set('insightId', widget.insightId)
   }
 
   return yMap

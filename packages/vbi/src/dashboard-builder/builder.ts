@@ -4,7 +4,7 @@ import { createEmptyDashboardLayout } from 'src/vbi/create-empty-dashboard'
 import { getOrCreateDashboardWidgets } from 'src/vbi/from/dashboard-widget-y-map'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 import * as Y from 'yjs'
-import { DashboardChartCollectionBuilder, UndoManager } from './features'
+import { DashboardChartCollectionBuilder, DashboardInsightCollectionBuilder, UndoManager } from './features'
 import { applyUpdateToDoc, buildVBIDashboardDSL, encodeDocStateAsUpdate, isEmptyVBIDashboardDSL } from './modules'
 
 export class VBIDashboardBuilder implements VBIDashboardBuilderInterface {
@@ -12,6 +12,7 @@ export class VBIDashboardBuilder implements VBIDashboardBuilderInterface {
   public dsl: Y.Map<any>
   public undoManager: UndoManager
   public chart: DashboardChartCollectionBuilder
+  public insight: DashboardInsightCollectionBuilder
 
   constructor(doc: Y.Doc, dsl?: Y.Map<any>) {
     this.doc = doc
@@ -39,6 +40,7 @@ export class VBIDashboardBuilder implements VBIDashboardBuilderInterface {
 
     this.undoManager = new UndoManager(this.dsl)
     this.chart = new DashboardChartCollectionBuilder(this, doc, this.dsl)
+    this.insight = new DashboardInsightCollectionBuilder(this, doc, this.dsl)
   }
 
   public applyUpdate = (update: Uint8Array, transactionOrigin?: any) => {

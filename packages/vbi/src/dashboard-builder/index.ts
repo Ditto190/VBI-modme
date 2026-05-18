@@ -1,2 +1,7 @@
 export { VBIDashboardBuilder } from './builder'
-export { DashboardChartBuilder, DashboardChartCollectionBuilder } from './features'
+export {
+  DashboardChartBuilder,
+  DashboardChartCollectionBuilder,
+  DashboardInsightBuilder,
+  DashboardInsightCollectionBuilder,
+} from './features'
