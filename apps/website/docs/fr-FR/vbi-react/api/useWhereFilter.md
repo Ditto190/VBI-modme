@@ -14,7 +14,7 @@ useWhereFilter(builder: VBIChartBuilder): UseWhereFilterReturn
 
 ## Description
 
-Gère l’arbre de filtres Where et fournit des points d’entrée de mutation.
+Gère l’arbre de filtres Where et expose des points d’entrée mutation.
 
 ## Exemple minimal
 

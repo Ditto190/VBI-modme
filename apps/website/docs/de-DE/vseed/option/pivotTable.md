@@ -2,41 +2,41 @@
 
 :::info{title=Empfohlen}
 - Empfohlene Feldkonfiguration: `1` Kennzahl, `1` Dimension
-- Unterstützt Data Reshape: mindestens `1` Kennzahl, `0` Dimensionen
+- Unterstützt Datenumformung: mindestens `1` Kennzahl, `0` Dimensionen
 :::
 
 :::info{title=Encoding-Zuordnung}
 Die Pivot-Tabelle unterstützt die folgenden visuellen Kanäle:
 
-`row`    : Zeilendimensionen, unterstützt `mehrere Dimensionen`, gruppiert Daten nach Dimensionswerten in Zeilen.
+`row`    : Zeilendimension, unterstützt `mehrere Dimensionen`, gruppiert Daten nach Dimensionswerten in Zeilen
 
-`column` : Spaltendimensionen, unterstützt `mehrere Dimensionen`, gruppiert Daten nach Dimensionswerten in Spalten.
+`column` : Spaltendimension, unterstützt `mehrere Dimensionen`, gruppiert Daten nach Dimensionswerten in Spalten
 
-`detail` : Detailkanal, unterstützt `mehrere Kennzahlen`, zeigt Kennzahlwerte in Zellen an.
+`detail` : Detailkanal, unterstützt `mehrere Kennzahlen`, zeigt Kennzahlwerte in Zellen an
 
 :::
 
 :::note{title=Beschreibung}
-Pivot-Tabelle, geeignet für mehrdimensionale Kreuzanalysen, mit flexibler Konfiguration von Zeilen-/Spaltendimensionen und Kennzahlberechnungen.
+Pivot-Tabelle, geeignet für mehrdimensionale Kreuzanalysen; Zeilen- und Spaltendimensionen sowie Kennzahlberechnungen lassen sich flexibel konfigurieren.
 
 Geeignete Szenarien:
 
-- Komplexe mehrdimensionale statistische Analyse.
-- Daten-Drilldown und aggregierte Anzeige.
-- Erstellung von Geschäftsberichten und Datenexploration.
+- Komplexe mehrdimensionale statistische Analyse
+- Daten-Drilldown und aggregierte Anzeige
+- Erstellung von Geschäftsberichten und Datenexploration
 
 :::
 
 :::warning{title=Warning}
 Datenanforderungen:
 
-- Mindestens 1 Zeilendimension, 1 Spaltendimension oder 1 Kennzahl.
-- Daten müssen voraggregiert sein.
-- Daten müssen gruppierbar sein.
+- Mindestens 1 Zeilendimension oder 1 Spaltendimension oder 1 Kennzahl
+- Daten müssen bereits aggregiert sein
+- Daten müssen gruppierbar sein
 
 Standardmäßig aktivierte Funktionen:
 
-- Zeilen-/Spaltensortierung, Datenfilterung, Aggregations-/Zwischensummenberechnung sowie Zwischen-/Gesamtsummenanzeige sind standardmäßig aktiviert.
+- Zeilen-/Spaltensortierung, Datenfilterung, Aggregationsberechnung, Zwischensummen und Gesamtsummen sind standardmäßig aktiviert
 
 :::
 
@@ -46,7 +46,7 @@ Standardmäßig aktivierte Funktionen:
 **Type:** `"pivotTable"`
 
 :::note{title=Beschreibung}
-Pivot-Tabelle, geeignet für mehrdimensionale Kreuzanalysen.
+Pivot-Tabelle, geeignet für mehrdimensionale Kreuzanalysen
 
 :::
 
@@ -61,7 +61,7 @@ Pivot-Tabelle, geeignet für mehrdimensionale Kreuzanalysen.
 **Type:** `Record[]`
 
 :::note{title=Beschreibung}
-Ein bereits aggregierter Datensatz gemäß TidyData-Spezifikation, der Datenquelle und Struktur des Diagramms definiert. Benutzereingaben müssen nicht vorverarbeitet werden; VSeed bietet starke Data-Reshape-Funktionen, die die Formatierung automatisch übernehmen. Pivot-Table-Daten werden letztlich in eine entsprechende Baumstruktur umgewandelt, sodass keine manuelle Datenverarbeitung erforderlich ist.
+Ein bereits aggregierter Datensatz gemäß TidyData-Spezifikation, der Datenquelle und Struktur des Diagramms definiert. Benutzereingaben müssen nicht verarbeitet werden; VSeed verfügt über leistungsfähige Datenumformungsfunktionen und formt die Daten automatisch um. Pivot-Tabellendaten werden letztlich in die entsprechende Baumstruktur umgewandelt, sodass keine manuelle Datenverarbeitung erforderlich ist.
 
 :::
 
@@ -142,7 +142,7 @@ Kanal, dem die Dimension zugeordnet wird:
 **Type:** `TableMeasure[] | undefined`
 
 :::note{title=Beschreibung}
-Die Pivot-Tabelle unterstützt mehrere Dimensionskennzahlen.
+Die Pivot-Tabelle unterstützt mehrere Kennzahlen.
 
 :::
 
@@ -185,7 +185,7 @@ Formatierungsregeln: Dezimalzahlen mit aktivierter compact notation, mindestens 
 
 Zum Beispiel:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=zh-CN: 749740.264 → 74.45万
 
 - locale=en-US: 749740.264 → 744.5K
 
@@ -222,7 +222,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 - 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -237,7 +237,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 - 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -357,7 +357,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 - 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -372,7 +372,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 - 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 

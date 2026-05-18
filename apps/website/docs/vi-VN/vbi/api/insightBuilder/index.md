@@ -1,106 +1,106 @@
 # VBIInsightBuilder
 
-## Thuoc tinh
+## Thuộc tính
 
-| Thuoc tinh | Kieu | Mo ta |
+| Thuộc tính | Kiểu | Mô tả |
 | --- | --- | --- |
 | **doc** | `Y.Doc` | - |
 | **dsl** | `Y.Map<any>` | - |
 | **undoManager** | `UndoManager` | - |
 
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### applyUpdate
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 applyUpdate(update: Uint8Array, transactionOrigin: any): any
 ```
 
-**Tra ve**: `any`
+**Trả về**: `any`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
 | `transactionOrigin` | any | - |
 
 ### encodeStateAsUpdate
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 encodeStateAsUpdate(targetStateVector: Uint8Array): any
 ```
 
-**Tra ve**: `any`
+**Trả về**: `any`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `targetStateVector` | Uint8Array | - |
 
 ### getUUID
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getUUID(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### setContent
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setContent(content: string): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `content` | string | - |
 
 ### build
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 build(): VBIInsightDSL
 ```
 
-**Tra ve**: `VBIInsightDSL`
+**Trả về**: `VBIInsightDSL`
 
 ### isEmpty
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 isEmpty(): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`

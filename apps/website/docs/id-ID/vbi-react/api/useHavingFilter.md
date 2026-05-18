@@ -1,12 +1,12 @@
 # useHavingFilter
 
-## Import
+## Impor
 
 ```ts
 import { useHavingFilter } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useHavingFilter(builder: VBIChartBuilder): UseHavingFilterReturn
@@ -14,7 +14,7 @@ useHavingFilter(builder: VBIChartBuilder): UseHavingFilterReturn
 
 ## Deskripsi
 
-Mengelola pohon filter Having dan menyediakan entry mutation.
+Mengelola pohon filter Having dan menyediakan titik masuk mutation.
 
 ## Contoh Minimal
 

@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## add-date-dimension-year
 
-Ajouter une dimension de date agregee par an
+Ajouter une dimension de date agrégée par an
 
 
 ```tsx preview
@@ -45,7 +45,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -58,7 +58,7 @@ export default () => {
   const dimensionId = builder.dimensions.find(node => node.getField() === 'order_date')?.getId()
   if (dimensionId) {
     builder.dimensions.update(dimensionId, node => {
-      node.setAlias('Annee').setAggregate({ func: 'toYear' })
+      node.setAlias('Année').setAggregate({ func: 'toYear' })
     })
   }
 }
@@ -106,7 +106,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -114,7 +114,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.dimensions.add('product_type', node => {
-    node.setAlias('Type d article')
+    node.setAlias('Type d’article')
   })
   const dimensionId = builder.dimensions.find(node => node.getField() === 'product_type')?.getId()
   if (dimensionId) {
@@ -137,7 +137,7 @@ export default () => {
 
 ## add-multiple-dimensions
 
-Ajouter plusieurs dimensions (appels chaines)
+Ajouter plusieurs dimensions (appels chaînés)
 
 
 ```tsx preview
@@ -167,7 +167,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -188,7 +188,7 @@ export default () => {
 
 ## mixed-date-and-normal-dimensions
 
-Regroupement mixte avec dimension normale et dimension date agregee par trimestre
+Regroupement mixte avec dimension normale et dimension date agrégée par trimestre
 
 
 ```tsx preview
@@ -227,7 +227,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -236,7 +236,7 @@ export default () => {
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.dimensions
     .add('area', node => {
-      node.setAlias('Region')
+      node.setAlias('Région')
     })
     .add('order_date', node => {
       node.setAlias('Trimestre').setAggregate({ func: 'toQuarter' })
@@ -295,7 +295,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -305,7 +305,7 @@ export default () => {
   const dimensionId = builder.dimensions.toJSON().find(item => item.field === 'product_type')?.id
   if (dimensionId) {
     builder.dimensions.update(dimensionId, node => {
-      node.setAlias('Type de produit a supprimer')
+      node.setAlias('Type de produit à supprimer')
     })
     builder.dimensions.remove(dimensionId)
   }
@@ -324,7 +324,7 @@ export default () => {
 
 ## update-date-dimension-month
 
-Mettre a jour une dimension date existante en agregation mensuelle
+Mettre à jour une dimension date existante en agrégation mensuelle
 
 
 ```tsx preview
@@ -368,7 +368,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -379,7 +379,7 @@ export default () => {
   if (dimensionId) {
     const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
     if (dimension) {
-      dimension.setAlias('Date de commande a ajuster')
+      dimension.setAlias('Date de commande à ajuster')
     }
     builder.dimensions.update(dimensionId, node => {
       node.setAlias('Mois').setAggregate({ func: 'toMonth' })
@@ -400,7 +400,7 @@ export default () => {
 
 ## update-dimension
 
-Mettre a jour une dimension
+Mettre à jour une dimension
 
 
 ```tsx preview
@@ -435,7 +435,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "fr-FR",
           "version": 1,
           "limit": 20
         },
@@ -446,7 +446,7 @@ export default () => {
   if (dimensionId) {
     const dimension = builder.dimensions.find((node) => node.getId() === dimensionId)
     if (dimension) {
-      dimension.setAlias('Type de produit a ajuster')
+      dimension.setAlias('Type de produit à ajuster')
     }
     builder.dimensions.update(dimensionId, n => n.setAlias('Nouveau type de produit'))
   }

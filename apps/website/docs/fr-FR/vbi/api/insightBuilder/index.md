@@ -1,34 +1,34 @@
 # VBIInsightBuilder
 
-## Proprietes
+## Propriétés
 
-| Propriete | Type | Description |
+| Propriété | Type | Description |
 | --- | --- | --- |
 | **doc** | `Y.Doc` | - |
 | **dsl** | `Y.Map<any>` | - |
 | **undoManager** | `UndoManager` | - |
 
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### applyUpdate
 
-**Definition**:
+**Définition**:
 
 ```typescript
 applyUpdate(update: Uint8Array, transactionOrigin: any): any
@@ -36,16 +36,16 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 
 **Retour**: `any`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
 | `transactionOrigin` | any | - |
 
 ### encodeStateAsUpdate
 
-**Definition**:
+**Définition**:
 
 ```typescript
 encodeStateAsUpdate(targetStateVector: Uint8Array): any
@@ -53,15 +53,15 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 
 **Retour**: `any`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `targetStateVector` | Uint8Array | - |
 
 ### getUUID
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getUUID(): string
@@ -71,7 +71,7 @@ getUUID(): string
 
 ### setContent
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setContent(content: string): this
@@ -79,15 +79,15 @@ setContent(content: string): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `content` | string | - |
 
 ### build
 
-**Definition**:
+**Définition**:
 
 ```typescript
 build(): VBIInsightDSL
@@ -97,7 +97,7 @@ build(): VBIInsightDSL
 
 ### isEmpty
 
-**Definition**:
+**Définition**:
 
 ```typescript
 isEmpty(): boolean

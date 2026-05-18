@@ -1,6 +1,6 @@
 # UndoManager
 
-Undo/Redo-Manager mit YJS-basierter Undo- und Redo-Funktionalitaet, inklusive Stack-Verwaltung und Verlaufloeschung
+Undo/Redo-Manager mit YJS-basierter Undo- und Redo-Funktionalität, inklusive Stack-Verwaltung und Verlaufslöschung
 
 ## Eigenschaften
 
@@ -20,11 +20,11 @@ constructor(scope: any)
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `scope` | any | - YJS-Dokument oder Typ-Scope zur Definition des Tracking-Bereichs fuer Undo/Redo |
+| `scope` | any | - YJS-Dokument oder Typ-Scope zur Definition des Tracking-Bereichs für Undo/Redo |
 
 ### undo
 
-Letzte Aenderung rueckgaengig machen
+Letzte Änderung rückgängig machen
 
 **Definition**:
 
@@ -32,11 +32,11 @@ Letzte Aenderung rueckgaengig machen
 undo(): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`
 
 ### redo
 
-Rueckgaengig gemachte Aenderung wiederholen
+Rückgängig gemachte Änderung wiederholen
 
 **Definition**:
 
@@ -44,11 +44,11 @@ Rueckgaengig gemachte Aenderung wiederholen
 redo(): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`
 
 ### canUndo
 
-Pruefen, ob Operationen rueckgaengig gemacht werden koennen
+Prüfen, ob Operationen rückgängig gemacht werden können
 
 **Definition**:
 
@@ -56,11 +56,11 @@ Pruefen, ob Operationen rueckgaengig gemacht werden koennen
 canUndo(): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`
 
 ### canRedo
 
-Pruefen, ob Operationen wiederholt werden koennen
+Prüfen, ob Operationen wiederholt werden können
 
 **Definition**:
 
@@ -68,11 +68,11 @@ Pruefen, ob Operationen wiederholt werden koennen
 canRedo(): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`
 
 ### clear
 
-Verlauf loeschen
+Verlauf löschen
 
 **Definition**:
 
@@ -80,11 +80,11 @@ Verlauf loeschen
 clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 ```
 
-**Rueckgabe**: `void`
+**Rückgabe**: `void`
 
 **Parameter**:
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Ob der Undo-Stack geloescht wird, Standard true |
-| `clearRedoStack` | boolean | - Ob der Redo-Stack geloescht wird, Standard true |
+| `clearUndoStack` | boolean | - Ob der Undo-Stack gelöscht wird, Standard true |
+| `clearRedoStack` | boolean | - Ob der Redo-Stack gelöscht wird, Standard true |

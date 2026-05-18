@@ -106,7 +106,7 @@ setEncoding(encoding: NonNullable<VBIDimension['encoding']>): this
 
 ### setSort
 
-정렬 설정 설정
+정렬 설정하기
 
 **정의**:
 

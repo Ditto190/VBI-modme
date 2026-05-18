@@ -1,42 +1,42 @@
 # Table
 
-:::info{title=Recommended}
-\- Recommended field configuration: `Any` measure(s), `Any` dimension(s)
+:::info{title=Rekomendasi}
+\- Konfigurasi field yang direkomendasikan: `berapa pun` metrik, `berapa pun` dimensi
 
-\- Supports Data Reshape: at least `Any` measure(s), `Any` dimension(s)
-
-:::
-
-:::info{title=Encoding Mapping}
-Only supports configuring dimension and measure trees; defaults to encoding to columns.
+\- Mendukung restrukturisasi data: minimal `berapa pun` metrik, `berapa pun` dimensi
 
 :::
 
-:::note{title=Description}
-Table, suitable for detailed data display scenarios, with clear rows and columns for easy viewing of specific values.
-
-Applicable scenarios:
-
-\- Display detailed data records
-
-\- Precise comparison of data items
-
-\- Display attributes of multiple dimensions
+:::info{title=Pemetaan Encoding}
+Hanya mendukung konfigurasi tree dimensi dan tree metrik; default-nya encoding ke kolom.
 
 :::
 
-:::warning{title=Warning}
-Data requirements:
+:::note{title=Deskripsi}
+Tabel cocok untuk skenario tampilan data detail, dengan baris dan kolom yang jelas agar nilai spesifik mudah dilihat.
 
-\- At least 1 dimension field
+Skenario yang sesuai:
 
-\- At least 1 measure field
+\- Menampilkan detail record data
 
-\- Dimension fields will be used as table column headers
+\- Membandingkan item data secara presisi
 
-Features enabled by default:
+\- Menampilkan atribut dari banyak dimensi
 
-\- Sorting, filtering, and pagination are enabled by default
+:::
+
+:::warning{title=Peringatan}
+Persyaratan data:
+
+\- Minimal 1 field dimensi
+
+\- Minimal 1 field metrik
+
+\- Field dimensi akan digunakan sebagai header kolom tabel
+
+Fitur yang aktif secara default:
+
+\- Pengurutan, pemfilteran, dan pagination aktif secara default
 
 :::
 
@@ -45,12 +45,12 @@ Features enabled by default:
 
 **Type:** `"table"`
 
-:::note{title=Description}
-Standard table component for displaying detailed data
+:::note{title=Deskripsi}
+Komponen tabel standar untuk menampilkan data detail
 
 :::
 
-**Example**
+**Contoh**
 'table'
 
 
@@ -60,12 +60,12 @@ Standard table component for displaying detailed data
 
 **Type:** `Record[]`
 
-:::note{title=Description}
-A dataset that conforms to the TidyData specification and is already aggregated, used to define the chart's data source and structure. The dataset provided by the user does not need any preprocessing; each field corresponds to a column, and each record corresponds to a row.
+:::note{title=Deskripsi}
+Dataset yang sesuai dengan spesifikasi TidyData dan sudah diagregasi, digunakan untuk menentukan sumber data dan struktur diagram. Dataset yang diberikan pengguna tidak perlu diproses terlebih dahulu; setiap field berkorespondensi dengan satu kolom, dan setiap record berkorespondensi dengan satu baris.
 
 :::
 
-**Example**
+**Contoh**
 [{id: 1, name: "A", value: 100}, {id: 2, name: "B", value: 200}]
 
 
@@ -75,12 +75,12 @@ A dataset that conforms to the TidyData specification and is already aggregated,
 
 **Type:** `DimensionTree | undefined`
 
-:::note{title=Description}
-Each dimension in the table corresponds to a column.
+:::note{title=Deskripsi}
+Setiap dimensi dalam tabel berkorespondensi dengan satu kolom.
 
 :::
 
-**Example**
+**Contoh**
 [{id: "name", alias: "Name"}]
 
 
@@ -98,8 +98,8 @@ Each dimension in the table corresponds to a column.
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=Deskripsi}
+Konfigurasi format tanggal dimensi
 
 :::
 
@@ -108,8 +108,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=Deskripsi}
+Granularitas waktu, menentukan presisi tampilan tanggal
 
 :::
 
@@ -117,12 +117,12 @@ Time granularity, determines the date display precision
 
 **Type:** `"row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=Deskripsi}
+Kanal tempat dimensi dipetakan
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: mendukung pemetaan beberapa dimensi ke kanal baris
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: mendukung pemetaan beberapa dimensi ke kanal kolom
 
 :::
 
@@ -143,8 +143,8 @@ Channel to which the dimension is mapped
 
 **Type:** `TimeFormat | undefined`
 
-:::note{title=Description}
-Dimension date format configuration
+:::note{title=Deskripsi}
+Konfigurasi format tanggal dimensi
 
 :::
 
@@ -153,8 +153,8 @@ Dimension date format configuration
 
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
-:::note{title=Description}
-Time granularity, determines the date display precision
+:::note{title=Deskripsi}
+Granularitas waktu, menentukan presisi tampilan tanggal
 
 :::
 
@@ -162,12 +162,12 @@ Time granularity, determines the date display precision
 
 **Type:** `"row" | "column" | undefined`
 
-:::note{title=Description}
-Channel to which the dimension is mapped
+:::note{title=Deskripsi}
+Kanal tempat dimensi dipetakan
 
-\- row: supports mapping multiple dimensions to the row channel
+\- row: mendukung pemetaan beberapa dimensi ke kanal baris
 
-\- column: supports mapping multiple dimensions to the column channel
+\- column: mendukung pemetaan beberapa dimensi ke kanal kolom
 
 :::
 
@@ -176,12 +176,12 @@ Channel to which the dimension is mapped
 
 **Type:** `MeasureTree | undefined`
 
-:::note{title=Description}
-Each measure in the table corresponds to a column, and natively supports measure combinations.
+:::note{title=Deskripsi}
+Setiap metrik dalam tabel berkorespondensi dengan satu baris dan mendukung kombinasi metrik secara native.
 
 :::
 
-**Example**
+**Contoh**
 [{id: "value", alias: "Value"}]
 
 
@@ -191,8 +191,8 @@ Each measure in the table corresponds to a column, and natively supports measure
 
 **Type:** `string`
 
-:::note{title=Description}
-Measure group ID, must be unique.
+:::note{title=Deskripsi}
+ID grup metrik, harus unik.
 
 :::
 
@@ -200,8 +200,8 @@ Measure group ID, must be unique.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Measure group alias, can be duplicate; defaults to the ID if not specified.
+:::note{title=Deskripsi}
+Alias grup metrik, boleh duplikat; default-nya ID jika tidak ditentukan.
 
 :::
 
@@ -209,18 +209,18 @@ Measure group alias, can be duplicate; defaults to the ID if not specified.
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Automatic number formatting, enabled by default, highest priority
+:::note{title=Deskripsi}
+Pemformatan angka otomatis, aktif secara default dengan prioritas tertinggi
 
-When autoFormat=true, it overrides all numFormat configurations
+Saat autoFormat=true, konfigurasi ini menimpa semua konfigurasi numFormat
 
-When enabled, chart data labels and tooltips will automatically select the appropriate formatting based on measure values and locale
+Saat diaktifkan, label data dan tooltip diagram akan otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale
 
-Formatting rules: decimal numbers with compact notation enabled, minimum 0 decimal places, maximum 2 decimal places, automatic rounding, using the browser's Intl.NumberFormat implementation
+Aturan format: angka desimal dengan compact notation aktif, minimal 0 digit desimal, maksimal 2 digit desimal, pembulatan otomatis, menggunakan implementasi Intl.NumberFormat browser
 
-For example:
+Contoh:
 
-\- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -230,10 +230,10 @@ For example:
 
 **Type:** `NumFormat | undefined`
 
-:::note{title=Description}
-Custom number formatting for measures; automatically applied to labels and tooltips
+:::note{title=Deskripsi}
+Pemformatan angka kustom untuk metrik; otomatis diterapkan ke label dan tooltip
 
-Note: To use custom formatting, you must explicitly set autoFormat=false; otherwise autoFormat will override this config
+Catatan: Untuk memakai format kustom, Anda harus menetapkan autoFormat=false secara eksplisit; jika tidak, autoFormat akan menimpa konfigurasi ini
 
 :::
 
@@ -242,8 +242,8 @@ Note: To use custom formatting, you must explicitly set autoFormat=false; otherw
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Deskripsi}
+Jenis format angka, mendukung angka (desimal), persen (%), permil (‰), dan notasi ilmiah
 
 :::
 
@@ -251,14 +251,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Deskripsi}
+Rasio format angka, tidak boleh 0
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Contoh**
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -266,14 +266,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Deskripsi}
+Simbol format angka, misalnya %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Contoh**
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -281,8 +281,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Deskripsi}
+Pemisah ribuan untuk format angka
 
 :::
 
@@ -290,8 +290,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Deskripsi}
+Sufiks format angka
 
 :::
 
@@ -299,8 +299,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Deskripsi}
+Prefiks format angka
 
 :::
 
@@ -308,18 +308,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Deskripsi}
+Jumlah digit desimal untuk format angka, memakai minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser; prioritas lebih rendah daripada significantDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Contoh**
+\- 1234.5678 dikonversi menjadi 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -327,20 +327,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Deskripsi}
+Digit signifikan untuk format angka, memakai minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser; prioritas lebih tinggi daripada fractionDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Contoh**
+\- 1234.5678 dikonversi menjadi 1000, significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200, significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234, significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -348,14 +348,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Deskripsi}
+Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama-sama diatur; memakai Intl.NumberFormat browser dan mengikuti aturan roundingPriority Intl.NumberFormat
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Contoh**
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -363,8 +363,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Deskripsi}
+Mode pembulatan format angka, memakai Intl.NumberFormat browser dan mengikuti aturan roundingMode Intl.NumberFormat
 
 :::
 
@@ -377,8 +377,8 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
-:::note{title=Description}
-Number format type, supports: number (decimal), percent (%), permille (‰), scientific notation
+:::note{title=Deskripsi}
+Jenis format angka, mendukung angka (desimal), persen (%), permil (‰), dan notasi ilmiah
 
 :::
 
@@ -386,14 +386,14 @@ Number format type, supports: number (decimal), percent (%), permille (‰), sci
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Number format ratio, cannot be 0
+:::note{title=Deskripsi}
+Rasio format angka, tidak boleh 0
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Contoh**
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -401,14 +401,14 @@ Number format ratio, cannot be 0
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format symbol, e.g. %, ‰
+:::note{title=Deskripsi}
+Simbol format angka, misalnya %, ‰
 
 :::
 
-**Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+**Contoh**
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -416,8 +416,8 @@ Number format symbol, e.g. %, ‰
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Thousands separator for number formatting
+:::note{title=Deskripsi}
+Pemisah ribuan untuk format angka
 
 :::
 
@@ -425,8 +425,8 @@ Thousands separator for number formatting
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format suffix
+:::note{title=Deskripsi}
+Sufiks format angka
 
 :::
 
@@ -434,8 +434,8 @@ Number format suffix
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Number format prefix
+:::note{title=Deskripsi}
+Prefiks format angka
 
 :::
 
@@ -443,18 +443,18 @@ Number format prefix
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Decimal places for number formatting, using the browser's Intl.NumberFormat minimumFractionDigits and maximumFractionDigits; lower priority than significantDigits
+:::note{title=Deskripsi}
+Jumlah digit desimal untuk format angka, memakai minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser; prioritas lebih rendah daripada significantDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1235, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.6, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1230.568, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
+**Contoh**
+\- 1234.5678 dikonversi menjadi 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -462,20 +462,20 @@ Decimal places for number formatting, using the browser's Intl.NumberFormat mini
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Significant digits for number formatting, using the browser's Intl.NumberFormat minimumSignificantDigits and maximumSignificantDigits; higher priority than fractionDigits
+:::note{title=Deskripsi}
+Digit signifikan untuk format angka, memakai minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser; prioritas lebih tinggi daripada fractionDigits
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1000, significantDigits:1
-\- 1234.5678 converts to 1200, significantDigits:2
-\- 1234.5678 converts to 1230, significantDigits:3
-\- 1234.5678 converts to 1234, significantDigits:4
-\- 1234.5678 converts to 1234.6, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.57, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.568, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 converts to 1234.5678, significantDigits:8 (roundingMode:halfCeil)
+**Contoh**
+\- 1234.5678 dikonversi menjadi 1000, significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200, significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234, significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -483,14 +483,14 @@ Significant digits for number formatting, using the browser's Intl.NumberFormat 
 
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
-:::note{title=Description}
-Rounding priority for number formatting when both significantDigits and fractionDigits are set; uses the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingPriority
+:::note{title=Deskripsi}
+Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama-sama diatur; memakai Intl.NumberFormat browser dan mengikuti aturan roundingPriority Intl.NumberFormat
 
 :::
 
-**Example**
-\- 1234.5678 converts to 1230, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 converts to 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
+**Contoh**
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -498,8 +498,8 @@ Rounding priority for number formatting when both significantDigits and fraction
 
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
-:::note{title=Description}
-Rounding mode for number formatting, using the browser's Intl.NumberFormat, following the same rules as Intl.NumberFormat's roundingMode
+:::note{title=Deskripsi}
+Mode pembulatan format angka, memakai Intl.NumberFormat browser dan mengikuti aturan roundingMode Intl.NumberFormat
 
 :::
 
@@ -507,10 +507,10 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 
 **Type:** `"column" | undefined`
 
-:::note{title=Description}
-Channel to which the measure is mapped
+:::note{title=Deskripsi}
+Kanal tempat metrik dipetakan
 
-\- column: Measure column
+\- column: Kolom metrik
 
 :::
 
@@ -518,13 +518,13 @@ Channel to which the measure is mapped
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-In flat measure configuration form, builds a tree-shaped measure group. parentId points to the id of the parent measure group, used for building the measure tree
+:::note{title=Deskripsi}
+Dalam bentuk konfigurasi metrik datar, membangun grup metrik berbentuk tree. parentId menunjuk ke id grup metrik induk untuk membangun tree metrik
 
 :::
 
 :::tip{title=Tip}
-There are two ways to configure the measure tree: Option 1 is directly configuring a measure tree with children; Option 2 is configuring a flat measure list with parentId. These two methods cannot be used simultaneously
+Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree metrik dengan children; Opsi 2 mengonfigurasi daftar metrik datar dengan parentId. Kedua metode ini tidak dapat digunakan bersamaan
 
 :::
 
@@ -532,8 +532,8 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 
 **Type:** `(TableMeasure | MeasureGroup)[] | undefined`
 
-:::note{title=Description}
-Child measures or measure groups within the measure group.
+:::note{title=Deskripsi}
+Metrik anak atau grup metrik di dalam grup metrik.
 
 :::
 
@@ -542,8 +542,8 @@ Child measures or measure groups within the measure group.
 
 **Type:** `Page | undefined`
 
-:::note{title=Description}
-Pagination configuration, used to specify the pagination field name, which must be a dimension.
+:::note{title=Deskripsi}
+Konfigurasi pagination, digunakan untuk menentukan nama field pagination yang harus berupa dimensi.
 
 :::
 
@@ -552,8 +552,8 @@ Pagination configuration, used to specify the pagination field name, which must 
 
 **Type:** `string`
 
-:::note{title=Description}
-Pagination field; specifies the field name for pagination, must be a dimension
+:::note{title=Deskripsi}
+Field paginasi; menentukan nama field untuk paginasi, harus berupa dimensi
 
 :::
 
@@ -561,12 +561,12 @@ Pagination field; specifies the field name for pagination, must be a dimension
 
 **Type:** `string`
 
-:::note{title=Description}
-Current pagination value; specifies the value used to determine the current page
+:::note{title=Deskripsi}
+Nilai paginasi saat ini; menentukan nilai untuk menentukan halaman saat ini
 
 :::
 
-**Example**
+**Contoh**
 '2023\-01\-01'
 
 
@@ -576,8 +576,8 @@ Current pagination value; specifies the value used to determine the current page
 
 **Type:** `BackgroundColor`
 
-:::note{title=Description}
-Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or rgba value (e.g. '#ff0000', 'rgba(255,0,0,0.5)')
+:::note{title=Deskripsi}
+Warna latar belakang dapat berupa string warna (mis. 'red', 'blue'), atau nilai hex, rgb, maupun rgba (mis. '#ff0000', 'rgba(255,0,0,0.5)')
 
 :::
 
@@ -586,8 +586,8 @@ Background color can be a color string (e.g. 'red', 'blue'), or a hex, rgb, or r
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Table border color
+:::note{title=Deskripsi}
+Warna border tabel
 
 :::
 
@@ -596,8 +596,8 @@ Table border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Table body font size
+:::note{title=Deskripsi}
+Ukuran font body tabel
 
 :::
 
@@ -606,8 +606,8 @@ Table body font size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Table body font color
+:::note{title=Deskripsi}
+Warna font body tabel
 
 :::
 
@@ -616,8 +616,8 @@ Table body font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Table body background color
+:::note{title=Deskripsi}
+Warna background body tabel
 
 :::
 
@@ -626,7 +626,7 @@ Table body background color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Header font size
 
 :::
@@ -636,8 +636,8 @@ Header font size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Header font color
+:::note{title=Deskripsi}
+Warna font header
 
 :::
 
@@ -646,8 +646,8 @@ Header font color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Header background color
+:::note{title=Deskripsi}
+Warna background header
 
 :::
 
@@ -656,7 +656,7 @@ Header background color
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
+:::note{title=Deskripsi}
 Background color when the mouse hovers over a header cell, used to highlight the hovered cell.
 
 :::
@@ -666,8 +666,8 @@ Background color when the mouse hovers over a header cell, used to highlight the
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color of the entire row when the mouse hovers over the header, used to highlight the hovered row.
+:::note{title=Deskripsi}
+Warna latar belakang seluruh baris saat mouse diarahkan ke header, digunakan untuk menyorot baris yang sedang di-hover.
 
 :::
 
@@ -676,8 +676,8 @@ Background color of the entire row when the mouse hovers over the header, used t
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Border color for selected cells, used to highlight the selection.
+:::note{title=Deskripsi}
+Warna border sel yang dipilih, digunakan untuk menyorot sel yang dipilih.
 
 :::
 
@@ -686,8 +686,8 @@ Border color for selected cells, used to highlight the selection.
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Background color for selected cells, used to highlight the selection.
+:::note{title=Deskripsi}
+Warna latar belakang sel yang dipilih, digunakan untuk menyorot sel yang dipilih.
 
 :::
 
@@ -696,8 +696,8 @@ Background color for selected cells, used to highlight the selection.
 
 **Type:** `BodyCellStyle | BodyCellStyle[] | undefined`
 
-:::note{title=Description}
-Sets special styles for cells in the table body.
+:::note{title=Deskripsi}
+Mengatur gaya khusus untuk sel pada badan tabel.
 
 :::
 
@@ -706,29 +706,29 @@ Sets special styles for cells in the table body.
 
 **Type:** `Selector | Selectors | FieldSelector | undefined`
 
-:::note{title=Description}
-Data selector
+:::note{title=Deskripsi}
+Selector data
 
-If a selector is configured, it provides four types of data matching capabilities: numeric selectors, partial data selectors, conditional dimension selectors, and conditional measure selectors.
+Jika selector dikonfigurasi, tersedia empat jenis kemampuan pencocokan data: selector numerik, selector data parsial, selector dimensi bersyarat, dan selector metrik bersyarat.
 
-If no selector is configured, the style applies globally.
+Jika selector tidak dikonfigurasi, gaya berlaku secara global.
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+Catatan: selector dan dynamicFilter tidak dapat digunakan bersamaan; dynamicFilter memiliki prioritas lebih tinggi.
 
 :::
 
-**Example**
-Numeric selector
+**Contoh**
+Selector numerik
 selector = "tool"
 selector = ["tool", "book"]
 selector = 100
 selector = [100, 200]
 
-Partial data selector
+Selector data parsial
 selector = { profit: 100 }
 selector = [{ profit: 100 }, { profit: 200 }]
 
-Conditional dimension selector
+Selector dimensi bersyarat
 selector = {
 field: 'category',
 operator: 'in',
@@ -740,7 +740,7 @@ operator: 'not in',
 value: 'book'
 }
 
-Conditional measure selector
+Selector metrik bersyarat
 selector = {
 field: 'profit',
 operator: '>=',
@@ -752,7 +752,7 @@ operator: 'between'
 value: [100, 300]
 }
 
-Field column filtering
+Filtering kolom field
 selector = {
 field: 'category'
 }
@@ -767,16 +767,16 @@ field: ['category', 'profit']
 
 **Type:** `string | string[]`
 
-:::note{title=Description}
-Field name, can be a single field or an array of multiple fields.
+:::note{title=Deskripsi}
+Nama field, dapat berupa satu field atau array beberapa field.
 
 :::
 
-**Example**
-Single field
+**Contoh**
+Field tunggal
 field: 'sales'
 
-Multiple fields
+Beberapa field
 field: ['sales', 'profit', 'revenue']
 
 
@@ -785,12 +785,12 @@ field: ['sales', 'profit', 'revenue']
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Deskripsi}
+Perataan vertikal teks; biasanya diatur ke 'top' agar teks muncul di bawah titik anotasi dan tetap berada dalam area diagram yang terlihat.
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Memilih item data dengan nilai field dimensi yang berada dalam array value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Memilih item data dengan nilai field dimensi yang tidak berada dalam array value.
 
 :::
 
@@ -798,14 +798,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Deskripsi}
+Perataan vertikal teks; biasanya diatur ke 'top' agar teks muncul di bawah titik anotasi dan tetap berada dalam area diagram yang terlihat.
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Memilih item data dengan nilai field dimensi yang berada dalam array value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Memilih item data dengan nilai field dimensi yang tidak berada dalam array value.
 
-same as operator
+sama dengan operator
 
 :::
 
@@ -813,8 +813,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selects dimension field values; supports arrays.
+:::note{title=Deskripsi}
+Memilih nilai field dimensi; mendukung array.
 
 :::
 
@@ -822,40 +822,40 @@ Selects dimension field values; supports arrays.
 
 **Type:** `TableDynamicFilter | undefined`
 
-:::note{title=Description}
-Dynamic filter (code-driven)
+:::note{title=Deskripsi}
+Filter dinamis (berbasis kode)
 
 
 
-Implements complex data filtering logic via AI-generated JavaScript code.
+Mengimplementasikan logika filter data kompleks melalui kode JavaScript yang dihasilkan AI.
 
-Suitable for scenarios where static selectors are difficult to express, such as Top N, statistical analysis, and complex conditions.
-
-
-
-Key capabilities:
-
-\- Supports arbitrarily complex data filtering conditions.
-
-\- Uses built-in utility functions for data manipulation.
-
-\- Safely executed in the browser environment (Web Worker sandbox).
+Cocok untuk skenario yang sulit diungkapkan dengan selector statis, seperti Top N, analisis statistik, dan kondisi kompleks.
 
 
 
-Environmental requirements: Only supports browser environments; Node.js environments will use the fallback.
+Kemampuan utama:
+
+\- Mendukung kondisi filter data yang kompleks secara arbitrer.
+
+\- Menggunakan fungsi utilitas bawaan untuk manipulasi data.
+
+\- Dieksekusi dengan aman di lingkungan browser (sandbox Web Worker).
 
 
 
-Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority.
+Persyaratan lingkungan: hanya mendukung lingkungan browser; lingkungan Node.js akan menggunakan fallback.
 
 
 
-Table dynamic filter configuration
+Catatan: selector dan dynamicFilter tidak dapat digunakan bersamaan; dynamicFilter memiliki prioritas lebih tinggi.
 
 
 
-Implements precise cell-level filtering in tables via AI-generated JavaScript code.
+Konfigurasi filter dinamis tabel
+
+
+
+Mengimplementasikan filter presisi tingkat sel pada tabel melalui kode JavaScript yang dihasilkan AI.
 
 :::
 
@@ -868,15 +868,15 @@ Implements precise cell-level filtering in tables via AI-generated JavaScript co
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-User's filtering requirement description (natural language).
+:::note{title=Deskripsi}
+Deskripsi kebutuhan filter pengguna (bahasa natural).
 
 :::
 
-**Example**
-"Highlight cells with sales greater than 1000"
+**Contoh**
+"Sorot sel dengan penjualan lebih besar dari 1000"
 
-"Highlight the cell with the maximum value in each row"
+"Sorot sel dengan nilai maksimum di setiap baris"
 
 
 
@@ -884,24 +884,24 @@ User's filtering requirement description (natural language).
 
 **Type:** `string`
 
-:::note{title=Description}
-AI-generated JavaScript filtering code.
+:::note{title=Deskripsi}
+Kode filter JavaScript yang dihasilkan AI.
 
 
 
-\- Can only use built-in utility functions (accessible via _ or R).
+\- Hanya boleh menggunakan fungsi utilitas bawaan (diakses melalui _ atau R).
 
-\- Input parameters: data (array), where each item includes an _index field representing the row number.
+\- Parameter input: data (array), setiap item berisi field _index yang mewakili nomor baris.
 
-\- Must return an array of cell selectors: Array<{ __row_index: number, field: string }>.
+\- Harus mengembalikan array selector sel: Array<{ __row_index: number, field: string }>.
 
-\- When field is "*", it indicates highlighting the entire row.
+\- Saat field adalah "*", berarti seluruh baris disorot.
 
-\- Prohibited: eval, Function, asynchronous operations, DOM APIs, and network requests.
+\- Dilarang: eval, Function, operasi asinkron, DOM API, dan permintaan jaringan.
 
 :::
 
-**Example**
+**Contoh**
 Top N filtering
 dynamicFilter = {
 type: 'row\-with\-field',
@@ -920,7 +920,7 @@ _.map(result, item => [
 enabled: true
 }
 
-Multi-condition filtering
+Filtering multi-kondisi
 dynamicFilter = {
 type: 'row\-with\-field',
 description: 'Highlight products with profit margin > 20% and sales > 5000',
@@ -939,10 +939,10 @@ _.map(matched, item => [
 enabled: true
 }
 
-Relative value filtering
+Filtering nilai relatif
 dynamicFilter = {   *
 type: 'row\-with\-field',
-description: 'Highlight products with sales above average',
+description: 'Sorot produk dengan sales di atas rata-rata',
 code: `
 const avgSales = _.meanBy(data, 'sales');
 const matched = _.filter(data, item => item.sales > avgSales);
@@ -973,7 +973,7 @@ _.map(topByRegion, item => [
 enabled: true
 }
 
-Highlight entire row
+Sorot seluruh baris
 dynamicFilter = {
 description: 'Highlight rows where sales are greater than profit',
 code: `
@@ -992,8 +992,8 @@ enabled: true
 
 **Type:** `Selector | Selectors | undefined`
 
-:::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported.
+:::note{title=Deskripsi}
+Rencana fallback saat eksekusi kode gagal atau lingkungan tidak didukung.
 
 :::
 
@@ -1002,8 +1002,8 @@ Fallback plan when code execution fails or the environment is not supported.
 
 **Type:** `string`
 
-:::note{title=Description}
-Dimension field; ID of an item in dimensions.
+:::note{title=Deskripsi}
+Field dimensi; ID item dalam dimensions.
 
 :::
 
@@ -1011,12 +1011,12 @@ Dimension field; ID of an item in dimensions.
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Deskripsi}
+Perataan vertikal teks; biasanya diatur ke 'top' agar teks muncul di bawah titik anotasi dan tetap berada dalam area diagram yang terlihat.
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Memilih item data dengan nilai field dimensi yang berada dalam array value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Memilih item data dengan nilai field dimensi yang tidak berada dalam array value.
 
 :::
 
@@ -1024,14 +1024,14 @@ Operator
 
 **Type:** `"in" | "not in" | undefined`
 
-:::note{title=Description}
-Operator
+:::note{title=Deskripsi}
+Perataan vertikal teks; biasanya diatur ke 'top' agar teks muncul di bawah titik anotasi dan tetap berada dalam area diagram yang terlihat.
 
-\- in: Selects data items where the dimension field value is in the value array.
+\- in: Memilih item data dengan nilai field dimensi yang berada dalam array value.
 
-\- not in: Selects data items where the dimension field value is not in the value array.
+\- not in: Memilih item data dengan nilai field dimensi yang tidak berada dalam array value.
 
-same as operator
+sama dengan operator
 
 :::
 
@@ -1039,8 +1039,8 @@ same as operator
 
 **Type:** `string | number | (string | number)[]`
 
-:::note{title=Description}
-Selects dimension field values; supports arrays.
+:::note{title=Deskripsi}
+Memilih nilai field dimensi; mendukung array.
 
 :::
 
@@ -1048,8 +1048,8 @@ Selects dimension field values; supports arrays.
 
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
-:::note{title=Description}
-Dynamic filter execution result (runtime field)
+:::note{title=Deskripsi}
+Hasil eksekusi filter dinamis (field runtime)
 
 
 
@@ -1074,8 +1074,8 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell background color
+:::note{title=Deskripsi}
+Warna background sel
 
 :::
 
@@ -1083,8 +1083,8 @@ Cell background color
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable color scale configuration for background colors
+:::note{title=Deskripsi}
+Apakah mengaktifkan konfigurasi color scale untuk warna background
 
 :::
 
@@ -1092,8 +1092,8 @@ Whether to enable color scale configuration for background colors
 
 **Type:** `{ minValue?: number; maxValue?: number; minColor: string; maxColor: string; } | undefined`
 
-:::note{title=Description}
-Cell background color scale mapping; takes priority over backgroundColor
+:::note{title=Deskripsi}
+Pemetaan color scale warna background sel; prioritasnya lebih tinggi daripada backgroundColor
 
 :::
 
@@ -1102,8 +1102,8 @@ Cell background color scale mapping; takes priority over backgroundColor
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Minimum value; defaults to the minimum value in the current data column if not configured
+:::note{title=Deskripsi}
+Nilai minimum; jika tidak dikonfigurasi, default-nya adalah nilai minimum pada kolom data saat ini
 
 :::
 
@@ -1111,8 +1111,8 @@ Minimum value; defaults to the minimum value in the current data column if not c
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Maximum value; defaults to the maximum value in the current data column if not configured
+:::note{title=Deskripsi}
+Nilai maksimum; jika tidak dikonfigurasi, default-nya adalah nilai maksimum pada kolom data saat ini
 
 :::
 
@@ -1120,8 +1120,8 @@ Maximum value; defaults to the maximum value in the current data column if not c
 
 **Type:** `string`
 
-:::note{title=Description}
-Color corresponding to the minimum value
+:::note{title=Deskripsi}
+Warna yang sesuai dengan nilai minimum
 
 :::
 
@@ -1129,8 +1129,8 @@ Color corresponding to the minimum value
 
 **Type:** `string`
 
-:::note{title=Description}
-Color corresponding to the maximum value
+:::note{title=Deskripsi}
+Warna yang sesuai dengan nilai maksimum
 
 :::
 
@@ -1138,8 +1138,8 @@ Color corresponding to the maximum value
 
 **Type:** `boolean | undefined`
 
-:::note{title=Description}
-Whether to enable the progress bar feature (a bar showing the relative size of the cell value); disabled by default
+:::note{title=Deskripsi}
+Apakah mengaktifkan fitur progress bar (bar yang menunjukkan ukuran relatif nilai sel); nonaktif secara default
 
 :::
 
@@ -1147,8 +1147,8 @@ Whether to enable the progress bar feature (a bar showing the relative size of t
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Progress bar color when the cell value is positive
+:::note{title=Deskripsi}
+Warna progress bar saat nilai sel positif
 
 :::
 
@@ -1156,8 +1156,8 @@ Progress bar color when the cell value is positive
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Progress bar color when the cell value is negative
+:::note{title=Deskripsi}
+Warna progress bar saat nilai sel negatif
 
 :::
 
@@ -1165,12 +1165,12 @@ Progress bar color when the cell value is negative
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Progress bar minimum value
+:::note{title=Deskripsi}
+Nilai minimum progress bar
 
 
 
-Automatically calculates the column minimum if not configured
+Menghitung nilai minimum kolom secara otomatis jika tidak dikonfigurasi
 
 :::
 
@@ -1178,12 +1178,12 @@ Automatically calculates the column minimum if not configured
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Progress bar maximum value
+:::note{title=Deskripsi}
+Nilai maksimum progress bar
 
 
 
-Automatically calculates the column maximum if not configured
+Menghitung nilai maksimum kolom secara otomatis jika tidak dikonfigurasi
 
 :::
 
@@ -1191,8 +1191,8 @@ Automatically calculates the column maximum if not configured
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell text color
+:::note{title=Deskripsi}
+Warna teks sel
 
 :::
 
@@ -1200,8 +1200,8 @@ Cell text color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Cell text font size
+:::note{title=Deskripsi}
+Ukuran font teks sel
 
 :::
 
@@ -1209,8 +1209,8 @@ Cell text font size
 
 **Type:** `string | undefined`
 
-:::note{title=Description}
-Cell border color
+:::note{title=Deskripsi}
+Warna border sel
 
 :::
 
@@ -1218,8 +1218,8 @@ Cell border color
 
 **Type:** `number | undefined`
 
-:::note{title=Description}
-Cell border line width
+:::note{title=Deskripsi}
+Lebar garis border sel
 
 :::
 
@@ -1228,36 +1228,36 @@ Cell border line width
 
 **Type:** `TotalType | undefined`
 
-:::note{title=Description}
-The type of summary row to display; only applicable to measure columns
+:::note{title=Deskripsi}
+Jenis baris ringkasan yang ditampilkan; hanya berlaku untuk kolom metrik
 
-\- 'sum': Displays the sum row
+\- 'sum': Menampilkan baris jumlah
 
-\- 'avg': Displays the average row
+\- 'avg': Menampilkan baris rata-rata
 
-\- 'max': Displays the maximum row
+\- 'max': Menampilkan baris maksimum
 
-\- 'min': Displays the minimum row
+\- 'min': Menampilkan baris minimum
 
-\- 'count': Displays the count row
+\- 'count': Menampilkan baris hitung
 
 
 
-Table summary row type
+Tipe baris ringkasan tabel
 
-\- 'sum': Sum
+\- 'sum': Jumlah
 
-\- 'avg': Average
+\- 'avg': Rata-rata
 
-\- 'max': Maximum
+\- 'max': Maksimum
 
 \- 'min': Minimum
 
-\- 'count': Count
+\- 'count': Hitung
 
 :::
 
-**Example**
+**Contoh**
 'sum'
 
 
@@ -1267,20 +1267,20 @@ Table summary row type
 
 **Type:** `Theme | undefined`
 
-:::note{title=Description}
-Chart theme. Theme is a lower-priority configuration that includes universal settings shared by all chart types and specific settings for individual chart types. Built-in themes include 'light' and 'dark'; users can customize themes via the Builder.
+:::note{title=Deskripsi}
+Tema diagram. Tema adalah konfigurasi fungsional berprioritas lebih rendah yang mencakup pengaturan umum untuk semua tipe diagram dan pengaturan khusus untuk satu tipe diagram. Tema terang dan gelap bawaan dapat dikustomisasi melalui Builder.
 
 
 
-Theme
+Tema
 
 
 
-Built-in light and dark themes; new themes can be customized using registerTheme.
+Tema terang dan gelap bawaan; tema baru dapat dikustomisasi melalui registerTheme.
 
 :::
 
-**Example**
+**Contoh**
 'dark'
 
 'light'
@@ -1303,7 +1303,7 @@ Built-in light and dark themes; new themes can be customized using registerTheme
 
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
-:::note{title=Description}
-Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, language can be set using the intl.setLocale('zh-CN') method.
+:::note{title=Deskripsi}
+Konfigurasi bahasa diagram; mendukung 'zh-CN' dan 'en-US'. Selain itu, bahasa dapat diatur dengan metode intl.setLocale('zh-CN').
 
 :::

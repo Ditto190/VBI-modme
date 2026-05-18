@@ -1,135 +1,135 @@
 # HavingFilterNodeBuilder
 
-Builder node loc Having dung de cau hinh mot dieu kien loc Having
+Builder node lọc Having dùng để cấu hình một điều kiện lọc Having
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getId
 
-Lay ID node
+Lấy ID node
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getId(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getField
 
-Lay ten field
+Lấy tên field
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getField(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getOperator
 
-Lay toan tu loc
+Lấy toán tử lọc
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getOperator(): string | undefined
 ```
 
-**Tra ve**: `string \| undefined`
+**Trả về**: `string \| undefined`
 
 ### getAggregate
 
-Lay cau hinh tong hop
+Lấy cấu hình tổng hợp
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getAggregate(): VBIHavingAggregate | undefined
 ```
 
-**Tra ve**: `VBIHavingAggregate \| undefined`
+**Trả về**: `VBIHavingAggregate \| undefined`
 
 ### setValue
 
-Thiet lap gia tri cua dieu kien loc
+Thiết lập giá trị của điều kiện lọc
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setValue(value: unknown): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `value` | unknown | - Gia tri loc |
+| `value` | unknown | - Giá trị lọc |
 
 ### setOperator
 
-Thiet lap toan tu loc
+Thiết lập toán tử lọc
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setOperator(operator: string): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `operator` | string | - Toan tu |
+| `operator` | string | - Toán tử |
 
 ### setAggregate
 
-Thiet lap cau hinh tong hop
+Thiết lập cấu hình tổng hợp
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setAggregate(aggregate: VBIHavingAggregate): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `aggregate` | VBIHavingAggregate | - Cau hinh tong hop |
+| `aggregate` | VBIHavingAggregate | - Cấu hình tổng hợp |
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIHavingFilter
 ```
 
-**Tra ve**: `VBIHavingFilter`
+**Trả về**: `VBIHavingFilter`

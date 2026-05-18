@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## add-measure
 
-Mass hinzufuegen
+Kennzahl hinzufügen
 
 
 ```tsx preview
@@ -36,7 +36,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -44,7 +44,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.measures.add('sales', node => {
-    node.setAlias('Urspruenglicher Umsatz')
+    node.setAlias('Ursprünglicher Umsatz')
   })
   const measureId = builder.measures.find(node => node.getField() === 'sales')?.getId()
   if (measureId) {
@@ -67,7 +67,7 @@ export default () => {
 
 ## add-measure-encoding
 
-Mass hinzufuegen und Encoding setzen
+Kennzahl hinzufügen und Encoding setzen
 
 
 ```tsx preview
@@ -97,7 +97,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -124,7 +124,7 @@ export default () => {
 
 ## measure-with-custom-and-auto-format
 
-Massformatierung: Umsatz nutzt ein benutzerdefiniertes 10.000er-Format (¥-Praefix, zwei Dezimalstellen), Gewinn nutzt automatische Formatierung, Rabatt nutzt Prozentformat
+Kennzahlenformatierung: Umsatz nutzt ein benutzerdefiniertes 10.000er-Format (¥-Präfix, zwei Dezimalstellen), Gewinnrate nutzt automatische Formatierung, Rabatt nutzt Prozentformat
 
 
 ```tsx preview
@@ -159,7 +159,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -186,7 +186,7 @@ export default () => {
         .setFormat({ autoFormat: true });
     })
     .add('discount', node => {
-      node.setAlias('Durchschn. Rabatt')
+      node.setAlias('Durchschnittsrabatt')
         .setAggregate({ func: 'avg' })
         .setEncoding('column')
         .setFormat({
@@ -209,7 +209,7 @@ export default () => {
 
 ## remove-measure
 
-Mass entfernen
+Kennzahl entfernen
 
 
 ```tsx preview
@@ -256,7 +256,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -283,7 +283,7 @@ export default () => {
 
 ## update-measure
 
-Mass aktualisieren
+Kennzahl aktualisieren
 
 
 ```tsx preview
@@ -304,7 +304,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Urspruenglicher Umsatz",
+              "alias": "Ursprünglicher Umsatz",
               "aggregate": {
                 "func": "sum"
               },
@@ -322,7 +322,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },

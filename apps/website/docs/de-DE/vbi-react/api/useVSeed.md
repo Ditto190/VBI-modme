@@ -14,7 +14,7 @@ useVSeed(builder: VBIChartBuilder, options: UseVSeedOptions =
 
 ## Beschreibung
 
-Führt die Abfrage- und VSeed-Generierungspipeline aus und gibt den für das Rendering erforderlichen Status und die Daten zurück.
+Führt den Abfrage- und VSeed-Generierungsablauf aus und gibt den für das Rendering erforderlichen Zustand sowie die Daten zurück.
 
 ## Minimales Beispiel
 

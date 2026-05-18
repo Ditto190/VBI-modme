@@ -1,33 +1,33 @@
 # LocaleBuilder
 
-Builder de locale pour definir et lire la locale courante
+Builder de locale pour définir et lire la locale courante
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
 Constructeur
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `_doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Observer les changements de locale et renvoyer une fonction de desabonnement
+Observer les changements de locale et renvoyer une fonction de désabonnement
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
@@ -35,25 +35,25 @@ observe(callback: ObserveCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveCallback | - Fonction de rappel |
 
 ### setLocale
 
-Definir la locale
+Définir la locale
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setLocale(locale: string)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `locale` | string | - Nom de locale |
 
@@ -61,7 +61,7 @@ setLocale(locale: string)
 
 Obtenir la locale courante
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getLocale(): string
@@ -73,7 +73,7 @@ getLocale(): string
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): string

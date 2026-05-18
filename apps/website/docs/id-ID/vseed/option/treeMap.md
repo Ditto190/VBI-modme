@@ -25,7 +25,7 @@ Skenario yang sesuai:
 :::warning{title=Warning}
 Persyaratan data:
 
-\- Minimal 1 field numerik untuk memetakan ukuran area
+\- Minimal 1 field numerik untuk memetakan ukuran luas
 
 \- Minimal 1 field dimensi untuk pembagian hierarkis
 
@@ -56,12 +56,11 @@ Diagram Treemap menampilkan hubungan proporsional pada data hierarkis.
 **Type:** `Record[]`
 
 :::note{title=Deskripsi}
-Dataset
+Set data
 
 
 
-Dataset teragregasi yang mengikuti spesifikasi TidyData, digunakan untuk menentukan sumber dan struktur data chart.
-
+Set data yang sudah diagregasi dan sesuai spesifikasi TidyData, digunakan untuk menentukan sumber dan struktur data diagram.
 :::
 
 **Contoh**
@@ -236,7 +235,7 @@ Rasio format angka, tidak boleh 0
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -251,7 +250,7 @@ Simbol format angka, misalnya %, ‰
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -371,7 +370,7 @@ Rasio format angka, tidak boleh 0
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -386,7 +385,7 @@ Simbol format angka, misalnya %, ‰
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -489,7 +488,7 @@ Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikut
 :::note{title=Deskripsi}
 Kanal tempat metrik dipetakan
 
-\- size: metrik dipetakan ke kanal ukuran, digunakan untuk menampilkan area atau ukuran pada chart seperti Treemap dan Sunburst.
+\- size: metrik dipetakan ke kanal ukuran, digunakan untuk menampilkan area atau ukuran pada diagram seperti Treemap dan Sunburst.
 
 \- label: metrik dipetakan ke kanal label
 
@@ -552,7 +551,7 @@ Nilai paginasi saat ini; menentukan nilai yang digunakan untuk menentukan halama
 
 ## backgroundColor
 
-**Type:** `BackgroundWarna`
+**Type:** `BackgroundColor`
 
 :::note{title=Deskripsi}
 Warna latar belakang chart
@@ -566,7 +565,7 @@ Warna latar dapat berupa string warna (misalnya 'red', 'blue'), atau nilai hex, 
 
 ## color
 
-**Type:** `Warna | undefined`
+**Type:** `Color | undefined`
 
 :::note{title=Deskripsi}
 Warna
@@ -751,7 +750,7 @@ Rasio format angka, tidak boleh 0
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -766,7 +765,7 @@ Simbol format angka, misalnya %, ‰
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -1204,7 +1203,7 @@ Apakah tooltip diaktifkan
 
 ## theme
 
-**Type:** `Tema | undefined`
+**Type:** `Theme | undefined`
 
 :::note{title=Deskripsi}
 Tema chart; tema memiliki prioritas lebih rendah dan mencakup konfigurasi umum untuk semua tipe chart serta konfigurasi khusus untuk kategori chart tertentu

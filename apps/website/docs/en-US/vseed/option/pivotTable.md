@@ -1,42 +1,42 @@
 # PivotTable
 
 :::info{title=Recommended}
-- Recommended field configuration: `1` measure(s), `1` dimension(s)
-- Supports Data Reshape: at least `1` measure(s), `0` dimension(s)
+- Recommended field configuration: `1` measure, `1` dimension
+- Supports data reshaping: at least `1` measure, `0` dimensions
 :::
 
 :::info{title=Encoding Mapping}
-The Pivot Table supports the following visual channels:
+The pivot table supports the following visual channels:
 
-`row`    : Row dimensions, supports `multiple dimensions`, groups data by dimension values on rows.
+`row`    : row dimension, supports `multiple dimensions`, groups data by dimension values on rows
 
-`column` : Column dimensions, supports `multiple dimensions`, groups data by dimension values on columns.
+`column` : column dimension, supports `multiple dimensions`, groups data by dimension values on columns
 
-`detail` : Detail channel, supports `multiple measures`, displays measure values within cells.
+`detail` : detail channel, supports `multiple measures`, displays measure values in cells
 
 :::
 
 :::note{title=Description}
-Pivot Table, suitable for multi-dimensional data cross-analysis scenarios, allowing flexible configuration of row/column dimensions and measure calculation methods.
+Pivot table, suitable for multi-dimensional data cross-analysis scenarios, with flexible configuration of row and column dimensions and measure calculation methods.
 
 Applicable scenarios:
 
-- Complex multi-dimensional statistical analysis.
-- Data drilling and aggregated display.
-- Business report generation and data exploration.
+- Complex multi-dimensional statistical analysis
+- Data drill-down and aggregated display
+- Business report generation and data exploration
 
 :::
 
 :::warning{title=Warning}
 Data requirements:
 
-- At least 1 row dimension, 1 column dimension, or 1 measure.
-- Data must be pre-aggregated.
-- Data must be groupable.
+- At least 1 row dimension, or 1 column dimension, or 1 measure
+- Data must already be aggregated
+- Data can be grouped
 
 Features enabled by default:
 
-- Row/column sorting, data filtering, aggregation/subtotal calculation, and subtotal/grand total display are enabled by default.
+- Row and column sorting, data filtering, aggregate calculation, subtotals, and grand totals are enabled by default
 
 :::
 
@@ -46,7 +46,7 @@ Features enabled by default:
 **Type:** `"pivotTable"`
 
 :::note{title=Description}
-Pivot Table, suitable for multi-dimensional data cross-analysis scenarios.
+Pivot table, suitable for multi-dimensional data cross-analysis scenarios
 
 :::
 
@@ -61,7 +61,7 @@ Pivot Table, suitable for multi-dimensional data cross-analysis scenarios.
 **Type:** `Record[]`
 
 :::note{title=Description}
-Dataset compliant with the TidyData specification and already aggregated, defining the chart's data source and structure. User input does not require pre-processing; VSeed features powerful Data Reshape capabilities that handle formatting automatically. Pivot Table data is ultimately converted into a corresponding tree structure, so no manual data manipulation is required.
+A TidyData-compliant, already aggregated dataset used to define the chart data source and structure. User input does not need any processing; VSeed has powerful data reshaping capabilities and performs data reshaping automatically. Pivot table data is ultimately converted into the corresponding tree structure, so users do not need to process the data manually.
 
 :::
 
@@ -76,7 +76,7 @@ Dataset compliant with the TidyData specification and already aggregated, defini
 **Type:** `TableDimension[] | undefined`
 
 :::note{title=Description}
-Row and column dimensions for the Pivot Table. Data is automatically processed into a tree structure and mapped to row and column axes.
+Row and column dimensions of a pivot table. Data is automatically processed into a tree structure and mapped to row and column axes.
 
 :::
 
@@ -142,7 +142,7 @@ Channel to which the dimension is mapped:
 **Type:** `TableMeasure[] | undefined`
 
 :::note{title=Description}
-Pivot Table supports multiple dimension measures.
+Pivot table supports multiple dimension measures.
 
 :::
 
@@ -185,7 +185,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=zh-CN: 749740.264 → 74.45万
 
 - locale=en-US: 749740.264 → 744.5K
 
@@ -222,7 +222,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -237,7 +237,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -357,7 +357,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -372,7 +372,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-- 100000 converts to 10W, ratio:10000, symbol:"W"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
 - 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -1175,7 +1175,7 @@ true
 **Type:** `PivotTableTotals | undefined`
 
 :::note{title=Description}
-Grand total and subtotal configuration for the Pivot Table.
+Grand total and subtotal configuration for the pivot table.
 
 :::
 

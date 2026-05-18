@@ -1,42 +1,42 @@
 # PivotTable
 
-:::info{title=Direkomendasikan}
+:::info{title=Rekomendasi}
 - Konfigurasi field yang direkomendasikan: `1` metrik, `1` dimensi
-- Mendukung Data Reshape: minimal `1` metrik, `0` dimensi
+- Mendukung reshape data: minimal `1` metrik, `0` dimensi
 :::
 
-:::info{title=Pemetaan Encoding}
-Pivot Table mendukung kanal visual berikut:
+:::info{title=Pemetaan encoding}
+Tabel pivot mendukung kanal visual berikut:
 
-`row`    : dimensi baris, mendukung `beberapa dimensi`, mengelompokkan data menurut nilai dimensi pada baris.
+`row`    : dimensi baris, mendukung `beberapa dimensi`, mengelompokkan data berdasarkan nilai dimensi pada baris
 
-`column` : dimensi kolom, mendukung `beberapa dimensi`, mengelompokkan data menurut nilai dimensi pada kolom.
+`column` : dimensi kolom, mendukung `beberapa dimensi`, mengelompokkan data berdasarkan nilai dimensi pada kolom
 
-`detail` : kanal detail, mendukung `beberapa metrik`, menampilkan nilai metrik di dalam sel.
+`detail` : kanal detail, mendukung `beberapa metrik`, menampilkan nilai metrik di dalam sel
 
 :::
 
 :::note{title=Deskripsi}
-Pivot Table cocok untuk analisis silang data multidimensi, dengan konfigurasi dimensi baris/kolom dan metode perhitungan metrik yang fleksibel.
+Tabel pivot cocok untuk skenario analisis silang data multidimensi, dengan konfigurasi dimensi baris, dimensi kolom, dan metode perhitungan metrik yang fleksibel.
 
-Skenario yang sesuai:
+Skenario penggunaan:
 
-- Analisis statistik multidimensi yang kompleks.
-- Drill-down data dan tampilan agregat.
-- Pembuatan laporan bisnis dan eksplorasi data.
+- Analisis statistik data multidimensi yang kompleks
+- Drill-down data dan tampilan agregat
+- Pembuatan laporan bisnis dan eksplorasi data
 
 :::
 
 :::warning{title=Warning}
-Persyaratan data:
+Kebutuhan data:
 
-- Minimal 1 dimensi baris, 1 dimensi kolom, atau 1 metrik.
-- Data harus sudah diagregasi.
-- Data harus dapat dikelompokkan.
+- Minimal 1 dimensi baris atau 1 dimensi kolom atau 1 metrik
+- Data harus sudah diagregasi
+- Data dapat dikelompokkan
 
 Fitur yang aktif secara default:
 
-- Pengurutan baris/kolom, filter data, perhitungan agregasi/subtotal, serta tampilan subtotal/grand total aktif secara default.
+- Pengurutan baris dan kolom, filter data, perhitungan agregasi, subtotal, dan total keseluruhan aktif secara default
 
 :::
 
@@ -46,7 +46,7 @@ Fitur yang aktif secara default:
 **Type:** `"pivotTable"`
 
 :::note{title=Deskripsi}
-Pivot Table cocok untuk skenario analisis silang data multidimensi.
+Tabel pivot cocok untuk skenario analisis silang data multidimensi
 
 :::
 
@@ -61,7 +61,7 @@ Pivot Table cocok untuk skenario analisis silang data multidimensi.
 **Type:** `Record[]`
 
 :::note{title=Deskripsi}
-Dataset yang sesuai spesifikasi TidyData dan sudah teragregasi, digunakan untuk menentukan sumber dan struktur data chart. Input pengguna tidak memerlukan praproses; VSeed memiliki kemampuan Data Reshape yang kuat untuk menangani pemformatan secara otomatis. Data Pivot Table akhirnya dikonversi menjadi struktur tree yang sesuai, sehingga tidak perlu manipulasi data manual.
+Dataset yang telah diagregasi dan sesuai spesifikasi TidyData, digunakan untuk menentukan sumber serta struktur data diagram. Dataset masukan pengguna tidak perlu diproses lagi; VSeed memiliki kemampuan reshape data yang kuat dan akan melakukan reshape secara otomatis. Data tabel pivot akhirnya dikonversi menjadi struktur pohon yang sesuai, sehingga pengguna tidak perlu memproses data secara manual.
 
 :::
 
@@ -76,7 +76,7 @@ Dataset yang sesuai spesifikasi TidyData dan sudah teragregasi, digunakan untuk 
 **Type:** `TableDimension[] | undefined`
 
 :::note{title=Deskripsi}
-Dimensi baris dan kolom untuk Pivot Table. Data otomatis diproses menjadi struktur tree dan dipetakan ke sumbu baris dan kolom.
+Dimensi baris dan dimensi kolom pada tabel pivot. Data otomatis diproses menjadi struktur pohon dan dipetakan ke sumbu baris dan kolom.
 
 :::
 
@@ -142,7 +142,7 @@ Kanal tempat dimensi dipetakan:
 **Type:** `TableMeasure[] | undefined`
 
 :::note{title=Deskripsi}
-Pivot Table mendukung beberapa metrik dimensi.
+Tabel pivot mendukung beberapa metrik lintas dimensi.
 
 :::
 
@@ -179,13 +179,13 @@ Pemformatan angka otomatis, aktif secara default, prioritas tertinggi.
 
 Saat autoFormat=true, semua konfigurasi numFormat akan ditimpa.
 
-Saat diaktifkan, label data chart dan tooltip otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale.
+Saat diaktifkan, label data diagram dan tooltip otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale.
 
 Aturan format: angka desimal dengan compact notation aktif, minimal 0 digit desimal, maksimal 2 digit desimal, pembulatan otomatis, menggunakan implementasi Intl.NumberFormat browser.
 
 Contoh:
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=zh-CN: 749740.264 → 74.45万
 
 - locale=en-US: 749740.264 → 744.5K
 
@@ -222,8 +222,8 @@ Rasio format angka, tidak boleh 0
 :::
 
 **Contoh**
-- 100000 dikonversi menjadi 10W , ratio:10000, symbol:"W"
-- 100000 dikonversi menjadi 10K , ratio:1000, symbol:"K"
+- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -237,8 +237,8 @@ Simbol format angka, misalnya %, ‰
 :::
 
 **Contoh**
-- 100000 dikonversi menjadi 10W , ratio:10000, symbol:"W"
-- 100000 dikonversi menjadi 10K , ratio:1000, symbol:"K"
+- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -357,8 +357,8 @@ Rasio format angka, tidak boleh 0
 :::
 
 **Contoh**
-- 100000 dikonversi menjadi 10W , ratio:10000, symbol:"W"
-- 100000 dikonversi menjadi 10K , ratio:1000, symbol:"K"
+- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -372,8 +372,8 @@ Simbol format angka, misalnya %, ‰
 :::
 
 **Contoh**
-- 100000 dikonversi menjadi 10W , ratio:10000, symbol:"W"
-- 100000 dikonversi menjadi 10K , ratio:1000, symbol:"K"
+- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
+- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -484,12 +484,12 @@ Kanal tempat metrik dipetakan:
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Dalam konfigurasi metrik datar, membangun struktur metrik seperti tree. parentId menunjuk ke ID grup metrik induk untuk membangun hierarki.
+Dalam konfigurasi metrik datar, membangun struktur metrik berbentuk pohon. parentId menunjuk ke ID grup metrik induk untuk membangun hierarki.
 
 :::
 
 :::tip{title=Tip}
-Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree metrik dengan children; Opsi 2 menyediakan daftar metrik datar dengan parentId. Kedua cara ini tidak dapat digunakan bersamaan.
+Ada dua cara mengonfigurasi pohon metrik: Opsi 1 langsung mengonfigurasi pohon metrik dengan children; Opsi 2 menyediakan daftar metrik datar dengan parentId. Kedua cara ini tidak dapat digunakan bersamaan.
 
 :::
 
@@ -1175,7 +1175,7 @@ true
 **Type:** `PivotTableTotals | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi grand total dan subtotal untuk Pivot Table.
+Konfigurasi total keseluruhan dan subtotal untuk Tabel pivot.
 
 :::
 
@@ -1190,7 +1190,7 @@ Konfigurasi grand total dan subtotal untuk Pivot Table.
 **Type:** `RowOrColumnTotalConfig | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi grand total dan subtotal untuk baris.
+Konfigurasi total keseluruhan dan subtotal untuk baris.
 
 :::
 
@@ -1200,7 +1200,7 @@ Konfigurasi grand total dan subtotal untuk baris.
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-Apakah menampilkan grand total (baris/kolom total).
+Apakah menampilkan total keseluruhan (baris/kolom total).
 
 :::
 
@@ -1232,7 +1232,7 @@ Dimensi untuk subtotal; mengelompokkan subtotal berdasarkan dimensi ini.
 **Type:** `RowOrColumnTotalConfig | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi grand total dan subtotal untuk kolom.
+Konfigurasi total keseluruhan dan subtotal untuk kolom.
 
 :::
 
@@ -1242,7 +1242,7 @@ Konfigurasi grand total dan subtotal untuk kolom.
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-Apakah menampilkan grand total (baris/kolom total).
+Apakah menampilkan total keseluruhan (baris/kolom total).
 
 :::
 

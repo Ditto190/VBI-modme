@@ -3,33 +3,33 @@
 :::info{title=Empfohlen}
 - Empfohlene Feldkonfiguration: `1` Kennzahl, `1` Dimension
 
-\- Unterstützt Data Reshape: mindestens `1` Kennzahl, `0` Dimensionen
+\- Unterstützt Datenumformung: mindestens `1` Kennzahl, `0` Dimensionen
 
 :::
 
 :::info{title=Encoding-Zuordnung}
-Das Funnel-Diagramm unterstützt die folgenden visuellen Kanäle:
+Das Trichterdiagramm unterstützt die folgenden visuellen Kanäle:
 
-`size`   : Größenkanal, unterstützt `mehrere Kennzahlen`, Zuordnung zur Funnel-Breite nach Kennzahlwert
+`size`   : Größenkanal, unterstützt `mehrere Kennzahlen` und ordnet Kennzahlenwerte der Trichterbreite zu
 
-`detail` : Detailkanal, unterstützt `mehrere Dimensionen`, um innerhalb derselben Farbserie feiner granulare Daten anzuzeigen
+`detail` : Detailkanal, unterstützt `mehrere Dimensionen` und wird verwendet, um feinere Daten innerhalb derselben Farbserie darzustellen
 
-`color`  : Farbkanal, unterstützt `mehrere Dimensionen` oder `eine Kennzahl`; Dimensionsfarben unterscheiden Datenreihen, Kennzahlfarben bilden Kennzahlwerte linear auf Grafikfarben ab
+`color`  : Farbkanal, unterstützt `mehrere Dimensionen` oder `eine Kennzahl`. Dimensionsfarben unterscheiden Datenserien, Kennzahlenfarben ordnen Kennzahlenwerte linear grafischen Farben zu
 
-`tooltip`: Tooltip-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen`, wird beim Hover über einen Datenpunkt angezeigt
+`tooltip`: Tooltip-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen` und wird angezeigt, wenn der Mauszeiger über einem Datenpunkt liegt
 
-`label`  : Label-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen`, zeigt Datenlabels auf Datenpunkten an
+`label`  : Label-Kanal, unterstützt `mehrere Dimensionen` und `mehrere Kennzahlen` und zeigt Datenlabels auf Datenpunkten an
 
 :::
 
 :::note{title=Beschreibung}
-Ein Funnel-Diagramm dient zur Darstellung der Anteilsbeziehungen eindimensionaler Daten
+Trichterdiagramm, verwendet zur Darstellung des Anteilsverhältnisses von Daten einer einzelnen Dimension.
 
-Geeignete Szenarien:
+Anwendungsszenarien:
 
-Geeignete Szenarien für Funnel-Diagramme:
+Anwendungsszenarien für Trichterdiagramme:
 
-\- Geeignet zur Analyse von Prozessen mit mehreren aufeinanderfolgenden, standardisierten Schritten und zur klaren Darstellung von Datenverlust oder Konversion in jedem Schritt
+\- Geeignet zur Analyse von Prozessen mit mehreren aufeinanderfolgenden, standardisierten Schritten und zur klaren Darstellung von Datenverlust oder Konversion in jeder Phase
 
 :::
 
@@ -38,13 +38,13 @@ Datenanforderungen:
 
 \- Mindestens 1 numerisches Feld (Kennzahl)
 
-\- Alle Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt
+\- Alle Dimensionen werden mit Kennzahlennamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt
 
 \- Alle Kennzahlen werden automatisch zu einer Kennzahl zusammengeführt
 
 Standardmäßig aktivierte Funktionen:
 
-\- Legende, Datenlabels, Tooltips und Anteilsberechnung sind standardmäßig aktiviert
+\- Legende, Datenlabels, Tooltips und Prozentberechnung sind standardmäßig aktiviert
 
 :::
 
@@ -54,11 +54,11 @@ Standardmäßig aktivierte Funktionen:
 **Type:** `"funnel"`
 
 :::note{title=Beschreibung}
-Funnel-Diagramm
+Trichterdiagramm
 
 
 
-Funnel-Diagramm, stellt Anteilsbeziehungen eindimensionaler Daten dar
+Trichterdiagramm, das das Anteilsverhältnis von Daten einer einzelnen Dimension darstellt.
 
 :::
 
@@ -73,11 +73,7 @@ Funnel-Diagramm, stellt Anteilsbeziehungen eindimensionaler Daten dar
 **Type:** `Record[]`
 
 :::note{title=Beschreibung}
-Ein voraggregierter, TidyData-konformer Datensatz, der Datenquelle und Struktur des Diagramms definiert. Benutzer müssen Eingabedaten nicht manuell verarbeiten; die leistungsfähige Data-Reshape-Funktion von VSeed übernimmt dies automatisch. Daten des Flächendiagramms werden letztlich in 2 Dimensionen und 1 Kennzahl umgeformt.
-
-
-
-Ein bereits aggregierter Datensatz, der der TidyData-Spezifikation entspricht und Datenquelle sowie Struktur des Diagramms definiert. Der vom Benutzer eingegebene Datensatz muss nicht weiter verarbeitet werden. VSeed verfügt über leistungsfähige Data-Reshape-Funktionen und formt die Daten automatisch um. Die Daten des Funnel-Diagramms werden schließlich in 1 Dimension und 1 Kennzahl umgewandelt.
+Datensatz. Ein bereits aggregierter Datensatz nach TidyData-Spezifikation, der Datenquelle und Struktur des Diagramms definiert. Benutzereingaben müssen nicht vorverarbeitet werden; VSeed verfügt über leistungsfähige Datenumformungsfunktionen und formt die Daten automatisch um. Die Daten des Trichterdiagramms werden schließlich in 1 Dimension und 1 Kennzahl umgewandelt.
 
 :::
 
@@ -92,11 +88,11 @@ Ein bereits aggregierter Datensatz, der der TidyData-Spezifikation entspricht un
 **Type:** `PieDimension[] | undefined`
 
 :::note{title=Beschreibung}
-Die erste Dimension wird der X-Achse zugeordnet; die verbleibenden Dimensionen werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zusammengeführt und als Legendeneinträge angezeigt.
+Dimensionen
 
 
 
-Alle Dimensionen des Funnel-Diagramms werden mit Kennzahlnamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt
+Bei Trichterdiagrammen werden alle Dimensionen mit Kennzahlennamen (wenn mehrere Kennzahlen vorhanden sind) zu einer Dimension zusammengeführt und als Legendeneinträge angezeigt.
 
 :::
 
@@ -174,7 +170,7 @@ Kennzahlen
 
 
 
-Alle Kennzahlen des Funnel-Diagramms werden automatisch zu einer Kennzahl zusammengeführt. Bei mehreren Kennzahlen werden die Kennzahlnamen mit den übrigen Dimensionen kombiniert und als Legendeneinträge angezeigt.
+Bei Trichterdiagrammen werden alle Kennzahlen automatisch zu einer Kennzahl zusammengeführt. Wenn mehrere Kennzahlen vorhanden sind, werden die Kennzahlennamen mit den übrigen Dimensionen zusammengeführt und als Legendeneinträge angezeigt.
 
 :::
 
@@ -240,8 +236,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -249,12 +244,11 @@ Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wiss
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Verhältnis der Zahlenformatierung, darf nicht 0 sein
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -264,12 +258,11 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Symbol der Zahlenformatierung, z. B. %, ‰
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -279,8 +272,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-Tausendertrennzeichen für die Zahlenformatierung
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -289,7 +281,6 @@ Tausendertrennzeichen für die Zahlenformatierung
 
 :::note{title=Beschreibung}
 Suffix der Zahlenformatierung
-
 :::
 
 #### prefix
@@ -298,7 +289,6 @@ Suffix der Zahlenformatierung
 
 :::note{title=Beschreibung}
 Präfix der Zahlenformatierung
-
 :::
 
 #### fractionDigits
@@ -306,17 +296,16 @@ Präfix der Zahlenformatierung
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und maximumFractionDigits von Intl.NumberFormat im Browser; niedrigere Priorität als significantDigits
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -325,19 +314,18 @@ Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDigits und maximumSignificantDigits von Intl.NumberFormat im Browser; höhere Priorität als fractionDigits
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
-\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
-\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
-\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
-\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1000, significantDigits:1
+\- 1234.5678 wird zu 1200, significantDigits:2
+\- 1234.5678 wird zu 1230, significantDigits:3
+\- 1234.5678 wird zu 1234, significantDigits:4
+\- 1234.5678 wird zu 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -346,13 +334,12 @@ Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDi
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingPriority
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 wird zu 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -361,8 +348,7 @@ Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auc
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingMode
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### format
@@ -375,8 +361,7 @@ Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers u
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -384,12 +369,11 @@ Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wiss
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Verhältnis der Zahlenformatierung, darf nicht 0 sein
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -399,12 +383,11 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Symbol der Zahlenformatierung, z. B. %, ‰
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -414,8 +397,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-Tausendertrennzeichen für die Zahlenformatierung
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -424,7 +406,6 @@ Tausendertrennzeichen für die Zahlenformatierung
 
 :::note{title=Beschreibung}
 Suffix der Zahlenformatierung
-
 :::
 
 #### prefix
@@ -433,7 +414,6 @@ Suffix der Zahlenformatierung
 
 :::note{title=Beschreibung}
 Präfix der Zahlenformatierung
-
 :::
 
 #### fractionDigits
@@ -441,17 +421,16 @@ Präfix der Zahlenformatierung
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und maximumFractionDigits von Intl.NumberFormat im Browser; niedrigere Priorität als significantDigits
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1235 konvertiert, fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -460,19 +439,18 @@ Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDigits und maximumSignificantDigits von Intl.NumberFormat im Browser; höhere Priorität als fractionDigits
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1000 konvertiert, significantDigits:1
-\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
-\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
-\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
-\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1000, significantDigits:1
+\- 1234.5678 wird zu 1200, significantDigits:2
+\- 1234.5678 wird zu 1230, significantDigits:3
+\- 1234.5678 wird zu 1234, significantDigits:4
+\- 1234.5678 wird zu 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -481,13 +459,12 @@ Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDi
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingPriority
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 wird zu 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -496,8 +473,7 @@ Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auc
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingMode
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### encoding
@@ -507,11 +483,11 @@ Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers u
 :::note{title=Beschreibung}
 Kanal, dem die Kennzahl zugeordnet wird
 
-\- size: Größe, der die Kennzahl zugeordnet wird
-
-\- color: Kennzahl wird dem Farbkanal zugeordnet
-
 \- label: Kennzahl, die dem Beschriftungskanal zugeordnet wird
+
+\- color: Kennzahl, die dem Farbkanal zugeordnet wird
+
+\- label: Kennzahl, die dem Label-Kanal zugeordnet wird
 
 \- tooltip: Kennzahl, die dem Tooltip-Kanal zugeordnet wird
 
@@ -527,7 +503,7 @@ In flacher Kennzahlkonfiguration wird eine baumförmige Kennzahlgruppe aufgebaut
 :::
 
 :::tip{title=Tip}
-Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfiguriert den Kennzahlbaum direkt mit children; Option 2 konfiguriert eine flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
+Es gibt zwei Formen der Kennzahlbaum-Konfiguration: direkt einen Kennzahlbaum mit children konfigurieren oder eine flache Kennzahlliste mit parentId konfigurieren. Beide Formen können nicht gleichzeitig verwendet werden.
 
 :::
 
@@ -537,7 +513,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `Page | undefined`
 
 :::note{title=Beschreibung}
-
+Paginierungskonfiguration
 
 :::
 
@@ -547,8 +523,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Paginierungsfeld; gibt den Feldnamen für die Paginierung an und muss eine Dimension sein
 :::
 
 ### currentValue
@@ -556,8 +531,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Aktueller Paginierungswert; gibt den Wert zur Bestimmung der aktuellen Seite an
 :::
 
 **Beispiel**
@@ -571,12 +545,11 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `BackgroundColor`
 
 :::note{title=Beschreibung}
+Hintergrundfarbe des Diagramms
 
 
 
-
-
-
+Die Hintergrundfarbe kann ein Farbstring sein (z. B. 'red', 'blue') oder ein hex-, rgb- oder rgba-Wert (z. B. '#ff0000', 'rgba(255,0,0,0.5)')
 :::
 
 
@@ -585,7 +558,7 @@ Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfigu
 **Type:** `Color | undefined`
 
 :::note{title=Beschreibung}
-Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagramms
+Konfiguration linearer Verlaufsfarben, verwendet zur Definition des Farbschemas des Diagramms
 
 :::
 
@@ -595,8 +568,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Diskretes Farbschema zur Definition der Farben verschiedener Elemente im Diagramm
 :::
 
 **Beispiel**
@@ -609,8 +581,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Lineares Farbverlaufsschema zur Definition der Farben verschiedener Elemente im Diagramm
 :::
 
 **Beispiel**
@@ -623,8 +594,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbzuordnung, ordnet Datenwerte konkreten Farben zu
 :::
 
 **Beispiel**
@@ -640,8 +610,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe positiver Werte im Diagramm
 :::
 
 ### negativeColor
@@ -649,8 +618,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe negativer Werte im Diagramm
 :::
 
 
@@ -659,7 +627,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `Label | undefined`
 
 :::note{title=Beschreibung}
-
+Label-Konfiguration zur Definition der Datenlabels im Diagramm, einschließlich Position, Format und Stil.
 
 :::
 
@@ -669,8 +637,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungen aktiviert sind
 :::
 
 ### wrap
@@ -678,8 +645,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungen umbrochen werden
 :::
 
 ### showValue
@@ -687,12 +653,11 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Kennzahlwerte anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Risiko widersprüchlicher Werte, da alle zeichnungsbezogenen Kennzahlen durch `foldMeasures` verarbeitet und zu einer Kennzahl zusammengeführt werden, die einen Datenpunkt repräsentiert.
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### showValuePercent
@@ -700,12 +665,11 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Kennzahlwerte als Prozentsatz anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Risiko widersprüchlicher Werte, da alle zeichnungsbezogenen Kennzahlen durch `foldMeasures` verarbeitet und zu einer Kennzahl zusammengeführt werden, die einen Datenpunkt repräsentiert.
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### showDimension
@@ -713,12 +677,11 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Dimensionslabels anzeigen
 
+Zeigt alle Dimensionslabels an
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### autoFormat
@@ -726,8 +689,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungswerte automatisch formatiert werden. Wenn autoFormat true ist, wird numFormat ignoriert
 :::
 
 ### numFormat
@@ -735,8 +697,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-
-
+Formatierungskonfiguration für Beschriftungswerte. Sie wird mit `format` in `measure` zusammengeführt; `format` in `measure` hat höhere Priorität. numFormat hat niedrigere Priorität als autoFormat
 :::
 
 
@@ -745,8 +706,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -754,13 +714,12 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
-
 
 
 
@@ -769,13 +728,12 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
-
 
 
 
@@ -784,8 +742,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -793,8 +750,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Suffix der Zahlenformatierung
 :::
 
 #### prefix
@@ -802,8 +758,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Präfix der Zahlenformatierung
 :::
 
 #### fractionDigits
@@ -811,17 +766,16 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1234.6 konvertiert, fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.57 konvertiert, fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1230.568 konvertiert, fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.5678 konvertiert, fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.56780 konvertiert, fractionDigits:5 (roundingMode:halfCeil)
-
+\- 1234.5678 wird zu 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -830,19 +784,18 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1200 konvertiert, significantDigits:2
-\- 1234.5678 wird zu 1230 konvertiert, significantDigits:3
-\- 1234.5678 wird zu 1234 konvertiert, significantDigits:4
-\- 1234.5678 wird zu 1234.6 konvertiert, significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.57 konvertiert, significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.568 konvertiert, significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:8 (roundingMode:halfCeil)
-
+\- 1234.5678 wird zu 1000, significantDigits:1
+\- 1234.5678 wird zu 1200, significantDigits:2
+\- 1234.5678 wird zu 1230, significantDigits:3
+\- 1234.5678 wird zu 1234, significantDigits:4
+\- 1234.5678 wird zu 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 wird zu 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -851,13 +804,12 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
-\- 1234.5678 wird zu 1234.5678 konvertiert, significantDigits:3 (roundingPriority:morePrecision)
-
+\- 1234.5678 wird zu 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 wird zu 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -866,8 +818,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### labelFontSize
@@ -875,8 +826,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Beschriftung
 :::
 
 ### labelFontWeight
@@ -884,8 +834,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Beschriftung
 :::
 
 ### labelBackgroundColor
@@ -893,8 +842,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Hintergrundfarbe der Beschriftung
 :::
 
 ### labelStroke
@@ -902,8 +850,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe der Beschriftung
 :::
 
 ### labelColor
@@ -911,8 +858,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Beschriftung
 :::
 
 ### labelColorSmartInvert
@@ -920,8 +866,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Schriftfarbe der Beschriftung automatisch anhand der Markierungsfarbe invertiert wird
 :::
 
 ### labelPosition
@@ -929,8 +874,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Position der Beschriftung
 :::
 
 ### labelOverlap
@@ -938,8 +882,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungsüberlappungen vermieden werden
 :::
 
 ### selector
@@ -947,8 +890,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschriftungsfilter. Standardmäßig ist die Bedingungsverknüpfung zwischen selectors OR
 :::
 
 
@@ -957,8 +899,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Dimensionsfeld, die id eines Eintrags in dimensions
 :::
 
 #### operator
@@ -966,12 +907,11 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
-
-
-
-
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 :::
 
 #### op
@@ -979,14 +919,13 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 
-
-
-
-
-
+identisch mit operator
 :::
 
 #### value
@@ -994,8 +933,7 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wählt Werte des Dimensionsfelds in Datenpunkten aus. Arrays werden unterstützt
 :::
 
 ### dynamicFilter
@@ -1003,38 +941,25 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von AI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik durch AI-generierten JavaScript-Code
 
+Kernfunktionen:
 
+\- Unterstützt beliebig komplexe Datenfilterbedingungen
 
+\- Verwendet eingebaute Hilfsfunktionen für Datenoperationen
 
+\- Sichere Ausführung im Browser (Web-Worker-Sandbox)
 
+Umgebungsanforderung: nur in Browserumgebungen unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden. dynamicFilter hat höhere Priorität
 
+Dynamische Filterkonfiguration für Diagramme
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Filtert Diagramm-Markierungen (Balken, Punkte usw.) mit AI-generiertem JavaScript-Code
 :::
 
 
@@ -1047,14 +972,13 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
-"Balken mit Umsatz über 1000 hervorheben"
+\- Unterstützt beliebig komplexe Datenfilterbedingungen
 
-"Balken mit der höchsten Gewinnmarge je Region hervorheben"
+\- Verwendet integrierte Hilfsfunktionen für Datenoperationen
 
 
 
@@ -1063,20 +987,17 @@ Konfiguration linearer Verlaufsfarben zur Definition des Farbschemas des Diagram
 **Type:** `string`
 
 :::note{title=Beschreibung}
+AI-generierter JavaScript-Filtercode
 
+\- Es dürfen nur eingebaute Hilfsfunktionen verwendet werden (Zugriff über _ oder R)
 
+\- Eingabeparameter: data (Array), jedes item enthält das Feld __row_index als Zeilennummer
 
+\- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+\- __row_index ist die Zeilennummer des ursprünglichen Datenpunkts, field ist das hervorzuhebende Feld
 
-
-
-
-
-
-
-
-
-
+\- Verboten: eval, Function, asynchrone Operationen, DOM-APIs, Netzwerkanfragen
 :::
 
 **Beispiel**
@@ -1124,8 +1045,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback, wenn Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -1134,8 +1054,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Dimensionsfeld, die id eines Eintrags in dimensions
 :::
 
 ##### operator
@@ -1143,12 +1062,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
-
-
-
-
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 :::
 
 ##### op
@@ -1156,14 +1074,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 
-
-
-
-
-
+identisch mit operator
 :::
 
 ##### value
@@ -1171,8 +1088,7 @@ _.map(filtered, item => [
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wählt Werte des Dimensionsfelds in Datenpunkten aus. Arrays werden unterstützt
 :::
 
 #### result
@@ -1180,12 +1096,9 @@ _.map(filtered, item => [
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des dynamischen Filters (Laufzeitfeld)
 
-
-
-
-
-
+Wird in prepare() geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -1207,7 +1120,7 @@ _.map(filtered, item => [
 **Type:** `ColorLegend | undefined`
 
 :::note{title=Beschreibung}
-Konfiguration der Farblegende; definiert Legendenposition, Format, Stil usw.
+Konfiguration der Farblegende, einschließlich Position, Format, Stil usw.
 
 :::
 
@@ -1217,12 +1130,11 @@ Konfiguration der Farblegende; definiert Legendenposition, Format, Stil usw.
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenposition
 :::
 
 **Beispiel**
-
+position: 'rightTop'
 
 
 
@@ -1231,8 +1143,7 @@ Konfiguration der Farblegende; definiert Legendenposition, Format, Stil usw.
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Legende aktiviert ist
 :::
 
 **Beispiel**
@@ -1245,8 +1156,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Legende
 :::
 
 ### labelFontColor
@@ -1254,8 +1164,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Legende
 :::
 
 ### labelFontSize
@@ -1263,12 +1172,11 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Legende
 :::
 
 **Beispiel**
-
+labelFontSize: 10
 
 
 
@@ -1277,12 +1185,11 @@ enable: true
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Legende
 :::
 
 **Beispiel**
-
+labelFontWeight: 400
 
 
 
@@ -1314,8 +1221,7 @@ Ob die Brush-Auswahl aktiviert wird
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Tooltip-Informationen aktiviert sind
 :::
 
 
@@ -1342,8 +1248,7 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Brush-Auswahl aktiviert ist
 :::
 
 ### brushType
@@ -1351,18 +1256,17 @@ Brush-Auswahlmodus: einzeln oder mehrfach
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Beschreibung}
+Brush-Typ
 
+Definiert Form und Richtung der Brush-Auswahl.
 
+\- `rect`: rechteckige Brush-Auswahl, wählt gleichzeitig in X- und Y-Richtung aus
 
+\- `polygon`: polygonale Brush-Auswahl, zeichnet durch Klicken mehrerer Punkte ein beliebiges Polygon
 
+\- `x`: Brush-Auswahl in X-Achsenrichtung, nur in X-Richtung; Y-Richtung bleibt uneingeschränkt
 
-
-
-
-
-
-
-
+\- `y`: Brush-Auswahl in Y-Achsenrichtung, nur in Y-Richtung; X-Richtung bleibt uneingeschränkt
 :::
 
 ### brushMode
@@ -1385,8 +1289,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Brush-Bereich nach dem Ende der Auswahl gelöscht wird
 :::
 
 ### inBrushStyle
@@ -1394,12 +1297,9 @@ Deckkraft of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Beschreibung}
+Stil für Daten innerhalb des Brush-Bereichs
 
-
-
-
-
-
+Definiert den Stil ausgewählter Datenpunkte
 :::
 
 
@@ -1408,12 +1308,9 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Deckkraft
 
-
-
-
-
-
+Deckkraft ausgewählter Datenpunkte, Wertebereich 0 bis 1
 :::
 
 #### stroke
@@ -1421,8 +1318,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe
 :::
 
 #### lineWidth
@@ -1430,8 +1326,7 @@ Deckkraft of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichbreite
 :::
 
 ### outOfBrushStyle
@@ -1453,7 +1348,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 
 
 
@@ -1466,8 +1361,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe
 :::
 
 #### lineWidth
@@ -1475,7 +1369,7 @@ X-Achse, Kategorieachse, X-Achsenkonfiguration; definiert die X-Achse des Diagra
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
+Strichbreite
 :::
 
 

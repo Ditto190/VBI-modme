@@ -38,23 +38,23 @@
 | [add-having-filter](./havingFilter#add-having-filter) | 地域でグループ化した後、売上が 100 万を超える高業績地域を絞り込む | - |
 | [add-multiple-having-filter](./havingFilter#add-multiple-having-filter) | 複数の Having 条件をチェーン追加し、売上と利益が高い地域を絞り込む | - |
 | [clear-having-filter](./havingFilter#clear-having-filter) | すべての Having フィルター条件をクリアし、全量のグループ集計結果を表示 | - |
-| [having-array-value-with-in-operator](./havingFilter#having-array-value-with-in-operator) | Having filter with array value that triggers 'in' operator conversion | - |
-| [having-array-value-with-not-in-operator](./havingFilter#having-array-value-with-not-in-operator) | Having filter with array value that triggers 'not in' operator conversion | - |
-| [having-clear-and-rebuild](./havingFilter#having-clear-and-rebuild) | Clear existing having conditions and rebuild new grouped filters, simulating a user resetting and reconfiguring the filter panel | - |
-| [having-deeply-nested-groups](./havingFilter#having-deeply-nested-groups) | Three-level nested grouping: OR(AND(sales > 500K, profit > 50K), AND(quantity > 100, average discount < 0.3)), simulating complex business filtering | - |
-| [having-empty-dsl-compose-target](./havingFilter#having-empty-dsl-compose-target) | Start from an empty DSL and use builder to assemble where, having, measures, and dimensions, including a having condition combination with sum and countDistinct aggregations | - |
-| [having-field-not-in-measures-and-dimensions](./havingFilter#having-field-not-in-measures-and-dimensions) | 空の DSL を初期化し、builder で area ディメンションと sales メジャーだけを追加し、measures/dimensions に存在しない profit フィールドを having で使用する（SUM(profit) > 100000） | - |
-| [having-find-and-update](./havingFilter#having-find-and-update) | Add having conditions first, then locate them with find and dynamically update thresholds and operators to simulate interactive filter adjustment | - |
-| [having-group-add-to-existing](./havingFilter#having-group-add-to-existing) | Append a new condition to an existing having group, simulating progressive filter refinement | - |
-| [having-group-remove-condition](./havingFilter#having-group-remove-condition) | Remove a specific condition from an existing having group, simulating a user canceling a filter item | - |
-| [having-mix-filters-and-groups](./havingFilter#having-mix-filters-and-groups) | Mix standalone filter conditions and an OR group: sales > 500K AND (profit > 100K OR quantity >= 30) | - |
-| [having-multi-dimension-aggregate](./havingFilter#having-multi-dimension-aggregate) | Group by category and region, filter combinations with average discount below 20% and total sales over 100K, and analyze high-value low-discount business | - |
-| [having-nested-groups](./havingFilter#having-nested-groups) | Nested grouping: AND(sales > 1M, OR(profit > 200K, quantity >= 50)) | - |
-| [having-or-group](./havingFilter#having-or-group) | Use an OR group to filter regions with high sales or high profit | - |
-| [having-scatter-profit-analysis](./havingFilter#having-scatter-profit-analysis) | Scatter chart analysis: group by category and filter categories with high profit ratio and more than 20 transactions to identify high-quality business | - |
-| [having-update-group-operator](./havingFilter#having-update-group-operator) | Update an existing Having group operator from AND to OR | - |
-| [having-with-where-combined](./havingFilter#having-with-where-combined) | Combined where and having filtering: first use where to filter Office Supplies, then use having to filter provinces with sales over 50K or profit over 10K | - |
-| [remove-having-filter](./havingFilter#remove-having-filter) | Remove redundant Having filters and keep only the profit filter | - |
+| [having-array-value-with-in-operator](./havingFilter#having-array-value-with-in-operator) | 配列値を持つ Having フィルターで 'in' 演算子への変換を発生させる例 | - |
+| [having-array-value-with-not-in-operator](./havingFilter#having-array-value-with-not-in-operator) | 配列値を持つ Having フィルターで 'not in' 演算子への変換を発生させる例 | - |
+| [having-clear-and-rebuild](./havingFilter#having-clear-and-rebuild) | 既存の having 条件をクリアして新しいグループフィルターを再構築し、ユーザーがフィルターパネルをリセットして再設定する流れを再現 | - |
+| [having-deeply-nested-groups](./havingFilter#having-deeply-nested-groups) | 3 層のネストグループ: OR(AND(売上 > 50 万, 利益 > 5 万), AND(数量 > 100, 平均割引 < 0.3)) による複雑な業務フィルター | - |
+| [having-empty-dsl-compose-target](./havingFilter#having-empty-dsl-compose-target) | 空の DSL から builder で where/having/measures/dimensions を組み立て、sum と countDistinct 集計を含む having 条件を構成 | - |
+| [having-field-not-in-measures-and-dimensions](./havingFilter#having-field-not-in-measures-and-dimensions) | 空の DSL を初期化し、builder で area ディメンションと sales 指標だけを追加し、measures/dimensions にない profit フィールドを having で使用 | - |
+| [having-find-and-update](./havingFilter#having-find-and-update) | having 条件を追加した後、find で検索してしきい値と演算子を動的に更新し、対話的な条件調整を再現 | - |
+| [having-group-add-to-existing](./havingFilter#having-group-add-to-existing) | 既存の having グループに新しい条件を追加し、段階的にフィルタールールを絞り込む流れを再現 | - |
+| [having-group-remove-condition](./havingFilter#having-group-remove-condition) | 既存の having グループから特定条件を削除し、ユーザーがフィルター項目を取り消す流れを再現 | - |
+| [having-mix-filters-and-groups](./havingFilter#having-mix-filters-and-groups) | 独立条件と OR グループを混在: 売上 > 50 万 AND (利益 > 10 万 OR 数量 >= 30) | - |
+| [having-multi-dimension-aggregate](./havingFilter#having-multi-dimension-aggregate) | カテゴリと地域の 2 ディメンションでグループ化し、平均割引 20% 未満かつ総売上 10 万超の組み合わせを抽出 | - |
+| [having-nested-groups](./havingFilter#having-nested-groups) | ネストグループ: AND(売上 > 100 万, OR(利益 > 20 万, 数量 >= 50)) | - |
+| [having-or-group](./havingFilter#having-or-group) | OR グループで売上または利益が高い地域を絞り込む | - |
+| [having-scatter-profit-analysis](./havingFilter#having-scatter-profit-analysis) | 散布図分析: カテゴリ別に高利益率かつ取引数 20 件超のカテゴリを絞り込み、優良業務を特定 | - |
+| [having-update-group-operator](./havingFilter#having-update-group-operator) | 既存の Having グループの論理演算子を AND から OR に更新 | - |
+| [having-with-where-combined](./havingFilter#having-with-where-combined) | where と having の組み合わせ: 先に where で事務用品カテゴリを絞り込み、having で売上 5 万超または利益 1 万超の都道府県を抽出 | - |
+| [remove-having-filter](./havingFilter#remove-having-filter) | 余分な Having フィルター条件を削除し、利益フィルターだけを保持 | - |
 
 ## Locale
 
@@ -90,21 +90,21 @@
 
 | 例 | 説明 | ラベル |
 | --- | --- | --- |
-| [between-sales-range-analysis](./whereFilter#between-sales-range-analysis) | Sales range analysis: use between to filter orders from 1000 to 10000 and summarize profit by category | - |
-| [clear-and-rebuild-filters](./whereFilter#clear-and-rebuild-filters) | Clear and rebuild filters: clear old simple filters and rebuild complex grouped conditions | - |
-| [date-filter-period-and-range-combo](./whereFilter#date-filter-period-and-range-combo) | Date-period and range filtering: use period to filter 2024 Q1 data while range limits the profit interval, then cross-analyze by category and ship mode | - |
-| [date-filter-relative-with-nested-conditions](./whereFilter#date-filter-relative-with-nested-conditions) | Date filtering with nested conditions: filter high-value orders from Consumer or Corporate customers in the last 30 days and summarize sales and profit by province | - |
-| [deeply-nested-or-and-groups](./whereFilter#deeply-nested-or-and-groups) | Multi-level nested grouping: high-value orders with Same Day shipping for Consumer customers or First Class shipping for Corporate customers, using three levels of AND/OR nesting | - |
-| [high-discount-tech-profit-analysis](./whereFilter#high-discount-tech-profit-analysis) | High-discount Technology product profit analysis: filter Technology orders with discount greater than 0.5 and compare profit by region | - |
-| [in-operator-multi-area-delivery](./whereFilter#in-operator-multi-area-delivery) | Multi-region delivery efficiency comparison: use in to filter East China, North China, and Central South, then count orders by ship mode | - |
-| [nested-group-region-product-filter](./whereFilter#nested-group-region-product-filter) | Office Supplies or Furniture sales in East China: use nested grouping with AND connecting the region condition and OR category conditions | - |
-| [not-between-sales-range](./whereFilter#not-between-sales-range) | Not between filter: exclude sales between 1000~10000 | - |
-| [not-between-with-explicit-operators](./whereFilter#not-between-with-explicit-operators) | Not between filter with explicit leftOp/rightOp to test invert functions | - |
-| [office-supplies-sales-by-province](./whereFilter#office-supplies-sales-by-province) | Office Supplies sales ranking by province: filter the Office Supplies category and summarize sales by province | - |
-| [or-group-product-category-comparison](./whereFilter#or-group-product-category-comparison) | Office Supplies versus Technology category comparison: use an OR group to filter two categories and compare sales by region | - |
-| [remove-condition-from-group](./whereFilter#remove-condition-from-group) | Remove a condition from a group: the preset OR group contains three categories, and updateGroup removes one of them | - |
-| [remove-filter-by-index](./whereFilter#remove-filter-by-index) | Remove a filter by index: remove the first category filter and keep only the region condition | - |
-| [update-filter-switch-province](./whereFilter#update-filter-switch-province) | Dynamically modify a filter: update the province filter from Zhejiang to Guangdong and observe sales changes | - |
-| [update-group-or-to-and](./whereFilter#update-group-or-to-and) | Modify group logic: switch the preset OR category group to AND to narrow the filter scope | - |
-| [where-filter-array-value-converts-to-in](./whereFilter#where-filter-array-value-converts-to-in) | Where filter with array value using '=' operator should convert to 'in' | - |
-| [where-filter-array-value-converts-to-not-in](./whereFilter#where-filter-array-value-converts-to-not-in) | Where filter with array value using '!=' operator should convert to 'not in' | - |
+| [between-sales-range-analysis](./whereFilter#between-sales-range-analysis) | 売上区間分析: between で 1000〜10000 の注文を絞り込み、カテゴリ別に利益を集計 | - |
+| [clear-and-rebuild-filters](./whereFilter#clear-and-rebuild-filters) | フィルターをクリアして再構築: 古い単純条件を削除し、グループを含む複雑条件を再構築 | - |
+| [date-filter-period-and-range-combo](./whereFilter#date-filter-period-and-range-combo) | 日付範囲の組み合わせフィルター: period で 2024 年 Q1 データを絞り込み、range で利益範囲を制限してカテゴリと配送方法でクロス分析 | - |
+| [date-filter-relative-with-nested-conditions](./whereFilter#date-filter-relative-with-nested-conditions) | 日付フィルターとネスト条件の組み合わせ: 直近 30 日の消費者または企業顧客の高額注文を絞り込み、都道府県別に売上と利益を集計 | - |
+| [deeply-nested-or-and-groups](./whereFilter#deeply-nested-or-and-groups) | 多層ネストグループ: 消費者顧客の当日配送高額注文、または企業顧客の一級配送高額注文を 3 層 AND/OR で表現 | - |
+| [high-discount-tech-profit-analysis](./whereFilter#high-discount-tech-profit-analysis) | 高割引技術商品の利益分析: 技術カテゴリかつ割引 0.5 超の注文を絞り込み、地域別に利益を比較 | - |
+| [in-operator-multi-area-delivery](./whereFilter#in-operator-multi-area-delivery) | 複数地域の配送効率比較: in で華東、華北、中南を絞り込み、配送方法別に注文数を集計 | - |
+| [nested-group-region-product-filter](./whereFilter#nested-group-region-product-filter) | 華東地域の事務用品または家具の売上: ネストグループで地域条件と OR カテゴリ条件を AND 接続 | - |
+| [not-between-sales-range](./whereFilter#not-between-sales-range) | not between フィルター: 1000〜10000 の売上を除外 | - |
+| [not-between-with-explicit-operators](./whereFilter#not-between-with-explicit-operators) | 明示的な leftOp/rightOp を持つ not between フィルターで反転関数をテスト | - |
+| [office-supplies-sales-by-province](./whereFilter#office-supplies-sales-by-province) | 都道府県別の事務用品売上ランキング: 事務用品カテゴリを絞り込み、都道府県別に売上を集計 | - |
+| [or-group-product-category-comparison](./whereFilter#or-group-product-category-comparison) | 事務用品と技術カテゴリの比較: OR グループで 2 カテゴリを絞り込み、地域別に売上を比較 | - |
+| [remove-condition-from-group](./whereFilter#remove-condition-from-group) | グループから条件を削除: 3 つのカテゴリを含む OR グループから updateGroup で 1 つを削除 | - |
+| [remove-filter-by-index](./whereFilter#remove-filter-by-index) | インデックスでフィルターを削除: 最初のカテゴリ条件を削除し、地域条件だけを保持 | - |
+| [update-filter-switch-province](./whereFilter#update-filter-switch-province) | フィルターを動的に変更: 都道府県条件を浙江から広東に更新し、売上変化を確認 | - |
+| [update-group-or-to-and](./whereFilter#update-group-or-to-and) | グループロジックを変更: 既存の OR カテゴリグループを AND に切り替え、範囲を絞る | - |
+| [where-filter-array-value-converts-to-in](./whereFilter#where-filter-array-value-converts-to-in) | 配列値と '=' 演算子を持つ where フィルターが 'in' に変換される例 | - |
+| [where-filter-array-value-converts-to-not-in](./whereFilter#where-filter-array-value-converts-to-not-in) | 配列値と '!=' 演算子を持つ where フィルターが 'not in' に変換される例 | - |

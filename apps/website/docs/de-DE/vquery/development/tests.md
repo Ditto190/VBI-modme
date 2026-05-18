@@ -5,7 +5,7 @@ VQuery verwendet das Framework `rstest` für Tests. **Alle Befehle müssen im St
 ## Testmechanismus
 Die VQuery-Tests decken ab:
 - **Unit**: Hilfsfunktionen und Compilerlogik.
-- **Examples**: Vollständige SQL-Erzeugung und Datenabfragen.
+- **examples**: Vollständige SQL-Erzeugung und Datenabfragen.
 
 ## Häufige Befehle
 
@@ -20,7 +20,7 @@ Wenn Änderungen an der SQL-Erzeugung erwartet sind, aktualisiere die Snapshots:
 pnpm --filter=@visactor/vquery run test:update
 ```
 
-### Coverage-Bericht
+### Testabdeckungsbericht
 Testabdeckung erzeugen und prüfen:
 ```bash
 pnpm --filter=@visactor/vquery run test:coverage

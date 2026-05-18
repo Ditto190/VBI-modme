@@ -1,22 +1,22 @@
 # DimensionsBuilder
 
-Builder de dimensions pour ajouter, modifier et supprimer la configuration des dimensions. Les dimensions sont des champs categoriels, par exemple temps, region ou categorie produit
+Builder de dimensions pour ajouter, modifier et supprimer la configuration des dimensions. Les dimensions sont des champs catégoriels, par exemple le temps, la région ou la catégorie de produit
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
@@ -25,7 +25,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 Ajouter une dimension
 
-**Definition**:
+**Définition**:
 
 ```typescript
 add(field: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBuilder
@@ -33,18 +33,18 @@ add(field: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBu
 
 **Retour**: `DimensionsBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `field` | string | - Nom du champ |
 | `callback` | (node: DimensionNodeBuilder) => void | - Fonction de rappel |
 
 ### remove
 
-Supprimer la dimension avec l ID indique
+Supprimer la dimension avec l'ID indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 remove(id: string): DimensionsBuilder
@@ -52,17 +52,17 @@ remove(id: string): DimensionsBuilder
 
 **Retour**: `DimensionsBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `id` | string | - ID de dimension |
 
 ### update
 
-Mettre a jour la configuration de la dimension avec l ID indique
+Mettre à jour la configuration de la dimension avec l'ID indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 update(id: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBuilder
@@ -70,18 +70,18 @@ update(id: string, callback: (node: DimensionNodeBuilder) => void): DimensionsBu
 
 **Retour**: `DimensionsBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `id` | string | - ID de dimension |
 | `callback` | (node: DimensionNodeBuilder) => void | - Fonction de rappel |
 
 ### find
 
-Trouver la premiere dimension selon une condition de callback, comme Array.find
+Trouver la première dimension selon une condition de callback, comme Array.find
 
-**Definition**:
+**Définition**:
 
 ```typescript
 find(predicate: (node: DimensionNodeBuilder, index: number) => boolean): DimensionNodeBuilder | undefined
@@ -89,9 +89,9 @@ find(predicate: (node: DimensionNodeBuilder, index: number) => boolean): Dimensi
 
 **Retour**: `DimensionNodeBuilder \| undefined`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `predicate` | (node: DimensionNodeBuilder, index: number) => boolean | - Condition de recherche |
 
@@ -99,7 +99,7 @@ find(predicate: (node: DimensionNodeBuilder, index: number) => boolean): Dimensi
 
 Obtenir toutes les dimensions
 
-**Definition**:
+**Définition**:
 
 ```typescript
 findAll(): DimensionNodeBuilder[]
@@ -111,7 +111,7 @@ findAll(): DimensionNodeBuilder[]
 
 Exporter toutes les dimensions en tableau JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIDimension[]
@@ -121,9 +121,9 @@ toJSON(): VBIDimension[]
 
 ### observe
 
-Observer les changements de dimensions et renvoyer une fonction de desabonnement
+Observer les changements de dimensions et renvoyer une fonction de désabonnement
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveDeepCallback): () => void
@@ -131,15 +131,15 @@ observe(callback: ObserveDeepCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveDeepCallback | - Fonction de rappel |
 
 ### static isDimensionNode
 
-**Definition**:
+**Définition**:
 
 ```typescript
 static isDimensionNode(node: VBIDimensionTree[0]): node is VBIDimension
@@ -147,15 +147,15 @@ static isDimensionNode(node: VBIDimensionTree[0]): node is VBIDimension
 
 **Retour**: `node is VBIDimension`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `node` | VBIDimensionTree[0] | - |
 
 ### static isDimensionGroup
 
-**Definition**:
+**Définition**:
 
 ```typescript
 static isDimensionGroup(node: VBIDimensionTree[0]): node is VBIDimensionGroup
@@ -163,8 +163,8 @@ static isDimensionGroup(node: VBIDimensionTree[0]): node is VBIDimensionGroup
 
 **Retour**: `node is VBIDimensionGroup`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `node` | VBIDimensionTree[0] | - |

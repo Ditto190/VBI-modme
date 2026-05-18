@@ -30,7 +30,7 @@ Knoten-ID abrufen
 getId(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### getField
 
@@ -42,7 +42,7 @@ Feldname abrufen
 getField(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### setField
 
@@ -54,7 +54,7 @@ Feldname setzen
 setField(field: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -72,7 +72,7 @@ Filteroperator abrufen
 getOperator(): string | undefined
 ```
 
-**Rueckgabe**: `string \| undefined`
+**Rückgabe**: `string \| undefined`
 
 ### setOperator
 
@@ -84,7 +84,7 @@ Filteroperator setzen
 setOperator(operator: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -102,7 +102,7 @@ Filterwert setzen
 setValue(value: unknown): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -120,17 +120,17 @@ Datumsfilterbedingung setzen
 setDate(predicate: VBIWhereDatePredicate): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `predicate` | VBIWhereDatePredicate | - Datumspraedikat |
+| `predicate` | VBIWhereDatePredicate | - Datumsprädikat |
 
 ### getDate
 
-Datumsfilterbedingung abrufen; bei Nicht-Datumsfiltern undefined zurueckgeben
+Datumsfilterbedingung abrufen; bei Nicht-Datumsfiltern undefined zurückgeben
 
 **Definition**:
 
@@ -138,7 +138,7 @@ Datumsfilterbedingung abrufen; bei Nicht-Datumsfiltern undefined zurueckgeben
 getDate(): VBIWhereDatePredicate | undefined
 ```
 
-**Rueckgabe**: `VBIWhereDatePredicate \| undefined`
+**Rückgabe**: `VBIWhereDatePredicate \| undefined`
 
 ### toJSON
 
@@ -150,4 +150,4 @@ Als JSON exportieren
 toJSON(): VBIWhereFilter
 ```
 
-**Rueckgabe**: `VBIWhereFilter`
+**Rückgabe**: `VBIWhereFilter`

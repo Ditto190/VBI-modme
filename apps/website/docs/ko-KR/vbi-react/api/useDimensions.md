@@ -14,7 +14,7 @@ useDimensions(builder: VBIChartBuilder): UseDimensionsReturn
 
 ## 설명
 
-dimension 설정을 읽고 업데이트하며, dimension 추가, 삭제, 수정 기능을 제공합니다.
+차원 설정을 읽고 업데이트하며, 차원 추가, 삭제, 수정 기능을 제공합니다.
 
 ## 최소 예제
 

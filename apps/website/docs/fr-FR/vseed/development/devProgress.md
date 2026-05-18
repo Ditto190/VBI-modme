@@ -1,85 +1,85 @@
-# Development Workflow
+# Flux de développement
 
-## Start the Project
+## Démarrer le projet
 
-```bash title="Start Project"
+```bash title="Démarrer le projet"
 pnpm install && pnpm dev
 ```
 
-## Understand Requirements and Write Code
+## Comprendre les besoins et écrire le code
 
-This is a complex process, but generally involves three things:
-1. Define the input: `vseed`
-2. Define the output: `vseed` → `advancedVSeed`, or `advancedVSeed` → `spec`
-3. Write code to ensure new inputs produce the expected outputs
-
-:::tip
-The `playground` (`apps/website/docs/zh-CN/playground/index.mdx`) can be used for debugging and development.
-:::
-
-## Create New Test Cases
-
-If necessary, consider creating new test cases.
+C'est un processus complexe, mais dans la plupart des cas, il se résume à trois choses :
+1. Clarifier l'entrée : `vseed`
+2. Clarifier la sortie : `vseed` devient `advancedVSeed`, ou `advancedVSeed` devient `spec`
+3. Écrire le code et garantir que les nouvelles entrées produisent les sorties attendues
 
 :::tip
-When test coverage decreases, new test cases are required.
+Le `playground` (`apps/website/docs/fr-FR/playground/index.mdx`) peut être utilisé pour le débogage et le développement.
 :::
 
-In the `packages/vseed/tests/*` directory, create a new `testName.json` file and write a VSeed DSL.
+## Créer de nouveaux cas de test
 
-Then run:
+Si nécessaire, il est possible d'envisager la création de nouveaux cas de test.
 
-```bash title="Create Test Case"
+:::tip
+Lorsque la couverture diminue, de nouveaux cas de test doivent être créés.
+:::
+
+Dans le répertoire `packages/vseed/tests/*`, créez un nouveau fichier `testName.json` et écrivez-y la VSeed DSL.
+
+Exécuter :
+
+```bash title="Créer un cas de test"
 pnpm build:canvasTest
 ```
 
-## Run Unit Tests and Update Coverage
+## Exécuter les tests unitaires et mettre à jour la couverture
 
-```bash title="Run Unit Tests and Update Coverage"
+```bash title="Exécuter les tests unitaires et mettre à jour la couverture"
 pnpm test:coverage
 ```
 
-Ensure three things:
-1. All tests pass
-2. Snapshot changes are as expected
-3. Coverage has not decreased
+Vérifiez trois choses :
+1. Tous les tests passent
+2. Les changements de snapshots sont conformes aux attentes
+3. La couverture n'a pas diminué
 
-> Coverage changes will be automatically updated to README.md
+> Les changements de couverture seront automatiquement mis à jour dans README.md
 
-## Update Options Documentation
+## Mettre à jour la documentation des options de configuration
 
-If you modify TypeScript definitions for chart types, please update the options documentation.
+Si vous modifiez les définitions TypeScript des types de graphiques, veuillez mettre à jour la documentation des options de configuration.
 
 :::tip
-All type definitions under `packages/vseed/src/types/chartType` correspond to the options documentation for each chart. If changes are made, please update accordingly.
+Toutes les définitions de types sous `packages/vseed/src/types/chartType` correspondent à la documentation des options de configuration de chaque graphique. En cas de changement, veuillez impérativement la mettre à jour.
 :::
 
-```bash title="Update Options Documentation"
+```bash title="Mettre à jour la documentation des options de configuration"
 pnpm build:docs
 ```
 
-## Publish and Submit
+## Publication et soumission
 
-```bash title="Describe Changes"
+```bash title="Décrire les changements"
 pnpm changeset
 ```
 
-After running `pnpm changeset`, follow the prompts to:
-1. Select the packages to change — in most cases, only vseed
-2. Follow semantic versioning: press Enter twice to skip `major` and `minor`, then select `patch`
-3. Enter a change description, e.g.: `fix: chart render error caused by only one measure`
+Après avoir exécuté `pnpm changeset`, suivez les indications pour effectuer les opérations suivantes :
+1. Sélectionner les packages qui changent ; dans la plupart des cas, seulement `vseed`
+2. Respecter le versionnement sémantique et choisir le type de changement. Dans la grande majorité des cas, appuyez deux fois sur Entrée pour ignorer `major` et `minor`, puis choisissez `patch`
+3. Saisir la description du changement, par exemple : `fix: chart render error caused by only one measure`
 
-:::tip Recommendation
-One feature or bugfix → one `changeset` → one `commit`
+:::tip Recommandation
+Une fonctionnalité ou un Bugfix correspond à un `changeset` et à un `commit`
 
-One `Pull Request` → one `issue`
+Un `Pull Request` correspond à une `issue`
 
-One `Pull Request` can contain multiple features or bugfixes → multiple `changeset`s → multiple `commit`s
+Un `Pull Request` contenant plusieurs fonctionnalités ou plusieurs Bugfixes correspond à plusieurs `changeset`s et plusieurs `commit`s
 :::
 
 ## Commit
 
-```bash title="Commit Everything"
+```bash title="Commit tout le contenu"
 git add .
 git commit -m "fix: chart render error caused by only one measure"
 git push

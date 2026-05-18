@@ -3,48 +3,48 @@
 :::info{title=Rekomendasi}
 - Konfigurasi field yang direkomendasikan: `1` metrik, `1` dimensi
 
-\- Mendukung Data Reshape: minimal `1` measure, `0` dimensi
+\- Mendukung reshape data: minimal `1` metrik, `0` dimensi
 
 :::
 
-:::info{title=Pemetaan Encoding}
-Diagram funnel mendukung saluran visual berikut:
+:::info{title=Pemetaan encoding}
+Diagram funnel mendukung kanal visual berikut:
 
-`size`   : kanal ukuran, mendukung `beberapa measure`, dipetakan ke lebar funnel berdasarkan nilai measure
+`size`   : kanal ukuran, mendukung `beberapa metrik`, memetakan nilai metrik ke lebar funnel
 
-`detail` : kanal detail, mendukung `beberapa dimensi`, digunakan untuk menampilkan data yang lebih granular dalam seri warna yang sama
+`detail` : kanal detail, mendukung `beberapa dimensi`, digunakan untuk menampilkan data dengan granularitas lebih halus dalam seri warna yang sama
 
-`color`  : kanal warna, mendukung `beberapa dimensi` atau `satu measure`; warna dimensi membedakan seri data, warna measure memetakan nilai measure secara linear ke warna grafis
+`color`  : kanal warna, mendukung `beberapa dimensi` atau `satu metrik`. Warna dimensi membedakan seri data, sedangkan warna metrik memetakan nilai metrik secara linear ke warna grafis
 
-`tooltip`: kanal tooltip, mendukung `beberapa dimensi` dan `beberapa measure`, ditampilkan saat mouse berada di atas titik data
+`tooltip`: kanal tooltip, mendukung `beberapa dimensi` dan `beberapa metrik`, ditampilkan saat kursor berada di atas titik data
 
-`label`  : kanal label, mendukung `beberapa dimensi` dan `beberapa measure`, menampilkan label data pada titik data
+`label`  : kanal label, mendukung `beberapa dimensi` dan `beberapa metrik`, menampilkan label data pada titik data
 
 :::
 
 :::note{title=Deskripsi}
-Diagram funnel digunakan untuk menampilkan hubungan proporsi data satu dimensi
+Diagram funnel digunakan untuk menampilkan hubungan proporsi data dari satu dimensi.
 
-Skenario yang sesuai:
+Skenario yang berlaku:
 
-Skenario yang sesuai untuk diagram funnel:
+Skenario penggunaan diagram funnel:
 
-\- Cocok untuk menganalisis proses dengan beberapa langkah berurutan dan terstandardisasi, serta menampilkan kehilangan data atau konversi pada setiap tahap dengan jelas
+\- Cocok untuk menganalisis proses dengan beberapa langkah berurutan dan terstandardisasi, serta menampilkan kehilangan data atau konversi pada setiap tahap secara jelas
 
 :::
 
 :::warning{title=Warning}
-Persyaratan data:
+Kebutuhan data:
 
-\- Minimal 1 field numerik (metrik)
+\- Setidaknya 1 field numerik (metrik)
 
-\- Semua dimensi digabung dengan nama metrik (jika ada beberapa metrik) menjadi satu dimensi dan ditampilkan sebagai item legenda
+\- Semua dimensi akan digabungkan dengan nama metrik (jika ada beberapa metrik) menjadi satu dimensi dan ditampilkan sebagai item legenda
 
-\- Semua measure otomatis digabung menjadi satu measure
+\- Semua metrik otomatis digabungkan menjadi satu metrik
 
 Fitur yang aktif secara default:
 
-\- Secara default mengaktifkan legenda, label data, tooltip, dan perhitungan proporsi
+\- Legenda, label data, tooltip, dan perhitungan persentase aktif secara default
 
 :::
 
@@ -58,7 +58,7 @@ Diagram funnel
 
 
 
-Diagram funnel, menampilkan hubungan proporsi data satu dimensi
+Diagram funnel yang menampilkan hubungan proporsi data dari satu dimensi.
 
 :::
 
@@ -73,11 +73,7 @@ Diagram funnel, menampilkan hubungan proporsi data satu dimensi
 **Type:** `Record[]`
 
 :::note{title=Deskripsi}
-Dataset pra-agregasi yang sesuai TidyData untuk mendefinisikan sumber dan struktur data chart. Pengguna tidak perlu memproses input data secara manual; kemampuan Data Reshape VSeed yang kuat menanganinya secara otomatis. Data Chart Area pada akhirnya di-reshape menjadi 2 dimensi dan 1 metrik.
-
-
-
-Dataset yang telah diagregasi dan sesuai spesifikasi TidyData, digunakan untuk menentukan sumber dan struktur data chart. Dataset masukan pengguna tidak perlu diproses lagi. VSeed memiliki kemampuan reshape data yang kuat dan akan melakukan reshape secara otomatis. Data diagram funnel akhirnya akan dikonversi menjadi 1 dimensi dan 1 metrik.
+Dataset. Dataset yang telah diagregasi dan sesuai spesifikasi TidyData, digunakan untuk menentukan sumber serta struktur data diagram. Dataset masukan pengguna tidak perlu diproses lagi; VSeed memiliki kemampuan reshape data yang kuat dan akan melakukan reshape secara otomatis. Data diagram funnel akhirnya dikonversi menjadi 1 dimensi dan 1 metrik.
 
 :::
 
@@ -92,11 +88,11 @@ Dataset yang telah diagregasi dan sesuai spesifikasi TidyData, digunakan untuk m
 **Type:** `PieDimension[] | undefined`
 
 :::note{title=Deskripsi}
-Dimensi pertama dipetakan ke sumbu X; dimensi lainnya digabung dengan nama metrik (saat ada beberapa metrik) dan ditampilkan sebagai item legenda.
+Dimensi
 
 
 
-Semua dimensi diagram funnel digabung dengan nama metrik (jika ada beberapa metrik) menjadi satu dimensi dan ditampilkan sebagai item legenda
+Untuk diagram funnel, semua dimensi akan digabungkan dengan nama metrik (jika ada beberapa metrik) menjadi satu dimensi dan ditampilkan sebagai item legenda.
 
 :::
 
@@ -150,17 +146,17 @@ Granularitas waktu, menentukan presisi tampilan tanggal
 :::note{title=Deskripsi}
 Kanal tempat dimensi dipetakan
 
-\- color: mendukung pemetaan beberapa dimensi ke channel warna
+\- color: mendukung pemetaan beberapa dimensi ke kanal warna
 
-\- detail: mendukung pemetaan beberapa dimensi ke channel detail
+\- detail: mendukung pemetaan beberapa dimensi ke kanal detail
 
 \- tooltip: mendukung pemetaan beberapa dimensi ke kanal tooltip
 
 \- label: mendukung pemetaan beberapa dimensi ke kanal label
 
-\- row: mendukung pemetaan beberapa dimensi ke channel baris
+\- row: mendukung pemetaan beberapa dimensi ke kanal baris
 
-\- column: mendukung pemetaan beberapa dimensi ke channel kolom
+\- column: mendukung pemetaan beberapa dimensi ke kanal kolom
 
 :::
 
@@ -174,12 +170,12 @@ Metrik
 
 
 
-Semua metrik diagram funnel otomatis digabung menjadi satu metrik. Jika terdapat beberapa metrik, nama metrik digabung dengan dimensi lainnya dan ditampilkan sebagai item legenda.
+Untuk diagram funnel, semua metrik otomatis digabungkan menjadi satu metrik. Jika ada beberapa metrik, nama metrik akan digabungkan dengan dimensi lainnya dan ditampilkan sebagai item legenda.
 
 :::
 
 **Contoh**
-[{id: 'value', alias: 'Proporsi nilai', format: 'percent'}]
+[{id: 'value', alias: 'Proporsi Nilai', format: 'percent'}]
 
 
 
@@ -211,7 +207,7 @@ Pemformatan angka otomatis, aktif secara default, prioritas tertinggi
 
 Saat autoFormat=true, semua konfigurasi numFormat akan ditimpa
 
-Saat diaktifkan, label data chart dan tooltip otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale
+Saat diaktifkan, label data diagram dan tooltip otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale
 
 Aturan format: angka desimal dengan compact notation aktif, minimal 0 digit desimal, maksimal 2 digit desimal, pembulatan otomatis, menggunakan implementasi Intl.NumberFormat browser
 
@@ -240,8 +236,7 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Deskripsi}
-Tipe format angka, mendukung: angka (desimal), persen (%), permille (‰), notasi ilmiah
-
+Jenis format angka. Mendukung angka (desimal), persen (%), permille (‰), dan notasi ilmiah
 :::
 
 #### ratio
@@ -249,12 +244,11 @@ Tipe format angka, mendukung: angka (desimal), persen (%), permille (‰), notas
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Rasio format angka, tidak boleh 0
-
+Rasio pemformatan angka. Tidak boleh 0
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -264,12 +258,11 @@ Rasio format angka, tidak boleh 0
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Simbol format angka, misalnya %, ‰
-
+Simbol pemformatan angka, misalnya % atau ‰
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -279,8 +272,7 @@ Simbol format angka, misalnya %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-Pemisah ribuan untuk format angka
-
+Pemisah ribuan untuk pemformatan angka
 :::
 
 #### suffix
@@ -288,8 +280,7 @@ Pemisah ribuan untuk format angka
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Sufiks format angka
-
+Sufiks pemformatan angka
 :::
 
 #### prefix
@@ -297,8 +288,7 @@ Sufiks format angka
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Prefiks format angka
-
+Prefiks pemformatan angka
 :::
 
 #### fractionDigits
@@ -306,17 +296,16 @@ Prefiks format angka
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser; prioritas lebih rendah daripada significantDigits
-
+Digit desimal untuk pemformatan angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser. Prioritas lebih rendah daripada significantDigits
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1235 , fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -325,19 +314,18 @@ Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan m
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Digit signifikan untuk format angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser; prioritas lebih tinggi daripada fractionDigits
-
+Digit signifikan untuk pemformatan angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser. Prioritas lebih tinggi daripada fractionDigits
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1000 , significantDigits:1
-\- 1234.5678 dikonversi menjadi 1200 , significantDigits:2
-\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3
-\- 1234.5678 dikonversi menjadi 1234 , significantDigits:4
-\- 1234.5678 dikonversi menjadi 1234.6 , significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.57 , significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.568 , significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1000, significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200, significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234, significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -346,13 +334,12 @@ Digit signifikan untuk format angka, menggunakan minimumSignificantDigits dan ma
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Deskripsi}
-Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama-sama diatur; menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingPriority yang sama
-
+Prioritas pembulatan pemformatan angka saat significantDigits dan fractionDigits sama-sama diatur, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingPriority Intl.NumberFormat
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -361,8 +348,7 @@ Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Deskripsi}
-Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingMode yang sama
-
+Mode pembulatan pemformatan angka, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingMode Intl.NumberFormat
 :::
 
 ### format
@@ -375,8 +361,7 @@ Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikut
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Deskripsi}
-Tipe format angka, mendukung: angka (desimal), persen (%), permille (‰), notasi ilmiah
-
+Jenis format angka. Mendukung angka (desimal), persen (%), permille (‰), dan notasi ilmiah
 :::
 
 #### ratio
@@ -384,12 +369,11 @@ Tipe format angka, mendukung: angka (desimal), persen (%), permille (‰), notas
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Rasio format angka, tidak boleh 0
-
+Rasio pemformatan angka. Tidak boleh 0
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -399,12 +383,11 @@ Rasio format angka, tidak boleh 0
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Simbol format angka, misalnya %, ‰
-
+Simbol pemformatan angka, misalnya % atau ‰
 :::
 
 **Contoh**
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
@@ -414,8 +397,7 @@ Simbol format angka, misalnya %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-Pemisah ribuan untuk format angka
-
+Pemisah ribuan untuk pemformatan angka
 :::
 
 #### suffix
@@ -423,8 +405,7 @@ Pemisah ribuan untuk format angka
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Sufiks format angka
-
+Sufiks pemformatan angka
 :::
 
 #### prefix
@@ -432,8 +413,7 @@ Sufiks format angka
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-Prefiks format angka
-
+Prefiks pemformatan angka
 :::
 
 #### fractionDigits
@@ -441,17 +421,16 @@ Prefiks format angka
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser; prioritas lebih rendah daripada significantDigits
-
+Digit desimal untuk pemformatan angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser. Prioritas lebih rendah daripada significantDigits
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1235 , fractionDigits:0 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -460,19 +439,18 @@ Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan m
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Digit signifikan untuk format angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser; prioritas lebih tinggi daripada fractionDigits
-
+Digit signifikan untuk pemformatan angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser. Prioritas lebih tinggi daripada fractionDigits
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1000 , significantDigits:1
-\- 1234.5678 dikonversi menjadi 1200 , significantDigits:2
-\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3
-\- 1234.5678 dikonversi menjadi 1234 , significantDigits:4
-\- 1234.5678 dikonversi menjadi 1234.6 , significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.57 , significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.568 , significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1000, significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200, significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234, significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -481,13 +459,12 @@ Digit signifikan untuk format angka, menggunakan minimumSignificantDigits dan ma
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Deskripsi}
-Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama-sama diatur; menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingPriority yang sama
-
+Prioritas pembulatan pemformatan angka saat significantDigits dan fractionDigits sama-sama diatur, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingPriority Intl.NumberFormat
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3 (roundingPriority:lessPrecision)
-\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -496,8 +473,7 @@ Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Deskripsi}
-Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingMode yang sama
-
+Mode pembulatan pemformatan angka, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingMode Intl.NumberFormat
 :::
 
 ### encoding
@@ -507,13 +483,13 @@ Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikut
 :::note{title=Deskripsi}
 Kanal tempat metrik dipetakan
 
-\- size: ukuran tempat metrik dipetakan
-
-\- color: metrik dipetakan ke channel warna
-
 \- label: metrik dipetakan ke kanal label
 
-\- tooltip: metrik dipetakan ke kanal tooltip
+\- color: metrik yang dipetakan ke kanal warna
+
+\- label: metrik yang dipetakan ke kanal label
+
+\- tooltip: metrik yang dipetakan ke kanal tooltip
 
 :::
 
@@ -537,7 +513,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `Page | undefined`
 
 :::note{title=Deskripsi}
-
+Konfigurasi paginasi
 
 :::
 
@@ -547,8 +523,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Field paginasi; menentukan nama field untuk paginasi dan harus berupa dimensi
 :::
 
 ### currentValue
@@ -556,8 +531,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Nilai paginasi saat ini; menentukan nilai yang digunakan untuk menentukan halaman saat ini
 :::
 
 **Contoh**
@@ -571,12 +545,11 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `BackgroundColor`
 
 :::note{title=Deskripsi}
+Warna latar belakang chart
 
 
 
-
-
-
+Warna latar dapat berupa string warna (misalnya 'red', 'blue'), atau nilai hex, rgb, atau rgba (misalnya '#ff0000', 'rgba(255,0,0,0.5)')
 :::
 
 
@@ -585,7 +558,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `Color | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
+Konfigurasi warna gradasi linear, digunakan untuk mendefinisikan skema warna chart
 
 :::
 
@@ -595,8 +568,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string[] | undefined`
 
 :::note{title=Deskripsi}
-
-
+Skema warna diskret untuk menentukan warna berbagai elemen dalam chart
 :::
 
 **Contoh**
@@ -609,8 +581,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string[] | undefined`
 
 :::note{title=Deskripsi}
-
-
+Skema warna gradien linear untuk menentukan warna berbagai elemen dalam chart
 :::
 
 **Contoh**
@@ -623,8 +594,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Deskripsi}
-
-
+Pemetaan warna, digunakan untuk memetakan nilai data ke warna tertentu
 :::
 
 **Contoh**
@@ -640,8 +610,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi warna positif/negatif; mendefinisikan warna untuk nilai positif pada chart
 :::
 
 ### negativeColor
@@ -649,8 +618,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi warna positif/negatif; mendefinisikan warna untuk nilai negatif pada chart
 :::
 
 
@@ -659,7 +627,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `Label | undefined`
 
 :::note{title=Deskripsi}
-
+Konfigurasi label untuk mendefinisikan label data diagram, termasuk posisi, format, dan gayanya.
 
 :::
 
@@ -669,8 +637,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `false | true`
 
 :::note{title=Deskripsi}
-
-
+Apakah label diaktifkan
 :::
 
 ### wrap
@@ -678,8 +645,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah label dibungkus ke baris berikutnya
 :::
 
 ### showValue
@@ -687,12 +653,11 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
+Apakah label menampilkan nilai metrik
 
+Dalam skenario multi-metrik, tidak perlu khawatir nilai beberapa metrik saling bertentangan, karena semua metrik yang terkait dengan penggambaran diproses oleh `foldMeasures` dan digabungkan menjadi satu metrik yang mewakili satu titik data.
 
-
-
-
-
+Catatan: encoding.label memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi encoding.label
 :::
 
 ### showValuePercent
@@ -700,12 +665,11 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
+Apakah label menampilkan persentase nilai metrik
 
+Dalam skenario multi-metrik, tidak perlu khawatir nilai beberapa metrik saling bertentangan, karena semua metrik yang terkait dengan penggambaran diproses oleh `foldMeasures` dan digabungkan menjadi satu metrik yang mewakili satu titik data.
 
-
-
-
-
+Catatan: encoding.label memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi encoding.label
 :::
 
 ### showDimension
@@ -713,12 +677,11 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
+Apakah label menampilkan label dimensi
 
+Menampilkan semua label dimensi
 
-
-
-
-
+Catatan: encoding.label memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi encoding.label
 :::
 
 ### autoFormat
@@ -726,8 +689,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah nilai label diformat otomatis. Saat autoFormat bernilai true, konfigurasi numFormat diabaikan
 :::
 
 ### numFormat
@@ -735,8 +697,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `NumFormat | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi format nilai label. Konfigurasi ini digabungkan dengan `format` dalam `measure`; `format` dalam `measure` memiliki prioritas lebih tinggi. numFormat memiliki prioritas lebih rendah daripada autoFormat
 :::
 
 
@@ -745,8 +706,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Jenis format angka. Mendukung angka (desimal), persen (%), permille (‰), dan notasi ilmiah
 :::
 
 #### ratio
@@ -754,13 +714,12 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Rasio pemformatan angka. Tidak boleh 0
 :::
 
 **Contoh**
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
-
 
 
 
@@ -769,13 +728,12 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Simbol pemformatan angka, misalnya % atau ‰
 :::
 
 **Contoh**
+\- 100000 dikonversi menjadi 10万, ratio:10000, symbol:"万"
 \- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
-
 
 
 
@@ -784,8 +742,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Pemisah ribuan untuk pemformatan angka
 :::
 
 #### suffix
@@ -793,8 +750,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Sufiks pemformatan angka
 :::
 
 #### prefix
@@ -802,8 +758,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Prefiks pemformatan angka
 :::
 
 #### fractionDigits
@@ -811,17 +766,16 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Digit desimal untuk pemformatan angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser. Prioritas lebih rendah daripada significantDigits
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
-
+\- 1234.5678 dikonversi menjadi 1235, fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6, fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568, fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780, fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -830,19 +784,18 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Digit signifikan untuk pemformatan angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser. Prioritas lebih tinggi daripada fractionDigits
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1200 , significantDigits:2
-\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3
-\- 1234.5678 dikonversi menjadi 1234 , significantDigits:4
-\- 1234.5678 dikonversi menjadi 1234.6 , significantDigits:5 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.57 , significantDigits:6 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.568 , significantDigits:7 (roundingMode:halfCeil)
-\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
-
+\- 1234.5678 dikonversi menjadi 1000, significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200, significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234, significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6, significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57, significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568, significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -851,13 +804,12 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Prioritas pembulatan pemformatan angka saat significantDigits dan fractionDigits sama-sama diatur, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingPriority Intl.NumberFormat
 :::
 
 **Contoh**
-\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
-
+\- 1234.5678 dikonversi menjadi 1230, significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678, significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -866,8 +818,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Mode pembulatan pemformatan angka, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingMode Intl.NumberFormat
 :::
 
 ### labelFontSize
@@ -875,8 +826,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Ukuran font label
 :::
 
 ### labelFontWeight
@@ -884,8 +834,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Ketebalan font label
 :::
 
 ### labelBackgroundColor
@@ -893,8 +842,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna latar label
 :::
 
 ### labelStroke
@@ -902,8 +850,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna stroke label
 :::
 
 ### labelColor
@@ -911,8 +858,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna font label
 :::
 
 ### labelColorSmartInvert
@@ -920,8 +866,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah warna font label otomatis dibalik berdasarkan warna mark
 :::
 
 ### labelPosition
@@ -929,8 +874,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Posisi label
 :::
 
 ### labelOverlap
@@ -938,8 +882,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah anti-overlap label diaktifkan
 :::
 
 ### selector
@@ -947,8 +890,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Deskripsi}
-
-
+Filter label. Secara default, hubungan kondisi antar selectors adalah OR
 :::
 
 
@@ -957,8 +899,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Field dimensi, id dari salah satu item dalam dimensions
 :::
 
 #### operator
@@ -966,12 +907,11 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
-
-
-
-
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 :::
 
 #### op
@@ -979,14 +919,13 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 
-
-
-
-
-
+sama dengan operator
 :::
 
 #### value
@@ -994,8 +933,7 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Deskripsi}
-
-
+Memilih nilai field dimensi dalam item data. Array didukung
 :::
 
 ### dynamicFilter
@@ -1003,38 +941,25 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Deskripsi}
+Filter dinamis (eksekusi kode yang dihasilkan AI)
 
+Mengimplementasikan logika filter data kompleks melalui kode JavaScript yang dihasilkan AI
 
+Kemampuan utama:
 
+\- Mendukung kondisi filter data yang sangat kompleks
 
+\- Menggunakan fungsi utilitas bawaan untuk operasi data
 
+\- Dieksekusi dengan aman di lingkungan browser (sandbox Web Worker)
 
+Persyaratan lingkungan: hanya didukung di lingkungan browser; lingkungan Node.js akan menggunakan fallback
 
+Catatan: selector dan dynamicFilter tidak dapat digunakan bersamaan. dynamicFilter memiliki prioritas lebih tinggi
 
+Konfigurasi filter dinamis chart
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Menggunakan kode JavaScript yang dihasilkan AI untuk memfilter mark chart (bar, titik, dan sebagainya)
 :::
 
 
@@ -1047,14 +972,13 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Deskripsi kebutuhan filter pengguna (bahasa alami)
 :::
 
 **Contoh**
-"Sorot batang dengan penjualan di atas 1000"
+\- Mendukung kondisi filter data kompleks apa pun
 
-"Sorot batang dengan margin laba tertinggi di setiap wilayah"
+\- Menggunakan fungsi utilitas bawaan untuk operasi data
 
 
 
@@ -1063,20 +987,17 @@ Konfigurasi warna gradien linear, digunakan untuk menentukan skema warna chart
 **Type:** `string`
 
 :::note{title=Deskripsi}
+Kode filter JavaScript yang dihasilkan AI
 
+\- Hanya boleh menggunakan fungsi utilitas bawaan (diakses melalui _ atau R)
 
+\- Parameter input: data (array), setiap item berisi field __row_index sebagai nomor baris
 
+\- Harus mengembalikan array kombinasi indeks baris dan field: Array<{ __row_index: number, field: string }>
 
+\- __row_index adalah nomor baris item data asli, dan field adalah field yang perlu disorot
 
-
-
-
-
-
-
-
-
-
+\- Dilarang: eval, Function, operasi async, DOM API, request jaringan
 :::
 
 **Contoh**
@@ -1124,8 +1045,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Deskripsi}
-
-
+Fallback ketika eksekusi kode gagal atau lingkungan tidak didukung
 :::
 
 
@@ -1134,8 +1054,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Field dimensi, id dari salah satu item dalam dimensions
 :::
 
 ##### operator
@@ -1143,12 +1062,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
-
-
-
-
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 :::
 
 ##### op
@@ -1156,14 +1074,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 
-
-
-
-
-
+sama dengan operator
 :::
 
 ##### value
@@ -1171,8 +1088,7 @@ _.map(filtered, item => [
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Deskripsi}
-
-
+Memilih nilai field dimensi dalam item data. Array didukung
 :::
 
 #### result
@@ -1180,12 +1096,9 @@ _.map(filtered, item => [
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Deskripsi}
+Hasil eksekusi filter dinamis (field runtime)
 
-
-
-
-
-
+Ditulis pada tahap prepare(); hanya baca saat runtime
 :::
 
 
@@ -1207,7 +1120,7 @@ _.map(filtered, item => [
 **Type:** `ColorLegend | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi legenda warna, digunakan untuk menentukan legenda chart, termasuk posisi, format, gaya, dan lain-lain.
+Konfigurasi legenda warna, digunakan untuk mendefinisikan legenda chart, termasuk posisi, format, gaya, dan lainnya.
 
 :::
 
@@ -1217,12 +1130,11 @@ Konfigurasi legenda warna, digunakan untuk menentukan legenda chart, termasuk po
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Posisi legenda
 :::
 
 **Contoh**
-
+position: 'rightTop'
 
 
 
@@ -1231,8 +1143,7 @@ Konfigurasi legenda warna, digunakan untuk menentukan legenda chart, termasuk po
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah legenda diaktifkan
 :::
 
 **Contoh**
@@ -1245,8 +1156,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna font legenda
 :::
 
 ### labelFontColor
@@ -1254,8 +1164,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna font legenda
 :::
 
 ### labelFontSize
@@ -1263,12 +1172,11 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Ukuran font legenda
 :::
 
 **Contoh**
-
+labelFontSize: 10
 
 
 
@@ -1277,12 +1185,11 @@ enable: true
 **Type:** `string | number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Ketebalan font legenda
 :::
 
 **Contoh**
-
+labelFontWeight: 400
 
 
 
@@ -1314,8 +1221,7 @@ Apakah mengaktifkan seleksi brush
 **Type:** `false | true`
 
 :::note{title=Deskripsi}
-
-
+Apakah tooltip diaktifkan
 :::
 
 
@@ -1342,8 +1248,7 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah brush selection diaktifkan
 :::
 
 ### brushType
@@ -1351,18 +1256,17 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
+Jenis brush
 
+Menentukan bentuk area brush dan arah seleksi.
 
+\- `rect`: seleksi persegi panjang, dapat memilih pada arah sumbu X dan Y sekaligus
 
+\- `polygon`: seleksi poligon, menggambar poligon bebas dengan mengklik beberapa titik
 
+\- `x`: seleksi arah sumbu X, hanya memilih pada arah X tanpa membatasi arah Y
 
-
-
-
-
-
-
-
+\- `y`: seleksi arah sumbu Y, hanya memilih pada arah Y tanpa membatasi arah X
 :::
 
 ### brushMode
@@ -1385,8 +1289,7 @@ Opasitas of selected data points, range 0-1
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah area brush dibersihkan setelah brush selection selesai
 :::
 
 ### inBrushStyle
@@ -1394,12 +1297,9 @@ Opasitas of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Deskripsi}
+Gaya data di dalam area brush
 
-
-
-
-
-
+Menentukan gaya titik data yang terseleksi
 :::
 
 
@@ -1408,12 +1308,9 @@ Opasitas of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
+Opasitas
 
-
-
-
-
-
+Opasitas titik data yang terseleksi, rentang nilai 0-1
 :::
 
 #### stroke
@@ -1421,8 +1318,7 @@ Opasitas of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna stroke
 :::
 
 #### lineWidth
@@ -1430,8 +1326,7 @@ Opasitas of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Lebar stroke
 :::
 
 ### outOfBrushStyle
@@ -1453,7 +1348,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 menjadi 10万, ratio:10000, symbol:"万"
 
 
 
@@ -1466,8 +1361,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna stroke
 :::
 
 #### lineWidth
@@ -1475,7 +1369,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
+Lebar stroke
 :::
 
 
@@ -1488,7 +1382,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 
 
 
-Selector data. Jika dikonfigurasi, menyediakan kemampuan pencocokan untuk nilai numerik, sebagian item data, dimensi, atau measure. Jika tidak diatur, gaya diterapkan secara global.
+Selector data. Jika dikonfigurasi, menyediakan kemampuan pencocokan untuk nilai numerik, sebagian item data, dimensi, atau metrik. Jika tidak diatur, gaya diterapkan secara global.
 
 
 

@@ -224,7 +224,7 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-\- locale=zh-CN: 749740.264 → 74.45~74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
 
@@ -261,8 +261,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -276,8 +276,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -396,8 +396,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -411,8 +411,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -780,8 +780,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -795,8 +795,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -1006,7 +1006,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -1169,7 +1169,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -1324,7 +1324,6 @@ labelFontWeight: 400
 
 :::note{title=Description}
 Legend shape
-
 :::
 
 :::warning{title=Warning}
@@ -1458,20 +1457,17 @@ Whether to enable brush selection
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Description}
-brush type
+Brush type
 
+Defines the shape and selection direction of the brush
 
+\- `rect`: rectangular brush selection; can select in both X-axis and Y-axis directions at the same time
 
-Define the shape and direction of the brush selection box
+\- `polygon`: polygon brush selection; draws an arbitrary polygon by clicking multiple points
 
-\- `rect`: Rectangular brush, allows simultaneous selection on X and Y axes
+\- `x`: X-axis brush selection; only selects in the X-axis direction, with no restriction in the Y-axis direction
 
-\- `polygon`: Polygonal brush, creates custom polygons by clicking points
-
-\- `x`: X-axis brush, restricts selection to the X-axis
-
-\- `y`: Y-axis brush, restricts selection to the Y-axis
-
+\- `y`: Y-axis brush selection; only selects in the Y-axis direction, with no restriction in the X-axis direction
 :::
 
 ### brushMode
@@ -2331,8 +2327,8 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -2346,8 +2342,8 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
-\- 100000 converts to 10K, ratio:1000, symbol:"K"
+- 100000 converts to 10万, ratio:10000, symbol:"万"
+- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
 
@@ -3035,7 +3031,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -3200,7 +3196,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -3412,7 +3408,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -3577,7 +3573,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -3776,7 +3772,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -3831,6 +3827,8 @@ Filter chart markers (bars, points, etc.) via AI-generated JavaScript code
 User requirement description (natural language)
 
 :::
+
+**Example**
 
 "Highlight columns with sales greater than 1000"
 
@@ -3940,7 +3938,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -4058,7 +4056,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -4232,7 +4230,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -4389,7 +4387,6 @@ true
 
 :::note{title=Description}
 Background color
-
 :::
 
 **Example**
@@ -4814,7 +4811,6 @@ true
 
 :::note{title=Description}
 Background color
-
 :::
 
 **Example**
@@ -5149,7 +5145,6 @@ true
 
 :::note{title=Description}
 Background color
-
 :::
 
 **Example**
@@ -5353,7 +5348,7 @@ Operator
 
 \- not in: Select data items where the dimension field value is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -5500,7 +5495,6 @@ true
 
 :::note{title=Description}
 Background color
-
 :::
 
 **Example**
@@ -5741,7 +5735,7 @@ Operator
 
 \- not in: select data items whose dimension field value is not in value
 
-same as operator
+Same as operator
 
 :::
 
@@ -5818,7 +5812,7 @@ Operator
 
 \- not in: select data items whose dimension field value is not in value
 
-same as operator
+Same as operator
 
 :::
 
@@ -5838,10 +5832,9 @@ Value of the dimension field used to select data items; arrays are supported
 :::note{title=Description}
 Difference value type.
 
-\- absolute: show the absolute difference, calculated as end \- start
+- absolute: displays the absolute difference, calculated as end - start
 
-\- percent: show the percentage difference, calculated as (end \- start) / start
-
+- percent: displays the percentage difference, calculated as (end - start) / start
 :::
 
 ### textFontSize
@@ -5877,7 +5870,6 @@ Text background color.
 
 :::note{title=Description}
 Line color.
-
 :::
 
 ### lineStyle
@@ -5886,7 +5878,6 @@ Line color.
 
 :::note{title=Description}
 Line style.
-
 :::
 
 

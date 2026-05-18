@@ -34,7 +34,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 applyUpdate(update: Uint8Array, transactionOrigin: any): any
 ```
 
-**Rueckgabe**: `any`
+**Rückgabe**: `any`
 
 **Parameter**:
 
@@ -51,7 +51,7 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 encodeStateAsUpdate(targetStateVector: Uint8Array): any
 ```
 
-**Rueckgabe**: `any`
+**Rückgabe**: `any`
 
 **Parameter**:
 
@@ -67,7 +67,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 getUUID(): string
 ```
 
-**Rueckgabe**: `string`
+**Rückgabe**: `string`
 
 ### setContent
 
@@ -77,7 +77,7 @@ getUUID(): string
 setContent(content: string): this
 ```
 
-**Rueckgabe**: `this`
+**Rückgabe**: `this`
 
 **Parameter**:
 
@@ -93,7 +93,7 @@ setContent(content: string): this
 build(): VBIInsightDSL
 ```
 
-**Rueckgabe**: `VBIInsightDSL`
+**Rückgabe**: `VBIInsightDSL`
 
 ### isEmpty
 
@@ -103,4 +103,4 @@ build(): VBIInsightDSL
 isEmpty(): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`

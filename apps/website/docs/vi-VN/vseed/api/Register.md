@@ -5,7 +5,7 @@
 ### registerCustomTheme
 
 :::note{title=Mô tả}
-Đăng ký theme tùy chỉnh.
+Đăng ký chủ đề tùy chỉnh.
 :::
 
 ```ts
@@ -16,20 +16,20 @@ function registerCustomTheme(key: string, themeConfig:
 
 **Tham số:**
 
-- Định danh duy nhất của theme
-- Đối tượng cấu hình theme, hoặc một hàm trả về đối tượng cấu hình
-Nếu là hàm, hàm sẽ nhận một đối tượng chứa lightTheme và darkTheme làm tham số, giúp mở rộng dựa trên theme hiện có dễ dàng hơn.
+- Định danh duy nhất của chủ đề
+- Đối tượng cấu hình chủ đề, hoặc một hàm trả về đối tượng cấu hình
+Nếu là hàm, hàm sẽ nhận một đối tượng chứa lightTheme và darkTheme làm tham số, giúp mở rộng dựa trên chủ đề hiện có dễ dàng hơn.
 
 **Ví dụ:**
 
 registerCustomTheme('myTheme', { ... });
-// Hoặc chỉnh sửa dựa trên theme sáng
+// Hoặc chỉnh sửa dựa trên chủ đề sáng
 registerCustomTheme('myTheme', ({ lightTheme }) => ({ ...lightTheme, ... }));
 
 ### registerDarkTheme
 
 :::note{title=Mô tả}
-Đăng ký theme tối (Dark Theme).
+Đăng ký chủ đề tối (Dark Theme).
 Sau khi đăng ký, có thể lấy qua Builder.getTheme('dark').
 :::
 
@@ -40,7 +40,7 @@ function registerDarkTheme(): void
 ### registerLightTheme
 
 :::note{title=Mô tả}
-Đăng ký theme sáng (Light Theme).
+Đăng ký chủ đề sáng (Light Theme).
 Sau khi đăng ký, có thể lấy qua Builder.getTheme('light').
 :::
 

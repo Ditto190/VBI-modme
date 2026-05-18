@@ -1,6 +1,6 @@
 # ChartTypeSelector
 
-## Import
+## Nhập
 
 ```ts
 import { ChartTypeSelector } from '@visactor/vbi-react/components'

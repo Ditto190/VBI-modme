@@ -6,7 +6,7 @@ pageType: doc
 
 ## Ví dụ cơ bản
 
-Bằng cách cấu hình thuộc tính `page`, bạn có thể chỉ định chart hiển thị dữ liệu của một số giá trị dimension cụ thể.
+Bằng cách cấu hình thuộc tính `page`, bạn có thể chỉ định biểu đồ hiển thị dữ liệu của một số giá trị chiều cụ thể.
 
 - `field`: trường dùng để phân trang.
 - `currentValue`: giá trị hiện đang được hiển thị.
@@ -66,7 +66,7 @@ export default SimplePageDemo
 
 ## Player tùy chỉnh
 
-Bằng cách kết hợp thuộc tính `page` với quản lý state của React, bạn có thể triển khai điều khiển player tùy chỉnh.
+Bằng cách kết hợp thuộc tính `page` với quản lý trạng thái của React, bạn có thể triển khai điều khiển trình phát tùy chỉnh.
 
 ```tsx direction=vertical playground
 import { useRef, useEffect, useState, memo } from 'react'
@@ -650,7 +650,7 @@ const Demo = memo(() => {
 
   const order = Array.from(new Set(vseed.dataset.map((d) => d[vseed?.page.field])))
 
-  // Player state
+  // Trạng thái trình phát
   const [currentIndex, setCurrentIndex] = useState(() => {
     const idx = order.indexOf(vseed?.page?.currentValue)
     return idx === -1 ? 0 : idx
@@ -658,12 +658,12 @@ const Demo = memo(() => {
   const [current, setCurrent] = useState(order[currentIndex])
   const [isPlaying, setIsPlaying] = useState(false)
 
-  // Sync current value
+  // Đồng bộ giá trị current
   useEffect(() => {
     setCurrent(order[currentIndex])
   }, [currentIndex])
 
-  // Auto play logic
+  // Logic tự động phát
   useEffect(() => {
     let timer: number
     if (isPlaying) {
@@ -674,7 +674,7 @@ const Demo = memo(() => {
     return () => clearInterval(timer)
   }, [isPlaying, order.length])
 
-  // Event handling
+  // Xử lý sự kiện
   const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + order.length) % order.length)
   const handleNext = () => setCurrentIndex((prev) => (prev + 1) % order.length)
   const togglePlay = () => setIsPlaying(!isPlaying)
@@ -754,9 +754,9 @@ const Demo = memo(() => {
           background: '#f8fafc',
         }}
       >
-        {/* Row 1: Player controls */}
+        {/* Hàng 1: Điều khiển trình phát */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <button onClick={handlePrev} style={btnStyle} title="Previous">
+          <button onClick={handlePrev} style={btnStyle} title="Trước">
             <svg viewBox="0 0 24 24" style={iconStyle}>
               <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
             </svg>
@@ -781,7 +781,7 @@ const Demo = memo(() => {
             ))}
           </select>
 
-          <button onClick={handleNext} style={btnStyle} title="Next">
+          <button onClick={handleNext} style={btnStyle} title="Tiếp">
             <svg viewBox="0 0 24 24" style={iconStyle}>
               <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
             </svg>
@@ -806,7 +806,7 @@ const Demo = memo(() => {
           </button>
         </div>
 
-        {/* Row 2: Progress bar */}
+        {/* Hàng 2: Thanh tiến trình */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <input
             type="range"

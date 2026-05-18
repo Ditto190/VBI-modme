@@ -70,7 +70,7 @@ Dataset
 
 
 
-An aggregated dataset that follows the TidyData specification, used to define the chart's data source and structure
+An aggregated dataset that conforms to the TidyData specification, used to define the chart's data source and structure
 
 :::
 
@@ -89,7 +89,7 @@ Dimensions
 
 
 
-Dimension configuration, used to define the source / target node structure and supporting the source / target / color / detail / label / tooltip / row / column channels
+Dimension configuration, used to define the source / target node structure and supports the source / target / color / detail / label / tooltip / row / column channels
 
 :::
 
@@ -171,7 +171,7 @@ Measures
 
 
 
-Measure configuration, used to define flow size and supporting the size / detail / label / tooltip channels
+Measure configuration, used to define flow size and supports the size / detail / label / tooltip channels
 
 :::
 
@@ -251,7 +251,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -266,7 +266,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -386,7 +386,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -401,7 +401,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -766,7 +766,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -781,7 +781,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -992,7 +992,7 @@ Operator
 
 \- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 
@@ -1169,7 +1169,7 @@ Operator
 
 \- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 

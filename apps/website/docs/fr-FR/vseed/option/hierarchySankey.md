@@ -1,22 +1,22 @@
 # HierarchySankey
 
-:::info{title=Mappage Encoding}
+:::info{title=Mappage d’encodage}
 Le diagramme de Sankey hiérarchique prend en charge les canaux visuels suivants :
 
 `hierarchy`: canal hiérarchique, prend en charge `plusieurs dimensions`
 
 `size`: canal de taille, prend en charge `une mesure`
 
-`label`: canal d’étiquette, prend en charge `plusieurs dimensions` et `plusieurs mesures`
+`label`: canal de libellé, prend en charge `plusieurs dimensions` et `plusieurs mesures`
 
 `tooltip`: canal d’infobulle, prend en charge `plusieurs dimensions` et `plusieurs mesures`
 
 :::
 
 :::note{title=Description}
-Le diagramme de Sankey hiérarchique sert à afficher des données de flux hiérarchiques, avec des nœuds arborescents et des liens de flux représentant les relations hiérarchiques et les volumes
+Diagramme de Sankey hiérarchique, utilisé pour afficher des données de flux hiérarchiques. Les nœuds arborescents et les liens de flux représentent les relations hiérarchiques et les volumes de flux.
 
-Scenarios applicables :
+Scénarios d’utilisation :
 
 \- Afficher les relations de flux hiérarchiques de l’amont vers l’aval
 
@@ -25,13 +25,13 @@ Scenarios applicables :
 :::
 
 :::warning{title=Warning}
-Exigences de donnees :
+Exigences de données :
 
 \- Au moins 1 champ de dimension pour construire la structure hiérarchique
 
 \- Au moins 1 champ numérique (mesure) pour mapper la taille du flux
 
-\- Le advanced pipeline doit convertir tidyData en structure children arborescente prise en charge par VChart
+\- advanced pipeline doit convertir tidyData en structure children arborescente prise en charge par VChart
 
 :::
 
@@ -60,7 +60,7 @@ Diagramme de Sankey hiérarchique, affiche les relations de flux et les volumes 
 **Type:** `Record[]`
 
 :::note{title=Description}
-Jeu de données préagrégé conforme à TidyData, définissant la source et la structure des données du graphique. Les utilisateurs n'ont pas besoin de traiter manuellement les données d'entrée ; la puissante capacité Data Reshape de VSeed s'en charge automatiquement. Les données du graphique Area sont finalement remodelées en 2 dimensions et 1 mesure.
+Jeu de données
 
 
 
@@ -79,7 +79,7 @@ Jeu de données déjà agrégé et conforme à la spécification TidyData, utili
 **Type:** `HierarchyDimension[] | undefined`
 
 :::note{title=Description}
-La première dimension est mappée sur l'axe X ; les dimensions restantes sont fusionnées avec les noms de mesures (lorsqu'il y a plusieurs mesures) et affichées comme éléments de légende.
+Champs de dimension
 
 
 
@@ -98,8 +98,7 @@ Configuration des dimensions, utilisée pour définir la structure hiérarchique
 **Type:** `string`
 
 :::note{title=Description}
-ID de champ correspondant à la dimension
-
+ID du champ correspondant à la dimension
 :::
 
 ### alias
@@ -126,8 +125,7 @@ Configuration du format de date de la dimension
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
 :::note{title=Description}
-Granularité temporelle, détermine la précision d'affichage de la date
-
+Granularité temporelle, détermine la précision d’affichage de la date
 :::
 
 ### encoding
@@ -175,8 +173,7 @@ Configuration des mesures, utilisée pour définir la taille du flux, avec prise
 **Type:** `string`
 
 :::note{title=Description}
-ID de mesure, doit être unique
-
+ID de mesure. Ne peut pas être dupliqué
 :::
 
 ### alias
@@ -184,8 +181,7 @@ ID de mesure, doit être unique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Alias de mesure, doublons autorisés ; s'il n'est pas défini, alias vaut id
-
+Alias de mesure. Les doublons sont autorisés. Si non renseigné, alias prend la valeur de id
 :::
 
 ### autoFormat
@@ -193,20 +189,19 @@ Alias de mesure, doublons autorisés ; s'il n'est pas défini, alias vaut id
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Formatage numérique automatique, activé par défaut, priorité la plus élevée
+Formatage automatique des nombres, activé par défaut et prioritaire
 
-Lorsque autoFormat=true, toutes les configurations numFormat sont remplacées
+Lorsque autoFormat=true, il remplace toutes les configurations numFormat
 
-Lorsqu'il est activé, les étiquettes de données et les infobulles choisissent automatiquement le format adapté selon les valeurs de mesure et la locale
+Lorsqu’il est activé, les étiquettes et infobulles du graphique choisissent automatiquement le format approprié selon les valeurs de mesure et la locale
 
-Règles de formatage : nombres décimaux avec compact notation activée, minimum 0 décimale, maximum 2 décimales, arrondi automatique, via l'implémentation Intl.NumberFormat du navigateur
+Règles de formatage : nombres décimaux avec compact notation activée, au minimum 0 décimale, au maximum 2 décimales, arrondi automatique, implémenté avec Intl.NumberFormat du navigateur
 
-Par exemple :
+Exemple :
 
 \- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
-
 :::
 
 ### numFormat
@@ -214,10 +209,9 @@ Par exemple :
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Formatage numérique personnalisé pour les mesures ; appliqué automatiquement aux étiquettes et infobulles
+Formatage numérique personnalisé des mesures, appliqué automatiquement à label et tooltip
 
-Remarque : pour utiliser un format personnalisé, définissez explicitement autoFormat=false ; sinon autoFormat remplacera cette configuration
-
+Remarque : pour utiliser un formatage personnalisé, définissez explicitement autoFormat=false ; sinon autoFormat remplace cette configuration
 :::
 
 
@@ -226,8 +220,7 @@ Remarque : pour utiliser un format personnalisé, définissez explicitement auto
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Type de format numérique, prend en charge : nombre (décimal), pourcentage (%), pour mille (‰), notation scientifique
-
+Type de format numérique. Prend en charge nombre (décimal), pourcentage (%), pour mille (‰) et notation scientifique
 :::
 
 #### ratio
@@ -235,12 +228,11 @@ Type de format numérique, prend en charge : nombre (décimal), pourcentage (%),
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Ratio de format numérique, ne peut pas être 0
-
+Ratio de formatage numérique. Ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -250,12 +242,11 @@ Ratio de format numérique, ne peut pas être 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Symbole de format numérique, par ex. %, ‰
-
+Symbole de formatage numérique, par exemple % ou ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -265,8 +256,7 @@ Symbole de format numérique, par ex. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Séparateur des milliers pour le formatage numérique
-
+Séparateur de milliers pour le formatage numérique
 :::
 
 #### suffix
@@ -274,8 +264,7 @@ Séparateur des milliers pour le formatage numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Suffixe de format numérique
-
+Suffixe de formatage numérique
 :::
 
 #### prefix
@@ -283,8 +272,7 @@ Suffixe de format numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Préfixe de format numérique
-
+Préfixe de formatage numérique
 :::
 
 #### fractionDigits
@@ -292,8 +280,7 @@ Préfixe de format numérique
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur ; priorité inférieure à significantDigits
-
+Décimales du formatage numérique, avec minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur. Priorité inférieure à significantDigits
 :::
 
 **Exemple**
@@ -311,8 +298,7 @@ Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Chiffres significatifs pour le formatage numérique, utilise minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur ; priorité supérieure à fractionDigits
-
+Chiffres significatifs du formatage numérique, avec minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur. Priorité supérieure à fractionDigits
 :::
 
 **Exemple**
@@ -332,8 +318,7 @@ Chiffres significatifs pour le formatage numérique, utilise minimumSignificantD
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Priorité d'arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis ; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority
-
+Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingPriority
 :::
 
 **Exemple**
@@ -347,8 +332,7 @@ Priorité d'arrondi du formatage numérique lorsque significantDigits et fractio
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Mode d'arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode
-
+Mode d’arrondi du formatage numérique, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingMode
 :::
 
 ### format
@@ -361,8 +345,7 @@ Mode d'arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-Type de format numérique, prend en charge : nombre (décimal), pourcentage (%), pour mille (‰), notation scientifique
-
+Type de format numérique. Prend en charge nombre (décimal), pourcentage (%), pour mille (‰) et notation scientifique
 :::
 
 #### ratio
@@ -370,12 +353,11 @@ Type de format numérique, prend en charge : nombre (décimal), pourcentage (%),
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Ratio de format numérique, ne peut pas être 0
-
+Ratio de formatage numérique. Ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -385,12 +367,11 @@ Ratio de format numérique, ne peut pas être 0
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Symbole de format numérique, par ex. %, ‰
-
+Symbole de formatage numérique, par exemple % ou ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -400,8 +381,7 @@ Symbole de format numérique, par ex. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Séparateur des milliers pour le formatage numérique
-
+Séparateur de milliers pour le formatage numérique
 :::
 
 #### suffix
@@ -409,8 +389,7 @@ Séparateur des milliers pour le formatage numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Suffixe de format numérique
-
+Suffixe de formatage numérique
 :::
 
 #### prefix
@@ -418,8 +397,7 @@ Suffixe de format numérique
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Préfixe de format numérique
-
+Préfixe de formatage numérique
 :::
 
 #### fractionDigits
@@ -427,8 +405,7 @@ Préfixe de format numérique
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur ; priorité inférieure à significantDigits
-
+Décimales du formatage numérique, avec minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur. Priorité inférieure à significantDigits
 :::
 
 **Exemple**
@@ -446,8 +423,7 @@ Nombre de décimales pour le formatage numérique, utilise minimumFractionDigits
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Chiffres significatifs pour le formatage numérique, utilise minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur ; priorité supérieure à fractionDigits
-
+Chiffres significatifs du formatage numérique, avec minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur. Priorité supérieure à fractionDigits
 :::
 
 **Exemple**
@@ -467,8 +443,7 @@ Chiffres significatifs pour le formatage numérique, utilise minimumSignificantD
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-Priorité d'arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis ; utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingPriority
-
+Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingPriority
 :::
 
 **Exemple**
@@ -482,8 +457,7 @@ Priorité d'arrondi du formatage numérique lorsque significantDigits et fractio
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-Mode d'arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur et suit les mêmes règles que roundingMode
-
+Mode d’arrondi du formatage numérique, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingMode
 :::
 
 ### encoding
@@ -535,8 +509,7 @@ Utilisé pour spécifier le nom du champ de pagination ; doit être une dimensio
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Champ de pagination ; indique le nom du champ utilisé pour la pagination et doit être une dimension
 :::
 
 ### currentValue
@@ -544,8 +517,7 @@ Utilisé pour spécifier le nom du champ de pagination ; doit être une dimensio
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Valeur de pagination actuelle ; indique la valeur utilisée pour déterminer la page courante
 :::
 
 **Exemple**
@@ -587,8 +559,7 @@ Configuration des couleurs, utilisée pour définir le schéma de couleurs du gr
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-
-
+Palette de couleurs discrètes utilisée pour définir les couleurs des différents éléments du graphique
 :::
 
 **Exemple**
@@ -601,8 +572,7 @@ Configuration des couleurs, utilisée pour définir le schéma de couleurs du gr
 **Type:** `string[] | undefined`
 
 :::note{title=Description}
-
-
+Palette de couleurs en dégradé linéaire utilisée pour définir les couleurs des différents éléments du graphique
 :::
 
 **Exemple**
@@ -615,8 +585,7 @@ Configuration des couleurs, utilisée pour définir le schéma de couleurs du gr
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Description}
-
-
+Mappage de couleurs, utilisé pour associer les valeurs de données à des couleurs précises
 :::
 
 **Exemple**
@@ -632,8 +601,7 @@ Configuration des couleurs, utilisée pour définir le schéma de couleurs du gr
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Configuration des couleurs positif/négatif ; définit la couleur des valeurs positives dans le graphique
 :::
 
 ### negativeColor
@@ -641,8 +609,7 @@ Configuration des couleurs, utilisée pour définir le schéma de couleurs du gr
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Configuration des couleurs positif/négatif ; définit la couleur des valeurs négatives dans le graphique
 :::
 
 
@@ -665,8 +632,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `false | true`
 
 :::note{title=Description}
-
-
+Indique si les étiquettes sont activées
 :::
 
 ### wrap
@@ -674,8 +640,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si les étiquettes passent à la ligne
 :::
 
 ### showValue
@@ -683,12 +648,11 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
+Indique si les étiquettes affichent les valeurs de mesure
 
+Dans les scénarios à plusieurs mesures, il n’y a pas de risque de valeurs contradictoires, car toutes les mesures liées au rendu sont traitées par `foldMeasures` et fusionnées en une seule mesure représentant un point de données.
 
-
-
-
-
+Remarque : encoding.label a une priorité plus élevée ; cette configuration n’affecte pas encoding.label
 :::
 
 ### showValuePercent
@@ -696,12 +660,11 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
+Indique si les étiquettes affichent le pourcentage des valeurs de mesure
 
+Dans les scénarios à plusieurs mesures, il n’y a pas de risque de valeurs contradictoires, car toutes les mesures liées au rendu sont traitées par `foldMeasures` et fusionnées en une seule mesure représentant un point de données.
 
-
-
-
-
+Remarque : encoding.label a une priorité plus élevée ; cette configuration n’affecte pas encoding.label
 :::
 
 ### showDimension
@@ -709,12 +672,11 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
+Indique si les étiquettes affichent les libellés de dimension
 
+Affiche tous les libellés de dimension
 
-
-
-
-
+Remarque : encoding.label a une priorité plus élevée ; cette configuration n’affecte pas encoding.label
 :::
 
 ### autoFormat
@@ -722,8 +684,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si les valeurs d’étiquette sont formatées automatiquement. Lorsque autoFormat vaut true, la configuration numFormat est ignorée
 :::
 
 ### numFormat
@@ -731,8 +692,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-
-
+Configuration du format des valeurs d’étiquette. Elle est fusionnée avec `format` dans `measure` ; `format` dans `measure` a une priorité plus élevée. numFormat a une priorité inférieure à autoFormat
 :::
 
 
@@ -741,8 +701,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Description}
-
-
+Type de format numérique. Prend en charge nombre (décimal), pourcentage (%), pour mille (‰) et notation scientifique
 :::
 
 #### ratio
@@ -750,11 +709,11 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Ratio de formatage numérique. Ne peut pas être 0
 :::
 
 **Exemple**
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -765,11 +724,11 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Symbole de formatage numérique, par exemple % ou ‰
 :::
 
 **Exemple**
+\- 100000 devient 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -780,8 +739,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Séparateur de milliers pour le formatage numérique
 :::
 
 #### suffix
@@ -789,8 +747,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Suffixe de formatage numérique
 :::
 
 #### prefix
@@ -798,8 +755,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Préfixe de formatage numérique
 :::
 
 #### fractionDigits
@@ -807,8 +763,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Décimales du formatage numérique, avec minimumFractionDigits et maximumFractionDigits de Intl.NumberFormat du navigateur. Priorité inférieure à significantDigits
 :::
 
 **Exemple**
@@ -826,8 +781,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Chiffres significatifs du formatage numérique, avec minimumSignificantDigits et maximumSignificantDigits de Intl.NumberFormat du navigateur. Priorité supérieure à fractionDigits
 :::
 
 **Exemple**
@@ -847,8 +801,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Description}
-
-
+Priorité d’arrondi du formatage numérique lorsque significantDigits et fractionDigits sont tous deux définis, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingPriority
 :::
 
 **Exemple**
@@ -862,8 +815,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Description}
-
-
+Mode d’arrondi du formatage numérique, avec Intl.NumberFormat du navigateur selon les mêmes règles que roundingMode
 :::
 
 ### labelFontSize
@@ -871,8 +823,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Taille de police de l’étiquette
 :::
 
 ### labelFontWeight
@@ -880,8 +831,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-
-
+Graisse de police de l’étiquette
 :::
 
 ### labelBackgroundColor
@@ -889,8 +839,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur d’arrière-plan de l’étiquette
 :::
 
 ### labelStroke
@@ -898,8 +847,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur du contour de l’étiquette
 :::
 
 ### labelColor
@@ -907,8 +855,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de police de l’étiquette
 :::
 
 ### labelColorSmartInvert
@@ -916,8 +863,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la couleur de police de l’étiquette est automatiquement inversée selon la couleur du marqueur
 :::
 
 ### labelPosition
@@ -925,8 +871,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Description}
-
-
+Position de l’étiquette
 :::
 
 ### labelOverlap
@@ -934,8 +879,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si l’évitement du chevauchement des étiquettes est activé
 :::
 
 ### selector
@@ -943,8 +887,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-
-
+Filtre d’étiquette. Par défaut, la relation entre selectors est OR
 :::
 
 
@@ -953,8 +896,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Champ de dimension, id d’un élément de dimensions
 :::
 
 #### operator
@@ -962,12 +904,11 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
-
-
-
-
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 :::
 
 #### op
@@ -975,14 +916,13 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 
-
-
-
-
-
+identique à operator
 :::
 
 #### value
@@ -990,8 +930,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-
-
+Sélectionne les valeurs du champ de dimension dans les éléments de données. Les tableaux sont pris en charge
 :::
 
 ### dynamicFilter
@@ -999,38 +938,25 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
+Filtre dynamique (exécution de code généré par IA)
 
+Implémente une logique complexe de filtrage des données via du code JavaScript généré par IA
 
+Capacités clés :
 
+\- Prend en charge des conditions de filtrage de données arbitrairement complexes
 
+\- Utilise des fonctions utilitaires intégrées pour les opérations sur les données
 
+\- S’exécute en toute sécurité dans l’environnement navigateur (sandbox Web Worker)
 
+Exigence d’environnement : uniquement pris en charge dans le navigateur ; les environnements Node.js utilisent fallback
 
+Remarque : selector et dynamicFilter ne peuvent pas être utilisés simultanément. dynamicFilter a une priorité plus élevée
 
+Configuration du filtre dynamique du graphique
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Utilise du code JavaScript généré par IA pour filtrer les marques du graphique (barres, points, etc.)
 :::
 
 
@@ -1043,8 +969,7 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Description du besoin de filtrage utilisateur (langage naturel)
 :::
 
 **Exemple**
@@ -1059,20 +984,17 @@ Configuration des étiquettes, utilisée pour définir les étiquettes de donné
 **Type:** `string`
 
 :::note{title=Description}
+Code de filtrage JavaScript généré par IA
 
+\- Seules les fonctions utilitaires intégrées peuvent être utilisées (via _ ou R)
 
+\- Paramètre d’entrée : data (tableau), chaque item contient le champ __row_index indiquant le numéro de ligne
 
+\- Doit retourner un tableau de combinaisons index de ligne et champ : Array<{ __row_index: number, field: string }>
 
+\- __row_index indique le numéro de ligne de l’élément de données original, field indique le champ à mettre en évidence
 
-
-
-
-
-
-
-
-
-
+\- Interdit : eval, Function, opérations asynchrones, API DOM, requêtes réseau
 :::
 
 **Exemple**
@@ -1120,8 +1042,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-
-
+Fallback lorsque l’exécution du code échoue ou que l’environnement n’est pas pris en charge
 :::
 
 
@@ -1130,8 +1051,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Description}
-
-
+Champ de dimension, id d’un élément de dimensions
 :::
 
 ##### operator
@@ -1139,12 +1059,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
-
-
-
-
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 :::
 
 ##### op
@@ -1152,14 +1071,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Description}
+Opérateur
 
+\- in : sélectionne les éléments de données dont la valeur du champ de dimension est dans value
 
+\- not in : sélectionne les éléments de données dont la valeur du champ de dimension n’est pas dans value
 
-
-
-
-
-
+identique à operator
 :::
 
 ##### value
@@ -1167,8 +1085,7 @@ _.map(filtered, item => [
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-
-
+Sélectionne les valeurs du champ de dimension dans les éléments de données. Les tableaux sont pris en charge
 :::
 
 #### result
@@ -1176,12 +1093,9 @@ _.map(filtered, item => [
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
+Résultat d’exécution du filtre dynamique (champ runtime)
 
-
-
-
-
-
+Écrit pendant prepare(); en lecture seule à l’exécution
 :::
 
 
@@ -1217,8 +1131,7 @@ Configuration de la légende, utilisée pour définir l’affichage, la position
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la légende est activée
 :::
 
 **Exemple**
@@ -1231,13 +1144,11 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-
-
+Indique si la bordure de légende est activée
 :::
 
 :::warning{title=Warning}
-
-
+Efficace uniquement pour les légendes discrètes
 :::
 
 **Exemple**
@@ -1250,8 +1161,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de police de la légende
 :::
 
 ### pagerIconColor
@@ -1259,8 +1169,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de l’icône du pager
 :::
 
 ### pagerIconDisableColor
@@ -1268,8 +1177,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de l’icône du pager désactivée
 :::
 
 ### labelFontSize
@@ -1277,8 +1185,7 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Description}
-
-
+Taille de police de la légende
 :::
 
 **Exemple**
@@ -1291,8 +1198,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-
-
+Couleur de police de la légende
 :::
 
 ### labelFontWeight
@@ -1300,8 +1206,7 @@ enable: true
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-
-
+Graisse de police de la légende
 :::
 
 **Exemple**
@@ -1314,13 +1219,11 @@ enable: true
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Description}
-
-
+Forme de la légende
 :::
 
 :::warning{title=Warning}
-
-
+Efficace uniquement pour les légendes discrètes
 :::
 
 **Exemple**
@@ -1333,8 +1236,7 @@ enable: true
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Description}
-
-
+Position de la légende
 :::
 
 **Exemple**
@@ -1347,17 +1249,15 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Description}
+Nombre maximal de colonnes ou de lignes lorsqu’il y a beaucoup d’éléments de légende
 
+Si position est horizontale (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize contrôle le nombre de colonnes affichées
 
-
-
-
-
+Si position est verticale (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize contrôle le nombre de lignes affichées
 :::
 
 :::warning{title=Warning}
-
-
+Efficace uniquement pour les légendes discrètes
 :::
 
 **Exemple**
@@ -1385,8 +1285,7 @@ Configuration des infobulles, utilisée pour définir les informations du graphi
 **Type:** `false | true`
 
 :::note{title=Description}
-
-
+Indique si les infobulles sont activées
 :::
 
 

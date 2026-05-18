@@ -1,7 +1,7 @@
 # RacePie
 
 :::note{title=Deskripsi}
-Diagram Pie Dinamis (Race Pie Chart)
+Diagram pie dinamis (Race Pie Chart)
 
 Cocok untuk menampilkan hubungan proporsi data yang berubah seiring waktu; luas sektor menunjukkan proporsi setiap kategori
 
@@ -16,7 +16,7 @@ Skenario yang sesuai:
 :::
 
 :::note{title=Note}
-Diagram Pie Dinamis:
+Diagram pie dinamis:
 
 \- Sudut memetakan nilai metrik, warna memetakan nilai dimensi
 
@@ -46,13 +46,12 @@ Sumber data
 
 :::
 
-
 ## dimensions
 
 **Type:** `RacePieDimension[] | undefined`
 
 :::note{title=Deskripsi}
-Dimensi pertama dipetakan ke sumbu X; dimensi lainnya digabung dengan nama metrik (saat ada beberapa metrik) dan ditampilkan sebagai item legenda.
+Dimensi
 
 :::
 
@@ -101,19 +100,19 @@ Granularitas waktu, menentukan presisi tampilan tanggal
 :::note{title=Deskripsi}
 Kanal tempat dimensi dipetakan
 
-\- color: mendukung pemetaan beberapa dimensi ke channel warna
+\- color: mendukung pemetaan beberapa dimensi ke kanal warna
 
-\- detail: mendukung pemetaan beberapa dimensi ke channel detail
+\- detail: mendukung pemetaan beberapa dimensi ke kanal detail
 
 \- tooltip: mendukung pemetaan beberapa dimensi ke kanal tooltip
 
 \- label: mendukung pemetaan beberapa dimensi ke kanal label
 
-\- row: mendukung pemetaan beberapa dimensi ke channel baris
+\- row: mendukung pemetaan beberapa dimensi ke kanal baris
 
-\- column: mendukung pemetaan beberapa dimensi ke channel kolom
+\- column: mendukung pemetaan beberapa dimensi ke kanal kolom
 
-\- player: mendukung pemetaan beberapa dimensi ke saluran pemutar
+\- player: mendukung pemetaan beberapa dimensi ke kanal pemutar
 
 :::
 
@@ -126,7 +125,6 @@ Kanal tempat dimensi dipetakan
 Metrik
 
 :::
-
 
 ### id
 
@@ -155,7 +153,7 @@ Pemformatan angka otomatis, aktif secara default, prioritas tertinggi
 
 Saat autoFormat=true, semua konfigurasi numFormat akan ditimpa
 
-Saat diaktifkan, label data chart dan tooltip otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale
+Saat diaktifkan, label data diagram dan tooltip otomatis memilih format yang sesuai berdasarkan nilai metrik dan locale
 
 Aturan format: angka desimal dengan compact notation aktif, minimal 0 digit desimal, maksimal 2 digit desimal, pembulatan otomatis, menggunakan implementasi Intl.NumberFormat browser
 
@@ -184,7 +182,7 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Deskripsi}
-
+Tipe format angka, mendukung: angka (desimal), persen (%), permille (‰), notasi ilmiah
 
 :::
 
@@ -193,13 +191,13 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
+Rasio format angka, tidak boleh 0
 
 :::
 
 **Contoh**
-
-
+\- 100000 menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -208,12 +206,13 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
+Simbol format angka, misalnya %, ‰
 
 :::
 
 **Contoh**
-
-
+\- 100000 menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -222,7 +221,7 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
+Pemisah ribuan untuk format angka
 
 :::
 
@@ -231,7 +230,7 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
+Sufiks format angka
 
 :::
 
@@ -240,7 +239,7 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
+Prefiks format angka
 
 :::
 
@@ -249,16 +248,17 @@ Catatan: Untuk memakai format kustom, autoFormat=false harus diatur secara ekspl
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
+Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser; prioritas lebih rendah daripada significantDigits
 
 :::
 
 **Contoh**
-
-
-Fungsi easing animasi
-
-
-
+\- 1234.5678 dikonversi menjadi 1235 , fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -267,19 +267,19 @@ Fungsi easing animasi
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi pengurutan sumbu kategori, mendukung pengurutan berdasarkan dimensi atau measure, serta urutan kustom
+Digit signifikan untuk format angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser; prioritas lebih tinggi daripada fractionDigits
 
 :::
 
 **Contoh**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
-
+\- 1234.5678 dikonversi menjadi 1000 , significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200 , significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234 , significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6 , significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57 , significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568 , significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -288,13 +288,13 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Deskripsi}
-
+Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama-sama diatur; menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingPriority yang sama
 
 :::
 
 **Contoh**
-Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
-
+\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -303,7 +303,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Deskripsi}
-
+Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingMode yang sama
 
 :::
 
@@ -317,7 +317,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Deskripsi}
-
+Tipe format angka, mendukung: angka (desimal), persen (%), permille (‰), notasi ilmiah
 
 :::
 
@@ -326,13 +326,13 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
+Rasio format angka, tidak boleh 0
 
 :::
 
 **Contoh**
-
-
+\- 100000 menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -341,12 +341,13 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
+Simbol format angka, misalnya %, ‰
 
 :::
 
 **Contoh**
-
-
+\- 100000 menjadi 10万, ratio:10000, symbol:"万"
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -355,7 +356,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
+Pemisah ribuan untuk format angka
 
 :::
 
@@ -364,7 +365,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
+Sufiks format angka
 
 :::
 
@@ -373,7 +374,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
+Prefiks format angka
 
 :::
 
@@ -382,16 +383,17 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
+Jumlah digit desimal untuk format angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser; prioritas lebih rendah daripada significantDigits
 
 :::
 
 **Contoh**
-
-
-Fungsi easing animasi
-
-
-
+\- 1234.5678 dikonversi menjadi 1235 , fractionDigits:0 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -400,19 +402,19 @@ Fungsi easing animasi
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi pengurutan sumbu kategori, mendukung pengurutan berdasarkan dimensi atau measure, serta urutan kustom
+Digit signifikan untuk format angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser; prioritas lebih tinggi daripada fractionDigits
 
 :::
 
 **Contoh**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
-
+\- 1234.5678 dikonversi menjadi 1000 , significantDigits:1
+\- 1234.5678 dikonversi menjadi 1200 , significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234 , significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6 , significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57 , significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568 , significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -421,13 +423,13 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Deskripsi}
-
+Prioritas pembulatan format angka saat significantDigits dan fractionDigits sama-sama diatur; menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingPriority yang sama
 
 :::
 
 **Contoh**
-Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
-
+\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3 (roundingPriority:lessPrecision)
+\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -436,7 +438,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Deskripsi}
-
+Mode pembulatan format angka, menggunakan Intl.NumberFormat browser dan mengikuti aturan roundingMode yang sama
 
 :::
 
@@ -449,7 +451,7 @@ Kanal tempat metrik dipetakan
 
 \- angle: sudut tempat metrik dipetakan
 
-\- color: metrik dipetakan ke channel warna
+\- color: metrik dipetakan ke kanal warna
 
 \- label: metrik dipetakan ke kanal label
 
@@ -477,8 +479,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `Page | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi paginasi, digunakan untuk menentukan nama field paginasi, dan harus berupa dimensi.
 :::
 
 
@@ -487,8 +488,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Field paginasi; menentukan nama field untuk paginasi dan harus berupa dimensi
 :::
 
 ### currentValue
@@ -496,8 +496,7 @@ Ada dua cara mengonfigurasi tree metrik: Opsi 1 langsung mengonfigurasi tree met
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Nilai paginasi saat ini; menentukan nilai yang digunakan untuk menentukan halaman saat ini
 :::
 
 **Contoh**
@@ -666,7 +665,11 @@ Warna tombol maju pemutar
 **Type:** `BackgroundColor`
 
 :::note{title=Deskripsi}
+Warna latar belakang chart
 
+
+
+Warna latar dapat berupa string warna (misalnya 'red', 'blue'), atau nilai hex, rgb, atau rgba (misalnya '#ff0000', 'rgba(255,0,0,0.5)')
 :::
 
 
@@ -675,7 +678,11 @@ Warna tombol maju pemutar
 **Type:** `Color | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi warna
+Warna
+
+
+
+
 
 :::
 
@@ -685,8 +692,7 @@ Konfigurasi warna
 **Type:** `string[] | undefined`
 
 :::note{title=Deskripsi}
-
-
+Skema warna diskret untuk menentukan warna berbagai elemen dalam chart
 :::
 
 **Contoh**
@@ -699,8 +705,7 @@ Konfigurasi warna
 **Type:** `string[] | undefined`
 
 :::note{title=Deskripsi}
-
-
+Skema warna gradien linear untuk menentukan warna berbagai elemen dalam chart
 :::
 
 **Contoh**
@@ -713,8 +718,7 @@ Konfigurasi warna
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Deskripsi}
-
-
+Pemetaan warna, digunakan untuk memetakan nilai data ke warna tertentu
 :::
 
 **Contoh**
@@ -730,8 +734,7 @@ Konfigurasi warna
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi warna positif/negatif; mendefinisikan warna untuk nilai positif pada chart
 :::
 
 ### negativeColor
@@ -739,8 +742,7 @@ Konfigurasi warna
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi warna positif/negatif; mendefinisikan warna untuk nilai negatif pada chart
 :::
 
 
@@ -749,7 +751,11 @@ Konfigurasi warna
 **Type:** `PieLabel | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi label
+Konfigurasi label untuk menentukan label data diagram, termasuk posisi, format, dan style.
+
+
+
+
 
 :::
 
@@ -759,8 +765,7 @@ Konfigurasi label
 **Type:** `false | true`
 
 :::note{title=Deskripsi}
-
-
+Apakah label diaktifkan
 :::
 
 ### wrap
@@ -768,8 +773,7 @@ Konfigurasi label
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah label dibungkus ke baris berikutnya
 :::
 
 ### showValue
@@ -777,12 +781,11 @@ Konfigurasi label
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
+Apakah label menampilkan nilai metrik
 
+Dalam skenario multi-metrik, tidak perlu khawatir nilai beberapa metrik saling bertentangan, karena semua metrik terkait penggambaran diproses oleh `foldMeasures` dan digabungkan menjadi satu metrik yang mewakili satu titik data.
 
-
-
-
-
+Catatan: encoding.label memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi encoding.label
 :::
 
 ### showValuePercent
@@ -790,12 +793,11 @@ Konfigurasi label
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
+Apakah label menampilkan persentase nilai metrik
 
+Dalam skenario multi-metrik, tidak perlu khawatir nilai beberapa metrik saling bertentangan, karena semua metrik terkait penggambaran diproses oleh `foldMeasures` dan digabungkan menjadi satu metrik yang mewakili satu titik data.
 
-
-
-
-
+Catatan: encoding.label memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi encoding.label
 :::
 
 ### showDimension
@@ -803,12 +805,11 @@ Konfigurasi label
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
+Apakah label menampilkan label dimensi
 
+Menampilkan semua label dimensi
 
-
-
-
-
+Catatan: encoding.label memiliki prioritas lebih tinggi; konfigurasi ini tidak memengaruhi encoding.label
 :::
 
 ### autoFormat
@@ -816,8 +817,7 @@ Konfigurasi label
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah nilai label diformat otomatis. Saat autoFormat bernilai true, konfigurasi numFormat diabaikan
 :::
 
 ### numFormat
@@ -825,8 +825,7 @@ Konfigurasi label
 **Type:** `NumFormat | undefined`
 
 :::note{title=Deskripsi}
-
-
+Konfigurasi format nilai label. Konfigurasi ini digabungkan dengan `format` dalam `measure`; `format` dalam `measure` memiliki prioritas lebih tinggi. numFormat memiliki prioritas lebih rendah daripada autoFormat
 :::
 
 
@@ -835,8 +834,7 @@ Konfigurasi label
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Jenis format angka. Mendukung angka (desimal), persen (%), permille (‰), dan notasi ilmiah
 :::
 
 #### ratio
@@ -844,12 +842,11 @@ Konfigurasi label
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Rasio pemformatan angka. Tidak boleh 0
 :::
 
 **Contoh**
-
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -859,11 +856,11 @@ Konfigurasi label
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
+Simbol pemformatan angka, misalnya % atau ‰
 :::
 
 **Contoh**
-
+\- 100000 dikonversi menjadi 10K, ratio:1000, symbol:"K"
 
 
 
@@ -873,8 +870,7 @@ Konfigurasi label
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Pemisah ribuan untuk pemformatan angka
 :::
 
 #### suffix
@@ -882,8 +878,7 @@ Konfigurasi label
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Sufiks pemformatan angka
 :::
 
 #### prefix
@@ -891,8 +886,7 @@ Konfigurasi label
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Prefiks pemformatan angka
 :::
 
 #### fractionDigits
@@ -900,15 +894,15 @@ Konfigurasi label
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
+Digit desimal untuk pemformatan angka, menggunakan minimumFractionDigits dan maximumFractionDigits dari Intl.NumberFormat browser. Prioritas lebih rendah daripada significantDigits
 :::
 
 **Contoh**
-
-
-Fungsi easing animasi
-
-
+\- 1234.5678 dikonversi menjadi 1234.6 , fractionDigits:1 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57 , fractionDigits:2 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1230.568 , fractionDigits:3 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678 , fractionDigits:4 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.56780 , fractionDigits:5 (roundingMode:halfCeil)
 
 
 
@@ -918,18 +912,17 @@ Fungsi easing animasi
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi pengurutan sumbu kategori, mendukung pengurutan berdasarkan dimensi atau measure, serta urutan kustom
-
+Digit signifikan untuk pemformatan angka, menggunakan minimumSignificantDigits dan maximumSignificantDigits dari Intl.NumberFormat browser. Prioritas lebih tinggi daripada fractionDigits
 :::
 
 **Contoh**
-sort: {
-  orderBy: 'profit',
-  order: 'asc',
-}
-sort: {
-  customOrder:['2019', '2020', '2021']
-}
+\- 1234.5678 dikonversi menjadi 1200 , significantDigits:2
+\- 1234.5678 dikonversi menjadi 1230 , significantDigits:3
+\- 1234.5678 dikonversi menjadi 1234 , significantDigits:4
+\- 1234.5678 dikonversi menjadi 1234.6 , significantDigits:5 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.57 , significantDigits:6 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.568 , significantDigits:7 (roundingMode:halfCeil)
+\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:8 (roundingMode:halfCeil)
 
 
 
@@ -939,12 +932,11 @@ sort: {
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Prioritas pembulatan pemformatan angka saat significantDigits dan fractionDigits sama-sama diatur, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingPriority Intl.NumberFormat
 :::
 
 **Contoh**
-Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
+\- 1234.5678 dikonversi menjadi 1234.5678 , significantDigits:3 (roundingPriority:morePrecision)
 
 
 
@@ -954,8 +946,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Mode pembulatan pemformatan angka, menggunakan Intl.NumberFormat browser dengan aturan yang sama seperti roundingMode Intl.NumberFormat
 :::
 
 ### labelFontSize
@@ -963,8 +954,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-  orderBy: 'profit',
-
+Ukuran font label
 :::
 
 ### labelFontWeight
@@ -972,8 +962,7 @@ Urutan pengurutan, nilai opsional adalah 'asc' atau 'desc'
 **Type:** `string | number | undefined`
 
 :::note{title=Deskripsi}
-or
-
+Ketebalan font label
 :::
 
 ### labelBackgroundColor
@@ -981,8 +970,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna latar label
 :::
 
 ### labelStroke
@@ -990,8 +978,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna stroke label
 :::
 
 ### labelColor
@@ -999,8 +986,7 @@ or
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna font label
 :::
 
 ### labelColorSmartInvert
@@ -1008,8 +994,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah warna font label otomatis dibalik berdasarkan warna mark
 :::
 
 ### labelPosition
@@ -1017,8 +1002,7 @@ or
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Posisi label
 :::
 
 ### labelOverlap
@@ -1026,8 +1010,7 @@ or
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah anti-overlap label diaktifkan
 :::
 
 ### selector
@@ -1035,8 +1018,7 @@ or
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Deskripsi}
-
-
+Filter label. Secara default, hubungan kondisi antar selectors adalah OR
 :::
 
 
@@ -1045,8 +1027,7 @@ or
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Field dimensi, id dari salah satu item dalam dimensions
 :::
 
 #### operator
@@ -1054,11 +1035,11 @@ or
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
-**Contoh**
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
-
-
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 :::
 
 #### op
@@ -1066,13 +1047,13 @@ or
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
-**Contoh**
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 
-
-same as operator
-
+sama dengan operator
 :::
 
 #### value
@@ -1080,8 +1061,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Deskripsi}
-
-
+Memilih nilai field dimensi dalam item data. Array didukung
 :::
 
 ### dynamicFilter
@@ -1089,38 +1069,25 @@ same as operator
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Deskripsi}
+Filter dinamis (eksekusi kode yang dihasilkan AI)
 
+Mengimplementasikan logika filter data kompleks melalui kode JavaScript yang dihasilkan AI
 
+Kemampuan utama:
 
+\- Mendukung kondisi filter data yang sangat kompleks
 
-Warna stroke latar belakang
+\- Menggunakan fungsi utilitas bawaan untuk operasi data
 
+\- Dieksekusi dengan aman di lingkungan browser (sandbox Web Worker)
 
+Persyaratan lingkungan: hanya didukung di lingkungan browser; lingkungan Node.js akan menggunakan fallback
 
+Catatan: selector dan dynamicFilter tidak dapat digunakan bersamaan. dynamicFilter memiliki prioritas lebih tinggi
 
+Konfigurasi filter dinamis chart
 
-
-
-
-
-
-
-
-
-'red'
-
-
-
-
-
-
-
-
-
-
-
-Radius sudut latar belakang
-
+Menggunakan kode JavaScript yang dihasilkan AI untuk memfilter mark chart (bar, titik, dan sebagainya)
 :::
 
 
@@ -1133,14 +1100,13 @@ Radius sudut latar belakang
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Deskripsi kebutuhan filter pengguna (bahasa alami)
 :::
 
 **Contoh**
-"Sorot item data dengan penjualan lebih dari 1000"
+"Sorot batang dengan penjualan di atas 1000"
 
-"Sorot item data dengan margin laba tertinggi di setiap wilayah"
+"Sorot batang dengan margin laba tertinggi di setiap wilayah"
 
 
 
@@ -1149,23 +1115,21 @@ Radius sudut latar belakang
 **Type:** `string`
 
 :::note{title=Deskripsi}
-Operator
+Kode filter JavaScript yang dihasilkan AI
 
+\- Hanya boleh menggunakan fungsi utilitas bawaan (diakses melalui _ atau R)
 
+\- Parameter input: data (array), setiap item berisi field __row_index sebagai nomor baris
 
-\- not in: Memilih item data ketika nilai field dimensi tidak ada dalam value
+\- Harus mengembalikan array kombinasi indeks baris dan field: Array<{ __row_index: number, field: string }>
 
-**Contoh**
+\- __row_index adalah nomor baris item data asli, dan field adalah field yang perlu disorot
 
-
-
-
-
-
+\- Dilarang: eval, Function, operasi async, DOM API, request jaringan
 :::
 
 **Contoh**
-Sorot field sales dari item data dengan penjualan lebih dari 1000
+return _.map(filtered, item => ({
 ```javascript
 const filtered = _.filter(data, item => item.sales > 1000);
 return _.map(filtered, item => ({
@@ -1174,7 +1138,7 @@ field: 'sales'
 }));
 ```
 
-Sorot item data dengan margin laba tertinggi di setiap wilayah
+const maxItems = _.map(grouped, group =>
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1188,7 +1152,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Sorot item data yang memenuhi beberapa kondisi filter
+const profitRate = item.profit / item.sales;
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1209,8 +1173,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Deskripsi}
-
-
+Fallback ketika eksekusi kode gagal atau lingkungan tidak didukung
 :::
 
 
@@ -1219,8 +1182,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Deskripsi}
-
-
+Field dimensi, id dari salah satu item dalam dimensions
 :::
 
 ##### operator
@@ -1228,11 +1190,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
-**Contoh**
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
-
-
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 :::
 
 ##### op
@@ -1240,13 +1202,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Deskripsi}
-**Contoh**
+Operator
 
+\- in: memilih item data dengan nilai field dimensi yang ada dalam value
 
+\- not in: memilih item data dengan nilai field dimensi yang tidak ada dalam value
 
-
-same as operator
-
+sama dengan operator
 :::
 
 ##### value
@@ -1254,8 +1216,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Deskripsi}
-
-
+Memilih nilai field dimensi dalam item data. Array didukung
 :::
 
 #### result
@@ -1263,12 +1224,9 @@ same as operator
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Deskripsi}
+Hasil eksekusi filter dinamis (field runtime)
 
-
-
-
-Warna teks
-
+Ditulis pada tahap prepare(); hanya baca saat runtime
 :::
 
 
@@ -1305,8 +1263,9 @@ Metode tata letak label, hanya berlaku untuk diagram pai dan donat serta saat `l
 **Type:** `Legend | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi legenda
+Legenda
 
+Konfigurasi legenda untuk menentukan legenda chart, termasuk posisi, format, dan gaya.
 :::
 
 
@@ -1315,8 +1274,7 @@ Konfigurasi legenda
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah legenda diaktifkan
 :::
 
 **Contoh**
@@ -1329,17 +1287,15 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah border legenda diaktifkan
 :::
 
 :::warning{title=Warning}
-
-
+Hanya berlaku untuk legenda diskret
 :::
 
 **Contoh**
-border: true
+
 
 
 
@@ -1348,8 +1304,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna font legenda
 :::
 
 ### pagerIconColor
@@ -1357,8 +1312,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna ikon pager
 :::
 
 ### pagerIconDisableColor
@@ -1366,8 +1320,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna ikon pager saat nonaktif
 :::
 
 ### labelFontSize
@@ -1375,12 +1328,11 @@ border: true
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Ukuran font legenda
 :::
 
 **Contoh**
-labelFontSize: 10
+
 
 
 
@@ -1389,8 +1341,7 @@ labelFontSize: 10
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna font legenda
 :::
 
 ### labelFontWeight
@@ -1398,12 +1349,11 @@ labelFontSize: 10
 **Type:** `string | number | undefined`
 
 :::note{title=Deskripsi}
-
-
+Ketebalan font legenda
 :::
 
 **Contoh**
-labelFontWeight: 400
+
 
 
 
@@ -1412,17 +1362,15 @@ labelFontWeight: 400
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Bentuk legenda
 :::
 
 :::warning{title=Warning}
-
-
+Hanya berlaku untuk legenda diskret
 :::
 
 **Contoh**
-shapeType: 'circle'
+
 
 
 
@@ -1431,12 +1379,11 @@ shapeType: 'circle'
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Deskripsi}
-
-
+Posisi legenda
 :::
 
 **Contoh**
-position: 'rightTop'
+
 
 
 
@@ -1445,21 +1392,19 @@ position: 'rightTop'
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
+Jumlah maksimum kolom atau baris saat item legenda sangat banyak
 
+Jika position horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize mengontrol jumlah kolom yang ditampilkan
 
-
-
-
-
+Jika position vertikal (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize mengontrol jumlah baris yang ditampilkan
 :::
 
 :::warning{title=Warning}
-
-
+Hanya berlaku untuk legenda diskret
 :::
 
 **Contoh**
-maxSize: 2
+
 
 
 
@@ -1469,7 +1414,11 @@ maxSize: 2
 **Type:** `Tooltip | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi tooltip
+
+
+
+
+Apakah mengaktifkan seleksi brush
 
 :::
 
@@ -1479,8 +1428,7 @@ Konfigurasi tooltip
 **Type:** `false | true`
 
 :::note{title=Deskripsi}
-
-
+Apakah tooltip diaktifkan
 :::
 
 
@@ -1489,7 +1437,11 @@ Konfigurasi tooltip
 **Type:** `Brush | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi brush
+
+
+
+
+
 
 
 
@@ -1503,8 +1455,7 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah brush selection diaktifkan
 :::
 
 ### brushType
@@ -1512,18 +1463,17 @@ Mode seleksi brush: tunggal atau ganda
 **Type:** `"rect" | "x" | "y" | "polygon" | undefined`
 
 :::note{title=Deskripsi}
+Jenis brush
 
+Menentukan bentuk area brush dan arah seleksi.
 
+\- `rect`: seleksi persegi panjang, dapat memilih pada arah sumbu X dan Y sekaligus
 
+\- `polygon`: seleksi poligon, menggambar poligon bebas dengan mengklik beberapa titik
 
+\- `x`: seleksi arah sumbu X, hanya memilih pada arah X tanpa membatasi arah Y
 
-
-
-
-
-
-
-
+\- `y`: seleksi arah sumbu Y, hanya memilih pada arah Y tanpa membatasi arah X
 :::
 
 ### brushMode
@@ -1546,8 +1496,7 @@ Opasitas of selected data points, range 0-1
 **Type:** `boolean | undefined`
 
 :::note{title=Deskripsi}
-
-
+Apakah area brush dibersihkan setelah brush selection selesai
 :::
 
 ### inBrushStyle
@@ -1555,12 +1504,9 @@ Opasitas of selected data points, range 0-1
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Deskripsi}
+Gaya data di dalam area brush
 
-
-
-
-
-
+Menentukan gaya titik data yang terseleksi
 :::
 
 
@@ -1569,12 +1515,9 @@ Opasitas of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+Opasitas
 
-
-
-
-
+Opasitas titik data yang terseleksi, rentang nilai 0-1
 :::
 
 #### stroke
@@ -1582,8 +1525,7 @@ Opasitas of selected data points, range 0-1
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna stroke
 :::
 
 #### lineWidth
@@ -1591,7 +1533,7 @@ Opasitas of selected data points, range 0-1
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
+Lebar stroke
 :::
 
 ### outOfBrushStyle
@@ -1613,7 +1555,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-\- 100000 dikonversi menjadi 10W, ratio:10000, symbol:"W"
+\- 100000 menjadi 10万, ratio:10000, symbol:"万"
 
 
 
@@ -1626,8 +1568,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `string | undefined`
 
 :::note{title=Deskripsi}
-
-
+Warna stroke
 :::
 
 #### lineWidth
@@ -1635,7 +1576,7 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 **Type:** `number | undefined`
 
 :::note{title=Deskripsi}
-
+Lebar stroke
 :::
 
 
@@ -1646,16 +1587,11 @@ Sumbu X, sumbu kategori, konfigurasi sumbu X; mendefinisikan sumbu X chart, term
 :::note{title=Deskripsi}
 Konfigurasi tema
 
+Tema
 
-
-const maxItems = _.map(grouped, group =>
-
-
-
-_.map(maxItems, item => [
+Tersedia dua tema bawaan, light dan dark; tema baru dapat dikustomisasi melalui registerTheme.
 
 :::
-
 
 ### length
 
@@ -1671,6 +1607,10 @@ _.map(maxItems, item => [
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Deskripsi}
-Konfigurasi bahasa
+Bahasa
+
+
+
+Konfigurasi bahasa chart, mendukung dua bahasa 'zh\-CN' dan 'en\-US'; selain itu bahasa dapat diatur dengan memanggil metode intl.setLocale('zh\-CN')
 
 :::

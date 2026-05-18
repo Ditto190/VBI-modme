@@ -1,82 +1,82 @@
 # LimitBuilder
 
-Builder gioi han du lieu dung de thiet lap va lay limit hien tai
+Builder giới hạn dữ liệu dùng để thiết lập và lấy limit hiện tại
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-Ham khoi tao
+Hàm khởi tạo
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `_doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Lang nghe thay doi limit va tra ve ham huy lang nghe
+Lắng nghe thay đổi limit và trả về hàm hủy lắng nghe
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveCallback | - Ham callback |
+| `callback` | ObserveCallback | - Hàm callback |
 
 ### setLimit
 
-Thiet lap limit
+Thiết lập limit
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setLimit(limit: number)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `limit` | number | - Gioi han du lieu |
+| `limit` | number | - Giới hạn dữ liệu |
 
 ### getLimit
 
-Lay limit hien tai
+Lấy limit hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getLimit(): number | undefined
 ```
 
-**Tra ve**: `number \| undefined`
+**Trả về**: `number \| undefined`
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): number | undefined
 ```
 
-**Tra ve**: `number \| undefined`
+**Trả về**: `number \| undefined`

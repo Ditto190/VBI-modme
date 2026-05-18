@@ -5,7 +5,7 @@ Contoh ini menunjukkan `BuilderLayout` + `FieldPanel` + `ChartRenderer` + `Chart
 ## Dependensi
 
 - Dependensi paket: `@visactor/vbi-react/components`, `@visactor/vbi`, `react`
-- Batasan input: `builder` sebaiknya memiliki field dimensi/measure yang tersedia agar `FieldPanel` dapat mendemonstrasikan operasi tambah/hapus
+- Batasan input: `builder` sebaiknya memiliki field dimensi/metrik yang tersedia agar `FieldPanel` dapat mendemonstrasikan operasi tambah/hapus
 
 ## Cuplikan Kode
 
@@ -32,6 +32,6 @@ export function LayoutDemo({ builder }: { builder: VBIChartBuilder }) {
 
 ## Hasil yang Diharapkan
 
-- Bagian atas dapat mengganti jenis chart, panel kiri dapat menambah/menghapus dimensi/measure, dan area utama menampilkan pratinjau DSL chart.
+- Bagian atas dapat mengganti jenis chart, panel kiri dapat menambah/menghapus dimensi/metrik, dan area utama menampilkan pratinjau DSL chart.
 - Setelah operasi field, konten area utama diperbarui otomatis tanpa pemicu manual.
-- Ketika build gagal, `ChartRenderer` menampilkan error default dan tombol coba ulang.
+- Ketika proses build gagal, `ChartRenderer` menampilkan error default dan tombol coba ulang.

@@ -32,6 +32,6 @@ export function LayoutDemo({ builder }: { builder: VBIChartBuilder }) {
 
 ## Résultat attendu
 
-- La barre supérieure permet de changer de type de graphique, le panneau gauche d'ajouter/supprimer des dimensions/mesures, et la zone principale affiche l'aperçu du DSL de graphique.
+- La barre supérieure permet de changer de type de graphique, le panneau gauche d'ajouter ou supprimer des dimensions/mesures, et la zone principale affiche l'aperçu du DSL de graphique.
 - Après les opérations sur les champs, la zone principale se rafraîchit automatiquement sans déclenchement manuel.
 - Si le build échoue, `ChartRenderer` affiche l'erreur par défaut et un bouton de nouvelle tentative.

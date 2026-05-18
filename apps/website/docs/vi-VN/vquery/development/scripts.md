@@ -11,9 +11,9 @@ pnpm run g
 1. `build:test`: Biên dịch tài nguyên kiểm thử.
 2. `build:docs`: Tạo tài liệu API.
 
-## Phát triển và build
+## Phát triển và xây dựng
 
-### Build
+### Xây dựng
 ```bash
 pnpm --filter=@visactor/vquery run build
 ```
@@ -31,7 +31,7 @@ pnpm --filter=@visactor/vquery run test
 pnpm --filter=@visactor/vquery run test:update
 ```
 
-### Coverage
+### Độ bao phủ
 ```bash
 pnpm --filter=@visactor/vquery run test:coverage
 ```

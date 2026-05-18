@@ -1,45 +1,47 @@
-# Pipeline Design
+# Desain pipeline
 
-:::info Why Pipeline?
-1. A choice made by senior team members.
-2. Pipeline's advantage: it allows `VSeed` to independently control the execution flow for each chart type. With good design, each chart type's implementation is both decoupled and locally reusable, giving each chart type perfect control over every detail — this is what Pipeline brings, and exactly what `VSeed` needs most.
-3. The downsides of the Pipeline pattern can all be avoided at design time — by keeping individual `Pipe` sizes small and minimizing dependencies between `Pipe`s.
-4. After four generations of Pipeline design and optimization, this is the fifth version — the pitfalls have already been navigated.
+:::info Mengapa Pipeline?
+1. Pilihan para senior di dalam tim.
+2. Keunggulan Pipeline adalah memungkinkan `VSeed` mengontrol alur eksekusi setiap jenis chart secara independen. Dengan desain yang baik, implementasi setiap jenis chart dapat terlepas satu sama lain sekaligus tetap dapat digunakan ulang secara lokal, dan setiap jenis chart dapat mengontrol detail apa pun secara presisi. Inilah yang dibawa Pipeline, dan inilah yang paling dibutuhkan `VSeed`.
+3. Dibandingkan dengan itu, kekurangan pola Pipeline dapat dihindari saat desain. Selama ukuran setiap `Pipe` diperkecil dan dependensi antar-`Pipe` dikurangi, kekurangan pola ini dapat sangat dihindari.
+4. Setelah empat generasi desain dan optimasi Pipeline, di VSeed ini sudah menjadi versi kelima. Lubang yang perlu dilewati sudah pernah dilewati.
+
 :::
 
-## What is a Pipeline?
+## Apa itu Pipeline?
 
-Pipeline is a powerful abstraction and engineering practice that decomposes a complex task into a series of connected, sequentially executed smaller steps. Its design philosophy is deeply influenced by the core ideas of functional programming (FP).
+Pipeline adalah abstraksi dan praktik engineering yang kuat. Ia memecah tugas kompleks menjadi serangkaian langkah kecil yang saling terhubung dan dijalankan berurutan. Filosofi desain dan implementasinya sangat dipengaruhi oleh ide inti functional programming (FP).
 
-### Pipeline Advantages:
-- **Modularity**: Atomic implementation — compose atoms into modules.
-- **Automation**: Simply define the input to automatically get the output, without worrying about internal implementation.
-- **Pure functions**: Given a specified input, the expected output is always produced — a characteristic of pure functions.
-- **Parallelism**: Naturally supports concurrency.
-- **Reusability**: Every module can be reused.
-- **Testability**: In theory, every module is independent and can be tested individually to ensure quality.
-- **Traceability**: Clear inputs and outputs at each stage make it easy to locate issues and monitor process state.
-- **Cacheability**: In theory, the output of individual `Pipe`s can be cached, avoiding redundant computation and improving efficiency.
+### Keunggulan Pipeline:
+- Modularitas: implementasi atomik, lalu menyusun atom menjadi modul.
+- Otomatisasi: cukup menentukan input, output dapat diperoleh otomatis tanpa perlu memperhatikan implementasi internal.
+- Pure function: input tertentu pasti menghasilkan output yang diharapkan, ini adalah ciri pure function.
+- Paralelisme: secara alami mendukung concurrency.
+- Reusability: setiap modul dapat digunakan ulang.
+- Testability: secara teori setiap modul independen dan dapat diuji terpisah untuk memastikan kualitas.
+- Traceability: input dan output setiap tahap jelas, sehingga mudah menemukan masalah dan memantau status proses.
+- Cacheability: secara teori output satu `Pipe` dapat dicache secara terpisah, sehingga menghindari komputasi berulang dan meningkatkan efisiensi.
 
-### Pipeline Disadvantages:
-- **Sequential dependencies**: When Pipes have ordering dependencies, the cognitive cost increases — you need to understand earlier stages to understand later ones. Deep overall understanding is needed to quickly locate issues.
-- **Debugging cost**: Since Pipeline executes sequentially, a failure at any stage causes the entire Pipeline to fail. This makes debugging harder, as you need to locate the failing stage and fix it.
-- **Performance**: Since Pipeline executes sequentially, each stage's output must wait for the previous stage to complete, which can cause performance issues — especially when one stage takes a long time.
-- **Functional programming**: Requires learning new concepts, which carries some onboarding cost. As a result, design principles and implementation details need to be documented in the contribution guide for other developers.
+### Kekurangan Pipeline:
+- Dependensi berurutan: ketika antar-`Pipe` memiliki dependensi urutan, biaya pemahaman meningkat, karena tahap sebelumnya harus dipahami sebelum tahap berikutnya. Pemahaman menyeluruh atas proses diperlukan untuk cepat menemukan masalah.
+- Biaya debugging: karena Pipeline dijalankan berurutan, kegagalan satu tahap menyebabkan seluruh Pipeline gagal. Ini membuat debugging lebih sulit karena tahap yang gagal harus ditemukan dan diperbaiki.
+- Masalah performa: karena Pipeline dijalankan berurutan, output setiap tahap harus menunggu tahap sebelumnya selesai. Ini dapat menimbulkan masalah performa, terutama ketika salah satu tahap berjalan lama.
+- Functional programming: perlu memahami konsep baru, sehingga ada biaya belajar. Karena itu prinsip desain dan detail implementasi perlu ditulis dalam contribution guide agar developer lain dapat memahami dan menggunakannya.
 
-## How to Write Pipelines in VSeed?
+## Bagaimana menulis Pipeline di VSeed?
 
-### Pipe Composition Pattern
+### Pola Komposisi Pipe
 
-Multiple functional Pipes can be composed into a larger functional Pipe, or combined into a more complex Pipeline.
+Beberapa `Pipe` fungsional dapat disusun menjadi `Pipe` fungsional yang lebih besar, atau menjadi Pipeline yang lebih kompleks.
 
-In VSeed, a complete Pipeline corresponds to the implementation of one chart type. By describing the composition of Pipes, different chart types can be created. During the Pipeline composition phase, you don't need to worry about each pipe's specific implementation.
+Di VSeed, satu Pipeline lengkap berkorespondensi dengan implementasi satu jenis chart. Dengan mendeskripsikan hubungan komposisi antar-`Pipe`, kita dapat membuat berbagai jenis chart. Pada tahap komposisi Pipeline, detail implementasi setiap `pipe` tidak perlu diperhatikan.
 
-#### Composition for Differences
 
-Example:
+#### Perbedaan Komposisi
 
-Line charts and area charts share many reusable features — labels, legends, axes, etc. — but area charts have area mark styles while line charts don't. The pipeline resolves this difference through functional Pipe composition, with no if statements needed.
+Contoh:
+
+Line chart dan area chart dapat menggunakan ulang banyak fungsi, seperti label, legend, dan axis. Namun line chart tidak memiliki style mark area, sehingga pipeline menyelesaikan perbedaan ini melalui komposisi `Pipe` fungsional, tanpa satu pun pernyataan `if`.
 
 ```ts
 const lineChartPipeline = [
@@ -59,22 +61,23 @@ const areaChartPipeline = [
   lineStyle,
   pointStyle,
 
-  // Only area charts have area mark style
+  // Hanya area chart yang memiliki style mark area
   areaStyle,
 ]
 ```
 
-### Pipe Adapter Pattern
 
-Beyond composition, building Pipes often involves conditions. To handle different conditional Pipe combinations, VSeed makes heavy use of Pipe adapters.
+### Pola Adapter Pipe
 
-#### Conditional Composition
+Selain pola komposisi, pembuatan `Pipe` sering kali memiliki kondisi tertentu. Untuk memenuhi komposisi `Pipe` di kondisi yang berbeda, VSeed banyak menggunakan adapter `Pipe`.
 
-Example:
+#### Kondisi Komposisi
 
-Line charts support pivot mode — without pivot, rendered by VChart (output VChart spec); with pivot, rendered by VTable (output VTable spec).
+Contoh:
 
-Pivot line charts need to reuse most basic line chart features (labels, legends, axes, etc.), so the adapter pattern adapts regular line chart Pipes into pivot line chart Pipes.
+Line chart memiliki kemampuan pivot. Tanpa pivot, chart dirender oleh VChart dan menghasilkan VChart spec. Dengan pivot, chart dirender oleh VTable dan menghasilkan VTable spec.
+
+Pivot line chart pada dasarnya perlu menggunakan ulang fungsi dasar line chart, seperti label, legend, dan axis. Karena itu diperlukan pola adapter untuk mengadaptasi `Pipe` line chart menjadi `Pipe` pivot line chart.
 
 ```ts
 const pivotLineChartPipeline = [
@@ -103,36 +106,71 @@ const lineChartPipeline = [
 ]
 ```
 
-In summary, each adapter is essentially an if-else — hidden conditions inside a pipe are abstracted into an adapter, pushing the if-else to the top level. This results in a Pipeline with clearer dependencies and lower maintenance cost.
+Singkatnya, setiap adapter adalah satu `if else`. Kondisi yang tersembunyi di dalam `pipe` dapat diabstraksikan menjadi adapter, sehingga `if else` dipindahkan ke level paling atas. Hasilnya adalah Pipeline dengan dependensi yang lebih jelas dan biaya maintenance yang lebih rendah.
 
-### The Most Basic Unit: Functional Pipe
+### Unit paling dasar Pipeline: Pipe fungsional
 
-VSeed expects all chart types to use **features** as the most basic unit, providing sufficient reusability and extensibility — building a chart type's pipeline bottom-up. Each functional Pipe should be an independent, testable, and reusable module.
+VSeed mengharapkan semua jenis chart menggunakan fungsi sebagai unit paling dasar, menyediakan kemampuan reuse dan ekstensi yang cukup. Pipeline satu jenis chart dibangun dari bawah ke atas. Setiap `Pipe` fungsional sebaiknya menjadi modul yang independen, dapat diuji, dan dapat digunakan ulang.
 
-The most critical point: **abstract differences into different Pipes** (write fewer if-else statements), rather than writing one large, all-in-one Pipe.
+Hal terpenting adalah mengabstraksikan perbedaan fungsi menjadi `Pipe` yang berbeda (yaitu menulis lebih sedikit `if else`), bukan menulis satu `Pipe` besar yang mencakup semuanya.
 
-#### Flat Functional Pipes
+#### Pipe Fungsional yang Datar
 
-Example:
+Contoh:
 
-Bar, column, line, area, and scatter charts all have X and Y axes — similar but slightly different. If you write one large `axes` pipe, it might look like this:
+Bar chart, column chart, line chart, area chart, dan scatter chart semuanya memiliki sumbu X dan Y. Mereka mirip tetapi sedikit berbeda. Jika menulis satu `axes` pipe besar yang mencakup semuanya, bentuknya mungkin seperti ini:
 
 ```ts
-// ... (see zh-CN for full example)
+const lineChartPipeline = [
+  axes
+]
+const barChartPipeline = [
+  axes
+]
+const areaChartPipeline = [
+  axes
+]
+const scatterChartPipeline = [
+  axes
+]
 const axes = (spec, context) => {
   if (isLine || isArea || isColumn){
+    // Line chart, area chart, dan column chart memiliki satu sumbu diskret dan satu sumbu kontinu
     return xy(spec, context)
   }
   if (isScatter){
+    // Scatter chart memiliki dua sumbu kontinu
     return yy(spec, context)
   }
   if (isBar){
+    // Bar chart memiliki satu sumbu diskret dan satu sumbu kontinu, tetapi arah sumbunya berbeda dari line, area, dan column chart
     return yx(spec, context)
   }
 }
+
+const xy = (spec, context) => {
+  linearAxis(spec, context, {orient: 'left'})
+  bandAxis(spec, context, {orient: 'bottom'})
+}
+
+const yx = (spec, context) => {
+  linearAxis(spec, context, {orient: 'bottom'})
+  bandAxis(spec, context, {orient: 'left'})
+}
+
+const yy = (spec, context) => {
+  linearAxis(spec, context, {orient: 'bottom'})
+  linearAxis(spec, context, {orient: 'left'})
+}
 ```
 
-The better approach is to abstract the differences into separate Pipes and compose them at the pipeline level:
+Logika di atas memilih sub-`pipe` fungsional yang berbeda berdasarkan jenis chart di dalam satu `Pipe` fungsional. Ini menimbulkan dua masalah:
+1. Bagaimana fungsi yang berulang di `xy`, `yx`, dan `yy` digunakan ulang? Banyak subfungsi yang mirip tetapi berbeda harus dipanggil berulang di berbagai sub-`pipe` fungsional. Dependensi mudah menjadi rumit dan meningkatkan biaya maintenance.
+2. Saat mengubah fungsi line chart atau area chart, bar chart mudah terlewat karena logika sudah bercabang. Karena itu perbedaan harus dipertimbangkan saat mengimplementasikan fungsi baru.
+
+Ketika ukuran seluruh spec pipeline berkembang hingga ratusan `pipe`, cara penulisan seperti ini akan membawa biaya maintenance yang sangat tinggi. Karena itu kita membutuhkan cara yang lebih sederhana untuk memilih sub-`pipe` fungsional yang berbeda berdasarkan jenis chart.
+
+Melanjutkan contoh di atas, perbedaan diabstraksikan menjadi `Pipe` yang berbeda, dikemas pada granularitas fungsi yang lebih halus, lalu dikomposisikan langsung di dalam pipeline. Dengan demikian masalah di atas dapat dihindari.
 
 ```ts
 const lineChartPipeline = [
@@ -151,8 +189,19 @@ const scatterChartPipeline = [
   xLinearAxis,
   yLinearAxis,
 ]
+
+const xBandAxis = (spec, context) => {
+}
+const yBandAxis = (spec, context) => {
+}
+const xLinearAxis = (spec, context) => {
+}
+const yLinearAxis = (spec, context) => {
+}
 ```
 
-All chart type divergences should occur **above** the Pipeline level. Unless absolutely necessary, Pipelines should not branch based on chart type.
+Pada contoh di atas, tidak ada `axes` pipe yang diimplementasikan. Sebaliknya, `xBandAxis`, `yBandAxis`, `xLinearAxis`, dan `yLinearAxis` langsung dikomposisikan. Ini menghindari masalah pemilihan sub-`pipe` fungsional berbeda di dalam `axes` pipe berdasarkan jenis chart, menghindari branching berdasarkan jenis chart, dan mengurangi penggunaan `if else`.
 
-This composition approach aligns with VSeed's design philosophy: use a flatter composition of functional Pipes instead of if-else conditions in a single large Pipe.
+Semua percabangan perbedaan jenis chart sebaiknya berada di atas Pipeline. Kecuali benar-benar terpaksa, Pipeline tidak perlu memilih sub-`pipe` fungsional yang berbeda berdasarkan jenis chart.
+
+Cara komposisi ini sesuai dengan filosofi desain VSeed: menggunakan komposisi `Pipe` fungsional yang lebih datar, bukan menggunakan kondisi `if else` untuk membuat satu `Pipe` fungsional besar yang mencakup semuanya.

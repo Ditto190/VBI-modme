@@ -206,13 +206,14 @@ export default () => {
 
 ループアニメーションは初回描画後に継続して再生される動きで、強調や動的なリズムの維持に使えます。
 
-#### 2.1 highlight（グループ強調） + atmo（雰囲気効果）
+#### 2.1 highlight（グループ強調） + atmosphere（雰囲気効果）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
 import { VSeedRender } from '@components'
 import { registerTokenThemes } from '@visactor/vseed'
 
+const THEME_URL = 'https://lf9-dp-fe-cms-tos.byteorg.com/obj/bit-cloud/theme.json'
 const DATASET = [
   {
     10001: 'Sales',
@@ -354,7 +355,7 @@ export default () => {
           enable: true,
           interval: 3,
           loop: { enable: true, effects: ['highLight'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear', color: '#4A90E2' },
+          atmosphere: { effect: 'breath', ease: 'linear', color: '#4A90E2' },
         },
       },
     },
@@ -384,7 +385,7 @@ export default () => {
 }
 ```
 
-#### 2.2 growth（ループ） + atmo（雰囲気効果）
+#### 2.2 growth（ループ） + atmosphere（雰囲気効果）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -562,7 +563,7 @@ export default () => {
 }
 ```
 
-#### 2.3 moveIn（ループ） + atmo（雰囲気効果）
+#### 2.3 moveIn（ループ） + atmosphere（雰囲気効果）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1130,7 +1131,7 @@ export default () => {
 
 ループアニメーションは、長時間表示される状態でチャートを周期的に動かし続けます。
 
-#### 2.1 load（ループ） + atmo（breath）
+#### 2.1 load（ループ） + atmosphere（breath）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1290,7 +1291,7 @@ export default () => {
           enable: true,
           interval: 2,
           loop: { enable: true, effects: ['load'], ease: 'linear', duration: 1 },
-          atmo: { effect: 'breath', ease: 'linear' },
+          atmosphere: { effect: 'breath', ease: 'linear' },
         },
       },
     },
@@ -1320,7 +1321,7 @@ export default () => {
 }
 ```
 
-#### 2.2 load（ループ） + atmo（ripple）
+#### 2.2 load（ループ） + atmosphere（ripple）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -1480,7 +1481,7 @@ export default () => {
           enable: true,
           interval: 3,
           loop: { enable: true, effects: ['load'], ease: 'circInOut', duration: 1 },
-          atmo: { effect: 'ripple', ease: 'linear' },
+          atmosphere: { effect: 'ripple', ease: 'linear' },
         },
       },
     },
@@ -2608,9 +2609,9 @@ export default () => {
 
 ### 2. ループアニメーション
 
-レーダーチャートのループアニメーションは、`atmo.effect` によって継続的な雰囲気の動きとして表現されます。
+レーダーチャートのループアニメーションは、`atmosphere.effect` によって継続的な雰囲気の動きとして表現されます。
 
-#### 2.1 none（ループ） + atmo（ripple）
+#### 2.1 none（ループ） + atmosphere（ripple）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -2771,7 +2772,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['radial'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'ripple', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'ripple', ease: 'linear' } },
       },
     },
   }
@@ -2800,7 +2801,7 @@ export default () => {
 }
 ```
 
-#### 2.2 none（ループ） + atmo（reveal）
+#### 2.2 none（ループ） + atmosphere（reveal）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -2961,7 +2962,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 3, atmo: { effect: 'reveal', ease: 'linear' } },
+        loop: { enable: true, interval: 3, atmosphere: { effect: 'reveal', ease: 'linear' } },
       },
     },
   }
@@ -2990,7 +2991,7 @@ export default () => {
 }
 ```
 
-#### 2.3 none（ループ） + atmo（breath）
+#### 2.3 none（ループ） + atmosphere（breath）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3151,7 +3152,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'breath', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'breath', ease: 'linear' } },
       },
     },
   }
@@ -3538,9 +3539,9 @@ export default () => {
 
 ### 2. ループアニメーション
 
-散布図のループアニメーションは通常、継続的なリズムを出すために `atmo` で表現します。
+散布図のループアニメーションは通常、継続的なリズムを出すために `atmosphere` で表現します。
 
-#### 2.1 none（ループ） + atmo（ripple）
+#### 2.1 none（ループ） + atmosphere（ripple）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3681,7 +3682,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'ripple', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'ripple', ease: 'linear' } },
       },
     },
   }
@@ -3710,7 +3711,7 @@ export default () => {
 }
 ```
 
-#### 2.2 none（ループ） + atmo（breath）
+#### 2.2 none（ループ） + atmosphere（breath）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -3851,7 +3852,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['fadeIn'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 2, atmo: { effect: 'breath', ease: 'linear' } },
+        loop: { enable: true, interval: 2, atmosphere: { effect: 'breath', ease: 'linear' } },
       },
     },
   }
@@ -3880,7 +3881,7 @@ export default () => {
 }
 ```
 
-#### 2.3 none（ループ） + atmo（reveal）
+#### 2.3 none（ループ） + atmosphere（reveal）
 
 ```tsx preview
 import { useEffect, useState } from 'react'
@@ -4021,7 +4022,7 @@ export default () => {
       enable: true,
       params: {
         appear: { enable: true, effects: ['scale'], ease: 'linear', duration: 1 },
-        loop: { enable: true, interval: 3, atmo: { effect: 'reveal', ease: 'linear' } },
+        loop: { enable: true, interval: 3, atmosphere: { effect: 'reveal', ease: 'linear' } },
       },
     },
   }

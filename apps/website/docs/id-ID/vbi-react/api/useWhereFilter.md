@@ -1,12 +1,12 @@
 # useWhereFilter
 
-## Import
+## Impor
 
 ```ts
 import { useWhereFilter } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useWhereFilter(builder: VBIChartBuilder): UseWhereFilterReturn
@@ -14,7 +14,7 @@ useWhereFilter(builder: VBIChartBuilder): UseWhereFilterReturn
 
 ## Deskripsi
 
-Mengelola pohon filter Where dan menyediakan entry mutation.
+Mengelola pohon filter Where dan menyediakan titik masuk mutation.
 
 ## Contoh Minimal
 

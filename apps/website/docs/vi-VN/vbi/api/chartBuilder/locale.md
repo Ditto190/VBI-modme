@@ -1,82 +1,82 @@
 # LocaleBuilder
 
-Builder locale dung de thiet lap va lay locale hien tai
+Builder locale dùng để thiết lập và lấy locale hiện tại
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-Ham khoi tao
+Hàm khởi tạo
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `_doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Lang nghe thay doi locale va tra ve ham huy lang nghe
+Lắng nghe thay đổi locale và trả về hàm hủy lắng nghe
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveCallback | - Ham callback |
+| `callback` | ObserveCallback | - Hàm callback |
 
 ### setLocale
 
-Thiet lap locale
+Thiết lập locale
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setLocale(locale: string)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `locale` | string | - Ten locale |
+| `locale` | string | - Tên locale |
 
 ### getLocale
 
-Lay locale hien tai
+Lấy locale hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getLocale(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`

@@ -1,12 +1,12 @@
 # FieldPanel
 
-## Import
+## Impor
 
 ```ts
 import { FieldPanel } from '@visactor/vbi-react/components'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 FieldPanel(props: FieldPanelProps)
@@ -14,7 +14,7 @@ FieldPanel(props: FieldPanelProps)
 
 ## Deskripsi
 
-Menyediakan panel field dimensi/measure dan interaksi edit dasar.
+Menyediakan panel bidang dimensi/metrik dan interaksi penyuntingan dasar.
 
 ## Contoh Minimal
 

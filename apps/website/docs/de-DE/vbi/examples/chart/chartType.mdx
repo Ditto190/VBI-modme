@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## area-by-order-date
 
-Flaechendiagramm - Umsatztrend nach Datum
+Flächendiagramm - Umsatztrend nach Datum
 
 
 ```tsx preview
@@ -26,13 +26,13 @@ export default () => {
           "dimensions": [
             {
               "field": "order_date",
-              "alias": "Order Date"
+              "alias": "Bestelldatum"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -50,7 +50,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -91,13 +91,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "Produkttyp"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -115,7 +115,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -156,13 +156,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Bundesland"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -180,7 +180,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -201,7 +201,7 @@ export default () => {
 
 ## column-by-area
 
-Saeulendiagramm - Umsatz nach Region
+Säulendiagramm - Umsatz nach Region
 
 
 ```tsx preview
@@ -227,7 +227,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -245,7 +245,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -286,13 +286,13 @@ export default () => {
           "dimensions": [
             {
               "field": "customer_type",
-              "alias": "Customer Type"
+              "alias": "Kundentyp"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -310,7 +310,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -351,13 +351,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Bundesland"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -375,7 +375,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -416,13 +416,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Bundesland"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -440,7 +440,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -487,7 +487,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -505,7 +505,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -526,7 +526,7 @@ export default () => {
 
 ## pie-chart-measure-encoding
 
-Kreisdiagramm-Masscodierung - Pie-Diagrammtyp in measure-encoding.ts testen
+Kreisdiagramm-Kennzahlenkodierung - Pie-Diagrammtyp in measure-encoding.ts testen
 
 
 ```tsx preview
@@ -546,13 +546,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "Produkttyp"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "angle",
               "aggregate": {
                 "func": "sum"
@@ -570,7 +570,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -611,13 +611,13 @@ export default () => {
           "dimensions": [
             {
               "field": "city",
-              "alias": "City"
+              "alias": "Stadt"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -635,7 +635,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -656,7 +656,7 @@ export default () => {
 
 ## scatter-chart-measure-encoding
 
-Streudiagramm-Masscodierung - Scatter-Diagrammtyp in measure-encoding.ts testen
+Streudiagramm-Kennzahlenkodierung - Scatter-Diagrammtyp in measure-encoding.ts testen
 
 
 ```tsx preview
@@ -677,12 +677,12 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "xAxis"
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Gewinn",
               "encoding": "yAxis"
             }
           ],
@@ -697,7 +697,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },
@@ -739,7 +739,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Umsatz",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -747,7 +747,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Gewinn",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -765,7 +765,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 10
         },

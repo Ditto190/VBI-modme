@@ -46,7 +46,7 @@ Rôle :
 :::tip
 1. Pour plusieurs mesures, l'augmentation de dimension ramène le nombre de mesures à 1. Une mesure reste aussi 1 après augmentation.
 2. Pour plusieurs dimensions, l'augmentation de dimension ajoute une dimension. Même 0 dimension devient 1.
-3. Avec 0 dimension et 1 mesure, on peut appliquer l'augmentation de dimension à répétition pour obtenir n'importe quel nombre de dimensions et 1 mesure, ce qui permet aussi de tracer un histogramme avec une seule mesure.
+3. Avec 0 dimension et 1 mesure, on peut appliquer l'augmentation de dimension à répétition pour obtenir n'importe quel nombre de dimensions et 1 mesure, ce qui permet aussi de tracer un graphique en barres avec une seule mesure.
 :::
 
 ### Réduction de dimension

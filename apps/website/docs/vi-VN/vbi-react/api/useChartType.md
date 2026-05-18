@@ -1,6 +1,6 @@
 # useChartType
 
-## Import
+## Nhập
 
 ```ts
 import { useChartType } from '@visactor/vbi-react'

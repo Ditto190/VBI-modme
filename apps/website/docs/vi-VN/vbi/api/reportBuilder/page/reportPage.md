@@ -1,88 +1,88 @@
 # ReportPageBuilder
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, page: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `parent` | VBIReportBuilder<TQueryDSL, TSeedDSL> | - |
 | `page` | Y.Map<any> | - |
 
 ### getId
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getId(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### setTitle
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setTitle(title: string): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `title` | string | - |
 
 ### setChartId
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setChartId(chart: ResourceReference): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `chart` | ResourceReference | - |
 
 ### setInsightId
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 setInsightId(insight: ResourceReference): this
 ```
 
-**Tra ve**: `this`
+**Trả về**: `this`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `insight` | ResourceReference | - |
 
 ### toJSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIReportPageDSL
 ```
 
-**Tra ve**: `VBIReportPageDSL`
+**Trả về**: `VBIReportPageDSL`

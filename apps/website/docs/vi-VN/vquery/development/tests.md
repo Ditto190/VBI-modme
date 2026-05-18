@@ -4,8 +4,8 @@ VQuery sử dụng framework `rstest` để kiểm thử. **Mọi lệnh phải 
 
 ## Cơ chế kiểm thử
 Bộ kiểm thử của VQuery bao phủ:
-- **Unit**: Hàm tiện ích và logic compiler.
-- **Examples**: Toàn bộ luồng tạo SQL và truy vấn dữ liệu.
+- **Unit**: Hàm tiện ích và logic trình biên dịch.
+- **examples**: Toàn bộ luồng tạo SQL và truy vấn dữ liệu.
 
 ## Lệnh thường dùng
 
@@ -20,8 +20,8 @@ Nếu thay đổi trong logic tạo SQL là đúng kỳ vọng, hãy cập nhậ
 pnpm --filter=@visactor/vquery run test:update
 ```
 
-### Báo cáo coverage
-Tạo và xem coverage kiểm thử:
+### Báo cáo độ bao phủ
+Tạo và xem độ bao phủ kiểm thử:
 ```bash
 pnpm --filter=@visactor/vquery run test:coverage
 ```

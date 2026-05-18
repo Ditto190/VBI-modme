@@ -236,7 +236,7 @@ autoFormat=true이면 모든 numFormat 설정을 덮어씁니다
 :::
 
 **예시**
-\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10万으로 변환, ratio:10000, symbol:"万"
 \- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
@@ -251,7 +251,7 @@ autoFormat=true이면 모든 numFormat 설정을 덮어씁니다
 :::
 
 **예시**
-\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10万으로 변환, ratio:10000, symbol:"万"
 \- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
@@ -371,7 +371,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 :::
 
 **예시**
-\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10万으로 변환, ratio:10000, symbol:"万"
 \- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
@@ -386,7 +386,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 :::
 
 **예시**
-\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10万으로 변환, ratio:10000, symbol:"万"
 \- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
@@ -552,7 +552,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 
 ## backgroundColor
 
-**Type:** `Background색상`
+**Type:** `BackgroundColor`
 
 :::note{title=설명}
 차트 배경색
@@ -566,7 +566,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 
 ## color
 
-**Type:** `색상 | undefined`
+**Type:** `Color | undefined`
 
 :::note{title=설명}
 색상
@@ -644,7 +644,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 
 ## label
 
-**Type:** `레이블 | undefined`
+**Type:** `Label | undefined`
 
 :::note{title=설명}
 레이블
@@ -727,7 +727,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 **Type:** `NumFormat | undefined`
 
 :::note{title=설명}
-레이블 value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+레이블 값 서식 설정입니다. `measure`의 `format`과 병합되며, `measure`의 `format` 우선순위가 더 높습니다. numFormat의 우선순위는 autoFormat보다 낮습니다
 
 :::
 
@@ -751,7 +751,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 :::
 
 **예시**
-\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10万으로 변환, ratio:10000, symbol:"万"
 \- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
@@ -766,7 +766,7 @@ significantDigits와 fractionDigits가 모두 설정된 경우 숫자 서식의 
 :::
 
 **예시**
-\- 100000은 10만으로 변환, ratio:10000, symbol:"만"
+\- 100000은 10万으로 변환, ratio:10000, symbol:"万"
 \- 100000은 10K로 변환, ratio:1000, symbol:"K"
 
 
@@ -1204,7 +1204,7 @@ prepare() 단계에서 작성되며 런타임에는 읽기 전용
 
 ## theme
 
-**Type:** `테마 | undefined`
+**Type:** `Theme | undefined`
 
 :::note{title=설명}
 차트 테마. 테마는 우선순위가 낮으며 모든 차트 유형이 공유하는 공통 설정과 개별 차트 범주의 특정 설정을 포함합니다

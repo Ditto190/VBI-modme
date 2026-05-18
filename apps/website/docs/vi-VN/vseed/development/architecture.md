@@ -1,28 +1,28 @@
-# Architecture
+# Thiết kế kiến trúc
 
-VSeed is a chart generator based on semantic configuration, designed to connect user intent with underlying rendering engines (VChart/VTable).
+VSeed là một trình tạo chart dựa trên cấu hình ngữ nghĩa, được thiết kế để kết nối ý định người dùng với các rendering engine bên dưới (VChart/VTable).
 
 > [Deep Wiki](https://deepwiki.com/VisActor/VSeed)
 
-## Core Concepts
+## Khái niệm cốt lõi
 
-### 1. Pipeline Architecture
-VSeed uses a pipeline pattern to progressively build the chart Spec. The process consists of two main stages:
+### 1. Kiến trúc Pipeline (Pipeline Architecture)
+VSeed sử dụng mẫu pipeline để từng bước xây dựng Spec của chart. Toàn bộ quá trình được chia thành hai giai đoạn chính:
 
 - **AdvancedPipeline**:
-  - Input: Initial `VSeed` object.
-  - Responsibilities: Data reshaping, applying themes, inferring default configurations.
-  - Output: `AdvancedVSeed` (intermediate template).
+  - Đầu vào: đối tượng `VSeed` ban đầu.
+  - Phụ trách: reshape dữ liệu (Data Reshape), áp dụng theme, suy luận cấu hình mặc định.
+  - Đầu ra: `AdvancedVSeed` (template trạng thái trung gian).
 
 - **SpecPipeline**:
-  - Input: `AdvancedVSeed`.
-  - Responsibilities: Convert the intermediate template into concrete VChart/VTable configuration.
-  - Output: Final renderable Spec.
+  - Đầu vào: `AdvancedVSeed`.
+  - Phụ trách: chuyển đổi template trạng thái trung gian thành các mục cấu hình VChart/VTable cụ thể.
+  - Đầu ra: Spec cuối cùng có thể render.
 
-### 2. Builder Pattern
-The `VSeedBuilder` class is the core coordinator, responsible for managing Context, registering plugins, and executing the pipeline.
+### 2. Mẫu Builder
+Lớp `VSeedBuilder` là bộ điều phối cốt lõi, chịu trách nhiệm quản lý Context, đăng ký plugin và thực thi pipeline.
 
-### 3. Plugin-based Extensibility
-VSeed's core capabilities (such as supported chart types) are fully implemented via a plugin registration mechanism.
-- **Chart Type Registration**: Each chart type (e.g., `bar`, `line`) is a registered plugin.
-- **Theme Registration**: Custom themes can be registered.
+### 3. Mở rộng bằng plugin (Extensibility)
+Các năng lực cốt lõi của VSeed, chẳng hạn các loại chart được hỗ trợ, được triển khai hoàn toàn thông qua cơ chế đăng ký plugin.
+- **Chart Type Registration**: Mỗi loại chart (ví dụ `bar`, `line`) là một plugin đã đăng ký.
+- **Theme Registration**: Hỗ trợ đăng ký theme tùy chỉnh.

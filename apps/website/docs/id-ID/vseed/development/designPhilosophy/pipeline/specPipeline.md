@@ -1,6 +1,6 @@
-# Pipeline spec
+# spec pipeline
 
-## Pipeline spec
+## spec pipeline
 
 `spec pipeline` menerima advancedVSeed DSL dan menghasilkan spec.
 

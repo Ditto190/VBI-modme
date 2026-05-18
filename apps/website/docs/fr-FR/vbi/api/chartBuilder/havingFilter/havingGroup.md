@@ -1,28 +1,28 @@
 # HavingGroupBuilder
 
-Builder de groupe Having pour configurer la relation logique (AND/OR) d un groupe de conditions
+Builder de groupe Having pour configurer la relation logique (AND/OR) d'un groupe de conditions
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getConditions
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getConditions(): Y.Array<any>
@@ -32,9 +32,9 @@ getConditions(): Y.Array<any>
 
 ### getId
 
-Obtenir l ID du groupe
+Obtenir l'ID du groupe
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getId(): string
@@ -44,9 +44,9 @@ getId(): string
 
 ### getOperator
 
-Obtenir l operateur logique
+Obtenir l'opérateur logique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getOperator(): 'and' | 'or'
@@ -56,9 +56,9 @@ getOperator(): 'and' | 'or'
 
 ### setOperator
 
-Definir l operateur logique
+Définir l'opérateur logique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setOperator(op: 'and' | 'or'): this
@@ -66,17 +66,17 @@ setOperator(op: 'and' | 'or'): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `op` | 'and' \| 'or' | - Operateur logique |
+| `op` | 'and' \| 'or' | - Opérateur logique |
 
 ### add
 
 Ajouter une condition de filtre Having au groupe
 
-**Definition**:
+**Définition**:
 
 ```typescript
 add(field: string, callback: (node: HavingFilterNodeBuilder) => void): this
@@ -84,18 +84,18 @@ add(field: string, callback: (node: HavingFilterNodeBuilder) => void): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `field` | string | - Nom du champ |
 | `callback` | (node: HavingFilterNodeBuilder) => void | - Fonction de rappel |
 
 ### addGroup
 
-Ajouter un groupe imbrique au groupe courant
+Ajouter un groupe imbriqué au groupe courant
 
-**Definition**:
+**Définition**:
 
 ```typescript
 addGroup(op: 'and' | 'or', callback: (group: HavingGroupBuilder) => void): this
@@ -103,18 +103,18 @@ addGroup(op: 'and' | 'or', callback: (group: HavingGroupBuilder) => void): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `op` | 'and' \| 'or' | - Operateur logique |
+| `op` | 'and' \| 'or' | - Opérateur logique |
 | `callback` | (group: HavingGroupBuilder) => void | - Fonction de rappel |
 
 ### remove
 
-Supprimer la condition avec l ID indique ou l element a l index indique
+Supprimer la condition avec l'ID indiqué ou l'élément à l'index indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 remove(idOrIndex: string | number): this
@@ -122,9 +122,9 @@ remove(idOrIndex: string | number): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `idOrIndex` | string \| number | - ID ou index |
 
@@ -132,7 +132,7 @@ remove(idOrIndex: string | number): this
 
 Effacer toutes les conditions du groupe
 
-**Definition**:
+**Définition**:
 
 ```typescript
 clear(): this
@@ -144,7 +144,7 @@ clear(): this
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIHavingGroup

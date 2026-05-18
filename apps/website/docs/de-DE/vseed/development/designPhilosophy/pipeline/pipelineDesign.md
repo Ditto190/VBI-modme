@@ -1,45 +1,47 @@
-# Pipeline Design
+# pipeline-Design
 
-:::info Why Pipeline?
-1. A choice made by senior team members.
-2. Pipeline's advantage: it allows `VSeed` to independently control the execution flow for each chart type. With good design, each chart type's implementation is both decoupled and locally reusable, giving each chart type perfect control over every detail — this is what Pipeline brings, and exactly what `VSeed` needs most.
-3. The downsides of the Pipeline pattern can all be avoided at design time — by keeping individual `Pipe` sizes small and minimizing dependencies between `Pipe`s.
-4. After four generations of Pipeline design and optimization, this is the fifth version — the pitfalls have already been navigated.
+:::info Warum Pipeline?
+1. Eine Entscheidung erfahrener Teammitglieder.
+2. Der Vorteil von Pipeline besteht darin, dass `VSeed` den Ausführungsfluss jedes Charttyps unabhängig steuern kann. Durch gutes Design kann die Implementierung jedes Charttyps entkoppelt und zugleich lokal wiederverwendbar sein, während jede Chartklasse jedes Detail präzise kontrollieren kann. Genau das bringt Pipeline, und genau das braucht `VSeed` am meisten.
+3. Im Vergleich dazu lassen sich die Nachteile des Pipeline-Musters beim Design vermeiden. Wenn die Größe einzelner `Pipe`s reduziert und Abhängigkeiten zwischen `Pipe`s verringert werden, lassen sich die Nachteile dieses Musters weitgehend vermeiden.
+4. Nach vier Generationen von Pipeline-Design und Optimierung ist VSeed bereits die fünfte Version. Die typischen Stolpersteine wurden bereits durchlaufen.
+
 :::
 
-## What is a Pipeline?
+## Was ist Pipeline?
 
-Pipeline is a powerful abstraction and engineering practice that decomposes a complex task into a series of connected, sequentially executed smaller steps. Its design philosophy is deeply influenced by the core ideas of functional programming (FP).
+Pipeline ist eine mächtige Abstraktion und Engineering-Praxis. Sie zerlegt eine komplexe Aufgabe in eine Reihe kleinerer, miteinander verbundener Schritte, die nacheinander ausgeführt werden. Ihre Designidee und Implementierung sind stark von den Kernideen der funktionalen Programmierung (FP) geprägt.
 
-### Pipeline Advantages:
-- **Modularity**: Atomic implementation — compose atoms into modules.
-- **Automation**: Simply define the input to automatically get the output, without worrying about internal implementation.
-- **Pure functions**: Given a specified input, the expected output is always produced — a characteristic of pure functions.
-- **Parallelism**: Naturally supports concurrency.
-- **Reusability**: Every module can be reused.
-- **Testability**: In theory, every module is independent and can be tested individually to ensure quality.
-- **Traceability**: Clear inputs and outputs at each stage make it easy to locate issues and monitor process state.
-- **Cacheability**: In theory, the output of individual `Pipe`s can be cached, avoiding redundant computation and improving efficiency.
+### Vorteile von Pipeline:
+- Modularität: atomare Implementierung; durch Kombination von Atomen entstehen Module.
+- Automatisierung: Sobald die Eingabe bestimmt ist, wird die Ausgabe automatisch erzeugt, ohne dass interne Details beachtet werden müssen.
+- Reine Funktion: Eine bestimmte Eingabe liefert immer die erwartete Ausgabe; das ist ein Merkmal reiner Funktionen.
+- Parallelität: unterstützt von Natur aus Nebenläufigkeit.
+- Wiederverwendbarkeit: Jedes Modul kann wiederverwendet werden.
+- Testbarkeit: Theoretisch ist jedes Modul unabhängig und kann separat getestet werden, um Qualität sicherzustellen.
+- Nachverfolgbarkeit: Eingaben und Ausgaben jeder Phase sind klar, was Fehlersuche und Prozessüberwachung erleichtert.
+- Cachebarkeit: Theoretisch kann die Ausgabe eines einzelnen `Pipe` separat gecacht werden, um wiederholte Berechnungen zu vermeiden und Effizienz zu erhöhen.
 
-### Pipeline Disadvantages:
-- **Sequential dependencies**: When Pipes have ordering dependencies, the cognitive cost increases — you need to understand earlier stages to understand later ones. Deep overall understanding is needed to quickly locate issues.
-- **Debugging cost**: Since Pipeline executes sequentially, a failure at any stage causes the entire Pipeline to fail. This makes debugging harder, as you need to locate the failing stage and fix it.
-- **Performance**: Since Pipeline executes sequentially, each stage's output must wait for the previous stage to complete, which can cause performance issues — especially when one stage takes a long time.
-- **Functional programming**: Requires learning new concepts, which carries some onboarding cost. As a result, design principles and implementation details need to be documented in the contribution guide for other developers.
+### Nachteile von Pipeline:
+- Reihenfolgeabhängigkeit: Wenn zwischen `Pipe`s eine Reihenfolgeabhängigkeit besteht, steigt der Verständnisaufwand, weil frühere Phasen verstanden werden müssen, bevor spätere Phasen verständlich sind. Zur schnellen Fehlersuche ist ein tieferes Verständnis des Gesamtprozesses nötig.
+- Debugging-Kosten: Da Pipeline sequenziell ausgeführt wird, führt der Fehler einer Phase zum Fehlschlag der gesamten Pipeline. Das erschwert Debugging, weil die fehlerhafte Phase gefunden und repariert werden muss.
+- Performance-Probleme: Da Pipeline sequenziell ausgeführt wird, muss jede Phase auf die Ausgabe der vorherigen Phase warten. Das kann zu Performance-Problemen führen, besonders wenn eine Phase lange dauert.
+- Funktionale Programmierung: Neue Konzepte müssen verstanden werden, was Lernaufwand bedeutet. Deshalb sollten Designprinzipien und Implementierungsdetails im Contribution Guide dokumentiert werden, damit andere Entwickler sie verstehen und nutzen können.
 
-## How to Write Pipelines in VSeed?
+## Wie sollte Pipeline in VSeed geschrieben werden?
 
-### Pipe Composition Pattern
+### Pipe-Kompositionsmuster
 
-Multiple functional Pipes can be composed into a larger functional Pipe, or combined into a more complex Pipeline.
+Mehrere funktionale `Pipe`s können zu einem größeren funktionalen `Pipe` oder zu einer komplexeren Pipeline kombiniert werden.
 
-In VSeed, a complete Pipeline corresponds to the implementation of one chart type. By describing the composition of Pipes, different chart types can be created. During the Pipeline composition phase, you don't need to worry about each pipe's specific implementation.
+In VSeed entspricht eine vollständige Pipeline der Implementierung eines Charttyps. Durch Beschreibung der Kompositionsbeziehungen zwischen `Pipe`s lassen sich unterschiedliche Charttypen erstellen. In der Kompositionsphase der Pipeline muss man sich nicht um die konkrete Implementierung jedes `pipe` kümmern.
 
-#### Composition for Differences
 
-Example:
+#### Kompositionsunterschiede
 
-Line charts and area charts share many reusable features — labels, legends, axes, etc. — but area charts have area mark styles while line charts don't. The pipeline resolves this difference through functional Pipe composition, with no if statements needed.
+Ein Beispiel:
+
+Liniendiagramme und Flächendiagramme können viele Funktionen wiederverwenden, etwa Labels, Legenden und Achsen. Ein Liniendiagramm hat jedoch keinen Flächen-Mark-Stil. Daher löst die pipeline diesen Unterschied durch Kombination funktionaler `Pipe`s, ganz ohne `if`-Anweisung.
 
 ```ts
 const lineChartPipeline = [
@@ -59,22 +61,23 @@ const areaChartPipeline = [
   lineStyle,
   pointStyle,
 
-  // Only area charts have area mark style
+  // Nur Flächendiagramme haben einen Flächen-Mark-Stil
   areaStyle,
 ]
 ```
 
-### Pipe Adapter Pattern
 
-Beyond composition, building Pipes often involves conditions. To handle different conditional Pipe combinations, VSeed makes heavy use of Pipe adapters.
+### Pipe-Adaptermuster
 
-#### Conditional Composition
+Neben dem Kompositionsmuster hat der Aufbau eines `Pipe` häufig bestimmte Bedingungen. Um `Pipe`-Kombinationen unter unterschiedlichen Bedingungen zu erfüllen, verwendet VSeed viele `Pipe`-Adapter.
 
-Example:
+#### Kompositionsbedingungen
 
-Line charts support pivot mode — without pivot, rendered by VChart (output VChart spec); with pivot, rendered by VTable (output VTable spec).
+Ein Beispiel:
 
-Pivot line charts need to reuse most basic line chart features (labels, legends, axes, etc.), so the adapter pattern adapts regular line chart Pipes into pivot line chart Pipes.
+Liniendiagramme unterstützen Pivot. Ohne Pivot werden sie von VChart gerendert und geben eine VChart spec aus. Mit Pivot werden sie von VTable gerendert und geben eine VTable spec aus.
+
+Pivot-Liniendiagramme müssen im Wesentlichen die Grundfunktionen von Liniendiagrammen wiederverwenden, etwa Labels, Legenden und Achsen. Deshalb wird das Adaptermuster benötigt, um `Pipe`s eines Liniendiagramms in `Pipe`s eines Pivot-Liniendiagramms umzuwandeln.
 
 ```ts
 const pivotLineChartPipeline = [
@@ -103,36 +106,71 @@ const lineChartPipeline = [
 ]
 ```
 
-In summary, each adapter is essentially an if-else — hidden conditions inside a pipe are abstracted into an adapter, pushing the if-else to the top level. This results in a Pipeline with clearer dependencies and lower maintenance cost.
+Zusammengefasst ist jeder Adapter ein `if else`. Bedingungen, die in einem `pipe` verborgen wären, können als Adapter abstrahiert werden; dadurch wird das `if else` auf die oberste Ebene verschoben. So entsteht eine Pipeline mit klareren Abhängigkeiten und geringeren Wartungskosten.
 
-### The Most Basic Unit: Functional Pipe
+### Die Grundeinheit von Pipeline: funktionaler Pipe
 
-VSeed expects all chart types to use **features** as the most basic unit, providing sufficient reusability and extensibility — building a chart type's pipeline bottom-up. Each functional Pipe should be an independent, testable, and reusable module.
+VSeed erwartet, dass alle Charttypen Funktionen als Grundeinheit verwenden, um ausreichende Wiederverwendbarkeit und Erweiterbarkeit bereitzustellen. Die Pipeline eines Charttyps wird von unten nach oben aufgebaut. Jeder funktionale `Pipe` sollte ein unabhängiges, testbares und wiederverwendbares Modul sein.
 
-The most critical point: **abstract differences into different Pipes** (write fewer if-else statements), rather than writing one large, all-in-one Pipe.
+Entscheidend ist, funktionale Unterschiede als unterschiedliche `Pipe`s zu abstrahieren, also weniger `if else` zu schreiben, statt einen großen allumfassenden `Pipe` zu schreiben.
 
-#### Flat Functional Pipes
+#### Abgeflachter funktionaler Pipe
 
-Example:
+Ein Beispiel:
 
-Bar, column, line, area, and scatter charts all have X and Y axes — similar but slightly different. If you write one large `axes` pipe, it might look like this:
+Balken-, Säulen-, Linien-, Flächen- und Streudiagramme haben alle X- und Y-Achsen. Sie sind ähnlich, aber unterscheiden sich leicht. Würde man einen großen allumfassenden `axes` pipe schreiben, könnte das so aussehen:
 
 ```ts
-// ... (see zh-CN for full example)
+const lineChartPipeline = [
+  axes
+]
+const barChartPipeline = [
+  axes
+]
+const areaChartPipeline = [
+  axes
+]
+const scatterChartPipeline = [
+  axes
+]
 const axes = (spec, context) => {
   if (isLine || isArea || isColumn){
+    // Linien-, Flächen- und Säulendiagramme haben eine diskrete und eine kontinuierliche Achse
     return xy(spec, context)
   }
   if (isScatter){
+    // Streudiagramme haben zwei kontinuierliche Achsen
     return yy(spec, context)
   }
   if (isBar){
+    // Balkendiagramme haben eine diskrete und eine kontinuierliche Achse, aber ihre Achsrichtung unterscheidet sich von Linien-, Flächen- und Säulendiagrammen
     return yx(spec, context)
   }
 }
+
+const xy = (spec, context) => {
+  linearAxis(spec, context, {orient: 'left'})
+  bandAxis(spec, context, {orient: 'bottom'})
+}
+
+const yx = (spec, context) => {
+  linearAxis(spec, context, {orient: 'bottom'})
+  bandAxis(spec, context, {orient: 'left'})
+}
+
+const yy = (spec, context) => {
+  linearAxis(spec, context, {orient: 'bottom'})
+  linearAxis(spec, context, {orient: 'left'})
+}
 ```
 
-The better approach is to abstract the differences into separate Pipes and compose them at the pipeline level:
+Die obige Logik wählt innerhalb eines funktionalen `Pipe` je nach Charttyp unterschiedliche untergeordnete `pipe`s aus. Das führt zu zwei Problemen:
+1. Wie sollen die wiederholten Funktionen in `xy`, `yx` und `yy` wiederverwendet werden? Viele ähnliche, aber verschiedene Unterfunktionen müssen in unterschiedlichen untergeordneten `pipe`s wiederholt aufgerufen werden. Abhängigkeiten können leicht unübersichtlich werden und Wartungskosten erhöhen.
+2. Beim Ändern von Funktionen für Linien- und Flächendiagramme kann man Balkendiagramme leicht übersehen, weil die Logik verzweigt ist. Beim Implementieren neuer Funktionen müssen daher Unterschiede berücksichtigt werden.
+
+Wenn die gesamte spec pipeline auf mehrere hundert `pipe`s anwächst, verursacht diese Schreibweise sehr hohe Wartungskosten. Daher brauchen wir einen einfacheren Weg, um je nach Charttyp unterschiedliche untergeordnete `pipe`s auszuwählen.
+
+Setzt man das obige Beispiel fort, werden die Unterschiede als verschiedene `Pipe`s abstrahiert, auf feinerer funktionaler Granularität gekapselt und schließlich direkt in der pipeline kombiniert. So lassen sich die genannten Probleme vermeiden.
 
 ```ts
 const lineChartPipeline = [
@@ -151,8 +189,19 @@ const scatterChartPipeline = [
   xLinearAxis,
   yLinearAxis,
 ]
+
+const xBandAxis = (spec, context) => {
+}
+const yBandAxis = (spec, context) => {
+}
+const xLinearAxis = (spec, context) => {
+}
+const yLinearAxis = (spec, context) => {
+}
 ```
 
-All chart type divergences should occur **above** the Pipeline level. Unless absolutely necessary, Pipelines should not branch based on chart type.
+Im obigen Beispiel wird kein `axes` pipe implementiert. Stattdessen werden `xBandAxis`, `yBandAxis`, `xLinearAxis` und `yLinearAxis` direkt kombiniert. Dadurch wird vermieden, in einem `axes` pipe je nach Charttyp unterschiedliche untergeordnete `pipe`s auszuwählen; charttypbasierte Verzweigungen und der Einsatz von `if else` werden reduziert.
 
-This composition approach aligns with VSeed's design philosophy: use a flatter composition of functional Pipes instead of if-else conditions in a single large Pipe.
+Alle Verzweigungen aufgrund von Charttyp-Unterschieden sollten oberhalb der Pipeline liegen. Wenn es nicht unbedingt nötig ist, sollte Pipeline nicht je nach Charttyp unterschiedliche untergeordnete `pipe`s auswählen.
+
+Diese Kompositionsweise entspricht der Designphilosophie von VSeed: eine flachere Kombination funktionaler `Pipe`s verwenden, statt mit `if else` einen großen allumfassenden funktionalen `Pipe` zu bauen.

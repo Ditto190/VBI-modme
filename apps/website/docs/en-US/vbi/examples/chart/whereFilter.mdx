@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## between-sales-range-analysis
 
-Sales range analysis: Use 'between' to filter orders between 1000 and 10000, summarized by category profit.
+Sales range analysis: use between to filter individual orders from 1000 to 10000 and summarize profit by category
 
 
 ```tsx preview
@@ -75,7 +75,7 @@ export default () => {
 
 ## clear-and-rebuild-filters
 
-Clear and rebuild filters: Clear old simple filters and rebuild complex conditions with grouping.
+Clear and rebuild filters: clear old simple filters and rebuild complex grouped conditions
 
 
 ```tsx preview
@@ -116,13 +116,13 @@ export default () => {
                 "id": "f-old1",
                 "field": "product_type",
                 "op": "eq",
-                "value": "Office Supplies"
+                "value": "办公用品"
               },
               {
                 "id": "f-old2",
                 "field": "area",
                 "op": "eq",
-                "value": "East China"
+                "value": "华东"
               }
             ]
           },
@@ -144,8 +144,8 @@ export default () => {
     .add('profit', node => node.setOperator('>').setValue(0))
     .addGroup('or', group => {
       group
-        .add('area', n => n.setOperator('eq').setValue('East China'))
-        .add('area', n => n.setOperator('eq').setValue('North China'));
+        .add('area', n => n.setOperator('eq').setValue('华东'))
+        .add('area', n => n.setOperator('eq').setValue('华北'));
     });
 }
       applyBuilder(builder)
@@ -162,7 +162,7 @@ export default () => {
 
 ## date-filter-period-and-range-combo
 
-Date range combined filter: Use 'period' to filter 2024 Q1 data, while using 'range' to limit profit range, cross-analyzed by category and shipping mode.
+Date range combined filter: use period to filter 2024 Q1 data, while range limits the profit interval, then cross-analyze by category and shipping mode
 
 
 ```tsx preview
@@ -248,7 +248,7 @@ export default () => {
 
 ## date-filter-relative-with-nested-conditions
 
-Date filter and nested conditions combo: Filter high-value orders from Consumers or Corporate customers within the last 30 days, statistics by province.
+Date filter with nested conditions: filter high-value orders from Consumer or Corporate customers in the last 30 days and summarize sales and profit by province
 
 
 ```tsx preview
@@ -314,8 +314,8 @@ export default () => {
     .add('sales', node => node.setOperator('>').setValue(500))
     .addGroup('or', group => {
       group
-        .add('customer_type', n => n.setOperator('eq').setValue('Consumer'))
-        .add('customer_type', n => n.setOperator('in').setValue(['Corporate', 'Small Business']));
+        .add('customer_type', n => n.setOperator('eq').setValue('消费者'))
+        .add('customer_type', n => n.setOperator('in').setValue(['公司', '小型企业']));
     });
 }
       applyBuilder(builder)
@@ -332,7 +332,7 @@ export default () => {
 
 ## deeply-nested-or-and-groups
 
-Multi-level nested grouping: High-value orders with Same Day shipping for Consumers or First Class shipping for Corporate customers, three levels of AND/OR nesting.
+Multi-level nested grouping: high-value Same Day orders from Consumer customers or First Class orders from Corporate customers, using three levels of AND/OR nesting
 
 
 ```tsx preview
@@ -388,12 +388,12 @@ export default () => {
     .addGroup('or', outerGroup => {
       outerGroup
         .addGroup('and', g1 => {
-          g1.add('customer_type', n => n.setOperator('eq').setValue('Consumer'))
-            .add('delivery_method', n => n.setOperator('eq').setValue('Same Day'));
+          g1.add('customer_type', n => n.setOperator('eq').setValue('消费者'))
+            .add('delivery_method', n => n.setOperator('eq').setValue('当日'));
         })
         .addGroup('and', g2 => {
-          g2.add('customer_type', n => n.setOperator('in').setValue(['Corporate', 'Small Business']))
-            .add('delivery_method', n => n.setOperator('eq').setValue('First Class'));
+          g2.add('customer_type', n => n.setOperator('in').setValue(['公司', '小型企业']))
+            .add('delivery_method', n => n.setOperator('eq').setValue('一级'));
         });
     });
 }
@@ -411,7 +411,7 @@ export default () => {
 
 ## high-discount-tech-profit-analysis
 
-High discount Technology product profit analysis: Filter technology category orders with discount > 0.5, comparing profit by region.
+High-discount Technology product profit analysis: filter Technology category orders with discount greater than 0.5 and compare profit by region
 
 
 ```tsx preview
@@ -463,7 +463,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter
-    .add('product_type', node => node.setOperator('eq').setValue('Technology'))
+    .add('product_type', node => node.setOperator('eq').setValue('技术'))
     .add('discount', node => node.setOperator('>').setValue(0.5));
 }
       applyBuilder(builder)
@@ -480,7 +480,7 @@ export default () => {
 
 ## in-operator-multi-area-delivery
 
-Multi-region shipping efficiency comparison: Use 'in' to filter East China, North China, and Central South regions, statistics by shipping mode.
+Multi-region delivery efficiency comparison: use in to filter East China, North China, and Central South, then count orders by shipping mode
 
 
 ```tsx preview
@@ -532,7 +532,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter.add('area', node => {
-    node.setOperator('in').setValue(['East China', 'North China', 'Central South']);
+    node.setOperator('in').setValue(['华东', '华北', '中南']);
   });
 }
       applyBuilder(builder)
@@ -549,7 +549,7 @@ export default () => {
 
 ## nested-group-region-product-filter
 
-Office Supplies or Furniture sales in East China: Use nested grouping, AND connecting region condition and OR category conditions.
+Office Supplies or Furniture sales in East China: use nested grouping with AND connecting the region condition and OR category conditions
 
 
 ```tsx preview
@@ -601,11 +601,11 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter
-    .add('area', node => node.setOperator('eq').setValue('East China'))
+    .add('area', node => node.setOperator('eq').setValue('华东'))
     .addGroup('or', group => {
       group
-        .add('product_type', node => node.setOperator('eq').setValue('Office Supplies'))
-        .add('product_type', node => node.setOperator('eq').setValue('Furniture'));
+        .add('product_type', node => node.setOperator('eq').setValue('办公用品'))
+        .add('product_type', node => node.setOperator('eq').setValue('家具'));
     });
 }
       applyBuilder(builder)
@@ -622,7 +622,7 @@ export default () => {
 
 ## not-between-sales-range
 
-Not between filter: exclude sales between 1000~10000
+Not between filter: exclude sales between 1000 and 10000
 
 
 ```tsx preview
@@ -760,7 +760,7 @@ export default () => {
 
 ## office-supplies-sales-by-province
 
-Office Supplies sales ranking by province: Filter Office Supplies category, summarized by province sales.
+Office Supplies sales ranking by province: filter the Office Supplies category and summarize sales by province
 
 
 ```tsx preview
@@ -812,7 +812,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter.add('product_type', node => {
-    node.setOperator('eq').setValue('Office Supplies');
+    node.setOperator('eq').setValue('办公用品');
   });
 }
       applyBuilder(builder)
@@ -829,7 +829,7 @@ export default () => {
 
 ## or-group-product-category-comparison
 
-Office Supplies vs. Technology category comparison: Use OR grouping to filter two categories, comparing sales by region.
+Office Supplies versus Technology category comparison: use an OR group to filter two categories and compare sales by region
 
 
 ```tsx preview
@@ -882,8 +882,8 @@ export default () => {
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter.addGroup('or', group => {
     group
-      .add('product_type', node => node.setOperator('eq').setValue('Office Supplies'))
-      .add('product_type', node => node.setOperator('eq').setValue('Technology'));
+      .add('product_type', node => node.setOperator('eq').setValue('办公用品'))
+      .add('product_type', node => node.setOperator('eq').setValue('技术'));
   });
 }
       applyBuilder(builder)
@@ -900,7 +900,7 @@ export default () => {
 
 ## remove-condition-from-group
 
-Remove condition from group: Pre-defined OR group with three categories, remove one via updateGroup.
+Remove a condition from a group: the preset OR group contains three categories, and updateGroup removes one of them
 
 
 ```tsx preview
@@ -945,19 +945,19 @@ export default () => {
                     "id": "f-office",
                     "field": "product_type",
                     "op": "eq",
-                    "value": "Office Supplies"
+                    "value": "办公用品"
                   },
                   {
                     "id": "f-tech",
                     "field": "product_type",
                     "op": "eq",
-                    "value": "Technology"
+                    "value": "技术"
                   },
                   {
                     "id": "f-furniture",
                     "field": "product_type",
                     "op": "eq",
-                    "value": "Furniture"
+                    "value": "家具"
                   }
                 ]
               }
@@ -994,7 +994,7 @@ export default () => {
 
 ## remove-filter-by-index
 
-Remove filter by index: Remove the first category filter, keeping only the region condition.
+Remove a filter by index: remove the first category filter and keep only the region condition
 
 
 ```tsx preview
@@ -1035,16 +1035,16 @@ export default () => {
                 "id": "f-product",
                 "field": "product_type",
                 "op": "eq",
-                "value": "Office Supplies"
+                "value": "办公用品"
               },
               {
                 "id": "f-area",
                 "field": "area",
                 "op": "in",
                 "value": [
-                  "East China",
-                  "North China",
-                  "Central South"
+                  "华东",
+                  "华北",
+                  "中南"
                 ]
               }
             ]
@@ -1078,7 +1078,7 @@ export default () => {
 
 ## update-filter-switch-province
 
-Animated filter modification: Update province filter from Zhejiang to Guangdong, observing sales changes.
+Dynamically modify a filter: update the province filter from Zhejiang to Guangdong and observe sales changes
 
 
 ```tsx preview
@@ -1119,13 +1119,13 @@ export default () => {
                 "id": "f-province",
                 "field": "province",
                 "op": "eq",
-                "value": "Zhejiang"
+                "value": "浙江"
               },
               {
                 "id": "f-product",
                 "field": "product_type",
                 "op": "eq",
-                "value": "Technology"
+                "value": "技术"
               }
             ]
           },
@@ -1143,7 +1143,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter.update('f-province', node => {
-    node.setValue('Guangdong');
+    node.setValue('广东');
   });
 }
       applyBuilder(builder)
@@ -1160,7 +1160,7 @@ export default () => {
 
 ## update-group-or-to-and
 
-Modify group logic: Switch pre-defined OR category group to AND, narrowing the filter scope.
+Modify group logic: switch the preset OR category group to AND to narrow the filter scope
 
 
 ```tsx preview
@@ -1205,13 +1205,13 @@ export default () => {
                     "id": "f-ct1",
                     "field": "customer_type",
                     "op": "eq",
-                    "value": "Corporate"
+                    "value": "公司"
                   },
                   {
                     "id": "f-ct2",
                     "field": "customer_type",
                     "op": "eq",
-                    "value": "Consumer"
+                    "value": "消费者"
                   }
                 ]
               }
@@ -1300,7 +1300,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter.add('area', node => {
-    node.setOperator('=').setValue(['East China', 'North China']);
+    node.setOperator('=').setValue(['华东', '华北']);
   });
 }
       applyBuilder(builder)
@@ -1369,7 +1369,7 @@ export default () => {
       })
       const applyBuilder = (builder: VBIChartBuilder) => {
   builder.whereFilter.add('area', node => {
-    node.setOperator('!=').setValue(['East China', 'North China']);
+    node.setOperator('!=').setValue(['华东', '华北']);
   });
 }
       applyBuilder(builder)

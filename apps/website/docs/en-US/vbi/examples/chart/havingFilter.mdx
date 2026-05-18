@@ -1471,7 +1471,7 @@ export default () => {
         },
         connectorId: DEMO_CONNECTOR_ID,
       })
-      const applyBuilder = (builder: VBIChartBuilder) => { builder.whereFilter.add('product_type', n => n.setOperator('=').setValue('Office Supplies')); builder.havingFilter.addGroup('or', g => { g.add('sales', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(50000)); g.add('profit', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(10000)); }); }
+      const applyBuilder = (builder: VBIChartBuilder) => { builder.whereFilter.add('product_type', n => n.setOperator('=').setValue('办公用品')); builder.havingFilter.addGroup('or', g => { g.add('sales', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(50000)); g.add('profit', n => n.setAggregate({"func":"sum"}).setOperator('gt').setValue(10000)); }); }
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }

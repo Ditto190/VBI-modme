@@ -1,27 +1,27 @@
 # ReportPageBuilder
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, page: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `parent` | VBIReportBuilder<TQueryDSL, TSeedDSL> | - |
 | `page` | Y.Map<any> | - |
 
 ### getId
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getId(): string
@@ -31,7 +31,7 @@ getId(): string
 
 ### setTitle
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setTitle(title: string): this
@@ -39,15 +39,15 @@ setTitle(title: string): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `title` | string | - |
 
 ### setChartId
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setChartId(chart: ResourceReference): this
@@ -55,15 +55,15 @@ setChartId(chart: ResourceReference): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `chart` | ResourceReference | - |
 
 ### setInsightId
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setInsightId(insight: ResourceReference): this
@@ -71,15 +71,15 @@ setInsightId(insight: ResourceReference): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `insight` | ResourceReference | - |
 
 ### toJSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIReportPageDSL

@@ -4,7 +4,7 @@
   {
     "type": "dir",
     "name": "dataReshape",
-    "label": "Pembentukan Ulang Data"
+    "label": "Reshape Data"
   },
   {
     "type": "dir",

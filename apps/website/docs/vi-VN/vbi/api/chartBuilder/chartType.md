@@ -1,79 +1,79 @@
 # ChartTypeBuilder
 
-Builder loai chart dung de chuyen doi va lay loai chart. Ho tro bang, cot, duong, tron, phan tan va nhieu loai chart khac
+Builder loại chart dùng để chuyển đổi và lấy loại chart. Hỗ trợ bảng, cột, đường, tròn, phân tán và nhiều loại chart khác
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-Ham khoi tao
+Hàm khởi tạo
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Lang nghe thay doi loai chart
+Lắng nghe thay đổi loại chart
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveCallback | - Ham callback |
+| `callback` | ObserveCallback | - Hàm callback |
 
 ### changeChartType
 
-Thiet lap loai chart
+Thiết lập loại chart
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 changeChartType(chartType: string)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `chartType` | string | - Loai chart |
+| `chartType` | string | - Loại chart |
 
 ### getChartType
 
-Lay loai chart hien tai
+Lấy loại chart hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getChartType(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getSupportedDimensionEncodings
 
-Lay encoding dimension ma loai chart hien tai ho tro
+Lấy encoding dimension mà loại chart hiện tại hỗ trợ
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getSupportedDimensionEncodings()
@@ -81,25 +81,25 @@ getSupportedDimensionEncodings()
 
 ### getRecommendedDimensionEncodings
 
-Tra ve encoding dimension duoc de xuat theo thu tu dimension dua tren loai chart hien tai
+Trả về encoding dimension được đề xuất theo thứ tự dimension dựa trên loại chart hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getRecommendedDimensionEncodings(dimensionCount: number)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `dimensionCount` | number | - So luong dimension; mac dinh dung so dimension trong DSL hien tai |
+| `dimensionCount` | number | - Số lượng dimension; mặc định dùng số dimension trong DSL hiện tại |
 
 ### getSupportedMeasureEncodings
 
-Lay encoding measure ma loai chart hien tai ho tro
+Lấy encoding measure mà loại chart hiện tại hỗ trợ
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getSupportedMeasureEncodings()
@@ -107,40 +107,40 @@ getSupportedMeasureEncodings()
 
 ### getRecommendedMeasureEncodings
 
-Tra ve encoding measure duoc de xuat theo thu tu measure dua tren loai chart hien tai
+Trả về encoding measure được đề xuất theo thứ tự measure dựa trên loại chart hiện tại
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getRecommendedMeasureEncodings(measureCount: number)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `measureCount` | number | - So luong measure; mac dinh dung so measure trong DSL hien tai |
+| `measureCount` | number | - Số lượng measure; mặc định dùng số measure trong DSL hiện tại |
 
 ### toJSON
 
-Xuat thanh JSON
+Xuất thành JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): string
 ```
 
-**Tra ve**: `string`
+**Trả về**: `string`
 
 ### getAvailableChartTypes
 
-Lay tat ca loai chart duoc ho tro
+Lấy tất cả loại chart được hỗ trợ
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 getAvailableChartTypes(): string[]
 ```
 
-**Tra ve**: `string[]`
+**Trả về**: `string[]`

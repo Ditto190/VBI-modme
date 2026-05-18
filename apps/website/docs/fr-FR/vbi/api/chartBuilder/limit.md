@@ -1,33 +1,33 @@
 # LimitBuilder
 
-Builder de limite de donnees pour definir et lire le limit courant
+Builder de limite de données pour définir et lire le limit courant
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
 Constructeur
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `_doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Observer les changements de limit et renvoyer une fonction de desabonnement
+Observer les changements de limit et renvoyer une fonction de désabonnement
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
@@ -35,33 +35,33 @@ observe(callback: ObserveCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveCallback | - Fonction de rappel |
 
 ### setLimit
 
-Definir le limit
+Définir le limit
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setLimit(limit: number)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `limit` | number | - Limite de donnees |
+| `limit` | number | - Limite de données |
 
 ### getLimit
 
 Obtenir le limit courant
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getLimit(): number | undefined
@@ -73,7 +73,7 @@ getLimit(): number | undefined
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): number | undefined

@@ -1,12 +1,12 @@
 # BuilderLayout
 
-## Import
+## Impor
 
 ```ts
 import { BuilderLayout } from '@visactor/vbi-react/components'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 BuilderLayout(props: BuilderLayoutProps)
@@ -14,7 +14,7 @@ BuilderLayout(props: BuilderLayoutProps)
 
 ## Deskripsi
 
-Menyediakan container layout builder standar tiga kolom/dua kolom.
+Menyediakan kontainer tata letak builder standar tiga kolom/dua kolom.
 
 ## Contoh Minimal
 

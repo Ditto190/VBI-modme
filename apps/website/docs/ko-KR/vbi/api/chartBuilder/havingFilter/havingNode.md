@@ -106,7 +106,7 @@ setOperator(operator: string): this
 
 ### setAggregate
 
-집계 설정 설정
+집계 설정하기
 
 **정의**:
 

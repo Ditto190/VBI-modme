@@ -1,6 +1,6 @@
 # useDimensions
 
-## Import
+## Nhập
 
 ```ts
 import { useDimensions } from '@visactor/vbi-react'
@@ -14,7 +14,7 @@ useDimensions(builder: VBIChartBuilder): UseDimensionsReturn
 
 ## Mô tả
 
-Đọc và cập nhật cấu hình dimension, đồng thời cung cấp khả năng thêm, xóa và chỉnh sửa dimension.
+Đọc và cập nhật cấu hình chiều dữ liệu, đồng thời cung cấp khả năng thêm, xóa và chỉnh sửa chiều dữ liệu.
 
 ## Ví dụ tối thiểu
 

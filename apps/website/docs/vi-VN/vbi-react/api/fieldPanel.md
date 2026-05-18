@@ -1,6 +1,6 @@
 # FieldPanel
 
-## Import
+## Nhập
 
 ```ts
 import { FieldPanel } from '@visactor/vbi-react/components'
@@ -14,7 +14,7 @@ FieldPanel(props: FieldPanelProps)
 
 ## Mô tả
 
-Cung cấp panel trường dimension/measure cùng các tương tác chỉnh sửa cơ bản.
+Cung cấp bảng trường chiều dữ liệu/chỉ số đo lường cùng các tương tác chỉnh sửa cơ bản.
 
 ## Ví dụ tối thiểu
 

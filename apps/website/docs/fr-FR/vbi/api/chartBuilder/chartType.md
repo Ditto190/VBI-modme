@@ -1,24 +1,24 @@
 # ChartTypeBuilder
 
-Builder de type de graphique pour changer et lire le type de graphique. Prend en charge table, barres, lignes, secteurs, nuage de points et autres types
+Builder de type de graphique pour changer et récupérer le type de graphique. Prend en charge les tableaux, graphiques en barres, graphiques en courbes, graphiques en secteurs, nuages de points et d'autres types de graphiques
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
 Constructeur
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
@@ -27,7 +27,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 Observer les changements de type de graphique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
@@ -35,25 +35,25 @@ observe(callback: ObserveCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveCallback | - Fonction de rappel |
 
 ### changeChartType
 
-Definir le type de graphique
+Définir le type de graphique
 
-**Definition**:
+**Définition**:
 
 ```typescript
 changeChartType(chartType: string)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `chartType` | string | - Type de graphique |
 
@@ -61,7 +61,7 @@ changeChartType(chartType: string)
 
 Obtenir le type de graphique courant
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getChartType(): string
@@ -73,7 +73,7 @@ getChartType(): string
 
 Obtenir les encodages de dimensions pris en charge par le type de graphique courant
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getSupportedDimensionEncodings()
@@ -81,25 +81,25 @@ getSupportedDimensionEncodings()
 
 ### getRecommendedDimensionEncodings
 
-Renvoyer les encodages de dimensions recommandes selon le type de graphique courant et l ordre des dimensions
+Renvoyer les encodages de dimensions recommandés selon le type de graphique courant et l'ordre des dimensions
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getRecommendedDimensionEncodings(dimensionCount: number)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `dimensionCount` | number | - Nombre de dimensions ; par defaut le nombre de dimensions dans la DSL courante |
+| `dimensionCount` | number | - Nombre de dimensions ; par défaut le nombre de dimensions dans la DSL courante |
 
 ### getSupportedMeasureEncodings
 
 Obtenir les encodages de mesures pris en charge par le type de graphique courant
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getSupportedMeasureEncodings()
@@ -107,25 +107,25 @@ getSupportedMeasureEncodings()
 
 ### getRecommendedMeasureEncodings
 
-Renvoyer les encodages de mesures recommandes selon le type de graphique courant et l ordre des mesures
+Renvoyer les encodages de mesures recommandés selon le type de graphique courant et l'ordre des mesures
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getRecommendedMeasureEncodings(measureCount: number)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `measureCount` | number | - Nombre de mesures ; par defaut le nombre de mesures dans la DSL courante |
+| `measureCount` | number | - Nombre de mesures ; par défaut le nombre de mesures dans la DSL courante |
 
 ### toJSON
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): string
@@ -137,7 +137,7 @@ toJSON(): string
 
 Obtenir tous les types de graphiques pris en charge
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getAvailableChartTypes(): string[]

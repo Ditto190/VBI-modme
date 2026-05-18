@@ -1,85 +1,85 @@
-# Development Workflow
+# 開発フロー
 
-## Start the Project
+## プロジェクトの起動
 
-```bash title="Start Project"
+```bash title="プロジェクトを起動"
 pnpm install && pnpm dev
 ```
 
-## Understand Requirements and Write Code
+## 要件を理解してコードを書く
 
-This is a complex process, but generally involves three things:
-1. Define the input: `vseed`
-2. Define the output: `vseed` → `advancedVSeed`, or `advancedVSeed` → `spec`
-3. Write code to ensure new inputs produce the expected outputs
-
-:::tip
-The `playground` (`apps/website/docs/zh-CN/playground/index.mdx`) can be used for debugging and development.
-:::
-
-## Create New Test Cases
-
-If necessary, consider creating new test cases.
+これは複雑なプロセスですが、通常は次の 3 つです。
+1. 入力を明確にする: `vseed`
+2. 出力を明確にする: `vseed` を `advancedVSeed` に変換する、または `advancedVSeed` を `spec` に変換する
+3. コードを書き、新しい入力が期待どおりの出力を持つことを保証する
 
 :::tip
-When test coverage decreases, new test cases are required.
+`playground` (`apps/website/docs/ja-JP/playground/index.mdx`) は、デバッグと開発に使用できます。
 :::
 
-In the `packages/vseed/tests/*` directory, create a new `testName.json` file and write a VSeed DSL.
+## テストケースを新規作成する
 
-Then run:
+必要であれば、新しいテストケースの作成を検討できます。
 
-```bash title="Create Test Case"
+:::tip
+カバレッジが低下した場合は、新しいテストケースを作成する必要があります。
+:::
+
+`packages/vseed/tests/*` ディレクトリ配下に、新しい `testName.json` を作成し、VSeed DSL を書き込みます。
+
+実行:
+
+```bash title="テストケースを作成"
 pnpm build:canvasTest
 ```
 
-## Run Unit Tests and Update Coverage
+## ユニットテストを実行してカバレッジを更新する
 
-```bash title="Run Unit Tests and Update Coverage"
+```bash title="ユニットテストを実行してカバレッジを更新"
 pnpm test:coverage
 ```
 
-Ensure three things:
-1. All tests pass
-2. Snapshot changes are as expected
-3. Coverage has not decreased
+次の 3 つを確認します。
+1. すべてのテストが通る
+2. スナップショットの変更が期待どおりである
+3. カバレッジが低下していない
 
-> Coverage changes will be automatically updated to README.md
+> カバレッジの変化は README.md に自動更新されます
 
-## Update Options Documentation
+## 設定項目ドキュメントを更新する
 
-If you modify TypeScript definitions for chart types, please update the options documentation.
+チャートタイプの TypeScript 定義を変更した場合は、設定項目ドキュメントを更新してください。
 
 :::tip
-All type definitions under `packages/vseed/src/types/chartType` correspond to the options documentation for each chart. If changes are made, please update accordingly.
+`packages/vseed/src/types/chartType` 配下のすべての型定義は、各チャートの設定項目ドキュメントに対応しています。変更がある場合は必ず更新してください。
 :::
 
-```bash title="Update Options Documentation"
+```bash title="設定項目ドキュメントを更新"
 pnpm build:docs
 ```
 
-## Publish and Submit
+## リリースと提出
 
-```bash title="Describe Changes"
+```bash title="変更内容を記述"
 pnpm changeset
 ```
 
-After running `pnpm changeset`, follow the prompts to:
-1. Select the packages to change — in most cases, only vseed
-2. Follow semantic versioning: press Enter twice to skip `major` and `minor`, then select `patch`
-3. Enter a change description, e.g.: `fix: chart render error caused by only one measure`
+`pnpm changeset` コマンドを実行したら、プロンプトに従って次を選択します。
+1. 変更するパッケージを選択します。通常は `vseed` のみです
+2. セマンティックバージョニングに従い、変更タイプを選択します。ほとんどの場合、Enter キーを 2 回押して `major` と `minor` をスキップし、`patch` を選択すれば十分です
+3. 変更説明を入力します。例: `fix: chart render error caused by only one measure`
 
-:::tip Recommendation
-One feature or bugfix → one `changeset` → one `commit`
+:::tip 推奨
+1 つの機能または Bugfix は、1 つの `changeset`、1 つの `commit` に対応します
 
-One `Pull Request` → one `issue`
+1 つの `Pull Request` は、1 つの `issue` に対応します
 
-One `Pull Request` can contain multiple features or bugfixes → multiple `changeset`s → multiple `commit`s
+1 つの `Pull Request` が複数の機能または複数の Bugfix を含む場合、複数の `changeset`、複数の `commit` に対応します
 :::
 
-## Commit
+## コミット
 
-```bash title="Commit Everything"
+```bash title="すべてをコミット"
 git add .
 git commit -m "fix: chart render error caused by only one measure"
 git push

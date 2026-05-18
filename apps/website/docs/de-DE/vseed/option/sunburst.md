@@ -94,7 +94,7 @@ Dimensionskonfiguration zur Definition der hierarchischen Datenstruktur.
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Feld-ID, die der Dimension entspricht
+Feld-ID der Dimension
 
 :::
 
@@ -112,7 +112,7 @@ Dimensionsalias
 **Type:** `TimeFormat | undefined`
 
 :::note{title=Beschreibung}
-Datumsformatkonfiguration der Dimension
+Datumsformat-Konfiguration der Dimension
 
 :::
 
@@ -222,7 +222,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
+Zahlenformattyp. Unterstützt Zahl (Dezimalzahl), Prozent (%), Promille (‰) und wissenschaftliche Notation
 
 :::
 
@@ -236,7 +236,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -251,7 +251,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -357,7 +357,7 @@ Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers u
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
+Zahlenformattyp. Unterstützt Zahl (Dezimalzahl), Prozent (%), Promille (‰) und wissenschaftliche Notation
 
 :::
 
@@ -371,7 +371,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -386,7 +386,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -552,7 +552,7 @@ Aktueller Paginierungswert; legt den Wert fest, mit dem die aktuelle Seite besti
 
 ## backgroundColor
 
-**Type:** `BackgroundFarbe`
+**Type:** `BackgroundColor`
 
 :::note{title=Beschreibung}
 Hintergrundfarbe des Diagramms
@@ -566,7 +566,7 @@ Die Hintergrundfarbe kann ein Farbstring sein (z. B. 'red', 'blue') oder ein hex
 
 ## color
 
-**Type:** `Farbe | undefined`
+**Type:** `Color | undefined`
 
 :::note{title=Beschreibung}
 Farbe
@@ -644,7 +644,7 @@ Konfiguration für positive/negative Farben; definiert die Farbe negativer Werte
 
 ## label
 
-**Type:** `Beschriftung | undefined`
+**Type:** `Label | undefined`
 
 :::note{title=Beschreibung}
 Beschriftung
@@ -727,7 +727,7 @@ Ob Beschriftungswerte automatisch formatiert werden; wenn autoFormat true ist, w
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-Beschriftung value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+Formatkonfiguration für Beschriftungswerte; wird mit `format` in `measure` zusammengeführt, wobei `format` in `measure` höhere Priorität hat. numFormat hat niedrigere Priorität als autoFormat
 
 :::
 
@@ -737,7 +737,7 @@ Beschriftung value format configuration; merged with the `format` in `measure`, 
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
+Zahlenformattyp. Unterstützt Zahl (Dezimalzahl), Prozent (%), Promille (‰) und wissenschaftliche Notation
 
 :::
 
@@ -751,7 +751,7 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -766,7 +766,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万 konvertiert, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -876,7 +876,7 @@ Beschriftung font size
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-Beschriftung font weight
+Schriftstärke der Beschriftung
 
 :::
 

@@ -1,6 +1,6 @@
 # useMeasures
 
-## Import
+## Nhập
 
 ```ts
 import { useMeasures } from '@visactor/vbi-react'
@@ -14,7 +14,7 @@ useMeasures(builder: VBIChartBuilder): UseMeasuresReturn
 
 ## Mô tả
 
-Đọc và cập nhật cấu hình measure, đồng thời cung cấp khả năng thêm, xóa và chỉnh sửa measure.
+Đọc và cập nhật cấu hình chỉ số đo lường, đồng thời cung cấp khả năng thêm, xóa và chỉnh sửa chỉ số đo lường.
 
 ## Ví dụ tối thiểu
 

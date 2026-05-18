@@ -1,12 +1,12 @@
 # useDimensions
 
-## Import
+## Impor
 
 ```ts
 import { useDimensions } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useDimensions(builder: VBIChartBuilder): UseDimensionsReturn

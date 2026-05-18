@@ -14,7 +14,7 @@ useMeasures(builder: VBIChartBuilder): UseMeasuresReturn
 
 ## 설명
 
-measure 설정을 읽고 업데이트하며, measure 추가, 삭제, 수정 기능을 제공합니다.
+측정값 설정을 읽고 업데이트하며, 측정값 추가, 삭제, 수정 기능을 제공합니다.
 
 ## 최소 예제
 

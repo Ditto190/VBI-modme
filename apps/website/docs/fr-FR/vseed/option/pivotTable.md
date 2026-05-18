@@ -2,41 +2,41 @@
 
 :::info{title=Recommandé}
 - Configuration de champs recommandée : `1` mesure, `1` dimension
-- Prend en charge Data Reshape : au moins `1` mesure, `0` dimension
+- Prend en charge la restructuration des données : au moins `1` mesure, `0` dimension
 :::
 
 :::info{title=Mappage d'encodage}
 Le tableau croisé dynamique prend en charge les canaux visuels suivants :
 
-`row`    : dimensions de ligne, prend en charge `plusieurs dimensions`, groupe les données par valeurs de dimension sur les lignes.
+`row`    : dimension de ligne, prend en charge `plusieurs dimensions`, groupe les données par valeurs de dimension sur les lignes
 
-`column` : dimensions de colonne, prend en charge `plusieurs dimensions`, groupe les données par valeurs de dimension sur les colonnes.
+`column` : dimension de colonne, prend en charge `plusieurs dimensions`, groupe les données par valeurs de dimension sur les colonnes
 
-`detail` : canal de détail, prend en charge `plusieurs mesures`, affiche les valeurs de mesure dans les cellules.
+`detail` : canal de détail, prend en charge `plusieurs mesures`, affiche les valeurs de mesure dans les cellules
 
 :::
 
 :::note{title=Description}
-Tableau croisé dynamique adapté aux analyses croisées de données multidimensionnelles, avec configuration flexible des dimensions ligne/colonne et des méthodes de calcul des mesures.
+Tableau croisé dynamique, adapté aux scénarios d’analyse croisée de données multidimensionnelles, avec configuration flexible des dimensions ligne/colonne et des méthodes de calcul des mesures.
 
 Scénarios adaptés :
 
-- Analyse statistique multidimensionnelle complexe.
-- Exploration détaillée des données et affichage agrégé.
-- Génération de rapports métier et exploration de données.
+- Analyse statistique multidimensionnelle complexe
+- Exploration détaillée des données et affichage agrégé
+- Génération de rapports métier et exploration de données
 
 :::
 
 :::warning{title=Warning}
 Exigences de données :
 
-- Au moins 1 dimension de ligne, 1 dimension de colonne ou 1 mesure.
-- Les données doivent être préagrégées.
-- Les données doivent pouvoir être groupées.
+- Au moins 1 dimension de ligne ou 1 dimension de colonne ou 1 mesure
+- Les données doivent déjà être agrégées
+- Les données peuvent être groupées
 
 Fonctionnalités activées par défaut :
 
-- Le tri ligne/colonne, le filtrage des données, le calcul des agrégations/sous-totaux et l’affichage des sous-totaux/totaux généraux sont activés par défaut.
+- Le tri des lignes et colonnes, le filtrage des données, le calcul d’agrégats, les sous-totaux et les totaux généraux sont activés par défaut
 
 :::
 
@@ -46,7 +46,7 @@ Fonctionnalités activées par défaut :
 **Type:** `"pivotTable"`
 
 :::note{title=Description}
-Tableau croisé dynamique adapté aux scénarios d’analyse croisée multidimensionnelle.
+Tableau croisé dynamique, adapté aux scénarios d’analyse croisée multidimensionnelle
 
 :::
 
@@ -61,7 +61,7 @@ Tableau croisé dynamique adapté aux scénarios d’analyse croisée multidimen
 **Type:** `Record[]`
 
 :::note{title=Description}
-Jeu de données conforme à la spécification TidyData et déjà agrégé, définissant la source et la structure des données du graphique. Les données saisies par l’utilisateur ne nécessitent pas de prétraitement ; VSeed dispose de puissantes capacités Data Reshape qui gèrent automatiquement la mise en forme. Les données du tableau croisé dynamique sont finalement converties en structure arborescente correspondante, sans manipulation manuelle.
+Jeu de données déjà agrégé et conforme à la spécification TidyData, utilisé pour définir la source et la structure des données du graphique. Les données saisies par l’utilisateur ne nécessitent aucun traitement ; VSeed dispose de puissantes capacités de restructuration des données et effectue cette restructuration automatiquement. Les données du tableau croisé dynamique sont finalement converties en structure arborescente correspondante, sans traitement manuel par l’utilisateur.
 
 :::
 
@@ -76,7 +76,7 @@ Jeu de données conforme à la spécification TidyData et déjà agrégé, défi
 **Type:** `TableDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions de ligne et de colonne du tableau croisé dynamique. Les données sont automatiquement transformées en structure arborescente et mappées aux axes ligne et colonne.
+Dimensions de ligne et de colonne du tableau croisé dynamique. Les données sont automatiquement traitées en structure arborescente et mappées aux axes ligne et colonne.
 
 :::
 
@@ -142,7 +142,7 @@ Canal auquel la dimension est mappée :
 **Type:** `TableMeasure[] | undefined`
 
 :::note{title=Description}
-Le tableau croisé dynamique prend en charge plusieurs mesures de dimension.
+Le tableau croisé dynamique prend en charge plusieurs mesures.
 
 :::
 
@@ -185,7 +185,7 @@ Règles de formatage : nombres décimaux avec compact notation activée, minimum
 
 Par exemple :
 
-- locale=zh-CN: 749740.264 → 74.45~74.45万
+- locale=zh-CN: 749740.264 → 74.45万
 
 - locale=en-US: 749740.264 → 744.5K
 
@@ -222,8 +222,8 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+- 100000 est converti en 10万, ratio:10000, symbol:"万"
+- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -237,8 +237,8 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+- 100000 est converti en 10万, ratio:10000, symbol:"万"
+- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -357,8 +357,8 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+- 100000 est converti en 10万, ratio:10000, symbol:"万"
+- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 
@@ -372,8 +372,8 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-- 100000 est converti en 10W , ratio:10000, symbol:"W"
-- 100000 est converti en 10K , ratio:1000, symbol:"K"
+- 100000 est converti en 10万, ratio:10000, symbol:"万"
+- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
 

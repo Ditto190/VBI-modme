@@ -28,7 +28,7 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Ma
 add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
-**Rueckgabe**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
+**Rückgabe**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
 **Parameter**:
 
@@ -45,7 +45,7 @@ add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => v
 remove(pageId: string): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
-**Rueckgabe**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
+**Rückgabe**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
 **Parameter**:
 
@@ -61,7 +61,7 @@ remove(pageId: string): VBIReportBuilder<TQueryDSL, TSeedDSL>
 update(pageId: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
-**Rueckgabe**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
+**Rückgabe**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
 **Parameter**:
 
@@ -78,7 +78,7 @@ update(pageId: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) 
 get(pageId: string): ReportPageBuilder<TQueryDSL, TSeedDSL> | undefined
 ```
 
-**Rueckgabe**: `ReportPageBuilder<TQueryDSL, TSeedDSL> \| undefined`
+**Rückgabe**: `ReportPageBuilder<TQueryDSL, TSeedDSL> \| undefined`
 
 **Parameter**:
 

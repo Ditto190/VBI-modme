@@ -1,12 +1,12 @@
 # useChartType
 
-## Import
+## Impor
 
 ```ts
 import { useChartType } from '@visactor/vbi-react'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 useChartType(builder: VBIChartBuilder): UseChartTypeReturn

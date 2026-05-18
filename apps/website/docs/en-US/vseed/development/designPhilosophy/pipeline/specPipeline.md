@@ -1,6 +1,6 @@
-# Spec Pipeline
+# spec Pipeline
 
-## Spec pipeline
+## spec pipeline
 
 The `spec pipeline` receives an advancedVSeed DSL and outputs a spec.
 

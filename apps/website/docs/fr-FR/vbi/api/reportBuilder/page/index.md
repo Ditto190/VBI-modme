@@ -1,20 +1,20 @@
 # ReportPageCollectionBuilder
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `parent` | VBIReportBuilder<TQueryDSL, TSeedDSL> | - |
 | `doc` | Y.Doc | - |
@@ -22,7 +22,7 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Ma
 
 ### add
 
-**Definition**:
+**Définition**:
 
 ```typescript
 add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
@@ -30,16 +30,16 @@ add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => v
 
 **Retour**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `title` | string | - |
 | `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### remove
 
-**Definition**:
+**Définition**:
 
 ```typescript
 remove(pageId: string): VBIReportBuilder<TQueryDSL, TSeedDSL>
@@ -47,15 +47,15 @@ remove(pageId: string): VBIReportBuilder<TQueryDSL, TSeedDSL>
 
 **Retour**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `pageId` | string | - |
 
 ### update
 
-**Definition**:
+**Définition**:
 
 ```typescript
 update(pageId: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
@@ -63,16 +63,16 @@ update(pageId: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) 
 
 **Retour**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `pageId` | string | - |
 | `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### get
 
-**Definition**:
+**Définition**:
 
 ```typescript
 get(pageId: string): ReportPageBuilder<TQueryDSL, TSeedDSL> | undefined
@@ -80,8 +80,8 @@ get(pageId: string): ReportPageBuilder<TQueryDSL, TSeedDSL> | undefined
 
 **Retour**: `ReportPageBuilder<TQueryDSL, TSeedDSL> \| undefined`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `pageId` | string | - |

@@ -17,12 +17,12 @@ Bridges flexible business requirements from above, constrains data input formats
 3. Powerful data reshaping — no manual data processing needed; any number of dimensions and measures, any chart type can be rendered [Demo](/vseed/guide/intro/dataReshape)
 4. `VSeed` is fully serializable, enabling cross-platform transfer of `VSeed DSL` [Demo](/vseed/guide/intro/crossPlatformRender)
 5. Out-of-the-box: number formatting, internationalization, light/dark themes, common styles, and more [Demo](/vseed/guide/intro/internationalization)
-6. Excellent data processing performance — supports Node.js-side data processing with Web-side visualization [Demo](/vseed/guide/intro/separateBuild)
+6. Excellent data processing performance — supports `Node`-side data processing with `Web`-side visualization [Demo](/vseed/guide/intro/separateBuild)
 
 ## What are VSeed's Limitations?
 
 1. `VSeed` does not handle fine-grained customization of individual chart details — that's the responsibility of `VChart` and `VTable`. `VSeed` only provides the ability to flexibly modify `spec`; users can customize every chart detail according to their needs.
-2. Only datasets conforming to the `tidyData` specification can be visualized by `VSeed`. Non-standard datasets are not accepted.
+2. Only datasets conforming to the `tidyData` specification can be visualized by `VSeed`. Non-standard datasets are not accepted by `VSeed`.
 3. Built on top of the `VisActor` ecosystem — users need to understand the basic concepts of `VChart` and `VTable`.
 
 ## What are VSeed's Principles?

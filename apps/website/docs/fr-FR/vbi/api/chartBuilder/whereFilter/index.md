@@ -1,29 +1,29 @@
 # WhereFilterBuilder
 
-Builder de filtre Where pour ajouter, modifier et supprimer des conditions de niveau ligne. Les filtres Where s appliquent avant la requete et filtrent les donnees brutes
+Builder de filtre Where pour ajouter, modifier et supprimer des conditions de niveau ligne. Les filtres Where s'appliquent avant la requête et filtrent les données brutes
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### getConditions
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getConditions(): Y.Array<any>
@@ -35,7 +35,7 @@ getConditions(): Y.Array<any>
 
 Ajouter une condition de filtre Where
 
-**Definition**:
+**Définition**:
 
 ```typescript
 add(field: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilterBuilder
@@ -43,9 +43,9 @@ add(field: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilte
 
 **Retour**: `WhereFilterBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `field` | string | - Nom du champ |
 | `callback` | (node: WhereFilterNodeBuilder) => void | - Fonction de rappel |
@@ -54,7 +54,7 @@ add(field: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilte
 
 Ajouter un groupe Where
 
-**Definition**:
+**Définition**:
 
 ```typescript
 addGroup(op: 'and' | 'or', callback: (group: WhereGroupBuilder) => void): WhereFilterBuilder
@@ -62,18 +62,18 @@ addGroup(op: 'and' | 'or', callback: (group: WhereGroupBuilder) => void): WhereF
 
 **Retour**: `WhereFilterBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `op` | 'and' \| 'or' | - Operateur logique |
+| `op` | 'and' \| 'or' | - Opérateur logique |
 | `callback` | (group: WhereGroupBuilder) => void | - Fonction de rappel |
 
 ### update
 
-Mettre a jour la condition de filtre avec l ID indique
+Mettre à jour la condition de filtre avec l'ID indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 update(id: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilterBuilder
@@ -81,18 +81,18 @@ update(id: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilte
 
 **Retour**: `WhereFilterBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `id` | string | - ID de condition de filtre |
 | `callback` | (node: WhereFilterNodeBuilder) => void | - Fonction de rappel |
 
 ### updateGroup
 
-Mettre a jour le groupe avec l ID indique
+Mettre à jour le groupe avec l'ID indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 updateGroup(id: string, callback: (group: WhereGroupBuilder) => void): WhereFilterBuilder
@@ -100,18 +100,18 @@ updateGroup(id: string, callback: (group: WhereGroupBuilder) => void): WhereFilt
 
 **Retour**: `WhereFilterBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `id` | string | - ID de groupe |
 | `callback` | (group: WhereGroupBuilder) => void | - Fonction de rappel |
 
 ### remove
 
-Supprimer la condition avec l ID indique ou l element a l index indique
+Supprimer la condition avec l'ID indiqué ou l'élément à l'index indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 remove(idOrIndex: string | number): WhereFilterBuilder
@@ -119,17 +119,17 @@ remove(idOrIndex: string | number): WhereFilterBuilder
 
 **Retour**: `WhereFilterBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `idOrIndex` | string \| number | - ID ou index |
 
 ### find
 
-Trouver la premiere condition (filtre ou groupe) selon un callback, comme Array.find
+Trouver la première condition (filtre ou groupe) selon un callback, comme Array.find
 
-**Definition**:
+**Définition**:
 
 ```typescript
 find(predicate: (entry: WhereFilterNodeBuilder | WhereGroupBuilder, index: number) => boolean): WhereFilterNodeBuilder | WhereGroupBuilder | undefined
@@ -137,9 +137,9 @@ find(predicate: (entry: WhereFilterNodeBuilder | WhereGroupBuilder, index: numbe
 
 **Retour**: `WhereFilterNodeBuilder \| WhereGroupBuilder \| undefined`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `predicate` | (entry: WhereFilterNodeBuilder \| WhereGroupBuilder, index: number) => boolean | - Condition de recherche |
 
@@ -147,7 +147,7 @@ find(predicate: (entry: WhereFilterNodeBuilder | WhereGroupBuilder, index: numbe
 
 Effacer toutes les conditions de filtre Where
 
-**Definition**:
+**Définition**:
 
 ```typescript
 clear()
@@ -155,9 +155,9 @@ clear()
 
 ### toJSON
 
-Exporter la configuration complete du filtre Where
+Exporter la configuration complète du filtre Where
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIWhereGroup
@@ -167,9 +167,9 @@ toJSON(): VBIWhereGroup
 
 ### observe
 
-Observer les changements de conditions de filtre et renvoyer une fonction de desabonnement
+Observer les changements de conditions de filtre et renvoyer une fonction de désabonnement
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveDeepCallback): () => void
@@ -177,17 +177,17 @@ observe(callback: ObserveDeepCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveDeepCallback | - Fonction de rappel |
 
 ### static isGroup
 
-Determiner si le noeud est un noeud de groupe
+Déterminer si le nœud est un nœud de groupe
 
-**Definition**:
+**Définition**:
 
 ```typescript
 static isGroup(yMap: Y.Map<any>): boolean
@@ -195,17 +195,17 @@ static isGroup(yMap: Y.Map<any>): boolean
 
 **Retour**: `boolean`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### static isNode
 
-Determiner si le noeud est un noeud feuille
+Déterminer si le nœud est un nœud feuille
 
-**Definition**:
+**Définition**:
 
 ```typescript
 static isNode(yMap: Y.Map<any>): boolean
@@ -213,8 +213,8 @@ static isNode(yMap: Y.Map<any>): boolean
 
 **Retour**: `boolean`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |

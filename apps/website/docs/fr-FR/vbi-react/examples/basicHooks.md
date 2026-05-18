@@ -37,5 +37,5 @@ export function BasicHooksDemo({ builder }: { builder: VBIChartBuilder }) {
 ## Résultat attendu
 
 - Lorsque le builder change, `dsl` et `vseed` sont mis à jour de façon synchronisée.
-- Affiche `Loading...` au premier chargement ou pendant une mise à jour; en cas d'échec, une nouvelle tentative manuelle est possible.
+- Affiche `Loading...` au premier chargement ou pendant une mise à jour ; en cas d'échec, une nouvelle tentative manuelle est possible.
 - Après réussite, le `chartType` actuel et le dernier VSeed JSON sont visibles.

@@ -1,6 +1,6 @@
 # useWhereFilter
 
-## Import
+## Nhập
 
 ```ts
 import { useWhereFilter } from '@visactor/vbi-react'

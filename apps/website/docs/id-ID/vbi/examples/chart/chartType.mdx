@@ -26,13 +26,13 @@ export default () => {
           "dimensions": [
             {
               "field": "order_date",
-              "alias": "Order Date"
+              "alias": "Tanggal Pesanan"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -50,7 +50,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -71,7 +71,7 @@ export default () => {
 
 ## bar-by-product-type
 
-Bar chart - penjualan menurut tipe produk
+Bar chart - penjualan menurut jenis produk
 
 
 ```tsx preview
@@ -91,13 +91,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "Jenis Produk"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -115,7 +115,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -136,7 +136,7 @@ export default () => {
 
 ## chart-type-switching
 
-Beralih antara tipe line chart dan bar chart
+Beralih antara jenis line chart dan bar chart
 
 
 ```tsx preview
@@ -156,13 +156,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Provinsi"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -180,7 +180,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -221,13 +221,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Wilayah"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -245,7 +245,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -266,7 +266,7 @@ export default () => {
 
 ## donut-by-customer-type
 
-Donut chart - pangsa penjualan menurut tipe pelanggan
+Donut chart - pangsa penjualan menurut jenis pelanggan
 
 
 ```tsx preview
@@ -286,13 +286,13 @@ export default () => {
           "dimensions": [
             {
               "field": "customer_type",
-              "alias": "Customer Type"
+              "alias": "Jenis Pelanggan"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -310,7 +310,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -351,13 +351,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Provinsi"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -375,7 +375,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -416,13 +416,13 @@ export default () => {
           "dimensions": [
             {
               "field": "province",
-              "alias": "Province"
+              "alias": "Provinsi"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -440,7 +440,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -481,13 +481,13 @@ export default () => {
           "dimensions": [
             {
               "field": "area",
-              "alias": "Region"
+              "alias": "Wilayah"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -505,7 +505,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -526,7 +526,7 @@ export default () => {
 
 ## pie-chart-measure-encoding
 
-Encoding measure pie chart - menguji tipe chart Pie di measure-encoding.ts
+Encoding metrik pie chart - menguji jenis chart Pie di measure-encoding.ts
 
 
 ```tsx preview
@@ -546,13 +546,13 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Product Type"
+              "alias": "Jenis Produk"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "angle",
               "aggregate": {
                 "func": "sum"
@@ -570,7 +570,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -611,13 +611,13 @@ export default () => {
           "dimensions": [
             {
               "field": "city",
-              "alias": "City"
+              "alias": "Kota"
             }
           ],
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "size",
               "aggregate": {
                 "func": "sum"
@@ -635,7 +635,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -656,7 +656,7 @@ export default () => {
 
 ## scatter-chart-measure-encoding
 
-Encoding measure scatter chart - menguji tipe chart Scatter di measure-encoding.ts
+Encoding metrik scatter chart - menguji jenis chart Scatter di measure-encoding.ts
 
 
 ```tsx preview
@@ -677,12 +677,12 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "xAxis"
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Laba",
               "encoding": "yAxis"
             }
           ],
@@ -697,7 +697,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },
@@ -739,7 +739,7 @@ export default () => {
           "measures": [
             {
               "field": "sales",
-              "alias": "Sales",
+              "alias": "Penjualan",
               "encoding": "xAxis",
               "aggregate": {
                 "func": "sum"
@@ -747,7 +747,7 @@ export default () => {
             },
             {
               "field": "profit",
-              "alias": "Profit",
+              "alias": "Laba",
               "encoding": "yAxis",
               "aggregate": {
                 "func": "sum"
@@ -765,7 +765,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "id-ID",
           "version": 1,
           "limit": 10
         },

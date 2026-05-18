@@ -14,7 +14,7 @@ useWhereFilter(builder: VBIChartBuilder): UseWhereFilterReturn
 
 ## 説明
 
-Where フィルターツリーを管理し、mutation 入口を提供します。
+Where フィルターツリーを管理し、mutation の入口を提供します。
 
 ## 最小例
 

@@ -1,33 +1,33 @@
 # ThemeBuilder
 
-Builder de theme pour definir et lire le theme courant
+Builder de thème pour définir et lire le thème courant
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
 Constructeur
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(_doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `_doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### observe
 
-Observer les changements de theme et renvoyer une fonction de desabonnement
+Observer les changements de thème et renvoyer une fonction de désabonnement
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveCallback): () => void
@@ -35,33 +35,33 @@ observe(callback: ObserveCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveCallback | - Fonction de rappel |
 
 ### setTheme
 
-Definir le theme
+Définir le thème
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setTheme(theme: string)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `theme` | string | - Nom du theme |
+| `theme` | string | - Nom du thème |
 
 ### getTheme
 
-Obtenir le theme courant
+Obtenir le thème courant
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getTheme(): string
@@ -73,7 +73,7 @@ getTheme(): string
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): string

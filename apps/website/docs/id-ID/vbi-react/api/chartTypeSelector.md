@@ -1,12 +1,12 @@
 # ChartTypeSelector
 
-## Import
+## Impor
 
 ```ts
 import { ChartTypeSelector } from '@visactor/vbi-react/components'
 ```
 
-## Signature
+## Tanda Tangan
 
 ```ts
 ChartTypeSelector(props: ChartTypeSelectorProps)
@@ -14,7 +14,7 @@ ChartTypeSelector(props: ChartTypeSelectorProps)
 
 ## Deskripsi
 
-Menyediakan dropdown pemilih jenis chart.
+Menyediakan pemilih dropdown untuk jenis chart.
 
 ## Contoh Minimal
 

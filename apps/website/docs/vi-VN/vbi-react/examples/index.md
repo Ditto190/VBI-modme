@@ -1,4 +1,4 @@
-# Tổng quan ví dụ
+# Tổng quan các ví dụ
 
 Các ví dụ dưới đây có thể được sao chép trực tiếp vào file `.tsx` và chạy.
 

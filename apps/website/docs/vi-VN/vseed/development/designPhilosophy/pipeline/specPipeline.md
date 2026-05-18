@@ -1,6 +1,6 @@
-# Quy trình spec
+# spec pipeline
 
-## Quy trình spec
+## spec pipeline
 
 `spec pipeline` nhận advancedVSeed DSL và xuất ra spec.
 

@@ -1,170 +1,170 @@
 # MeasuresBuilder
 
-Builder measure dung de them, sua, xoa cau hinh measure. Measure la field so trong du lieu, nhu doanh so, loi nhuan, so luong
+Builder measure dùng để thêm, sửa, xóa cấu hình measure. Measure là field số trong dữ liệu, như doanh số, lợi nhuận, số lượng
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
 
 ### add
 
-Them mot measure
+Thêm một measure
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 add(field: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilder
 ```
 
-**Tra ve**: `MeasuresBuilder`
+**Trả về**: `MeasuresBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `field` | string | - Ten field |
-| `callback` | (node: MeasureNodeBuilder) => void | - Ham callback |
+| `field` | string | - Tên field |
+| `callback` | (node: MeasureNodeBuilder) => void | - Hàm callback |
 
 ### remove
 
-Xoa measure co ID chi dinh
+Xóa measure có ID chỉ định
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 remove(id: string): MeasuresBuilder
 ```
 
-**Tra ve**: `MeasuresBuilder`
+**Trả về**: `MeasuresBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `id` | string | - ID measure |
 
 ### update
 
-Cap nhat cau hinh measure
+Cập nhật cấu hình measure
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 update(id: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilder
 ```
 
-**Tra ve**: `MeasuresBuilder`
+**Trả về**: `MeasuresBuilder`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `id` | string | - ID measure |
-| `callback` | (node: MeasureNodeBuilder) => void | - Ham callback |
+| `callback` | (node: MeasureNodeBuilder) => void | - Hàm callback |
 
 ### find
 
-Tim measure dau tien theo dieu kien callback, hanh vi giong Array.find
+Tìm measure đầu tiên theo điều kiện callback, hành vi giống Array.find
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 find(predicate: (node: MeasureNodeBuilder, index: number) => boolean): MeasureNodeBuilder | undefined
 ```
 
-**Tra ve**: `MeasureNodeBuilder \| undefined`
+**Trả về**: `MeasureNodeBuilder \| undefined`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `predicate` | (node: MeasureNodeBuilder, index: number) => boolean | - Dieu kien tim kiem |
+| `predicate` | (node: MeasureNodeBuilder, index: number) => boolean | - Điều kiện tìm kiếm |
 
 ### findAll
 
-Lay tat ca measure
+Lấy tất cả measure
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 findAll(): MeasureNodeBuilder[]
 ```
 
-**Tra ve**: `MeasureNodeBuilder[]`
+**Trả về**: `MeasureNodeBuilder[]`
 
 ### toJSON
 
-Xuat tat ca measure thanh mang JSON
+Xuất tất cả measure thành mảng JSON
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 toJSON(): VBIMeasure[]
 ```
 
-**Tra ve**: `VBIMeasure[]`
+**Trả về**: `VBIMeasure[]`
 
 ### observe
 
-Lang nghe thay doi measure
+Lắng nghe thay đổi measure
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 observe(callback: ObserveDeepCallback): () => void
 ```
 
-**Tra ve**: `() => void`
+**Trả về**: `() => void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `callback` | ObserveDeepCallback | - Ham callback |
+| `callback` | ObserveDeepCallback | - Hàm callback |
 
 ### static isMeasureNode
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 static isMeasureNode(node: VBIMeasureTree[0]): node is VBIMeasure
 ```
 
-**Tra ve**: `node is VBIMeasure`
+**Trả về**: `node is VBIMeasure`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `node` | VBIMeasureTree[0] | - |
 
 ### static isMeasureGroup
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 static isMeasureGroup(node: VBIMeasureTree[0]): node is VBIMeasureGroup
 ```
 
-**Tra ve**: `node is VBIMeasureGroup`
+**Trả về**: `node is VBIMeasureGroup`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `node` | VBIMeasureTree[0] | - |

@@ -1,6 +1,6 @@
-# Quick Start
+# Démarrage rapide
 
-## Environment Setup
+## Préparer l'environnement
 
 [Node Download](https://nodejs.org/en/download)
 ```bash title="node"
@@ -9,32 +9,32 @@ nvm use 24
 ```
 
 [Pnpm Download](https://pnpm.io/installation#using-corepack)
-> `package.json` configures `packageManager` as `pnpm@10.13.1`; `corepack` will automatically install this version.
+> `package.json` configure `packageManager` avec `pnpm@10.13.1`; `corepack` installera automatiquement cette version.
 ```bash title="pnpm"
 corepack enable pnpm
 ```
 
-Check pnpm version, expected to be 10.26.1:
+Vérifiez la version de pnpm. La version attendue est 10.26.1.
 ```bash title="pnpm version"
 pnpm -v # expected 10.26.1
 ```
 
-## Start the Project
+## Démarrer le projet
 
-Start the documentation site (supports simultaneous development and debugging of vseed):
-```bash title="Development"
+Démarrez le site de documentation, tout en développant et en déboguant vseed.
+```bash title="Développement"
 pnpm install
 
 pnpm dev
 ```
 
-Build:
+Build
 ```bash title="Build"
 pnpm build
 ```
 
-Analyze the build output with `rsdoctor`:
-```bash title="Analyze"
+Analysez les artefacts avec `rsdoctor`.
+```bash title="Analyse"
 pnpm build:rsdoctor
 # or
 pnpm dev:rsdoctor

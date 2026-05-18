@@ -3,11 +3,11 @@
 :::info{title=Encoding Mapping}
 Circle Packing supports the following visual channels:
 
-`color`: color channel, supports`multiple dimensions`or `one measure`
+`color`: color channel, supports `multiple dimensions` or `one measure`
 
-`label`: label channel, supports`multiple dimensions` and `multiple measures`
+`label`: label channel, supports `multiple dimensions` and `multiple measures`
 
-`tooltip`: tooltip channel, supports`multiple dimensions` and `multiple measures`
+`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`
 
 :::
 
@@ -60,7 +60,7 @@ Dataset
 
 
 
-Dataset conforming to TidyData specifications and already aggregated, used to define the chart's data source and structure
+An aggregated dataset that conforms to the TidyData specification, used to define the chart's data source and structure.
 
 :::
 
@@ -79,7 +79,7 @@ Dimensions
 
 
 
-Dimensions configuration, used to define the hierarchical structure of data
+Dimension configuration, used to define the data's hierarchical structure.
 
 :::
 
@@ -133,7 +133,7 @@ Time granularity, determines the date display precision
 :::note{title=Description}
 Channel to which the dimension is mapped
 
-\- hierarchy: Supports mapping multiple dimensions to the hierarchy channel
+\- hierarchy: supports mapping multiple dimensions to the hierarchy channel
 
 \- label: supports mapping multiple dimensions to the label channel
 
@@ -142,7 +142,7 @@ Channel to which the dimension is mapped
 :::
 
 :::tip{title=Tip}
-The first dimension(s) will be directly mapped to the color channel
+The first dimension is directly mapped to the color channel
 
 :::
 
@@ -236,7 +236,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -251,7 +251,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -371,7 +371,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -386,7 +386,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -489,7 +489,7 @@ Rounding mode for number formatting, using the browser's Intl.NumberFormat, foll
 :::note{title=Description}
 Channel to which the measure is mapped
 
-\- size: Measures mapped to the size channel, used for area or size display in charts like Treemaps.
+\- size: Measure mapped to the size channel, used for displaying area or size in charts like Treemaps and Sunbursts.
 
 \- label: measure mapped to the label channel
 
@@ -517,11 +517,11 @@ There are two ways to configure the measure tree: Option 1 is directly configuri
 **Type:** `Page | undefined`
 
 :::note{title=Description}
-Pagination configuration
+PaginationConfiguration
 
 
 
-Used to specify the field name for pagination, must be a dimension.
+Used to specify the field name for pagination; must be a dimension
 
 :::
 
@@ -751,7 +751,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -766,7 +766,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -903,7 +903,7 @@ Label stroke color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Label font color
+LabelfontColor
 
 :::
 
@@ -912,7 +912,7 @@ Label font color
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to automatically invert the font color based on the element color
+Whether the label font color automatically inverts based on the graphical element color
 
 :::
 
@@ -930,7 +930,7 @@ label position
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether label anti-overlap functionality is enabled
+Whether the label anti-overlap function is enabled
 
 :::
 
@@ -939,7 +939,7 @@ Whether label anti-overlap functionality is enabled
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Label filtering, default relationship between selectors is Or
+Label filtering; the default relationship between selectors is OR
 
 :::
 
@@ -949,7 +949,7 @@ Label filtering, default relationship between selectors is Or
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+Dimension field; ID of a specific dimension item
 
 :::
 
@@ -960,9 +960,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in the value
+\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items where the value of the dimension field is not in the value
+\- not in: Select data items whose dimension field value is not within the specified value
 
 :::
 
@@ -973,11 +973,11 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in the value
+\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items where the value of the dimension field is not in the value
+\- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 
@@ -986,7 +986,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Value of the dimension field, supports arrays
+Select dimension field values; supports arrays
 
 :::
 
@@ -995,37 +995,25 @@ Value of the dimension field, supports arrays
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Description}
-Animated filter (AI-generated code execution)
-
-
+Dynamic filter (AI-generated code execution)
 
 Implements complex data filtering logic via AI-generated JavaScript code
 
-
-
 Core capabilities:
 
-\- Supports any complex data filtering conditions
+\- Supports arbitrarily complex data filtering conditions
 
-\- Uses built-in utility functions for data operations
+\- Use built-in utility functions for data manipulation
 
-\- Safely executes in the browser environment (Web Worker sandbox)
+\- Secure execution in the browser environment (Web Worker sandbox)
 
-
-
-Environment requirements: Only supports browser environment; Node.js environment will use fallback
-
-
+Environmental requirements: Supports browser environments only; Node.js environments will use fallback
 
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
+Chart dynamic filter configuration
 
-
-Chart animated filter configuration
-
-
-
-Implements filtering of chart markers (bars, points, etc.) via AI-generated JavaScript code
+Implements filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
 
 :::
 
@@ -1057,15 +1045,15 @@ User's filtering requirement description (natural language)
 :::note{title=Description}
 AI-generated JavaScript filtering code
 
-\- Can only use built-in utility functions (accessed via _ or R)
+\- Only built-in utility functions can be used (accessed via _ or R)
 
-\- Input parameter: data (array), each item contains a __row_index field representing the row number
+\- Input parameters: data (array), where each item includes a __row_index field representing the row number
 
 \- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- __row_index represents the row number of the original data item, field represents the field to be highlighted
+\- __row_index represents the row number of the original data item; field represents the field to be highlighted
 
-\- Prohibited: eval, Function, asynchronous operations, DOM API, network requests
+\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
@@ -1114,7 +1102,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback solution when code execution fails or the environment is not supported
+Fallback plan when code execution fails or the environment is not supported
 
 :::
 
@@ -1124,7 +1112,7 @@ Fallback solution when code execution fails or the environment is not supported
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field, the ID of a dimension item
+Dimension field; ID of a specific dimension item
 
 :::
 
@@ -1135,9 +1123,9 @@ Dimension field, the ID of a dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in the value
+\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items where the value of the dimension field is not in the value
+\- not in: Select data items whose dimension field value is not within the specified value
 
 :::
 
@@ -1148,11 +1136,11 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items where the value of the dimension field is in the value
+\- in: Select data items whose dimension field value is within the specified value
 
-\- not in: Select data items where the value of the dimension field is not in the value
+\- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 
@@ -1161,7 +1149,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Value of the dimension field, supports arrays
+Select dimension field values; supports arrays
 
 :::
 
@@ -1170,9 +1158,9 @@ Value of the dimension field, supports arrays
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Description}
-Animated filter execution result (runtime field)
+Dynamic filter execution result (runtime field)
 
-Written during the prepare() phase, read-only at runtime
+Written during the prepare() phase; read-only at runtime
 
 :::
 
@@ -1195,7 +1183,9 @@ Written during the prepare() phase, read-only at runtime
 **Type:** `Tooltip | undefined`
 
 :::note{title=Description}
-Tooltips
+tooltips
+
+
 
 Tooltip configuration, used to define the chart's tooltips, including their position, format, style, etc.
 
@@ -1207,7 +1197,7 @@ Tooltip configuration, used to define the chart's tooltips, including their posi
 **Type:** `false | true`
 
 :::note{title=Description}
-Whether tooltip functionality is enabled
+Whether tooltips are enabled
 
 :::
 
@@ -1217,9 +1207,9 @@ Whether tooltip functionality is enabled
 **Type:** `Theme | undefined`
 
 :::note{title=Description}
-Chart theme
+Chart theme; themes have lower priority and include common configurations shared across all chart types, as well as specific configurations for individual chart categories
 
-Built-in light and dark themes; users can customize themes via Builder.
+Built-in light and dark themes; users can define custom themes via the Builder
 
 Theme
 
@@ -1251,6 +1241,6 @@ Built-in light and dark themes; new themes can be customized via registerTheme.
 :::note{title=Description}
 Language
 
-Chart language configuration. Supports 'zh-CN' and 'en-US'.
+Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to specify the language.
 
 :::

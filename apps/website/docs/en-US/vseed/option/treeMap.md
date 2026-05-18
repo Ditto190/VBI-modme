@@ -1,13 +1,13 @@
 # TreeMap
 
 :::info{title=Encoding Mapping}
-The Treemap Chart supports the following visual channels:
+The treemap chart supports the following visual channels:
 
-`color`: color channel, supports`multiple dimensions`or `one measure`
+`color`: color channel, supports `multiple dimensions` or `one measure`
 
-`label`: label channel, supports`multiple dimensions` and `multiple measures`
+`label`: label channel, supports `multiple dimensions` and `multiple measures`
 
-`tooltip`: tooltip channel, supports`multiple dimensions` and `multiple measures`
+`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`
 
 :::
 
@@ -25,7 +25,7 @@ Applicable scenarios:
 :::warning{title=Warning}
 Data requirements:
 
-\- At least 1 numerical field used to map area size
+\- At least 1 numeric field (measure) used to map area size
 
 \- At least 1 dimension field used for hierarchical partitioning
 
@@ -60,7 +60,7 @@ Dataset
 
 
 
-An aggregated dataset that follows TidyData specifications, used to define the chart's data source and structure.
+An aggregated dataset that conforms to the TidyData specification, used to define the chart's data source and structure.
 
 :::
 
@@ -236,7 +236,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -251,7 +251,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -371,7 +371,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -386,7 +386,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -751,7 +751,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -766,7 +766,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -977,7 +977,7 @@ Operator
 
 \- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 
@@ -1140,7 +1140,7 @@ Operator
 
 \- not in: Select data items whose dimension field value is not within the specified value
 
-same as operator
+Same as operator
 
 :::
 

@@ -1,8 +1,8 @@
 # VBIReportBuilder
 
-## Proprietes
+## Propriétés
 
-| Propriete | Type | Description |
+| Propriété | Type | Description |
 | --- | --- | --- |
 | **doc** | `Y.Doc` | - |
 | **dsl** | `Y.Map<any>` | - |
@@ -10,19 +10,19 @@
 | **page** | `ReportPageCollectionBuilder<TQueryDSL, TSeedDSL>` | - |
 
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, resourceRegistry: VBIResourceRegistry<TQueryDSL, TSeedDSL>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `options` | VBIReportBuilderOptions<TQueryDSL, TSeedDSL> | - |
@@ -30,7 +30,7 @@ constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, r
 
 ### applyUpdate
 
-**Definition**:
+**Définition**:
 
 ```typescript
 applyUpdate(update: Uint8Array, transactionOrigin: any): any
@@ -38,16 +38,16 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 
 **Retour**: `any`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
 | `transactionOrigin` | any | - |
 
 ### encodeStateAsUpdate
 
-**Definition**:
+**Définition**:
 
 ```typescript
 encodeStateAsUpdate(targetStateVector: Uint8Array): any
@@ -55,15 +55,15 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 
 **Retour**: `any`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `targetStateVector` | Uint8Array | - |
 
 ### getUUID
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getUUID(): string
@@ -73,7 +73,7 @@ getUUID(): string
 
 ### getChartBuilder
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getChartBuilder(chartId: string): VBIChartBuilder<TQueryDSL, TSeedDSL> | undefined
@@ -81,15 +81,15 @@ getChartBuilder(chartId: string): VBIChartBuilder<TQueryDSL, TSeedDSL> | undefin
 
 **Retour**: `VBIChartBuilder<TQueryDSL, TSeedDSL> \| undefined`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `chartId` | string | - |
 
 ### getInsightBuilder
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getInsightBuilder(insightId: string): VBIInsightBuilder | undefined
@@ -97,15 +97,15 @@ getInsightBuilder(insightId: string): VBIInsightBuilder | undefined
 
 **Retour**: `VBIInsightBuilder \| undefined`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `insightId` | string | - |
 
 ### build
 
-**Definition**:
+**Définition**:
 
 ```typescript
 build(): VBIReportDSL
@@ -115,7 +115,7 @@ build(): VBIReportDSL
 
 ### snapshot
 
-**Definition**:
+**Définition**:
 
 ```typescript
 snapshot(): VBIReportSnapshotDSL
@@ -125,7 +125,7 @@ snapshot(): VBIReportSnapshotDSL
 
 ### isEmpty
 
-**Definition**:
+**Définition**:
 
 ```typescript
 isEmpty(): boolean

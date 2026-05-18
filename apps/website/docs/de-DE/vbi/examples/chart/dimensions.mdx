@@ -6,7 +6,7 @@ import { registerDemoConnector } from '@components/demoConnector'
 
 ## add-date-dimension-year
 
-Datumsdimension mit Jahresaggregation hinzufuegen
+Datumsdimension mit Jahresaggregation hinzufügen
 
 
 ```tsx preview
@@ -45,7 +45,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -76,7 +76,7 @@ export default () => {
 
 ## add-dimension
 
-Dimension hinzufuegen
+Dimension hinzufügen
 
 
 ```tsx preview
@@ -106,7 +106,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -137,7 +137,7 @@ export default () => {
 
 ## add-multiple-dimensions
 
-Mehrere Dimensionen hinzufuegen (verkettete Aufrufe)
+Mehrere Dimensionen hinzufügen (verkettete Aufrufe)
 
 
 ```tsx preview
@@ -167,13 +167,13 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
         connectorId: DEMO_CONNECTOR_ID,
       })
-      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('Produkttyp')).add('province', n => n.setAlias('Provinz')); }
+      const applyBuilder = (builder: VBIChartBuilder) => { builder.dimensions.add('product_type', n => n.setAlias('Produkttyp')).add('province', n => n.setAlias('Bundesland')); }
       applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
@@ -227,7 +227,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -280,7 +280,7 @@ export default () => {
             },
             {
               "field": "province",
-              "alias": "Provinz"
+              "alias": "Bundesland"
             }
           ],
           "measures": [],
@@ -295,7 +295,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -344,7 +344,7 @@ export default () => {
           "dimensions": [
             {
               "field": "order_date",
-              "alias": "Urspruengliches Bestelldatum"
+              "alias": "Ursprüngliches Bestelldatum"
             }
           ],
           "measures": [
@@ -368,7 +368,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },
@@ -420,7 +420,7 @@ export default () => {
           "dimensions": [
             {
               "field": "product_type",
-              "alias": "Urspruenglicher Produkttyp"
+              "alias": "Ursprünglicher Produkttyp"
             }
           ],
           "measures": [],
@@ -435,7 +435,7 @@ export default () => {
             "conditions": []
           },
           "theme": "light",
-          "locale": "en-US",
+          "locale": "de-DE",
           "version": 1,
           "limit": 20
         },

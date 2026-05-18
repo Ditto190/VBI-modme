@@ -1,6 +1,6 @@
-# Modifier les conditions de filtre
+# Édition des conditions de filtre
 
-Cet exemple montre les points d'entrée de mutation de `useWhereFilter` et `useHavingFilter`.
+Cet exemple montre les points d'entrée mutation de `useWhereFilter` et `useHavingFilter`.
 
 ## Dépendances
 

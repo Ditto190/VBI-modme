@@ -1,30 +1,30 @@
 # WhereFilterNodeBuilder
 
-Builder de noeud de filtre Where pour configurer une seule condition Where
+Builder de nœud de filtre Where pour configurer une seule condition Where
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(yMap: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `yMap` | Y.Map<any> | - |
 
 ### getId
 
-Obtenir l ID du noeud
+Obtenir l'ID du nœud
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getId(): string
@@ -36,7 +36,7 @@ getId(): string
 
 Obtenir le nom du champ
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getField(): string
@@ -46,9 +46,9 @@ getField(): string
 
 ### setField
 
-Definir le nom du champ
+Définir le nom du champ
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setField(field: string): this
@@ -56,17 +56,17 @@ setField(field: string): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `field` | string | - Nom du champ |
 
 ### getOperator
 
-Obtenir l operateur de filtre
+Obtenir l'opérateur de filtre
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getOperator(): string | undefined
@@ -76,9 +76,9 @@ getOperator(): string | undefined
 
 ### setOperator
 
-Definir l operateur de filtre
+Définir l'opérateur de filtre
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setOperator(operator: string): this
@@ -86,17 +86,17 @@ setOperator(operator: string): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `operator` | string | - Operateur |
+| `operator` | string | - Opérateur |
 
 ### setValue
 
-Definir la valeur de filtre
+Définir la valeur de filtre
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setValue(value: unknown): this
@@ -104,17 +104,17 @@ setValue(value: unknown): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `value` | unknown | - Valeur de filtre |
 
 ### setDate
 
-Definir la condition de filtre de date
+Définir la condition de filtre de date
 
-**Definition**:
+**Définition**:
 
 ```typescript
 setDate(predicate: VBIWhereDatePredicate): this
@@ -122,17 +122,17 @@ setDate(predicate: VBIWhereDatePredicate): this
 
 **Retour**: `this`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
-| `predicate` | VBIWhereDatePredicate | - Predicat de date |
+| `predicate` | VBIWhereDatePredicate | - Prédicat de date |
 
 ### getDate
 
 Obtenir la condition de filtre de date ; renvoie undefined pour un filtre non date
 
-**Definition**:
+**Définition**:
 
 ```typescript
 getDate(): VBIWhereDatePredicate | undefined
@@ -144,7 +144,7 @@ getDate(): VBIWhereDatePredicate | undefined
 
 Exporter en JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIWhereFilter

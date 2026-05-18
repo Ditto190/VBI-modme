@@ -1,6 +1,6 @@
 # WhereFilterBuilder
 
-Where-Filter-Builder zum Hinzufuegen, Aendern und Entfernen von Filterbedingungen auf Zeilenebene. Where-Filter wirken vor der Datenabfrage und filtern Rohdaten
+Where-Filter-Builder zum Hinzufügen, Ändern und Entfernen von Filterbedingungen auf Zeilenebene. Where-Filter wirken vor der Datenabfrage und filtern Rohdaten
 
 ## Eigenschaften
 
@@ -29,11 +29,11 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 getConditions(): Y.Array<any>
 ```
 
-**Rueckgabe**: `Y.Array<any>`
+**Rückgabe**: `Y.Array<any>`
 
 ### add
 
-Eine Where-Filterbedingung hinzufuegen
+Eine Where-Filterbedingung hinzufügen
 
 **Definition**:
 
@@ -41,7 +41,7 @@ Eine Where-Filterbedingung hinzufuegen
 add(field: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilterBuilder
 ```
 
-**Rueckgabe**: `WhereFilterBuilder`
+**Rückgabe**: `WhereFilterBuilder`
 
 **Parameter**:
 
@@ -52,7 +52,7 @@ add(field: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilte
 
 ### addGroup
 
-Eine Where-Gruppe hinzufuegen
+Eine Where-Gruppe hinzufügen
 
 **Definition**:
 
@@ -60,7 +60,7 @@ Eine Where-Gruppe hinzufuegen
 addGroup(op: 'and' | 'or', callback: (group: WhereGroupBuilder) => void): WhereFilterBuilder
 ```
 
-**Rueckgabe**: `WhereFilterBuilder`
+**Rückgabe**: `WhereFilterBuilder`
 
 **Parameter**:
 
@@ -79,7 +79,7 @@ Filterbedingung mit angegebener ID aktualisieren
 update(id: string, callback: (node: WhereFilterNodeBuilder) => void): WhereFilterBuilder
 ```
 
-**Rueckgabe**: `WhereFilterBuilder`
+**Rückgabe**: `WhereFilterBuilder`
 
 **Parameter**:
 
@@ -98,7 +98,7 @@ Gruppe mit angegebener ID aktualisieren
 updateGroup(id: string, callback: (group: WhereGroupBuilder) => void): WhereFilterBuilder
 ```
 
-**Rueckgabe**: `WhereFilterBuilder`
+**Rückgabe**: `WhereFilterBuilder`
 
 **Parameter**:
 
@@ -117,7 +117,7 @@ Bedingung mit angegebener ID oder Element an angegebenem Index entfernen
 remove(idOrIndex: string | number): WhereFilterBuilder
 ```
 
-**Rueckgabe**: `WhereFilterBuilder`
+**Rückgabe**: `WhereFilterBuilder`
 
 **Parameter**:
 
@@ -135,7 +135,7 @@ Erste Bedingung (Filter oder Gruppe) nach Callback-Bedingung finden, Verhalten w
 find(predicate: (entry: WhereFilterNodeBuilder | WhereGroupBuilder, index: number) => boolean): WhereFilterNodeBuilder | WhereGroupBuilder | undefined
 ```
 
-**Rueckgabe**: `WhereFilterNodeBuilder \| WhereGroupBuilder \| undefined`
+**Rückgabe**: `WhereFilterNodeBuilder \| WhereGroupBuilder \| undefined`
 
 **Parameter**:
 
@@ -155,7 +155,7 @@ clear()
 
 ### toJSON
 
-Vollstaendige Where-Filterkonfiguration exportieren
+Vollständige Where-Filterkonfiguration exportieren
 
 **Definition**:
 
@@ -163,11 +163,11 @@ Vollstaendige Where-Filterkonfiguration exportieren
 toJSON(): VBIWhereGroup
 ```
 
-**Rueckgabe**: `VBIWhereGroup`
+**Rückgabe**: `VBIWhereGroup`
 
 ### observe
 
-Filterbedingungsaenderungen beobachten und eine Funktion zum Abbestellen zurueckgeben
+Filterbedingungsänderungen beobachten und eine Funktion zum Abbestellen zurückgeben
 
 **Definition**:
 
@@ -175,7 +175,7 @@ Filterbedingungsaenderungen beobachten und eine Funktion zum Abbestellen zurueck
 observe(callback: ObserveDeepCallback): () => void
 ```
 
-**Rueckgabe**: `() => void`
+**Rückgabe**: `() => void`
 
 **Parameter**:
 
@@ -185,7 +185,7 @@ observe(callback: ObserveDeepCallback): () => void
 
 ### static isGroup
 
-Pruefen, ob der Knoten ein Gruppenknoten ist
+Prüfen, ob der Knoten ein Gruppenknoten ist
 
 **Definition**:
 
@@ -193,7 +193,7 @@ Pruefen, ob der Knoten ein Gruppenknoten ist
 static isGroup(yMap: Y.Map<any>): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`
 
 **Parameter**:
 
@@ -203,7 +203,7 @@ static isGroup(yMap: Y.Map<any>): boolean
 
 ### static isNode
 
-Pruefen, ob der Knoten ein Blattknoten ist
+Prüfen, ob der Knoten ein Blattknoten ist
 
 **Definition**:
 
@@ -211,7 +211,7 @@ Pruefen, ob der Knoten ein Blattknoten ist
 static isNode(yMap: Y.Map<any>): boolean
 ```
 
-**Rueckgabe**: `boolean`
+**Rückgabe**: `boolean`
 
 **Parameter**:
 

@@ -1,90 +1,90 @@
 # UndoManager
 
-Bo quan ly undo/redo cung cap chuc nang undo va redo dua tren YJS, ho tro quan ly stack va xoa lich su
+Bộ quản lý undo/redo cung cấp chức năng undo và redo dựa trên YJS, hỗ trợ quản lý stack và xóa lịch sử
 
-## Thuoc tinh
+## Thuộc tính
 
-## Phuong thuc
+## Phương thức
 
 ### constructor
 
-Ham khoi tao
+Hàm khởi tạo
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 constructor(scope: any)
 ```
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `scope` | any | - Tai lieu YJS hoac scope kieu dung de xac dinh pham vi theo doi undo/redo |
+| `scope` | any | - Tài liệu YJS hoặc scope kiểu, dùng để xác định phạm vi theo dõi undo/redo |
 
 ### undo
 
-Undo thay doi gan nhat
+Undo thay đổi gần nhất
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 undo(): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`
 
 ### redo
 
-Redo thay doi da undo
+Redo thay đổi đã undo
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 redo(): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`
 
 ### canUndo
 
-Kiem tra co thao tac co the undo hay khong
+Kiểm tra có thao tác có thể undo hay không
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 canUndo(): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`
 
 ### canRedo
 
-Kiem tra co thao tac co the redo hay khong
+Kiểm tra có thao tác có thể redo hay không
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 canRedo(): boolean
 ```
 
-**Tra ve**: `boolean`
+**Trả về**: `boolean`
 
 ### clear
 
-Xoa lich su
+Xóa lịch sử
 
-**Dinh nghia**:
+**Định nghĩa**:
 
 ```typescript
 clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 ```
 
-**Tra ve**: `void`
+**Trả về**: `void`
 
-**Tham so**:
+**Tham số**:
 
-| Tham so | Kieu | Mo ta |
+| Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Co xoa undo stack hay khong, mac dinh true |
-| `clearRedoStack` | boolean | - Co xoa redo stack hay khong, mac dinh true |
+| `clearUndoStack` | boolean | - Có xóa undo stack hay không, mặc định true |
+| `clearRedoStack` | boolean | - Có xóa redo stack hay không, mặc định true |

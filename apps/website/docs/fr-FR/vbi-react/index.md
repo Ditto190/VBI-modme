@@ -29,7 +29,7 @@ pnpm --filter=<your-app> add @visactor/vbi-react@workspace:* @visactor/vbi@works
 
 ## Démarrage rapide
 
-L'exemple ci-dessous montre la boucle minimale avec `useVBI` + `useVSeed` :
+L'exemple ci-dessous montre le flux minimal de bout en bout avec `useVBI` + `useVSeed` :
 
 ```tsx
 import { useMemo } from 'react'

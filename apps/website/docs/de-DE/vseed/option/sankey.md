@@ -100,8 +100,7 @@ Dimensionskonfiguration zur Definition der source / target-Knotenstruktur; unter
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Feld-ID, die der Dimension entspricht
-
+Feld-ID der Dimension
 :::
 
 ### alias
@@ -118,8 +117,7 @@ Dimensionsalias
 **Type:** `TimeFormat | undefined`
 
 :::note{title=Beschreibung}
-Datumsformatkonfiguration der Dimension
-
+Datumsformat-Konfiguration der Dimension
 :::
 
 
@@ -128,8 +126,7 @@ Datumsformatkonfiguration der Dimension
 **Type:** `"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second"`
 
 :::note{title=Beschreibung}
-Zeitgranularität; bestimmt die Genauigkeit der Datumsanzeige
-
+Zeitgranularität, bestimmt die Anzeigegenauigkeit des Datums
 :::
 
 ### encoding
@@ -151,9 +148,9 @@ Kanal, dem die Dimension zugeordnet wird
 
 \- tooltip: unterstützt das Zuordnen mehrerer Dimensionen zum Tooltip-Kanal
 
-\- row: unterstützt das Zuordnen mehrerer Dimensionen zum Zeilenkanal, verwendet für pivot charts
+\- row: unterstützt das Zuordnen mehrerer Dimensionen zum Zeilenkanal, verwendet für Pivot-Diagramme
 
-\- column: unterstützt das Zuordnen mehrerer Dimensionen zum Spaltenkanal, verwendet für pivot charts
+\- column: unterstützt das Zuordnen mehrerer Dimensionen zum Spaltenkanal, verwendet für Pivot-Diagramme
 
 :::
 
@@ -182,8 +179,7 @@ Kennzahlkonfiguration zur Definition der Flussgröße; unterstützt die Kanäle 
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Kennzahl-ID, muss eindeutig sein
-
+Kennzahl-ID. Darf nicht doppelt vorkommen
 :::
 
 ### alias
@@ -191,8 +187,7 @@ Kennzahl-ID, muss eindeutig sein
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht alias der id
-
+Kennzahl-Alias. Duplikate sind erlaubt. Wenn nicht angegeben, verwendet alias die id
 :::
 
 ### autoFormat
@@ -200,20 +195,19 @@ Kennzahlalias, Duplikate sind erlaubt; wenn nicht gesetzt, entspricht alias der 
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-Automatische Zahlenformatierung, standardmäßig aktiviert, höchste Priorität
+Automatische Zahlenformatierung, standardmäßig aktiviert und mit höchster Priorität
 
-Wenn autoFormat=true ist, werden alle numFormat-Konfigurationen überschrieben
+Wenn autoFormat=true ist, überschreibt es alle numFormat-Konfigurationen
 
-Wenn aktiviert, wählen Diagramm-Datenbeschriftungen und Tooltips automatisch die passende Formatierung anhand von Kennzahlwerten und Gebietsschema aus
+Wenn aktiviert, wählen Diagrammbeschriftungen und Tooltips anhand von Kennzahlwerten und Locale automatisch ein passendes Format
 
-Formatierungsregeln: Dezimalzahlen mit aktivierter compact notation, mindestens 0 und höchstens 2 Dezimalstellen, automatische Rundung, umgesetzt mit Intl.NumberFormat des Browsers
+Formatierungsregeln: Dezimalzahlen mit aktivierter compact notation, mindestens 0 und höchstens 2 Dezimalstellen, automatische Rundung, umgesetzt mit dem Browser-Intl.NumberFormat
 
-Zum Beispiel:
+Beispiel:
 
 \- locale=zh-CN: 749740.264 → 74.45万
 
 \- locale=en-US: 749740.264 → 744.5K
-
 :::
 
 ### numFormat
@@ -221,10 +215,9 @@ Zum Beispiel:
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-Benutzerdefinierte Zahlenformatierung für Kennzahlen; wird automatisch auf Beschriftungen und Tooltips angewendet
+Benutzerdefinierte Zahlenformatierung für Kennzahlen, automatisch auf label und tooltip angewendet
 
-Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit gesetzt werden; andernfalls überschreibt autoFormat diese Konfiguration
-
+Hinweis: Um benutzerdefinierte Formatierung zu verwenden, autoFormat=false explizit setzen; andernfalls überschreibt autoFormat diese Konfiguration
 :::
 
 
@@ -233,8 +226,7 @@ Hinweis: Für benutzerdefinierte Formatierung muss autoFormat=false explizit ges
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -242,12 +234,11 @@ Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wiss
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Verhältnis der Zahlenformatierung, darf nicht 0 sein
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -257,12 +248,11 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Symbol der Zahlenformatierung, z. B. %, ‰
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -272,8 +262,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-Tausendertrennzeichen für die Zahlenformatierung
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -299,8 +288,7 @@ Präfix der Zahlenformatierung
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und maximumFractionDigits von Intl.NumberFormat im Browser; niedrigere Priorität als significantDigits
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
@@ -318,8 +306,7 @@ Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDigits und maximumSignificantDigits von Intl.NumberFormat im Browser; höhere Priorität als fractionDigits
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
@@ -339,8 +326,7 @@ Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDi
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingPriority
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
@@ -354,8 +340,7 @@ Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auc
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingMode
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### format
@@ -368,8 +353,7 @@ Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers u
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wissenschaftliche Notation
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -377,12 +361,11 @@ Zahlenformattyp, unterstützt: Zahl (Dezimal), Prozent (%), Promille (‰), wiss
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Verhältnis der Zahlenformatierung, darf nicht 0 sein
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -392,12 +375,11 @@ Verhältnis der Zahlenformatierung, darf nicht 0 sein
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-Symbol der Zahlenformatierung, z. B. %, ‰
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
-\- 100000 wird zu 10W konvertiert, ratio:10000, symbol:"W"
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -407,8 +389,7 @@ Symbol der Zahlenformatierung, z. B. %, ‰
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-Tausendertrennzeichen für die Zahlenformatierung
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -434,8 +415,7 @@ Präfix der Zahlenformatierung
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und maximumFractionDigits von Intl.NumberFormat im Browser; niedrigere Priorität als significantDigits
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
@@ -453,8 +433,7 @@ Dezimalstellen für die Zahlenformatierung; verwendet minimumFractionDigits und 
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDigits und maximumSignificantDigits von Intl.NumberFormat im Browser; höhere Priorität als fractionDigits
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
@@ -474,8 +453,7 @@ Signifikante Stellen für die Zahlenformatierung; verwendet minimumSignificantDi
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auch fractionDigits gesetzt sind; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingPriority
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
@@ -489,8 +467,7 @@ Rundungspriorität der Zahlenformatierung, wenn sowohl significantDigits als auc
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-Rundungsmodus der Zahlenformatierung; verwendet Intl.NumberFormat des Browsers und folgt denselben Regeln wie dessen roundingMode
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### encoding
@@ -520,7 +497,7 @@ In flacher Kennzahlkonfiguration wird eine baumförmige Kennzahlgruppe aufgebaut
 :::
 
 :::tip{title=Tip}
-Es gibt zwei Möglichkeiten, den Kennzahlbaum zu konfigurieren: Option 1 konfiguriert den Kennzahlbaum direkt mit children; Option 2 konfiguriert eine flache Kennzahlliste mit parentId. Beide Methoden können nicht gleichzeitig verwendet werden
+Es gibt zwei Formen der Kennzahlbaum-Konfiguration: direkt einen Kennzahlbaum mit children konfigurieren oder eine flache Kennzahlliste mit parentId konfigurieren. Beide Formen können nicht gleichzeitig verwendet werden.
 
 :::
 
@@ -544,9 +521,7 @@ Legt den Feldnamen für die Paginierung fest; muss eine Dimension sein
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
-
-
+Paginierungsfeld; gibt den Feldnamen für die Paginierung an und muss eine Dimension sein
 :::
 
 ### currentValue
@@ -554,19 +529,7 @@ Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 **Type:** `string`
 
 :::note{title=Beschreibung}
-Von der KI generierter JavaScript-Filtercode
-
-\- Es dürfen nur integrierte Hilfsfunktionen verwendet werden (Zugriff über _ oder R)
-
-\- Eingabeparameter: data (Array); jedes item enthält das Feld __row_index für die Zeilennummer
-
-\- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
-
-\- __row_index steht für die Zeilennummer des ursprünglichen Dateneintrags, field für das hervorzuhebende Feld
-
-\- Verboten: eval, Function, asynchrone Operationen, DOM API, Netzwerkanfragen
-
-
+Aktueller Paginierungswert; gibt den Wert zur Bestimmung der aktuellen Seite an
 :::
 
 **Beispiel**
@@ -608,8 +571,7 @@ Farbkonfiguration zur Definition des Farbschemas des Diagramms, einschließlich 
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Diskretes Farbschema zur Definition der Farben verschiedener Elemente im Diagramm
 :::
 
 **Beispiel**
@@ -622,8 +584,7 @@ Farbkonfiguration zur Definition des Farbschemas des Diagramms, einschließlich 
 **Type:** `string[] | undefined`
 
 :::note{title=Beschreibung}
-
-
+Lineares Farbverlaufsschema zur Definition der Farben verschiedener Elemente im Diagramm
 :::
 
 **Beispiel**
@@ -636,8 +597,7 @@ Farbkonfiguration zur Definition des Farbschemas des Diagramms, einschließlich 
 **Type:** `Record<string, string> | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbzuordnung, ordnet Datenwerte konkreten Farben zu
 :::
 
 **Beispiel**
@@ -653,8 +613,7 @@ Farbkonfiguration zur Definition des Farbschemas des Diagramms, einschließlich 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe positiver Werte im Diagramm
 :::
 
 ### negativeColor
@@ -662,8 +621,7 @@ Farbkonfiguration zur Definition des Farbschemas des Diagramms, einschließlich 
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Positiv/Negativ-Farbkonfiguration; definiert die Farbe negativer Werte im Diagramm
 :::
 
 
@@ -686,8 +644,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungen aktiviert sind
 :::
 
 ### wrap
@@ -695,8 +652,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungen umbrochen werden
 :::
 
 ### showValue
@@ -704,12 +660,11 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Kennzahlwerte anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Risiko widersprüchlicher Werte, da alle zeichnungsbezogenen Kennzahlen durch `foldMeasures` verarbeitet und zu einer Kennzahl zusammengeführt werden, die einen Datenpunkt repräsentiert.
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### showValuePercent
@@ -717,12 +672,11 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Kennzahlwerte als Prozentsatz anzeigen
 
+In Szenarien mit mehreren Kennzahlen besteht kein Risiko widersprüchlicher Werte, da alle zeichnungsbezogenen Kennzahlen durch `foldMeasures` verarbeitet und zu einer Kennzahl zusammengeführt werden, die einen Datenpunkt repräsentiert.
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### showDimension
@@ -730,12 +684,11 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
+Ob Beschriftungen Dimensionslabels anzeigen
 
+Zeigt alle Dimensionslabels an
 
-
-
-
-
+Hinweis: encoding.label hat höhere Priorität; diese Konfiguration beeinflusst encoding.label nicht
 :::
 
 ### autoFormat
@@ -743,8 +696,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungswerte automatisch formatiert werden. Wenn autoFormat true ist, wird numFormat ignoriert
 :::
 
 ### numFormat
@@ -752,8 +704,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `NumFormat | undefined`
 
 :::note{title=Beschreibung}
-
-
+Formatierungskonfiguration für Beschriftungswerte. Sie wird mit `format` in `measure` zusammengeführt; `format` in `measure` hat höhere Priorität. numFormat hat niedrigere Priorität als autoFormat
 :::
 
 
@@ -762,8 +713,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `"number" | "percent" | "permille" | "scientific" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformattyp. Unterstützt Zahl (dezimal), Prozent (%), Promille (‰) und wissenschaftliche Notation
 :::
 
 #### ratio
@@ -771,11 +721,11 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierungsverhältnis. Darf nicht 0 sein
 :::
 
 **Beispiel**
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -786,11 +736,11 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Zahlenformatierungssymbol, z. B. % oder ‰
 :::
 
 **Beispiel**
+\- 100000 wird zu 10万, ratio:10000, symbol:"万"
 \- 100000 wird zu 10K konvertiert, ratio:1000, symbol:"K"
 
 
@@ -801,8 +751,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Tausendertrennzeichen für Zahlenformatierung
 :::
 
 #### suffix
@@ -810,8 +759,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Suffix der Zahlenformatierung
 :::
 
 #### prefix
@@ -819,8 +767,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Präfix der Zahlenformatierung
 :::
 
 #### fractionDigits
@@ -828,8 +775,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Dezimalstellen für Zahlenformatierung, verwendet minimumFractionDigits und maximumFractionDigits aus Browser Intl.NumberFormat. Niedrigere Priorität als significantDigits
 :::
 
 **Beispiel**
@@ -847,8 +793,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Signifikante Stellen für Zahlenformatierung, verwendet minimumSignificantDigits und maximumSignificantDigits aus Browser Intl.NumberFormat. Höhere Priorität als fractionDigits
 :::
 
 **Beispiel**
@@ -868,8 +813,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `"morePrecision" | "lessPrecision" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rundungspriorität der Zahlenformatierung, wenn significantDigits und fractionDigits gleichzeitig gesetzt sind; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingPriority
 :::
 
 **Beispiel**
@@ -883,8 +827,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `"floor" | "ceil" | "expand" | "trunc" | "halfCeil" | "halfFloor" | "halfExpand" | "halfTrunc" | "halfEven" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Rundungsmodus der Zahlenformatierung; verwendet Browser Intl.NumberFormat mit denselben Regeln wie Intl.NumberFormat roundingMode
 :::
 
 ### labelFontSize
@@ -892,8 +835,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Beschriftung
 :::
 
 ### labelFontWeight
@@ -901,8 +843,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Beschriftung
 :::
 
 ### labelBackgroundColor
@@ -910,8 +851,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Hintergrundfarbe der Beschriftung
 :::
 
 ### labelStroke
@@ -919,8 +859,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Strichfarbe der Beschriftung
 :::
 
 ### labelColor
@@ -928,8 +867,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Beschriftung
 :::
 
 ### labelColorSmartInvert
@@ -937,8 +875,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Schriftfarbe der Beschriftung automatisch anhand der Markierungsfarbe invertiert wird
 :::
 
 ### labelPosition
@@ -946,8 +883,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `"inside" | "outside" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Position der Beschriftung
 :::
 
 ### labelOverlap
@@ -955,8 +891,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob Beschriftungsüberlappungen vermieden werden
 :::
 
 ### selector
@@ -964,8 +899,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschriftungsfilter. Standardmäßig ist die Bedingungsverknüpfung zwischen selectors OR
 :::
 
 
@@ -974,8 +908,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Dimensionsfeld, die id eines Eintrags in dimensions
 :::
 
 #### operator
@@ -983,12 +916,11 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
-
-
-
-
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 :::
 
 #### op
@@ -996,14 +928,13 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 
-
-
-
-
-
+identisch mit operator
 :::
 
 #### value
@@ -1011,8 +942,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wählt Werte des Dimensionsfelds in Datenpunkten aus. Arrays werden unterstützt
 :::
 
 ### dynamicFilter
@@ -1020,38 +950,25 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `ChartDynamicFilter | undefined`
 
 :::note{title=Beschreibung}
+Dynamischer Filter (Ausführung von AI-generiertem Code)
 
+Implementiert komplexe Datenfilterlogik durch AI-generierten JavaScript-Code
 
+Kernfunktionen:
 
+\- Unterstützt beliebig komplexe Datenfilterbedingungen
 
+\- Verwendet eingebaute Hilfsfunktionen für Datenoperationen
 
+\- Sichere Ausführung im Browser (Web-Worker-Sandbox)
 
+Umgebungsanforderung: nur in Browserumgebungen unterstützt; Node.js-Umgebungen verwenden fallback
 
+Hinweis: selector und dynamicFilter können nicht gleichzeitig verwendet werden. dynamicFilter hat höhere Priorität
 
+Dynamische Filterkonfiguration für Diagramme
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Filtert Diagramm-Markierungen (Balken, Punkte usw.) mit AI-generiertem JavaScript-Code
 :::
 
 
@@ -1064,8 +981,7 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Beschreibung der Filteranforderung des Benutzers (natürliche Sprache)
 :::
 
 **Beispiel**
@@ -1080,20 +996,17 @@ Beschriftungskonfiguration zur Definition der Datenlabels des Diagramms, einschl
 **Type:** `string`
 
 :::note{title=Beschreibung}
+AI-generierter JavaScript-Filtercode
 
+\- Es dürfen nur eingebaute Hilfsfunktionen verwendet werden (Zugriff über _ oder R)
 
+\- Eingabeparameter: data (Array), jedes item enthält das Feld __row_index als Zeilennummer
 
+\- Muss ein Array aus Zeilenindex- und Feldkombinationen zurückgeben: Array<{ __row_index: number, field: string }>
 
+\- __row_index ist die Zeilennummer des ursprünglichen Datenpunkts, field ist das hervorzuhebende Feld
 
-
-
-
-
-
-
-
-
-
+\- Verboten: eval, Function, asynchrone Operationen, DOM-APIs, Netzwerkanfragen
 :::
 
 **Beispiel**
@@ -1141,8 +1054,7 @@ _.map(filtered, item => [
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Beschreibung}
-
-
+Fallback, wenn Codeausführung fehlschlägt oder die Umgebung nicht unterstützt wird
 :::
 
 
@@ -1151,8 +1063,7 @@ _.map(filtered, item => [
 **Type:** `string`
 
 :::note{title=Beschreibung}
-
-
+Dimensionsfeld, die id eines Eintrags in dimensions
 :::
 
 ##### operator
@@ -1160,12 +1071,11 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
-
-
-
-
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 :::
 
 ##### op
@@ -1173,14 +1083,13 @@ _.map(filtered, item => [
 **Type:** `"in" | "not in" | undefined`
 
 :::note{title=Beschreibung}
+Operator
 
+\- in: wählt Datenpunkte aus, deren Dimensionsfeldwert in value enthalten ist
 
+\- not in: wählt Datenpunkte aus, deren Dimensionsfeldwert nicht in value enthalten ist
 
-
-
-
-
-
+identisch mit operator
 :::
 
 ##### value
@@ -1188,8 +1097,7 @@ _.map(filtered, item => [
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Beschreibung}
-
-
+Wählt Werte des Dimensionsfelds in Datenpunkten aus. Arrays werden unterstützt
 :::
 
 #### result
@@ -1197,12 +1105,9 @@ _.map(filtered, item => [
 **Type:** `DynamicFilterExecutionResult<RowWithFieldRes> | undefined`
 
 :::note{title=Beschreibung}
+Ausführungsergebnis des dynamischen Filters (Laufzeitfeld)
 
-
-
-
-
-
+Wird in prepare() geschrieben und ist zur Laufzeit schreibgeschützt
 :::
 
 
@@ -1238,8 +1143,7 @@ Legendenkonfiguration zur Definition von Anzeige, Position und Stil der Farblege
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob die Legende aktiviert ist
 :::
 
 **Beispiel**
@@ -1252,13 +1156,11 @@ enable: true
 **Type:** `boolean | undefined`
 
 :::note{title=Beschreibung}
-
-
+Ob der Legendenrahmen aktiviert ist
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1271,8 +1173,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Legende
 :::
 
 ### pagerIconColor
@@ -1280,8 +1181,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbe des Pager-Icons
 :::
 
 ### pagerIconDisableColor
@@ -1289,8 +1189,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Farbe des deaktivierten Pager-Icons
 :::
 
 ### labelFontSize
@@ -1298,8 +1197,7 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftgröße der Legende
 :::
 
 **Beispiel**
@@ -1312,8 +1210,7 @@ enable: true
 **Type:** `string | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftfarbe der Legende
 :::
 
 ### labelFontWeight
@@ -1321,8 +1218,7 @@ enable: true
 **Type:** `string | number | undefined`
 
 :::note{title=Beschreibung}
-
-
+Schriftstärke der Legende
 :::
 
 **Beispiel**
@@ -1335,13 +1231,11 @@ enable: true
 **Type:** `"circle" | "cross" | "diamond" | "square" | "arrow" | "arrow2Left" | "arrow2Right" | "wedge" | "thinTriangle" | "triangle" | "triangleUp" | "triangleDown" | "triangleRight" | "triangleLeft" | "stroke" | "star" | "wye" | "rect" | "arrowLeft" | "arrowRight" | "rectRound" | "roundLine" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenform
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1354,8 +1248,7 @@ enable: true
 **Type:** `"left" | "leftTop" | "leftBottom" | "lt" | "lb" | "top" | "topLeft" | "topRight" | "tl" | "tr" | "right" | "rightTop" | "rightBottom" | "rt" | "rb" | "bottom" | "bottomLeft" | "bottomRight" | "bl" | "br" | undefined`
 
 :::note{title=Beschreibung}
-
-
+Legendenposition
 :::
 
 **Beispiel**
@@ -1368,17 +1261,15 @@ enable: true
 **Type:** `number | undefined`
 
 :::note{title=Beschreibung}
+Maximale Spalten- oder Zeilenzahl bei vielen Legendeneinträgen
 
+Wenn position horizontal ist (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), steuert maxSize die Anzahl der angezeigten Spalten
 
-
-
-
-
+Wenn position vertikal ist (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), steuert maxSize die Anzahl der angezeigten Zeilen
 :::
 
 :::warning{title=Warning}
-
-
+Nur für diskrete Legenden wirksam
 :::
 
 **Beispiel**
@@ -1406,8 +1297,7 @@ Tooltip-Konfiguration zur Definition der Tooltip-Informationen des Diagramms, ei
 **Type:** `false | true`
 
 :::note{title=Beschreibung}
-
-
+Ob Tooltip-Informationen aktiviert sind
 :::
 
 
@@ -1416,12 +1306,15 @@ Tooltip-Konfiguration zur Definition der Tooltip-Informationen des Diagramms, ei
 **Type:** `Theme | undefined`
 
 :::note{title=Beschreibung}
-Diagramm-Theme
+Diagrammthema
 
-Theme
 
-Integrierte Themes light und dark; neue Themes können über registerTheme angepasst werden.
 
+Thema
+
+
+
+Zwei integrierte Themen stehen bereit: light und dark; neue Themen können über registerTheme angepasst werden.
 :::
 
 

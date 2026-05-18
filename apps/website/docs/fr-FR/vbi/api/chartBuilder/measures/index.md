@@ -1,22 +1,22 @@
 # MeasuresBuilder
 
-Builder de mesures pour ajouter, modifier et supprimer la configuration des mesures. Les mesures sont des champs numeriques, par exemple ventes, profit ou quantite
+Builder de mesures pour ajouter, modifier et supprimer la configuration des mesures. Les mesures sont des champs numériques, par exemple les ventes, le profit ou la quantité
 
-## Proprietes
+## Propriétés
 
-## Methodes
+## Méthodes
 
 ### constructor
 
-**Definition**:
+**Définition**:
 
 ```typescript
 constructor(doc: Y.Doc, dsl: Y.Map<any>)
 ```
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
 | `dsl` | Y.Map<any> | - |
@@ -25,7 +25,7 @@ constructor(doc: Y.Doc, dsl: Y.Map<any>)
 
 Ajouter une mesure
 
-**Definition**:
+**Définition**:
 
 ```typescript
 add(field: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilder
@@ -33,18 +33,18 @@ add(field: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilde
 
 **Retour**: `MeasuresBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `field` | string | - Nom du champ |
 | `callback` | (node: MeasureNodeBuilder) => void | - Fonction de rappel |
 
 ### remove
 
-Supprimer la mesure avec l ID indique
+Supprimer la mesure avec l'ID indiqué
 
-**Definition**:
+**Définition**:
 
 ```typescript
 remove(id: string): MeasuresBuilder
@@ -52,17 +52,17 @@ remove(id: string): MeasuresBuilder
 
 **Retour**: `MeasuresBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `id` | string | - ID de mesure |
 
 ### update
 
-Mettre a jour la configuration de mesure
+Mettre à jour la configuration de mesure
 
-**Definition**:
+**Définition**:
 
 ```typescript
 update(id: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilder
@@ -70,18 +70,18 @@ update(id: string, callback: (node: MeasureNodeBuilder) => void): MeasuresBuilde
 
 **Retour**: `MeasuresBuilder`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `id` | string | - ID de mesure |
 | `callback` | (node: MeasureNodeBuilder) => void | - Fonction de rappel |
 
 ### find
 
-Trouver la premiere mesure selon une condition de callback, comme Array.find
+Trouver la première mesure selon une condition de callback, comme Array.find
 
-**Definition**:
+**Définition**:
 
 ```typescript
 find(predicate: (node: MeasureNodeBuilder, index: number) => boolean): MeasureNodeBuilder | undefined
@@ -89,9 +89,9 @@ find(predicate: (node: MeasureNodeBuilder, index: number) => boolean): MeasureNo
 
 **Retour**: `MeasureNodeBuilder \| undefined`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `predicate` | (node: MeasureNodeBuilder, index: number) => boolean | - Condition de recherche |
 
@@ -99,7 +99,7 @@ find(predicate: (node: MeasureNodeBuilder, index: number) => boolean): MeasureNo
 
 Obtenir toutes les mesures
 
-**Definition**:
+**Définition**:
 
 ```typescript
 findAll(): MeasureNodeBuilder[]
@@ -111,7 +111,7 @@ findAll(): MeasureNodeBuilder[]
 
 Exporter toutes les mesures en tableau JSON
 
-**Definition**:
+**Définition**:
 
 ```typescript
 toJSON(): VBIMeasure[]
@@ -123,7 +123,7 @@ toJSON(): VBIMeasure[]
 
 Observer les changements de mesures
 
-**Definition**:
+**Définition**:
 
 ```typescript
 observe(callback: ObserveDeepCallback): () => void
@@ -131,15 +131,15 @@ observe(callback: ObserveDeepCallback): () => void
 
 **Retour**: `() => void`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `callback` | ObserveDeepCallback | - Fonction de rappel |
 
 ### static isMeasureNode
 
-**Definition**:
+**Définition**:
 
 ```typescript
 static isMeasureNode(node: VBIMeasureTree[0]): node is VBIMeasure
@@ -147,15 +147,15 @@ static isMeasureNode(node: VBIMeasureTree[0]): node is VBIMeasure
 
 **Retour**: `node is VBIMeasure`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `node` | VBIMeasureTree[0] | - |
 
 ### static isMeasureGroup
 
-**Definition**:
+**Définition**:
 
 ```typescript
 static isMeasureGroup(node: VBIMeasureTree[0]): node is VBIMeasureGroup
@@ -163,8 +163,8 @@ static isMeasureGroup(node: VBIMeasureTree[0]): node is VBIMeasureGroup
 
 **Retour**: `node is VBIMeasureGroup`
 
-**Parametres**:
+**Paramètres**:
 
-| Parametre | Type | Description |
+| Paramètre | Type | Description |
 | --- | --- | --- |
 | `node` | VBIMeasureTree[0] | - |

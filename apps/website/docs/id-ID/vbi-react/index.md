@@ -9,7 +9,7 @@ Ekspor saat ini dibagi menjadi dua lapisan:
 
 ## Posisi
 
-- Pembungkus subscription state dan rendering untuk React 18+
+- Pembungkus langganan state dan rendering untuk React 18+
 - Menggunakan `VBIChartBuilder` sebagai Single Source of Truth (SSOT), tanpa menyimpan salinan state bisnis tambahan
 - Cocok untuk membangun panel konfigurasi BI, area pratinjau chart, dan panel debug DSL
 
@@ -29,7 +29,7 @@ pnpm --filter=<your-app> add @visactor/vbi-react@workspace:* @visactor/vbi@works
 
 ## Mulai Cepat
 
-Contoh berikut menunjukkan loop minimum dengan `useVBI` + `useVSeed`:
+Contoh berikut menunjukkan alur minimum dari awal hingga akhir dengan `useVBI` + `useVSeed`:
 
 ```tsx
 import { useMemo } from 'react'

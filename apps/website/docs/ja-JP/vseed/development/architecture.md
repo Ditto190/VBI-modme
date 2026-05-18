@@ -1,28 +1,28 @@
-# Architecture
+# アーキテクチャ設計
 
-VSeed is a chart generator based on semantic configuration, designed to connect user intent with underlying rendering engines (VChart/VTable).
+VSeed はセマンティックな設定に基づくチャート生成器であり、ユーザーの意図と基盤となるレンダリングエンジン（VChart/VTable）を接続するために設計されています。
 
 > [Deep Wiki](https://deepwiki.com/VisActor/VSeed)
 
-## Core Concepts
+## コアコンセプト
 
-### 1. Pipeline Architecture
-VSeed uses a pipeline pattern to progressively build the chart Spec. The process consists of two main stages:
+### 1. パイプラインアーキテクチャ (Pipeline Architecture)
+VSeed はパイプラインパターンを採用し、チャート Spec を段階的に構築します。全体のプロセスは主に 2 つの段階に分かれます。
 
 - **AdvancedPipeline**:
-  - Input: Initial `VSeed` object.
-  - Responsibilities: Data reshaping, applying themes, inferring default configurations.
-  - Output: `AdvancedVSeed` (intermediate template).
+  - 入力: 初期 `VSeed` オブジェクト。
+  - 役割: データリシェイプ (Data Reshape)、テーマの適用、デフォルト設定の推論。
+  - 出力: `AdvancedVSeed` (中間状態テンプレート)。
 
 - **SpecPipeline**:
-  - Input: `AdvancedVSeed`.
-  - Responsibilities: Convert the intermediate template into concrete VChart/VTable configuration.
-  - Output: Final renderable Spec.
+  - 入力: `AdvancedVSeed`。
+  - 役割: 中間状態テンプレートを具体的な VChart/VTable 設定項目へ変換します。
+  - 出力: 最終的にレンダリング可能な Spec。
 
-### 2. Builder Pattern
-The `VSeedBuilder` class is the core coordinator, responsible for managing Context, registering plugins, and executing the pipeline.
+### 2. Builder パターン
+`VSeedBuilder` クラスは中核となるコーディネーターであり、Context の管理、プラグインの登録、パイプラインの実行を担当します。
 
-### 3. Plugin-based Extensibility
-VSeed's core capabilities (such as supported chart types) are fully implemented via a plugin registration mechanism.
-- **Chart Type Registration**: Each chart type (e.g., `bar`, `line`) is a registered plugin.
-- **Theme Registration**: Custom themes can be registered.
+### 3. プラグインによる拡張 (Extensibility)
+VSeed のコア機能（サポートされるチャートタイプなど）は、完全にプラグイン登録メカニズムによって実装されています。
+- **Chart Type Registration**: 各チャートタイプ（例: `bar`, `line`）は登録プラグインです。
+- **Theme Registration**: カスタムテーマの登録をサポートします。

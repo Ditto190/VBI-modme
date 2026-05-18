@@ -1,31 +1,31 @@
 # Rose
 
 :::info{title=Recommended}
-\- Recommended field configuration: `1` measure(s), `1` dimension(s)
+\- Recommended field configuration: `1` measure, `1` dimension
 
-\- Supports Data Reshape: at least`1` measure(s), `0` dimension(s)
+\- Supports data reshaping: at least `1` measure, `0` dimensions
 
 :::
 
 :::info{title=Encoding Mapping}
-stackingThe Rose Chart supports the following visual channels:
+Stacked rose chart supports the following visual channels:
 
-`angle`  : angle channel, supports`multiple dimensions`, maps dimension values to the angular axis
+`angle`  : angle channel, supports `multiple dimensions`, maps dimension values to the angular axis
 
-`radius` : radius channel, supports`multiple measures`, maps measure values to the radius axis
+`radius` : radius channel, supports `multiple measures`, maps measure values to the radius axis
 
-`detail` : detail channel, supports`multiple dimensions`, used to display more granular data within the same color series
+`detail` : detail channel, supports `multiple dimensions`, used to display more granular data within the same color series
 
-`color`  : color channel, supports`multiple dimensions`or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
+`color`  : color channel, supports `multiple dimensions` or `one measure`, dimension colors are used to distinguish different data series, measure colors are used for linearly mapping measure values to graphical colors
 
-`tooltip`: tooltip channel, supports`multiple dimensions` and `multiple measures`, displayed when hovering over a data point
+`tooltip`: tooltip channel, supports `multiple dimensions` and `multiple measures`, displayed when hovering over a data point
 
-`label`  : label channel, supports`multiple dimensions` and `multiple measures`, displays data labels on data points
+`label`  : label channel, supports `multiple dimensions` and `multiple measures`, displays data labels on data points
 
 :::
 
 :::note{title=Description}
-Rose Chart, suitable for multi-dimensional data comparison scenarios, displaying data size through the arc length and radius of sectors in a polar coordinate system
+Stacked rose chart, suitable for multi-dimensional data comparison scenarios, displaying data size through the arc length and radius of sectors in a polar coordinate system
 
 Applicable scenarios:
 
@@ -40,7 +40,7 @@ Applicable scenarios:
 :::warning{title=Warning}
 Data requirements:
 
-\- At least 1 numerical field
+\- At least 1 numeric field (measure)
 
 \- The first dimension is placed on the angular axis; other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items
 
@@ -58,11 +58,11 @@ Features enabled by default:
 **Type:** `"rose"`
 
 :::note{title=Description}
-stackingRose Chart
+Stacked rose chart
 
 
 
-Rose Chart, displaying multi-dimensional data comparison relationships through a polar coordinate system
+Stacked rose chart, displaying multi-dimensional data comparison relationships through a polar coordinate system
 
 :::
 
@@ -81,7 +81,7 @@ Dataset
 
 
 
-An aggregated dataset that follows TidyData specifications, used to define the chart's data source and structure. User-input datasets do not require any manual processing; VSeed features a powerful data reshaping function that automatically transforms the data. Rose Chart data is eventually converted into 2 dimensions and 1 measure.
+An aggregated dataset that conforms to the TidyData specification, used to define the chart's data source and structure. User-input datasets do not require any manual processing; VSeed features a powerful data reshaping function that automatically transforms the data. Rose chart data is ultimately converted into 2 dimensions and 1 measure.
 
 :::
 
@@ -100,7 +100,7 @@ Dimensions
 
 
 
-The first dimension of the Rose Chart is mapped to the angular axis; other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items.
+The first dimension of the stacked rose chart is mapped to the angular axis; other dimensions are merged with measure names (when multiple measures exist) to be displayed as legend items.
 
 :::
 
@@ -180,7 +180,7 @@ Measures
 
 
 
-Measures in the Rose Chart are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with other dimensions to be displayed as legend items.
+Measures in the stacked rose chart are automatically merged into one measure and mapped to the radius axis. When multiple measures exist, measure names are merged with other dimensions to be displayed as legend items.
 
 :::
 
@@ -223,9 +223,9 @@ Formatting rules: decimal numbers with compact notation enabled, minimum 0 decim
 
 For example:
 
-\- locale='zh-CN': 749740.264 → 74.45万
+\- locale=zh-CN: 749740.264 → 74.45万
 
-\- locale='en-US': 749740.264 → 744.5K
+\- locale=en-US: 749740.264 → 744.5K
 
 :::
 
@@ -260,7 +260,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -275,7 +275,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -395,7 +395,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -410,7 +410,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -773,7 +773,7 @@ Number format ratio, cannot be 0
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -788,7 +788,7 @@ Number format symbol, e.g. %, ‰
 :::
 
 **Example**
-\- 100000 converts to 10W, ratio:10000, symbol:"W"
+\- 100000 converts to 10万, ratio:10000, symbol:"万"
 \- 100000 converts to 10K, ratio:1000, symbol:"K"
 
 
@@ -934,7 +934,7 @@ Label font color
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the label font color automatically inverts based on the graphical element color
+Whether the label font color automatically inverts based on the graphic element color
 
 :::
 
@@ -952,7 +952,7 @@ label position
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the label anti-overlap function is enabled
+Whether the label anti-overlap feature is enabled
 
 :::
 
@@ -971,7 +971,7 @@ Label filtering; the default relationship between selectors is OR
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field; ID of a specific dimension item
+Dimension field; the ID of an item in dimensions
 
 :::
 
@@ -982,9 +982,9 @@ Dimension field; ID of a specific dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items whose dimension field value is within the specified value
+\- in: Select data items where the value of the dimension field is in 'value'
 
-\- not in: Select data items whose dimension field value is not within the specified value
+\- not in: Select data items where the value of the dimension field is not in 'value'
 
 :::
 
@@ -995,11 +995,11 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items whose dimension field value is within the specified value
+\- in: Select data items where the value of the dimension field is in 'value'
 
-\- not in: Select data items whose dimension field value is not within the specified value
+\- not in: Select data items where the value of the dimension field is not in 'value'
 
-same as operator
+Same as operator
 
 :::
 
@@ -1008,7 +1008,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select dimension field values; supports arrays
+Select the value of the dimension field in the data item; supports arrays
 
 :::
 
@@ -1019,51 +1019,42 @@ Select dimension field values; supports arrays
 :::note{title=Description}
 Dynamic filter (AI-generated code execution)
 
-Implements complex data filtering logic via AI-generated JavaScript code
+Implement complex data filtering logic via AI-generated JavaScript code
 
 Core capabilities:
 
-\- Supports arbitrarily complex data filtering conditions
+- Supports any complex data filtering conditions
 
-\- Use built-in utility functions for data manipulation
+- Use built-in utility functions for data operations
 
-\- Secure execution in the browser environment (Web Worker sandbox)
+- Execute safely in the browser environment (Web Worker sandbox)
 
-
-
-Environmental requirements: Supports browser environments only; Node.js environments will use fallback
-
-
+Environment requirements: Only supports browser environment; Node.js environment will use fallback
 
 Note: selector and dynamicFilter cannot be used simultaneously; dynamicFilter has higher priority
 
-
-
 Chart dynamic filter configuration
 
-Implements filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
+Implement filtering of chart marks (bars, points, etc.) via AI-generated JavaScript code
 
 :::
-
 
 #### type
 
 **Type:** `"row-with-field"`
-
 #### description
 
 **Type:** `string | undefined`
 
 :::note{title=Description}
-User's filtering requirement description (natural language)
+User filtering requirement description (natural language)
 
 :::
 
 **Example**
-"Highlight columns with sales greater than 1000"
+"Highlight bars with sales greater than 1000"
 
-"Highlight the column with the highest profit margin in each area"
-
+"Highlight the bar with the highest profit margin in each region"
 
 
 #### code
@@ -1073,17 +1064,15 @@ User's filtering requirement description (natural language)
 :::note{title=Description}
 AI-generated JavaScript filtering code
 
+- Can only use built-in utility functions (accessed via _ or R)
 
+- Input parameter: data (array), each item contains __row_index representing the row number
 
-\- Only built-in utility functions can be used (accessed via _ or R)
+- Must return an array of row-index and field combinations: Array<{ __row_index: number, field: string }>
 
-\- Input parameters: data (array), where each item includes a __row_index field representing the row number
+- __row_index represents the original data item row number, and field represents the field to highlight
 
-\- Must return an array of row index and field combinations: Array<{ __row_index: number, field: string }>
-
-\- __row_index represents the row number of the original data item; field represents the field to be highlighted
-
-\- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
+- Forbidden: eval, Function, asynchronous operations, DOM API, network requests
 
 :::
 
@@ -1097,7 +1086,7 @@ field: 'sales'
 }));
 ```
 
-Highlight data items with the highest profit margin in each area
+Highlight the data item with the highest profit margin in each region
 ```javascript
 const grouped = _.groupBy(data, 'area');
 const maxItems = _.map(grouped, group =>
@@ -1111,7 +1100,7 @@ _.map(maxItems, item => [
 );
 ```
 
-Highlight data items filtered by multiple conditions
+Highlight data items that match multiple conditions
 ```javascript
 const filtered = _.filter(data, item => {
 const profitRate = item.profit / item.sales;
@@ -1126,23 +1115,21 @@ _.map(filtered, item => [
 ```
 
 
-
 #### fallback
 
 **Type:** `Selector | Selectors | undefined`
 
 :::note{title=Description}
-Fallback plan when code execution fails or the environment is not supported
+Fallback when code execution fails or the environment is unsupported
 
 :::
-
 
 ##### field
 
 **Type:** `string`
 
 :::note{title=Description}
-Dimension field; ID of a specific dimension item
+Dimension field, the id of an item in dimensions
 
 :::
 
@@ -1153,9 +1140,9 @@ Dimension field; ID of a specific dimension item
 :::note{title=Description}
 Operator
 
-\- in: Select data items whose dimension field value is within the specified value
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+- not in: selects data items where the dimension field value is not in value
 
 :::
 
@@ -1166,9 +1153,9 @@ Operator
 :::note{title=Description}
 Operator
 
-\- in: Select data items whose dimension field value is within the specified value
+- in: selects data items where the dimension field value is in value
 
-\- not in: Select data items whose dimension field value is not within the specified value
+- not in: selects data items where the dimension field value is not in value
 
 same as operator
 
@@ -1179,7 +1166,7 @@ same as operator
 **Type:** `string | number | (string | number)[]`
 
 :::note{title=Description}
-Select dimension field values; supports arrays
+Selects the value of the dimension field in the data item; arrays are supported
 
 :::
 
@@ -1190,10 +1177,9 @@ Select dimension field values; supports arrays
 :::note{title=Description}
 Dynamic filter execution result (runtime field)
 
-Written during the prepare() phase; read-only at runtime
+Written during prepare(); read-only at runtime
 
 :::
-
 
 ##### success
 
@@ -1207,18 +1193,19 @@ Written during the prepare() phase; read-only at runtime
 
 **Type:** `string | undefined`
 
+
 ### labelLayout
 
 **Type:** `"arc" | "labelLine" | "edge" | undefined`
 
 :::note{title=Description}
-Label layout mode; only effective for Pie and Donut charts when labelPosition is set to outside
+Label layout mode, only effective for Pie and Donut charts when `labelPosition` is `outside`.
 
-\- arc: Layout labels along the arc
+\- arc: Layout labels along an arc.
 
-\- labelLine: Labels are aligned at both ends, connected to sector segments via leader lines
+\- labelLine: Labels are aligned at both ends, connected to sector primitives via leader lines.
 
-\- edge: Labels are aligned at both ends, connected to sector segments via leader lines, and positioned close to the edges of the chart
+\- edge: Labels are aligned at both ends, connected to sector primitives via leader lines, and placed close to the edges of the chart.
 
 :::
 
@@ -1228,11 +1215,11 @@ Label layout mode; only effective for Pie and Donut charts when labelPosition is
 **Type:** `Legend | undefined`
 
 :::note{title=Description}
-legend
+Legend
 
 
 
-Legend configuration, used to define the chart's legend, including its position, format, style, etc.
+Legend configuration; used to define the chart legend, including its position, format, style, etc.
 
 :::
 
@@ -1242,7 +1229,7 @@ Legend configuration, used to define the chart's legend, including its position,
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether the legend function is enabled
+Whether the legend feature is enabled
 
 :::
 
@@ -1275,7 +1262,7 @@ border: true
 **Type:** `string | undefined`
 
 :::note{title=Description}
-legendfontColor
+Legend font color
 
 :::
 
@@ -1284,7 +1271,7 @@ legendfontColor
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Pagination icon color
+Pager icon color
 
 :::
 
@@ -1293,7 +1280,7 @@ Pagination icon color
 **Type:** `string | undefined`
 
 :::note{title=Description}
-Pagination icon disabled color
+Pager icon disabled color
 
 :::
 
@@ -1316,7 +1303,7 @@ labelFontSize: 10
 **Type:** `string | undefined`
 
 :::note{title=Description}
-legendfontColor
+Legend font color
 
 :::
 
@@ -1372,11 +1359,11 @@ position: 'rightTop'
 **Type:** `number | undefined`
 
 :::note{title=Description}
-Maximum number of columns or rows for the legend when many items are present
+Maximum number of columns or rows for the legend when many items exist.
 
-If the position is horizontal (bottom, top, etc.), maxSize controls the number of columns displayed
+If the position is horizontal (bottom, bottomLeft, bottomRight, bl, br, top, topLeft, topRight, tl, tr), maxSize controls the number of displayed columns.
 
-If the position is vertical (left, right, etc.), maxSize controls the number of rows displayed
+If the position is vertical (left, leftTop, leftBottom, lt, lb, right, rightTop, rightBottom, rt, rb), maxSize controls the number of displayed rows.
 
 :::
 
@@ -1396,11 +1383,11 @@ maxSize: 2
 **Type:** `Tooltip | undefined`
 
 :::note{title=Description}
-tooltips
+Tooltips
 
 
 
-Tooltip configuration, used to define the chart's tooltips, including their position, format, style, etc.
+Tooltip configuration; used to define chart tooltips, including their position, format, style, etc.
 
 :::
 
@@ -1410,7 +1397,7 @@ Tooltip configuration, used to define the chart's tooltips, including their posi
 **Type:** `false | true`
 
 :::note{title=Description}
-Whether tooltips are enabled
+Whether the tooltips feature is enabled
 
 :::
 
@@ -1420,11 +1407,11 @@ Whether tooltips are enabled
 **Type:** `Brush | undefined`
 
 :::note{title=Description}
-Brush
+Brush selection
 
 
 
-Brush configuration, used to enable/disable brush selection capabilities
+Brush configuration; used to enable/disable brush selection capabilities.
 
 
 
@@ -1451,15 +1438,15 @@ Brush type
 
 
 
-Defines the shape and direction of the brush selection
+Defines the shape and direction of the selection box.
 
-\- `rect`: Rectangular selection, allowing selection in both X and Y axis directions simultaneously
+\- `rect`: Rectangular selection; selection can be made in both X and Y directions simultaneously.
 
-\- `polygon`: Polygonal selection, allowing selection by drawing an arbitrary polygon through multiple points
+\- `polygon`: Polygon selection; perform selection by clicking multiple points to draw an arbitrary polygon.
 
-\- `x`: X-axis selection, restricting selection to the X-axis direction while the Y-axis remains unconstrained
+\- `x`: X-axis selection; selection only in the X direction, with no limits in the Y direction.
 
-\- `y`: Y-axis selection, restricting selection to the Y-axis direction while the X-axis remains unconstrained
+\- `y`: Y-axis selection; selection only in the Y direction, with no limits in the X direction.
 
 :::
 
@@ -1468,15 +1455,15 @@ Defines the shape and direction of the brush selection
 **Type:** `"single" | "multiple" | undefined`
 
 :::note{title=Description}
-Brush mode; single or multiple selection
+Brush selection mode: single or multiple.
 
 
 
-Defines the brush mode
+Defines the selection mode.
 
-\- `single`: Single mode, where only one brush selection can exist at a time
+\- `single`: Single selection mode; only one selection box can exist at a time.
 
-\- `multiple`: Multiple mode, where multiple brush selections can coexist simultaneously
+\- `multiple`: Multiple selection mode; multiple selection boxes can exist simultaneously.
 
 :::
 
@@ -1485,7 +1472,7 @@ Defines the brush mode
 **Type:** `boolean | undefined`
 
 :::note{title=Description}
-Whether to clear the selection once dragging ends
+Whether to clear the selection box after the brush selection ends
 
 :::
 
@@ -1494,11 +1481,11 @@ Whether to clear the selection once dragging ends
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style for selected data
+Style for selected data items
 
 
 
-Defines the style for selected data items
+Defines the style of the selected data points.
 
 :::
 
@@ -1512,7 +1499,7 @@ Opacity
 
 
 
-Opacity of selected data items, range: 0-1
+Opacity of the selected data points, ranging from 0 to 1
 
 :::
 
@@ -1539,11 +1526,11 @@ Stroke width
 **Type:** `{ opacity?: number; stroke?: string; lineWidth?: number; } | undefined`
 
 :::note{title=Description}
-Style for unselected data
+Style for unselected data items
 
 
 
-Defines the style for data items outside the selection
+Defines the style of the unselected data points.
 
 :::
 
@@ -1557,7 +1544,7 @@ Opacity
 
 
 
-Opacity of unselected data items, range: 0-1
+Opacity of unselected data points, ranging from 0 to 1
 
 :::
 
@@ -1839,9 +1826,9 @@ Atmosphere animation color
 **Type:** `Theme | undefined`
 
 :::note{title=Description}
-Chart theme; themes have lower priority and include common configurations shared across all chart types, as well as specific configurations for individual chart categories
+Chart theme. Theme is a low-priority configuration that includes common settings shared across all chart types and specific settings for a single chart type.
 
-Built-in light and dark themes; users can define custom themes via the Builder
+Built-in light and dark themes; users can customize themes via the Builder.
 
 
 
@@ -1876,10 +1863,10 @@ Built-in light and dark themes; new themes can be customized via registerTheme.
 **Type:** `"zh-CN" | "en-US" | "ja-JP" | "de-DE" | "id-ID" | "fr-FR" | "ko-KR" | "vi-VN" | undefined`
 
 :::note{title=Description}
-Language
+Locale
 
 
 
-Chart language configuration; supports 'zh-CN' and 'en-US'. Additionally, the intl.setLocale('zh-CN') method can be called to specify the language.
+Chart locale configuration; supports 'zh-CN' and 'en-US'. You can also call intl.setLocale('zh-CN') to set the language.
 
 :::

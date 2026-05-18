@@ -1,7 +1,7 @@
 # Sunburst
 
 :::info{title=Mappage d'encodage}
-Le graphique Sunburst prend en charge les canaux visuels suivants :
+Le graphique sunburst prend en charge les canaux visuels suivants :
 
 `color` : canal de couleur, prend en charge `plusieurs dimensions` ou `une mesure`
 
@@ -12,7 +12,7 @@ Le graphique Sunburst prend en charge les canaux visuels suivants :
 :::
 
 :::note{title=Description}
-Le graphique Sunburst sert à afficher des données hiérarchiques, la taille de chaque secteur représentant sa valeur numérique.
+Le graphique sunburst sert à afficher des données hiérarchiques, la taille de chaque secteur représentant sa valeur numérique.
 
 Scénarios adaptés :
 
@@ -37,11 +37,11 @@ Exigences de données :
 **Type:** `"sunburst"`
 
 :::note{title=Description}
-Graphique Sunburst
+Graphique sunburst
 
 
 
-Graphique Sunburst affichant les relations proportionnelles des données hiérarchiques.
+Graphique sunburst affichant les relations proportionnelles des données hiérarchiques.
 
 :::
 
@@ -75,12 +75,11 @@ Jeu de données agrégé conforme aux spécifications TidyData, utilisé pour d�
 **Type:** `HierarchyDimension[] | undefined`
 
 :::note{title=Description}
-Dimensions
+Champs de dimension
 
 
 
 Configuration des dimensions utilisée pour définir la structure hiérarchique des données.
-
 :::
 
 **Exemple**
@@ -236,7 +235,7 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -251,7 +250,7 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -371,7 +370,7 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -386,7 +385,7 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -552,7 +551,7 @@ Valeur de pagination actuelle ; spécifie la valeur utilisée pour déterminer l
 
 ## backgroundColor
 
-**Type:** `BackgroundCouleur`
+**Type:** `BackgroundColor`
 
 :::note{title=Description}
 Couleur d'arrière-plan du graphique
@@ -566,7 +565,7 @@ La couleur d'arrière-plan peut être une chaîne de couleur (par ex. 'red', 'bl
 
 ## color
 
-**Type:** `Couleur | undefined`
+**Type:** `Color | undefined`
 
 :::note{title=Description}
 Couleur
@@ -644,14 +643,14 @@ Configuration des couleurs positives/négatives ; définit la couleur des valeur
 
 ## label
 
-**Type:** `Étiquette | undefined`
+**Type:** `Label | undefined`
 
 :::note{title=Description}
 Étiquette
 
 
 
-Configuration des étiquettes pour définir les étiquettes de données du graphique, y compris leur position, format et style.
+Configuration des étiquettes pour définir les étiquettes de données du graphique, y compris leur position, leur format et leur apparence.
 
 :::
 
@@ -727,7 +726,7 @@ Indique si les valeurs d'étiquette sont formatées automatiquement ; lorsque au
 **Type:** `NumFormat | undefined`
 
 :::note{title=Description}
-Étiquette value format configuration; merged with the `format` in `measure`, where `measure`'s `format` has higher priority. numFormat priority is lower than autoFormat
+Configuration du format des valeurs d’étiquette ; fusionnée avec `format` dans `measure`, où le `format` de `measure` a une priorité plus élevée. La priorité de numFormat est inférieure à autoFormat
 
 :::
 
@@ -751,7 +750,7 @@ Ratio de format numérique, ne peut pas être 0
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -766,7 +765,7 @@ Symbole de format numérique, par ex. %, ‰
 :::
 
 **Exemple**
-\- 100000 est converti en 10W, ratio:10000, symbol:"W"
+\- 100000 est converti en 10万, ratio:10000, symbol:"万"
 \- 100000 est converti en 10K, ratio:1000, symbol:"K"
 
 
@@ -876,7 +875,7 @@ Mode d'arrondi du formatage numérique, utilise Intl.NumberFormat du navigateur 
 **Type:** `string | number | undefined`
 
 :::note{title=Description}
-Étiquette font weight
+Graisse de police de l’étiquette
 
 :::
 
@@ -1187,7 +1186,7 @@ Infobulles
 
 
 
-Configuration des infobulles, utilisée pour définir les infobulles du graphique, y compris leur position, format, style, etc.
+Configuration des infobulles, utilisée pour définir les infobulles du graphique, y compris leur position, leur format, leur apparence, etc.
 
 :::
 
@@ -1204,7 +1203,7 @@ Indique si les infobulles sont activées
 
 ## theme
 
-**Type:** `Thème | undefined`
+**Type:** `Theme | undefined`
 
 :::note{title=Description}
 Thème du graphique ; les thèmes ont une priorité plus faible et incluent les configurations communes à tous les types de graphiques ainsi que les configurations propres à chaque catégorie
