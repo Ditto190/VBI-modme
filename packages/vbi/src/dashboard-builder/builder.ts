@@ -1,15 +1,17 @@
 import type { VBIDashboardBuilderInterface, VBIDashboardDSL } from 'src/types'
 import { VBIDashboardDefaultBreakpoints } from 'src/types/dashboardDSL/breakpoint'
 import { createEmptyDashboardLayout } from 'src/vbi/create-empty-dashboard'
+import { getOrCreateDashboardWidgets } from 'src/vbi/from/dashboard-widget-y-map'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 import * as Y from 'yjs'
-import { UndoManager } from './features'
+import { DashboardChartCollectionBuilder, UndoManager } from './features'
 import { applyUpdateToDoc, buildVBIDashboardDSL, encodeDocStateAsUpdate, isEmptyVBIDashboardDSL } from './modules'
 
 export class VBIDashboardBuilder implements VBIDashboardBuilderInterface {
   public doc: Y.Doc
   public dsl: Y.Map<any>
   public undoManager: UndoManager
+  public chart: DashboardChartCollectionBuilder
 
   constructor(doc: Y.Doc, dsl?: Y.Map<any>) {
     this.doc = doc
@@ -17,9 +19,7 @@ export class VBIDashboardBuilder implements VBIDashboardBuilderInterface {
 
     doc.transact(() => {
       ensureResourceUUID(this.dsl)
-      if (this.dsl.get('widgets') === undefined) {
-        this.dsl.set('widgets', [])
-      }
+      getOrCreateDashboardWidgets(this.dsl)
       if (this.dsl.get('breakpoints') === undefined) {
         this.dsl.set('breakpoints', { ...VBIDashboardDefaultBreakpoints })
       }
@@ -38,6 +38,7 @@ export class VBIDashboardBuilder implements VBIDashboardBuilderInterface {
     })
 
     this.undoManager = new UndoManager(this.dsl)
+    this.chart = new DashboardChartCollectionBuilder(this, doc, this.dsl)
   }
 
   public applyUpdate = (update: Uint8Array, transactionOrigin?: any) => {

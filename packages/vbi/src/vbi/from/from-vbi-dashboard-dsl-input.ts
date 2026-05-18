@@ -2,6 +2,7 @@ import { VBIDashboardBuilder } from 'src/dashboard-builder/builder'
 import type { VBIDashboardDSLInput } from 'src/types'
 import { zVBIDashboardDSL } from 'src/types/dashboardDSL/dashboard'
 import * as Y from 'yjs'
+import { createDashboardWidgetYMap, getOrCreateDashboardWidgets } from './dashboard-widget-y-map'
 
 export const createDashboardBuilderFromVBIDashboardDSLInput = (dashboard: VBIDashboardDSLInput) => {
   const doc = new Y.Doc()
@@ -10,7 +11,10 @@ export const createDashboardBuilderFromVBIDashboardDSLInput = (dashboard: VBIDas
 
   doc.transact(() => {
     dsl.set('uuid', normalized.uuid)
-    dsl.set('widgets', normalized.widgets)
+    const widgets = getOrCreateDashboardWidgets(dsl)
+    for (const widget of normalized.widgets) {
+      widgets.push([createDashboardWidgetYMap(widget)])
+    }
     dsl.set('breakpoints', normalized.breakpoints)
     dsl.set('layout', normalized.layout)
     dsl.set('meta', normalized.meta)
