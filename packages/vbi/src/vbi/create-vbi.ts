@@ -1,25 +1,14 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
-import type {
-  VBIChartBuilderOptions,
-  VBIChartDSLInput,
-  VBIDashboardDSLInput,
-  VBIInsightDSLInput,
-  VBIReportBuilderOptions,
-  VBIReportDSLInput,
-} from 'src/types'
-import { createEmptyChart } from './create-empty-chart'
-import { createEmptyDashboard } from './create-empty-dashboard'
-import { createEmptyInsight } from './create-empty-insight'
-import { createEmptyReport } from './create-empty-report'
-import { createEmptyReportPage } from './create-empty-report-page'
+import type { VBIChartBuilderOptions } from 'src/types'
 import {
-  createChartBuilderFromVBIChartDSLInput,
-  createDashboardBuilderFromVBIDashboardDSLInput,
-  createInsightBuilderFromVBIInsightDSLInput,
-  createReportBuilderFromVBIReportDSLInput,
-} from './from'
-import { mergeBuilderOptions, mergeReportBuilderOptions } from './merge-builder-options'
+  createVBIChartNamespace,
+  createVBIConnectorNamespace,
+  createVBIDashboardNamespace,
+  createVBIInsightNamespace,
+  createVBIReportNamespace,
+  createVBIResourceNamespace,
+} from './namespaces'
 import { createVBIResourceRegistry } from './resources'
 import type { VBIInstance } from './types'
 
@@ -32,45 +21,19 @@ export function createVBI<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBIS
 ) {
   const resourceRegistry = createVBIResourceRegistry<TQueryDSL, TSeedDSL>()
 
-  const createChart = (vbi: VBIChartDSLInput, builderOptions?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>) => {
-    const options = mergeBuilderOptions(defaultBuilderOptions, builderOptions)
-    const builder = createChartBuilderFromVBIChartDSLInput(vbi, options)
-    resourceRegistry.charts.registerBuilder(builder.getUUID(), builder)
-    return builder
-  }
-  const createInsight = (insight: VBIInsightDSLInput) => {
-    const builder = createInsightBuilderFromVBIInsightDSLInput(insight)
-    resourceRegistry.insights.registerBuilder(builder.getUUID(), builder)
-    return builder
-  }
-  const createDashboard = (dashboard: VBIDashboardDSLInput) => {
-    return createDashboardBuilderFromVBIDashboardDSLInput(dashboard)
-  }
-  const createReport = (report: VBIReportDSLInput, builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>) => {
-    const options = mergeReportBuilderOptions(defaultBuilderOptions, builderOptions)
-    return createReportBuilderFromVBIReportDSLInput(report, options, resourceRegistry)
-  }
-
   return {
+    connectors: createVBIConnectorNamespace(),
+    resources: createVBIResourceNamespace(resourceRegistry),
+    dashboard: createVBIDashboardNamespace(defaultBuilderOptions, resourceRegistry),
+    report: createVBIReportNamespace(defaultBuilderOptions, resourceRegistry),
+    chart: createVBIChartNamespace(defaultBuilderOptions, resourceRegistry),
+    insight: createVBIInsightNamespace(resourceRegistry),
+
+    /** @deprecated Use `connectors` APIs instead of mutating the connector map directly. */
     connectorMap,
+    /** @deprecated Use `connectors.register(id, connector)` instead. */
     registerConnector,
+    /** @deprecated Use `connectors.get(id)` instead. */
     getConnector,
-    chart: {
-      create: createChart,
-      createEmpty: createEmptyChart,
-    },
-    insight: {
-      create: createInsight,
-      createEmpty: createEmptyInsight,
-    },
-    dashboard: {
-      create: createDashboard,
-      createEmpty: createEmptyDashboard,
-    },
-    report: {
-      create: createReport,
-      createEmpty: createEmptyReport,
-      createEmptyPage: createEmptyReportPage,
-    },
   } satisfies VBIInstance<TQueryDSL, TSeedDSL>
 }

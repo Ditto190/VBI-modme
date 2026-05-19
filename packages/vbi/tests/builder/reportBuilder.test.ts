@@ -125,6 +125,51 @@ describe('VBIReportBuilder', () => {
     })
   })
 
+  test('resources.register hydrates existing DSL references for report snapshots', () => {
+    const LocalVBI = createVBI()
+    const chart = LocalVBI.chart.createEmpty('demo', 'chart-1')
+    const insight = LocalVBI.insight.createEmpty('insight-1')
+    chart.measures.push({
+      id: 'measure-1',
+      field: 'sales',
+      alias: 'Sales',
+      aggregate: { func: 'sum' },
+      encoding: 'yAxis',
+    })
+    insight.content = 'external insight'
+
+    expect(LocalVBI.resources.register({ charts: [chart], insights: [insight] })).toEqual({
+      charts: [chart],
+      insights: [insight],
+    })
+
+    const reportBuilder = LocalVBI.report.create({
+      pages: [
+        {
+          id: 'page-1',
+          title: 'Story One',
+          chartId: 'chart-1',
+          insightId: 'insight-1',
+        },
+      ],
+      version: 0,
+    })
+    const page = reportBuilder.page.get('page-1')
+
+    expect(page?.chart?.build()).toMatchObject({
+      uuid: 'chart-1',
+      measures: [{ field: 'sales' }],
+    })
+    expect(page?.insight?.build()).toMatchObject({
+      uuid: 'insight-1',
+      content: 'external insight',
+    })
+    expect(reportBuilder.snapshot()).toMatchObject({
+      charts: { 'chart-1': { uuid: 'chart-1', measures: [{ field: 'sales' }] } },
+      insights: { 'insight-1': { uuid: 'insight-1', content: 'external insight' } },
+    })
+  })
+
   test('snapshot throws when a referenced resource is missing from registry', () => {
     const reportBuilder = VBI.report.create(VBI.report.createEmpty())
     reportBuilder.page.add('Story One', (page) => page.setChartId('chart-404').setInsightId('insight-404'))

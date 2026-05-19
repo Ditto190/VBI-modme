@@ -5,9 +5,12 @@ export { createEmptyReport } from './create-empty-report'
 export { createEmptyReportPage } from './create-empty-report-page'
 export { createVBI } from './create-vbi'
 export type {
+  VBIInstance,
+  VBIConnectorFactory,
+  VBIConnectorNamespace,
+  VBIResourceNamespace,
   VBIChartNamespace,
   VBIDashboardNamespace,
   VBIInsightNamespace,
-  VBIInstance,
   VBIReportNamespace,
 } from './types'

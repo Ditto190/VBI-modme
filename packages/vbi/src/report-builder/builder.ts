@@ -15,6 +15,11 @@ import { getOrCreateReportPages } from 'src/vbi/from'
 import type { VBIResourceRegistry } from 'src/vbi/resources'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 
+export interface VBIReportBuilderDependencies<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
+  builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>
+  resourceRegistry?: VBIResourceRegistry<TQueryDSL, TSeedDSL>
+}
+
 export class VBIReportBuilder<
   TQueryDSL = DefaultVBIQueryDSL,
   TSeedDSL = DefaultVBISeedDSL,
@@ -23,14 +28,14 @@ export class VBIReportBuilder<
   public dsl: Y.Map<any>
   public undoManager: UndoManager
   public page: ReportPageCollectionBuilder<TQueryDSL, TSeedDSL>
+  private builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>
+  private resourceRegistry?: VBIResourceRegistry<TQueryDSL, TSeedDSL>
 
-  constructor(
-    doc: Y.Doc,
-    private options?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>,
-    private resourceRegistry?: VBIResourceRegistry<TQueryDSL, TSeedDSL>,
-  ) {
+  constructor(doc: Y.Doc, dependencies: VBIReportBuilderDependencies<TQueryDSL, TSeedDSL> = {}) {
     this.doc = doc
     this.dsl = doc.getMap('dsl') as Y.Map<any>
+    this.builderOptions = dependencies.builderOptions
+    this.resourceRegistry = dependencies.resourceRegistry
 
     doc.transact(() => {
       ensureResourceUUID(this.dsl)
@@ -58,7 +63,7 @@ export class VBIReportBuilder<
     if (!this.resourceRegistry || !chartId) {
       return undefined
     }
-    return this.resourceRegistry.charts.resolveBuilder(chartId, this.options?.chart)
+    return this.resourceRegistry.charts.resolveBuilder(chartId, this.builderOptions?.chart)
   }
 
   public getInsightBuilder = (insightId: string): VBIInsightBuilder | undefined => {

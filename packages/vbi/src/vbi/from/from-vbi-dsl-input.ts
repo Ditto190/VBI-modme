@@ -2,7 +2,10 @@ import * as Y from 'yjs'
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIChartDSLInput, VBIChartBuilderOptions } from 'src/types'
 import { VBIChartBuilder } from 'src/chart-builder/builder'
-import { fillVBIChartDSLMap } from './fill-vbi-chart-dsl-map'
+import { ensureHavingGroup } from '../normalize/ensure-having-group'
+import { ensureWhereGroup } from '../normalize/ensure-where-group'
+import { ensureYArray } from '../normalize/ensure-y-array'
+import { setBaseDSLFields } from './set-base-dsl-fields'
 
 export const createChartBuilderFromVBIChartDSLInput = <TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>(
   vbi: VBIChartDSLInput,
@@ -12,7 +15,12 @@ export const createChartBuilderFromVBIChartDSLInput = <TQueryDSL = DefaultVBIQue
   const dsl = doc.getMap('dsl')
 
   doc.transact(() => {
-    fillVBIChartDSLMap(dsl, vbi)
+    dsl.clear()
+    setBaseDSLFields(dsl, vbi)
+    dsl.set('whereFilter', ensureWhereGroup(vbi.whereFilter))
+    dsl.set('havingFilter', ensureHavingGroup(vbi.havingFilter))
+    dsl.set('measures', ensureYArray(vbi.measures, 'field'))
+    dsl.set('dimensions', ensureYArray(vbi.dimensions, 'field'))
   })
 
   return new VBIChartBuilder<TQueryDSL, TSeedDSL>(doc, options, dsl)

@@ -1,0 +1,7 @@
+export type { VBIChartBuilderFactory, VBIChartNamespace } from './chart'
+export type { VBIConnectorFactory, VBIConnectorNamespace } from './connectors'
+export type { VBIDashboardNamespace } from './dashboard'
+export type { VBIInsightNamespace } from './insight'
+export type { VBIReportNamespace } from './report'
+export type { VBIResourceNamespace } from './resources'
+export type { VBIInstance } from './vbi'

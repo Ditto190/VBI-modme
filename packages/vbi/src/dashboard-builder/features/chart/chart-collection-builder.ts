@@ -1,4 +1,5 @@
-import type { VBIDashboardBuilder } from 'src/dashboard-builder/builder'
+import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
+import type { VBIChartBuilder } from 'src/chart-builder/builder'
 import type { VBIDashboardWidget } from 'src/types'
 import { id } from 'src/utils'
 import {
@@ -10,14 +11,26 @@ import * as Y from 'yjs'
 import { mergeWidgetLayoutsIntoDSL } from '../layout-merge'
 import { DashboardChartBuilder } from './chart-builder'
 
-export class DashboardChartCollectionBuilder {
+export interface DashboardChartCollectionDashboardBuilder<
+  TQueryDSL = DefaultVBIQueryDSL,
+  TSeedDSL = DefaultVBISeedDSL,
+> {
+  getChartBuilder: (chartId: string) => VBIChartBuilder<TQueryDSL, TSeedDSL> | undefined
+}
+
+export class DashboardChartCollectionBuilder<
+  TQueryDSL = DefaultVBIQueryDSL,
+  TSeedDSL = DefaultVBISeedDSL,
+  TDashboardBuilder extends DashboardChartCollectionDashboardBuilder<TQueryDSL, TSeedDSL> =
+    DashboardChartCollectionDashboardBuilder<TQueryDSL, TSeedDSL>,
+> {
   constructor(
-    private parent: VBIDashboardBuilder,
     private doc: Y.Doc,
     private dsl: Y.Map<any>,
+    private dashboardBuilder: TDashboardBuilder,
   ) {}
 
-  add(callback: (chart: DashboardChartBuilder) => void): VBIDashboardBuilder {
+  add(callback: (chart: DashboardChartBuilder<TQueryDSL, TSeedDSL>) => void): TDashboardBuilder {
     const widgetId = id.uuid()
     const chartId = id.uuid()
 
@@ -34,7 +47,9 @@ export class DashboardChartCollectionBuilder {
       widgets.push([widgetMap])
     })
 
-    const builder = new DashboardChartBuilder(widgetMap)
+    const builder = new DashboardChartBuilder<TQueryDSL, TSeedDSL>(widgetMap, {
+      getBuilder: (chartId) => this.dashboardBuilder.getChartBuilder(chartId),
+    })
     callback(builder)
 
     const layouts = builder.getLayouts()
@@ -52,10 +67,10 @@ export class DashboardChartCollectionBuilder {
       mergeWidgetLayoutsIntoDSL(this.dsl, widgetId, layouts)
     })
 
-    return this.parent
+    return this.dashboardBuilder
   }
 
-  update(widgetId: string, callback: (chart: DashboardChartBuilder) => void): VBIDashboardBuilder {
+  update(widgetId: string, callback: (chart: DashboardChartBuilder<TQueryDSL, TSeedDSL>) => void): TDashboardBuilder {
     this.doc.transact(() => {
       const builder = this.get(widgetId)
       if (!builder) {
@@ -68,10 +83,10 @@ export class DashboardChartCollectionBuilder {
         mergeWidgetLayoutsIntoDSL(this.dsl, widgetId, layouts)
       }
     })
-    return this.parent
+    return this.dashboardBuilder
   }
 
-  remove(widgetId: string): VBIDashboardBuilder {
+  remove(widgetId: string): TDashboardBuilder {
     this.doc.transact(() => {
       const widgets = getOrCreateDashboardWidgets(this.dsl)
       const index = locateDashboardWidgetIndexById(widgets, widgetId)
@@ -80,28 +95,37 @@ export class DashboardChartCollectionBuilder {
       }
       removeDashboardWidgetLayouts(this.dsl, widgetId)
     })
-    return this.parent
+    return this.dashboardBuilder
   }
 
-  get(widgetId: string): DashboardChartBuilder | undefined {
-    const widgets = getOrCreateDashboardWidgets(this.dsl)
-    const index = locateDashboardWidgetIndexById(widgets, widgetId)
-    if (index === -1) {
-      return undefined
-    }
-    const widget = widgets.get(index)
-    if (widget.get('type') !== 'chart') {
-      return undefined
-    }
-    return new DashboardChartBuilder(widget)
+  get(widgetId: string): DashboardChartBuilder<TQueryDSL, TSeedDSL> | undefined {
+    return this.find(widgetId)
   }
 
-  findAll(): DashboardChartBuilder[] {
+  find(id: string): DashboardChartBuilder<TQueryDSL, TSeedDSL> | undefined {
     const widgets = getOrCreateDashboardWidgets(this.dsl)
-    const result: DashboardChartBuilder[] = []
+    for (let index = 0; index < widgets.length; index += 1) {
+      const widget = widgets.get(index)
+      const isTargetChart = widget.get('type') === 'chart' && (widget.get('id') === id || widget.get('chartId') === id)
+      if (isTargetChart) {
+        return new DashboardChartBuilder<TQueryDSL, TSeedDSL>(widget, {
+          getBuilder: (chartId) => this.dashboardBuilder.getChartBuilder(chartId),
+        })
+      }
+    }
+    return undefined
+  }
+
+  findAll(): DashboardChartBuilder<TQueryDSL, TSeedDSL>[] {
+    const widgets = getOrCreateDashboardWidgets(this.dsl)
+    const result: DashboardChartBuilder<TQueryDSL, TSeedDSL>[] = []
     widgets.forEach((widget) => {
       if (widget.get('type') === 'chart') {
-        result.push(new DashboardChartBuilder(widget))
+        result.push(
+          new DashboardChartBuilder<TQueryDSL, TSeedDSL>(widget, {
+            getBuilder: (chartId) => this.dashboardBuilder.getChartBuilder(chartId),
+          }),
+        )
       }
     })
     return result
