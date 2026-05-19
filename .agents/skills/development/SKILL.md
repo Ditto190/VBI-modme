@@ -10,69 +10,56 @@ description: >
 
 # VBI Development Handbook
 
-This is the repository-level development handbook for VBI. The main file keeps
-only the core principles; load the relevant references only when changing a
-specific package, practice, or software-entropy risk area.
+Repository-level rules for VBI work. Keep this file as the routing layer: use it
+for the non-negotiable principles, then load only the reference that matches the
+package, practice, or entropy risk in front of you.
 
-## Entropy Budget
+## Core Rules
 
-Every change must reduce maintenance cost or at least avoid increasing it.
-Before editing, complete the following:
+- Work from the owner and source of truth: DSL, Builder, Provider API, generator,
+  example JSON, or local utility.
+- Reduce maintenance cost. Prefer deletion, simplification, extraction, or moving
+  ownership over adding compatibility layers.
+- Use real needs to drive abstraction, deletion to fight entropy, and naming and
+  boundaries to make code explain itself. See
+  `references/software-entropy.md#optimization-habits`.
+- Builder owns DSL mutation. UI, CLI, agent, app, and practice code should use
+  Builder or public package APIs instead of rebuilding internals.
+- Generated artifacts are outputs, not primary fixes. Change the source and
+  regenerate when needed.
+- Do not cross ownership boundaries casually: packages must not depend on apps,
+  and practices must not import another practice's private `src/*`.
+- When deleting or renaming, clean imports, calls, types, comments, tests, docs,
+  generated references, and old names in the same change.
 
-1. Read the relevant code and confirm ownership.
-2. Explicitly list any code smells found: duplicated code, long functions, large
-   files, dead exports, tight coupling, stale comments, generated files, legacy
-   compatibility aliases, shotgun edits, and temporary fields.
-3. Choose the smallest entropy-reducing action: delete, simplify, extract, move
-   ownership, or update the source of truth and regenerate.
-4. When deleting, also clean downstream references: imports, calls, types,
-   comments, tests, documentation, and generated artifacts.
+## Ownership Map
 
-Prefer deleting unused paths over keeping optional branches. Do not leave
-commented-out code behind. Do not add compatibility aliases without a clear
-migration reason.
-
-## Repository Ownership
-
-Unless a package script requires otherwise, run commands from the repository root.
-
-- `packages/vbi`: VBIChartDSL, Builder, and collaborative state.
-- `packages/vquery`: VQueryDSL-to-SQL and query execution.
-- `packages/vseed`: VSeedDSL-to-VChart/VTable specs.
+- `packages/vbi`: VBIChartDSL, Builder, dashboard/report/insight state, and
+  collaborative editing.
+- `packages/vquery`: QueryDSL-to-SQL and query execution.
+- `packages/vseed`: VSeed examples, lowering, and rendering specs.
 - `packages/vbi-agent`: Builder Agent runtime and tool protocol.
-- `packages/vbi-react`: React integration package.
-- `apps/*`: Product applications, official website, backend, provider, and CLI.
-- `practices/*`: Independent practice example applications.
+- `packages/vbi-react`: React integration.
+- `apps/*`: product applications, docs website, backend, provider, and CLI.
+- `practices/*`: independent practice examples. Treat
+  `practices/vbi-react-starter` as the `@visactor/vbi-react` integration starter,
+  separate from the self-contained practice apps.
 
-If a change crosses multiple ownership boundaries, first decide whether the
-boundary is wrong. Platform apps consume public package APIs; packages should not
-know app, provider, page, or CLI implementation details.
-
-## Sources of Truth
-
-- VBIChartDSL, VQueryDSL, and VSeedDSL drive core behavior.
-- Provider owns platform resource access and Builder creation.
-- Builder owns DSL mutation. UI, CLI, and agent layers should call Builder or
-  public package APIs instead of hand-writing internal DSL mutation logic.
-- Modify the source module first. Derived documentation, tests, and build
-  artifacts must be updated through the owning generator.
-- Do not use hand-edited generated files as the primary fix.
-- Keep each practice independent: do not import `src/*` from another practice.
-- Use public package APIs or local abstractions instead of reaching into
-  implementation details.
+Run repository-level commands from the repo root unless a package script requires
+otherwise.
 
 ## References
 
-Load only relevant references:
+Load only the relevant reference:
 
-- `references/software-entropy.md`: Entropy audit workflow, VBI-specific code
-  smells, and the pre-edit checklist.
+- `references/software-entropy.md`: maintainability, refactoring, cleanup,
+  deletion, generated-surface control, and optimization habits.
 - `references/VBI.md`: `packages/vbi`, VBI DSL, Builder/sub-builder design,
   headless logic boundaries, and TDD expectations.
-- `references/website.md`: `apps/website`, Rspress 2 documentation, generated
-  API/example docs, and multilingual documentation synchronization.
+- `references/website.md`: `apps/website`, Rspress docs, generated API/example
+  docs, and multilingual documentation synchronization.
 - `references/vquery.md`: `packages/vquery`, QueryDSL-to-SQL, DuckDB execution,
-  example-driven tests, and 100% coverage expectations.
+  example-driven tests, and coverage expectations.
 - `references/vseed.md`: `packages/vseed`, VSeed examples, and generated VSeed
   documentation.
 - `references/practice-minimalist.md`: `practices/minimalist`.
@@ -80,25 +67,17 @@ Load only relevant references:
 - `references/practice-streamlined.md`: `practices/streamlined`.
 - `references/practice-professional.md`: `practices/professional`.
 
-`practices/vbi-react-starter` is the `@visactor/vbi-react` package integration
-starter. Treat it separately from the four self-contained practice apps.
-
 ## Validation
 
-Repository-level gates after code changes:
-
-```bash
-pnpm run lint:check
-pnpm run typecheck
-```
-
-When scripts exist in the relevant ownership scope, also run focused validation:
+Prefer the narrowest proving command first, then repository gates when practical:
 
 ```bash
 pnpm --filter <package-name> run test
 pnpm --filter <package-name> run lint
 pnpm --filter <package-name> run typecheck
+pnpm run lint:check
+pnpm run typecheck
 ```
 
-If a change touches generated artifacts, run the generator first, then inspect
-the generated diff. Clearly report any required validation that could not be run.
+If generated artifacts are affected, run the generator first and inspect the
+generated diff. Report any validation that could not run and why.
