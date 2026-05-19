@@ -143,7 +143,7 @@ async function ensureDemoDataLoaded(): Promise<void> {
 
 export function createLocalConnector(connectorId: string): string {
   const vquery = new VQuery()
-  VBI.registerConnector(connectorId, async () => ({
+  VBI.connectors.register(connectorId, async () => ({
     discoverSchema: async () => {
       if (localSchema) return localSchema
       return localData.length === 0 ? [] : inferSchema(localData)

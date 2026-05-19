@@ -34,7 +34,7 @@ export const registerDemoConnector = () => {
   }
   registered = true
 
-  VBI.registerConnector(DEMO_CONNECTOR_ID, async () => {
+  VBI.connectors.register(DEMO_CONNECTOR_ID, async () => {
     const { VQuery } = await import('@visactor/vquery')
     const vquery = new VQuery()
 

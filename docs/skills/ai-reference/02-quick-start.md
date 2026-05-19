@@ -4,7 +4,7 @@
 
 ## 2.1 Note: Core VBI APIs Are Exported from the Main Entry
 
-`@visactor/vbi` now exports core APIs from the main entry, including `VBI`, `createVBI`, `VBIChartBuilder`, `VBI.registerConnector()`, `VBI.chart.create()`, and `VBI.chart.createEmpty()`.
+`@visactor/vbi` now exports core APIs from the main entry, including `VBI`, `createVBI`, `VBIChartBuilder`, `VBI.connectors.register()`, `VBI.chart.create()`, and `VBI.chart.createEmpty()`.
 
 **Recommended usage**: Even though the main entry can be used directly, prefer the target practice's own connector/bootstrap module. Connector registration, the default builder, and local data wiring are usually wrapped there.
 
@@ -21,7 +21,7 @@ import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } fro
 const connectorId = 'demo'
 
 // Register the Connector once during module initialization.
-VBI.registerConnector(connectorId, async () => {
+VBI.connectors.register(connectorId, async () => {
   const vquery = new VQuery()
 
   return {

@@ -4,13 +4,13 @@
 
 ## 7.1 Register a Connector
 
-> `VBI.registerConnector()` is available from the `@visactor/vbi` main entry. In real projects, still prefer the target practice's connector/bootstrap module, such as standard's `practices/standard/src/utils/localConnector.ts`.
+> `VBI.connectors.register()` is available from the `@visactor/vbi` main entry. In real projects, still prefer the target practice's connector/bootstrap module, such as standard's `practices/standard/src/utils/localConnector.ts`.
 
 ```ts
 // ✅ Can be used directly from the main entry.
 import { VBI } from '@visactor/vbi';
 
-VBI.registerConnector('my-connector-id', async () => {
+VBI.connectors.register('my-connector-id', async () => {
   return {
     discoverSchema: async () => [...],
     query: async ({ queryDSL, schema, connectorId, signal }) => {
@@ -50,7 +50,7 @@ import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } fro
 export const registerDemoConnector = () => {
   const vquery = new VQuery()
 
-  VBI.registerConnector('demo', async () => {
+  VBI.connectors.register('demo', async () => {
     return {
       discoverSchema: async () => [
         { name: 'order_date', type: 'date' },

@@ -23,7 +23,7 @@ export const connectorId = 'demo'
 export const registerDemoConnector = () => {
   const vquery = new VQuery()
 
-  VBI.registerConnector(connectorId, async () => {
+  VBI.connectors.register(connectorId, async () => {
     return {
       discoverSchema: async () => {
         return [
@@ -98,7 +98,7 @@ User configuration (dimensions/measures/filters)
 To connect a real data source, replace the `discoverSchema` and `query` implementations with real APIs:
 
 ```ts
-VBI.registerConnector('my-api', async () => {
+VBI.connectors.register('my-api', async () => {
   return {
     discoverSchema: async () => {
       const res = await fetch('/api/schema')
@@ -119,7 +119,7 @@ VBI.registerConnector('my-api', async () => {
 
 - **Each practice implements** its own connector/bootstrap module independently, such as `demoConnector.ts` or `localConnector.ts`; do not import across practices.
 - `registerXxxConnector()` is called automatically when the module loads to register the Connector.
-- `VBI.registerConnector` is safe to call at module scope because it has internal idempotency protection.
+- `VBI.connectors.register` is safe to call at module scope because it has internal idempotency protection.
 - `connectorId` must match the `connectorId` in the DSL.
 - `createDefaultBuilder()` can be passed into `VBIStoreProvider` and supports multiple builder instances.
 - **RawDatasetSource.rawDataset type constraint**: when using `type: 'json'`, `rawDataset` must be `TidyDatum[]`, namely `Record<string, number | string | null | boolean | undefined>[]`. Nested objects are not supported and must be converted with `toTidyDatum()`. See section 5 of [19-ui-considerations.md](./19-ui-considerations.md).

@@ -51,7 +51,7 @@ const connector: VBIConnector = {
   }),
 }
 
-VBI.registerConnector(connectorId, connector)
+VBI.connectors.register(connectorId, connector)
 
 export function App() {
   const builder = useMemo(

@@ -95,7 +95,7 @@ import {
 import { ChartRenderer, ChartTypeSelector, FieldPanel, BuilderLayout } from '@visactor/vbi-react'
 ```
 
-> **About the @visactor/vbi main entry**: The current `@visactor/vbi` package main entry already exports core APIs such as `VBI`, `VBIChartBuilder`, `registerConnector`, and `createEmptyChart`. Even so, each practice still **implements its own** connector/bootstrap module, such as `demoConnector.ts` or `localConnector.ts`, to wrap connector registration and default builder initialization. When AI operates on a specific practice, it should still prefer that practice's own implementation. See [10-feature-status.md](./10-feature-status.md).
+> **About the @visactor/vbi main entry**: The current `@visactor/vbi` package main entry already exports core APIs such as `VBI`, `VBIChartBuilder`, `VBI.connectors`, and `createEmptyChart`. Even so, each practice still **implements its own** connector/bootstrap module, such as `demoConnector.ts` or `localConnector.ts`, to wrap connector registration and default builder initialization. When AI operates on a specific practice, it should still prefer that practice's own implementation. See [10-feature-status.md](./10-feature-status.md).
 
 > **About the vbi-react package**: Only `vbi-react-starter` uses the hooks and components provided by `@visactor/vbi-react`. Other practices (minimalist/streamlined/professional/standard) **independently implement** their own hooks and model, and do not depend on `@visactor/vbi-react`.
 

@@ -10,7 +10,7 @@ export const registerDemoConnector = () => {
   registered = true
 
   const vquery = new VQuery()
-  VBI.registerConnector(DEMO_CONNECTOR_ID, async () => {
+  VBI.connectors.register(DEMO_CONNECTOR_ID, async () => {
     return {
       discoverSchema: async () => {
         return [

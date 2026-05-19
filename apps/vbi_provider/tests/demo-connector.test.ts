@@ -5,11 +5,11 @@ import type { VQueryDSL } from '@visactor/vquery'
 
 describe('demo connector', () => {
   test('registers the shared provider demo connector', async () => {
-    VBI.connectorMap.delete(DEMO_CONNECTOR_ID)
+    VBI.connectors.unregister(DEMO_CONNECTOR_ID)
 
     expect(registerDemoConnector()).toBe(DEMO_CONNECTOR_ID)
 
-    const connector = await VBI.getConnector(DEMO_CONNECTOR_ID)
+    const connector = await VBI.connectors.get(DEMO_CONNECTOR_ID)
     await expect(connector.discoverSchema()).resolves.toEqual(
       expect.arrayContaining([
         { name: 'order_date', type: 'date' },
@@ -21,10 +21,10 @@ describe('demo connector', () => {
   })
 
   test('queries the bundled supermarket csv', async () => {
-    VBI.connectorMap.delete(DEMO_CONNECTOR_ID)
+    VBI.connectors.unregister(DEMO_CONNECTOR_ID)
     registerDemoConnector()
 
-    const connector = await VBI.getConnector(DEMO_CONNECTOR_ID)
+    const connector = await VBI.connectors.get(DEMO_CONNECTOR_ID)
     const schema = await connector.discoverSchema()
     const queryDSL: VQueryDSL = {
       select: [

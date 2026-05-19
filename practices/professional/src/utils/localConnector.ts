@@ -50,7 +50,7 @@ export const createLocalConnector = (connectorId = CONNECTOR_ID) => {
   connectorRegistered = true
   const vquery = new VQuery()
 
-  VBI.registerConnector(connectorId, async () => ({
+  VBI.connectors.register(connectorId, async () => ({
     discoverSchema: async () => localSchema ?? (localData.length ? inferSchema(localData) : []),
     query: async ({ queryDSL, schema }) => {
       if ((await vquery.hasDataset(connectorId)) && datasetNeedsRefresh) await vquery.dropDataset(connectorId)

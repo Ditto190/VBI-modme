@@ -110,7 +110,7 @@ function normalizeDataset(queryDSL: VQueryDSL<Record<string, QueryValue>>, datas
 export function createLocalConnector(connectorId: string) {
   const vquery = new VQuery()
 
-  VBI.registerConnector(connectorId, async () => ({
+  VBI.connectors.register(connectorId, async () => ({
     discoverSchema: async () => {
       if (localSchema) {
         return localSchema

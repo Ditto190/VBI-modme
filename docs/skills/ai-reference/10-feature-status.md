@@ -16,7 +16,7 @@ The `@visactor/vbi` main entry (`src/index.ts`) already exports the main runtime
 | ---------------------------------------------------- | ----------------------------------- | ------------ |
 | `VBI` namespace / `createVBI()`                      | `src/vbi/create-vbi.ts`             | ✅ Available |
 | `VBIChartBuilder`                                    | `src/chart-builder/builder.ts`      | ✅ Available |
-| `registerConnector` / `getConnector`                 | `src/chart-builder/connector.ts`    | ✅ Available |
+| `VBI.connectors.register` / `VBI.connectors.get`     | `src/vbi/namespaces/connectors.ts`  | ✅ Available |
 | `createEmptyChart` / `VBI.chart.createEmpty()`       | `src/vbi/create-empty-chart.ts`     | ✅ Available |
 | `VBIChartDSL` and all DSL types                      | `src/types/chartDSL/`               | ✅ Available |
 | All Builder types                                    | `src/types/builder/`                | ✅ Available |
