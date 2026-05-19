@@ -18,6 +18,7 @@ const BUILDER_ROOTS = {
   chart: path.resolve(__dirname, '../src/chart-builder'),
   report: path.resolve(__dirname, '../src/report-builder'),
   insight: path.resolve(__dirname, '../src/insight-builder'),
+  dashboard: path.resolve(__dirname, '../src/dashboard-builder'),
 }
 const OUTPUT_DIR = path.resolve(__dirname, '../../../apps/website/docs/zh-CN/vbi/api')
 
@@ -165,6 +166,47 @@ const API_SECTIONS = [
             label: 'reportPage',
             file: 'features/page/page-builder.ts',
             displayName: 'ReportPageBuilder',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'dashboardBuilder',
+    label: 'dashboardBuilder',
+    root: 'dashboard',
+    index: {
+      file: 'builder.ts',
+      displayName: 'VBIDashboardBuilder',
+    },
+    items: [
+      {
+        type: 'dir',
+        name: 'chart',
+        label: 'dashboardBuilder.chart',
+        file: 'features/chart/chart-collection-builder.ts',
+        displayName: 'DashboardChartCollectionBuilder',
+        children: [
+          {
+            name: 'dashboardChart',
+            label: 'dashboardChart',
+            file: 'features/chart/chart-builder.ts',
+            displayName: 'DashboardChartBuilder',
+          },
+        ],
+      },
+      {
+        type: 'dir',
+        name: 'insight',
+        label: 'dashboardBuilder.insight',
+        file: 'features/insight/insight-collection-builder.ts',
+        displayName: 'DashboardInsightCollectionBuilder',
+        children: [
+          {
+            name: 'dashboardInsight',
+            label: 'dashboardInsight',
+            file: 'features/insight/insight-builder.ts',
+            displayName: 'DashboardInsightBuilder',
           },
         ],
       },
@@ -441,7 +483,15 @@ const createMetaDirEntry = (name, label, collapsed = true) => ({
   collapsed,
 })
 
+const isSinglePageSection = (section) => section.items.length === 0
+
 const generateSection = (section) => {
+  if (isSinglePageSection(section)) {
+    writeDoc(path.join(OUTPUT_DIR, `${section.name}.md`), renderBuilderDoc(toDocConfig(section.root, section.index)))
+    console.log(`Generated: ${section.name}.md`)
+    return
+  }
+
   const sectionDir = path.join(OUTPUT_DIR, section.name)
   ensureDir(sectionDir)
 
@@ -493,7 +543,11 @@ function generateDocs() {
 
   writeJson(
     path.join(OUTPUT_DIR, '_meta.json'),
-    API_SECTIONS.map((section) => createMetaDirEntry(section.name, section.label, false)),
+    API_SECTIONS.map((section) =>
+      isSinglePageSection(section)
+        ? createMetaFileEntry(section.name, section.label)
+        : createMetaDirEntry(section.name, section.label, false),
+    ),
   )
   console.log('Generated: api/_meta.json')
 

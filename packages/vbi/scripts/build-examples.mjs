@@ -23,9 +23,8 @@ const ensureDir = (dirPath) => {
   }
 }
 
-const resetDir = (dirPath) => {
+const removeDir = (dirPath) => {
   fs.rmSync(dirPath, { recursive: true, force: true })
-  fs.mkdirSync(dirPath, { recursive: true })
 }
 
 const toMetaFile = (name, label) => ({ type: 'file', name, label })
@@ -124,62 +123,18 @@ function generateBuilderIndexPage(group, locale = DEFAULT_LOCALE) {
   return md
 }
 
-function generateTopIndexPage(groups) {
-  let md = '# VBI 示例\n\n本页面展示 VBI 的各种使用示例。\n\n'
-
-  for (const group of groups) {
-    const total = group.dirs.reduce((sum, dir) => sum + findJsonFilesInDir(path.join(EXAMPLES_DIR, dir)).length, 0)
-    md += `## ${formatBuilderLabel(group.kind)}\n\n`
-    md += `共 ${total} 个示例。\n\n`
-    md += '| 分类 | 数量 |\n| --- | --- |\n'
-    md += group.dirs
-      .map(
-        (dir) =>
-          `| [${formatDirLabel(dir)}](./${group.kind}${shouldRenderBuilderIndexOnly(group) ? '' : `/${dir}`}) | ${findJsonFilesInDir(path.join(EXAMPLES_DIR, dir)).length} |`,
-      )
-      .join('\n')
-    md += '\n\n'
-  }
-
-  return md
-}
-
-function generateTagsPage(groups) {
-  const tagStats = {}
-  let total = 0
-
-  for (const group of groups) {
-    for (const dir of group.dirs) {
-      const files = findJsonFilesInDir(path.join(EXAMPLES_DIR, dir))
-      total += files.length
-      for (const file of files) {
-        for (const tag of parseTags(readJsonFile(file))) {
-          tagStats[tag] = (tagStats[tag] || 0) + 1
-        }
-      }
-    }
-  }
-
-  const entries = Object.entries(tagStats).sort((a, b) => b[1] - a[1])
-  let md = `# 标签\n\n共 ${total} 个示例，${entries.length} 个标签。\n\n`
-  md += '| 标签 | 数量 |\n| --- | --- |\n'
-  md += entries.map(([tag, count]) => `| ${tag} | ${count} |`).join('\n')
-  return md
-}
-
 function writeBuilderDocs(group) {
-  const builderDir = path.join(OUTPUT_DIR, group.kind)
-  ensureDir(builderDir)
-
   if (shouldRenderBuilderIndexOnly(group)) {
     fs.writeFileSync(
-      path.join(builderDir, 'index.mdx'),
+      path.join(OUTPUT_DIR, `${group.kind}.mdx`),
       generateDirDocs(group.dirs[0], DEFAULT_LOCALE, formatBuilderLabel(group.kind)),
     )
-    fs.writeFileSync(path.join(builderDir, '_meta.json'), JSON.stringify([], null, 2))
-    console.log(`Generated: ${group.kind}/index.mdx`)
+    console.log(`Generated: ${group.kind}.mdx`)
     return
   }
+
+  const builderDir = path.join(OUTPUT_DIR, group.kind)
+  ensureDir(builderDir)
 
   fs.writeFileSync(path.join(builderDir, 'index.mdx'), generateBuilderIndexPage(group))
   fs.writeFileSync(
@@ -201,21 +156,23 @@ function writeBuilderDocs(group) {
 function generateDocs() {
   console.log('Building docs from JSON files...')
 
-  resetDir(OUTPUT_DIR)
+  removeDir(OUTPUT_DIR)
+  ensureDir(OUTPUT_DIR)
 
   const groups = groupDirsByBuilder(getActiveDirs())
 
   fs.writeFileSync(
     path.join(OUTPUT_DIR, '_meta.json'),
     JSON.stringify(
-      groups.map((group) => toMetaDir(group.kind, formatBuilderLabel(group.kind))),
+      groups.map((group) =>
+        shouldRenderBuilderIndexOnly(group)
+          ? toMetaFile(group.kind, formatBuilderLabel(group.kind))
+          : toMetaDir(group.kind, formatBuilderLabel(group.kind)),
+      ),
       null,
       2,
     ),
   )
-  fs.writeFileSync(path.join(OUTPUT_DIR, 'index.mdx'), generateTopIndexPage(groups))
-  fs.writeFileSync(path.join(OUTPUT_DIR, 'tags.mdx'), generateTagsPage(groups))
-
   let totalExamples = 0
   for (const group of groups) {
     writeBuilderDocs(group)
