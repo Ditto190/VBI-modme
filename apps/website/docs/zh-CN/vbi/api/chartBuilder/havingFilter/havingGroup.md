@@ -2,8 +2,6 @@
 
 Having 分组构建器，用于配置一组条件的逻辑关系（AND/OR）
 
-## 属性
-
 ## 方法
 
 ### constructor

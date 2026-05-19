@@ -2,8 +2,6 @@
 
 Builder de filtre Where pour ajouter, modifier et supprimer des conditions de niveau ligne. Les filtres Where s'appliquent avant la requête et filtrent les données brutes
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

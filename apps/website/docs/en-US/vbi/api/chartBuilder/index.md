@@ -25,7 +25,7 @@
 **Definition**:
 
 ```typescript
-constructor(doc: Y.Doc, options: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, dsl: Y.Map<any>)
+constructor(doc: Y.Doc, options?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, dsl?: Y.Map<any>)
 ```
 
 **Parameters**:
@@ -33,15 +33,15 @@ constructor(doc: Y.Doc, options: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, ds
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
-| `options` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
-| `dsl` | Y.Map<any> | - |
+| `options?` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
+| `dsl?` | Y.Map<any> | - |
 
 ### applyUpdate
 
 **Definition**:
 
 ```typescript
-applyUpdate(update: Uint8Array, transactionOrigin: any): void
+applyUpdate(update: Uint8Array, transactionOrigin?: any): void
 ```
 
 **Returns**: `void`
@@ -51,14 +51,14 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): void
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
-| `transactionOrigin` | any | - |
+| `transactionOrigin?` | any | - |
 
 ### encodeStateAsUpdate
 
 **Definition**:
 
 ```typescript
-encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
+encodeStateAsUpdate(targetStateVector?: Uint8Array): Uint8Array<ArrayBufferLike>
 ```
 
 **Returns**: `Uint8Array<ArrayBufferLike>`
@@ -67,7 +67,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `targetStateVector` | Uint8Array | - |
+| `targetStateVector?` | Uint8Array | - |
 
 ### getUUID
 
@@ -84,7 +84,7 @@ getUUID(): string
 **Definition**:
 
 ```typescript
-buildVSeed(options: BuildVSeedOptions): Promise<TSeedDSL>
+buildVSeed(options?: BuildVSeedOptions): Promise<TSeedDSL>
 ```
 
 **Returns**: `Promise<TSeedDSL>`
@@ -93,7 +93,7 @@ buildVSeed(options: BuildVSeedOptions): Promise<TSeedDSL>
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `options` = {} | BuildVSeedOptions | - |
+| `options?` = {} | BuildVSeedOptions | - |
 
 ### buildVQuery
 

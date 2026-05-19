@@ -2,8 +2,6 @@
 
 Builder lọc Having dùng để thêm, sửa, xóa điều kiện lọc sau khi nhóm. Lọc Having có hiệu lực sau khi tổng hợp dữ liệu và dùng để lọc kết quả nhóm
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

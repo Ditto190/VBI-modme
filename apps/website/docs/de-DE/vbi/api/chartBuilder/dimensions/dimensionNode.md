@@ -2,8 +2,6 @@
 
 Dimensionsknoten-Builder zur Konfiguration einer einzelnen Dimension
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

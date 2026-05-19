@@ -2,8 +2,6 @@
 
 Builder de filtre Having pour ajouter, modifier et supprimer des conditions après regroupement. Les filtres Having s'appliquent après l'agrégation et filtrent les résultats groupés
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

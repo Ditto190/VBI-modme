@@ -2,8 +2,6 @@
 
 Builder de nœud de filtre Having pour configurer une seule condition Having
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

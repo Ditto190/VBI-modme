@@ -2,8 +2,6 @@
 
 Builder node filter Having untuk mengonfigurasi satu kondisi filter Having
 
-## Properti
-
 ## Metode
 
 ### constructor

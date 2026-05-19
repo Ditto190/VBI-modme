@@ -2,8 +2,6 @@
 
 Builder de nœud de mesure pour configurer une seule mesure
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

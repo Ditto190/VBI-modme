@@ -2,8 +2,6 @@
 
 Builder de thème pour définir et lire le thème courant
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

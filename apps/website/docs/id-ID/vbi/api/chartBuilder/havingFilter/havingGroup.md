@@ -2,8 +2,6 @@
 
 Builder grup Having untuk mengonfigurasi relasi logika (AND/OR) dari sekelompok kondisi
 
-## Properti
-
 ## Metode
 
 ### constructor

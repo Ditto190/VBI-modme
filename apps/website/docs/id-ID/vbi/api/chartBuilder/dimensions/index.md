@@ -2,8 +2,6 @@
 
 Builder dimensi untuk menambah, mengubah, dan menghapus konfigurasi dimensi. Dimensi adalah field kategori dalam data, seperti waktu, wilayah, atau kategori produk
 
-## Properti
-
 ## Metode
 
 ### constructor

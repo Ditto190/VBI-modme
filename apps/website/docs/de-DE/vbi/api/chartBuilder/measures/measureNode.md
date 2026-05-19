@@ -2,8 +2,6 @@
 
 Kennzahlenknoten-Builder zur Konfiguration einer einzelnen Kennzahl
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

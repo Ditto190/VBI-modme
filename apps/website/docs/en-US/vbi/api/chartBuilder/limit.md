@@ -2,8 +2,6 @@
 
 Data limit builder for setting and getting the current limit.
 
-## Properties
-
 ## Methods
 
 ### constructor

@@ -2,8 +2,6 @@
 
 Theme-Builder zum Setzen und Abrufen des aktuellen Themes
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

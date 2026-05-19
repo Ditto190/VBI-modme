@@ -2,8 +2,6 @@
 
 Having filter builder for adding, modifying, and removing post-aggregation filter conditions. Having filters take effect after data aggregation and are used to filter grouped results.
 
-## Properties
-
 ## Methods
 
 ### constructor

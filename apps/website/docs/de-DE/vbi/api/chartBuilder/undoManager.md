@@ -2,8 +2,6 @@
 
 Undo/Redo-Manager mit YJS-basierter Undo- und Redo-Funktionalität, inklusive Stack-Verwaltung und Verlaufslöschung
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor
@@ -77,7 +75,7 @@ Verlauf löschen
 **Definition**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **Rückgabe**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Ob der Undo-Stack gelöscht wird, Standard true |
-| `clearRedoStack` | boolean | - Ob der Redo-Stack gelöscht wird, Standard true |
+| `clearUndoStack?` | boolean | - Ob der Undo-Stack gelöscht wird, Standard true |
+| `clearRedoStack?` | boolean | - Ob der Redo-Stack gelöscht wird, Standard true |

@@ -2,8 +2,6 @@
 
 Having filter node builder for configuring a single Having filter condition.
 
-## Properties
-
 ## Methods
 
 ### constructor

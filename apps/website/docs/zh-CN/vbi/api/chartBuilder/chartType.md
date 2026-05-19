@@ -2,8 +2,6 @@
 
 图表类型构建器，用于切换和获取图表类型。支持表格、柱状图、折线图、饼图、散点图等多种图表类型
 
-## 属性
-
 ## 方法
 
 ### constructor
@@ -86,14 +84,14 @@ getSupportedDimensionEncodings()
 **定义**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **参数**:
 
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
-| `dimensionCount` | number | - 维度数量，默认使用当前 DSL 中的维度数量 |
+| `dimensionCount?` | number | - 维度数量，默认使用当前 DSL 中的维度数量 |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ getSupportedMeasureEncodings()
 **定义**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **参数**:
 
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
-| `measureCount` | number | - 指标数量，默认使用当前 DSL 中的指标数量 |
+| `measureCount?` | number | - 指标数量，默认使用当前 DSL 中的指标数量 |
 
 ### toJSON
 

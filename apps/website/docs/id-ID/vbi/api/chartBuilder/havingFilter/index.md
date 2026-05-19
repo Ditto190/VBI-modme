@@ -2,8 +2,6 @@
 
 Builder filter Having untuk menambah, mengubah, dan menghapus kondisi filter setelah pengelompokan. Filter Having berlaku setelah agregasi data dan digunakan untuk memfilter hasil grup
 
-## Properti
-
 ## Metode
 
 ### constructor

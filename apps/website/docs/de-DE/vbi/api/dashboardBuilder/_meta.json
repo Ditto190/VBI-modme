@@ -1,0 +1,16 @@
+[
+  {
+    "type": "dir",
+    "name": "chart",
+    "label": "dashboardBuilder.chart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "insight",
+    "label": "dashboardBuilder.insight",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

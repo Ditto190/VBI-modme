@@ -2,8 +2,6 @@
 
 Builder node lọc Where, dùng để cấu hình một điều kiện lọc Where
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

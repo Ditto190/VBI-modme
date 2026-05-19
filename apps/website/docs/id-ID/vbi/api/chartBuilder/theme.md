@@ -2,8 +2,6 @@
 
 Builder tema untuk mengatur dan mengambil tema saat ini
 
-## Properti
-
 ## Metode
 
 ### constructor

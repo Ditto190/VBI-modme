@@ -2,8 +2,6 @@
 
 Where-Filter-Builder zum Hinzufügen, Ändern und Entfernen von Filterbedingungen auf Zeilenebene. Where-Filter wirken vor der Datenabfrage und filtern Rohdaten
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

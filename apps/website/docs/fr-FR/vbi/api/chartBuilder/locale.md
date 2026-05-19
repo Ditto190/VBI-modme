@@ -2,8 +2,6 @@
 
 Builder de locale pour définir et lire la locale courante
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

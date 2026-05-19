@@ -2,8 +2,6 @@
 
 Where-Filterknoten-Builder zur Konfiguration einer einzelnen Where-Filterbedingung
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

@@ -2,8 +2,6 @@
 
 Having-Filterknoten-Builder zur Konfiguration einer einzelnen Having-Filterbedingung
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

@@ -2,8 +2,6 @@
 
 Where filter node builder for configuring a single Where filter condition.
 
-## Properties
-
 ## Methods
 
 ### constructor

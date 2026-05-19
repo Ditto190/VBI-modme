@@ -2,8 +2,6 @@
 
 Where-Gruppen-Builder zur Konfiguration der logischen Beziehung (AND/OR) einer Bedingungsgruppe
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

@@ -2,8 +2,6 @@
 
 Manager undo/redo yang menyediakan fungsi undo dan redo berbasis YJS, dengan dukungan manajemen stack dan penghapusan riwayat
 
-## Properti
-
 ## Metode
 
 ### constructor
@@ -77,7 +75,7 @@ Menghapus riwayat
 **Definisi**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **Mengembalikan**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | Parameter | Tipe | Deskripsi |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Apakah menghapus undo stack, default true |
-| `clearRedoStack` | boolean | - Apakah menghapus redo stack, default true |
+| `clearUndoStack?` | boolean | - Apakah menghapus undo stack, default true |
+| `clearRedoStack?` | boolean | - Apakah menghapus redo stack, default true |

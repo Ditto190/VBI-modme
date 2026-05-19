@@ -2,8 +2,6 @@
 
 Builder nhóm Where, dùng để cấu hình quan hệ logic (AND/OR) của một nhóm điều kiện
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

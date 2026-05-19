@@ -2,8 +2,6 @@
 
 Builder locale dùng để thiết lập và lấy locale hiện tại
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

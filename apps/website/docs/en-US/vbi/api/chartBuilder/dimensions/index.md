@@ -2,8 +2,6 @@
 
 Dimension builder for adding, modifying, and removing dimension configuration. Dimensions are the categorical fields in data, such as: time, region, product category.
 
-## Properties
-
 ## Methods
 
 ### constructor

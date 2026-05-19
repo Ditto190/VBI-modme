@@ -2,8 +2,6 @@
 
 Builder node measure dùng để cấu hình một measure
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

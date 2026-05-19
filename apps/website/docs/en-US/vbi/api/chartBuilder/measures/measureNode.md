@@ -2,8 +2,6 @@
 
 Measure node builder for configuring a single measure.
 
-## Properties
-
 ## Methods
 
 ### constructor

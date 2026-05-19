@@ -2,8 +2,6 @@
 
 撤销/重做管理器，提供基于 YJS 的撤销和重做功能，支持栈管理和历史清除操作
 
-## 属性
-
 ## 方法
 
 ### constructor
@@ -77,7 +75,7 @@ canRedo(): boolean
 **定义**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **返回**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - 是否清除撤销栈，默认 true |
-| `clearRedoStack` | boolean | - 是否清除重做栈，默认 true |
+| `clearUndoStack?` | boolean | - 是否清除撤销栈，默认 true |
+| `clearRedoStack?` | boolean | - 是否清除重做栈，默认 true |

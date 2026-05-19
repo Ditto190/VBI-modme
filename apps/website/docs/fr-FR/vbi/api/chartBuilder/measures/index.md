@@ -2,8 +2,6 @@
 
 Builder de mesures pour ajouter, modifier et supprimer la configuration des mesures. Les mesures sont des champs numériques, par exemple les ventes, le profit ou la quantité
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

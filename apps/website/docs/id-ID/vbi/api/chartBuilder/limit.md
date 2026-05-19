@@ -2,8 +2,6 @@
 
 Builder batas data untuk mengatur dan mengambil limit saat ini
 
-## Properti
-
 ## Metode
 
 ### constructor

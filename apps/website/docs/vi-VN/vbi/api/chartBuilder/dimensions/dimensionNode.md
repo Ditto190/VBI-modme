@@ -2,8 +2,6 @@
 
 Builder node dimension dùng để cấu hình một dimension
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

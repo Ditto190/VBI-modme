@@ -2,8 +2,6 @@
 
 Builder measure dùng để thêm, sửa, xóa cấu hình measure. Measure là field số trong dữ liệu, như doanh số, lợi nhuận, số lượng
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

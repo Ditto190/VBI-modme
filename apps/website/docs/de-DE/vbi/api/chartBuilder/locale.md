@@ -2,8 +2,6 @@
 
 Locale-Builder zum Setzen und Abrufen der aktuellen Locale
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

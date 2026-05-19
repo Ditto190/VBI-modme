@@ -2,8 +2,6 @@
 
 Builder giới hạn dữ liệu dùng để thiết lập và lấy limit hiện tại
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

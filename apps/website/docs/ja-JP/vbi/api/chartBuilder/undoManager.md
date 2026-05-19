@@ -2,8 +2,6 @@
 
 Undo/Redo マネージャー。YJS ベースの Undo/Redo 機能を提供し、スタック管理と履歴クリアをサポートします
 
-## プロパティ
-
 ## メソッド
 
 ### constructor
@@ -77,7 +75,7 @@ canRedo(): boolean
 **定義**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **戻り値**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | パラメータ | 型 | 説明 |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Undo スタックをクリアするか。デフォルトは true |
-| `clearRedoStack` | boolean | - Redo スタックをクリアするか。デフォルトは true |
+| `clearUndoStack?` | boolean | - Undo スタックをクリアするか。デフォルトは true |
+| `clearRedoStack?` | boolean | - Redo スタックをクリアするか。デフォルトは true |

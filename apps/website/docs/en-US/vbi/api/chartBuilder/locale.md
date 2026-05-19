@@ -2,8 +2,6 @@
 
 Locale builder for setting and getting the current locale.
 
-## Properties
-
 ## Methods
 
 ### constructor
