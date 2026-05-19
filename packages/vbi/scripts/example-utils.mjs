@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 export const EXAMPLES_DIR = path.resolve(__dirname, '../tests/examples')
 export const MOCK_SYSTEM_TIME = '2026-03-23T00:00:00.000Z'
 export const DEFAULT_LOCALE = 'zh-CN'
-export const BUILDER_ORDER = ['chart', 'insight', 'report']
+export const BUILDER_ORDER = ['chart', 'insight', 'dashboard', 'report']
 
 const DEFAULT_DSL = {
   chart: {
@@ -26,6 +26,30 @@ const DEFAULT_DSL = {
     content: '',
     version: 0,
   },
+  dashboard: {
+    widgets: [],
+    breakpoints: {
+      xxl: 1600,
+      xl: 1200,
+      lg: 996,
+      md: 768,
+      sm: 480,
+      xs: 0,
+    },
+    layout: {
+      xxl: [],
+      xl: [],
+      lg: [],
+      md: [],
+      sm: [],
+      xs: [],
+    },
+    meta: {
+      title: '',
+      theme: 'light',
+    },
+    version: 0,
+  },
   report: {
     pages: [],
     version: 0,
@@ -35,6 +59,7 @@ const DEFAULT_DSL = {
 const BUILDER_TYPES = {
   chart: 'VBIChartBuilder',
   insight: 'VBIInsightBuilder',
+  dashboard: 'VBIDashboardBuilder',
   report: 'VBIReportBuilder',
 }
 
@@ -116,7 +141,7 @@ function toCode(value, indent = 0) {
     .join('\n')
 }
 
-function getReportResources(json) {
+function getResourceDefinitions(json) {
   return {
     charts: json.resources?.charts || [],
     insights: json.resources?.insights || [],
@@ -127,13 +152,13 @@ function shouldBuildReportSnapshot(json) {
   if (typeof json.snapshot === 'boolean') {
     return json.snapshot
   }
-  const resources = getReportResources(json)
+  const resources = getResourceDefinitions(json)
   return resources.charts.length > 0 || resources.insights.length > 0
 }
 
-function renderReportResources(json, indent = 4) {
+function renderResources(json, indent = 4) {
   const prefix = ' '.repeat(indent)
-  const resources = getReportResources(json)
+  const resources = getResourceDefinitions(json)
   const chartLines = resources.charts.map((item, index) => {
     const name = item.name || `chart${index + 1}`
     return `${prefix}    ${name}: LocalVBI.chart.create(${toCode(buildDSL('chart', item.dsl || {}), indent + 6)}),`
@@ -179,7 +204,7 @@ function renderTestBody(json) {
     expect(snapshotDSL).toMatchInlineSnapshot()`
       : ''
     return `    const LocalVBI = createVBI()
-${renderReportResources(json)}
+${renderResources(json)}
     const builder = LocalVBI.report.create(${dslCode})
 
     ${applyBuilderCode}
@@ -187,6 +212,18 @@ ${renderReportResources(json)}
 
     const reportDSL = builder.build()
     expect(reportDSL).toMatchInlineSnapshot()${snapshotAssertion}`
+  }
+
+  if (kind === 'dashboard') {
+    return `    const LocalVBI = createVBI()
+${renderResources(json)}
+    const builder = LocalVBI.dashboard.create(${dslCode})
+
+    ${applyBuilderCode}
+    applyBuilder(builder, resources)
+
+    const dashboardDSL = builder.build()
+    expect(dashboardDSL).toMatchInlineSnapshot()`
   }
 
   return `    const builder = VBI.chart.create(${dslCode})
@@ -210,6 +247,9 @@ export function getTestImports(kind) {
   }
   if (kind === 'report') {
     return "import { createVBI, type VBIReportBuilder } from '@visactor/vbi'"
+  }
+  if (kind === 'dashboard') {
+    return "import { createVBI, type VBIDashboardBuilder } from '@visactor/vbi'"
   }
   return "import { VBI, type VBIChartBuilder } from '@visactor/vbi'"
 }
@@ -269,11 +309,41 @@ export default () => {
   useEffect(() => {
     try {
       const LocalVBI = createVBI()
-${renderReportResources(json, 6)}
+${renderResources(json, 6)}
       const builder = LocalVBI.report.create(${toCode(dsl, 8)})
       ${code}
       applyBuilder(builder, resources)
       setResult(${resultExpr})
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+    }
+  }, [])
+
+  if (error) return <JsonRender value={{ error }} />
+  if (!result) return <div>Loading...</div>
+
+  return <JsonRender value={result} />
+}`.trim()
+  }
+
+  if (kind === 'dashboard') {
+    return `
+import { createVBI, VBIChartBuilder, VBIInsightBuilder, VBIDashboardBuilder } from '@visactor/vbi'
+import { JsonRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    try {
+      const LocalVBI = createVBI()
+${renderResources(json, 6)}
+      const builder = LocalVBI.dashboard.create(${toCode(dsl, 8)})
+      ${code}
+      applyBuilder(builder, resources)
+      setResult(builder.build())
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err))
     }

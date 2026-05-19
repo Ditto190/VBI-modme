@@ -15,6 +15,13 @@
   },
   {
     "type": "dir",
+    "name": "dashboard",
+    "label": "dashboard",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
     "name": "report",
     "label": "report",
     "collapsible": true,
