@@ -1,10 +1,10 @@
 import { z } from 'zod'
 import { zVBIDimensionTree } from '../dimensions/dimensions'
+import { zVBIHavingGroup } from '../havingFilter/having'
+import { zVBIDSLLocale } from '../locale/locale'
 import { zVBIMeasureTree } from '../measures/measures'
 import { zVBIDSLTheme } from '../theme/theme'
-import { zVBIDSLLocale } from '../locale/locale'
 import { zVBIWhereGroup } from '../whereFilter/filters'
-import { zVBIHavingGroup } from '../havingFilter/having'
 
 export const zVBIChartDSL = z.object({
   uuid: z.string().optional().default(''),

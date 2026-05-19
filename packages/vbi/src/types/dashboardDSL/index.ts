@@ -1,0 +1,5 @@
+export type { VBIDashboardBreakpoint, VBIDashboardBreakpoints } from './breakpoint'
+export type { VBIDashboardDSL, VBIDashboardDSLInput } from './dashboard'
+export type { VBIDashboardItemLayout, VBIDashboardLayout } from './layout'
+export type { VBIDashboardMeta } from './meta'
+export type { VBIDashboardWidget } from './widget'

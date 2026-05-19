@@ -1,16 +1,19 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIChartBuilder } from 'src/chart-builder/builder'
+import type { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
+import type { VBIDashboardBuilder } from 'src/dashboard-builder/builder'
 import type { VBIInsightBuilder } from 'src/insight-builder/builder'
 import type { VBIReportBuilder } from 'src/report-builder/builder'
 import type {
   VBIChartBuilderOptions,
   VBIChartDSLInput,
+  VBIDashboardDSLInput,
   VBIInsightDSLInput,
   VBIReportBuilderOptions,
   VBIReportDSLInput,
 } from 'src/types'
-import type { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
 import type { createEmptyChart } from './create-empty-chart'
+import type { createEmptyDashboard } from './create-empty-dashboard'
 import type { createEmptyInsight } from './create-empty-insight'
 import type { createEmptyReport } from './create-empty-report'
 import type { createEmptyReportPage } from './create-empty-report-page'
@@ -26,6 +29,11 @@ export interface VBIChartNamespace<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = De
 export interface VBIInsightNamespace {
   create: (insight: VBIInsightDSLInput) => VBIInsightBuilder
   createEmpty: typeof createEmptyInsight
+}
+
+export interface VBIDashboardNamespace {
+  create: (dashboard: VBIDashboardDSLInput) => VBIDashboardBuilder
+  createEmpty: typeof createEmptyDashboard
 }
 
 export interface VBIReportNamespace<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
@@ -48,5 +56,6 @@ export interface VBIInstance<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultV
   getConnector: typeof getConnector
   chart: VBIChartNamespace<TQueryDSL, TSeedDSL>
   insight: VBIInsightNamespace
+  dashboard: VBIDashboardNamespace
   report: VBIReportNamespace<TQueryDSL, TSeedDSL>
 }

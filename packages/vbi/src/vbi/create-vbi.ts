@@ -3,21 +3,24 @@ import { connectorMap, getConnector, registerConnector } from 'src/chart-builder
 import type {
   VBIChartBuilderOptions,
   VBIChartDSLInput,
+  VBIDashboardDSLInput,
   VBIInsightDSLInput,
   VBIReportBuilderOptions,
   VBIReportDSLInput,
 } from 'src/types'
-import {
-  createChartBuilderFromVBIChartDSLInput,
-  createInsightBuilderFromVBIInsightDSLInput,
-  createReportBuilderFromVBIReportDSLInput,
-} from './from'
-import { createVBIResourceRegistry } from './resources'
 import { createEmptyChart } from './create-empty-chart'
+import { createEmptyDashboard } from './create-empty-dashboard'
 import { createEmptyInsight } from './create-empty-insight'
 import { createEmptyReport } from './create-empty-report'
 import { createEmptyReportPage } from './create-empty-report-page'
+import {
+  createChartBuilderFromVBIChartDSLInput,
+  createDashboardBuilderFromVBIDashboardDSLInput,
+  createInsightBuilderFromVBIInsightDSLInput,
+  createReportBuilderFromVBIReportDSLInput,
+} from './from'
 import { mergeBuilderOptions, mergeReportBuilderOptions } from './merge-builder-options'
+import { createVBIResourceRegistry } from './resources'
 import type { VBIInstance } from './types'
 
 export function createVBI(): VBIInstance<DefaultVBIQueryDSL, DefaultVBISeedDSL>
@@ -40,6 +43,9 @@ export function createVBI<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBIS
     resourceRegistry.insights.registerBuilder(builder.getUUID(), builder)
     return builder
   }
+  const createDashboard = (dashboard: VBIDashboardDSLInput) => {
+    return createDashboardBuilderFromVBIDashboardDSLInput(dashboard)
+  }
   const createReport = (report: VBIReportDSLInput, builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>) => {
     const options = mergeReportBuilderOptions(defaultBuilderOptions, builderOptions)
     return createReportBuilderFromVBIReportDSLInput(report, options, resourceRegistry)
@@ -56,6 +62,10 @@ export function createVBI<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBIS
     insight: {
       create: createInsight,
       createEmpty: createEmptyInsight,
+    },
+    dashboard: {
+      create: createDashboard,
+      createEmpty: createEmptyDashboard,
     },
     report: {
       create: createReport,
