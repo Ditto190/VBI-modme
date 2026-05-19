@@ -7,7 +7,13 @@ export { createVBI } from './create-vbi'
 export type {
   VBIInstance,
   VBIConnectorFactory,
+  VBIConnectorLike,
   VBIConnectorNamespace,
+  VBIChartResourceNamespace,
+  VBIInsightResourceNamespace,
+  VBIResourceRegisterInput,
+  VBIResourceRegisterResult,
+  VBIResourceSnapshot,
   VBIResourceNamespace,
   VBIChartNamespace,
   VBIDashboardNamespace,

@@ -42,11 +42,17 @@ export {
 } from './vbi/index'
 export type {
   VBIChartNamespace,
+  VBIChartResourceNamespace,
   VBIConnectorFactory,
+  VBIConnectorLike,
   VBIConnectorNamespace,
   VBIDashboardNamespace,
+  VBIInsightResourceNamespace,
   VBIInsightNamespace,
   VBIInstance,
   VBIReportNamespace,
   VBIResourceNamespace,
+  VBIResourceRegisterInput,
+  VBIResourceRegisterResult,
+  VBIResourceSnapshot,
 } from './vbi/index'

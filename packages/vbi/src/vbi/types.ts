@@ -1,11 +1,17 @@
 export type {
   VBIChartBuilderFactory,
   VBIChartNamespace,
+  VBIChartResourceNamespace,
   VBIConnectorFactory,
+  VBIConnectorLike,
   VBIConnectorNamespace,
   VBIDashboardNamespace,
+  VBIInsightResourceNamespace,
   VBIInsightNamespace,
   VBIInstance,
   VBIReportNamespace,
   VBIResourceNamespace,
+  VBIResourceRegisterInput,
+  VBIResourceRegisterResult,
+  VBIResourceSnapshot,
 } from './types/index'

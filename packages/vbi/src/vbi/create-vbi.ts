@@ -1,5 +1,4 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
-import { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
 import type { VBIChartBuilderOptions } from 'src/types'
 import {
   createVBIChartNamespace,
@@ -12,7 +11,17 @@ import {
 import { createVBIResourceRegistry } from './resources'
 import type { VBIInstance } from './types'
 
+/**
+ * @description 创建一个独立的 VBI 实例。
+ *
+ * 每个实例都有自己的资源注册表，适合在同一应用中隔离不同报表、仪表盘或测试上下文。
+ */
 export function createVBI(): VBIInstance<DefaultVBIQueryDSL, DefaultVBISeedDSL>
+/**
+ * @description 创建一个使用自定义 QueryDSL 和 SeedDSL 的 VBI 实例。
+ *
+ * @param defaultBuilderOptions 默认图表 Builder 配置，会传递给 chart、report 和 dashboard 中创建的图表 Builder。
+ */
 export function createVBI<TQueryDSL, TSeedDSL>(
   defaultBuilderOptions: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>,
 ): VBIInstance<TQueryDSL, TSeedDSL>
@@ -28,12 +37,5 @@ export function createVBI<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBIS
     report: createVBIReportNamespace(defaultBuilderOptions, resourceRegistry),
     chart: createVBIChartNamespace(defaultBuilderOptions, resourceRegistry),
     insight: createVBIInsightNamespace(resourceRegistry),
-
-    /** @deprecated Use `connectors` APIs instead of mutating the connector map directly. */
-    connectorMap,
-    /** @deprecated Use `connectors.register(id, connector)` instead. */
-    registerConnector,
-    /** @deprecated Use `connectors.get(id)` instead. */
-    getConnector,
   } satisfies VBIInstance<TQueryDSL, TSeedDSL>
 }
