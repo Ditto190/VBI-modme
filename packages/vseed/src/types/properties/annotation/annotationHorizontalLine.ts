@@ -1,4 +1,4 @@
-import type { ValueDynamicFilter } from '../../dataSelector'
+import type { ValueDynamicFilter } from '../../dataSelector/selector'
 
 /**
  * @description 水平标注线, 根据用户设置的 yValue, 从左向右绘制一条末尾有箭头的线, 标签默认在标注线的终点正下方

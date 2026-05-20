@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { zChartDynamicFilter, zSelector, zSelectors } from '../../dataSelector'
+import { zChartDynamicFilter, zSelector, zSelectors } from '../../dataSelector/selector'
 
 export const zAreaStyle = z.object({
   selector: z.union([zSelector, zSelectors]).nullish(),

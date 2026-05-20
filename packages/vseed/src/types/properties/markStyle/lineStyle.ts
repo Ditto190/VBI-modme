@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import type { ChartDynamicFilter } from '../../dataSelector'
-import { zChartDynamicFilter, zSelector, zSelectors, type Selector, type Selectors } from '../../dataSelector'
+import type { ChartDynamicFilter } from '../../dataSelector/selector'
+import { zChartDynamicFilter, zSelector, zSelectors, type Selector, type Selectors } from '../../dataSelector/selector'
 
 export type LineStyle = {
   /**

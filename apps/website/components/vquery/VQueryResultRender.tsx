@@ -1,6 +1,6 @@
 import type { VQueryDSL, DatasetColumn } from '@visactor/vquery'
 import { useEffect, useState, useRef } from 'react'
-import { VSeedRender } from '@components'
+import { VSeedRender } from '../vseed/VSeedRender'
 import type { VSeed } from '@visactor/vseed'
 import { useDark } from '@rspress/core/runtime'
 

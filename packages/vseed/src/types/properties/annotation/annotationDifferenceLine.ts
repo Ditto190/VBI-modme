@@ -1,4 +1,4 @@
-import type { DimensionSelector, MeasureSelector, PartialDatumSelector } from '../../dataSelector'
+import type { DimensionSelector, MeasureSelector, PartialDatumSelector } from '../../dataSelector/selector'
 
 /**
  * @description 差异标注锚点选择器，仅支持能明确绑定到具体数据项的选择器类型。

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { zDatum, type Datum } from '../properties'
+import { zDatum, type Datum } from '../properties/dataset/dataset'
 
 export type ValueSelector = string | number
 

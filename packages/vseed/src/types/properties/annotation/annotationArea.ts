@@ -1,4 +1,4 @@
-import type { AreaSelectors, AreaSelector } from '../../dataSelector'
+import type { AreaSelectors, AreaSelector } from '../../dataSelector/selector'
 
 export type AnnotationArea = {
   /**

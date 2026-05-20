@@ -1,7 +1,7 @@
 import tinycolor from 'tinycolor2'
 import type { Config, CustomThemeConfig } from 'src/types'
 import { registerAll } from '../builder/register/all'
-import { registerCustomTheme } from '../builder/register/theme'
+import { registerCustomTheme } from '../builder/register/theme/custom'
 import { darkTheme } from './dark'
 import { lightTheme } from './light'
 

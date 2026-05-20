@@ -1,5 +1,5 @@
 import type { IHistogramChartSpec } from '@visactor/vchart'
-import { BinEndMeasureId, BinStartMeasureId, FoldMeasureValue } from 'src/index'
+import { BinEndMeasureId, BinStartMeasureId, FoldMeasureValue } from 'src/dataReshape'
 import type { VChartSpecPipe } from 'src/types'
 
 export const initHistogram: VChartSpecPipe = (spec) => {

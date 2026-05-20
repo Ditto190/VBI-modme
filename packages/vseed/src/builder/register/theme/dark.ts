@@ -1,4 +1,4 @@
-import { darkTheme } from '../../../theme'
+import { darkTheme } from '../../../theme/dark'
 import { registerCustomTheme } from './custom'
 
 /**
