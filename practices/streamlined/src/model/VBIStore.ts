@@ -1,5 +1,5 @@
-import { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
-import { VSeed } from '@visactor/vseed'
+import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
+import type { VSeed } from '@visactor/vseed'
 import { createStore, type StoreApi } from 'zustand/vanilla'
 import { createDefaultBuilder } from 'src/utils/demoConnector'
 

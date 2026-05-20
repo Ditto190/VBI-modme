@@ -1,7 +1,10 @@
 import { useRef, useEffect, useState, memo } from 'react'
-import VChart, { ISpec } from '@visactor/vchart'
-import { ListTable, ListTableConstructorOptions, PivotTableConstructorOptions, PivotTable } from '@visactor/vtable'
-import { registerAll, VSeed, Builder, isTable, isPivotTable } from '@visactor/vseed'
+import type { ISpec } from '@visactor/vchart'
+import VChart from '@visactor/vchart'
+import type { ListTableConstructorOptions, PivotTableConstructorOptions } from '@visactor/vtable'
+import { ListTable, PivotTable } from '@visactor/vtable'
+import type { VSeed } from '@visactor/vseed'
+import { registerAll, Builder, isTable, isPivotTable } from '@visactor/vseed'
 registerAll()
 
 const PagePlayer = memo(() => {

@@ -35,6 +35,13 @@
   },
   "overrides": [
     {
+      "files": ["apps/vbi_be/**/*.{ts,tsx}"],
+      "rules": {
+        "typescript/consistent-type-exports": "off",
+        "typescript/consistent-type-imports": "off"
+      }
+    },
+    {
       "files": [
         "apps/vbi_cli/**/*.ts",
         "apps/vbi_provider/**/*.ts",

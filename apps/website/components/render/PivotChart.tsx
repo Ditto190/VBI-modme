@@ -1,7 +1,9 @@
 import { useRef, useEffect, memo } from 'react'
 import VChart from '@visactor/vchart'
-import { register, PivotChart as VTablePivotChart, PivotChartConstructorOptions } from '@visactor/vtable'
-import { registerAll, VSeed, Builder, ColorIdEncoding, DATUM_HIDE_KEY } from '@visactor/vseed'
+import type { PivotChartConstructorOptions } from '@visactor/vtable'
+import { register, PivotChart as VTablePivotChart } from '@visactor/vtable'
+import type { VSeed } from '@visactor/vseed'
+import { registerAll, Builder, ColorIdEncoding, DATUM_HIDE_KEY } from '@visactor/vseed'
 import { useDark } from '@rspress/core/runtime'
 
 register.chartModule('vchart', VChart)

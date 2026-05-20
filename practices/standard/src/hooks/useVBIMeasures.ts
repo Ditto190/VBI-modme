@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
-import { VBIChartBuilder, type VBIMeasure as CoreVBIMeasure, type VBIMeasureFormat, type VBISort } from '@visactor/vbi'
+import type { VBIChartBuilder } from '@visactor/vbi'
+import { type VBIMeasure as CoreVBIMeasure, type VBIMeasureFormat, type VBISort } from '@visactor/vbi'
 import { useBuilderDocState } from './useBuilderDocState'
 
 export type VBIMeasure = Omit<CoreVBIMeasure, 'encoding' | 'aggregate'> & {

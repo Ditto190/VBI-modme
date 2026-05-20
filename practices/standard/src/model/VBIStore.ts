@@ -1,4 +1,5 @@
-import { VBI, VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
+import { VBI } from '@visactor/vbi'
 import { type DatasetColumn } from '@visactor/vquery'
 import { Builder as VSeedBuilder, type VSeed } from '@visactor/vseed'
 import { createDefaultBuilder, setLocalDataWithSchema } from 'src/utils/localConnector'

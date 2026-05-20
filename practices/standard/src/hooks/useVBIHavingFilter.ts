@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { VBIChartBuilder, VBIHavingAggregate, VBIHavingClause } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIHavingAggregate, VBIHavingClause } from '@visactor/vbi'
 import { useBuilderDocState } from './useBuilderDocState'
 
 const EMPTY_HAVING_CLAUSES: VBIHavingClause[] = []

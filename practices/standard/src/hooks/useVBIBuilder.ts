@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import {
   DEMO_DEFAULT_LIMIT,
   DEMO_DEFAULT_LOCALE,

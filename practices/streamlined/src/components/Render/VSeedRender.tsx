@@ -1,14 +1,13 @@
 import { useEffect, useRef } from 'react'
-import VChart, { ISpec } from '@visactor/vchart'
-import {
-  ListTable,
-  PivotChart,
+import type { ISpec } from '@visactor/vchart'
+import VChart from '@visactor/vchart'
+import type {
   PivotChartConstructorOptions,
-  PivotTable,
   PivotTableConstructorOptions,
   ListTableConstructorOptions,
-  register,
 } from '@visactor/vtable'
+import { ListTable, PivotChart, PivotTable, register } from '@visactor/vtable'
+import type { VSeed } from '@visactor/vseed'
 import {
   Builder as VSeedBuilder,
   ColorIdEncoding,
@@ -17,7 +16,6 @@ import {
   isTable,
   isVChart,
   registerAll,
-  VSeed,
 } from '@visactor/vseed'
 
 registerAll()

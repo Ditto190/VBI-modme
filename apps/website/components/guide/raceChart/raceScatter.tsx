@@ -1,5 +1,5 @@
 import { VSeedRender } from '@components'
-import { VSeed } from '@visactor/vseed'
+import type { VSeed } from '@visactor/vseed'
 
 export const RaceScatter = () => {
   const vseed: VSeed = {

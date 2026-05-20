@@ -1,8 +1,10 @@
 import { useDark } from '@rspress/core/runtime'
 
 import { useRef, useEffect, memo } from 'react'
-import VChart, { ISpec } from '@visactor/vchart'
-import { registerAll, VSeed, Builder } from '@visactor/vseed'
+import type { ISpec } from '@visactor/vchart'
+import VChart from '@visactor/vchart'
+import type { VSeed } from '@visactor/vseed'
+import { registerAll, Builder } from '@visactor/vseed'
 registerAll()
 
 export const VChartRender = memo((props: { vseed: VSeed }) => {

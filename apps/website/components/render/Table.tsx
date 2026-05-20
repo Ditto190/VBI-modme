@@ -1,6 +1,8 @@
 import { useRef, useEffect, memo } from 'react'
-import { ListTable as VTableListTable, ListTableConstructorOptions } from '@visactor/vtable'
-import { registerAll, VSeed, Builder, ColorIdEncoding } from '@visactor/vseed'
+import type { ListTableConstructorOptions } from '@visactor/vtable'
+import { ListTable as VTableListTable } from '@visactor/vtable'
+import type { VSeed } from '@visactor/vseed'
+import { registerAll, Builder, ColorIdEncoding } from '@visactor/vseed'
 import { useDark } from '@rspress/core/runtime'
 
 registerAll()

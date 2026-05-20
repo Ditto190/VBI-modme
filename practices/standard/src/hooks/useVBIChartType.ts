@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { VBIChartBuilder } from '@visactor/vbi'
+import type { VBIChartBuilder } from '@visactor/vbi'
 
 /**
  * VBI ChartType Hook

@@ -1,4 +1,4 @@
-import { VSeed } from '@visactor/vseed'
+import type { VSeed } from '@visactor/vseed'
 import { VSeedRender } from '@components'
 import { memo } from 'react'
 
