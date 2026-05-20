@@ -190,7 +190,7 @@ function renderTestBody(json) {
     return `    const builder = VBI.insight.create(${dslCode})
 
     ${applyBuilderCode}
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const insightDSL = builder.build()
     expect(insightDSL).toMatchInlineSnapshot()`
@@ -208,7 +208,7 @@ ${renderResources(json)}
     const builder = LocalVBI.report.create(${dslCode})
 
     ${applyBuilderCode}
-    applyBuilder(builder, resources)
+    await applyBuilder(builder, resources)
 
     const reportDSL = builder.build()
     expect(reportDSL).toMatchInlineSnapshot()${snapshotAssertion}`
@@ -220,7 +220,7 @@ ${renderResources(json)}
     const builder = LocalVBI.dashboard.create(${dslCode})
 
     ${applyBuilderCode}
-    applyBuilder(builder, resources)
+    await applyBuilder(builder, resources)
 
     const dashboardDSL = builder.build()
     expect(dashboardDSL).toMatchInlineSnapshot()`
@@ -229,7 +229,7 @@ ${renderResources(json)}
   return `    const builder = VBI.chart.create(${dslCode})
 
     ${applyBuilderCode}
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot()
@@ -278,14 +278,17 @@ export default () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    try {
-      const builder = VBI.insight.create(${toCode(dsl, 8)})
-      ${code}
-      applyBuilder(builder)
-      setResult(builder.build())
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err))
+    const run = async () => {
+      try {
+        const builder = VBI.insight.create(${toCode(dsl, 8)})
+        ${code}
+        await applyBuilder(builder)
+        setResult(builder.build())
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err))
+      }
     }
+    run()
   }, [])
 
   if (error) return <JsonRender value={{ error }} />
@@ -307,16 +310,19 @@ export default () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    try {
-      const LocalVBI = createVBI()
+    const run = async () => {
+      try {
+        const LocalVBI = createVBI()
 ${renderResources(json, 6)}
-      const builder = LocalVBI.report.create(${toCode(dsl, 8)})
-      ${code}
-      applyBuilder(builder, resources)
-      setResult(${resultExpr})
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err))
+        const builder = LocalVBI.report.create(${toCode(dsl, 8)})
+        ${code}
+        await applyBuilder(builder, resources)
+        setResult(${resultExpr})
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err))
+      }
     }
+    run()
   }, [])
 
   if (error) return <JsonRender value={{ error }} />
@@ -337,16 +343,19 @@ export default () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    try {
-      const LocalVBI = createVBI()
+    const run = async () => {
+      try {
+        const LocalVBI = createVBI()
 ${renderResources(json, 6)}
-      const builder = LocalVBI.dashboard.create(${toCode(dsl, 8)})
-      ${code}
-      applyBuilder(builder, resources)
-      setResult(builder.build())
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err))
+        const builder = LocalVBI.dashboard.create(${toCode(dsl, 8)})
+        ${code}
+        await applyBuilder(builder, resources)
+        setResult(builder.build())
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err))
+      }
     }
+    run()
   }, [])
 
   if (error) return <JsonRender value={{ error }} />
@@ -371,7 +380,7 @@ export default () => {
         connectorId: DEMO_CONNECTOR_ID,
       })
       ${code}
-      applyBuilder(builder)
+      await applyBuilder(builder)
       setResult(await builder.buildVSeed())
     }
     run()

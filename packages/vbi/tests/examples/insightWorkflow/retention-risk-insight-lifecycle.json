@@ -1,0 +1,10 @@
+{
+  "builder": "insight",
+  "name": "retention-risk-insight-lifecycle",
+  "description": "客户留存风险分析场景中通过 insight builder 检查空状态并更新业务解读内容",
+  "tags": ["insight", "workflow", "isEmpty"],
+  "dsl": {
+    "content": ""
+  },
+  "code": "const applyBuilder = (builder: VBIInsightBuilder) => {\n  expect(builder.isEmpty()).toBe(true)\n  builder.setContent('高价值客户在最近 30 天复购放缓，建议运营团队优先触达企业客户并复核折扣策略。')\n  expect(builder.isEmpty()).toBe(false)\n  expect(builder.build().content).toContain('高价值客户')\n}"
+}

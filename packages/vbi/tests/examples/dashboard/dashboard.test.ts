@@ -107,7 +107,7 @@ describe('Dashboard', () => {
           })
       })
     }
-    applyBuilder(builder, resources)
+    await applyBuilder(builder, resources)
 
     const dashboardDSL = builder.build()
     expect(dashboardDSL).toMatchInlineSnapshot(`
@@ -331,7 +331,7 @@ describe('Dashboard', () => {
           })
       })
     }
-    applyBuilder(builder, resources)
+    await applyBuilder(builder, resources)
 
     const dashboardDSL = builder.build()
     expect(dashboardDSL).toMatchInlineSnapshot(`
@@ -510,7 +510,7 @@ describe('Dashboard', () => {
       })
       builder.chart.remove(chartWidget.id)
     }
-    applyBuilder(builder, resources)
+    await applyBuilder(builder, resources)
 
     const dashboardDSL = builder.build()
     expect(dashboardDSL).toMatchInlineSnapshot(`

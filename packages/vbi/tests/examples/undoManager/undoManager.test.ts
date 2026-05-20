@@ -59,7 +59,7 @@ describe('chart / UndoManager', () => {
         builder.undoManager.redo()
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`

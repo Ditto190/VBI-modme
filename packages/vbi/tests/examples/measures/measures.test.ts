@@ -48,7 +48,7 @@ describe('chart / Measures', () => {
         })
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -154,7 +154,7 @@ describe('chart / Measures', () => {
         builder.measures.update(measureId, (n) => n.setEncoding('yAxis').setAggregate({ func: 'sum' }))
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -279,7 +279,7 @@ describe('chart / Measures', () => {
           })
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -510,7 +510,7 @@ describe('chart / Measures', () => {
         builder.measures.remove(measureId)
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -628,7 +628,7 @@ describe('chart / Measures', () => {
         builder.measures.update(measureId, (n) => n.setAlias('新销售额').setAggregate({ func: 'avg' }))
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`

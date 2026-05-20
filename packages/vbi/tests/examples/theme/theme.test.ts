@@ -57,7 +57,7 @@ describe('chart / Theme', () => {
         builder.theme.setTheme(nextTheme)
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -236,7 +236,7 @@ describe('chart / Theme', () => {
         builder.theme.setTheme(nextTheme)
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`

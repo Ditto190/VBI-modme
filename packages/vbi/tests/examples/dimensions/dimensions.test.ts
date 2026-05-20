@@ -57,7 +57,7 @@ describe('chart / Dimensions', () => {
         })
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -211,7 +211,7 @@ describe('chart / Dimensions', () => {
         })
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -321,7 +321,7 @@ describe('chart / Dimensions', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.dimensions.add('product_type', (n) => n.setAlias('产品类型')).add('province', (n) => n.setAlias('省份'))
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -533,7 +533,7 @@ describe('chart / Dimensions', () => {
           node.setAlias('季度').setAggregate({ func: 'toQuarter' })
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -794,7 +794,7 @@ describe('chart / Dimensions', () => {
         builder.dimensions.remove(dimensionId)
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -976,7 +976,7 @@ describe('chart / Dimensions', () => {
         })
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1196,7 +1196,7 @@ describe('chart / Dimensions', () => {
         builder.dimensions.update(dimensionId, (n) => n.setAlias('新产品类型'))
       }
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`

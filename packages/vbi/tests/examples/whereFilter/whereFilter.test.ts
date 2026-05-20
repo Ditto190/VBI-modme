@@ -56,7 +56,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('between').setValue({ min: 1000, max: 10000 })
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -249,7 +249,7 @@ describe('chart / WhereFilter', () => {
             .add('area', (n) => n.setOperator('eq').setValue('华北'))
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -502,7 +502,7 @@ describe('chart / WhereFilter', () => {
         })
         .add('sales', (node) => node.setOperator('>=').setValue(100))
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -748,7 +748,7 @@ describe('chart / WhereFilter', () => {
             .add('customer_type', (n) => n.setOperator('in').setValue(['公司', '小型企业']))
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -996,7 +996,7 @@ describe('chart / WhereFilter', () => {
             })
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1314,7 +1314,7 @@ describe('chart / WhereFilter', () => {
         .add('product_type', (node) => node.setOperator('eq').setValue('技术'))
         .add('discount', (node) => node.setOperator('>').setValue(0.5))
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1479,7 +1479,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('in').setValue(['华东', '华北', '中南'])
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1662,7 +1662,7 @@ describe('chart / WhereFilter', () => {
             .add('product_type', (node) => node.setOperator('eq').setValue('家具'))
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1890,7 +1890,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('not between').setValue({ min: 1000, max: 10000 })
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2070,7 +2070,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('not between').setValue({ min: 1000, max: 10000, leftOp: '<', rightOp: '<' })
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2252,7 +2252,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('eq').setValue('办公用品')
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2489,7 +2489,7 @@ describe('chart / WhereFilter', () => {
           .add('product_type', (node) => node.setOperator('eq').setValue('技术'))
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2715,7 +2715,7 @@ describe('chart / WhereFilter', () => {
         group.remove('f-furniture')
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2927,7 +2927,7 @@ describe('chart / WhereFilter', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.whereFilter.remove(0)
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3175,7 +3175,7 @@ describe('chart / WhereFilter', () => {
         node.setValue('广东')
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3440,7 +3440,7 @@ describe('chart / WhereFilter', () => {
         group.setOperator('and')
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3616,7 +3616,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('=').setValue(['华东', '华北'])
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3785,7 +3785,7 @@ describe('chart / WhereFilter', () => {
         node.setOperator('!=').setValue(['华东', '华北'])
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
