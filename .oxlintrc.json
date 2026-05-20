@@ -47,12 +47,6 @@
         "typescript/consistent-type-exports": "off",
         "typescript/consistent-type-imports": "off"
       }
-    },
-    {
-      "files": ["packages/vbi/**/*.{ts,tsx}", "packages/vquery/**/*.{ts,tsx}"],
-      "rules": {
-        "import/no-cycle": "error"
-      }
     }
   ]
 }
