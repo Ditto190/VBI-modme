@@ -1,7 +1,7 @@
 import type { DuckDBBundles, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm'
 import { AsyncDuckDB, selectBundle, ConsoleLogger } from '@duckdb/duckdb-wasm'
-import { QueryAdapter } from '../../types'
-import { QueryResult } from '../../types/DataSet'
+import type { QueryAdapter } from '../../types'
+import type { QueryResult } from '../../types/DataSet'
 
 export class DuckDBWebQueryAdapter implements QueryAdapter {
   private db: AsyncDuckDB | null = null

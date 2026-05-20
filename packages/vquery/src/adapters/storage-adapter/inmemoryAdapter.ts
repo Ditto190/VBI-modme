@@ -1,5 +1,5 @@
-import { DatasetSource, StorageAdapter } from '../../types'
-import { DatasetSchema } from '../../types/DataSet'
+import type { DatasetSource, StorageAdapter } from '../../types'
+import type { DatasetSchema } from '../../types/DataSet'
 
 // 为了代码清晰，定义一个内部存储记录的类型
 type StoredDataset = {

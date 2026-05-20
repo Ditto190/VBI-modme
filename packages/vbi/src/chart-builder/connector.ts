@@ -1,4 +1,4 @@
-import { VBIConnector, VBIConnectorId } from 'src/types/connector/connector'
+import type { VBIConnector, VBIConnectorId } from 'src/types/connector/connector'
 
 export const connectorMap: Map<VBIConnectorId, VBIConnector | (() => Promise<VBIConnector>)> = new Map()
 

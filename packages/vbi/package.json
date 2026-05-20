@@ -31,7 +31,7 @@
     "build": "rslib build",
     "dev": "rslib build --watch --no-clean",
     "format": "oxfmt .",
-    "lint": "oxlint .",
+    "lint": "oxlint --fix .",
     "test": "rstest",
     "test:update": "rstest --update",
     "test:coverage": "rstest --coverage && node scripts/build-coverage-badge.mjs && open coverage/index.html",

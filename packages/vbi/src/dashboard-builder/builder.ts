@@ -7,7 +7,7 @@ import { createEmptyDashboardLayout } from 'src/vbi/create-empty-dashboard'
 import { getOrCreateDashboardWidgets } from 'src/vbi/from/dashboard-widget-y-map'
 import type { VBIResourceRegistry } from 'src/vbi/resources'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import { DashboardChartCollectionBuilder, DashboardInsightCollectionBuilder, UndoManager } from './features'
 import { applyUpdateToDoc, buildVBIDashboardDSL, encodeDocStateAsUpdate, isEmptyVBIDashboardDSL } from './modules'
 

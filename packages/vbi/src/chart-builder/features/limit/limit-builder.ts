@@ -1,5 +1,5 @@
-import { ObserveCallback } from 'src/types'
-import * as Y from 'yjs'
+import type { ObserveCallback } from 'src/types'
+import type * as Y from 'yjs'
 
 /**
  * @description 数据量限制构建器，用于设置和获取当前 limit

@@ -1,8 +1,8 @@
-import type { DuckDBBundles } from '@duckdb/duckdb-wasm/blocking'
-import { createDuckDB, ConsoleLogger, NODE_RUNTIME, DuckDBConnection } from '@duckdb/duckdb-wasm/blocking'
+import type { DuckDBBundles, DuckDBConnection } from '@duckdb/duckdb-wasm/blocking'
+import { createDuckDB, ConsoleLogger, NODE_RUNTIME } from '@duckdb/duckdb-wasm/blocking'
 import { createRequire } from 'node:module'
-import { QueryAdapter } from '../../types'
-import { QueryResult } from '../../types/DataSet'
+import type { QueryAdapter } from '../../types'
+import type { QueryResult } from '../../types/DataSet'
 
 export class DuckDBNodeQueryAdapter implements QueryAdapter {
   private bindings: any | null = null

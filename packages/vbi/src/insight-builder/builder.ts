@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import type { VBIInsightBuilderInterface, VBIInsightDSL } from 'src/types'
 import { UndoManager } from 'src/chart-builder/features'
 import { applyUpdateToDoc, buildVBIInsightDSL, encodeDocStateAsUpdate, isEmptyVBIInsightDSL } from './modules'

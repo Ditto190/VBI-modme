@@ -1,13 +1,14 @@
-import { Dialect, DummyDriver } from 'kysely'
+import { DummyDriver } from 'kysely'
 import { PostgresQueryCompiler } from 'kysely'
 import { PostgresAdapter } from 'kysely'
-import { Kysely } from 'kysely'
+import type { Kysely } from 'kysely'
 import type {
   DatabaseIntrospector,
   SchemaMetadata,
   TableMetadata,
   DatabaseMetadata,
   DatabaseMetadataOptions,
+  Dialect,
 } from 'kysely'
 
 export class PostgresDialect implements Dialect {

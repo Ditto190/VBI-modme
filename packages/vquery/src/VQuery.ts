@@ -1,5 +1,5 @@
 import { Dataset } from './dataset/dataset'
-import { RawDatasetSource, DatasetColumn, QueryAdapter, StorageAdapter } from './types'
+import type { RawDatasetSource, DatasetColumn, QueryAdapter, StorageAdapter } from './types'
 import { DatasetSourceBuilder } from './data-source-builder'
 
 export class VQuery {

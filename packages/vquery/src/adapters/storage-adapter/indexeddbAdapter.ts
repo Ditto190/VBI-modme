@@ -1,5 +1,5 @@
-import { DatasetSource, StorageAdapter } from '../../types'
-import { DatasetSchema } from '../../types/DataSet'
+import type { DatasetSource, StorageAdapter } from '../../types'
+import type { DatasetSchema } from '../../types/DataSet'
 import { idbPut, idbGet, idbDelete, idbGetAll } from './idb-helpers'
 
 type StoredDataset = {

@@ -1,4 +1,4 @@
-import { DatasetSourceType, DataType } from '../types'
+import type { DatasetSourceType, DataType } from '../types'
 
 export const READ_FUNCTION_MAP: Record<DatasetSourceType, string> = {
   csv: 'read_csv_auto',
