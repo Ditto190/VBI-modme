@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "oxc"],
+  "plugins": ["typescript", "oxc", "import"],
   "env": {
     "browser": true,
     "node": true,
@@ -27,6 +27,7 @@
   ],
   "rules": {
     "no-console": "off",
+    "import/no-cycle": "warn",
     "typescript/no-explicit-any": "off",
     "typescript/triple-slash-reference": "off"
   },
