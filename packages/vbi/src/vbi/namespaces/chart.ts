@@ -1,8 +1,8 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIChartBuilderOptions } from 'src/types'
 import { createEmptyChart } from '../create-empty-chart'
-import { createChartBuilderFromVBIChartDSLInput } from '../from'
-import type { VBIResourceRegistry } from '../resources'
+import { createChartBuilderFromVBIChartDSLInput } from '../from/from-vbi-dsl-input'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import type { VBIChartNamespace } from '../types'
 
 export const mergeChartBuilderOptions = <TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>(

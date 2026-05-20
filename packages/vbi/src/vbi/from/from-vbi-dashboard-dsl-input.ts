@@ -3,7 +3,7 @@ import { VBIDashboardBuilder } from 'src/dashboard-builder/builder'
 import type { VBIDashboardBuilderOptions, VBIDashboardDSLInput } from 'src/types'
 import { zVBIDashboardDSL } from 'src/types/dashboardDSL/dashboard'
 import * as Y from 'yjs'
-import type { VBIResourceRegistry } from '../resources'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import { createDashboardWidgetYMap, getOrCreateDashboardWidgets } from './dashboard-widget-y-map'
 
 export const createDashboardBuilderFromVBIDashboardDSLInput = <

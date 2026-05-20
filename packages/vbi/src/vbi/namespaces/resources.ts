@@ -1,7 +1,7 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import { zVBIChartDSL } from 'src/types/chartDSL/vbi/vbi'
 import { zVBIInsightDSL } from 'src/types/insightDSL/insight'
-import type { VBIResourceRegistry } from '../resources'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import type { VBIResourceNamespace } from '../types'
 
 export const createVBIResourceNamespace = <TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>(

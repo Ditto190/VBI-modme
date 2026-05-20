@@ -2,8 +2,8 @@ import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/ad
 import type { VBIChartBuilderOptions, VBIReportBuilderOptions } from 'src/types'
 import { createEmptyReport } from '../create-empty-report'
 import { createEmptyReportPage } from '../create-empty-report-page'
-import { createReportBuilderFromVBIReportDSLInput } from '../from'
-import type { VBIResourceRegistry } from '../resources'
+import { createReportBuilderFromVBIReportDSLInput } from '../from/from-vbi-report-dsl-input'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import type { VBIReportNamespace } from '../types'
 import { mergeChartBuilderOptions } from './chart'
 

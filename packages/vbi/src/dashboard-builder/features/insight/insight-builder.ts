@@ -17,7 +17,7 @@ export interface DashboardInsightBuilderOptions {
   getBuilder?: (insightId: string) => VBIInsightBuilder | undefined
 }
 
-export class DashboardInsightBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
+export class DashboardInsightBuilder<_TQueryDSL = DefaultVBIQueryDSL, _TSeedDSL = DefaultVBISeedDSL> {
   private _layouts: DashboardWidgetLayouts = {}
 
   constructor(

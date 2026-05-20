@@ -1,8 +1,8 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIDashboardBuilderOptions, VBIChartBuilderOptions } from 'src/types'
 import { createEmptyDashboard } from '../create-empty-dashboard'
-import { createDashboardBuilderFromVBIDashboardDSLInput } from '../from'
-import type { VBIResourceRegistry } from '../resources'
+import { createDashboardBuilderFromVBIDashboardDSLInput } from '../from/from-vbi-dashboard-dsl-input'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import type { VBIDashboardNamespace } from '../types'
 import { mergeChartBuilderOptions } from './chart'
 

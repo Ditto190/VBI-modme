@@ -1,14 +1,12 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIChartBuilderOptions } from 'src/types'
-import {
-  createVBIChartNamespace,
-  createVBIConnectorNamespace,
-  createVBIDashboardNamespace,
-  createVBIInsightNamespace,
-  createVBIReportNamespace,
-  createVBIResourceNamespace,
-} from './namespaces'
-import { createVBIResourceRegistry } from './resources'
+import { createVBIChartNamespace } from './namespaces/chart'
+import { createVBIConnectorNamespace } from './namespaces/connectors'
+import { createVBIDashboardNamespace } from './namespaces/dashboard'
+import { createVBIInsightNamespace } from './namespaces/insight'
+import { createVBIReportNamespace } from './namespaces/report'
+import { createVBIResourceNamespace } from './namespaces/resources'
+import { createVBIResourceRegistry } from './resources/resource-registry'
 import type { VBIInstance } from './types'
 
 /**

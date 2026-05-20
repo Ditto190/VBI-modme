@@ -27,9 +27,16 @@
   ],
   "rules": {
     "no-console": "off",
-    "import/no-cycle": "warn",
-    "typescript/consistent-type-exports": "warn",
-    "typescript/consistent-type-imports": "warn",
+    "import/no-cycle": "off",
+    "typescript/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "typescript/consistent-type-exports": "error",
+    "typescript/consistent-type-imports": "error",
     "typescript/no-explicit-any": "off",
     "typescript/triple-slash-reference": "off"
   },
@@ -42,23 +49,9 @@
       }
     },
     {
-      "files": [
-        "apps/vbi_cli/**/*.ts",
-        "apps/vbi_provider/**/*.ts",
-        "packages/vbi-agent/**/*.ts",
-        "packages/vbi-react/**/*.{ts,tsx}",
-        "packages/vseed/**/*.{ts,tsx}"
-      ],
+      "files": ["packages/vbi/**/*.{ts,tsx}", "packages/vquery/**/*.{ts,tsx}"],
       "rules": {
-        "typescript/consistent-type-exports": "error",
-        "typescript/consistent-type-imports": "error"
-      }
-    },
-    {
-      "files": ["packages/vbi-react/**/*.{ts,tsx}", "packages/vseed/**/*.{ts,tsx}"],
-      "rules": {
-        "no-console": "error",
-        "typescript/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+        "import/no-cycle": "error"
       }
     }
   ]

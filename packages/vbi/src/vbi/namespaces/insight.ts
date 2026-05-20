@@ -1,7 +1,7 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import { createEmptyInsight } from '../create-empty-insight'
-import { createInsightBuilderFromVBIInsightDSLInput } from '../from'
-import type { VBIResourceRegistry } from '../resources'
+import { createInsightBuilderFromVBIInsightDSLInput } from '../from/from-vbi-insight-dsl-input'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import type { VBIInsightNamespace } from '../types'
 
 export const createVBIInsightNamespace = <TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>(

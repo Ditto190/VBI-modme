@@ -1,8 +1,8 @@
 import type * as Y from 'yjs'
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIReportBuilder } from 'src/report-builder/builder'
-import { createEmptyReportPage } from 'src/vbi/index'
-import { createReportPageYMap, getOrCreateReportPages, locateReportPageIndexById } from 'src/vbi/from'
+import { createEmptyReportPage } from 'src/vbi/create-empty-report-page'
+import { createReportPageYMap, getOrCreateReportPages, locateReportPageIndexById } from 'src/vbi/from/report-page-y-map'
 import { ReportPageBuilder } from './page-builder'
 
 export class ReportPageCollectionBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
