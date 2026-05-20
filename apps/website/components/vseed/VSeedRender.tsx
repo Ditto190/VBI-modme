@@ -1,18 +1,16 @@
 import { useRef, useEffect, useState } from 'react'
 import { useDark } from '@rspress/core/runtime'
-import VChart, { ISpec } from '@visactor/vchart'
-import {
-  ListTable,
-  PivotTable,
-  PivotChart,
-  register,
+import type { ISpec } from '@visactor/vchart'
+import VChart from '@visactor/vchart'
+import type {
   ListTableConstructorOptions,
   PivotTableConstructorOptions,
   PivotChartConstructorOptions,
 } from '@visactor/vtable'
+import { ListTable, PivotTable, PivotChart, register } from '@visactor/vtable'
+import type { VSeed } from '@visactor/vseed'
 import {
   registerAll,
-  VSeed,
   Builder,
   isPivotChart,
   isVChart,

@@ -40,7 +40,7 @@ export const removeDashboardWidgetLayouts = (dsl: Y.Map<any>, widgetId: string):
   }
 
   if (layout instanceof Y.Map) {
-    for (const [_breakpoint, items] of layout.entries()) {
+    for (const items of layout.values()) {
       if (items instanceof Y.Array) {
         const indices: number[] = []
         items.forEach((item: any, index: number) => {

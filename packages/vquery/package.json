@@ -45,7 +45,7 @@
     "build:docs": "node scripts/build-examples.js",
     "g": "pnpm run build:test && pnpm run build:docs && pnpm run test:update",
     "dev": "rslib build --watch --no-clean",
-    "lint": "oxlint .",
+    "lint": "oxlint --fix .",
     "test": "rstest",
     "format": "oxfmt .",
     "test:update": "rstest --update",

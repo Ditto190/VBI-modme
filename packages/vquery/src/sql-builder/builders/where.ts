@@ -1,4 +1,4 @@
-import { Where, WhereClause } from '../../types'
+import type { Where, WhereClause } from '../../types'
 import { sql } from 'kysely'
 import type { RawBuilder, SelectQueryBuilder } from 'kysely'
 import { toSqlOperator } from '../utils'

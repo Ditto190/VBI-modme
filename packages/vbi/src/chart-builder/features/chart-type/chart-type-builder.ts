@@ -1,6 +1,6 @@
 import { ChartTypeEnum } from '@visactor/vseed'
-import { ObserveCallback } from 'src/types'
-import * as Y from 'yjs'
+import type { ObserveCallback } from 'src/types'
+import type * as Y from 'yjs'
 import {
   getRecommendedDimensionEncodingsForChartType,
   getSupportedDimensionEncodingsForChartType,

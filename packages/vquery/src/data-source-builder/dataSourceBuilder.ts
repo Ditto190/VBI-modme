@@ -1,5 +1,5 @@
 import { isUrl } from '../utils'
-import { DatasetSourceType, DatasetSourceValue, RawDatasetSource } from '../types'
+import type { DatasetSourceType, DatasetSourceValue, RawDatasetSource } from '../types'
 
 const MIME_TYPES: Record<DatasetSourceType, string> = {
   csv: 'text/csv',

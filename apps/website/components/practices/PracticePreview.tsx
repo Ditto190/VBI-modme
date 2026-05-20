@@ -4,14 +4,6 @@ import type { ComponentType } from 'react'
 const SUPPORTED_PRACTICE_LOCALES = ['zh-CN', 'en-US', 'ja-JP', 'de-DE', 'id-ID', 'fr-FR', 'ko-KR', 'vi-VN'] as const
 
 type PracticeLocale = (typeof SUPPORTED_PRACTICE_LOCALES)[number]
-type PracticeTheme = 'light' | 'dark'
-
-type PracticeAppProps = {
-  hideLocale?: boolean
-  hideTheme?: boolean
-  locale?: PracticeLocale
-  theme?: PracticeTheme
-}
 
 type PracticePreviewProps = {
   App: ComponentType<any>

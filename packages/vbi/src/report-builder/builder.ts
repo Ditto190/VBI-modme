@@ -1,9 +1,10 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import type { VBIChartBuilder } from 'src/chart-builder/builder'
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIInsightBuilder } from 'src/insight-builder/builder'
 import type { VBIReportDSL, VBIReportBuilderInterface, VBIReportBuilderOptions, VBIReportSnapshotDSL } from 'src/types'
-import { UndoManager, ReportPageCollectionBuilder } from './features'
+import { UndoManager } from 'src/chart-builder/features/undo-manager'
+import { ReportPageCollectionBuilder } from './features/page/page-collection-builder'
 import {
   applyUpdateToDoc,
   buildVBIReportDSL,
@@ -11,8 +12,8 @@ import {
   encodeDocStateAsUpdate,
   isEmptyVBIReportDSL,
 } from './modules'
-import { getOrCreateReportPages } from 'src/vbi/from'
-import type { VBIResourceRegistry } from 'src/vbi/resources'
+import { getOrCreateReportPages } from 'src/vbi/from/report-page-y-map'
+import type { VBIResourceRegistry } from 'src/vbi/resources/resource-registry'
 import { ensureResourceUUID, getResourceUUID } from 'src/vbi/resource-uuid'
 
 export interface VBIReportBuilderDependencies<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {

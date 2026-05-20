@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { zValueDynamicFilter } from '../../dataSelector'
+import { zValueDynamicFilter } from '../../dataSelector/selector'
 
 export const zAnnotationHorizontalLine = z.object({
   yValue: z.union([z.number(), z.string(), z.array(z.union([z.number(), z.string()]))]).nullish(),

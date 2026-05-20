@@ -1,6 +1,7 @@
 import type { CustomThemeConfig } from 'src/types'
 import { Builder } from '../../builder'
-import { darkTheme, lightTheme } from '../../../theme'
+import { darkTheme } from '../../../theme/dark'
+import { lightTheme } from '../../../theme/light'
 
 /**
  * @description 注册自定义主题。

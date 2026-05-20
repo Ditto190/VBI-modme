@@ -1,6 +1,6 @@
 import type { AdvancedPipelineContext, AdvancedVSeed } from 'src/types'
 import { execPipeline } from '../../pipeline'
-import { Builder } from './builder'
+import type { Builder } from './builder'
 import { intl } from 'src/i18n'
 
 export const buildAdvanced = (builder: Builder): AdvancedVSeed | null => {
@@ -10,7 +10,8 @@ export const buildAdvanced = (builder: Builder): AdvancedVSeed | null => {
     throw new Error('chartType is nil in buildAdvanced')
   }
 
-  const pipeline = Builder.getAdvancedPipeline(chartType)
+  const BuilderCtor = builder.constructor as typeof Builder
+  const pipeline = BuilderCtor.getAdvancedPipeline(chartType)
   if (!pipeline) {
     throw new Error(
       `please invoke registerAll or register ${chartType} before build, no advanced pipeline for chartType ${chartType}`,
@@ -19,7 +20,7 @@ export const buildAdvanced = (builder: Builder): AdvancedVSeed | null => {
 
   const context: AdvancedPipelineContext = {
     vseed: builder.vseed,
-    customTheme: Builder.getThemeMap(),
+    customTheme: BuilderCtor.getThemeMap(),
   }
   if (builder.locale) {
     intl.setLocale(builder.locale)

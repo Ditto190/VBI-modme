@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { zDimensionSelector, zMeasureSelector, zPartialSelector } from '../../dataSelector'
+import { zDimensionSelector, zMeasureSelector, zPartialSelector } from '../../dataSelector/selector'
 
 export const zDifferenceSelector = z.union([zPartialSelector, zMeasureSelector, zDimensionSelector])
 export const zDifferenceSelectors = z.array(zDifferenceSelector)

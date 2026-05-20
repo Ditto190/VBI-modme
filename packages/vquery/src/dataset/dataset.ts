@@ -1,4 +1,4 @@
-import { DatasetColumn, DatasetSource, QueryDSL, QueryAdapter, StorageAdapter, VQueryDSL } from '../types'
+import type { DatasetColumn, DatasetSource, QueryDSL, QueryAdapter, StorageAdapter, VQueryDSL } from '../types'
 import { convertDSLToSQL } from '../sql-builder'
 import { READ_FUNCTION_MAP, buildColumnsStruct } from './constants'
 

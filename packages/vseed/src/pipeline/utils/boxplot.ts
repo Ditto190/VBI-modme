@@ -1,4 +1,4 @@
-import { BoxPlotPivotIndicator } from 'src/dataReshape'
+import { BoxPlotPivotIndicator } from 'src/dataReshape/constant'
 
 export const revisedBoxPlotFieldKey = (fieldKey: string, groupId: string, isPivotChart = true) => {
   if (!isPivotChart) {

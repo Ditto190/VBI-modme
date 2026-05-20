@@ -1,7 +1,8 @@
 import type { VBIHavingAggregate } from '@visactor/vbi'
 import { Form, InputNumber, Modal, Select } from 'antd'
 import type { FormInstance } from 'antd'
-import { aggregateOptionsForRole, operatorOptions } from './havingOptions'
+import type { aggregateOptionsForRole } from './havingOptions'
+import { operatorOptions } from './havingOptions'
 import type { HavingAggregateFunc, HavingField } from './havingTypes'
 
 type HavingFilterModalProps = {

@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import type { VBIMeasure, VBIMeasureFormat, VBISort } from 'src/types'
 
 /**

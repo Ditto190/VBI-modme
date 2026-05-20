@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import type { VBIInsightDSL } from 'src/types'
 import { zVBIInsightDSL } from 'src/types/insightDSL/insight'
 

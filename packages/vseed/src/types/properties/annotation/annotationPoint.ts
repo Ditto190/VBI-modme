@@ -1,5 +1,5 @@
-import type { ChartDynamicFilter } from '../../dataSelector'
-import { type Selector, type Selectors } from '../../dataSelector'
+import type { ChartDynamicFilter } from '../../dataSelector/selector'
+import { type Selector, type Selectors } from '../../dataSelector/selector'
 /**
  * @description 标注点, 根据用户设置的selector, 在数据点的左下方, 显示一个带有背景的标签.
  */

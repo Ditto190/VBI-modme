@@ -1,4 +1,4 @@
-import { zChartDynamicFilter, zSelector, zSelectors } from '../../dataSelector'
+import { zChartDynamicFilter, zSelector, zSelectors } from '../../dataSelector/selector'
 import { z } from 'zod'
 
 export const zAnnotationPoint = z.object({

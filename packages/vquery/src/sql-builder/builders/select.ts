@@ -1,4 +1,4 @@
-import { SelectItem } from '../../types/dsl/Select'
+import type { SelectItem } from '../../types/dsl/Select'
 import { isSelectItem } from '../utils'
 import { sql } from 'kysely'
 import type { SelectQueryBuilder } from 'kysely'

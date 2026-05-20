@@ -1,4 +1,4 @@
-import { VBIChartBuilder } from '@visactor/vbi'
+import type { VBIChartBuilder } from '@visactor/vbi'
 import { theme as antdTheme, Card, ConfigProvider, Flex, Spin } from 'antd'
 import deDE from 'antd/locale/de_DE'
 import enUS from 'antd/locale/en_US'

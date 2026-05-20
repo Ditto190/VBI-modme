@@ -1,4 +1,4 @@
-import { QueryResult } from '../QueryResult'
+import type { QueryResult } from '../QueryResult'
 
 export interface QueryAdapter {
   open: () => Promise<void>

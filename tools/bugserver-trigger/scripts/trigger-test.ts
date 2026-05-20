@@ -1,6 +1,7 @@
 import nodeFetch from 'node-fetch'
 import NodeFormData from 'form-data'
-import fs, { ReadStream } from 'fs'
+import type { ReadStream } from 'fs'
+import fs from 'fs'
 import path from 'path'
 
 const BUG_SERVER_HOST = 'https://bug-server.zijieapi.com'

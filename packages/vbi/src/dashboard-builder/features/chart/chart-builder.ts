@@ -1,7 +1,7 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIChartBuilder } from 'src/chart-builder/builder'
 import type { VBIDashboardBreakpoint, VBIDashboardItemLayout, VBIDashboardWidget } from 'src/types'
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 
 type ResourceReference = string | { getUUID: () => string }
 

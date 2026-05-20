@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import type { VBIChartDSLInput } from 'src/types'
 
 export const setBaseDSLFields = (dsl: Y.Map<any>, vbi: VBIChartDSLInput) => {

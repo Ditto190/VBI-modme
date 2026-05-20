@@ -1,5 +1,5 @@
-import { VSeed } from '@visactor/vseed'
-import { VSeedRender } from '@components'
+import type { VSeed } from '@visactor/vseed'
+import { VSeedRender } from '../../vseed/VSeedRender'
 import { memo } from 'react'
 
 export const RaceBar = memo(() => {

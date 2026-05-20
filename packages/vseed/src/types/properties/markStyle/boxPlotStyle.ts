@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { zSelector, zSelectors, type Selector, type Selectors } from '../../dataSelector'
+import { zSelector, zSelectors, type Selector, type Selectors } from '../../dataSelector/selector'
 
 export type BoxPlotStyle = {
   /**

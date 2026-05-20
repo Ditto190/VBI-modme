@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import { createWhereGroup } from 'src/chart-builder/features/whereFilter/where-utils'
 import { ensureYArray } from './ensure-y-array'
 import type { FilterGroupInput } from './types'

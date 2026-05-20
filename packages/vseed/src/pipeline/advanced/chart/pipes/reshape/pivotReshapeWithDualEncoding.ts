@@ -1,7 +1,7 @@
 import { uniqueBy, unique } from 'remeda'
 import { dataReshapeByEncoding, DimAxisType, FoldPrimaryMeasureValue, FoldSecondaryMeasureValue } from 'src/dataReshape'
-import { DEFAULT_DUAL_CHART_TYPE } from 'src/index'
 import { getColorMeasureId } from 'src/pipeline/spec/chart/pipes'
+import { DEFAULT_DUAL_CHART_TYPE } from 'src/pipeline/utils/chatType'
 import type {
   AdvancedPipe,
   AdvancedVSeed,

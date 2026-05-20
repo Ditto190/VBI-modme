@@ -1,5 +1,5 @@
 import { DatasetSourceBuilder } from '@visactor/vquery'
-import { RawDatasetSource } from '@visactor/vquery'
+import type { RawDatasetSource } from '@visactor/vquery'
 
 describe('DatasetSourceBuilder', () => {
   it('should handle Blob input', async () => {

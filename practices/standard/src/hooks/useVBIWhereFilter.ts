@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
-import { VBIChartBuilder, VBIWhereClause, VBIWhereFilter, isVBIFilter, isVBIWhereGroup } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIWhereClause, VBIWhereFilter } from '@visactor/vbi'
+import { isVBIFilter, isVBIWhereGroup } from '@visactor/vbi'
 import { useBuilderDocState } from './useBuilderDocState'
 
 const EMPTY_WHERE_CLAUSES: VBIWhereClause[] = []

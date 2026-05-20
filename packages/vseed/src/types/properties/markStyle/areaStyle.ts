@@ -1,5 +1,5 @@
-import type { ChartDynamicFilter } from '../../dataSelector'
-import { type Selector, type Selectors } from '../../dataSelector'
+import type { ChartDynamicFilter } from '../../dataSelector/selector'
+import { type Selector, type Selectors } from '../../dataSelector/selector'
 
 export type AreaStyle = {
   /**

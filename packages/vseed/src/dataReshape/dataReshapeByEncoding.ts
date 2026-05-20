@@ -2,7 +2,7 @@ import type { Dataset, Dimension, Encoding, FoldInfo, Measure, Measures, UnfoldI
 import { foldMeasures } from './foldMeasures'
 import { FoldMeasureId, FoldMeasureName, FoldMeasureValue, Separator } from './constant'
 import { unfoldDimensions } from './unfoldDimensions'
-import { createFormatterByDimension } from 'src/pipeline/utils'
+import { createFormatterByDimension } from 'src/pipeline/utils/format/createFormatterByDimension'
 
 export const dataReshapeByEncoding = (
   dataset: Dataset,

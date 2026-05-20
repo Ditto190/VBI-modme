@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIInsightBuilder } from 'src/insight-builder/builder'
 import type { VBIDashboardBreakpoint, VBIDashboardItemLayout, VBIDashboardWidget } from 'src/types'
@@ -17,7 +17,7 @@ export interface DashboardInsightBuilderOptions {
   getBuilder?: (insightId: string) => VBIInsightBuilder | undefined
 }
 
-export class DashboardInsightBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
+export class DashboardInsightBuilder<_TQueryDSL = DefaultVBIQueryDSL, _TSeedDSL = DefaultVBISeedDSL> {
   private _layouts: DashboardWidgetLayouts = {}
 
   constructor(

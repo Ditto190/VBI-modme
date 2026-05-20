@@ -1,5 +1,5 @@
-import { DatasetSchema } from '../DataSet'
-import { DatasetSource } from '../DataSource'
+import type { DatasetSchema } from '../DataSet'
+import type { DatasetSource } from '../DataSource'
 
 export interface StorageAdapter {
   open: () => Promise<void>

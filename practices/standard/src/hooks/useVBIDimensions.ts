@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
-import { VBIChartBuilder, type VBIDimension as CoreVBIDimension, type VBISort } from '@visactor/vbi'
+import type { VBIChartBuilder } from '@visactor/vbi'
+import { type VBIDimension as CoreVBIDimension, type VBISort } from '@visactor/vbi'
 import { useBuilderDocState } from './useBuilderDocState'
 
 export type VBIDimension = CoreVBIDimension

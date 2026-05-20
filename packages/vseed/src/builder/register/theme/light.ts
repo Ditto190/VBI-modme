@@ -1,5 +1,5 @@
 import { registerCustomTheme } from './custom'
-import { lightTheme } from '../../../theme'
+import { lightTheme } from '../../../theme/light'
 
 /**
  * @description 注册浅色主题 (Light Theme)。

@@ -1,5 +1,5 @@
 import type { AdvancedVSeed, Pipe, Spec, SpecPipelineContext } from 'src/types'
-import { Builder } from './builder'
+import type { Builder } from './builder'
 import { execPipeline } from '../../pipeline'
 import { intl } from 'src/i18n'
 
@@ -8,7 +8,8 @@ export const buildSpec = (builder: Builder, advancedVSeed: AdvancedVSeed): Spec 
 
   const { chartType } = builder.vseed
 
-  const pipeline = Builder.getSpecPipeline(chartType)
+  const BuilderCtor = builder.constructor as typeof Builder
+  const pipeline = BuilderCtor.getSpecPipeline(chartType)
   if (!pipeline) {
     throw new Error(
       `please invoke registerAll or register ${chartType} before build, no spec pipeline for chartType ${chartType}`,

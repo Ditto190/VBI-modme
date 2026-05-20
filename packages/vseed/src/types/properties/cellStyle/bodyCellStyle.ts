@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { FieldSelector, TableDynamicFilter } from '../../dataSelector'
+import type { FieldSelector, TableDynamicFilter } from '../../dataSelector/selector'
 import {
   zFieldSelector,
   zSelector,
@@ -7,7 +7,7 @@ import {
   zTableDynamicFilter,
   type Selector,
   type Selectors,
-} from '../../dataSelector'
+} from '../../dataSelector/selector'
 
 export type BodyCellStyle = {
   /**

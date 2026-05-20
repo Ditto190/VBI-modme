@@ -1,6 +1,6 @@
 import { Avatar, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
-import { HocuspocusProvider } from '@hocuspocus/provider'
+import type { HocuspocusProvider } from '@hocuspocus/provider'
 import { funnel } from 'remeda'
 import { CollaboratorCursorOverlay } from './CollaboratorCursorOverlay'
 import {

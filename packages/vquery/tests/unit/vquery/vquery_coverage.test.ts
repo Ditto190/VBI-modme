@@ -1,5 +1,5 @@
 import { VQuery } from '@visactor/vquery'
-import { DatasetColumn, RawDatasetSource } from '@visactor/vquery'
+import type { DatasetColumn, RawDatasetSource } from '@visactor/vquery'
 
 describe('VQuery Coverage', () => {
   let vquery: VQuery

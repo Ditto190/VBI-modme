@@ -1,4 +1,4 @@
-import { zAreaSelector, zAreaSelectors } from '../../dataSelector'
+import { zAreaSelector, zAreaSelectors } from '../../dataSelector/selector'
 import { z } from 'zod'
 
 export const zAnnotationArea = z.object({

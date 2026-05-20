@@ -3,7 +3,7 @@ import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/ad
 import type { VBIReportDSLInput, VBIReportBuilderOptions } from 'src/types'
 import { zVBIReportDSL } from 'src/types/reportDSL/report'
 import { VBIReportBuilder } from 'src/report-builder/builder'
-import type { VBIResourceRegistry } from '../resources'
+import type { VBIResourceRegistry } from '../resources/resource-registry'
 import { ensureReportPages } from './report-page-y-map'
 
 export const createReportBuilderFromVBIReportDSLInput = <TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL>(

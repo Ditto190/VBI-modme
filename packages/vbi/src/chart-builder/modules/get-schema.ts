@@ -1,4 +1,4 @@
-import * as Y from 'yjs'
+import type * as Y from 'yjs'
 import { getConnector } from '../connector'
 
 export const getBuilderSchema = async (dsl: Y.Map<any>) => {

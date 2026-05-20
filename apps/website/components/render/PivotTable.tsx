@@ -1,6 +1,8 @@
 import { useRef, useEffect, memo } from 'react'
-import { PivotTable as VTablePivotTable, PivotTableConstructorOptions } from '@visactor/vtable'
-import { registerAll, VSeed, Builder, ColorIdEncoding } from '@visactor/vseed'
+import type { PivotTableConstructorOptions } from '@visactor/vtable'
+import { PivotTable as VTablePivotTable } from '@visactor/vtable'
+import type { VSeed } from '@visactor/vseed'
+import { registerAll, Builder, ColorIdEncoding } from '@visactor/vseed'
 import { useDark } from '@rspress/core/runtime'
 
 registerAll()
