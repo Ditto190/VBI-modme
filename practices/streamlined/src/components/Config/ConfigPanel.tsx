@@ -24,6 +24,8 @@ type ConfigPanelProps = {
 }
 type SectionKey = 'chartType' | 'encodings' | 'facet' | 'filters'
 
+const HIDDEN_CHART_TYPE_ENTRIES = new Set(['boxPlot', 'histogram'])
+
 const chartIconByType = (type: string) => {
   if (type.includes('table')) return <TableOutlined />
   if (type.includes('pie') || type.includes('donut')) return <PieChartOutlined />
@@ -80,15 +82,18 @@ export const ConfigPanel = (props: ConfigPanelProps) => {
           <Select
             className='stream-chart-type'
             value={dsl.chartType}
-            options={builder.chartType.getAvailableChartTypes().map((type) => ({
-              label: (
-                <span className='stream-chart-type-option'>
-                  {chartIconByType(type)}
-                  {type}
-                </span>
-              ),
-              value: type,
-            }))}
+            options={builder.chartType
+              .getAvailableChartTypes()
+              .filter((type) => !HIDDEN_CHART_TYPE_ENTRIES.has(type))
+              .map((type) => ({
+                label: (
+                  <span className='stream-chart-type-option'>
+                    {chartIconByType(type)}
+                    {type}
+                  </span>
+                ),
+                value: type,
+              }))}
             onChange={(type) => builder.chartType.changeChartType(type)}
           />
         </ConfigSection>

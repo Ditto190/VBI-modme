@@ -208,20 +208,6 @@ export const CHART_TYPE_METAS: ChartTypeMeta[] = [
     icon: <HeatMapOutlined />,
   },
   {
-    type: 'boxPlot',
-    group: 'distribution',
-    labelKey: 'toolbarChartTypeItemsBoxPlotLabel',
-    descriptionKey: 'toolbarChartTypeItemsBoxPlotDescription',
-    icon: <DotChartOutlined />,
-  },
-  {
-    type: 'histogram',
-    group: 'distribution',
-    labelKey: 'toolbarChartTypeItemsHistogramLabel',
-    descriptionKey: 'toolbarChartTypeItemsHistogramDescription',
-    icon: <BarChartOutlined />,
-  },
-  {
     type: 'radar',
     group: 'distribution',
     labelKey: 'toolbarChartTypeItemsRadarLabel',

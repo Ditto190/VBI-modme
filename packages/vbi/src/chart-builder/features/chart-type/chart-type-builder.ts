@@ -131,8 +131,6 @@ export class ChartTypeBuilder {
       ChartTypeEnum.Radar,
       ChartTypeEnum.Funnel,
       ChartTypeEnum.Heatmap,
-      ChartTypeEnum.Boxplot,
-      ChartTypeEnum.Histogram,
       ChartTypeEnum.TreeMap,
       ChartTypeEnum.Sunburst,
       ChartTypeEnum.CirclePacking,

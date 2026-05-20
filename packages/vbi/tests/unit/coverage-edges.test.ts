@@ -1,5 +1,6 @@
 import * as Y from 'yjs'
 import { VBI, createVBI } from '@visactor/vbi'
+import { ChartTypeEnum } from '@visactor/vseed'
 import { getConnector, registerConnector } from 'src/chart-builder/connector'
 import { VBIChartBuilder } from 'src/chart-builder/builder'
 import { buildVSeedDSL } from 'src/chart-builder/adapters/vquery-vseed/build-vseed'
@@ -108,6 +109,12 @@ describe('unit/coverage edges', () => {
     expect(getRecommendedDimensionEncodingsForChartType('unknown-chart', 2)).toEqual(['column', 'column'])
     expect(getSupportedMeasureEncodingsForChartType('unknown-chart')).toEqual(['column'])
     expect(getRecommendedMeasureEncodingsForChartType('unknown-chart', 2)).toEqual(['column', 'column'])
+
+    expect(chartType.getAvailableChartTypes()).not.toEqual(
+      expect.arrayContaining([ChartTypeEnum.Boxplot, ChartTypeEnum.Histogram]),
+    )
+    expect(getSupportedDimensionEncodingsForChartType(ChartTypeEnum.Boxplot)).toContain('xAxis')
+    expect(getSupportedMeasureEncodingsForChartType(ChartTypeEnum.Histogram)).toContain('value')
   })
 
   it('covers field collection defaults, missing removals, and node JSON helpers', () => {
