@@ -1,0 +1,387 @@
+# dashboard
+
+import { registerDemoConnector } from '@components/demoConnector'
+
+{registerDemoConnector()}
+
+## basic-dashboard
+
+Combine chart and insight resources with the dashboard builder to generate a basic dashboard
+
+
+> Tags: `basic`
+
+
+```tsx preview
+import { createVBI, VBIChartBuilder, VBIInsightBuilder, VBIDashboardBuilder } from '@visactor/vbi'
+import { JsonRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    try {
+      const LocalVBI = createVBI()
+      const resources = {
+        charts: {
+          salesChart: LocalVBI.chart.create({
+              "connectorId": "demoSupermarket",
+              "chartType": "bar",
+              "dimensions": [
+                {
+                  "field": "province",
+                  "alias": "Province"
+                }
+              ],
+              "measures": [
+                {
+                  "field": "sales",
+                  "alias": "Sales",
+                  "encoding": "xAxis",
+                  "aggregate": {
+                    "func": "sum"
+                  }
+                }
+              ],
+              "whereFilter": {
+                "id": "root",
+                "op": "and",
+                "conditions": []
+              },
+              "havingFilter": {
+                "id": "root",
+                "op": "and",
+                "conditions": []
+              },
+              "theme": "light",
+              "locale": "en-US",
+              "version": 1
+            }),
+        },
+        insights: {
+          salesInsight: LocalVBI.insight.create({
+              "content": "Sales in East China lead the market. Continue following up with key customers.",
+              "version": 0
+            }),
+        },
+      }
+      const builder = LocalVBI.dashboard.create({
+          "widgets": [],
+          "breakpoints": {
+            "xxl": 1600,
+            "xl": 1200,
+            "lg": 996,
+            "md": 768,
+            "sm": 480,
+            "xs": 0
+          },
+          "layout": {
+            "xxl": [],
+            "xl": [],
+            "lg": [],
+            "md": [],
+            "sm": [],
+            "xs": []
+          },
+          "meta": {
+            "title": "Sales Dashboard",
+            "theme": "light"
+          },
+          "version": 0
+        })
+      const applyBuilder = (builder: VBIDashboardBuilder, resources: any) => {
+  builder.chart.add(chart => {
+    chart
+      .setChartId(resources.charts.salesChart)
+      .setTitle('Sales Trend')
+      .setDescription('Sales summarized by province')
+      .setLayouts({
+        lg: { x: 0, y: 0, w: 8, h: 6 },
+        md: { x: 0, y: 0, w: 6, h: 5 }
+      })
+  })
+
+  builder.insight.add(insight => {
+    insight
+      .setInsightId(resources.insights.salesInsight)
+      .setTitle('Key Insight')
+      .setLayouts({
+        lg: { x: 8, y: 0, w: 4, h: 6 },
+        md: { x: 0, y: 5, w: 6, h: 3 }
+      })
+  })
+}
+      applyBuilder(builder, resources)
+      setResult(builder.build())
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+    }
+  }, [])
+
+  if (error) return <JsonRender value={{ error }} />
+  if (!result) return <div>Loading...</div>
+
+  return <JsonRender value={result} />
+}
+```
+
+## responsive-dashboard-layout
+
+Combine multiple chart and insight resources, and configure responsive dashboard layouts for different breakpoints
+
+
+> Tags: `layout` `responsive` `resources`
+
+
+```tsx preview
+import { createVBI, VBIChartBuilder, VBIInsightBuilder, VBIDashboardBuilder } from '@visactor/vbi'
+import { JsonRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    try {
+      const LocalVBI = createVBI()
+      const resources = {
+        charts: {
+          salesChart: LocalVBI.chart.create({
+              "connectorId": "demoSupermarket",
+              "chartType": "bar",
+              "dimensions": [
+                {
+                  "field": "province",
+                  "alias": "Province"
+                }
+              ],
+              "measures": [
+                {
+                  "field": "sales",
+                  "alias": "Sales",
+                  "encoding": "xAxis",
+                  "aggregate": {
+                    "func": "sum"
+                  }
+                }
+              ],
+              "whereFilter": {
+                "id": "root",
+                "op": "and",
+                "conditions": []
+              },
+              "havingFilter": {
+                "id": "root",
+                "op": "and",
+                "conditions": []
+              },
+              "theme": "light",
+              "locale": "en-US",
+              "version": 1
+            }),
+          profitChart: LocalVBI.chart.create({
+              "connectorId": "demoSupermarket",
+              "chartType": "line",
+              "dimensions": [
+                {
+                  "field": "order_date",
+                  "alias": "Order Month",
+                  "aggregate": {
+                    "func": "toMonth"
+                  }
+                }
+              ],
+              "measures": [
+                {
+                  "field": "profit",
+                  "alias": "Profit",
+                  "encoding": "yAxis",
+                  "aggregate": {
+                    "func": "sum"
+                  }
+                }
+              ],
+              "whereFilter": {
+                "id": "root",
+                "op": "and",
+                "conditions": []
+              },
+              "havingFilter": {
+                "id": "root",
+                "op": "and",
+                "conditions": []
+              },
+              "theme": "light",
+              "locale": "en-US",
+              "version": 1
+            }),
+        },
+        insights: {
+          opsInsight: LocalVBI.insight.create({
+              "content": "Sales and profit trends should be reviewed together. Low-profit months need a deeper category breakdown.",
+              "version": 0
+            }),
+        },
+      }
+      const builder = LocalVBI.dashboard.create({
+          "widgets": [],
+          "breakpoints": {
+            "xxl": 1600,
+            "xl": 1200,
+            "lg": 996,
+            "md": 768,
+            "sm": 480,
+            "xs": 0
+          },
+          "layout": {
+            "xxl": [],
+            "xl": [],
+            "lg": [],
+            "md": [],
+            "sm": [],
+            "xs": []
+          },
+          "meta": {
+            "title": "Operations Dashboard",
+            "theme": "dark"
+          },
+          "version": 0
+        })
+      const applyBuilder = (builder: VBIDashboardBuilder, resources: any) => {
+  builder.chart.add(chart => {
+    chart
+      .setChartId(resources.charts.salesChart)
+      .setTitle('Regional Sales')
+      .setDescription('Sales summarized by province')
+      .setLayouts({
+        lg: { x: 0, y: 0, w: 7, h: 5 },
+        md: { x: 0, y: 0, w: 6, h: 4 },
+        sm: { x: 0, y: 0, w: 4, h: 4 }
+      })
+  })
+
+  builder.chart.add(chart => {
+    chart
+      .setChartId(resources.charts.profitChart)
+      .setTitle('Profit Trend')
+      .setDescription('Profit summarized by month')
+      .setLayouts({
+        lg: { x: 7, y: 0, w: 5, h: 5 },
+        md: { x: 0, y: 4, w: 6, h: 4 },
+        sm: { x: 0, y: 4, w: 4, h: 4 }
+      })
+  })
+
+  builder.insight.add(insight => {
+    insight
+      .setInsightId(resources.insights.opsInsight)
+      .setTitle('Operations Insight')
+      .setDescription('Sales and profit relationship notes')
+      .setLayouts({
+        lg: { x: 0, y: 5, w: 12, h: 3 },
+        md: { x: 0, y: 8, w: 6, h: 3 },
+        sm: { x: 0, y: 8, w: 4, h: 3 }
+      })
+  })
+}
+      applyBuilder(builder, resources)
+      setResult(builder.build())
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+    }
+  }, [])
+
+  if (error) return <JsonRender value={{ error }} />
+  if (!result) return <div>Loading...</div>
+
+  return <JsonRender value={result} />
+}
+```
+
+## update-and-remove-dashboard-widgets
+
+Add multiple dashboard widgets, then update their layouts and remove a temporary chart
+
+
+> Tags: `layout` `mutation`
+
+
+```tsx preview
+import { createVBI, VBIChartBuilder, VBIInsightBuilder, VBIDashboardBuilder } from '@visactor/vbi'
+import { JsonRender } from '@components'
+import { useEffect, useState } from 'react'
+
+export default () => {
+  const [result, setResult] = useState<any>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    try {
+      const LocalVBI = createVBI()
+      const resources = {
+        charts: {
+        },
+        insights: {
+        },
+      }
+      const builder = LocalVBI.dashboard.create({
+          "widgets": [],
+          "breakpoints": {
+            "xxl": 1600,
+            "xl": 1200,
+            "lg": 996,
+            "md": 768,
+            "sm": 480,
+            "xs": 0
+          },
+          "layout": {
+            "xxl": [],
+            "xl": [],
+            "lg": [],
+            "md": [],
+            "sm": [],
+            "xs": []
+          },
+          "meta": {
+            "title": "",
+            "theme": "light"
+          },
+          "version": 0
+        })
+      const applyBuilder = (builder: VBIDashboardBuilder, _resources: any) => {
+  builder.chart.add(chart => {
+    chart.setTitle('Temporary Chart').setLayouts({ lg: { x: 0, y: 0, w: 6, h: 4 } })
+  })
+  builder.insight.add(insight => {
+    insight.setTitle('Retained Insight').setLayouts({ lg: { x: 6, y: 0, w: 6, h: 4 } })
+  })
+
+  const [chartWidget] = builder.chart.toJSON()
+  const [insightWidget] = builder.insight.toJSON()
+
+  builder.chart.update(chartWidget.id, chart => {
+    chart
+      .setDescription('Remove after update')
+      .setLayouts({ lg: { x: 0, y: 1, w: 5, h: 3 } })
+  })
+  builder.insight.update(insightWidget.id, insight => {
+    insight.setDescription('Notes for the insight retained in the dashboard')
+  })
+  builder.chart.remove(chartWidget.id)
+}
+      applyBuilder(builder, resources)
+      setResult(builder.build())
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+    }
+  }, [])
+
+  if (error) return <JsonRender value={{ error }} />
+  if (!result) return <div>Loading...</div>
+
+  return <JsonRender value={result} />
+}
+```

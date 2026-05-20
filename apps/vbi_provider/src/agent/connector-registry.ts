@@ -23,7 +23,7 @@ const getConnectorId = (dsl: unknown) => {
 
 const hasSchemaConnector = async (id: string) => {
   try {
-    const connector = await VBI.getConnector(id)
+    const connector = await VBI.connectors.get(id)
     return typeof connector.discoverSchema === 'function'
   } catch {
     return false
@@ -38,7 +38,7 @@ export const createVBIProviderConnectorRegistry = (
 ): VBIProviderConnectorRegistry => {
   const register = (id: string, connector: VBIProviderConnectorRegistration) => {
     if (!connector) throw new Error('connector registration is required')
-    VBI.registerConnector(id, connector as never)
+    VBI.connectors.register(id, connector as never)
     return id
   }
   const ensureKnownConnector = async (connectorId: string) => {

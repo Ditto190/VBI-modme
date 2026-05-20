@@ -6,19 +6,19 @@
 
 ## Current Status
 
-The `@visactor/vbi` main entry now exports core runtime APIs, including `VBI`, `createVBI`, `VBIChartBuilder`, `registerConnector`, and `createEmptyChart`.
+The `@visactor/vbi` main entry now exports core runtime APIs, including `VBI`, `createVBI`, `VBIChartBuilder`, `VBI.connectors`, and `createEmptyChart`.
 
 The following capabilities can be accessed directly through the main entry:
 
-| Feature                              | Actual location                  | Notes                           |
-| ------------------------------------ | -------------------------------- | ------------------------------- |
-| `VBI` / `VBI.chart.create()`         | `src/vbi/create-vbi.ts`          | ✅ Exported from the main entry |
-| `VBIChartBuilder`                    | `src/chart-builder/builder.ts`   | ✅ Exported from the main entry |
-| `registerConnector` / `getConnector` | `src/chart-builder/connector.ts` | ✅ Exported from the main entry |
-| `createEmptyChart`                   | `src/vbi/create-empty-chart.ts`  | ✅ Exported from the main entry |
-| All DSL types, such as `VBIChartDSL` | `src/types/chartDSL/`            | ✅ Exported from the main entry |
-| All Builder types                    | `src/types/builder/`             | ✅ Exported from the main entry |
-| Type guards such as `isVBIFilter`    | `src/utils/filter-guards.ts`     | ✅ Exported from the main entry |
+| Feature                                          | Actual location                    | Notes                           |
+| ------------------------------------------------ | ---------------------------------- | ------------------------------- |
+| `VBI` / `VBI.chart.create()`                     | `src/vbi/create-vbi.ts`            | ✅ Exported from the main entry |
+| `VBIChartBuilder`                                | `src/chart-builder/builder.ts`     | ✅ Exported from the main entry |
+| `VBI.connectors.register` / `VBI.connectors.get` | `src/vbi/namespaces/connectors.ts` | ✅ Exported from the main entry |
+| `createEmptyChart`                               | `src/vbi/create-empty-chart.ts`    | ✅ Exported from the main entry |
+| All DSL types, such as `VBIChartDSL`             | `src/types/chartDSL/`              | ✅ Exported from the main entry |
+| All Builder types                                | `src/types/builder/`               | ✅ Exported from the main entry |
+| Type guards such as `isVBIFilter`                | `src/utils/filter-guards.ts`       | ✅ Exported from the main entry |
 
 ## Why Practice Code Is Still the Recommended Reference
 
@@ -61,7 +61,7 @@ import { VBI } from '@visactor/vbi'
 | Main entry                            | `packages/vbi/src/index.ts`                     |
 | VBI.chart.create                      | `packages/vbi/src/vbi/create-vbi.ts`            |
 | VBIChartBuilder                       | `packages/vbi/src/chart-builder/builder.ts`     |
-| registerConnector                     | `packages/vbi/src/chart-builder/connector.ts`   |
+| VBI.connectors                        | `packages/vbi/src/vbi/namespaces/connectors.ts` |
 | createEmptyChart                      | `packages/vbi/src/vbi/create-empty-chart.ts`    |
 | filter-guards, exported by main entry | `packages/vbi/src/utils/filter-guards.ts`       |
 | vseed main entry                      | `packages/vseed/src/index.ts`                   |

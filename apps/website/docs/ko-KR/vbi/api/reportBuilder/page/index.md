@@ -1,7 +1,5 @@
 # ReportPageCollectionBuilder
 
-## 속성
-
 ## 메서드
 
 ### constructor
@@ -25,7 +23,7 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Ma
 **정의**:
 
 ```typescript
-add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
+add(title: string, callback?: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
 **반환**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
@@ -35,7 +33,7 @@ add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => v
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
 | `title` | string | - |
-| `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
+| `callback?` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### remove
 

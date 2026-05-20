@@ -2,8 +2,6 @@
 
 Builder für Diagrammtypen zum Wechseln und Abrufen des Diagrammtyps. Unterstützt Tabellen, Balken-, Linien-, Kreis- und Streudiagramme sowie weitere Diagrammtypen
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor
@@ -86,14 +84,14 @@ Empfohlene Dimensions-Encodings anhand des aktuellen Diagrammtyps in Dimensionsr
 **Definition**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **Parameter**:
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `dimensionCount` | number | - Anzahl der Dimensionen; standardmäßig die Dimensionsanzahl in der aktuellen DSL |
+| `dimensionCount?` | number | - Anzahl der Dimensionen; standardmäßig die Dimensionsanzahl in der aktuellen DSL |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ Empfohlene Kennzahlen-Encodings anhand des aktuellen Diagrammtyps in Kennzahlenr
 **Definition**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **Parameter**:
 
 | Parameter | Typ | Beschreibung |
 | --- | --- | --- |
-| `measureCount` | number | - Anzahl der Kennzahlen; standardmäßig die Kennzahlenanzahl in der aktuellen DSL |
+| `measureCount?` | number | - Anzahl der Kennzahlen; standardmäßig die Kennzahlenanzahl in der aktuellen DSL |
 
 ### toJSON
 

@@ -2,8 +2,6 @@
 
 Builder measure untuk menambah, mengubah, dan menghapus konfigurasi measure. Measure adalah field numerik dalam data, seperti penjualan, laba, atau jumlah
 
-## Properti
-
 ## Metode
 
 ### constructor

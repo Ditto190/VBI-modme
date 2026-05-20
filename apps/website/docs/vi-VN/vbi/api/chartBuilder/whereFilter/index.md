@@ -2,8 +2,6 @@
 
 Builder lọc Where, dùng để thêm, sửa, xóa điều kiện lọc cấp hàng. Lọc Where có hiệu lực trước khi query dữ liệu và dùng để lọc dữ liệu gốc
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

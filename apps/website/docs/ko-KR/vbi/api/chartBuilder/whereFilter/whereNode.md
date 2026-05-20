@@ -2,8 +2,6 @@
 
 단일 Where 필터 조건을 설정하는 Where 필터 노드 빌더입니다
 
-## 속성
-
 ## 메서드
 
 ### constructor

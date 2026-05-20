@@ -2,22 +2,23 @@
   {
     "type": "dir",
     "name": "chart",
-    "label": "チャート",
+    "label": "chart",
     "collapsible": true,
     "collapsed": false
   },
   {
-    "type": "dir",
+    "type": "file",
     "name": "insight",
-    "label": "インサイト",
-    "collapsible": true,
-    "collapsed": false
+    "label": "insight"
   },
   {
-    "type": "dir",
+    "type": "file",
+    "name": "dashboard",
+    "label": "dashboard"
+  },
+  {
+    "type": "file",
     "name": "report",
-    "label": "レポート",
-    "collapsible": true,
-    "collapsed": false
+    "label": "report"
   }
 ]

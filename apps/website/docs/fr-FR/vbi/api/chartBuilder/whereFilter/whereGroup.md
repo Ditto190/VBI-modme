@@ -2,8 +2,6 @@
 
 Builder de groupe Where pour configurer la relation logique (AND/OR) d'un groupe de conditions
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

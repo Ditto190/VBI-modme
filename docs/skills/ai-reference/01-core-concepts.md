@@ -6,13 +6,13 @@
 User configuration (DSL) -> VBIChartBuilder -> VQuery (SQL) -> VSeed (rendering Spec) -> Chart rendering
 ```
 
-| Concept           | Description                                                                            |
-| ----------------- | -------------------------------------------------------------------------------------- |
-| `VBIChartBuilder` | Yjs-backed configuration builder. All chart config is managed by sub-builders.         |
-| `VBIChartDSL`     | JSON snapshot of the configuration, returned by `builder.build()`                      |
-| `VQueryDSL`       | Generated SQL query DSL, returned by `builder.buildVQuery()`                           |
-| `VSeed`           | Rendering-layer Spec returned by `builder.buildVSeed()`, passable to VChart/VTable     |
-| `connectorId`     | Data source identifier. It must first be registered through `VBI.registerConnector()`. |
+| Concept           | Description                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| `VBIChartBuilder` | Yjs-backed configuration builder. All chart config is managed by sub-builders.           |
+| `VBIChartDSL`     | JSON snapshot of the configuration, returned by `builder.build()`                        |
+| `VQueryDSL`       | Generated SQL query DSL, returned by `builder.buildVQuery()`                             |
+| `VSeed`           | Rendering-layer Spec returned by `builder.buildVSeed()`, passable to VChart/VTable       |
+| `connectorId`     | Data source identifier. It must first be registered through `VBI.connectors.register()`. |
 
 ## 1.2 Yjs Doc Structure
 

@@ -25,7 +25,7 @@
 **정의**:
 
 ```typescript
-constructor(doc: Y.Doc, options: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, dsl: Y.Map<any>)
+constructor(doc: Y.Doc, options?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, dsl?: Y.Map<any>)
 ```
 
 **매개변수**:
@@ -33,15 +33,15 @@ constructor(doc: Y.Doc, options: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, ds
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
-| `options` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
-| `dsl` | Y.Map<any> | - |
+| `options?` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
+| `dsl?` | Y.Map<any> | - |
 
 ### applyUpdate
 
 **정의**:
 
 ```typescript
-applyUpdate(update: Uint8Array, transactionOrigin: any): void
+applyUpdate(update: Uint8Array, transactionOrigin?: any): void
 ```
 
 **반환**: `void`
@@ -51,14 +51,14 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): void
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
-| `transactionOrigin` | any | - |
+| `transactionOrigin?` | any | - |
 
 ### encodeStateAsUpdate
 
 **정의**:
 
 ```typescript
-encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
+encodeStateAsUpdate(targetStateVector?: Uint8Array): Uint8Array<ArrayBufferLike>
 ```
 
 **반환**: `Uint8Array<ArrayBufferLike>`
@@ -67,7 +67,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `targetStateVector` | Uint8Array | - |
+| `targetStateVector?` | Uint8Array | - |
 
 ### getUUID
 
@@ -84,7 +84,7 @@ getUUID(): string
 **정의**:
 
 ```typescript
-buildVSeed(options: BuildVSeedOptions): Promise<TSeedDSL>
+buildVSeed(options?: BuildVSeedOptions): Promise<TSeedDSL>
 ```
 
 **반환**: `Promise<TSeedDSL>`
@@ -93,7 +93,7 @@ buildVSeed(options: BuildVSeedOptions): Promise<TSeedDSL>
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `options` = {} | BuildVSeedOptions | - |
+| `options?` = {} | BuildVSeedOptions | - |
 
 ### buildVQuery
 

@@ -1,6 +1,13 @@
 [
   {
     "type": "dir",
+    "name": "vbiInstance",
+    "label": "VBI",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
     "name": "chartBuilder",
     "label": "chartBuilder",
     "collapsible": true,
@@ -15,9 +22,14 @@
   },
   {
     "type": "dir",
-    "name": "insightBuilder",
-    "label": "insightBuilder",
+    "name": "dashboardBuilder",
+    "label": "dashboardBuilder",
     "collapsible": true,
     "collapsed": false
+  },
+  {
+    "type": "file",
+    "name": "insightBuilder",
+    "label": "insightBuilder"
   }
 ]

@@ -2,8 +2,6 @@
 
 Builder für Datenlimits zum Setzen und Abrufen des aktuellen limit
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

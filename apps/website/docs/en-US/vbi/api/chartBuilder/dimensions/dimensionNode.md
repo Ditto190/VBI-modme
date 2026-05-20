@@ -2,8 +2,6 @@
 
 Dimension node builder for configuring a single dimension.
 
-## Properties
-
 ## Methods
 
 ### constructor

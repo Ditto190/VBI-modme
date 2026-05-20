@@ -25,7 +25,7 @@
 **定义**:
 
 ```typescript
-constructor(doc: Y.Doc, options: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, dsl: Y.Map<any>)
+constructor(doc: Y.Doc, options?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, dsl?: Y.Map<any>)
 ```
 
 **参数**:
@@ -33,15 +33,15 @@ constructor(doc: Y.Doc, options: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, ds
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
-| `options` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
-| `dsl` | Y.Map<any> | - |
+| `options?` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
+| `dsl?` | Y.Map<any> | - |
 
 ### applyUpdate
 
 **定义**:
 
 ```typescript
-applyUpdate(update: Uint8Array, transactionOrigin: any): void
+applyUpdate(update: Uint8Array, transactionOrigin?: any): void
 ```
 
 **返回**: `void`
@@ -51,14 +51,14 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): void
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
-| `transactionOrigin` | any | - |
+| `transactionOrigin?` | any | - |
 
 ### encodeStateAsUpdate
 
 **定义**:
 
 ```typescript
-encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
+encodeStateAsUpdate(targetStateVector?: Uint8Array): Uint8Array<ArrayBufferLike>
 ```
 
 **返回**: `Uint8Array<ArrayBufferLike>`
@@ -67,7 +67,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): Uint8Array<ArrayBufferLike>
 
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
-| `targetStateVector` | Uint8Array | - |
+| `targetStateVector?` | Uint8Array | - |
 
 ### getUUID
 
@@ -84,7 +84,7 @@ getUUID(): string
 **定义**:
 
 ```typescript
-buildVSeed(options: BuildVSeedOptions): Promise<TSeedDSL>
+buildVSeed(options?: BuildVSeedOptions): Promise<TSeedDSL>
 ```
 
 **返回**: `Promise<TSeedDSL>`
@@ -93,7 +93,7 @@ buildVSeed(options: BuildVSeedOptions): Promise<TSeedDSL>
 
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
-| `options` = {} | BuildVSeedOptions | - |
+| `options?` = {} | BuildVSeedOptions | - |
 
 ### buildVQuery
 

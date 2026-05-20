@@ -2,8 +2,6 @@
 
 Builder node lọc Having dùng để cấu hình một điều kiện lọc Having
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

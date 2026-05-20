@@ -2,8 +2,6 @@
 
 Builder filter Where untuk menambah, mengubah, dan menghapus kondisi filter tingkat baris. Filter Where berlaku sebelum query data dan digunakan untuk memfilter data mentah
 
-## Properti
-
 ## Metode
 
 ### constructor

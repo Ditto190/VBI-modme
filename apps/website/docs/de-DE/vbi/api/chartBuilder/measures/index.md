@@ -2,8 +2,6 @@
 
 Kennzahlen-Builder zum Hinzufügen, Ändern und Entfernen von Kennzahlenkonfigurationen. Kennzahlen sind numerische Datenfelder wie Umsatz, Gewinn oder Menge
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

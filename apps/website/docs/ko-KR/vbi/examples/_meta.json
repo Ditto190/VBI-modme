@@ -2,22 +2,23 @@
   {
     "type": "dir",
     "name": "chart",
-    "label": "차트",
+    "label": "chart",
     "collapsible": true,
     "collapsed": false
   },
   {
-    "type": "dir",
+    "type": "file",
     "name": "insight",
-    "label": "인사이트",
-    "collapsible": true,
-    "collapsed": false
+    "label": "insight"
   },
   {
-    "type": "dir",
+    "type": "file",
+    "name": "dashboard",
+    "label": "dashboard"
+  },
+  {
+    "type": "file",
     "name": "report",
-    "label": "리포트",
-    "collapsible": true,
-    "collapsed": false
+    "label": "report"
   }
 ]

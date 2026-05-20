@@ -2,8 +2,6 @@
 
 Builder jenis chart untuk mengganti dan mengambil jenis chart. Mendukung tabel, bar, line, pie, scatter, dan berbagai jenis chart lain
 
-## Properti
-
 ## Metode
 
 ### constructor
@@ -86,14 +84,14 @@ Mengembalikan encoding dimensi yang direkomendasikan menurut urutan dimensi berd
 **Definisi**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **Parameter**:
 
 | Parameter | Tipe | Deskripsi |
 | --- | --- | --- |
-| `dimensionCount` | number | - Jumlah dimensi; default memakai jumlah dimensi dalam DSL saat ini |
+| `dimensionCount?` | number | - Jumlah dimensi; default memakai jumlah dimensi dalam DSL saat ini |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ Mengembalikan encoding measure yang direkomendasikan menurut urutan measure berd
 **Definisi**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **Parameter**:
 
 | Parameter | Tipe | Deskripsi |
 | --- | --- | --- |
-| `measureCount` | number | - Jumlah measure; default memakai jumlah measure dalam DSL saat ini |
+| `measureCount?` | number | - Jumlah measure; default memakai jumlah measure dalam DSL saat ini |
 
 ### toJSON
 

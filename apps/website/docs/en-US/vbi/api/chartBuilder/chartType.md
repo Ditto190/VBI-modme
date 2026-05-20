@@ -2,8 +2,6 @@
 
 Chart type builder for switching and retrieving the chart type. Supports various chart types including table, bar, line, pie, scatter, and more.
 
-## Properties
-
 ## Methods
 
 ### constructor
@@ -86,14 +84,14 @@ Returns recommended dimension encodings in order based on the current chart type
 **Definition**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **Parameters**:
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `dimensionCount` | number | - Number of dimensions; defaults to the dimension count in the current DSL |
+| `dimensionCount?` | number | - Number of dimensions; defaults to the dimension count in the current DSL |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ Returns recommended measure encodings in order based on the current chart type.
 **Definition**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **Parameters**:
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `measureCount` | number | - Number of measures; defaults to the measure count in the current DSL |
+| `measureCount?` | number | - Number of measures; defaults to the measure count in the current DSL |
 
 ### toJSON
 

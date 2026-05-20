@@ -56,6 +56,6 @@ export const demoConnector: VBIConnector = {
 }
 
 export const registerDemoConnector = () => {
-  VBI.registerConnector(DEMO_CONNECTOR_ID, demoConnector)
+  VBI.connectors.register(DEMO_CONNECTOR_ID, demoConnector)
   return DEMO_CONNECTOR_ID
 }

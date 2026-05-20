@@ -1,16 +1,18 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 
 rs.mock('@visactor/vbi', () => {
-  const registerConnector = rs.fn()
+  const register = rs.fn()
   return {
     VBI: {
-      registerConnector,
+      connectors: {
+        register,
+      },
       chart: {
         createEmpty: rs.fn((connectorId: string) => ({ connectorId })),
         create: rs.fn((source: unknown) => ({ source })),
       },
     },
-    __vbiMockState: { registerConnector },
+    __vbiMockState: { register },
   }
 })
 
@@ -53,7 +55,7 @@ describe('localConnector', () => {
 
     const { __vbiMockState } = (await import('@visactor/vbi')) as any
     expect(fetchMock).not.toHaveBeenCalled()
-    expect(__vbiMockState.registerConnector).toHaveBeenCalledWith(CONNECTOR_ID, expect.any(Function))
+    expect(__vbiMockState.register).toHaveBeenCalledWith(CONNECTOR_ID, expect.any(Function))
   })
 
   test('createLocalConnector normalizes measure values to number', async () => {
@@ -74,7 +76,7 @@ describe('localConnector', () => {
 
     createLocalConnector('test-connector')
     const { __vbiMockState } = (await import('@visactor/vbi')) as any
-    const factory = __vbiMockState.registerConnector.mock.calls[0][1]
+    const factory = __vbiMockState.register.mock.calls[0][1]
     const connector = await factory()
     const result = await connector.query({
       queryDSL: {

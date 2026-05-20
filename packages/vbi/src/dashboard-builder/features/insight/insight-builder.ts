@@ -1,4 +1,6 @@
 import * as Y from 'yjs'
+import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
+import type { VBIInsightBuilder } from 'src/insight-builder/builder'
 import type { VBIDashboardBreakpoint, VBIDashboardItemLayout, VBIDashboardWidget } from 'src/types'
 
 type ResourceReference = string | { getUUID: () => string }
@@ -11,13 +13,24 @@ export type DashboardWidgetLayouts = Partial<
   Record<VBIDashboardBreakpoint, Omit<VBIDashboardItemLayout, 'id' | 'widgetId'>>
 >
 
-export class DashboardInsightBuilder {
+export interface DashboardInsightBuilderOptions {
+  getBuilder?: (insightId: string) => VBIInsightBuilder | undefined
+}
+
+export class DashboardInsightBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
   private _layouts: DashboardWidgetLayouts = {}
 
-  constructor(private widget: Y.Map<any>) {}
+  constructor(
+    private widget: Y.Map<any>,
+    private options: DashboardInsightBuilderOptions = {},
+  ) {}
 
   getId(): string {
     return this.widget.get('id')
+  }
+
+  getBuilder(): VBIInsightBuilder | undefined {
+    return this.options.getBuilder?.(this.widget.get('insightId') ?? '')
   }
 
   setTitle(title: string): this {

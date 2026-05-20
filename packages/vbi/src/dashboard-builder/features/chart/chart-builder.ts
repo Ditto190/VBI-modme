@@ -1,3 +1,5 @@
+import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
+import type { VBIChartBuilder } from 'src/chart-builder/builder'
 import type { VBIDashboardBreakpoint, VBIDashboardItemLayout, VBIDashboardWidget } from 'src/types'
 import * as Y from 'yjs'
 
@@ -11,13 +13,24 @@ export type DashboardWidgetLayouts = Partial<
   Record<VBIDashboardBreakpoint, Omit<VBIDashboardItemLayout, 'id' | 'widgetId'>>
 >
 
-export class DashboardChartBuilder {
+export interface DashboardChartBuilderOptions<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
+  getBuilder?: (chartId: string) => VBIChartBuilder<TQueryDSL, TSeedDSL> | undefined
+}
+
+export class DashboardChartBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBISeedDSL> {
   private _layouts: DashboardWidgetLayouts = {}
 
-  constructor(private widget: Y.Map<any>) {}
+  constructor(
+    private widget: Y.Map<any>,
+    private options: DashboardChartBuilderOptions<TQueryDSL, TSeedDSL> = {},
+  ) {}
 
   getId(): string {
     return this.widget.get('id')
+  }
+
+  getBuilder(): VBIChartBuilder<TQueryDSL, TSeedDSL> | undefined {
+    return this.options.getBuilder?.(this.widget.get('chartId') ?? '')
   }
 
   setTitle(title: string): this {

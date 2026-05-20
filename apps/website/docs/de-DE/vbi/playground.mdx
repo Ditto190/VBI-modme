@@ -10,7 +10,7 @@ const run = async (setVSeed) => {
 
   const connectorId = 'vbi-demo'
 
-  VBI.registerConnector(connectorId, async () => {
+  VBI.connectors.register(connectorId, async () => {
     return {
       discoverSchema: async () => {
         return [

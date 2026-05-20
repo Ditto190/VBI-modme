@@ -1,7 +1,5 @@
 # ReportPageBuilder
 
-## プロパティ
-
 ## メソッド
 
 ### constructor

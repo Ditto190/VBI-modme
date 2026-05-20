@@ -1,7 +1,5 @@
 # ReportPageCollectionBuilder
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor
@@ -25,7 +23,7 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Ma
 **Định nghĩa**:
 
 ```typescript
-add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
+add(title: string, callback?: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
 **Trả về**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
@@ -35,7 +33,7 @@ add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => v
 | Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `title` | string | - |
-| `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
+| `callback?` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### remove
 

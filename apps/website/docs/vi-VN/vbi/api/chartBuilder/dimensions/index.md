@@ -2,8 +2,6 @@
 
 Builder dimension dùng để thêm, sửa, xóa cấu hình dimension. Dimension là field phân loại trong dữ liệu, như thời gian, khu vực, danh mục sản phẩm
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

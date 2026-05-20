@@ -2,8 +2,6 @@
 
 Builder node measure untuk mengonfigurasi satu measure
 
-## Properti
-
 ## Metode
 
 ### constructor

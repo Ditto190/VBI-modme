@@ -2,8 +2,6 @@
 
 Having-Filter-Builder zum Hinzufügen, Ändern und Entfernen von Filterbedingungen nach der Gruppierung. Having-Filter wirken nach der Datenaggregation und filtern Gruppenergebnisse
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

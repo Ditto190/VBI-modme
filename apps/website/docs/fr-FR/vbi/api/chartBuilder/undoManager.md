@@ -2,8 +2,6 @@
 
 Gestionnaire annuler/rétablir fournissant des fonctions basées sur YJS, avec gestion des piles et effacement de l'historique
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor
@@ -77,7 +75,7 @@ Effacer l'historique
 **Définition**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **Retour**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | Paramètre | Type | Description |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Indique s'il faut effacer la pile undo, true par défaut |
-| `clearRedoStack` | boolean | - Indique s'il faut effacer la pile redo, true par défaut |
+| `clearUndoStack?` | boolean | - Indique s'il faut effacer la pile undo, true par défaut |
+| `clearRedoStack?` | boolean | - Indique s'il faut effacer la pile redo, true par défaut |

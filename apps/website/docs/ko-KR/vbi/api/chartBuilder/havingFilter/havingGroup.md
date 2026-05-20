@@ -2,8 +2,6 @@
 
 조건 그룹의 논리 관계(AND/OR)를 설정하는 Having 그룹 빌더입니다
 
-## 속성
-
 ## 메서드
 
 ### constructor

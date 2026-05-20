@@ -2,8 +2,6 @@
 
 Bộ quản lý undo/redo cung cấp chức năng undo và redo dựa trên YJS, hỗ trợ quản lý stack và xóa lịch sử
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor
@@ -77,7 +75,7 @@ Xóa lịch sử
 **Định nghĩa**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **Trả về**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Có xóa undo stack hay không, mặc định true |
-| `clearRedoStack` | boolean | - Có xóa redo stack hay không, mặc định true |
+| `clearUndoStack?` | boolean | - Có xóa undo stack hay không, mặc định true |
+| `clearRedoStack?` | boolean | - Có xóa redo stack hay không, mặc định true |

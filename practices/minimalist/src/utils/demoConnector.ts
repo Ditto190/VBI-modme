@@ -34,7 +34,7 @@ export const registerDemoConnector = () => {
   if (registered) return DEMO_CONNECTOR_ID
   registered = true
   const vquery = new VQuery()
-  VBI.registerConnector(DEMO_CONNECTOR_ID, async () => ({
+  VBI.connectors.register(DEMO_CONNECTOR_ID, async () => ({
     discoverSchema: async () => schema,
     query: async ({ queryDSL, schema }) => {
       if (!(await vquery.hasDataset(DEMO_CONNECTOR_ID))) {

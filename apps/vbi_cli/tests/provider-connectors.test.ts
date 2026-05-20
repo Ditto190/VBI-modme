@@ -4,7 +4,7 @@ import { createVBIProviderWorkspace } from '@visactor/headless-bi-provider'
 
 describe('provider workspace connectors', () => {
   test('auto-registers the demo connector when opening a demo chart', async () => {
-    VBI.connectorMap.delete('demo')
+    VBI.connectors.unregister('demo')
     const chartBuilder = VBI.chart.create(VBI.chart.createEmpty('demo'))
     const chart = {
       open: rs.fn(async () => chartBuilder),
@@ -29,7 +29,7 @@ describe('provider workspace connectors', () => {
   })
 
   test('builds seed dsl through the demo connector', async () => {
-    VBI.connectorMap.delete('demo')
+    VBI.connectors.unregister('demo')
     const chartBuilder = VBI.chart.create(VBI.chart.createEmpty('demo'))
     chartBuilder.chartType.changeChartType('bar')
     chartBuilder.dimensions.add('area', (node) => node.setAlias('area').setEncoding('xAxis'))

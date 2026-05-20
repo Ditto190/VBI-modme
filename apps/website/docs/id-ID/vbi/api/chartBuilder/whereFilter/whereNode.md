@@ -2,8 +2,6 @@
 
 Builder node filter Where untuk mengonfigurasi satu kondisi filter Where
 
-## Properti
-
 ## Metode
 
 ### constructor

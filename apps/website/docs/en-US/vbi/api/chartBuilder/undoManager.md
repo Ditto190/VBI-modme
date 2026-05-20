@@ -2,8 +2,6 @@
 
 Undo/redo manager providing YJS-based undo and redo functionality, with support for stack management and history clearing.
 
-## Properties
-
 ## Methods
 
 ### constructor
@@ -77,7 +75,7 @@ Clears the history.
 **Definition**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **Returns**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - Whether to clear the undo stack, defaults to true |
-| `clearRedoStack` | boolean | - Whether to clear the redo stack, defaults to true |
+| `clearUndoStack?` | boolean | - Whether to clear the undo stack, defaults to true |
+| `clearRedoStack?` | boolean | - Whether to clear the redo stack, defaults to true |

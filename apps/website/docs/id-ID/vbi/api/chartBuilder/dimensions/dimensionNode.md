@@ -2,8 +2,6 @@
 
 Builder node dimensi untuk mengonfigurasi satu dimensi
 
-## Properti
-
 ## Metode
 
 ### constructor

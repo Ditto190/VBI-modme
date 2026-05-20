@@ -2,8 +2,6 @@
 
 Having 过滤节点构建器，用于配置单个 Having 过滤条件
 
-## 属性
-
 ## 方法
 
 ### constructor

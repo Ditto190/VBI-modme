@@ -1,7 +1,5 @@
 # ReportPageBuilder
 
-## 属性
-
 ## 方法
 
 ### constructor

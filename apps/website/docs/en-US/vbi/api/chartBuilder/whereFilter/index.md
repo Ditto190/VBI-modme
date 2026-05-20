@@ -2,8 +2,6 @@
 
 Where filter builder for adding, modifying, and removing row-level filter conditions. Where filters take effect before data querying and are used to filter raw data.
 
-## Properties
-
 ## Methods
 
 ### constructor

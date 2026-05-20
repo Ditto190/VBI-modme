@@ -2,8 +2,6 @@
 
 Measure builder for adding, modifying, and removing measure configuration. Measures are the numeric fields in data, such as: sales, profit, quantity.
 
-## Properties
-
 ## Methods
 
 ### constructor

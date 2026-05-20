@@ -69,7 +69,7 @@ describe('createProviderWorkspace', () => {
     })
 
     expect(connectorId).toBe('cli-test-direct')
-    const connector = await VBI.getConnector('cli-test-direct')
+    const connector = await VBI.connectors.get('cli-test-direct')
     await expect(connector.discoverSchema()).resolves.toEqual(schema)
   })
 

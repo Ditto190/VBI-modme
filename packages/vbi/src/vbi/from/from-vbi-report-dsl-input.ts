@@ -21,5 +21,8 @@ export const createReportBuilderFromVBIReportDSLInput = <TQueryDSL = DefaultVBIQ
     dsl.set('pages', ensureReportPages(normalized.pages))
   })
 
-  return new VBIReportBuilder<TQueryDSL, TSeedDSL>(doc, options, resourceRegistry)
+  return new VBIReportBuilder<TQueryDSL, TSeedDSL>(doc, {
+    builderOptions: options,
+    resourceRegistry,
+  })
 }

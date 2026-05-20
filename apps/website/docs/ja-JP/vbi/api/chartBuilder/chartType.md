@@ -2,8 +2,6 @@
 
 チャートタイプビルダー。チャートタイプの切り替えと取得に使います。テーブル、棒グラフ、折れ線グラフ、円グラフ、散布図など複数のチャートタイプをサポートします
 
-## プロパティ
-
 ## メソッド
 
 ### constructor
@@ -86,14 +84,14 @@ getSupportedDimensionEncodings()
 **定義**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **パラメータ**:
 
 | パラメータ | 型 | 説明 |
 | --- | --- | --- |
-| `dimensionCount` | number | - ディメンション数。デフォルトでは現在の DSL のディメンション数を使用 |
+| `dimensionCount?` | number | - ディメンション数。デフォルトでは現在の DSL のディメンション数を使用 |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ getSupportedMeasureEncodings()
 **定義**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **パラメータ**:
 
 | パラメータ | 型 | 説明 |
 | --- | --- | --- |
-| `measureCount` | number | - メジャー数。デフォルトでは現在の DSL のメジャー数を使用 |
+| `measureCount?` | number | - メジャー数。デフォルトでは現在の DSL のメジャー数を使用 |
 
 ### toJSON
 

@@ -1,6 +1,5 @@
 import { createVBI, VBI } from '@visactor/vbi'
 import { VBIChartDSL } from 'src/types/chartDSL'
-import { getConnector, registerConnector } from 'src/chart-builder/connector'
 
 describe('VBI', () => {
   test('build', () => {
@@ -120,22 +119,39 @@ describe('VBI', () => {
     })
   })
 
-  test('getConnector throws for unregistered connector', async () => {
+  test('connectors.get throws for unregistered connector', async () => {
     const unregisteredId = 'unregistered-connector-id'
 
-    await expect(getConnector(unregisteredId)).rejects.toThrow(`connector ${unregisteredId} not registered`)
+    await expect(VBI.connectors.get(unregisteredId)).rejects.toThrow(`connector ${unregisteredId} not registered`)
   })
 
-  test('getConnector handles async factory function', async () => {
+  test('connectors.get handles async factory function', async () => {
     const testConnectorId = 'test-async-connector'
-    registerConnector(testConnectorId, async () => ({
+    VBI.connectors.register(testConnectorId, async () => ({
       discoverSchema: async () => [{ name: 'test', type: 'string' }],
       query: async () => ({ dataset: [] }),
     }))
 
-    const connector = await getConnector(testConnectorId)
+    const connector = await VBI.connectors.get(testConnectorId)
     const schema = await connector.discoverSchema()
     expect(schema).toEqual([{ name: 'test', type: 'string' }])
+  })
+
+  test('connectors facade wraps the global connector registry', async () => {
+    const testConnectorId = 'test-facade-connector'
+    VBI.connectors.unregister(testConnectorId)
+
+    expect(VBI.connectors.has(testConnectorId)).toBe(false)
+
+    VBI.connectors.register(testConnectorId, {
+      discoverSchema: async () => [{ name: 'facade', type: 'string' }],
+      query: async () => ({ dataset: [] }),
+    })
+
+    expect(VBI.connectors.has(testConnectorId)).toBe(true)
+    expect(await VBI.connectors.get(testConnectorId)).toMatchObject({ discoverSchema: expect.any(Function) })
+    expect(VBI.connectors.unregister(testConnectorId)).toBe(true)
+    expect(VBI.connectors.has(testConnectorId)).toBe(false)
   })
 
   test('createVBI uses defaultBuilderOptions when createChart is called without overrides', async () => {

@@ -1,7 +1,5 @@
 # ReportPageBuilder
 
-## 속성
-
 ## 메서드
 
 ### constructor

@@ -2,8 +2,6 @@
 
 Builder locale untuk mengatur dan mengambil locale saat ini
 
-## Properti
-
 ## Metode
 
 ### constructor

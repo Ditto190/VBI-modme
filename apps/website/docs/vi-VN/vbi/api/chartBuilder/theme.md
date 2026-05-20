@@ -2,8 +2,6 @@
 
 Builder chủ đề, dùng để thiết lập và lấy chủ đề hiện tại
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

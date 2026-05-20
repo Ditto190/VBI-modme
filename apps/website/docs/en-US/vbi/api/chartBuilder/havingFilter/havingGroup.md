@@ -2,8 +2,6 @@
 
 Having group builder for configuring the logical relationship (AND/OR) of a condition group.
 
-## Properties
-
 ## Methods
 
 ### constructor

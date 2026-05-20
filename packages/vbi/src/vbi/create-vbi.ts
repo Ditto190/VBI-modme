@@ -1,29 +1,27 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
-import { connectorMap, getConnector, registerConnector } from 'src/chart-builder/connector'
-import type {
-  VBIChartBuilderOptions,
-  VBIChartDSLInput,
-  VBIDashboardDSLInput,
-  VBIInsightDSLInput,
-  VBIReportBuilderOptions,
-  VBIReportDSLInput,
-} from 'src/types'
-import { createEmptyChart } from './create-empty-chart'
-import { createEmptyDashboard } from './create-empty-dashboard'
-import { createEmptyInsight } from './create-empty-insight'
-import { createEmptyReport } from './create-empty-report'
-import { createEmptyReportPage } from './create-empty-report-page'
+import type { VBIChartBuilderOptions } from 'src/types'
 import {
-  createChartBuilderFromVBIChartDSLInput,
-  createDashboardBuilderFromVBIDashboardDSLInput,
-  createInsightBuilderFromVBIInsightDSLInput,
-  createReportBuilderFromVBIReportDSLInput,
-} from './from'
-import { mergeBuilderOptions, mergeReportBuilderOptions } from './merge-builder-options'
+  createVBIChartNamespace,
+  createVBIConnectorNamespace,
+  createVBIDashboardNamespace,
+  createVBIInsightNamespace,
+  createVBIReportNamespace,
+  createVBIResourceNamespace,
+} from './namespaces'
 import { createVBIResourceRegistry } from './resources'
 import type { VBIInstance } from './types'
 
+/**
+ * @description 创建一个独立的 VBI 实例。
+ *
+ * 每个实例都有自己的资源注册表，适合在同一应用中隔离不同报表、仪表盘或测试上下文。
+ */
 export function createVBI(): VBIInstance<DefaultVBIQueryDSL, DefaultVBISeedDSL>
+/**
+ * @description 创建一个使用自定义 QueryDSL 和 SeedDSL 的 VBI 实例。
+ *
+ * @param defaultBuilderOptions 默认图表 Builder 配置，会传递给 chart、report 和 dashboard 中创建的图表 Builder。
+ */
 export function createVBI<TQueryDSL, TSeedDSL>(
   defaultBuilderOptions: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>,
 ): VBIInstance<TQueryDSL, TSeedDSL>
@@ -32,45 +30,12 @@ export function createVBI<TQueryDSL = DefaultVBIQueryDSL, TSeedDSL = DefaultVBIS
 ) {
   const resourceRegistry = createVBIResourceRegistry<TQueryDSL, TSeedDSL>()
 
-  const createChart = (vbi: VBIChartDSLInput, builderOptions?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>) => {
-    const options = mergeBuilderOptions(defaultBuilderOptions, builderOptions)
-    const builder = createChartBuilderFromVBIChartDSLInput(vbi, options)
-    resourceRegistry.charts.registerBuilder(builder.getUUID(), builder)
-    return builder
-  }
-  const createInsight = (insight: VBIInsightDSLInput) => {
-    const builder = createInsightBuilderFromVBIInsightDSLInput(insight)
-    resourceRegistry.insights.registerBuilder(builder.getUUID(), builder)
-    return builder
-  }
-  const createDashboard = (dashboard: VBIDashboardDSLInput) => {
-    return createDashboardBuilderFromVBIDashboardDSLInput(dashboard)
-  }
-  const createReport = (report: VBIReportDSLInput, builderOptions?: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>) => {
-    const options = mergeReportBuilderOptions(defaultBuilderOptions, builderOptions)
-    return createReportBuilderFromVBIReportDSLInput(report, options, resourceRegistry)
-  }
-
   return {
-    connectorMap,
-    registerConnector,
-    getConnector,
-    chart: {
-      create: createChart,
-      createEmpty: createEmptyChart,
-    },
-    insight: {
-      create: createInsight,
-      createEmpty: createEmptyInsight,
-    },
-    dashboard: {
-      create: createDashboard,
-      createEmpty: createEmptyDashboard,
-    },
-    report: {
-      create: createReport,
-      createEmpty: createEmptyReport,
-      createEmptyPage: createEmptyReportPage,
-    },
+    connectors: createVBIConnectorNamespace(),
+    resources: createVBIResourceNamespace(resourceRegistry),
+    dashboard: createVBIDashboardNamespace(defaultBuilderOptions, resourceRegistry),
+    report: createVBIReportNamespace(defaultBuilderOptions, resourceRegistry),
+    chart: createVBIChartNamespace(defaultBuilderOptions, resourceRegistry),
+    insight: createVBIInsightNamespace(resourceRegistry),
   } satisfies VBIInstance<TQueryDSL, TSeedDSL>
 }

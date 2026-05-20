@@ -2,8 +2,6 @@
 
 Builder de limite de données pour définir et lire le limit courant
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

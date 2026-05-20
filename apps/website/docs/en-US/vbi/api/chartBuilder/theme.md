@@ -2,8 +2,6 @@
 
 Theme builder for setting and getting the current theme.
 
-## Properties
-
 ## Methods
 
 ### constructor

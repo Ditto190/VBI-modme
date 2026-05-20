@@ -2,8 +2,6 @@
 
 Builder de nœud de dimension pour configurer une seule dimension
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

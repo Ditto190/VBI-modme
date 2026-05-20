@@ -2,8 +2,6 @@
 
 차트 타입을 전환하고 가져오는 차트 타입 빌더입니다. 테이블, 막대, 라인, 파이, 산점도 등 여러 차트 타입을 지원합니다
 
-## 속성
-
 ## 메서드
 
 ### constructor
@@ -86,14 +84,14 @@ getSupportedDimensionEncodings()
 **정의**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **매개변수**:
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `dimensionCount` | number | - 차원 수. 기본값은 현재 DSL의 차원 수 |
+| `dimensionCount?` | number | - 차원 수. 기본값은 현재 DSL의 차원 수 |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ getSupportedMeasureEncodings()
 **정의**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **매개변수**:
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `measureCount` | number | - 지표 수. 기본값은 현재 DSL의 지표 수 |
+| `measureCount?` | number | - 지표 수. 기본값은 현재 DSL의 지표 수 |
 
 ### toJSON
 

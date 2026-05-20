@@ -2,8 +2,6 @@
 
 Builder de type de graphique pour changer et récupérer le type de graphique. Prend en charge les tableaux, graphiques en barres, graphiques en courbes, graphiques en secteurs, nuages de points et d'autres types de graphiques
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor
@@ -86,14 +84,14 @@ Renvoyer les encodages de dimensions recommandés selon le type de graphique cou
 **Définition**:
 
 ```typescript
-getRecommendedDimensionEncodings(dimensionCount: number)
+getRecommendedDimensionEncodings(dimensionCount?: number)
 ```
 
 **Paramètres**:
 
 | Paramètre | Type | Description |
 | --- | --- | --- |
-| `dimensionCount` | number | - Nombre de dimensions ; par défaut le nombre de dimensions dans la DSL courante |
+| `dimensionCount?` | number | - Nombre de dimensions ; par défaut le nombre de dimensions dans la DSL courante |
 
 ### getSupportedMeasureEncodings
 
@@ -112,14 +110,14 @@ Renvoyer les encodages de mesures recommandés selon le type de graphique couran
 **Définition**:
 
 ```typescript
-getRecommendedMeasureEncodings(measureCount: number)
+getRecommendedMeasureEncodings(measureCount?: number)
 ```
 
 **Paramètres**:
 
 | Paramètre | Type | Description |
 | --- | --- | --- |
-| `measureCount` | number | - Nombre de mesures ; par défaut le nombre de mesures dans la DSL courante |
+| `measureCount?` | number | - Nombre de mesures ; par défaut le nombre de mesures dans la DSL courante |
 
 ### toJSON
 

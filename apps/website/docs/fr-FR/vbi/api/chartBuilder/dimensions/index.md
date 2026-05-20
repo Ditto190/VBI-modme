@@ -2,8 +2,6 @@
 
 Builder de dimensions pour ajouter, modifier et supprimer la configuration des dimensions. Les dimensions sont des champs catégoriels, par exemple le temps, la région ou la catégorie de produit
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

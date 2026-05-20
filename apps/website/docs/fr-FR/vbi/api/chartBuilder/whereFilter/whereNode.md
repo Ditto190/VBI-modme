@@ -2,8 +2,6 @@
 
 Builder de nœud de filtre Where pour configurer une seule condition Where
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

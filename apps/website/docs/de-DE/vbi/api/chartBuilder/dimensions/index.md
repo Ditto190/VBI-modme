@@ -2,8 +2,6 @@
 
 Dimensions-Builder zum Hinzufügen, Ändern und Entfernen von Dimensionskonfigurationen. Dimensionen sind kategoriale Datenfelder wie Zeit, Region oder Produktkategorie
 
-## Eigenschaften
-
 ## Methoden
 
 ### constructor

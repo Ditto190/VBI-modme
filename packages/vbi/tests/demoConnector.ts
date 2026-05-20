@@ -33,7 +33,7 @@ const SUPERMARKET_SCHEMA: Array<{ name: string; type: string }> = [
  * This connector can be reused by all test examples
  */
 export function registerDemoConnector() {
-  VBI.registerConnector(DEMO_CONNECTOR_ID, async () => {
+  VBI.connectors.register(DEMO_CONNECTOR_ID, async () => {
     // Create a shared VQuery instance
     const vquery = new VQuery()
 

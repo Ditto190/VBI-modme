@@ -2,8 +2,6 @@
 
 YJS 기반 실행 취소/다시 실행 기능을 제공하는 Undo/Redo 관리자이며 스택 관리와 기록 지우기를 지원합니다
 
-## 속성
-
 ## 메서드
 
 ### constructor
@@ -77,7 +75,7 @@ canRedo(): boolean
 **정의**:
 
 ```typescript
-clear(clearUndoStack: boolean, clearRedoStack: boolean): void
+clear(clearUndoStack?: boolean, clearRedoStack?: boolean): void
 ```
 
 **반환**: `void`
@@ -86,5 +84,5 @@ clear(clearUndoStack: boolean, clearRedoStack: boolean): void
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `clearUndoStack` | boolean | - undo 스택을 지울지 여부, 기본값 true |
-| `clearRedoStack` | boolean | - redo 스택을 지울지 여부, 기본값 true |
+| `clearUndoStack?` | boolean | - undo 스택을 지울지 여부, 기본값 true |
+| `clearRedoStack?` | boolean | - redo 스택을 지울지 여부, 기본값 true |
