@@ -17,7 +17,7 @@
 **정의**:
 
 ```typescript
-constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, resourceRegistry: VBIResourceRegistry<TQueryDSL, TSeedDSL>)
+constructor(doc: Y.Doc, dependencies?: VBIReportBuilderDependencies<TQueryDSL, TSeedDSL>)
 ```
 
 **매개변수**:
@@ -25,15 +25,14 @@ constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, r
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
-| `options` | VBIReportBuilderOptions<TQueryDSL, TSeedDSL> | - |
-| `resourceRegistry` | VBIResourceRegistry<TQueryDSL, TSeedDSL> | - |
+| `dependencies?` = {} | VBIReportBuilderDependencies<TQueryDSL, TSeedDSL> | - |
 
 ### applyUpdate
 
 **정의**:
 
 ```typescript
-applyUpdate(update: Uint8Array, transactionOrigin: any): any
+applyUpdate(update: Uint8Array, transactionOrigin?: any): any
 ```
 
 **반환**: `any`
@@ -43,14 +42,14 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
-| `transactionOrigin` | any | - |
+| `transactionOrigin?` | any | - |
 
 ### encodeStateAsUpdate
 
 **정의**:
 
 ```typescript
-encodeStateAsUpdate(targetStateVector: Uint8Array): any
+encodeStateAsUpdate(targetStateVector?: Uint8Array): any
 ```
 
 **반환**: `any`
@@ -59,7 +58,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 
 | 매개변수 | 타입 | 설명 |
 | --- | --- | --- |
-| `targetStateVector` | Uint8Array | - |
+| `targetStateVector?` | Uint8Array | - |
 
 ### getUUID
 

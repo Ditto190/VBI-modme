@@ -1,7 +1,5 @@
 # ReportPageCollectionBuilder
 
-## プロパティ
-
 ## メソッド
 
 ### constructor
@@ -25,7 +23,7 @@ constructor(parent: VBIReportBuilder<TQueryDSL, TSeedDSL>, doc: Y.Doc, dsl: Y.Ma
 **定義**:
 
 ```typescript
-add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
+add(title: string, callback?: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void): VBIReportBuilder<TQueryDSL, TSeedDSL>
 ```
 
 **戻り値**: `VBIReportBuilder<TQueryDSL, TSeedDSL>`
@@ -35,7 +33,7 @@ add(title: string, callback: (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => v
 | パラメータ | 型 | 説明 |
 | --- | --- | --- |
 | `title` | string | - |
-| `callback` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
+| `callback?` | (page: ReportPageBuilder<TQueryDSL, TSeedDSL>) => void | - |
 
 ### remove
 

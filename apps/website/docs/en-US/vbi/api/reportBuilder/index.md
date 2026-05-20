@@ -17,7 +17,7 @@
 **Definition**:
 
 ```typescript
-constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, resourceRegistry: VBIResourceRegistry<TQueryDSL, TSeedDSL>)
+constructor(doc: Y.Doc, dependencies?: VBIReportBuilderDependencies<TQueryDSL, TSeedDSL>)
 ```
 
 **Parameters**:
@@ -25,15 +25,14 @@ constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, r
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
-| `options` | VBIReportBuilderOptions<TQueryDSL, TSeedDSL> | - |
-| `resourceRegistry` | VBIResourceRegistry<TQueryDSL, TSeedDSL> | - |
+| `dependencies?` = {} | VBIReportBuilderDependencies<TQueryDSL, TSeedDSL> | - |
 
 ### applyUpdate
 
 **Definition**:
 
 ```typescript
-applyUpdate(update: Uint8Array, transactionOrigin: any): any
+applyUpdate(update: Uint8Array, transactionOrigin?: any): any
 ```
 
 **Returns**: `any`
@@ -43,14 +42,14 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
-| `transactionOrigin` | any | - |
+| `transactionOrigin?` | any | - |
 
 ### encodeStateAsUpdate
 
 **Definition**:
 
 ```typescript
-encodeStateAsUpdate(targetStateVector: Uint8Array): any
+encodeStateAsUpdate(targetStateVector?: Uint8Array): any
 ```
 
 **Returns**: `any`
@@ -59,7 +58,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `targetStateVector` | Uint8Array | - |
+| `targetStateVector?` | Uint8Array | - |
 
 ### getUUID
 

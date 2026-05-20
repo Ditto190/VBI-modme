@@ -1,7 +1,5 @@
 # ReportPageBuilder
 
-## Propriétés
-
 ## Méthodes
 
 ### constructor

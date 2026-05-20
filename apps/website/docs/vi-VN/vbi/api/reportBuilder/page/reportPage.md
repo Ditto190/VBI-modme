@@ -1,7 +1,5 @@
 # ReportPageBuilder
 
-## Thuộc tính
-
 ## Phương thức
 
 ### constructor

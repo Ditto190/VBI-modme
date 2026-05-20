@@ -2,22 +2,23 @@
   {
     "type": "dir",
     "name": "chart",
-    "label": "Chart",
+    "label": "chart",
     "collapsible": true,
     "collapsed": false
   },
   {
-    "type": "dir",
+    "type": "file",
     "name": "insight",
-    "label": "Insight",
-    "collapsible": true,
-    "collapsed": false
+    "label": "insight"
   },
   {
-    "type": "dir",
+    "type": "file",
+    "name": "dashboard",
+    "label": "dashboard"
+  },
+  {
+    "type": "file",
     "name": "report",
-    "label": "Report",
-    "collapsible": true,
-    "collapsed": false
+    "label": "report"
   }
 ]

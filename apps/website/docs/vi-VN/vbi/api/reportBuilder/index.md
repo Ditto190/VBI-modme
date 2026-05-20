@@ -17,7 +17,7 @@
 **Định nghĩa**:
 
 ```typescript
-constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, resourceRegistry: VBIResourceRegistry<TQueryDSL, TSeedDSL>)
+constructor(doc: Y.Doc, dependencies?: VBIReportBuilderDependencies<TQueryDSL, TSeedDSL>)
 ```
 
 **Tham số**:
@@ -25,15 +25,14 @@ constructor(doc: Y.Doc, options: VBIReportBuilderOptions<TQueryDSL, TSeedDSL>, r
 | Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `doc` | Y.Doc | - |
-| `options` | VBIReportBuilderOptions<TQueryDSL, TSeedDSL> | - |
-| `resourceRegistry` | VBIResourceRegistry<TQueryDSL, TSeedDSL> | - |
+| `dependencies?` = {} | VBIReportBuilderDependencies<TQueryDSL, TSeedDSL> | - |
 
 ### applyUpdate
 
 **Định nghĩa**:
 
 ```typescript
-applyUpdate(update: Uint8Array, transactionOrigin: any): any
+applyUpdate(update: Uint8Array, transactionOrigin?: any): any
 ```
 
 **Trả về**: `any`
@@ -43,14 +42,14 @@ applyUpdate(update: Uint8Array, transactionOrigin: any): any
 | Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
 | `update` | Uint8Array | - |
-| `transactionOrigin` | any | - |
+| `transactionOrigin?` | any | - |
 
 ### encodeStateAsUpdate
 
 **Định nghĩa**:
 
 ```typescript
-encodeStateAsUpdate(targetStateVector: Uint8Array): any
+encodeStateAsUpdate(targetStateVector?: Uint8Array): any
 ```
 
 **Trả về**: `any`
@@ -59,7 +58,7 @@ encodeStateAsUpdate(targetStateVector: Uint8Array): any
 
 | Tham số | Kiểu | Mô tả |
 | --- | --- | --- |
-| `targetStateVector` | Uint8Array | - |
+| `targetStateVector?` | Uint8Array | - |
 
 ### getUUID
 
