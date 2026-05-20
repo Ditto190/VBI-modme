@@ -28,6 +28,8 @@
   "rules": {
     "no-console": "off",
     "import/no-cycle": "warn",
+    "typescript/consistent-type-exports": "warn",
+    "typescript/consistent-type-imports": "warn",
     "typescript/no-explicit-any": "off",
     "typescript/triple-slash-reference": "off"
   },
