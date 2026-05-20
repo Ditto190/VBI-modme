@@ -54,7 +54,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('line')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -232,7 +232,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('column')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -382,7 +382,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('columnParallel')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -560,7 +560,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('bar')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -722,7 +722,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('pie')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -872,7 +872,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('area')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1050,7 +1050,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('area')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1228,7 +1228,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('donut')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1390,7 +1390,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('pie')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1540,7 +1540,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('pie')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1715,7 +1715,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('scatter')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1882,7 +1882,7 @@ describe('chart / ChartType', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.chartType.changeChartType('bar')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`

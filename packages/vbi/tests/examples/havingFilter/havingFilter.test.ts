@@ -56,7 +56,7 @@ describe('chart / HavingFilter', () => {
         node.setAggregate({ func: 'sum' }).setOperator('gt').setValue(1000000)
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -245,7 +245,7 @@ describe('chart / HavingFilter', () => {
         .add('sales', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(1000000))
         .add('profit', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(200000))
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -489,7 +489,7 @@ describe('chart / HavingFilter', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.havingFilter.clear()
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -678,7 +678,7 @@ describe('chart / HavingFilter', () => {
         node.setOperator('=').setValue([100, 200, 300])
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -846,7 +846,7 @@ describe('chart / HavingFilter', () => {
         node.setOperator('!=').setValue([100, 200])
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1068,7 +1068,7 @@ describe('chart / HavingFilter', () => {
         })
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1394,7 +1394,7 @@ describe('chart / HavingFilter', () => {
         })
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1778,7 +1778,7 @@ describe('chart / HavingFilter', () => {
       const dimensions = builder.dsl.get('dimensions')
       dimensions.get(0).set('id', 'c3583433-a2cc-4234-85ff-75ae2472b674')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -1992,7 +1992,7 @@ describe('chart / HavingFilter', () => {
       builder.havingFilter.add('profit', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(100000))
       builder.limit.setLimit(20)
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2188,7 +2188,7 @@ describe('chart / HavingFilter', () => {
         n.setOperator('gte').setValue(50000)
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2435,7 +2435,7 @@ describe('chart / HavingFilter', () => {
         group.add('amount', (n) => n.setAggregate({ func: 'sum' }).setOperator('gte').setValue(200))
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2752,7 +2752,7 @@ describe('chart / HavingFilter', () => {
         group.remove('cond-1')
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -2979,7 +2979,7 @@ describe('chart / HavingFilter', () => {
           group.add('amount', (n) => n.setAggregate({ func: 'sum' }).setOperator('gte').setValue(30))
         })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3276,7 +3276,7 @@ describe('chart / HavingFilter', () => {
         g.add('sales', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(100000))
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3580,7 +3580,7 @@ describe('chart / HavingFilter', () => {
         })
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -3878,7 +3878,7 @@ describe('chart / HavingFilter', () => {
         group.add('profit', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(200000))
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -4131,7 +4131,7 @@ describe('chart / HavingFilter', () => {
         g.add('sales', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(10000))
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -4472,7 +4472,7 @@ describe('chart / HavingFilter', () => {
         group.setOperator('or')
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -4717,7 +4717,7 @@ describe('chart / HavingFilter', () => {
         g.add('profit', (n) => n.setAggregate({ func: 'sum' }).setOperator('gt').setValue(10000))
       })
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`
@@ -5019,7 +5019,7 @@ describe('chart / HavingFilter', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.havingFilter.remove('having-1')
     }
-    applyBuilder(builder)
+    await applyBuilder(builder)
 
     const vbiDSL = builder.build()
     expect(vbiDSL).toMatchInlineSnapshot(`

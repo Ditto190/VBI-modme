@@ -71,7 +71,7 @@ describe('Report', () => {
         page.setInsightId(resources.insights.salesInsight)
       })
     }
-    applyBuilder(builder, resources)
+    await applyBuilder(builder, resources)
 
     const reportDSL = builder.build()
     expect(reportDSL).toMatchInlineSnapshot(`

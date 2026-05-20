@@ -5,6 +5,11 @@ let resourceUUIDCounter = 0
 const originalUuid = id.uuid
 const originalResourceUUID = id.resourceUUID
 
+;(globalThis as any).__vbiOriginalId = {
+  uuid: originalUuid,
+  resourceUUID: originalResourceUUID,
+}
+
 beforeEach(() => {
   idCounter = 0
   resourceUUIDCounter = 0

@@ -16,6 +16,8 @@ type ToolbarProps = {
   rowCount: number
 }
 
+const HIDDEN_CHART_TYPE_ENTRIES = new Set(['boxPlot', 'histogram'])
+
 const Settings = ({ builder, dsl, hideLocale, hideTheme, labels }: ToolbarProps) => (
   <div className='mini-settings'>
     <label>
@@ -56,7 +58,10 @@ export const Toolbar = (props: ToolbarProps) => (
       <strong>VBI</strong>
       <Select
         className='mini-chart-type'
-        options={props.builder.chartType.getAvailableChartTypes().map((type) => ({ label: type, value: type }))}
+        options={props.builder.chartType
+          .getAvailableChartTypes()
+          .filter((type) => !HIDDEN_CHART_TYPE_ENTRIES.has(type))
+          .map((type) => ({ label: type, value: type }))}
         value={props.dsl.chartType}
         onChange={(type) => props.builder.chartType.changeChartType(type)}
       />
