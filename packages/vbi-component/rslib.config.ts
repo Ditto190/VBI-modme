@@ -1,4 +1,5 @@
 import { defineConfig } from '@rslib/core'
+import pkg from './package.json'
 
 export default defineConfig({
   lib: [
@@ -12,6 +13,11 @@ export default defineConfig({
       syntax: ['node 18'],
     },
   ],
+  source: {
+    define: {
+      __VDASH_VERSION__: JSON.stringify(pkg.version),
+    },
+  },
   output: {
     sourceMap: true,
   },
