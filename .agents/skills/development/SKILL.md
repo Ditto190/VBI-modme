@@ -39,6 +39,7 @@ package, practice, or entropy risk in front of you.
 - `packages/vquery`: QueryDSL-to-SQL and query execution.
 - `packages/vseed`: VSeed examples, lowering, and rendering specs.
 - `packages/vbi-agent`: Builder Agent runtime and tool protocol.
+- `packages/vbi-component`: shared component layer for VBI.
 - `packages/vbi-react`: React integration.
 - `apps/*`: product applications, docs website, backend, provider, and CLI.
 - `practices/*`: independent practice examples. Treat
