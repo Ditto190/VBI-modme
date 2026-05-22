@@ -38,10 +38,12 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
   },
   "devDependencies": {
+    "@open-wc/testing": "4.0.0",
     "@rslib/core": "0.20.3",
     "@rstest/core": "0.8.3",
     "@types/node": "24.10.1",
     "@visactor/vchart": "2.0.23-alpha.6",
+    "jsdom": "29.1.1",
     "typescript": "6.0.2"
   },
   "peerDependencies": {
