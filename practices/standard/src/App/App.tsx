@@ -9,13 +9,13 @@ import koKR from 'antd/locale/ko_KR'
 import viVN from 'antd/locale/vi_VN'
 import zhCN from 'antd/locale/zh_CN'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ShelfDndProvider } from 'src/components/Shelves/dnd'
-import { Toolbar } from 'src/components/Toolbar'
-import { DEMO_DEFAULT_LOCALE, DEMO_DEFAULT_THEME, type DemoLocale, type DemoTheme } from 'src/constants/builder'
-import { useVBIBuilder } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore, VBIStoreProvider } from 'src/model'
-import { initVBIConnector } from 'src/utils/localConnector'
+import { ShelfDndProvider } from '../components/Shelves/dnd'
+import { Toolbar } from '../components/Toolbar'
+import { DEMO_DEFAULT_LOCALE, DEMO_DEFAULT_THEME, type DemoLocale, type DemoTheme } from '../constants/builder'
+import { useVBIBuilder } from '../hooks'
+import { useTranslation } from '../i18n'
+import { useVBIStore, VBIStoreProvider } from '../model'
+import { initVBIConnector } from '../utils/localConnector'
 import { useShallow } from 'zustand/shallow'
 import './app.css'
 import { ChartPanel, FieldsPanel, ShelfPanel, ViewPanel } from './components'
@@ -126,7 +126,6 @@ const AppContent = ({
   mode: AppMode
   themeMode: DemoTheme
 }) => {
-  const logState = useVBIStore((state) => state.logState)
   const { locale, t } = useTranslation()
   const antdLocale = DEMO_ANTD_LOCALES[locale]
   const antdThemeConfig = useMemo(() => createThemeConfig(themeMode), [themeMode])
@@ -177,17 +176,7 @@ const AppContent = ({
 
   return (
     <ConfigProvider locale={antdLocale} theme={antdThemeConfig} componentSize='small'>
-      <div
-        ref={appRootRef}
-        className={`demo-app-root demo-app-root--${mode}`}
-        onClick={
-          mode === 'edit'
-            ? () => {
-                void logState()
-              }
-            : undefined
-        }
-      >
+      <div ref={appRootRef} className={`demo-app-root demo-app-root--${mode}`}>
         {!initialized ? (
           mode === 'edit' ? (
             <Spin tip={t('appInitializing')} fullscreen />
@@ -223,7 +212,9 @@ const AppShell = ({ builder, mode }: { builder?: VBIChartBuilder; mode: AppMode 
     let cleanup: ReturnType<typeof initialize> | undefined
 
     void (async () => {
-      await initVBIConnector()
+      if (!builder) {
+        await initVBIConnector()
+      }
       if (!isActive) return
       cleanup = initialize(builder)
     })()

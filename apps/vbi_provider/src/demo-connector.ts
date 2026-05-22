@@ -1,31 +1,7 @@
 import { VBI, type VBIConnector } from '@visactor/vbi'
 import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
-import supermarketCsv from './dataset/supermarket.csv?raw'
-
-export const DEMO_CONNECTOR_ID = 'demo'
-
-const demoSchema: DatasetColumn[] = [
-  { name: 'id', type: 'string' },
-  { name: 'order_id', type: 'string' },
-  { name: 'order_date', type: 'date' },
-  { name: 'delivery_date', type: 'date' },
-  { name: 'delivery_method', type: 'string' },
-  { name: 'customer_id', type: 'string' },
-  { name: 'customer_name', type: 'string' },
-  { name: 'customer_type', type: 'string' },
-  { name: 'city', type: 'string' },
-  { name: 'province', type: 'string' },
-  { name: 'country_or_region', type: 'string' },
-  { name: 'area', type: 'string' },
-  { name: 'product_id', type: 'string' },
-  { name: 'product_type', type: 'string' },
-  { name: 'product_sub_type', type: 'string' },
-  { name: 'product_name', type: 'string' },
-  { name: 'sales', type: 'number' },
-  { name: 'amount', type: 'number' },
-  { name: 'discount', type: 'number' },
-  { name: 'profit', type: 'number' },
-]
+import supermarketCsv from './dataset/supermarket-csv'
+import { DEMO_CONNECTOR_ID, demoSchema } from './demo-connector-common'
 
 type VQueryInstance = InstanceType<typeof VQuery>
 
@@ -54,6 +30,8 @@ export const demoConnector: VBIConnector = {
     return { dataset: result.dataset }
   },
 }
+
+export { DEMO_CONNECTOR_ID }
 
 export const registerDemoConnector = () => {
   VBI.connectors.register(DEMO_CONNECTOR_ID, demoConnector)

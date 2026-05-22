@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
-import type { DemoLocale } from 'src/constants/builder'
-import { useVBIBuilder } from 'src/hooks'
-import { useVBIStore } from 'src/model'
+import type { DemoLocale } from '../constants/builder'
+import { useVBIBuilder } from '../hooks'
+import { useVBIStore } from '../model'
 import { createTranslator, type TranslationParams } from './utils'
 
 type UseTranslationResult = {

@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
 import { AppstoreOutlined } from '@ant-design/icons'
 import { Button, Popover, Typography, theme } from 'antd'
-import { useVBIChartType } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore } from 'src/model'
-import { getChartTypeGroups, getChartTypeMeta } from 'src/components/Toolbar/config'
+import { useVBIChartType } from '../../hooks'
+import { useTranslation } from '../../i18n'
+import { useVBIStore } from '../../model'
+import { getChartTypeGroups, getChartTypeMeta } from '../Toolbar/config'
 
 const { Text } = Typography
 const PANEL_CARD_WIDTH = 96

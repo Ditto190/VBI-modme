@@ -1,6 +1,6 @@
 import { Card, Flex, theme } from 'antd'
-import { DimensionShelf, HavingShelf, MeasureShelf, WhereShelf } from 'src/components/Shelves'
-import { useTranslation } from 'src/i18n'
+import { DimensionShelf, HavingShelf, MeasureShelf, WhereShelf } from '../../components/Shelves'
+import { useTranslation } from '../../i18n'
 import { FilterRootOperatorToggle } from './FilterRootOperatorToggle'
 import { ShelfRow } from './ShelfRow'
 

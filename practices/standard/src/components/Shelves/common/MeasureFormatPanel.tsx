@@ -1,7 +1,7 @@
 import { Button, Flex, Input, InputNumber, Select, Segmented, Switch, Typography, theme } from 'antd'
 import { useCallback, useMemo } from 'react'
 import type { VBIMeasureFormat } from '@visactor/vbi'
-import { useTranslation } from 'src/i18n'
+import { useTranslation } from '../../../i18n'
 
 type MeasureFormatPanelProps = {
   format?: VBIMeasureFormat

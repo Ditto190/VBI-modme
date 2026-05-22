@@ -6,8 +6,8 @@ import {
   DEMO_DEFAULT_THEME,
   type DemoLocale,
   type DemoTheme,
-} from 'src/constants/builder'
-import { useVBIStoreConfig } from 'src/model'
+} from '../constants/builder'
+import { useVBIStoreConfig } from '../model'
 
 export interface VBIBuilderState {
   locale: DemoLocale

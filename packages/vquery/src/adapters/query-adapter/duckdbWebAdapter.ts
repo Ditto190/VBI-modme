@@ -3,6 +3,11 @@ import { AsyncDuckDB, selectBundle, ConsoleLogger } from '@duckdb/duckdb-wasm'
 import type { QueryAdapter } from '../../types'
 import type { QueryResult } from '../../types/DataSet'
 
+const toAbsoluteBrowserUrl = (url?: string | null) => {
+  if (!url || !globalThis.location?.href) return url
+  return new URL(url, globalThis.location.href).href
+}
+
 export class DuckDBWebQueryAdapter implements QueryAdapter {
   private db: AsyncDuckDB | null = null
   private connection: AsyncDuckDBConnection | null = null
@@ -21,14 +26,17 @@ export class DuckDBWebQueryAdapter implements QueryAdapter {
       },
     }
     const bundle = await selectBundle(MANUAL_BUNDLES)
+    const mainModule = toAbsoluteBrowserUrl(bundle.mainModule)!
+    const mainWorker = toAbsoluteBrowserUrl(bundle.mainWorker)!
+    const pthreadWorker = toAbsoluteBrowserUrl(bundle.pthreadWorker)
     const worker_url = URL.createObjectURL(
-      new Blob([`importScripts("${bundle.mainWorker!}");`], { type: 'text/javascript' }),
+      new Blob([`importScripts(${JSON.stringify(mainWorker)});`], { type: 'text/javascript' }),
     )
     const worker = new Worker(worker_url)
     const logger = new ConsoleLogger()
 
     this.db = new AsyncDuckDB(logger, worker)
-    await this.db.instantiate(bundle.mainModule, bundle.pthreadWorker)
+    await this.db.instantiate(mainModule, pthreadWorker)
     URL.revokeObjectURL(worker_url)
 
     this.connection = await this.db.connect()

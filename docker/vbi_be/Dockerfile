@@ -12,9 +12,9 @@ WORKDIR /app
 
 FROM base AS build
 
-COPY .env.example .env package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ packages/
-COPY apps/vbi_be/ apps/vbi_be/
+# Copy the workspace. .dockerignore is the single source of truth for excluding
+# local-only files, which keeps root and package-level config files in sync.
+COPY . .
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm --filter @visactor/vquery build

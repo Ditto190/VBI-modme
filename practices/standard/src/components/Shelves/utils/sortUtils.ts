@@ -1,5 +1,5 @@
 import type { VBISort } from '@visactor/vbi'
-import type { Translate } from 'src/i18n'
+import type { Translate } from '../../../i18n'
 
 export const getSortMenuSelectedKeys = (sort?: VBISort) => {
   if (!sort) {

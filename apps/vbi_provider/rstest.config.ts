@@ -19,17 +19,4 @@ export default defineConfig({
       '@visactor/headless-bi-provider': ['./src/index.ts'],
     },
   },
-  tools: {
-    rspack: {
-      module: {
-        rules: [
-          {
-            resourceQuery: /raw/,
-            test: /\.csv$/,
-            type: 'asset/source',
-          },
-        ],
-      },
-    },
-  },
 })

@@ -34,7 +34,7 @@ import {
 import { DateFilterEditor } from './DateFilterEditor'
 import { getDefaultDatePredicate } from './dateFilterUtils'
 import type { VBIWhereDatePredicate } from '@visactor/vbi'
-import { useTranslation } from 'src/i18n'
+import { useTranslation } from '../../i18n'
 
 const { Option = Select.Option } = Select
 const { Text } = Typography

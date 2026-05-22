@@ -11,14 +11,9 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-# Copy workspace config first
-COPY .env.example .env package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-# Copy packages source code (needed for dependencies)
-COPY packages/ packages/
-
-# Copy app source code
-COPY apps/vbi_be/ apps/vbi_be/
+# Copy the workspace. .dockerignore is the single source of truth for excluding
+# local-only files, which keeps root and package-level config files in sync.
+COPY . .
 COPY docker/vbi_be/docker-entrypoint.dev.sh /app/docker-entrypoint.dev.sh
 
 # Install all dependencies

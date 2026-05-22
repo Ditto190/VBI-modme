@@ -16,8 +16,8 @@ import {
   RadarChartOutlined,
   TableOutlined,
 } from '@ant-design/icons'
-import { DEMO_DEFAULT_LIMIT, type DemoLocale } from 'src/constants/builder'
-import type { Translate } from 'src/i18n'
+import { DEMO_DEFAULT_LIMIT, type DemoLocale } from '../../constants/builder'
+import type { Translate } from '../../i18n'
 
 export type ChartGroupKey = 'table' | 'comparison' | 'trend' | 'proportion' | 'distribution' | 'hierarchy' | 'dynamic'
 

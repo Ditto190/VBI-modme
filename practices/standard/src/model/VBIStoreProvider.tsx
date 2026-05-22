@@ -1,6 +1,6 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
 import { createContext, useContext, useRef, type PropsWithChildren } from 'react'
-import type { DemoLocale, DemoTheme } from 'src/constants/builder'
+import type { DemoLocale, DemoTheme } from '../constants/builder'
 import { useStore } from 'zustand'
 import { createVBIStore, type VBIStoreApi, type VBIStoreState } from './VBIStore'
 

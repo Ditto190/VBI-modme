@@ -1,4 +1,5 @@
 import {
+  CloudUploadOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined,
   InfoCircleOutlined,
@@ -6,17 +7,16 @@ import {
   RedoOutlined,
   SunOutlined,
   UndoOutlined,
-  CloudUploadOutlined,
 } from '@ant-design/icons'
 import { Button, InputNumber, Segmented, Select, Space, Tooltip, theme } from 'antd'
 import React, { useState } from 'react'
-import { ChartTypeSelector } from 'src/components/ChartType'
-import { CSVModal } from 'src/components/CSVModal'
-import { DEMO_LOCALE_LABELS, DEMO_SUPPORTED_LOCALES, type DemoLocale, type DemoTheme } from 'src/constants/builder'
-import { useVBIBuilder, useVBIUndoManager } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore, useVBIStoreConfig } from 'src/model'
-import { CONNECTOR_ID } from 'src/utils/localConnector'
+import { ChartTypeSelector } from '../ChartType'
+import { CSVModal } from '../CSVModal'
+import { DEMO_LOCALE_LABELS, DEMO_SUPPORTED_LOCALES, type DemoLocale, type DemoTheme } from '../../constants/builder'
+import { useVBIBuilder, useVBIUndoManager } from '../../hooks'
+import { useTranslation } from '../../i18n'
+import { useVBIStore, useVBIStoreConfig } from '../../model'
+import { CONNECTOR_ID } from '../../utils/localConnector'
 import { formatDefaultLimit } from './config'
 
 const normalizeLimitValue = (value: number) => {
@@ -44,6 +44,7 @@ export const Toolbar: React.FC<{
 }> = ({ isFullscreen, onToggleFullscreen }) => {
   const [isCSVModalOpen, setIsCSVModalOpen] = useState(false)
   const builder = useVBIStore((state) => state.builder)
+  const logState = useVBIStore((state) => state.logState)
   const switchSource = useVBIStore((state) => state.switchSource)
   const { token } = theme.useToken()
   const { hideLocale, hideTheme } = useVBIStoreConfig()
@@ -68,6 +69,9 @@ export const Toolbar: React.FC<{
 
   return (
     <div
+      onDoubleClick={() => {
+        void logState()
+      }}
       style={{
         width: '100%',
         overflowX: 'auto',

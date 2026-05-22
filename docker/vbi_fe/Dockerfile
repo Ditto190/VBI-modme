@@ -1,5 +1,8 @@
 # syntax=docker/dockerfile:1.7
 
+ARG VBI_API_ORIGIN=http://vbi_be:3030
+ARG VBI_COLLABORATION_ORIGIN=http://vbi_be:1234
+
 FROM node:24.12.0-slim AS builder
 
 WORKDIR /app
@@ -7,26 +10,37 @@ WORKDIR /app
 # Enable pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ARG VBI_API_ORIGIN
+ARG VBI_COLLABORATION_ORIGIN
+ENV VBI_API_ORIGIN=$VBI_API_ORIGIN
+ENV VBI_COLLABORATION_ORIGIN=$VBI_COLLABORATION_ORIGIN
 RUN corepack enable
 
-# Copy workspace config
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY .env.example .env ./
-
-# Copy source code
-COPY packages/ packages/
-COPY practices/ practices/
-COPY apps/vbi_provider/ apps/vbi_provider/
-COPY apps/vbi_fe/ apps/vbi_fe/
+# Copy the workspace. .dockerignore is the single source of truth for excluding
+# local-only files, which keeps root and package-level config files in sync.
+COPY . .
 
 # Install dependencies and build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm --filter=@visactor/headless-bi-fe build
+RUN pnpm exec turbo build --filter=@visactor/headless-bi-fe^...
+RUN pnpm --filter @visactor/headless-bi-fe build
 
-FROM nginx:alpine
-COPY docker/vbi_fe/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/apps/vbi_fe/dist /usr/share/nginx/html
+FROM node:24.12.0-slim AS runner
 
-EXPOSE 80
+WORKDIR /app
 
-CMD ["nginx", "-g", "daemon off;"]
+ARG VBI_API_ORIGIN
+ARG VBI_COLLABORATION_ORIGIN
+ENV NODE_ENV=production
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
+ENV VBI_API_ORIGIN=$VBI_API_ORIGIN
+ENV VBI_COLLABORATION_ORIGIN=$VBI_COLLABORATION_ORIGIN
+
+COPY --from=builder /app/apps/vbi_fe/.next/standalone ./
+COPY --from=builder /app/apps/vbi_fe/.next/static ./apps/vbi_fe/.next/static
+COPY --from=builder /app/apps/vbi_fe/public ./apps/vbi_fe/public
+
+EXPOSE 3000
+
+CMD ["node", "apps/vbi_fe/server.js"]

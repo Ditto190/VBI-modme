@@ -1,7 +1,7 @@
-import { ShelfRootOperatorButton, type RootOperatorButtonColor } from 'src/components/Shelves/common'
-import { useFilterRootOperator } from 'src/components/Shelves/hooks'
-import { useVBIBuilder } from 'src/hooks'
-import { useVBIStore } from 'src/model'
+import { ShelfRootOperatorButton, type RootOperatorButtonColor } from '../../components/Shelves/common'
+import { useFilterRootOperator } from '../../components/Shelves/hooks'
+import { useVBIBuilder } from '../../hooks'
+import { useVBIStore } from '../../model'
 import { theme } from 'antd'
 import { useMemo } from 'react'
 

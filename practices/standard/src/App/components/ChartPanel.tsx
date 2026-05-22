@@ -1,8 +1,8 @@
 import { Card, Empty, Flex, Space, Typography, theme } from 'antd'
-import { VSeedRender } from 'src/components/Render'
-import { useConfiguredVSeed } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore } from 'src/model'
+import { VSeedRender } from '../../components/Render'
+import { useConfiguredVSeed } from '../../hooks'
+import { useTranslation } from '../../i18n'
+import { useVBIStore } from '../../model'
 
 export const ChartPanel = () => {
   const vseed = useVBIStore((state) => state.vseed)
