@@ -32,13 +32,9 @@ export const createDebugBridge = () => ({
     reports: {
       create: () => useReportsStore.getState().create(),
       load: () => useReportsStore.getState().load(),
-      openReport: (id: string) => useReportsStore.getState().openReport(id),
+      openDetail: (id: string) => useReportsStore.getState().openDetail(id),
       remove: (id: string) => useReportsStore.getState().remove(id),
-      startRename: (id: string) => {
-        const item = useReportsStore.getState().items.find((record) => record.id === id)
-        if (item) useReportsStore.getState().startRename(item)
-      },
-      confirmRename: () => useReportsStore.getState().confirmRename(),
+      renameSelected: () => useReportsStore.getState().renameSelected(),
     },
   },
   dump: () => ({

@@ -47,25 +47,25 @@ const createThemeConfig = (themeMode: DemoTheme) => {
     algorithm: themeMode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     token: {
       colorPrimary: themeMode === 'dark' ? '#6ea8ff' : '#1677ff',
-      borderRadius: 10,
-      borderRadiusLG: 14,
-      borderRadiusSM: 8,
-      borderRadiusXS: 6,
-      borderRadiusOuter: 22,
-      controlHeight: 32,
-      controlHeightSM: 28,
+      borderRadius: 8,
+      borderRadiusLG: 10,
+      borderRadiusSM: 6,
+      borderRadiusXS: 4,
+      borderRadiusOuter: 18,
+      controlHeight: 30,
+      controlHeightSM: 26,
       fontSize: 12,
-      fontSizeSM: 12,
+      fontSizeSM: 11,
     },
   }
 }
 
 const DemoWorkbenchPanels = memo(() => {
   return (
-    <Flex vertical={false} gap={8} style={{ flex: 1, minHeight: 0, minWidth: 0 }}>
+    <Flex vertical={false} gap={7} style={{ flex: 1, minHeight: 0, minWidth: 0 }}>
       <FieldsPanel />
 
-      <Flex vertical gap={8} style={{ flex: '1 1 0', minWidth: 0 }}>
+      <Flex vertical gap={7} style={{ flex: '1 1 0', minWidth: 0 }}>
         <ShelfPanel />
         <ChartPanel />
       </Flex>
@@ -91,7 +91,7 @@ const DemoWorkbench = ({
         vertical
         style={{
           height: '100%',
-          gap: 10,
+          gap: 8,
         }}
       >
         <Card

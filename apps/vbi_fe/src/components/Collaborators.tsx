@@ -1,7 +1,7 @@
-import { Avatar, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import type { HocuspocusProvider } from '@hocuspocus/provider'
 import { funnel } from 'remeda'
+import { Tooltip } from './ui/tooltip'
 import { CollaboratorCursorOverlay } from './CollaboratorCursorOverlay'
 import {
   getAvatarUsers,
@@ -58,27 +58,20 @@ export const Collaborators = ({ provider }: CollaboratorsProps) => {
 
   return (
     <>
-      <div style={{ padding: '10px' }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            flexWrap: 'nowrap',
-            overflow: 'hidden',
-          }}
-        >
-          <Avatar.Group
-            max={{
-              count: 8,
-              style: { color: '#f56a00', backgroundColor: '#fde3cf' },
-            }}
-          >
-            {getAvatarUsers(clients).map((user) => (
-              <Tooltip title={user.name} placement='top' key={user.id}>
-                <Avatar style={{ backgroundColor: user.color }}>{user.name[0]?.toUpperCase()}</Avatar>
+      <div className='flex items-center overflow-hidden p-2.5'>
+        <div className='flex -space-x-2'>
+          {getAvatarUsers(clients)
+            .slice(0, 8)
+            .map((user) => (
+              <Tooltip title={user.name} key={user.id}>
+                <span
+                  className='flex h-8 w-8 items-center justify-center rounded-full border-2 border-[var(--vbi-surface-solid)] text-xs font-semibold text-white shadow-sm'
+                  style={{ backgroundColor: user.color }}
+                >
+                  {user.name[0]?.toUpperCase()}
+                </span>
               </Tooltip>
             ))}
-          </Avatar.Group>
         </div>
       </div>
       <CollaboratorCursorOverlay users={getCursorUsers(clients, awareness.clientID)} />

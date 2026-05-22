@@ -1,8 +1,6 @@
 import { create } from 'zustand'
 import { tRuntime } from '../i18n'
 import * as resourceApi from '../services/resourceApi'
-import { useNavigationStore } from './navigation.store'
-import type { ResourceItem } from '../types'
 import {
   createResourceListActions,
   createResourceListState,
@@ -14,59 +12,54 @@ import {
 type ReportsState = ResourceListState &
   ResourceListActions & {
     createName: string
-    editing: ResourceItem | null
+    editorName: string
     isCreateOpen: boolean
     loading: boolean
-    renameValue: string
+    selectedId: string
     bootstrap(): Promise<void>
     closeCreate(): void
-    confirmRename(): Promise<void>
+    closeDetail(): Promise<void>
     create(): Promise<void>
     deleteSelected(): Promise<void>
     load(): Promise<void>
     openCreate(): void
-    openReport(id: string): void
+    openDetail(id: string): Promise<void>
+    renameSelected(): Promise<void>
     remove(id: string): Promise<void>
     setCreateName(createName: string): void
-    setRenameValue(renameValue: string): void
-    startRename(item: ResourceItem): void
-    stopRename(): void
+    setEditorName(editorName: string): void
   }
+
+const getNextReportName = (name: string) => name.trim() || tRuntime('reports.untitled')
 
 export const useReportsStore = create<ReportsState>((set, get) => ({
   ...createResourceListState(),
   createName: '',
-  editing: null,
+  editorName: '',
   isCreateOpen: false,
   loading: false,
-  renameValue: '',
+  selectedId: '',
   ...createResourceListActions(set),
   bootstrap: async () => {
     await get().load()
   },
   closeCreate: () => set({ isCreateOpen: false }),
-  confirmRename: async () => {
-    const { editing, renameValue } = get()
-    if (!editing) return
-    await resourceApi.renameResource(
-      'report',
-      editing.id,
-      renameValue.trim() || editing.name || tRuntime('reports.untitled'),
-    )
-    set({ editing: null, renameValue: '' })
-    await get().load()
+  closeDetail: async () => {
+    set({ editorName: '', selectedId: '' })
   },
   create: async () => {
     const createName = get().createName.trim()
     if (!createName) return
-    const report = await resourceApi.createResource('report', createName)
+    await resourceApi.createResource('report', createName)
     set({ createName: '', isCreateOpen: false })
     await get().load()
-    get().openReport(report.id)
   },
   deleteSelected: async () => {
     const ids = [...get().selectedRowKeys]
     await Promise.all(ids.map((id) => resourceApi.removeResource('report', id)))
+    if (ids.includes(get().selectedId)) {
+      await get().closeDetail()
+    }
     set({ selectedRowKeys: [] })
     await get().load()
   },
@@ -74,43 +67,57 @@ export const useReportsStore = create<ReportsState>((set, get) => ({
     await loadResourceItems(set, () => resourceApi.listResources('report'))
   },
   openCreate: () => set({ isCreateOpen: true }),
-  openReport: (id) => useNavigationStore.getState().openReport(id),
+  openDetail: async (id) => {
+    const { items, selectedId } = get()
+    if (selectedId === id) return
+    set({
+      editorName: items.find((item) => item.id === id)?.name || tRuntime('reports.untitled'),
+      selectedId: id,
+    })
+  },
+  renameSelected: async () => {
+    const { editorName, items, selectedId } = get()
+    if (!selectedId) return
+    const current = items.find((item) => item.id === selectedId)
+    await resourceApi.renameResource('report', selectedId, getNextReportName(editorName || current?.name || ''))
+    await get().load()
+  },
   remove: async (id) => {
     await resourceApi.removeResource('report', id)
+    if (get().selectedId === id) {
+      await get().closeDetail()
+    }
     set((state) => ({
       selectedRowKeys: state.selectedRowKeys.filter((key) => key !== id),
     }))
     await get().load()
   },
   setCreateName: (createName) => set({ createName }),
-  setRenameValue: (renameValue) => set({ renameValue }),
-  startRename: (editing) => set({ editing, renameValue: editing.name || '' }),
-  stopRename: () => set({ editing: null, renameValue: '' }),
+  setEditorName: (editorName) => set({ editorName }),
 }))
 
 export const selectReportsPageState = (state: ReportsState) => ({
   bootstrap: state.bootstrap,
   clearSelection: state.clearSelection,
   closeCreate: state.closeCreate,
-  confirmRename: state.confirmRename,
+  closeDetail: state.closeDetail,
   create: state.create,
   createName: state.createName,
   deleteSelected: state.deleteSelected,
-  editing: state.editing,
+  editorName: state.editorName,
   filteredItems: state.filteredItems,
   isCreateOpen: state.isCreateOpen,
   loading: state.loading,
   openCreate: state.openCreate,
-  openReport: state.openReport,
+  openDetail: state.openDetail,
+  renameSelected: state.renameSelected,
   remove: state.remove,
-  renameValue: state.renameValue,
   searchText: state.searchText,
   selectAllFiltered: state.selectAllFiltered,
+  selectedId: state.selectedId,
   selectedRowKeys: state.selectedRowKeys,
   setCreateName: state.setCreateName,
-  setRenameValue: state.setRenameValue,
+  setEditorName: state.setEditorName,
   setSearchText: state.setSearchText,
   setSelectedRowKeys: state.setSelectedRowKeys,
-  startRename: state.startRename,
-  stopRename: state.stopRename,
 })

@@ -3,7 +3,7 @@ import { createDebugBridge } from '../debug/bridge'
 
 export const DebugBridgeInstaller = () => {
   useEffect(() => {
-    if (!import.meta.env.DEV) return
+    if (process.env.NODE_ENV !== 'development') return
     window.__VBI_FE_DEBUG__ = createDebugBridge()
     return () => {
       delete window.__VBI_FE_DEBUG__

@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { createInsight, deleteInsight, fetchInsights, updateInsight } from '../services/insightApi'
 import { tRuntime } from '../i18n'
-import { connectResourceSession, releaseResourceSession } from './resource-session.store'
 import {
   createResourceListActions,
   createResourceListState,
@@ -9,6 +8,16 @@ import {
   type ResourceListActions,
   type ResourceListState,
 } from './resource-list.model'
+
+const connectInsightSession = async (resourceId: string, userName: string) => {
+  const { connectResourceSession } = await import('./resource-session.store')
+  await connectResourceSession('insight', resourceId, userName)
+}
+
+const releaseInsightSession = async (resourceId: string) => {
+  const { releaseResourceSession } = await import('./resource-session.store')
+  await releaseResourceSession('insight', resourceId)
+}
 
 type ManageInsightsState = ResourceListState &
   ResourceListActions & {
@@ -54,7 +63,7 @@ export const useManageInsightsStore = create<ManageInsightsState>((set, get) => 
   closeCreate: () => set({ createOpen: false }),
   closeDetail: async () => {
     const { selectedId } = get()
-    await releaseResourceSession('insight', selectedId)
+    await releaseInsightSession(selectedId)
     set({ editorName: '', selectedId: '' })
   },
   create: async () => {
@@ -85,7 +94,7 @@ export const useManageInsightsStore = create<ManageInsightsState>((set, get) => 
     await get().load()
   },
   dispose: async () => {
-    await releaseResourceSession('insight', get().selectedId)
+    await releaseInsightSession(get().selectedId)
     set({
       createContent: '',
       createName: '',
@@ -105,13 +114,13 @@ export const useManageInsightsStore = create<ManageInsightsState>((set, get) => 
     const { items, selectedId, userName } = get()
     if (selectedId === id) return
     if (selectedId && selectedId !== id) {
-      await releaseResourceSession('insight', selectedId)
+      await releaseInsightSession(selectedId)
     }
     set({
       editorName: items.find((item) => item.id === id)?.name || tRuntime('insights.untitled'),
       selectedId: id,
     })
-    await connectResourceSession('insight', id, userName)
+    await connectInsightSession(id, userName)
   },
   renameSelected: async () => {
     const { editorName, items, selectedId } = get()

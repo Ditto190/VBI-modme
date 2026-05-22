@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom'
 import type { CollaboratorClient } from './collaborators-state'
+import { MousePointer2 } from './ui/icons'
 
 type CollaboratorCursorOverlayProps = {
   users: CollaboratorClient[]
@@ -34,25 +35,15 @@ export const CollaboratorCursorOverlay = ({ users }: CollaboratorCursorOverlayPr
               transition: 'left 0.1s linear, top 0.1s linear',
             }}
           >
-            <svg
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
+            <MousePointer2
+              aria-hidden='true'
+              size={24}
               style={{
                 display: 'block',
                 filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))',
+                color: user.color,
               }}
-            >
-              <path
-                d='M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z'
-                fill={user.color}
-                stroke='white'
-                strokeWidth='1.5'
-                strokeLinejoin='round'
-              />
-            </svg>
+            />
             <div
               style={{
                 backgroundColor: user.color,

@@ -8,8 +8,9 @@ rs.mock('../src/stores/resource-session.store', () => ({
   releaseResourceSession,
 }))
 
-const { useReportBuilderModel } = await import('../src/models')
+const { useInsightBuilderModel, useReportBuilderModel } = await import('../src/models')
 const { getReportDetailSnapshot, useReportDetailStore } = await import('../src/stores/report-detail.store')
+const initialInsightBuilderState = useInsightBuilderModel.getState()
 const initialReportBuilderState = useReportBuilderModel.getState()
 const initialReportDetailState = useReportDetailStore.getState()
 
@@ -51,6 +52,7 @@ describe('report detail store', () => {
   beforeEach(() => {
     rs.clearAllMocks()
     releaseResourceSession.mockResolvedValue(undefined)
+    useInsightBuilderModel.setState(initialInsightBuilderState, true)
     useReportBuilderModel.setState(initialReportBuilderState, true)
     useReportDetailStore.setState(initialReportDetailState, true)
   })
@@ -143,6 +145,43 @@ describe('report detail store', () => {
     expect(connectResourceSession).toHaveBeenCalledWith('insight', 'insight-2', 'user-1')
   })
 
+  test('updates active resource ids when scrolling to another report DSL page', async () => {
+    connectResourceSession.mockResolvedValue(undefined)
+    useReportBuilderModel.setState({
+      sessions: {
+        'report-1': {
+          builder: createReportBuilder([
+            {
+              chartId: 'chart-1',
+              id: 'page-1',
+              insightId: 'insight-1',
+              title: 'Page 1',
+            },
+            {
+              chartId: 'chart-2',
+              id: 'page-2',
+              insightId: 'insight-2',
+              title: 'Page 2',
+            },
+          ]),
+        },
+      },
+    })
+    useReportDetailStore.setState({
+      activePageId: 'page-1',
+      connectedChartId: 'chart-1',
+      connectedInsightId: 'insight-1',
+      reportId: 'report-1',
+      userName: 'user-1',
+    })
+
+    useReportDetailStore.getState().setScrolledPage('page-2')
+
+    expect(getReportDetailSnapshot().activePageId).toBe('page-2')
+    expect(getReportDetailSnapshot().connectedChartId).toBe('chart-2')
+    expect(getReportDetailSnapshot().connectedInsightId).toBe('insight-2')
+  })
+
   test('removes chart from active page and releases chart session', async () => {
     connectResourceSession.mockResolvedValue(undefined)
     const reportBuilder = createReportBuilder()
@@ -169,5 +208,25 @@ describe('report detail store', () => {
     expect(getReportDetailSnapshot().connectedChartId).toBe('')
     expect(releaseResourceSession).toHaveBeenCalledWith('chart', 'chart-1')
     expect(connectResourceSession).not.toHaveBeenCalled()
+  })
+
+  test('updates the active insight builder content from report editor', () => {
+    const setContent = rs.fn()
+    useInsightBuilderModel.setState({
+      sessions: {
+        'insight-1': {
+          builder: {
+            setContent,
+          },
+        },
+      },
+    })
+    useReportDetailStore.setState({
+      connectedInsightId: 'insight-1',
+    })
+
+    useReportDetailStore.getState().setInsightContent('Updated insight text')
+
+    expect(setContent).toHaveBeenCalledWith('Updated insight text')
   })
 })

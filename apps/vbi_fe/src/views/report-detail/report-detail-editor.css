@@ -1,0 +1,134 @@
+.report-detail-chart-drawer {
+  overflow: hidden;
+  border-left-color: var(--vbi-border-strong);
+  background: var(--vbi-editor-bg);
+}
+
+.ui-drawer-content[data-direction='right'].report-detail-chart-drawer {
+  width: min(calc(100vw - 24px), 1320px);
+  max-width: none;
+}
+
+.report-detail-chart-drawer .ui-drawer-header {
+  min-height: 50px;
+  padding: 10px 12px 10px 14px;
+}
+
+.ui-drawer-body.report-detail-chart-drawer-body {
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  background: var(--vbi-editor-bg);
+}
+
+.report-detail-editor {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--vbi-editor-bg);
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.report-detail-editor .demo-app-root,
+.report-detail-editor .demo-app-workbench {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.report-detail-editor .demo-app-workbench-panels {
+  gap: 10px !important;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.report-detail-editor .demo-app-fields-panel {
+  position: relative;
+  box-sizing: border-box;
+  flex: 0 0 252px !important;
+  width: 252px !important;
+  min-width: 252px !important;
+  max-width: 252px !important;
+  padding-right: 10px;
+}
+
+.report-detail-editor .demo-app-fields-panel::after {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  bottom: 4px;
+  width: 1px;
+  background: var(--vbi-border);
+  content: '';
+}
+
+.report-detail-editor .demo-app-main-panel {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.report-detail-editor .demo-app-toolbar-card,
+.report-detail-editor .demo-app-field-list-card,
+.report-detail-editor .demo-app-shelf-panel-card,
+.report-detail-editor .demo-app-chart-panel-card {
+  border-radius: 7px !important;
+  box-shadow: none;
+}
+
+.report-detail-editor .demo-app-field-list-card {
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  .ui-drawer-content[data-direction='right'].report-detail-chart-drawer {
+    width: calc(100vw - 12px);
+  }
+
+  .report-detail-editor {
+    padding: 10px;
+  }
+
+  .report-detail-editor .demo-app-workbench-panels {
+    gap: 10px !important;
+  }
+
+  .report-detail-editor .demo-app-fields-panel {
+    flex-basis: 228px !important;
+    width: 228px !important;
+    min-width: 228px !important;
+    max-width: 228px !important;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .report-detail-editor .demo-app-workbench-panels {
+    flex-direction: column !important;
+  }
+
+  .report-detail-editor .demo-app-fields-panel {
+    flex: 0 0 180px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding-right: 0;
+    padding-bottom: 10px;
+  }
+
+  .report-detail-editor .demo-app-fields-panel::after {
+    top: auto;
+    right: 4px;
+    bottom: 0;
+    left: 4px;
+    width: auto;
+    height: 1px;
+  }
+}

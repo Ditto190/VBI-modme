@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { createResource, listResources, removeResource, renameResource } from '../services/resourceApi'
 import { tRuntime } from '../i18n'
-import { releaseResourceSession, connectResourceSession } from './resource-session.store'
 import {
   createResourceListActions,
   createResourceListState,
@@ -9,6 +8,16 @@ import {
   type ResourceListActions,
   type ResourceListState,
 } from './resource-list.model'
+
+const connectChartSession = async (resourceId: string, userName: string) => {
+  const { connectResourceSession } = await import('./resource-session.store')
+  await connectResourceSession('chart', resourceId, userName)
+}
+
+const releaseChartSession = async (resourceId: string) => {
+  const { releaseResourceSession } = await import('./resource-session.store')
+  await releaseResourceSession('chart', resourceId)
+}
 
 type ManageChartsState = ResourceListState &
   ResourceListActions & {
@@ -51,7 +60,7 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
   closeCreate: () => set({ createOpen: false }),
   closeDetail: async () => {
     const { selectedId } = get()
-    await releaseResourceSession('chart', selectedId)
+    await releaseChartSession(selectedId)
     set({ editorName: '', selectedId: '' })
   },
   create: async () => {
@@ -79,7 +88,7 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
     await get().load()
   },
   dispose: async () => {
-    await releaseResourceSession('chart', get().selectedId)
+    await releaseChartSession(get().selectedId)
     set({
       createName: '',
       createOpen: false,
@@ -98,13 +107,13 @@ export const useManageChartsStore = create<ManageChartsState>((set, get) => ({
     const { items, selectedId, userName } = get()
     if (selectedId === id) return
     if (selectedId && selectedId !== id) {
-      await releaseResourceSession('chart', selectedId)
+      await releaseChartSession(selectedId)
     }
     set({
       editorName: items.find((item) => item.id === id)?.name || tRuntime('charts.untitled'),
       selectedId: id,
     })
-    await connectResourceSession('chart', id, userName)
+    await connectChartSession(id, userName)
   },
   renameSelected: async () => {
     const { editorName, items, selectedId } = get()

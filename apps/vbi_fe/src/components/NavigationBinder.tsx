@@ -1,18 +1,18 @@
 import { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { usePathname, useRouter } from 'next/navigation'
 import { useNavigationStore } from '../stores/navigation.store'
 
 export const NavigationBinder = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
-    useNavigationStore.getState().setNavigate(navigate)
-  }, [navigate])
+    useNavigationStore.getState().setNavigate((path) => router.push(path))
+  }, [router])
 
   useEffect(() => {
-    useNavigationStore.getState().setPathname(location.pathname)
-  }, [location.pathname])
+    useNavigationStore.getState().setPathname(pathname ?? '')
+  }, [pathname])
 
   return null
 }
