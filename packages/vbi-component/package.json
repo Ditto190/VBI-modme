@@ -41,9 +41,15 @@
     "@rslib/core": "0.20.3",
     "@rstest/core": "0.8.3",
     "@types/node": "24.10.1",
+    "@visactor/vchart": "2.0.23-alpha.6",
     "typescript": "6.0.2"
   },
+  "peerDependencies": {
+    "@visactor/vchart": "2.0.23-alpha.6"
+  },
   "dependencies": {
+    "@visactor/vseed": "workspace:*",
+    "@visactor/vtable": "1.23.1",
     "lit": "3.3.3"
   }
 }

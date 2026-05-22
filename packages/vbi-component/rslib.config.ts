@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   source: {
     define: {
-      __VDASH_VERSION__: JSON.stringify(pkg.version),
+      __VBI_COMPONENT_VERSION__: JSON.stringify(pkg.version),
     },
   },
   output: {
