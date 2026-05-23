@@ -23,7 +23,7 @@ import {
   CheckOutlined,
 } from '@ant-design/icons'
 import type { VBIHavingAggregate } from '@visactor/vbi'
-import { useTranslation } from 'src/i18n'
+import { useTranslation } from '../../i18n'
 import {
   getDefaultHavingAggregateByFieldRole,
   getDefaultHavingOperator,

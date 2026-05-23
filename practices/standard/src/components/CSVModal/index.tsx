@@ -2,10 +2,10 @@ import { InboxOutlined } from '@ant-design/icons'
 import type { DatasetColumn } from '@visactor/vquery'
 import { Button, Input, message, Modal, Select, Space, Table, Typography, Upload } from 'antd'
 import React, { useState } from 'react'
-import { useTranslation } from 'src/i18n'
-import { inferSchema, rowsToDataset } from 'src/utils/dataset'
-import type { LocalRow } from 'src/utils/localConnector'
-import { parseCsv } from 'src/utils/parseCsv'
+import { useTranslation } from '../../i18n'
+import { inferSchema, rowsToDataset } from '../../utils/dataset'
+import type { LocalRow } from '../../utils/localConnector'
+import { parseCsv } from '../../utils/parseCsv'
 
 const { Dragger } = Upload
 const { Text } = Typography

@@ -1,6 +1,6 @@
 import type { VSeed } from '@visactor/vseed'
 import { useMemo } from 'react'
-import { useVBIStoreConfig } from 'src/model'
+import { useVBIStoreConfig } from '../model'
 
 export const useConfiguredVSeed = (vseed: VSeed | null) => {
   const { locale, theme } = useVBIStoreConfig()

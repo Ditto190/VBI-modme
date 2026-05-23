@@ -1,5 +1,5 @@
 import type { VBIMeasureFormat } from '@visactor/vbi'
-import type { Translate } from 'src/i18n'
+import type { Translate } from '../../../i18n'
 
 const FORMAT_TYPE_LABEL_KEYS: Record<string, string> = {
   number: 'formatTypeNumber',

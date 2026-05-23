@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { VBIChartBuilder } from '@visactor/vbi'
-import { getFieldRoleBySchemaType, isDateSchemaType, type FieldRole } from 'src/utils/fieldRole'
+import { getFieldRoleBySchemaType, isDateSchemaType, type FieldRole } from '../utils/fieldRole'
 
 export interface VBISchemaField {
   name: string

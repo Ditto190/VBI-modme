@@ -1,5 +1,5 @@
 import type { VBIHavingAggregate } from '@visactor/vbi'
-import type { Translate } from 'src/i18n'
+import type { Translate } from '../../i18n'
 import {
   MEASURE_AGGREGATE_KEYS,
   getAggregateItemsByFieldRole,
@@ -8,8 +8,8 @@ import {
   type MeasureAggregate,
   type MeasureAggregateKey,
   type MeasureAggregateItem,
-} from 'src/components/Shelves/measureAggregateUtils'
-import type { FieldRole } from 'src/utils/fieldRole'
+} from '../Shelves/measureAggregateUtils'
+import type { FieldRole } from '../../utils/fieldRole'
 import { getFilterOperatorDisplayLabel, getFilterOperatorOptionLabel } from './whereFilterUtils'
 
 export type HavingFieldRole = FieldRole

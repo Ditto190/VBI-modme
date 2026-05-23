@@ -10,13 +10,13 @@ import {
 } from '@ant-design/icons'
 import { Badge, Button, Card, Checkbox, Divider, Flex, Input, Popover, Typography, theme } from 'antd'
 import { memo, useEffect, useMemo, useRef, useState } from 'react'
-import { createSchemaFieldDragId, type SchemaFieldDragData } from 'src/components/Shelves/dnd'
-import { getDefaultDimensionDateAggregate } from 'src/components/Shelves/dimensionDateAggregateUtils'
-import type { VBISchemaField } from 'src/hooks/useVBISchemaFields'
-import { useVBIDimensions, useVBIMeasures, useVBISchemaFields } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore } from 'src/model'
-import type { FieldRole } from 'src/utils/fieldRole'
+import { createSchemaFieldDragId, type SchemaFieldDragData } from '../../Shelves/dnd'
+import { getDefaultDimensionDateAggregate } from '../../Shelves/dimensionDateAggregateUtils'
+import type { VBISchemaField } from '../../../hooks/useVBISchemaFields'
+import { useVBIDimensions, useVBIMeasures, useVBISchemaFields } from '../../../hooks'
+import { useTranslation } from '../../../i18n'
+import { useVBIStore } from '../../../model'
+import type { FieldRole } from '../../../utils/fieldRole'
 
 const MAX_VISIBLE_FIELDS = 10
 const FIELD_ROLE_OPTIONS: FieldRole[] = ['dimension', 'measure']

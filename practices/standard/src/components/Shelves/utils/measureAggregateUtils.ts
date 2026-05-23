@@ -1,6 +1,6 @@
-import type { FieldRole } from 'src/utils/fieldRole'
-import type { Translate } from 'src/i18n'
-import { getFieldRoleBySchemaType } from 'src/utils/fieldRole'
+import type { FieldRole } from '../../../utils/fieldRole'
+import type { Translate } from '../../../i18n'
+import { getFieldRoleBySchemaType } from '../../../utils/fieldRole'
 
 export type MeasureFieldRole = FieldRole
 

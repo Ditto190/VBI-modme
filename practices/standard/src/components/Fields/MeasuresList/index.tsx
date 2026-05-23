@@ -1,10 +1,10 @@
 import { useDraggable } from '@dnd-kit/core'
 import { Card, Flex, theme } from 'antd'
 import { NumberOutlined } from '@ant-design/icons'
-import { createSchemaFieldDragId, type SchemaFieldDragData } from 'src/components/Shelves/dnd'
-import { useVBIMeasures, useVBISchemaFields } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore } from 'src/model'
+import { createSchemaFieldDragId, type SchemaFieldDragData } from '../../Shelves/dnd'
+import { useVBIMeasures, useVBISchemaFields } from '../../../hooks'
+import { useTranslation } from '../../../i18n'
+import { useVBIStore } from '../../../model'
 
 const MeasureFieldItem = ({
   fieldName,

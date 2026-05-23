@@ -6,5 +6,4 @@
 **/.turbo
 **/.DS_Store
 .git
-docs
-apps/website
+apps/website/docs

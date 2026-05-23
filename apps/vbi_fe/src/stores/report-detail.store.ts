@@ -3,11 +3,9 @@ import type { ReportPageBuilder } from '@visactor/vbi'
 import { createInsight } from '../services/insightApi'
 import { createResource } from '../services/resourceApi'
 import { useInsightBuilderModel, useReportBuilderModel } from '../models'
-import { resolveActivePageId } from '../pages/report-detail/page-state'
+import { resolveActivePageId } from '../views/report-detail/page-state'
 import { connectResourceSession, releaseResourceSession } from './resource-session.store'
-import type { ReportPage } from '../types'
-
-type ReportViewMode = 'horizontal' | 'vertical'
+import type { ReportPage, ResourceKind } from '../types'
 
 type ReportDetailState = {
   activePageId: string
@@ -21,7 +19,6 @@ type ReportDetailState = {
   reportId: string
   stopReportSync: (() => void) | null
   userName: string
-  viewMode: ReportViewMode
   addPage(): Promise<void>
   bootstrap(reportId: string, userName: string): Promise<void>
   closeChartEditor(): void
@@ -37,7 +34,6 @@ type ReportDetailState = {
   selectPage(pageId: string): Promise<void>
   setInsightContent(value: string): void
   setScrolledPage(pageId: string): void
-  setViewMode(viewMode: ReportViewMode): void
   syncActivePage(): Promise<void>
 }
 
@@ -67,7 +63,37 @@ const diffIds = (source: string[], target: string[]) => source.filter((id) => !t
 
 const getConnectedIds = (ids: string[], activeId: string) => (ids.length || !activeId ? ids : [activeId])
 
+let reportDetailLifecycleToken = 0
+
+const createReportDetailResetPatch = () => ({
+  activePageId: '',
+  chartEditorOpen: false,
+  connectedChartId: '',
+  connectedChartIds: [],
+  connectedInsightId: '',
+  connectedInsightIds: [],
+  insightEditorOpen: false,
+  pageActionBusy: false,
+  reportId: '',
+  stopReportSync: null,
+  userName: '',
+})
+
+const connectReportResourceIfCurrent = async (
+  kind: Extract<ResourceKind, 'chart' | 'insight'>,
+  resourceId: string,
+  userName: string,
+  reportId: string,
+) => {
+  if (useReportDetailStore.getState().reportId !== reportId) return
+  await connectResourceSession(kind, resourceId, userName)
+  if (useReportDetailStore.getState().reportId !== reportId) {
+    await releaseResourceSession(kind, resourceId)
+  }
+}
+
 const syncReportResources = async (state: ReportDetailState, pages: ReportPage[]) => {
+  if (!state.reportId || useReportDetailStore.getState().reportId !== state.reportId) return
   const activePage = pages.find((page) => page.id === state.activePageId)
   const nextChartIds = uniqueResourceIds(pages, 'chartId')
   const nextInsightIds = uniqueResourceIds(pages, 'insightId')
@@ -93,8 +119,12 @@ const syncReportResources = async (state: ReportDetailState, pages: ReportPage[]
   await Promise.all([
     ...diffIds(prevChartIds, nextChartIds).map((id) => releaseResourceSession('chart', id)),
     ...diffIds(prevInsightIds, nextInsightIds).map((id) => releaseResourceSession('insight', id)),
-    ...diffIds(nextChartIds, prevChartIds).map((id) => connectResourceSession('chart', id, state.userName)),
-    ...diffIds(nextInsightIds, prevInsightIds).map((id) => connectResourceSession('insight', id, state.userName)),
+    ...diffIds(nextChartIds, prevChartIds).map((id) =>
+      connectReportResourceIfCurrent('chart', id, state.userName, state.reportId),
+    ),
+    ...diffIds(nextInsightIds, prevInsightIds).map((id) =>
+      connectReportResourceIfCurrent('insight', id, state.userName, state.reportId),
+    ),
   ])
 }
 
@@ -126,7 +156,6 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   reportId: '',
   stopReportSync: null,
   userName: '',
-  viewMode: 'vertical',
   addPage: async () => {
     const state = get()
     const reportBuilder = getReportBuilder(state.reportId)
@@ -162,37 +191,36 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   bootstrap: async (reportId, userName) => {
     await get().dispose()
     if (!reportId) return
-    set({ reportId, userName, viewMode: 'vertical' })
+    const lifecycleToken = ++reportDetailLifecycleToken
+    set({ reportId, userName })
     await connectResourceSession('report', reportId, userName)
-    set({ stopReportSync: subscribeReportSession(reportId) })
+    if (lifecycleToken !== reportDetailLifecycleToken || get().reportId !== reportId) {
+      await releaseResourceSession('report', reportId)
+      return
+    }
+    const stopReportSync = subscribeReportSession(reportId)
+    if (lifecycleToken !== reportDetailLifecycleToken || get().reportId !== reportId) {
+      stopReportSync()
+      await releaseResourceSession('report', reportId)
+      return
+    }
+    set({ stopReportSync })
     await get().syncActivePage()
   },
   closeChartEditor: () => set({ chartEditorOpen: false }),
   closeInsightEditor: () => set({ insightEditorOpen: false }),
   dispose: async () => {
+    reportDetailLifecycleToken += 1
     const state = get()
     state.stopReportSync?.()
     const chartIds = getConnectedIds(state.connectedChartIds, state.connectedChartId)
     const insightIds = getConnectedIds(state.connectedInsightIds, state.connectedInsightId)
+    set(createReportDetailResetPatch())
     await Promise.all([
       ...chartIds.map((id) => releaseResourceSession('chart', id)),
       ...insightIds.map((id) => releaseResourceSession('insight', id)),
+      releaseResourceSession('report', state.reportId),
     ])
-    await releaseResourceSession('report', state.reportId)
-    set({
-      activePageId: '',
-      chartEditorOpen: false,
-      connectedChartId: '',
-      connectedChartIds: [],
-      connectedInsightId: '',
-      connectedInsightIds: [],
-      insightEditorOpen: false,
-      pageActionBusy: false,
-      reportId: '',
-      stopReportSync: null,
-      userName: '',
-      viewMode: 'vertical',
-    })
   },
   openChartEditor: () => set({ chartEditorOpen: true }),
   openInsightEditor: () => set({ insightEditorOpen: true }),
@@ -266,6 +294,7 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   removePage: async (pageId) => {
     const reportBuilder = getReportBuilder(get().reportId)
     if (!reportBuilder) return
+    if (getReportPages(get().reportId).length <= 1) return
     set({ pageActionBusy: true })
     try {
       reportBuilder.page.remove(pageId)
@@ -286,11 +315,16 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
     getInsightBuilder(get().connectedInsightId)?.setContent(value)
   },
   setScrolledPage: (pageId) => {
-    if (pageId && pageId !== get().activePageId) {
-      set({ activePageId: pageId })
-    }
+    const state = get()
+    if (!pageId || pageId === state.activePageId) return
+    const page = getActivePage(state.reportId, pageId)
+    if (!page) return
+    set({
+      activePageId: pageId,
+      connectedChartId: page.chartId ?? '',
+      connectedInsightId: page.insightId ?? '',
+    })
   },
-  setViewMode: (viewMode) => set({ viewMode }),
   syncActivePage: async () => {
     const state = get()
     const pages = getReportPages(state.reportId)
@@ -303,33 +337,3 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
     await syncReportResources({ ...get(), activePageId: nextActivePageId }, pages)
   },
 }))
-
-export const getReportDetailSnapshot = () => {
-  const state = useReportDetailStore.getState()
-  const activePage = getActivePage(state.reportId, state.activePageId)
-  return {
-    activePage,
-    activePageId: state.activePageId,
-    chartEditorOpen: state.chartEditorOpen,
-    connectedChartId: state.connectedChartId,
-    connectedChartIds: state.connectedChartIds,
-    connectedInsightId: state.connectedInsightId,
-    connectedInsightIds: state.connectedInsightIds,
-    insightEditorOpen: state.insightEditorOpen,
-    pageActionBusy: state.pageActionBusy,
-    pages: getReportPages(state.reportId),
-    reportId: state.reportId,
-    viewMode: state.viewMode,
-  }
-}
-
-export const getReportDetailView = () => {
-  const state = useReportDetailStore.getState()
-  const activePage = getActivePage(state.reportId, state.activePageId)
-  const insightBuilder = getInsightBuilder(activePage?.insightId ?? '')
-  return {
-    activePage,
-    insightContent: insightBuilder?.build().content?.trim() ?? '',
-    pages: getReportPages(state.reportId),
-  }
-}

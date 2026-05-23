@@ -1,5 +1,8 @@
-import type { ProviderResource } from '@visactor/headless-bi-provider'
-
 export type ResourceKind = 'chart' | 'insight' | 'report'
 
-export type ResourceItem = ProviderResource
+export type ResourceItem = {
+  id: string
+  name: string | null
+  createdAt: string
+  updatedAt: string
+}

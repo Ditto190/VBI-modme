@@ -3,9 +3,9 @@ import { getSessionUserName } from '../utils/collaboration'
 
 export const useStoreLifecycle = (bootstrap: () => void | Promise<void>, dispose?: () => void | Promise<void>) => {
   useEffect(() => {
-    void bootstrap()
+    void Promise.resolve(bootstrap()).catch(() => undefined)
     return () => {
-      void dispose?.()
+      void Promise.resolve(dispose?.()).catch(() => undefined)
     }
   }, [bootstrap, dispose])
 }
@@ -15,9 +15,9 @@ export const useUserStoreLifecycle = (
   dispose?: () => void | Promise<void>,
 ) => {
   useEffect(() => {
-    void bootstrap(getSessionUserName())
+    void Promise.resolve(bootstrap(getSessionUserName())).catch(() => undefined)
     return () => {
-      void dispose?.()
+      void Promise.resolve(dispose?.()).catch(() => undefined)
     }
   }, [bootstrap, dispose])
 }

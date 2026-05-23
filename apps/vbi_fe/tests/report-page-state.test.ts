@@ -1,5 +1,5 @@
 import { expect, test } from '@rstest/core'
-import { normalizePageTitle, resolveActivePageId } from '../src/pages/report-detail/page-state'
+import { resolveActivePageId } from '../src/views/report-detail/page-state'
 
 test('resolveActivePageId falls back to first page when selection disappears', () => {
   const pages = [
@@ -19,9 +19,4 @@ test('resolveActivePageId falls back to first page when selection disappears', (
 
   expect(resolveActivePageId(pages, 'missing')).toBe('page-1')
   expect(resolveActivePageId(pages, 'page-2')).toBe('page-2')
-})
-
-test('normalizePageTitle keeps the current title when draft is blank', () => {
-  expect(normalizePageTitle('  ', 'Page 1')).toBe('Page 1')
-  expect(normalizePageTitle(' Revenue ', 'Page 1')).toBe('Revenue')
 })

@@ -28,20 +28,20 @@ export const createResourceListState = (): ResourceListState => ({
   selectedRowKeys: [],
 })
 
-export const getFilteredItems = (items: ResourceItem[], searchText: string) =>
+const getFilteredItems = (items: ResourceItem[], searchText: string) =>
   items.filter((item) => matchesResourceSearch(item, searchText))
 
-export const setResourceItems = (state: ResourceListState, items: ResourceItem[]) => ({
+const setResourceItems = (state: ResourceListState, items: ResourceItem[]) => ({
   filteredItems: getFilteredItems(items, state.searchText),
   items,
 })
 
-export const setResourceSearchText = (state: ResourceListState, searchText: string) => ({
+const setResourceSearchText = (state: ResourceListState, searchText: string) => ({
   filteredItems: getFilteredItems(state.items, searchText),
   searchText,
 })
 
-export const selectFilteredResourceIds = (state: ResourceListState) => ({
+const selectFilteredResourceIds = (state: ResourceListState) => ({
   selectedRowKeys: getFilteredItems(state.items, state.searchText).map((item) => item.id),
 })
 

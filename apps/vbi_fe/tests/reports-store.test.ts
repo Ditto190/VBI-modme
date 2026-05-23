@@ -1,7 +1,5 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { useReportsStore } from '../src/stores/reports.store'
-import { getReportsSnapshot } from '../src/stores/reports.snapshot'
-import { useNavigationStore } from '../src/stores/navigation.store'
 
 rs.mock('../src/services/resourceApi', () => ({
   createResource: rs.fn(),
@@ -12,7 +10,7 @@ rs.mock('../src/services/resourceApi', () => ({
 
 const resourceApi = await import('../src/services/resourceApi')
 const initialReportsState = useReportsStore.getState()
-const initialNavigationState = useNavigationStore.getState()
+const getReportsSnapshot = () => useReportsStore.getState()
 const mockedListResources = resourceApi.listResources as unknown as {
   mockResolvedValue(value: unknown): void
 }
@@ -30,7 +28,6 @@ describe('reports store', () => {
   beforeEach(() => {
     rs.clearAllMocks()
     useReportsStore.setState(initialReportsState, true)
-    useNavigationStore.setState(initialNavigationState, true)
   })
 
   test('load stores fetched report items', async () => {
@@ -43,8 +40,7 @@ describe('reports store', () => {
     expect(getReportsSnapshot().items[0]?.id).toBe('report-1')
   })
 
-  test('create navigates to the new report', async () => {
-    const navigate = rs.fn()
+  test('create keeps report management on the list page', async () => {
     mockedCreateResource.mockResolvedValue({
       id: 'report-2',
       name: 'Revenue',
@@ -52,13 +48,12 @@ describe('reports store', () => {
       updatedAt: '2024-01-01T00:00:00.000Z',
     })
     mockedListResources.mockResolvedValue([])
-    useNavigationStore.getState().setNavigate(navigate)
     useReportsStore.getState().setCreateName(' Revenue ')
 
     await useReportsStore.getState().create()
 
     expect(resourceApi.createResource).toHaveBeenCalledWith('report', 'Revenue')
-    expect(navigate).toHaveBeenCalledWith('/manage/reports/report-2')
+    expect(getReportsSnapshot().selectedId).toBe('')
     expect(getReportsSnapshot().createName).toBe('')
     expect(getReportsSnapshot().isCreateOpen).toBe(false)
   })

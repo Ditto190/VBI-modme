@@ -1,5 +1,5 @@
 import { Button, Tooltip } from 'antd'
-import { useTranslation } from 'src/i18n'
+import { useTranslation } from '../../../i18n'
 
 export type RootOperator = 'and' | 'or'
 

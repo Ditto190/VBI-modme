@@ -1,16 +1,16 @@
 import { createRef } from 'react'
 import { expect, rs, test } from '@rstest/core'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
-rs.mock('../src/pages/report-detail/ReportChartPanel', () => ({
-  ReportChartPanel: () => <div className='report-detail-slide-chart' />,
+rs.mock('../src/views/report-detail/ReportChartPanel', () => ({
+  ReportChartPanel: () => <div data-report-panel='chart' />,
 }))
 
-rs.mock('../src/pages/report-detail/ReportInsightPanel', () => ({
-  ReportInsightPanel: () => <div className='report-detail-slide-note' />,
+rs.mock('../src/views/report-detail/ReportInsightPanel', () => ({
+  ReportInsightPanel: () => <div data-report-panel='insight' />,
 }))
 
-const { ReportStage } = await import('../src/pages/report-detail/ReportStage')
+const { ReportStage } = await import('../src/views/report-detail/ReportStage')
 
 const noop = () => {}
 
@@ -56,14 +56,13 @@ test('report stage renders empty when page has no resources', () => {
       onPageRef={() => () => undefined}
       pageSections={[]}
       stageRef={createRef()}
-      viewMode='vertical'
     />,
   )
 
-  expect(screen.getByText('当前页面暂无图表和洞察')).toBeInTheDocument()
+  expect(screen.getByText(/This page has no chart or insight|当前页面暂无图表和洞察/)).toBeInTheDocument()
 })
 
-test('report stage places insight before chart when both resources exist', () => {
+test('report stage places insight before chart when both resources exist', async () => {
   const { container } = render(
     <ReportStage
       activePageId='page-1'
@@ -72,19 +71,18 @@ test('report stage places insight before chart when both resources exist', () =>
       onPageRef={() => () => undefined}
       pageSections={[bothPage]}
       stageRef={createRef()}
-      viewMode='vertical'
     />,
   )
-  const sections = [
-    ...container.querySelectorAll(
-      '.report-detail-vertical-slide .report-detail-slide-note, .report-detail-vertical-slide .report-detail-slide-chart',
-    ),
-  ].map((node) => node.className)
+  await waitFor(() => {
+    const sections = [...container.querySelectorAll('[data-report-page-id="page-1"] [data-report-panel]')].map((node) =>
+      node.getAttribute('data-report-panel'),
+    )
 
-  expect(sections).toEqual(['report-detail-slide-note', 'report-detail-slide-chart'])
+    expect(sections).toEqual(['insight', 'chart'])
+  })
 })
 
-test('report stage renders page title dividers after each page', () => {
+test('report stage renders page title dividers between pages', () => {
   const { container } = render(
     <ReportStage
       activePageId='page-1'
@@ -93,14 +91,30 @@ test('report stage renders page title dividers after each page', () => {
       onPageRef={() => () => undefined}
       pageSections={[bothPage, secondPage]}
       stageRef={createRef()}
-      viewMode='vertical'
     />,
   )
-  const dividers = container.querySelectorAll('.report-detail-page-divider')
+  const dividers = container.querySelectorAll('[data-report-divider="page"]')
 
-  expect(dividers).toHaveLength(2)
-  expect(dividers[0].textContent).toBe('01Page 1')
-  expect(dividers[1].textContent).toBe('02Page 2')
+  expect(dividers).toHaveLength(1)
+  expect(dividers[0].textContent).toBe('02Page 2')
+})
+
+test('report stage renders report DSL pages in order and marks the active page', () => {
+  const { container } = render(
+    <ReportStage
+      activePageId='page-2'
+      onEditChart={noop}
+      onEditInsight={noop}
+      onPageRef={() => () => undefined}
+      pageSections={[bothPage, secondPage]}
+      stageRef={createRef()}
+    />,
+  )
+  const pageNodes = [...container.querySelectorAll<HTMLElement>('[data-report-page-id]')]
+
+  expect(pageNodes.map((node) => node.dataset.reportPageId)).toEqual(['page-1', 'page-2'])
+  expect(pageNodes[0].classList.contains('is-active')).toBe(false)
+  expect(pageNodes[1].classList.contains('is-active')).toBe(true)
 })
 
 test('report stage renders insight-only pages without chart panel', () => {
@@ -121,35 +135,10 @@ test('report stage renders insight-only pages without chart panel', () => {
         },
       ]}
       stageRef={createRef()}
-      viewMode='vertical'
     />,
   )
 
-  expect(container.querySelector('.report-detail-slide-note')).toBeTruthy()
-  expect(container.querySelector('.report-detail-slide-chart')).toBeNull()
-  expect(container.querySelector('.report-detail-vertical-stage')).toBeTruthy()
-  expect(container.querySelector('.report-detail-horizontal-stage')).toBeNull()
-})
-
-test('report stage uses the horizontal renderer in horizontal mode', () => {
-  const { container } = render(
-    <ReportStage
-      activePageId='page-1'
-      onEditChart={noop}
-      onEditInsight={noop}
-      onPageRef={() => () => undefined}
-      pageSections={[bothPage]}
-      stageRef={createRef()}
-      viewMode='horizontal'
-    />,
-  )
-  const sections = [
-    ...container.querySelectorAll(
-      '.report-detail-horizontal-slide .report-detail-slide-note, .report-detail-horizontal-slide .report-detail-slide-chart',
-    ),
-  ].map((node) => node.className)
-
-  expect(container.querySelector('.report-detail-horizontal-stage')).toBeTruthy()
-  expect(container.querySelector('.report-detail-vertical-stage')).toBeNull()
-  expect(sections).toEqual(['report-detail-slide-note', 'report-detail-slide-chart'])
+  expect(container.querySelector('[data-report-panel="insight"]')).toBeTruthy()
+  expect(container.querySelector('[data-report-panel="chart"]')).toBeNull()
+  expect(container.querySelector('[data-report-stage="vertical"]')).toBeTruthy()
 })

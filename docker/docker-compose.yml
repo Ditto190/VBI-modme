@@ -5,11 +5,17 @@ services:
     build:
       context: ..
       dockerfile: docker/vbi_fe/Dockerfile
+      args:
+        VBI_API_ORIGIN: ${VBI_API_ORIGIN:-http://vbi_be:3030}
+        VBI_COLLABORATION_ORIGIN: ${VBI_COLLABORATION_ORIGIN:-http://vbi_be:1234}
     ports:
-      - '${VBI_FE_PORT:-3000}:80'
+      - '${VBI_FE_PORT:-3000}:3000'
     depends_on:
       vbi_be:
         condition: service_started
+    environment:
+      VBI_API_ORIGIN: ${VBI_API_ORIGIN:-http://vbi_be:3030}
+      VBI_COLLABORATION_ORIGIN: ${VBI_COLLABORATION_ORIGIN:-http://vbi_be:1234}
     restart: unless-stopped
     networks:
       - vbi_net

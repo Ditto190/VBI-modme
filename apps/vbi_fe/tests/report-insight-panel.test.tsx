@@ -1,14 +1,14 @@
 import { expect, rs, test } from '@rstest/core'
 import { render, screen } from '@testing-library/react'
 
-rs.mock('../src/pages/report-detail/useInsightPreview', () => ({
+rs.mock('../src/views/report-detail/useInsightPreview', () => ({
   useInsightPreview: () => ({
     content: '# 核心结论\n\n- 数据表现稳定',
     loading: false,
   }),
 }))
 
-const { ReportInsightPanel } = await import('../src/pages/report-detail/ReportInsightPanel')
+const { ReportInsightPanel } = await import('../src/views/report-detail/ReportInsightPanel')
 
 test('report insight panel renders preview content without connected builder', () => {
   render(<ReportInsightPanel builder={null} insightId='insight-1' onEdit={() => undefined} />)

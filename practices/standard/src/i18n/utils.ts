@@ -6,7 +6,7 @@ import jaJP from './locales/ja-JP.json'
 import koKR from './locales/ko-KR.json'
 import viVN from './locales/vi-VN.json'
 import zhCN from './locales/zh-CN.json'
-import type { DemoLocale } from 'src/constants/builder'
+import type { DemoLocale } from '../constants/builder'
 
 export type TranslationParams = Record<string, string | number | boolean | null | undefined>
 export type Translate = (key: string, params?: TranslationParams) => string

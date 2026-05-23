@@ -1,7 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "noEmit": true,
     "emitDeclarationOnly": false,
     "composite": false,
@@ -32,5 +37,5 @@
       "path": "../../practices/standard"
     }
   ],
-  "include": ["src"]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "src"]
 }

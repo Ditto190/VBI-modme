@@ -1,5 +1,5 @@
 import type { VBIWhereDatePredicate } from '@visactor/vbi'
-import type { Translate } from 'src/i18n'
+import type { Translate } from '../../i18n'
 import { formatDateInput } from './datePickerValueUtils'
 
 export function isDateFilter(filter: { op: string }): boolean {

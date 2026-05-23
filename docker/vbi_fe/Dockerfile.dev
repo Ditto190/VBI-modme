@@ -9,19 +9,13 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-# Copy workspace config
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY .env.example .env ./
-
-# Copy source code
-COPY packages/ packages/
-COPY practices/ practices/
-COPY apps/vbi_provider/ apps/vbi_provider/
-COPY apps/vbi_fe/ apps/vbi_fe/
+# Copy the workspace. .dockerignore is the single source of truth for excluding
+# local-only files, which keeps root and package-level config files in sync.
+COPY . .
 
 # Install all dependencies (including devDependencies)
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "@visactor/headless-bi-fe", "dev:docker"]
+CMD ["sh", "-lc", "pnpm exec turbo build --filter=@visactor/headless-bi-fe^... && pnpm --filter @visactor/headless-bi-fe exec next dev --hostname 0.0.0.0"]

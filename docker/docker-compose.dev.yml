@@ -10,12 +10,15 @@ services:
     volumes:
       - ../apps/vbi_fe/src:/app/apps/vbi_fe/src
       - ../apps/vbi_fe/public:/app/apps/vbi_fe/public
-      - ../apps/vbi_fe/rsbuild.config.ts:/app/apps/vbi_fe/rsbuild.config.ts
+      - ../apps/vbi_fe/next.config.ts:/app/apps/vbi_fe/next.config.ts
+      - ../apps/vbi_fe/postcss.config.mjs:/app/apps/vbi_fe/postcss.config.mjs
       - ../apps/vbi_provider:/app/apps/vbi_provider
       - ../packages:/app/packages
       - ../practices:/app/practices
     environment:
       NODE_ENV: development
+      VBI_API_ORIGIN: ${VBI_API_ORIGIN:-http://vbi_be:3030}
+      VBI_COLLABORATION_ORIGIN: ${VBI_COLLABORATION_ORIGIN:-http://vbi_be:1234}
     depends_on:
       vbi_be:
         condition: service_started

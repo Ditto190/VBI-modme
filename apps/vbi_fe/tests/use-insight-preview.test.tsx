@@ -2,7 +2,7 @@ import { expect, test } from '@rstest/core'
 import { act, render, screen } from '@testing-library/react'
 import * as Y from 'yjs'
 import { VBIInsightBuilder } from '@visactor/vbi'
-import { useInsightPreview } from '../src/pages/report-detail/useInsightPreview'
+import { useInsightPreview } from '../src/views/report-detail/useInsightPreview'
 
 const PreviewProbe = ({ builder, insightId }: { builder: VBIInsightBuilder; insightId: string }) => {
   const { content } = useInsightPreview(insightId, builder)

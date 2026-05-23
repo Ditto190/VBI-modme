@@ -9,13 +9,13 @@ import koKR from 'antd/locale/ko_KR'
 import viVN from 'antd/locale/vi_VN'
 import zhCN from 'antd/locale/zh_CN'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ShelfDndProvider } from 'src/components/Shelves/dnd'
-import { Toolbar } from 'src/components/Toolbar'
-import { DEMO_DEFAULT_LOCALE, DEMO_DEFAULT_THEME, type DemoLocale, type DemoTheme } from 'src/constants/builder'
-import { useVBIBuilder } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore, VBIStoreProvider } from 'src/model'
-import { initVBIConnector } from 'src/utils/localConnector'
+import { ShelfDndProvider } from '../components/Shelves/dnd'
+import { Toolbar } from '../components/Toolbar'
+import { DEMO_DEFAULT_LOCALE, DEMO_DEFAULT_THEME, type DemoLocale, type DemoTheme } from '../constants/builder'
+import { useVBIBuilder } from '../hooks'
+import { useTranslation } from '../i18n'
+import { useVBIStore, VBIStoreProvider } from '../model'
+import { initVBIConnector } from '../utils/localConnector'
 import { useShallow } from 'zustand/shallow'
 import './app.css'
 import { ChartPanel, FieldsPanel, ShelfPanel, ViewPanel } from './components'
@@ -47,25 +47,25 @@ const createThemeConfig = (themeMode: DemoTheme) => {
     algorithm: themeMode === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     token: {
       colorPrimary: themeMode === 'dark' ? '#6ea8ff' : '#1677ff',
-      borderRadius: 10,
-      borderRadiusLG: 14,
-      borderRadiusSM: 8,
-      borderRadiusXS: 6,
-      borderRadiusOuter: 22,
-      controlHeight: 32,
-      controlHeightSM: 28,
+      borderRadius: 8,
+      borderRadiusLG: 10,
+      borderRadiusSM: 6,
+      borderRadiusXS: 4,
+      borderRadiusOuter: 18,
+      controlHeight: 30,
+      controlHeightSM: 26,
       fontSize: 12,
-      fontSizeSM: 12,
+      fontSizeSM: 11,
     },
   }
 }
 
 const DemoWorkbenchPanels = memo(() => {
   return (
-    <Flex vertical={false} gap={8} style={{ flex: 1, minHeight: 0, minWidth: 0 }}>
+    <Flex vertical={false} gap={7} style={{ flex: 1, minHeight: 0, minWidth: 0 }}>
       <FieldsPanel />
 
-      <Flex vertical gap={8} style={{ flex: '1 1 0', minWidth: 0 }}>
+      <Flex vertical gap={7} style={{ flex: '1 1 0', minWidth: 0 }}>
         <ShelfPanel />
         <ChartPanel />
       </Flex>
@@ -91,7 +91,7 @@ const DemoWorkbench = ({
         vertical
         style={{
           height: '100%',
-          gap: 10,
+          gap: 8,
         }}
       >
         <Card
@@ -126,7 +126,6 @@ const AppContent = ({
   mode: AppMode
   themeMode: DemoTheme
 }) => {
-  const logState = useVBIStore((state) => state.logState)
   const { locale, t } = useTranslation()
   const antdLocale = DEMO_ANTD_LOCALES[locale]
   const antdThemeConfig = useMemo(() => createThemeConfig(themeMode), [themeMode])
@@ -177,27 +176,13 @@ const AppContent = ({
 
   return (
     <ConfigProvider locale={antdLocale} theme={antdThemeConfig} componentSize='small'>
-      <div
-        ref={appRootRef}
-        className={`demo-app-root demo-app-root--${mode}`}
-        onClick={
-          mode === 'edit'
-            ? () => {
-                void logState()
-              }
-            : undefined
-        }
-      >
+      <div ref={appRootRef} className={`demo-app-root demo-app-root--${mode}`}>
         {!initialized ? (
-          mode === 'edit' ? (
-            <Spin tip={t('appInitializing')} fullscreen />
-          ) : (
-            <div className='demo-app-view-loading'>
-              <Spin spinning tip={t('appInitializing')}>
-                <div className='demo-app-view-loading-target' />
-              </Spin>
-            </div>
-          )
+          <div className='demo-app-loading'>
+            <Spin spinning tip={t('appInitializing')} wrapperClassName='demo-app-loading-spinner'>
+              <div className='demo-app-loading-target' />
+            </Spin>
+          </div>
         ) : mode === 'edit' ? (
           <DemoWorkbench themeMode={themeMode} isFullscreen={isFullscreen} onToggleFullscreen={toggleFullscreen} />
         ) : (
@@ -223,7 +208,9 @@ const AppShell = ({ builder, mode }: { builder?: VBIChartBuilder; mode: AppMode 
     let cleanup: ReturnType<typeof initialize> | undefined
 
     void (async () => {
-      await initVBIConnector()
+      if (!builder) {
+        await initVBIConnector()
+      }
       if (!isActive) return
       cleanup = initialize(builder)
     })()

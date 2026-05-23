@@ -1,5 +1,5 @@
-import { useVBIStore } from 'src/model'
-import type { VBIStoreState } from 'src/model/VBIStore'
+import { useVBIStore } from '../model'
+import type { VBIStoreState } from '../model/VBIStore'
 
 /**
  * VBI Store Hook

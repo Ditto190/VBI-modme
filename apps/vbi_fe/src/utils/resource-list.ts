@@ -5,6 +5,3 @@ export const matchesResourceSearch = (item: ResourceItem, query: string) => {
   if (!value) return true
   return [item.id, item.name ?? ''].some((field) => field.toLowerCase().includes(value))
 }
-
-export const getFilteredResourceIds = (items: ResourceItem[], searchText: string) =>
-  items.filter((item) => matchesResourceSearch(item, searchText)).map((item) => item.id)

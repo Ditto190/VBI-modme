@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { DatePicker, InputNumber, Select, Space } from 'antd'
 import type { DatePickerProps, GetProps } from 'antd'
 import type { VBIWhereDatePredicate } from '@visactor/vbi'
-import { useTranslation } from 'src/i18n'
+import { useTranslation } from '../../i18n'
 import { formatPickerDate, fromPeriodPickerDate, toPeriodPickerValue, toRangePickerValue } from './datePickerValueUtils'
 import { getDefaultDatePredicate } from './dateFilterUtils'
 

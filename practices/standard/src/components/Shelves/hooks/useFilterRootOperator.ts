@@ -1,6 +1,6 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
 import { useCallback } from 'react'
-import { useBuilderDocState } from 'src/hooks/useBuilderDocState'
+import { useBuilderDocState } from '../../../hooks/useBuilderDocState'
 import type { RootOperator } from '../common/ShelfRootOperatorButton'
 
 const FILTER_ROOT_KEY = {

@@ -1,23 +1,27 @@
 import { withApiErrorToast } from './apiClient'
+import { requestProvider } from './providerHttp'
 import { tRuntime } from '../i18n'
-import { getResourceHandle, listResources, removeResource } from './resourceApi'
+import { listResources, removeResource } from './resourceApi'
 import type { InsightRecord } from '../types'
 
-const mapInsightDetail = (detail: {
+type InsightDetailResponse = {
   id: string
   name: string | null
   createdAt: string
   updatedAt: string
-  dsl: { content?: string }
-}): InsightRecord => ({
+  dsl?: { content?: string } | null
+}
+
+const mapInsightDetail = (detail: InsightDetailResponse): InsightRecord => ({
   id: detail.id,
   name: detail.name,
   createdAt: detail.createdAt,
   updatedAt: detail.updatedAt,
-  content: detail.dsl.content ?? '',
+  content: detail.dsl?.content ?? '',
 })
 
-const fetchInsightDetail = (id: string) => getResourceHandle('insight', id).getDetail().then(mapInsightDetail)
+const fetchInsightDetail = (id: string) =>
+  requestProvider<InsightDetailResponse>(`/insights/${id}`).then(mapInsightDetail)
 
 export const fetchInsights = () => listResources('insight')
 
@@ -25,15 +29,13 @@ export const fetchInsight = (id: string) => withApiErrorToast(fetchInsightDetail
 
 export const createInsight = (input: { name: string; content?: string }) =>
   withApiErrorToast(
-    getResourceHandle('insight')
-      .create(input)
-      .then((resource) => fetchInsightDetail(resource.id)),
+    requestProvider<InsightDetailResponse>('/insights', { body: input, method: 'POST' }).then(mapInsightDetail),
     tRuntime('api.createInsightFailed'),
   )
 
 export const updateInsight = (id: string, input: { name?: string; content?: string }) =>
   withApiErrorToast(
-    getResourceHandle('insight', id).update(input).then(mapInsightDetail),
+    requestProvider<InsightDetailResponse>(`/insights/${id}`, { body: input, method: 'PATCH' }).then(mapInsightDetail),
     tRuntime('api.saveInsightFailed'),
   )
 

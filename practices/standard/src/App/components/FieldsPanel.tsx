@@ -1,5 +1,5 @@
 import { Flex } from 'antd'
-import { FieldList } from 'src/components/Fields/FieldList'
+import { FieldList } from '../../components/Fields/FieldList'
 
 export const FieldsPanel = () => {
   return (

@@ -1,4 +1,4 @@
-import type { FieldRole } from 'src/utils/fieldRole'
+import type { FieldRole } from '../../../utils/fieldRole'
 
 export type FieldDragPayload = {
   kind: 'field'

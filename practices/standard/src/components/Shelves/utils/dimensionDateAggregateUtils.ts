@@ -1,6 +1,6 @@
 import type { VBIDimension } from '@visactor/vbi'
-import type { Translate } from 'src/i18n'
-import { isDateSchemaType } from 'src/utils/fieldRole'
+import type { Translate } from '../../../i18n'
+import { isDateSchemaType } from '../../../utils/fieldRole'
 
 export type DimensionDateAggregate = NonNullable<VBIDimension['aggregate']>
 export const DIMENSION_DATE_AGGREGATE_KEYS = [

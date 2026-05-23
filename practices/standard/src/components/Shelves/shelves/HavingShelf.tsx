@@ -1,7 +1,7 @@
 import { isVBIHavingFilter, isVBIHavingGroup, type VBIHavingClause } from '@visactor/vbi'
 import { theme } from 'antd'
 import { useCallback, useMemo } from 'react'
-import { HavingFilterPanel, type HavingItem } from 'src/components/Filter'
+import { HavingFilterPanel, type HavingItem } from '../../Filter'
 import {
   getDefaultHavingAggregateByFieldRole,
   getDefaultHavingOperator,
@@ -10,11 +10,11 @@ import {
   normalizeHavingAggregate,
   normalizeHavingOperator,
   toHavingDslOperator,
-} from 'src/components/Filter/havingFilterUtils'
-import { useVBIBuilder, useVBIHavingFilter, useVBISchemaFields } from 'src/hooks'
-import { useTranslation } from 'src/i18n'
-import { useVBIStore } from 'src/model'
-import type { FieldRole } from 'src/utils/fieldRole'
+} from '../../Filter/havingFilterUtils'
+import { useVBIBuilder, useVBIHavingFilter, useVBISchemaFields } from '../../../hooks'
+import { useTranslation } from '../../../i18n'
+import { useVBIStore } from '../../../model'
+import type { FieldRole } from '../../../utils/fieldRole'
 import { FilterShelf, type FilterShelfTone } from '../common/FilterShelf'
 import { useFilterRootOperator } from '../hooks/useFilterRootOperator'
 import { reorderYArrayByInsertIndex, type YArrayLike } from '../utils/reorderUtils'
