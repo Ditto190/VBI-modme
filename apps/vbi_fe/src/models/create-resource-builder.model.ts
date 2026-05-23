@@ -11,8 +11,6 @@ import {
 } from './resource-builder.session'
 import type { BuilderByKind, BuilderStoreState } from './resource-builder.types'
 
-export type { BuilderByKind, BuilderModel } from './resource-builder.types'
-
 export const createResourceBuilderModel = <TKind extends ResourceKind>(kind: TKind) =>
   create<BuilderStoreState<BuilderByKind[TKind]>>((set, get) => {
     const release = createReleaseController(get, set)

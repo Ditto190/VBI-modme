@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { type AppThemeMode, useAppPreferencesStore } from '../stores/app-preferences.store'
 import type { AppLocale } from '../i18n'
+import { type AppThemeMode, useAppPreferencesStore } from '../stores/app-preferences.store'
 import { isDarkVbiTheme } from '../theme'
 
 type StandardAppLocale = 'zh-CN' | 'en-US' | 'ja-JP' | 'de-DE' | 'id-ID' | 'fr-FR' | 'ko-KR' | 'vi-VN'

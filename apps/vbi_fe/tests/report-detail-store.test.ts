@@ -9,10 +9,11 @@ rs.mock('../src/stores/resource-session.store', () => ({
 }))
 
 const { useInsightBuilderModel, useReportBuilderModel } = await import('../src/models')
-const { getReportDetailSnapshot, useReportDetailStore } = await import('../src/stores/report-detail.store')
+const { useReportDetailStore } = await import('../src/stores/report-detail.store')
 const initialInsightBuilderState = useInsightBuilderModel.getState()
 const initialReportBuilderState = useReportBuilderModel.getState()
 const initialReportDetailState = useReportDetailStore.getState()
+const getReportDetailSnapshot = () => useReportDetailStore.getState()
 
 const createReportBuilder = (
   initialPages = [
@@ -35,6 +36,10 @@ const createReportBuilder = (
       pages,
     }),
     page: {
+      remove: (pageId: string) => {
+        const pageIndex = pages.findIndex((item) => item.id === pageId)
+        if (pageIndex >= 0) pages.splice(pageIndex, 1)
+      },
       update: (pageId: string, callback: (page: { setChartId(chartId: string): void }) => void) => {
         const page = pages.find((item) => item.id === pageId)
         if (!page) throw new Error(`Page ${pageId} not found`)
@@ -228,5 +233,67 @@ describe('report detail store', () => {
     useReportDetailStore.getState().setInsightContent('Updated insight text')
 
     expect(setContent).toHaveBeenCalledWith('Updated insight text')
+  })
+
+  test('does not leave stale report subscriptions when disposed before bootstrap finishes', async () => {
+    let resolveReportConnection: () => void = () => {}
+    connectResourceSession.mockImplementation((kind: string) =>
+      kind === 'report'
+        ? new Promise<void>((resolve) => {
+            resolveReportConnection = resolve
+          })
+        : Promise.resolve(),
+    )
+    useReportBuilderModel.setState({
+      sessions: {
+        'report-1': {
+          builder: createReportBuilder(),
+        },
+      },
+    })
+
+    const bootstrap = useReportDetailStore.getState().bootstrap('report-1', 'user-1')
+    for (let index = 0; index < 10; index += 1) {
+      if (connectResourceSession.mock.calls.some(([kind]) => kind === 'report')) break
+      await Promise.resolve()
+    }
+    expect(getReportDetailSnapshot().reportId).toBe('report-1')
+
+    const dispose = useReportDetailStore.getState().dispose()
+    resolveReportConnection()
+    await bootstrap
+    await dispose
+
+    expect(getReportDetailSnapshot().reportId).toBe('')
+    expect(getReportDetailSnapshot().stopReportSync).toBeNull()
+    expect(releaseResourceSession).toHaveBeenCalledWith('report', 'report-1')
+  })
+
+  test('does not remove the final report page through the store', async () => {
+    const reportBuilder = createReportBuilder([
+      {
+        chartId: '',
+        id: 'page-1',
+        insightId: '',
+        title: 'Page 1',
+      },
+    ])
+    useReportBuilderModel.setState({
+      sessions: {
+        'report-1': {
+          builder: reportBuilder,
+        },
+      },
+    })
+    useReportDetailStore.setState({
+      activePageId: 'page-1',
+      reportId: 'report-1',
+      userName: 'user-1',
+    })
+
+    await useReportDetailStore.getState().removePage('page-1')
+
+    expect(reportBuilder.build().pages).toHaveLength(1)
+    expect(releaseResourceSession).not.toHaveBeenCalled()
   })
 })

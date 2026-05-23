@@ -25,7 +25,7 @@ type ResourceColumnOptions = {
   t: Translate
 }
 
-export const createResourceColumns = ({
+const createResourceColumns = ({
   deleteTitle,
   fallbackName,
   locale,
@@ -45,14 +45,15 @@ export const createResourceColumns = ({
     title: t('common.updatedAt'),
     dataIndex: 'updatedAt',
     key: 'updatedAt',
+    className: 'w-56',
     render: (value) => (typeof value === 'string' ? new Date(value).toLocaleString(locale) : ''),
   },
   {
     title: t('common.actions'),
-    className: 'manage-actions-column',
+    className: 'w-44 text-right',
     key: 'actions',
     render: (_, record) => (
-      <div className='manage-row-actions'>
+      <div className='flex translate-x-0.5 flex-wrap justify-end gap-1.5 opacity-90 transition duration-150 group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100'>
         {onOpen ? (
           <Button variant='primary' onClick={() => onOpen(record.id)}>
             {t('common.open')}
@@ -68,7 +69,7 @@ export const createResourceColumns = ({
         >
           <Button
             aria-label={t('common.delete')}
-            className='manage-row-delete'
+            className='text-[var(--vbi-text-soft)] hover:text-[var(--vbi-danger)]'
             size='icon'
             title={t('common.delete')}
             variant='ghost'

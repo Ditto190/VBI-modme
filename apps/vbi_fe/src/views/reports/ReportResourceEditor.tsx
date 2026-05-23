@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useShallow } from 'zustand/shallow'
 import dynamic from 'next/dynamic'
+import { CenteredState } from '../../components/ui/centered-state'
 import { Spinner } from '../../components/ui/spinner'
 import { useStoreLifecycle } from '../../hooks/useStoreLifecycle'
 import { useTranslation } from '../../i18n'
@@ -12,9 +13,9 @@ const ReportWorkspace = dynamic(
   () => import('../report-detail/ReportWorkspace').then((module) => module.ReportWorkspace),
   {
     loading: () => (
-      <div className='flex h-full min-h-64 items-center justify-center'>
+      <CenteredState className='h-full' minHeight='sm'>
         <Spinner />
-      </div>
+      </CenteredState>
     ),
     ssr: false,
   },
@@ -35,9 +36,9 @@ export const ReportResourceEditor = ({ selectedId }: { selectedId: string }) => 
 
   if (!reportBuilder) {
     return (
-      <div className='flex h-full min-h-64 items-center justify-center'>
+      <CenteredState className='h-full' minHeight='sm'>
         <Spinner label={t('reportDetail.title')} />
-      </div>
+      </CenteredState>
     )
   }
 

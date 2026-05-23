@@ -4,17 +4,13 @@ import dynamic from 'next/dynamic'
 import {
   Drawer,
   DrawerBody,
-  DrawerClose,
+  DrawerCloseButton,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
 } from '../../components/ui/drawer'
-import { toast } from '../../components/ui/toast'
-import { Button } from '../../components/ui/button'
-import { X } from '../../components/ui/icons'
 import type { Translate } from '../../i18n'
+import { ResourceCreateDrawer } from './ResourceCreateDrawer'
 
 const ChartResourceEditor = dynamic(
   () => import('./ChartResourceEditor').then((module) => module.ChartResourceEditor),
@@ -52,45 +48,23 @@ export const ChartResourceModals = ({
 }: Props) => {
   return (
     <>
-      <Drawer
+      <ResourceCreateDrawer
+        cancelLabel={t('common.cancel')}
+        closeLabel={t('common.close')}
+        confirmLabel={t('charts.create')}
+        invalidMessage={t('charts.nameRequired')}
+        isValid={() => !!createName.trim()}
         open={createOpen}
-        direction='bottom'
-        onOpenChange={(open) => {
-          if (!open) closeCreate()
-        }}
+        title={t('charts.createTitle')}
+        onClose={closeCreate}
+        onConfirm={create}
       >
-        <DrawerContent className='ui-drawer-panel-wide'>
-          <DrawerHeader>
-            <div>
-              <DrawerTitle>{t('charts.createTitle')}</DrawerTitle>
-              <DrawerDescription className='sr-only'>{t('charts.createTitle')}</DrawerDescription>
-            </div>
-            <DrawerClose className='ui-drawer-close' aria-label='Close'>
-              <X className='h-4 w-4' />
-            </DrawerClose>
-          </DrawerHeader>
-          <DrawerBody>
-            <Input value={createName} onChange={(event) => setCreateName(event.target.value)} />
-          </DrawerBody>
-          <DrawerFooter>
-            <Button variant='secondary' onClick={closeCreate}>
-              {t('common.cancel')}
-            </Button>
-            <Button
-              variant='primary'
-              onClick={() => {
-                if (!createName.trim()) {
-                  toast.warning(t('charts.nameRequired'))
-                  return
-                }
-                void create()
-              }}
-            >
-              {t('charts.create')}
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+        <Input
+          value={createName}
+          placeholder={t('charts.namePlaceholder')}
+          onChange={(event) => setCreateName(event.target.value)}
+        />
+      </ResourceCreateDrawer>
       <Drawer
         open={!!selectedId}
         direction='right'
@@ -98,7 +72,10 @@ export const ChartResourceModals = ({
           if (!open) void closeDetail()
         }}
       >
-        <DrawerContent className='chart-resource-editor-drawer ui-drawer-panel-wide' showHandle={false}>
+        <DrawerContent
+          className='chart-resource-editor-drawer overflow-hidden bg-[var(--vbi-editor-bg)]'
+          showHandle={false}
+        >
           <DrawerHeader>
             <div>
               <EditableDrawerTitle
@@ -110,11 +87,9 @@ export const ChartResourceModals = ({
               />
               <DrawerDescription className='sr-only'>{t('charts.editorTitle')}</DrawerDescription>
             </div>
-            <DrawerClose className='ui-drawer-close' aria-label='Close'>
-              <X className='h-4 w-4' />
-            </DrawerClose>
+            <DrawerCloseButton label={t('common.close')} />
           </DrawerHeader>
-          <DrawerBody className='chart-resource-editor-drawer-body'>
+          <DrawerBody className='chart-resource-editor-drawer-body flex min-h-0 flex-col gap-2.5 overflow-hidden bg-[var(--vbi-editor-bg)] p-2.5'>
             {selectedId ? <ChartResourceEditor selectedId={selectedId} t={t} /> : null}
           </DrawerBody>
         </DrawerContent>

@@ -4,7 +4,7 @@ import { cn } from '../../lib/utils'
 import { LoaderCircle } from './icons'
 
 const buttonVariants = cva(
-  'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md border text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)] disabled:pointer-events-none disabled:opacity-50',
+  'vbi-motion-press inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md border text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)] disabled:pointer-events-none disabled:translate-y-0 disabled:scale-100 disabled:opacity-50',
   {
     defaultVariants: {
       size: 'default',
@@ -31,7 +31,7 @@ const buttonVariants = cva(
   },
 )
 
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     icon?: ReactNode
     loading?: boolean

@@ -21,7 +21,7 @@ export const ReportStage = memo(
 
     if (!pageSections.length) {
       return (
-        <section className='report-detail-stage report-detail-stage-empty'>
+        <section className='flex min-h-0 flex-1 items-center justify-center overflow-auto overscroll-contain scroll-smooth [contain:layout] [overflow-anchor:none] [scrollbar-gutter:stable]'>
           <Empty description={emptyDescription} />
         </section>
       )

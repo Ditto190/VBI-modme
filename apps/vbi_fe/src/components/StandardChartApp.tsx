@@ -4,7 +4,7 @@ import type { VBIChartBuilder } from '@visactor/vbi'
 import dynamic from 'next/dynamic'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
-import type { useStandardAppProps } from '../hooks/useStandardAppProps'
+import { useStandardAppProps } from '../hooks/useStandardAppProps'
 import { ensureDemoConnector } from '../services/demoConnector'
 
 const StandardAPP = dynamic(() => import('standard').then((module) => module.APP), {
@@ -15,11 +15,11 @@ type StandardChartAppProps = {
   builder: VBIChartBuilder | null
   fallback: ReactNode
   mode: 'edit' | 'view'
-  standardAppProps: ReturnType<typeof useStandardAppProps>
 }
 
-export const StandardChartApp = ({ builder, fallback, mode, standardAppProps }: StandardChartAppProps) => {
+export const StandardChartApp = ({ builder, fallback, mode }: StandardChartAppProps) => {
   const [connectorReady, setConnectorReady] = useState(false)
+  const standardAppProps = useStandardAppProps()
 
   useEffect(() => {
     if (!builder) {

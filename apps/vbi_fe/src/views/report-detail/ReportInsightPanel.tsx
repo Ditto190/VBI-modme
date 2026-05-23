@@ -1,5 +1,6 @@
 import type { VBIInsightBuilder } from '@visactor/vbi'
 import { memo, useMemo } from 'react'
+import { CenteredState } from '../../components/ui/centered-state'
 import { Empty } from '../../components/ui/empty'
 import { FileSearch, Pencil } from '../../components/ui/icons'
 import { Spinner } from '../../components/ui/spinner'
@@ -31,21 +32,17 @@ export const ReportInsightPanel = memo(({ builder, insightId, onEdit }: ReportIn
   )
 
   return (
-    <div className='report-detail-slide-note'>
+    <div className='vbi-motion-row w-[min(100%,820px)] justify-self-center' data-report-panel='insight'>
       <EditableSurface actions={actions}>
-        <div className='report-detail-insight-panel'>
+        <div className='grid min-h-24 content-start gap-2 overflow-visible py-1'>
           {showLoading ? (
-            <div className='report-detail-placeholder'>
+            <CenteredState minHeight='sm'>
               <Spinner />
-            </div>
+            </CenteredState>
           ) : content ? (
             <MarkdownContent content={content} />
           ) : (
-            <Empty
-              className='report-detail-insight-empty'
-              description={t('reportDetail.emptyInsight')}
-              icon={<FileSearch className='h-5 w-5' />}
-            />
+            <Empty description={t('reportDetail.emptyInsight')} icon={<FileSearch className='h-5 w-5' />} />
           )}
         </div>
       </EditableSurface>

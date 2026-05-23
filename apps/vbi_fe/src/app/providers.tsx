@@ -1,19 +1,36 @@
 'use client'
 
 import { useEffect } from 'react'
-import { DebugBridgeInstaller } from '../components/DebugBridgeInstaller'
 import { NavigationBinder } from '../components/NavigationBinder'
 import { ToastViewport } from '../components/ui/toast'
-import { useAppPreferencesStore } from '../stores/app-preferences.store'
+import {
+  initializeAppPreferences,
+  reconcilePersistedAppPreferences,
+  useAppPreferencesStore,
+  type AppThemeMode,
+} from '../stores/app-preferences.store'
+import type { AppLocale } from '../i18n'
 import { getVbiThemeStyle, isDarkVbiTheme } from '../theme'
 
-export const VbiAppProviders = ({ children }: { children: React.ReactNode }) => {
-  const hydratePreferences = useAppPreferencesStore((state) => state.hydratePreferences)
+type VbiAppProvidersProps = {
+  children: React.ReactNode
+  initialLocale: AppLocale
+  initialThemeMode: AppThemeMode
+}
+
+export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: VbiAppProvidersProps) => {
+  initializeAppPreferences({ locale: initialLocale, themeMode: initialThemeMode })
+
+  const locale = useAppPreferencesStore((state) => state.locale)
   const themeMode = useAppPreferencesStore((state) => state.themeMode)
 
   useEffect(() => {
-    hydratePreferences()
-  }, [hydratePreferences])
+    reconcilePersistedAppPreferences()
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.lang = locale
+  }, [locale])
 
   return (
     <div
@@ -22,7 +39,6 @@ export const VbiAppProviders = ({ children }: { children: React.ReactNode }) => 
       style={getVbiThemeStyle(themeMode)}
     >
       <NavigationBinder />
-      <DebugBridgeInstaller />
       {children}
       <div data-vbi-portal-root='' />
       <ToastViewport />

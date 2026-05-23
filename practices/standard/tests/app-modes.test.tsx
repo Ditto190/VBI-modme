@@ -12,6 +12,13 @@ afterEach(() => {
   setLocalDataWithSchema([], null)
 })
 
+test('APP keeps initializing loading inside its own root', () => {
+  const { container } = render(<APP />)
+
+  expect(container.querySelector('.demo-app-loading')).toBeInTheDocument()
+  expect(document.body.querySelector('.ant-spin-fullscreen')).not.toBeInTheDocument()
+})
+
 test('APP keeps edit workbench as the default mode', async () => {
   render(<APP builder={createDefaultBuilder()} />)
 

@@ -4,9 +4,8 @@ import { useShallow } from 'zustand/shallow'
 import { useTranslation } from '../i18n'
 import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
 import { selectManageInsightsPageState, useManageInsightsStore } from '../stores/manage-insights.store'
-import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell'
-import { useResourceColumns } from './manage-resource/resource-columns'
 import { InsightResourceModals } from './manage-resource/InsightResourceModals'
+import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageInsightsPage = () => {
   const { locale, t } = useTranslation()
@@ -38,28 +37,26 @@ export const ManageInsightsPage = () => {
     setSelectedRowKeys,
   } = state
   useUserStoreLifecycle(bootstrapStore, dispose)
-  const columns = useResourceColumns({
-    deleteTitle: t('insights.deleteTitle'),
-    fallbackName: t('insights.untitled'),
-    locale,
-    onEdit: openDetail,
-    onRemove: deleteOne,
-    t,
-  })
-
   return (
-    <ManageResourcePageShell
-      columns={columns}
+    <ResourceManagementPage
       createLabel={t('insights.create')}
-      dataSource={filteredItems}
-      loading={loading}
-      onCreate={openCreate}
-      onDeleteSelected={deleteSelected}
-      onSearchTextChange={setSearchText}
-      searchText={searchText}
-      selectedRowKeys={selectedRowKeys}
-      setSelectedRowKeys={setSelectedRowKeys}
+      deleteTitle={t('insights.deleteTitle')}
+      fallbackName={t('insights.untitled')}
+      locale={locale}
+      state={{
+        deleteSelected,
+        filteredItems,
+        loading,
+        openCreate,
+        openDetail,
+        searchText,
+        selectedRowKeys,
+        setSearchText,
+        setSelectedRowKeys,
+      }}
       title={t('insights.title')}
+      t={t}
+      onRemove={deleteOne}
     >
       <InsightResourceModals
         closeCreate={closeCreate}
@@ -76,6 +73,6 @@ export const ManageInsightsPage = () => {
         setEditorName={setEditorName}
         t={t}
       />
-    </ManageResourcePageShell>
+    </ResourceManagementPage>
   )
 }

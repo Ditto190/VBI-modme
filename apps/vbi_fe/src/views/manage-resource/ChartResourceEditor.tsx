@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic'
-import { useStandardAppProps } from '../../hooks/useStandardAppProps'
 import { useChartBuilderModel } from '../../models'
 import type { Translate } from '../../i18n'
 
@@ -16,16 +15,14 @@ type ChartResourceEditorProps = {
 }
 
 export const ChartResourceEditor = ({ selectedId, t }: ChartResourceEditorProps) => {
-  const standardAppProps = useStandardAppProps()
   const builder = useChartBuilderModel((store) => store.sessions[selectedId]?.builder ?? null)
 
   return (
-    <div className='chart-resource-editor-host'>
+    <div className='flex min-h-0 flex-[1_1_auto] overflow-hidden'>
       <StandardChartApp
         builder={selectedId ? builder : null}
         fallback={<p className='text-sm text-[var(--vbi-text-muted)]'>{t('charts.connecting')}</p>}
         mode='edit'
-        standardAppProps={standardAppProps}
       />
     </div>
   )

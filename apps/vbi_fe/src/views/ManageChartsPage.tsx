@@ -3,10 +3,9 @@
 import { useShallow } from 'zustand/shallow'
 import { useTranslation } from '../i18n'
 import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
-import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell'
 import { selectManageChartsPageState, useManageChartsStore } from '../stores/manage-charts.store'
-import { useResourceColumns } from './manage-resource/resource-columns'
 import { ChartResourceModals } from './manage-resource/ChartResourceModals'
+import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageChartsPage = () => {
   const { locale, t } = useTranslation()
@@ -36,28 +35,26 @@ export const ManageChartsPage = () => {
     setSelectedRowKeys,
   } = state
   useUserStoreLifecycle(bootstrapStore, dispose)
-  const columns = useResourceColumns({
-    deleteTitle: t('charts.deleteTitle'),
-    fallbackName: t('charts.untitled'),
-    locale,
-    onEdit: openDetail,
-    onRemove: deleteOne,
-    t,
-  })
-
   return (
-    <ManageResourcePageShell
-      columns={columns}
+    <ResourceManagementPage
       createLabel={t('charts.create')}
-      dataSource={filteredItems}
-      loading={loading}
-      onCreate={openCreate}
-      onDeleteSelected={deleteSelected}
-      onSearchTextChange={setSearchText}
-      searchText={searchText}
-      selectedRowKeys={selectedRowKeys}
-      setSelectedRowKeys={setSelectedRowKeys}
+      deleteTitle={t('charts.deleteTitle')}
+      fallbackName={t('charts.untitled')}
+      locale={locale}
+      state={{
+        deleteSelected,
+        filteredItems,
+        loading,
+        openCreate,
+        openDetail,
+        searchText,
+        selectedRowKeys,
+        setSearchText,
+        setSelectedRowKeys,
+      }}
       title={t('charts.title')}
+      t={t}
+      onRemove={deleteOne}
     >
       <ChartResourceModals
         closeCreate={closeCreate}
@@ -72,6 +69,6 @@ export const ManageChartsPage = () => {
         setEditorName={setEditorName}
         t={t}
       />
-    </ManageResourcePageShell>
+    </ResourceManagementPage>
   )
 }

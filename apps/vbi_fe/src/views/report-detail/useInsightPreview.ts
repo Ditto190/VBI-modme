@@ -16,7 +16,7 @@ const initialState: InsightPreviewState = {
   loading: false,
 }
 
-const readBuilderContent = (builder: VBIInsightBuilder) => `${builder.dsl.get('content') ?? ''}`.trim()
+const readBuilderContent = (builder: VBIInsightBuilder) => `${builder.dsl.get('content') ?? ''}`
 
 export const useInsightPreview = (insightId: string, builder: VBIInsightBuilder | null): InsightPreviewResult => {
   const [state, setState] = useState<InsightPreviewState>(initialState)
@@ -41,7 +41,7 @@ export const useInsightPreview = (insightId: string, builder: VBIInsightBuilder 
       .then((insight) => {
         if (!active) return
         setState({
-          content: insight.content.trim(),
+          content: insight.content,
           insightId,
           loading: false,
         })

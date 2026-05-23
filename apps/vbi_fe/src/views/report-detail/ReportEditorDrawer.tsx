@@ -1,16 +1,15 @@
 import dynamic from 'next/dynamic'
+import { CenteredState } from '../../components/ui/centered-state'
 import {
   Drawer,
   DrawerBody,
-  DrawerClose,
+  DrawerCloseButton,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
 } from '../../components/ui/drawer'
-import { X } from '../../components/ui/icons'
 import { Spinner } from '../../components/ui/spinner'
-import { useStandardAppProps } from '../../hooks/useStandardAppProps'
 import { useTranslation } from '../../i18n'
 import { useChartBuilderModel, useReportBuilderModel } from '../../models'
 import { useReportDetailStore } from '../../stores/report-detail.store'
@@ -23,7 +22,6 @@ const StandardChartApp = dynamic(
 )
 
 export const ReportEditorDrawer = () => {
-  const standardAppProps = useStandardAppProps()
   const { t } = useTranslation()
   const chartId = useReportDetailStore((state) => state.connectedChartId)
   const closeChartEditor = useReportDetailStore((state) => state.closeChartEditor)
@@ -43,28 +41,28 @@ export const ReportEditorDrawer = () => {
         if (!nextOpen) closeChartEditor()
       }}
     >
-      <DrawerContent className='report-detail-chart-drawer ui-drawer-panel-wide' showHandle={false}>
-        <DrawerHeader>
+      <DrawerContent
+        className='report-detail-chart-drawer overflow-hidden border-l-[var(--vbi-border-strong)] bg-[var(--vbi-editor-bg)] data-[direction=right]:w-[min(calc(100vw_-_24px),1320px)] data-[direction=right]:max-w-none max-[1100px]:data-[direction=right]:w-[calc(100vw_-_12px)]'
+        showHandle={false}
+      >
+        <DrawerHeader className='min-h-[50px] py-2.5 pl-3.5 pr-3'>
           <div>
             <DrawerTitle>{title}</DrawerTitle>
             <DrawerDescription className='sr-only'>{t('charts.editorTitle')}</DrawerDescription>
           </div>
-          <DrawerClose className='ui-drawer-close' aria-label='Close'>
-            <X className='h-4 w-4' />
-          </DrawerClose>
+          <DrawerCloseButton label={t('common.close')} />
         </DrawerHeader>
-        <DrawerBody className='report-detail-chart-drawer-body'>
-          <div className='report-detail-editor'>
+        <DrawerBody className='flex min-h-0 overflow-hidden bg-[var(--vbi-editor-bg)] p-0'>
+          <div className='box-border flex h-full min-h-0 min-w-0 flex-1 overflow-hidden bg-[var(--vbi-editor-bg)] p-2.5'>
             <StandardChartApp
               builder={chartBuilder}
               fallback={
-                <div className='report-detail-placeholder'>
+                <CenteredState minHeight='sm'>
                   <Spinner label={t('reportDetail.connectingChartEditor')} />
                   <p className='text-sm text-[var(--vbi-text-muted)]'>{t('reportDetail.chartEditorReady')}</p>
-                </div>
+                </CenteredState>
               }
               mode='edit'
-              standardAppProps={standardAppProps}
             />
           </div>
         </DrawerBody>

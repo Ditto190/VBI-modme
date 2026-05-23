@@ -5,7 +5,6 @@ import { vbiThemePalettes, type VbiThemeMode } from '../theme/palette'
 export type AppThemeMode = VbiThemeMode
 
 type AppPreferencesState = {
-  hydratePreferences(): void
   locale: AppLocale
   themeMode: AppThemeMode
   setLocale(locale: AppLocale): void
@@ -14,19 +13,20 @@ type AppPreferencesState = {
 
 const localeStorageKey = 'vbi.locale'
 const themeStorageKey = 'vbi.theme'
-
-const languageFallbacks: Record<string, AppLocale> = {
-  de: 'de-DE',
-  en: 'en-US',
-  fr: 'fr-FR',
-  id: 'id-ID',
-  ja: 'ja-JP',
-  ko: 'ko-KR',
-  vi: 'vi-VN',
-  zh: 'zh-CN',
+const preferenceCookieMaxAge = 60 * 60 * 24 * 365
+const defaultPreferences = {
+  locale: 'zh-CN' as AppLocale,
+  themeMode: 'slate' as AppThemeMode,
 }
 
-const getStoredValue = (key: string) => {
+type InitialAppPreferences = Partial<{
+  locale: AppLocale
+  themeMode: AppThemeMode
+}>
+
+let clientPreferencesInitialized = false
+
+const getLocalStorageValue = (key: string) => {
   if (typeof window === 'undefined') return null
 
   try {
@@ -36,66 +36,89 @@ const getStoredValue = (key: string) => {
   }
 }
 
-const setStoredValue = (key: string, value: string) => {
-  if (typeof window === 'undefined') return
+const getCookieValue = (key: string) => {
+  if (typeof document === 'undefined') return null
 
-  try {
-    window.localStorage.setItem(key, value)
-  } catch {
-    // Storage can be disabled in privacy modes; the in-memory state still works.
+  const encodedKey = encodeURIComponent(key)
+  const cookie = document.cookie
+    .split('; ')
+    .find((item) => item.startsWith(`${encodedKey}=`))
+    ?.slice(encodedKey.length + 1)
+
+  return cookie ? decodeURIComponent(cookie) : null
+}
+
+const getPersistedValue = (key: string) => getCookieValue(key) ?? getLocalStorageValue(key)
+
+const setPreferenceCookie = (key: string, value: string) => {
+  if (typeof document === 'undefined') return
+
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; path=/; max-age=${preferenceCookieMaxAge}; SameSite=Lax`
+}
+
+const setPersistedValue = (key: string, value: string) => {
+  if (typeof window !== 'undefined') {
+    try {
+      window.localStorage.setItem(key, value)
+    } catch {
+      // Storage can be disabled in privacy modes; the in-memory state still works.
+    }
   }
+
+  setPreferenceCookie(key, value)
 }
 
 const isThemeMode = (value: string | null): value is AppThemeMode =>
   typeof value === 'string' && value in vbiThemePalettes
 
-const resolveBrowserLocale = (): AppLocale => {
-  if (typeof navigator === 'undefined') return 'zh-CN'
+const resolvePersistedLocalePreference = () => {
+  const storedLocale = getPersistedValue(localeStorageKey)
+  return isAppLocale(storedLocale) ? storedLocale : null
+}
 
-  const browserLanguages = [navigator.language, ...(navigator.languages ?? [])].filter(Boolean)
+const resolvePersistedThemePreference = () => {
+  const storedThemeMode = getPersistedValue(themeStorageKey)
+  return isThemeMode(storedThemeMode) ? storedThemeMode : null
+}
 
-  for (const language of browserLanguages) {
-    if (isAppLocale(language)) return language
+const normalizeInitialPreferences = (preferences: InitialAppPreferences) => ({
+  locale: preferences.locale ?? defaultPreferences.locale,
+  themeMode: preferences.themeMode ?? defaultPreferences.themeMode,
+})
 
-    const languagePrefix = language.split('-')[0]?.toLowerCase()
-    const matchedLocale = languagePrefix ? languageFallbacks[languagePrefix] : undefined
-
-    if (matchedLocale) return matchedLocale
+export const initializeAppPreferences = (preferences: InitialAppPreferences) => {
+  if (typeof window !== 'undefined') {
+    if (clientPreferencesInitialized) return
+    clientPreferencesInitialized = true
   }
 
-  return 'zh-CN'
+  useAppPreferencesStore.setState(normalizeInitialPreferences(preferences))
 }
 
-const resolveInitialLocale = () => {
-  const storedLocale = getStoredValue(localeStorageKey)
-  return isAppLocale(storedLocale) ? storedLocale : resolveBrowserLocale()
-}
+export const reconcilePersistedAppPreferences = () => {
+  const persistedLocale = resolvePersistedLocalePreference()
+  const persistedThemeMode = resolvePersistedThemePreference()
 
-const resolveInitialThemeMode = () => {
-  const storedThemeMode = getStoredValue(themeStorageKey)
-  return isThemeMode(storedThemeMode) ? storedThemeMode : 'slate'
+  if (persistedLocale) setPreferenceCookie(localeStorageKey, persistedLocale)
+  if (persistedThemeMode) setPreferenceCookie(themeStorageKey, persistedThemeMode)
+
+  useAppPreferencesStore.setState((state) => ({
+    locale: persistedLocale ?? state.locale,
+    themeMode: persistedThemeMode ?? state.themeMode,
+  }))
 }
 
 export const useAppPreferencesStore = create<AppPreferencesState>((set) => ({
-  hydratePreferences: () =>
-    set((state) => {
-      const nextLocale = resolveInitialLocale()
-      const nextThemeMode = resolveInitialThemeMode()
-
-      return state.locale === nextLocale && state.themeMode === nextThemeMode
-        ? state
-        : { locale: nextLocale, themeMode: nextThemeMode }
-    }),
-  locale: 'zh-CN',
-  themeMode: 'slate',
+  locale: defaultPreferences.locale,
+  themeMode: defaultPreferences.themeMode,
   setLocale: (locale) =>
     set((state) => {
-      setStoredValue(localeStorageKey, locale)
+      setPersistedValue(localeStorageKey, locale)
       return state.locale === locale ? state : { locale }
     }),
   setThemeMode: (themeMode) =>
     set((state) => {
-      setStoredValue(themeStorageKey, themeMode)
+      setPersistedValue(themeStorageKey, themeMode)
       return state.themeMode === themeMode ? state : { themeMode }
     }),
 }))

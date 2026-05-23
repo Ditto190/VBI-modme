@@ -4,9 +4,8 @@ import { useShallow } from 'zustand/shallow'
 import { useTranslation } from '../i18n'
 import { selectReportsPageState, useReportsStore } from '../stores/reports.store'
 import { useStoreLifecycle } from '../hooks/useStoreLifecycle'
-import { ManageResourcePageShell } from './manage-resource/ManageResourcePageShell'
-import { useResourceColumns } from './manage-resource/resource-columns'
 import { ReportResourceModals } from './reports/ReportResourceModals'
+import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ReportsPage = () => {
   const { locale, t } = useTranslation()
@@ -19,6 +18,7 @@ export const ReportsPage = () => {
     create,
     createName,
     deleteSelected,
+    dispose,
     editorName,
     filteredItems,
     isCreateOpen,
@@ -36,30 +36,28 @@ export const ReportsPage = () => {
     setSelectedRowKeys,
   } = state
 
-  useStoreLifecycle(bootstrap)
-
-  const columns = useResourceColumns({
-    deleteTitle: t('reports.deleteTitle'),
-    fallbackName: t('reports.untitled'),
-    locale,
-    onEdit: (id) => void openDetail(id),
-    onRemove: remove,
-    t,
-  })
+  useStoreLifecycle(bootstrap, dispose)
 
   return (
-    <ManageResourcePageShell
-      columns={columns}
+    <ResourceManagementPage
       createLabel={t('reports.create')}
-      dataSource={filteredItems}
-      loading={loading}
-      onCreate={openCreate}
-      onDeleteSelected={deleteSelected}
-      onSearchTextChange={setSearchText}
-      searchText={searchText}
-      selectedRowKeys={selectedRowKeys}
-      setSelectedRowKeys={setSelectedRowKeys}
+      deleteTitle={t('reports.deleteTitle')}
+      fallbackName={t('reports.untitled')}
+      locale={locale}
+      state={{
+        deleteSelected,
+        filteredItems,
+        loading,
+        openCreate,
+        openDetail,
+        searchText,
+        selectedRowKeys,
+        setSearchText,
+        setSelectedRowKeys,
+      }}
       title={t('reports.title')}
+      t={t}
+      onRemove={remove}
     >
       <ReportResourceModals
         createName={createName}
@@ -73,6 +71,6 @@ export const ReportsPage = () => {
         onEditorNameChange={setEditorName}
         onRenameSelected={renameSelected}
       />
-    </ManageResourcePageShell>
+    </ResourceManagementPage>
   )
 }

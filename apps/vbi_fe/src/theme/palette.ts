@@ -325,7 +325,6 @@ export const vbiThemePalettes = {
 } as const
 
 export type VbiThemeMode = keyof typeof vbiThemePalettes
-export type VbiThemePalette = (typeof vbiThemePalettes)[VbiThemeMode]
 
 export const lightVbiThemeModes = [
   'slate',

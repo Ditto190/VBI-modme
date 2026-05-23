@@ -3,11 +3,3 @@ declare module '*.svg?react' {
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
   export default ReactComponent
 }
-
-interface Window {
-  __VBI_FE_DEBUG__?: {
-    actions: Record<string, Record<string, unknown>>
-    dump(): Record<string, unknown>
-    getState(storeName: string): unknown
-  }
-}

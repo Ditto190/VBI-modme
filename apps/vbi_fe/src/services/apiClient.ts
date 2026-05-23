@@ -15,7 +15,7 @@ const getMessage = (value: unknown, fallback: string) => {
 
 const getDefaultApiErrorFallback = () => tRuntime('api.requestFailed')
 
-export const notifyApiError = (error: unknown, fallback = getDefaultApiErrorFallback()) => {
+const notifyApiError = (error: unknown, fallback = getDefaultApiErrorFallback()) => {
   toast.error(getMessage(error, fallback))
 }
 

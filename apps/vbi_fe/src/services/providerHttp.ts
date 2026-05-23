@@ -1,3 +1,5 @@
+import { tRuntime } from '../i18n'
+
 type ProviderResponse<T> = {
   data: T
 }
@@ -8,11 +10,13 @@ const resolveBody = (body: unknown) => (body === undefined ? {} : { body: JSON.s
 
 const toProviderError = async (response: Response) => {
   const payload = await response.text()
+  const fallback = tRuntime('api.statusFailed', { status: response.status })
+
   try {
     const parsed = JSON.parse(payload) as { message?: string }
-    return parsed.message || payload || `Request failed: ${response.status}`
+    return parsed.message || payload || fallback
   } catch {
-    return payload || `Request failed: ${response.status}`
+    return payload || fallback
   }
 }
 

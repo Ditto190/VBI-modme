@@ -1,13 +1,13 @@
 import { createRef } from 'react'
 import { expect, rs, test } from '@rstest/core'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
 rs.mock('../src/views/report-detail/ReportChartPanel', () => ({
-  ReportChartPanel: () => <div className='report-detail-slide-chart' />,
+  ReportChartPanel: () => <div data-report-panel='chart' />,
 }))
 
 rs.mock('../src/views/report-detail/ReportInsightPanel', () => ({
-  ReportInsightPanel: () => <div className='report-detail-slide-note' />,
+  ReportInsightPanel: () => <div data-report-panel='insight' />,
 }))
 
 const { ReportStage } = await import('../src/views/report-detail/ReportStage')
@@ -59,10 +59,10 @@ test('report stage renders empty when page has no resources', () => {
     />,
   )
 
-  expect(screen.getByText('当前页面暂无图表和洞察')).toBeInTheDocument()
+  expect(screen.getByText(/This page has no chart or insight|当前页面暂无图表和洞察/)).toBeInTheDocument()
 })
 
-test('report stage places insight before chart when both resources exist', () => {
+test('report stage places insight before chart when both resources exist', async () => {
   const { container } = render(
     <ReportStage
       activePageId='page-1'
@@ -73,13 +73,13 @@ test('report stage places insight before chart when both resources exist', () =>
       stageRef={createRef()}
     />,
   )
-  const sections = [
-    ...container.querySelectorAll(
-      '.report-detail-vertical-slide .report-detail-slide-note, .report-detail-vertical-slide .report-detail-slide-chart',
-    ),
-  ].map((node) => node.className)
+  await waitFor(() => {
+    const sections = [...container.querySelectorAll('[data-report-page-id="page-1"] [data-report-panel]')].map((node) =>
+      node.getAttribute('data-report-panel'),
+    )
 
-  expect(sections).toEqual(['report-detail-slide-note', 'report-detail-slide-chart'])
+    expect(sections).toEqual(['insight', 'chart'])
+  })
 })
 
 test('report stage renders page title dividers between pages', () => {
@@ -93,7 +93,7 @@ test('report stage renders page title dividers between pages', () => {
       stageRef={createRef()}
     />,
   )
-  const dividers = container.querySelectorAll('.report-detail-page-divider')
+  const dividers = container.querySelectorAll('[data-report-divider="page"]')
 
   expect(dividers).toHaveLength(1)
   expect(dividers[0].textContent).toBe('02Page 2')
@@ -138,7 +138,7 @@ test('report stage renders insight-only pages without chart panel', () => {
     />,
   )
 
-  expect(container.querySelector('.report-detail-slide-note')).toBeTruthy()
-  expect(container.querySelector('.report-detail-slide-chart')).toBeNull()
-  expect(container.querySelector('.report-detail-vertical-stage')).toBeTruthy()
+  expect(container.querySelector('[data-report-panel="insight"]')).toBeTruthy()
+  expect(container.querySelector('[data-report-panel="chart"]')).toBeNull()
+  expect(container.querySelector('[data-report-stage="vertical"]')).toBeTruthy()
 })

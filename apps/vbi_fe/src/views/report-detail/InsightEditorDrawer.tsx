@@ -1,15 +1,15 @@
 import { Button } from '../../components/ui/button'
+import { CenteredState } from '../../components/ui/centered-state'
 import {
   Drawer,
   DrawerBody,
-  DrawerClose,
+  DrawerCloseButton,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
 } from '../../components/ui/drawer'
-import { X } from '../../components/ui/icons'
 import { Spinner } from '../../components/ui/spinner'
 import { Textarea } from '../../components/ui/input'
 import { useTranslation } from '../../i18n'
@@ -34,15 +34,13 @@ export const InsightEditorDrawer = () => {
         if (!nextOpen) closeInsightEditor()
       }}
     >
-      <DrawerContent className='ui-drawer-panel-wide' showHandle={false}>
+      <DrawerContent showHandle={false}>
         <DrawerHeader>
           <div>
             <DrawerTitle>{t('reportDetail.editInsight')}</DrawerTitle>
             <DrawerDescription className='sr-only'>{t('reportDetail.editInsight')}</DrawerDescription>
           </div>
-          <DrawerClose className='ui-drawer-close' aria-label='Close'>
-            <X className='h-4 w-4' />
-          </DrawerClose>
+          <DrawerCloseButton label={t('common.close')} />
         </DrawerHeader>
         <DrawerBody>
           {insightBuilder ? (
@@ -53,9 +51,9 @@ export const InsightEditorDrawer = () => {
               onChange={(event) => setInsightContent(event.target.value)}
             />
           ) : (
-            <div className='report-detail-placeholder'>
+            <CenteredState minHeight='sm'>
               <Spinner label={t('reportDetail.connectingInsightEditor')} />
-            </div>
+            </CenteredState>
           )}
         </DrawerBody>
         <DrawerFooter>

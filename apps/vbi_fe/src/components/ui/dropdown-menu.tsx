@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react'
+'use client'
+
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
+import type { ReactElement, ReactNode } from 'react'
 import { cn } from '../../lib/utils'
 
 export type DropdownItem = {
@@ -10,10 +13,13 @@ export type DropdownItem = {
   onSelect: () => void
 }
 
+const getDropdownPortalRoot = () => document.querySelector<HTMLElement>('[data-vbi-portal-root]') ?? document.body
+
 export const DropdownMenu = ({
   closeOnSelect = true,
   items,
   menuClassName,
+  placement = 'bottom-end',
   renderContent,
   renderItem,
   trigger,
@@ -21,58 +27,59 @@ export const DropdownMenu = ({
   closeOnSelect?: boolean
   items: DropdownItem[]
   menuClassName?: string
+  placement?: 'bottom-end' | 'bottom-start' | 'top-end' | 'top-start'
   renderContent?: (items: DropdownItem[]) => ReactNode
   renderItem?: (item: DropdownItem) => ReactElement
   trigger: ReactNode
 }) => {
-  const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement | null>(null)
-
-  useEffect(() => {
-    if (!open) return
-    const close = (event: MouseEvent) => {
-      if (!ref.current?.contains(event.target as Node)) setOpen(false)
-    }
-    window.addEventListener('mousedown', close)
-    return () => window.removeEventListener('mousedown', close)
-  }, [open])
+  const [side, align] = placement.split('-') as ['bottom' | 'top', 'end' | 'start']
 
   return (
-    <div ref={ref} className='ui-dropdown' onClick={(event) => event.stopPropagation()}>
-      <span onClick={() => setOpen((value) => !value)}>{trigger}</span>
-      {open ? (
-        <div className={cn('ui-dropdown-menu', menuClassName)} role='menu'>
+    <DropdownMenuPrimitive.Root>
+      <DropdownMenuPrimitive.Trigger asChild>
+        <span className='ui-dropdown relative inline-flex'>{trigger}</span>
+      </DropdownMenuPrimitive.Trigger>
+      <DropdownMenuPrimitive.Portal container={typeof document === 'undefined' ? undefined : getDropdownPortalRoot()}>
+        <DropdownMenuPrimitive.Content
+          align={align}
+          className={cn(
+            'ui-dropdown-menu z-[95] min-w-40 origin-top-right overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] shadow-lg will-change-[transform,opacity] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
+            menuClassName,
+          )}
+          side={side}
+          sideOffset={8}
+        >
           {renderContent
             ? renderContent(items)
             : items.map((item) =>
                 renderItem ? (
-                  <span
+                  <DropdownMenuPrimitive.Item
+                    asChild
                     key={item.key}
-                    onClick={() => {
-                      if (closeOnSelect) setOpen(false)
-                    }}
+                    onSelect={(event) => !closeOnSelect && event.preventDefault()}
                   >
                     {renderItem(item)}
-                  </span>
+                  </DropdownMenuPrimitive.Item>
                 ) : (
-                  <button
+                  <DropdownMenuPrimitive.Item
                     key={item.key}
-                    className={cn('ui-dropdown-item', item.danger && 'is-danger')}
+                    className={cn(
+                      'ui-dropdown-item flex w-full cursor-pointer items-center gap-2 border-0 bg-transparent px-2.5 py-2 text-left text-xs text-[var(--vbi-text)] transition duration-150 ease-out hover:translate-x-0.5 hover:bg-[var(--vbi-hover-bg)] active:translate-x-px active:scale-[0.99] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45',
+                      item.danger && 'text-[var(--vbi-danger)]',
+                    )}
                     disabled={item.disabled}
-                    role='menuitem'
-                    type='button'
-                    onClick={() => {
-                      if (closeOnSelect) setOpen(false)
+                    onSelect={(event) => {
+                      if (!closeOnSelect) event.preventDefault()
                       item.onSelect()
                     }}
                   >
                     {item.icon}
                     <span>{item.label}</span>
-                  </button>
+                  </DropdownMenuPrimitive.Item>
                 ),
               )}
-        </div>
-      ) : null}
-    </div>
+        </DropdownMenuPrimitive.Content>
+      </DropdownMenuPrimitive.Portal>
+    </DropdownMenuPrimitive.Root>
   )
 }

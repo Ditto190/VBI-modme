@@ -105,6 +105,65 @@ docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter 
   the frontend container, validate in the running Docker frontend so workspace
   dependency behavior matches the app runtime.
 
+## Architecture Habits
+
+- Treat `chart`, `insight`, and `report` management pages as three adapters over
+  one resource-management workflow. Search, selection, create, delete, rename,
+  drawer open/close, list reload, and empty/loading states should be implemented
+  through shared modules where possible. Keep resource-specific differences in
+  small adapters instead of copying page/store/drawer flows.
+- Prefer deep frontend modules with small interfaces over pass-through helpers.
+  If a UI fix must be repeated in all three asset types, first look for a common
+  `manage-resource` or drawer-flow module before editing each page separately.
+- Keep Provider-first ownership intact. Frontend views consume Provider,
+  resource session stores, and Builder-facing commands; they should not rebuild
+  resource DSL payloads or duplicate provider lifecycle logic in React
+  components.
+- Keep report-detail runtime concerns separate from presentation concerns.
+  Session graph updates, child chart/insight retain/release, active-page
+  resolution, page mutation, and editor open state should live behind a report
+  workspace/runtime interface. Sidebar, stage, and drawer components should
+  receive projections and commands, not reconstruct Builder/session state.
+- When a report references multiple child resources, model it as a resource
+  session graph. Diffing child resource ids and ordering retain/release should be
+  centralized near `resource-session.store.ts`, not repeated in view modules.
+- Avoid barrel exports that expose internal helpers just because they exist.
+  Public exports from `src/i18n`, `src/theme`, `src/models`, and `src/types`
+  should be intentionally consumed by app modules.
+
+## UI And Interaction Notes
+
+- VBIFE UI should stay compact, quiet, and operational. Prefer small controls,
+  restrained borders, subtle motion, and clear hierarchy over large marketing
+  surfaces or decorative cards.
+- Theme selection should expose a compact trigger in the sidebar, not all colors
+  inline. The full palette belongs in a popover/dropdown, with clear light/dark
+  grouping and immediate preview. Persist the selected theme in browser storage.
+- Language selection should default from browser/server headers when the user has
+  not chosen a language. Once the user chooses, persist it in browser storage and
+  avoid weak-network flicker where Chinese renders first and then switches.
+- Search controls in asset pages should be compact by default, expand smoothly
+  on focus, and keep the table toolbar stable. If this interaction is tuned for
+  one asset page, apply it through the shared manage-resource module.
+- Destructive actions should use icons, confirmation, and subdued placement.
+  Avoid prominent red text labels in dense tables unless the action is the
+  primary focus of the flow.
+- Table operation columns for all three asset types should remain visually
+  consistent. If alignment, icon style, or spacing changes for one kind, update
+  the shared resource-column implementation.
+- Drawers for `chart`, `insight`, and `report` should use the same width,
+  header, title-edit, close, and footer conventions. Do not leave one asset type
+  with a special close button or mismatched drawer chrome unless the workflow
+  genuinely differs.
+- Titles in editor drawers should be edited from the drawer title itself:
+  support double-click and a hover-only edit icon. Avoid adding a second full-row
+  input for the same title.
+- Loading states should be scoped to the component or panel that is loading.
+  Avoid global overlays for Standard/chart rendering, report panels, or detail
+  drawers unless the whole app is genuinely blocked.
+- Prefer subtle animation for open/close, popovers, search focus, hover actions,
+  and page transitions. Respect `prefers-reduced-motion` for global motion.
+
 ## Report Detail UI Notes
 
 - Report detail state lives in `src/stores/report-detail.store.ts`; resource
@@ -131,6 +190,72 @@ docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter 
   the list action. This catches lifecycle issues that direct detail URLs can
   miss, including repeated enter/leave session cleanup and fallback resource
   fetches.
+- Repeatedly entering and leaving a report detail page is a required regression
+  path. It must not leave stale chart/insight/report sessions, duplicate active
+  page highlights, or toast loops from partially populated detail payloads.
+- The left page sidebar must have a single active page at any time. Selection
+  state should derive from one active page id and one page projection; avoid
+  mixing scroll-derived active state with click-derived state in separate
+  components.
+- The right report body should read like a report, not a nested card layout.
+  Keep page separators when useful, but avoid redundant frames around the whole
+  report. Charts in report pages should be centered and constrained instead of
+  filling all available drawer width by default.
+- Report pages should size to content. Do not add viewport-height constraints
+  that force short pages to occupy the viewport or inject large gaps between page
+  dividers.
+
+## Embedded Standard App Notes
+
+- `src/components/StandardChartApp.tsx` is the integration point for embedding
+  the `standard` practice app. Prefer deepening this module over duplicating
+  connector readiness, fallback, theme, locale, and sizing logic at each caller.
+- Treat chart view and chart edit as two intents over the same embedded chart
+  runtime. Callers should pass a builder and intent; the embedded runtime should
+  own Standard app props, demo connector readiness, loading fallback, and height
+  contract.
+- Standard/chart drawers must keep every wrapper constrained with `height: 100%`,
+  `min-height: 0`, and `overflow: hidden`. A stray parent `overflow: auto` or
+  missing `min-height: 0` will reintroduce drawer scrollbars.
+- Heavy dependencies such as `standard`, VChart/VTable, DuckDB WASM, markdown
+  rendering, and collaboration providers should stay behind dynamic imports
+  unless they are needed for the first interaction on the current route.
+
+## Internationalization And Preferences
+
+- Locale resolution has two phases: server/browser default for first render, then
+  stored user preference when it exists. Keep these paths aligned so hydration
+  does not visibly switch languages after initial paint.
+- Store user-selected locale and theme in browser storage. If there is no stored
+  locale, resolve from `Accept-Language` on the server and from
+  `navigator.languages` on the client.
+- Runtime translation helpers used by stores and services must read the current
+  preference store at call time. Do not capture a stale translator in long-lived
+  stores or async service helpers.
+- Theme palettes should change meaningful UI tokens, not only decorative accents.
+  Sidebar selection, buttons, focus rings, hover backgrounds, and key surfaces
+  should visibly respond to theme changes while preserving readability.
+
+## Performance And Dependency Hygiene
+
+- Validate Next.js performance from route and chunk behavior before changing
+  `next.config.ts`. The config is not the first place to optimize VBIFE.
+- Keep asset list routes lightweight. Heavy editor/runtime modules should load
+  when a drawer or report workspace is opened, not with the management table.
+- Report detail is allowed to load collaboration/runtime code, but split the
+  shell from the runtime when possible so title/header/chrome can render before
+  Yjs/provider-heavy modules.
+- `apps/vbi_fe/package.json` should list dependencies used directly by the
+  frontend app. Do not duplicate dependencies that are only used by `standard`,
+  `@visactor/vbi`, or provider packages.
+- When cleaning dead code, run static tools after reading the code: `oxlint`,
+  `typecheck`, and an unused-code pass such as `knip` can catch residual exports
+  and dependencies, but Next route files and workspace mounts can produce false
+  positives. Verify before deleting.
+- The running `vbi_fe` container does not mount `apps/vbi_fe/package.json` or
+  `pnpm-lock.yaml`. After dependency or lockfile changes, rebuild and recreate
+  the frontend container before trusting dependency-analysis output from inside
+  the container.
 
 ## Docker Runtime Ownership
 

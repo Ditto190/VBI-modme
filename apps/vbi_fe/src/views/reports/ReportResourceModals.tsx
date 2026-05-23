@@ -1,21 +1,18 @@
 import dynamic from 'next/dynamic'
-import { Button } from '../../components/ui/button'
+import { CenteredState } from '../../components/ui/centered-state'
 import { EditableDrawerTitle } from '../../components/ui/editable-drawer-title'
 import {
   Drawer,
   DrawerBody,
-  DrawerClose,
+  DrawerCloseButton,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
 } from '../../components/ui/drawer'
-import { X } from '../../components/ui/icons'
 import { Input } from '../../components/ui/input'
 import { Spinner } from '../../components/ui/spinner'
-import { toast } from '../../components/ui/toast'
 import { useTranslation } from '../../i18n'
+import { ResourceCreateDrawer } from '../manage-resource/ResourceCreateDrawer'
 
 type Props = {
   createName: string
@@ -34,9 +31,9 @@ const ReportResourceEditor = dynamic(
   () => import('./ReportResourceEditor').then((module) => module.ReportResourceEditor),
   {
     loading: () => (
-      <div className='flex h-full min-h-64 items-center justify-center'>
+      <CenteredState minHeight='sm'>
         <Spinner />
-      </div>
+      </CenteredState>
     ),
     ssr: false,
   },
@@ -58,45 +55,23 @@ export const ReportResourceModals = ({
 
   return (
     <>
-      <Drawer
+      <ResourceCreateDrawer
+        cancelLabel={t('common.cancel')}
+        closeLabel={t('common.close')}
+        confirmLabel={t('reports.create')}
+        invalidMessage={t('reports.nameRequired')}
+        isValid={() => !!createName.trim()}
         open={isCreateOpen}
-        direction='bottom'
-        onOpenChange={(open) => {
-          if (!open) onCloseCreate()
-        }}
+        title={t('reports.createTitle')}
+        onClose={onCloseCreate}
+        onConfirm={onConfirmCreate}
       >
-        <DrawerContent className='ui-drawer-panel-wide'>
-          <DrawerHeader>
-            <div>
-              <DrawerTitle>{t('reports.createTitle')}</DrawerTitle>
-              <DrawerDescription className='sr-only'>{t('reports.createTitle')}</DrawerDescription>
-            </div>
-            <DrawerClose className='ui-drawer-close' aria-label='Close'>
-              <X className='h-4 w-4' />
-            </DrawerClose>
-          </DrawerHeader>
-          <DrawerBody>
-            <Input value={createName} onChange={(event) => onCreateNameChange(event.target.value)} />
-          </DrawerBody>
-          <DrawerFooter>
-            <Button variant='secondary' onClick={onCloseCreate}>
-              {t('common.cancel')}
-            </Button>
-            <Button
-              variant='primary'
-              onClick={() => {
-                if (!createName.trim()) {
-                  toast.warning(t('reports.nameRequired'))
-                  return
-                }
-                void onConfirmCreate()
-              }}
-            >
-              {t('reports.create')}
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+        <Input
+          value={createName}
+          placeholder={t('reports.namePlaceholder')}
+          onChange={(event) => onCreateNameChange(event.target.value)}
+        />
+      </ResourceCreateDrawer>
       <Drawer
         open={!!selectedId}
         direction='right'
@@ -104,7 +79,7 @@ export const ReportResourceModals = ({
           if (!open) void onCloseDetail()
         }}
       >
-        <DrawerContent className='ui-drawer-panel-wide' showHandle={false}>
+        <DrawerContent showHandle={false}>
           <DrawerHeader>
             <div>
               <EditableDrawerTitle
@@ -116,9 +91,7 @@ export const ReportResourceModals = ({
               />
               <DrawerDescription className='sr-only'>{t('reportDetail.title')}</DrawerDescription>
             </div>
-            <DrawerClose className='ui-drawer-close' aria-label='Close'>
-              <X className='h-4 w-4' />
-            </DrawerClose>
+            <DrawerCloseButton label={t('common.close')} />
           </DrawerHeader>
           <DrawerBody className='flex flex-col gap-4'>
             <div className='flex min-h-0 flex-1 overflow-hidden'>

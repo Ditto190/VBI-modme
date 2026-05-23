@@ -31,6 +31,11 @@ export {
 
 export * from './pipeline'
 export * from './types'
+export type { Dimension } from './types/properties/dimensions/baseDimension'
+export type { Measure } from './types/properties/measures/baseMeasure'
+export type { NumFormat } from './types/properties/format/numFormat'
+export { zDimensionEncoding } from './types/properties/encoding/zDimensionEncoding'
+export { zNumFormat } from './types/properties/format/numFormat'
 export * from './dataReshape'
 export * from './dataSelector'
 export * from './theme'

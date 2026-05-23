@@ -178,15 +178,11 @@ const AppContent = ({
     <ConfigProvider locale={antdLocale} theme={antdThemeConfig} componentSize='small'>
       <div ref={appRootRef} className={`demo-app-root demo-app-root--${mode}`}>
         {!initialized ? (
-          mode === 'edit' ? (
-            <Spin tip={t('appInitializing')} fullscreen />
-          ) : (
-            <div className='demo-app-view-loading'>
-              <Spin spinning tip={t('appInitializing')}>
-                <div className='demo-app-view-loading-target' />
-              </Spin>
-            </div>
-          )
+          <div className='demo-app-loading'>
+            <Spin spinning tip={t('appInitializing')} wrapperClassName='demo-app-loading-spinner'>
+              <div className='demo-app-loading-target' />
+            </Spin>
+          </div>
         ) : mode === 'edit' ? (
           <DemoWorkbench themeMode={themeMode} isFullscreen={isFullscreen} onToggleFullscreen={toggleFullscreen} />
         ) : (

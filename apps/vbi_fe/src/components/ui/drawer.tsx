@@ -1,17 +1,15 @@
 'use client'
 
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
-import { createContext, forwardRef, useContext, useEffect, useId } from 'react'
-import { createPortal } from 'react-dom'
+import { createContext, forwardRef, useContext } from 'react'
 import { cn } from '../../lib/utils'
+import { X } from './icons'
 
 type DrawerDirection = 'top' | 'right' | 'bottom' | 'left'
 
 type DrawerContextValue = {
-  descriptionId: string
   direction: DrawerDirection
-  open: boolean
-  titleId: string
   onOpenChange: (open: boolean) => void
 }
 
@@ -23,6 +21,8 @@ const useDrawerContext = () => {
   return context
 }
 
+const getDrawerPortalRoot = () => document.querySelector<HTMLElement>('[data-vbi-portal-root]') ?? document.body
+
 type DrawerProps = {
   children: ReactNode
   direction?: DrawerDirection
@@ -30,129 +30,122 @@ type DrawerProps = {
   onOpenChange: (open: boolean) => void
 }
 
-export const Drawer = ({ children, direction = 'bottom', open, onOpenChange }: DrawerProps) => {
-  const titleId = useId()
-  const descriptionId = useId()
-
-  return (
-    <DrawerContext.Provider value={{ descriptionId, direction, open, titleId, onOpenChange }}>
+export const Drawer = ({ children, direction = 'bottom', open, onOpenChange }: DrawerProps) => (
+  <DrawerContext.Provider value={{ direction, onOpenChange }}>
+    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       {children}
-    </DrawerContext.Provider>
-  )
-}
-
-export const DrawerTrigger = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ onClick, ...props }, ref) => {
-    const { onOpenChange } = useDrawerContext()
-
-    return (
-      <button
-        ref={ref}
-        type='button'
-        onClick={(event) => {
-          onClick?.(event)
-          if (!event.defaultPrevented) onOpenChange(true)
-        }}
-        {...props}
-      />
-    )
-  },
+    </DialogPrimitive.Root>
+  </DrawerContext.Provider>
 )
-DrawerTrigger.displayName = 'DrawerTrigger'
 
 export const DrawerClose = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ onClick, ...props }, ref) => {
-    const { onOpenChange } = useDrawerContext()
-
-    return (
+  ({ children, className, ...props }, ref) => (
+    <DialogPrimitive.Close asChild>
       <button
         ref={ref}
+        className={cn(
+          'ui-drawer-close inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-[var(--vbi-text)] transition duration-150 ease-out hover:scale-[1.04] hover:bg-[var(--vbi-hover-bg)] active:scale-[0.96]',
+          className,
+        )}
         type='button'
-        onClick={(event) => {
-          onClick?.(event)
-          if (!event.defaultPrevented) onOpenChange(false)
-        }}
         {...props}
-      />
-    )
-  },
+      >
+        {children}
+      </button>
+    </DialogPrimitive.Close>
+  ),
 )
 DrawerClose.displayName = 'DrawerClose'
+
+export const DrawerCloseButton = ({
+  label,
+  ...props
+}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & { label: string }) => (
+  <DrawerClose aria-label={label} {...props}>
+    <X className='h-4 w-4' />
+  </DrawerClose>
+)
 
 type DrawerContentProps = HTMLAttributes<HTMLElement> & {
   showHandle?: boolean
 }
 
-const getDrawerPortalRoot = () => document.querySelector<HTMLElement>('[data-vbi-portal-root]') ?? document.body
-
 export const DrawerContent = forwardRef<HTMLElement, DrawerContentProps>(
-  ({ children, className, showHandle = true, onKeyDown, ...props }, ref) => {
-    const { descriptionId, direction, open, titleId, onOpenChange } = useDrawerContext()
+  ({ children, className, showHandle = true, ...props }, ref) => {
+    const { direction, onOpenChange } = useDrawerContext()
 
-    useEffect(() => {
-      if (!open) return undefined
-
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') onOpenChange(false)
-      }
-
-      document.addEventListener('keydown', handleKeyDown)
-      return () => document.removeEventListener('keydown', handleKeyDown)
-    }, [onOpenChange, open])
-
-    if (!open || typeof document === 'undefined') return null
-
-    return createPortal(
-      <div
-        className='ui-drawer-overlay'
-        data-direction={direction}
-        role='presentation'
-        onMouseDown={(event) => {
-          if (event.target === event.currentTarget) onOpenChange(false)
-        }}
-      >
-        <section
-          ref={ref}
-          aria-describedby={descriptionId}
-          aria-labelledby={titleId}
-          aria-modal='true'
-          className={cn('ui-drawer-content', className)}
+    return (
+      <DialogPrimitive.Portal container={typeof document === 'undefined' ? undefined : getDrawerPortalRoot()}>
+        <DialogPrimitive.Overlay
+          className='ui-drawer-overlay fixed inset-0 z-[70] flex animate-[vbi-overlay-fade-in_var(--vbi-motion)_var(--vbi-ease-out)] bg-black/40 backdrop-blur-[2px] data-[direction=bottom]:items-end data-[direction=bottom]:justify-center data-[direction=bottom]:p-4 data-[direction=left]:justify-start data-[direction=right]:justify-end data-[direction=top]:items-start data-[direction=top]:justify-center data-[direction=top]:p-4'
           data-direction={direction}
-          role='dialog'
-          tabIndex={-1}
-          onKeyDown={onKeyDown}
-          {...props}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) onOpenChange(false)
+          }}
         >
-          {showHandle ? <div className='ui-drawer-handle' aria-hidden='true' /> : null}
-          {children}
-        </section>
-      </div>,
-      getDrawerPortalRoot(),
+          <DialogPrimitive.Content asChild onOpenAutoFocus={(event) => event.preventDefault()}>
+            <section
+              ref={ref}
+              className={cn(
+                'ui-drawer-content flex flex-col overflow-hidden border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] text-[var(--vbi-text)] shadow-[var(--vbi-shadow)] will-change-[transform,opacity] data-[direction=bottom]:max-h-[min(85dvh,720px)] data-[direction=bottom]:w-[min(calc(100vw_-_32px),1480px)] data-[direction=bottom]:rounded-t-lg data-[direction=bottom]:animate-[vbi-drawer-slide-bottom_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=left]:h-dvh data-[direction=left]:w-[92vw] data-[direction=left]:max-w-[1480px] data-[direction=left]:animate-[vbi-drawer-slide-left_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=right]:h-dvh data-[direction=right]:w-[92vw] data-[direction=right]:max-w-[1480px] data-[direction=right]:animate-[vbi-drawer-slide-right_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=top]:max-h-[min(85dvh,720px)] data-[direction=top]:w-[min(calc(100vw_-_32px),1480px)] data-[direction=top]:rounded-b-lg data-[direction=top]:animate-[vbi-drawer-slide-top_var(--vbi-motion-slow)_var(--vbi-ease-spring)]',
+                className,
+              )}
+              data-direction={direction}
+              {...props}
+            >
+              {showHandle ? (
+                <div
+                  className='ui-drawer-handle mx-auto mt-2.5 h-1 w-[42px] shrink-0 rounded-full bg-[var(--vbi-border-strong)]'
+                  aria-hidden='true'
+                />
+              ) : null}
+              {children}
+            </section>
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Overlay>
+      </DialogPrimitive.Portal>
     )
   },
 )
 DrawerContent.displayName = 'DrawerContent'
 
 export const DrawerHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('ui-drawer-header', className)} {...props} />
+  <div
+    className={cn(
+      'ui-drawer-header flex shrink-0 items-center justify-between gap-3 border-b border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] px-3.5 py-3',
+      className,
+    )}
+    {...props}
+  />
 )
 
 export const DrawerFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('ui-drawer-footer', className)} {...props} />
+  <div
+    className={cn(
+      'ui-drawer-footer flex shrink-0 justify-end gap-2 border-t border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] px-3.5 py-3',
+      className,
+    )}
+    {...props}
+  />
 )
 
 export const DrawerBody = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('ui-drawer-body', className)} {...props} />
+  <div
+    className={cn('ui-drawer-body min-h-0 flex-auto overflow-auto bg-[var(--vbi-surface-solid)] p-3.5', className)}
+    {...props}
+  />
 )
 
-export const DrawerTitle = ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => {
-  const { titleId } = useDrawerContext()
+export const DrawerTitle = ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  <DialogPrimitive.Title
+    className={cn('ui-drawer-title m-0 text-[15px] font-semibold text-[var(--vbi-text-strong)]', className)}
+    {...props}
+  />
+)
 
-  return <h2 id={titleId} className={cn('ui-drawer-title', className)} {...props} />
-}
-
-export const DrawerDescription = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => {
-  const { descriptionId } = useDrawerContext()
-
-  return <p id={descriptionId} className={cn('ui-drawer-description', className)} {...props} />
-}
+export const DrawerDescription = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
+  <DialogPrimitive.Description
+    className={cn('ui-drawer-description mt-0.5 text-xs text-[var(--vbi-text-muted)]', className)}
+    {...props}
+  />
+)

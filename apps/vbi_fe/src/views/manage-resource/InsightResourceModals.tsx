@@ -1,20 +1,16 @@
 import dynamic from 'next/dynamic'
-import { Button } from '../../components/ui/button'
 import { EditableDrawerTitle } from '../../components/ui/editable-drawer-title'
 import {
   Drawer,
   DrawerBody,
-  DrawerClose,
+  DrawerCloseButton,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
 } from '../../components/ui/drawer'
 import { Input, Textarea } from '../../components/ui/input'
-import { toast } from '../../components/ui/toast'
-import { X } from '../../components/ui/icons'
 import type { Translate } from '../../i18n'
+import { ResourceCreateDrawer } from './ResourceCreateDrawer'
 
 const InsightResourceEditor = dynamic(
   () => import('./InsightResourceEditor').then((module) => module.InsightResourceEditor),
@@ -55,57 +51,31 @@ export const InsightResourceModals = ({
   t,
 }: Props) => (
   <>
-    <Drawer
+    <ResourceCreateDrawer
+      cancelLabel={t('common.cancel')}
+      closeLabel={t('common.close')}
+      confirmLabel={t('insights.create')}
+      invalidMessage={t('insights.nameRequired')}
+      isValid={() => !!createName.trim()}
       open={createOpen}
-      direction='bottom'
-      onOpenChange={(open) => {
-        if (!open) closeCreate()
-      }}
+      title={t('insights.createTitle')}
+      onClose={closeCreate}
+      onConfirm={create}
     >
-      <DrawerContent className='ui-drawer-panel-wide'>
-        <DrawerHeader>
-          <div>
-            <DrawerTitle>{t('insights.createTitle')}</DrawerTitle>
-            <DrawerDescription className='sr-only'>{t('insights.createTitle')}</DrawerDescription>
-          </div>
-          <DrawerClose className='ui-drawer-close' aria-label='Close'>
-            <X className='h-4 w-4' />
-          </DrawerClose>
-        </DrawerHeader>
-        <DrawerBody>
-          <div className='grid gap-3'>
-            <Input
-              value={createName}
-              placeholder={t('insights.titlePlaceholder')}
-              onChange={(event) => setCreateName(event.target.value)}
-            />
-            <Textarea
-              rows={6}
-              value={createContent}
-              placeholder={t('insights.contentPlaceholder')}
-              onChange={(event) => setCreateContent(event.target.value)}
-            />
-          </div>
-        </DrawerBody>
-        <DrawerFooter>
-          <Button variant='secondary' onClick={closeCreate}>
-            {t('common.cancel')}
-          </Button>
-          <Button
-            variant='primary'
-            onClick={() => {
-              if (!createName.trim()) {
-                toast.warning(t('insights.nameRequired'))
-                return
-              }
-              void create()
-            }}
-          >
-            {t('insights.create')}
-          </Button>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      <div className='grid gap-3'>
+        <Input
+          value={createName}
+          placeholder={t('insights.titlePlaceholder')}
+          onChange={(event) => setCreateName(event.target.value)}
+        />
+        <Textarea
+          rows={6}
+          value={createContent}
+          placeholder={t('insights.contentPlaceholder')}
+          onChange={(event) => setCreateContent(event.target.value)}
+        />
+      </div>
+    </ResourceCreateDrawer>
     <Drawer
       open={!!selectedId}
       direction='right'
@@ -113,7 +83,7 @@ export const InsightResourceModals = ({
         if (!open) void closeDetail()
       }}
     >
-      <DrawerContent className='ui-drawer-panel-wide' showHandle={false}>
+      <DrawerContent showHandle={false}>
         <DrawerHeader>
           <div>
             <EditableDrawerTitle
@@ -125,9 +95,7 @@ export const InsightResourceModals = ({
             />
             <DrawerDescription className='sr-only'>{t('insights.editorTitle')}</DrawerDescription>
           </div>
-          <DrawerClose className='ui-drawer-close' aria-label='Close'>
-            <X className='h-4 w-4' />
-          </DrawerClose>
+          <DrawerCloseButton label={t('common.close')} />
         </DrawerHeader>
         <DrawerBody>
           {selectedId ? (

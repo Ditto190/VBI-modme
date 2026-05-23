@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { useReportsStore } from '../src/stores/reports.store'
-import { getReportsSnapshot } from '../src/stores/reports.snapshot'
 
 rs.mock('../src/services/resourceApi', () => ({
   createResource: rs.fn(),
@@ -11,6 +10,7 @@ rs.mock('../src/services/resourceApi', () => ({
 
 const resourceApi = await import('../src/services/resourceApi')
 const initialReportsState = useReportsStore.getState()
+const getReportsSnapshot = () => useReportsStore.getState()
 const mockedListResources = resourceApi.listResources as unknown as {
   mockResolvedValue(value: unknown): void
 }

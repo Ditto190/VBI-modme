@@ -21,7 +21,3 @@ export const useNavigationStore = create<NavigationState>((set, get) => ({
   setNavigate: (navigate) => set({ navigate }),
   setPathname: (pathname) => set({ pathname }),
 }))
-
-export const getNavigationSnapshot = () => ({
-  pathname: useNavigationStore.getState().pathname,
-})

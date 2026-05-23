@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import { useReportDetailStore } from '../../stores/report-detail.store'
 
 type Params = {
   activePageId: string
   pageIds: string[]
+  resetKey: string
   setScrolledPage(pageId: string): void
 }
 
@@ -34,7 +35,23 @@ const resolveVisiblePageId = (container: HTMLDivElement, pageNodes: Map<string, 
   return nearestPageId
 }
 
-export const useReportStageScroll = ({ activePageId, pageIds, setScrolledPage }: Params) => {
+const scrollStageToPage = (container: HTMLDivElement, pageNode: HTMLDivElement, isFirstPage: boolean) => {
+  if (isFirstPage) {
+    container.scrollTo({ left: 0, top: 0 })
+    return
+  }
+
+  const containerRect = container.getBoundingClientRect()
+  const pageRect = pageNode.getBoundingClientRect()
+  const nextTop = container.scrollTop + pageRect.top - containerRect.top
+
+  container.scrollTo({
+    left: 0,
+    top: Math.max(0, nextTop),
+  })
+}
+
+export const useReportStageScroll = ({ activePageId, pageIds, resetKey, setScrolledPage }: Params) => {
   const stageRef = useRef<HTMLDivElement | null>(null)
   const pageNodes = useRef<Map<string, HTMLDivElement | null>>(new Map())
   const scrolledPageRef = useRef('')
@@ -50,17 +67,24 @@ export const useReportStageScroll = ({ activePageId, pageIds, setScrolledPage }:
     }
   }, [])
 
+  useLayoutEffect(() => {
+    const container = stageRef.current
+    if (!container || !pageIds.length) return
+    scrolledPageRef.current = ''
+    container.scrollTo({ left: 0, top: 0 })
+  }, [pageIds.length, resetKey])
+
   useEffect(() => {
     if (!activePageId) return
     if (activePageId === scrolledPageRef.current) {
       scrolledPageRef.current = ''
       return
     }
-    pageNodes.current.get(activePageId)?.scrollIntoView({
-      block: 'start',
-      inline: 'nearest',
-    })
-  }, [activePageId])
+    const container = stageRef.current
+    const pageNode = pageNodes.current.get(activePageId)
+    if (!container || !pageNode) return
+    scrollStageToPage(container, pageNode, activePageId === pageIds[0])
+  }, [activePageId, pageIds])
 
   useEffect(() => {
     const container = stageRef.current

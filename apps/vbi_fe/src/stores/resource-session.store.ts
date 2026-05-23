@@ -24,19 +24,3 @@ export const releaseResourceSession = async (kind: ResourceKind, resourceId: str
   if (!resourceId) return
   await getBuilderModel(kind).getState().release(resourceId)
 }
-
-const summarizeSessions = <TBuilder>(model: BuilderModel<TBuilder>) =>
-  Object.entries(model.getState().sessions).map(([resourceId, session]) => ({
-    connected: !!session.builder,
-    opening: !!session.opening,
-    providerAttached: !!session.provider,
-    refs: session.refs,
-    resourceId,
-    version: session.version,
-  }))
-
-export const getResourceSessionSummary = () => ({
-  chart: summarizeSessions(useChartBuilderModel),
-  insight: summarizeSessions(useInsightBuilderModel),
-  report: summarizeSessions(useReportBuilderModel),
-})
