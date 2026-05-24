@@ -1,29 +1,27 @@
 import type { ISpec } from '@visactor/vchart'
 import VChart from '@visactor/vchart'
-import { property } from 'lit/decorators.js'
 import { html, type PropertyValues } from 'lit'
+import { property } from 'lit/decorators.js'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { customElement, VdashElement } from 'src/shared/element'
-import styles from './vbi-chart.style'
+import styles from './vbi-chart-render.style'
 
-type VBIChartCleanup = (() => void) | undefined
+type VBIChartRenderCleanup = (() => void) | undefined
 
 /**
  * Chart container for rendering VChart specifications.
  *
- * @tag vbi-chart
+ * @tag vbi-chart-render
  *
  * @prop {ISpec | undefined} spec - VChart specification rendered inside the chart container.
- * @attr {string} empty - Empty state message shown when no spec is provided.
  */
-@customElement('vbi-chart')
-export class VBIChart extends VdashElement {
+@customElement('vbi-chart-render')
+export class VBIChartRender extends VdashElement {
   static override styles = styles
 
   @property({ attribute: false }) accessor spec: ISpec | undefined = undefined
-  @property({ type: String }) accessor empty = 'No data'
   private readonly chartContainerRef = createRef<HTMLDivElement>()
-  private cleanup: VBIChartCleanup = undefined
+  private cleanup: VBIChartRenderCleanup = undefined
 
   override disconnectedCallback(): void {
     this.cleanupRender()
@@ -59,16 +57,12 @@ export class VBIChart extends VdashElement {
   }
 
   override render() {
-    if (!this.spec) {
-      return html`<div class="vbi-chart__empty" role="status">${this.empty}</div>`
-    }
-
-    return html`<div ${ref(this.chartContainerRef)} class="vbi-chart__container"></div>`
+    return html`<div ${ref(this.chartContainerRef)}></div>`
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vbi-chart': VBIChart
+    'vbi-chart-render': VBIChartRender
   }
 }
