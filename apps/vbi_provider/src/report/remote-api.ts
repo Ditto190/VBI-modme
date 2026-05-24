@@ -1,7 +1,6 @@
 import type { VBIReportBuilder, VBIReportSnapshotDSL } from '@visactor/vbi'
 import type {
   ReportDetail,
-  ReportPageInput,
   ReportResponse,
   ReportSummary,
   ResourceSnapshot,
@@ -39,31 +38,11 @@ export const createReportRemoteApi = (
     state,
     toSummary: toReportSummary,
   })
-  const mapDetail = (request: Promise<ReportResponse>) => request.then(toReportDetail)
-  const pagePath = (pageId?: string) => `/reports/${requireId()}/pages${pageId ? `/${pageId}` : ''}`
 
   return {
     ...api,
     exportSnapshot: () => requestRemote<VBIReportSnapshotDSL>(config, `/reports/${requireId()}/snapshot`),
     getDetail: async () => toReportDetail(await api.getResponse()),
     getSnapshot: async () => toSnapshot(toReportDetail(await api.getResponse())),
-    createPage: (input?: { title?: string }) =>
-      mapDetail(requestRemote<ReportResponse>(config, pagePath(), { body: input, method: 'POST' })),
-    removePage: (pageId: string) =>
-      mapDetail(requestRemote<ReportResponse>(config, pagePath(pageId), { method: 'DELETE' })),
-    reorderPages: (pageIds: string[]) =>
-      mapDetail(
-        requestRemote<ReportResponse>(config, `/reports/${requireId()}/pages/reorder`, {
-          body: { pageIds },
-          method: 'PATCH',
-        }),
-      ),
-    updatePage: (pageId: string, input: ReportPageInput) =>
-      mapDetail(
-        requestRemote<ReportResponse>(config, pagePath(pageId), {
-          body: input,
-          method: 'PATCH',
-        }),
-      ),
   }
 }

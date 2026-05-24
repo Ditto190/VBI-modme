@@ -42,7 +42,6 @@ export const ReportWorkspace = memo(() => {
     openChartEditor,
     openInsightEditor,
     reportId,
-    selectPage,
     setScrolledPage,
   } = useReportDetailStore(
     useShallow((state) => ({
@@ -52,7 +51,6 @@ export const ReportWorkspace = memo(() => {
       openChartEditor: state.openChartEditor,
       openInsightEditor: state.openInsightEditor,
       reportId: state.reportId,
-      selectPage: state.selectPage,
       setScrolledPage: state.setScrolledPage,
     })),
   )
@@ -109,21 +107,19 @@ export const ReportWorkspace = memo(() => {
   const editChart = useCallback(
     (pageId: string) => {
       void (async () => {
-        await selectPage(pageId)
-        openChartEditor()
+        await openChartEditor(pageId)
       })()
     },
-    [openChartEditor, selectPage],
+    [openChartEditor],
   )
 
   const editInsight = useCallback(
     (pageId: string) => {
       void (async () => {
-        await selectPage(pageId)
-        openInsightEditor()
+        await openInsightEditor(pageId)
       })()
     },
-    [openInsightEditor, selectPage],
+    [openInsightEditor],
   )
 
   if (!pages.length) {

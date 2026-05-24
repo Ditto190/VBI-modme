@@ -108,7 +108,7 @@ This means:
 Provider design must be pure TypeScript / JavaScript runtime objects consumable by:
 
 - `apps/vbi_fe`
-- `apps/vbi_cli`
+- `apps/vbi_tui`
 - Node.js scripts
 - regular browser JS runtimes
 - future host applications
@@ -292,7 +292,7 @@ The system truly moves from "frontend application driven" to "resource runtime d
 
 #### 4. Easier SDK Productization
 
-Once the Provider interface is stable, `vbi_cli` and external SDKs can be built on the same model.
+Once the Provider interface is stable, `vbi_tui` and external SDKs can be built on the same model.
 
 ### Costs And Risks
 
@@ -393,7 +393,7 @@ Based on this ADR, the following should be produced next:
    - Clarify the execution order for Provider First.
 2. `@visactor/vbi-provider` interface design draft
    - Clarify `VBIProviderClient` and the refined interfaces for the three Providers.
-3. `vbi_cli` target command set
+3. `vbi_tui` target command set
    - Clarify how CLI maps to Provider.
 4. Frontend/backend migration plan
    - Migrate pages from direct API / hook calls to Provider calls.

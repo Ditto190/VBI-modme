@@ -24,8 +24,8 @@ type ReportDetailState = {
   closeChartEditor(): void
   closeInsightEditor(): void
   dispose(): Promise<void>
-  openChartEditor(): void
-  openInsightEditor(): void
+  openChartEditor(pageId?: string): Promise<void>
+  openInsightEditor(pageId?: string): Promise<void>
   addChart(pageId: string): Promise<void>
   addInsight(pageId: string): Promise<void>
   removeChart(pageId?: string): Promise<void>
@@ -128,6 +128,16 @@ const syncReportResources = async (state: ReportDetailState, pages: ReportPage[]
   ])
 }
 
+const getPageResourcePatch = (reportId: string, pageId: string) => {
+  const page = getActivePage(reportId, pageId)
+  if (!page) return null
+  return {
+    activePageId: pageId,
+    connectedChartId: page.chartId ?? '',
+    connectedInsightId: page.insightId ?? '',
+  }
+}
+
 const subscribeReportSession = (reportId: string) => {
   let current = useReportBuilderModel.getState().sessions[reportId]
   let lastBuilder = current?.builder ?? null
@@ -222,8 +232,32 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
       releaseResourceSession('report', state.reportId),
     ])
   },
-  openChartEditor: () => set({ chartEditorOpen: true }),
-  openInsightEditor: () => set({ insightEditorOpen: true }),
+  openChartEditor: async (pageId) => {
+    if (!pageId) {
+      set({ chartEditorOpen: true })
+      return
+    }
+    const patch = getPageResourcePatch(get().reportId, pageId)
+    if (!patch) return
+    set({ ...patch, chartEditorOpen: true, insightEditorOpen: false })
+    await syncReportResources(
+      { ...get(), ...patch, chartEditorOpen: true, insightEditorOpen: false },
+      getReportPages(get().reportId),
+    )
+  },
+  openInsightEditor: async (pageId) => {
+    if (!pageId) {
+      set({ insightEditorOpen: true })
+      return
+    }
+    const patch = getPageResourcePatch(get().reportId, pageId)
+    if (!patch) return
+    set({ ...patch, chartEditorOpen: false, insightEditorOpen: true })
+    await syncReportResources(
+      { ...get(), ...patch, chartEditorOpen: false, insightEditorOpen: true },
+      getReportPages(get().reportId),
+    )
+  },
   addChart: async (pageId) => {
     const state = get()
     const page = getActivePage(state.reportId, pageId)
@@ -316,6 +350,7 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   },
   setScrolledPage: (pageId) => {
     const state = get()
+    if (state.chartEditorOpen || state.insightEditorOpen) return
     if (!pageId || pageId === state.activePageId) return
     const page = getActivePage(state.reportId, pageId)
     if (!page) return

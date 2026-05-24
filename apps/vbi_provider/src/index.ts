@@ -14,7 +14,6 @@ export type {
   InsightProvider,
   InsightResponse,
   InsightSummary,
-  InsightUpdateInput,
   ProviderResource,
   RemoteFetch,
   RemoteHeaders,
