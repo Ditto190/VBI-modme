@@ -1,30 +1,21 @@
-export { jsonSchema } from 'ai'
-export { createActivityLog } from './activity-log.js'
-export { createHistory } from './history.js'
-export { createDeepSeekModelProvider } from './model/deepseek-provider.js'
-export { createOpenAIModelProvider } from './model/openai-provider.js'
-export { createAgentRuntime } from './runtime.js'
-export { executeAgentScript } from './script/runtime.js'
-export { createBuilderTools } from './tools/builder-tools.js'
-export { createToolKit } from './tools/toolkit.js'
-export { createVBIBuilderAgent } from './builder-agent.js'
+export { Agent } from '@earendil-works/pi-agent-core'
+export { estimateContextTokens } from '@earendil-works/pi-agent-core'
 export type {
-  AgentActivity,
-  AgentModelConfig,
-  AgentRuntimeController,
-  AgentState,
+  AgentEvent,
+  AgentMessage,
+  AgentOptions,
   AgentTool,
-  AgentToolKit,
-  ModelProvider,
-  ModelStreamHandlers,
-  ModelTurnResult,
-  PendingToolCall,
-  ToolExecutionResult,
+  AgentToolResult,
+  StreamFn,
+} from '@earendil-works/pi-agent-core'
+export { createBuilderTools } from './tools/builder-tools.js'
+export { createBuilderWorkspace, createStaticBuilderSlot } from './workspace.js'
+export { VBIAgent } from './builder-agent.js'
+export type { VBIBuilderWorkspaceInput, VBIWorkspaceSlotInput } from './workspace.js'
+export type {
   VBIAgentWorkspace,
-  VBIBuilderAgentInput,
   VBIWorkspaceConnector,
   VBIWorkspaceConnectorRegistration,
   VBIWorkspaceConnectors,
   VBIWorkspaceSlot,
-  VBITool,
 } from './types/index.js'

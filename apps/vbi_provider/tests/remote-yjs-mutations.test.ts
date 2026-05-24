@@ -146,7 +146,14 @@ describe('remote provider Yjs mutations', () => {
       }),
     ).resolves.toMatchObject({
       dsl: {
-        pages: [{ chartId: 'chart-external', insightId: 'insight-external', title: 'Updated First' }],
+        pages: expect.arrayContaining([
+          expect.objectContaining({
+            chartId: 'chart-external',
+            id: firstPageId,
+            insightId: 'insight-external',
+            title: 'Updated First',
+          }),
+        ]),
       },
     })
 

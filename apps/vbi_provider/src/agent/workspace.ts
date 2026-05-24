@@ -1,6 +1,6 @@
 import { createVBIProviderConnectorRegistry, getOptionalConnectorId } from './connector-registry'
 import { resolveResourceId } from './id'
-import type { VBIChartBuilder, VBIReportBuilder } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIInsightBuilder, VBIReportBuilder } from '@visactor/vbi'
 import type { VBIProviderClient } from '../types'
 
 export type VBIProviderWorkspaceSlot<TBuilder> = {
@@ -13,6 +13,7 @@ export type VBIProviderWorkspaceSlot<TBuilder> = {
 export type VBIProviderWorkspace = {
   chart: VBIProviderWorkspaceSlot<VBIChartBuilder>
   connectors: ReturnType<typeof createVBIProviderConnectorRegistry>
+  insight: VBIProviderWorkspaceSlot<VBIInsightBuilder>
   report: VBIProviderWorkspaceSlot<VBIReportBuilder>
 }
 
@@ -52,17 +53,24 @@ const createBuilderSlot = <TBuilder>({
       await afterOpen?.(builder)
       return builder
     },
-    snapshot: (id?: string) => getProvider(id).snapshot(),
+    snapshot: async (id?: string) => {
+      const provider = getProvider(id)
+      const builder = await provider.open()
+      await afterOpen?.(builder)
+      return provider.snapshot()
+    },
   }
 }
 
 export const createVBIProviderWorkspace = ({
   chartId,
   client,
+  insightId,
   reportId,
 }: {
   chartId?: string
   client: VBIProviderClient
+  insightId?: string
   reportId?: string
 }): VBIProviderWorkspace => {
   const connectors = createVBIProviderConnectorRegistry(client, chartId)
@@ -77,6 +85,11 @@ export const createVBIProviderWorkspace = ({
       resource: 'chart',
     }),
     connectors,
+    insight: createBuilderSlot({
+      createProvider: (id) => client.insight(id),
+      defaultId: insightId,
+      resource: 'insight',
+    }),
     report: createBuilderSlot({
       createProvider: (id) => client.report(id),
       defaultId: reportId,

@@ -16,12 +16,14 @@ export const clipOutput = (value: string) => clipText(value, scriptOutputLimit)
 
 export const clipJson = (value: unknown) => clipText(stringifyJson(value), scriptOutputLimit)
 
-export const runWorkspaceScript = (workspace: VBIAgentWorkspace, code: string, globals: Record<string, unknown> = {}) =>
+export const runScopedWorkspaceScript = (
+  workspace: VBIAgentWorkspace,
+  code: string,
+  globals: Record<string, unknown>,
+) =>
   executeAgentScript({
     code,
     globals: {
-      chart: workspace.chart,
-      report: workspace.report,
       workspace,
       ...globals,
     },

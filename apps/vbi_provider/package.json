@@ -34,14 +34,15 @@
     "format": "oxfmt .",
     "lint": "oxlint .",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
-    "test": "rstest",
-    "test:update": "rstest --update",
-    "test:coverage": "rstest --coverage"
+    "test": "node ../../tools/run-rstest.mjs",
+    "test:update": "node ../../tools/run-rstest.mjs --update",
+    "test:coverage": "node ../../tools/run-rstest.mjs --coverage"
   },
   "dependencies": {
     "@hocuspocus/provider": "3.4.3",
     "@visactor/vbi": "workspace:*",
     "@visactor/vquery": "workspace:*",
+    "typebox": "1.1.38",
     "yjs": "13.6.28"
   },
   "devDependencies": {

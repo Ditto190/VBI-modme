@@ -1,4 +1,4 @@
-import type { VBIChartBuilder, VBIReportBuilder } from '@visactor/vbi'
+import type { VBIChartBuilder, VBIInsightBuilder, VBIReportBuilder } from '@visactor/vbi'
 
 export interface VBIWorkspaceSlot<TBuilder = unknown> {
   close?(id?: string): Promise<void>
@@ -23,5 +23,6 @@ export interface VBIWorkspaceConnectors {
 export interface VBIAgentWorkspace {
   chart?: VBIWorkspaceSlot<VBIChartBuilder>
   connectors?: VBIWorkspaceConnectors
+  insight?: VBIWorkspaceSlot<VBIInsightBuilder>
   report?: VBIWorkspaceSlot<VBIReportBuilder>
 }

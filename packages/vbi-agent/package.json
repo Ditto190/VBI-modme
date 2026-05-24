@@ -21,16 +21,14 @@
     "build": "rslib build",
     "format": "oxfmt .",
     "lint": "oxlint .",
-    "test": "rstest",
-    "test:update": "rstest --update",
+    "test": "node ../../tools/run-rstest.mjs",
+    "test:update": "node ../../tools/run-rstest.mjs --update",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
   },
   "dependencies": {
-    "@ai-sdk/deepseek": "2.0.29",
-    "@ai-sdk/openai": "3.0.53",
-    "ai": "6.0.168",
+    "@earendil-works/pi-agent-core": "0.75.5",
     "@visactor/vbi": "workspace:*",
-    "zod": "4.1.8"
+    "typebox": "1.1.38"
   },
   "devDependencies": {
     "@rstest/core": "0.8.3",

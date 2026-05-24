@@ -13,7 +13,7 @@ import { requireRemoteResourceId } from '../remote/collaboration'
 
 const toReportSummary = (response: ReportSummary): ReportSummary => pickResourceSummary(response)
 
-export const toReportDetail = ({ createdAt, id, name, pages, updatedAt }: ReportResponse): ReportDetail => ({
+const toReportDetail = ({ createdAt, id, name, pages, updatedAt }: ReportResponse): ReportDetail => ({
   createdAt,
   dsl: { pages: pages ?? [], uuid: id, version: 0 },
   id,

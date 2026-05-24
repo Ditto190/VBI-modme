@@ -141,7 +141,7 @@ describe('createBuilderTools', () => {
   test('mutates the injected chart builder without platform provider access', async () => {
     const builder = createChartBuilder()
     const [tool] = createBuilderTools({ chart: { open: async () => builder as never } })
-    const result = await tool.execute({
+    const result = await tool.execute('call-1', {
       code: `
         const b = await chart.open();
         b.chartType.changeChartType('line');
@@ -159,12 +159,14 @@ describe('createBuilderTools', () => {
         return json(b.build());
       `,
     })
-    const payload = JSON.parse(result.content) as { result: ReturnType<typeof builder.build> }
+    const content = result.content.find((part) => part.type === 'text')?.text ?? ''
+    const details = result.details as { display?: string; summary: string }
+    const payload = JSON.parse(content) as { result: ReturnType<typeof builder.build> }
 
-    expect(result.summary).toBe('vbi_builder succeeded: 0 logs, object result')
-    expect(result.display).toContain('Status: succeeded')
-    expect(result.display).toContain('Logs: none')
-    expect(result.display).toContain('Result:')
+    expect(details.summary).toBe('vbi_chart_builder succeeded: 0 logs, object result')
+    expect(details.display).toContain('Status: succeeded')
+    expect(details.display).toContain('Logs: none')
+    expect(details.display).toContain('Result:')
     expect(payload.result).toMatchObject({
       chartType: 'line',
       dimensions: expect.arrayContaining([expect.objectContaining({ alias: 'Area', field: 'area' })]),
@@ -182,13 +184,62 @@ describe('createBuilderTools', () => {
   test('exposes workspace connector helpers to builder scripts', async () => {
     const register = (...[id]: [string, unknown]) => id
     const [tool] = createBuilderTools({ connectors: { register }, chart: { open: async () => ({}) as never } })
-    const result = await tool.execute({
+    const result = await tool.execute('call-1', {
       code: `
         return json({ connectorId: workspace.connectors.register('demo', { discoverSchema: async () => [], query: async () => ({ dataset: [] }) }) });
       `,
     })
-    const payload = JSON.parse(result.content) as { result: { connectorId: string } }
+    const content = result.content.find((part) => part.type === 'text')?.text ?? ''
+    const payload = JSON.parse(content) as { result: { connectorId: string } }
 
     expect(payload.result).toEqual({ connectorId: 'demo' })
+  })
+
+  test('exposes insight builder slots to insight scripts', async () => {
+    const [, tool] = createBuilderTools({
+      insight: { open: async () => ({ build: () => ({ content: 'summary' }) }) as never },
+    })
+
+    const result = await tool.execute('call-1', {
+      code: `
+        const i = await insight.open('insight-1');
+        const alias = await builder.open('insight-1');
+        return json({ insight: i.build().content, alias: alias.build().content });
+      `,
+    })
+    const content = result.content.find((part) => part.type === 'text')?.text ?? ''
+    const payload = JSON.parse(content) as { result: { alias: string; insight: string } }
+
+    expect(payload.result).toEqual({ alias: 'summary', insight: 'summary' })
+  })
+
+  test('exposes report builder slots to report scripts', async () => {
+    const pages: Array<{ id: string; title: string }> = []
+    const reportBuilder = {
+      build: () => ({ pages }),
+      page: {
+        add: (title: string) => {
+          pages.push({ id: `page-${pages.length + 1}`, title })
+          return reportBuilder
+        },
+      },
+    }
+    const [, , tool] = createBuilderTools({ report: { open: async () => reportBuilder as never } })
+
+    const result = await tool.execute('call-1', {
+      code: `
+        const b = await report.open('report-1');
+        b.page.add('Overview');
+        const alias = await builder.open('report-1');
+        return json({ same: alias === b, report: b.build() });
+      `,
+    })
+    const content = result.content.find((part) => part.type === 'text')?.text ?? ''
+    const payload = JSON.parse(content) as { result: { report: { pages: typeof pages }; same: boolean } }
+
+    expect(payload.result).toEqual({
+      report: { pages: [{ id: 'page-1', title: 'Overview' }] },
+      same: true,
+    })
   })
 })

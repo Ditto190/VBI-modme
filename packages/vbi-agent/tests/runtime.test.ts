@@ -1,279 +1,212 @@
 import { describe, expect, test } from '@rstest/core'
-import { createAgentRuntime } from '../src/runtime.js'
-import { createToolKit } from '../src/tools/toolkit.js'
-import type { AgentTool, ModelProvider, ModelTurnResult } from '../src/types/index.js'
+import { Type } from 'typebox'
+import { Agent, VBIAgent } from '../src/index.js'
+import type { AgentEvent, AgentOptions, AgentTool, StreamFn } from '../src/index.js'
 
-const createModel = (...turns: ModelTurnResult[]): ModelProvider => {
-  const queue = [...turns]
+type ToolExecutionEndEvent = Extract<AgentEvent, { type: 'tool_execution_end' }>
+
+const usage = {
+  cacheRead: 0,
+  cacheWrite: 0,
+  cost: { cacheRead: 0, cacheWrite: 0, input: 0, output: 0, total: 0 },
+  input: 0,
+  output: 0,
+  totalTokens: 0,
+}
+
+type InitialState = NonNullable<AgentOptions['initialState']>
+
+const model = {
+  api: 'test-api',
+  baseUrl: '',
+  contextWindow: 1000,
+  cost: { cacheRead: 0, cacheWrite: 0, input: 0, output: 0 },
+  id: 'test-model',
+  input: ['text'],
+  maxTokens: 1000,
+  name: 'Test Model',
+  provider: 'test-provider',
+  reasoning: false,
+} as Exclude<InitialState['model'], undefined>
+
+type ScriptedAssistantMessage = {
+  stopReason: 'stop' | 'toolUse'
+}
+
+const assistantMessage = (content: unknown[], stopReason: 'stop' | 'toolUse' = 'stop'): ScriptedAssistantMessage =>
+  ({
+    api: model.api,
+    content,
+    model: model.id,
+    provider: model.provider,
+    role: 'assistant',
+    stopReason,
+    timestamp: Date.now(),
+    usage,
+  }) as unknown as ScriptedAssistantMessage
+
+const createStreamResult = (message: ScriptedAssistantMessage) =>
+  ({
+    async *[Symbol.asyncIterator]() {
+      yield { message, reason: message.stopReason, type: 'done' }
+    },
+    result: async () => message,
+  }) as unknown as ReturnType<StreamFn>
+
+const createOptions = (...messages: ScriptedAssistantMessage[]) => {
+  const contexts: unknown[] = []
+  const streamFn: StreamFn = (_model, context) => {
+    contexts.push(context)
+    const message = messages.shift()
+    if (!message) throw new Error('no scripted assistant message left')
+    return createStreamResult(message)
+  }
   return {
-    streamTurn: async ({ handlers }) => {
-      handlers?.onTextDelta?.('delta')
-      const next = queue.shift()
-      if (!next) throw new Error('no scripted turn left')
-      return next
-    },
+    contexts,
+    options: {
+      initialState: { model },
+      streamFn,
+    } satisfies AgentOptions & { initialState: { model: typeof model } },
   }
 }
 
-const createFakeTool = () => {
-  const calls: Record<string, unknown>[] = []
-  const agentTool: AgentTool = {
-    name: 'bash',
-    descriptor: {
-      description: 'demo',
-      inputSchema: { jsonSchema: { type: 'object' } },
-      strict: true,
-    } as AgentTool['descriptor'],
-    execute: async (input) => {
-      calls.push(input)
-      return { content: JSON.stringify({ ok: true }), summary: 'bash succeeded' }
-    },
-  }
-  const tool = createToolKit([agentTool])
-  return { calls, tool }
-}
-
-describe('createAgentRuntime', () => {
-  test('dispatches tool calls by name', async () => {
-    const { calls, tool } = createFakeTool()
-    const result = await tool.execute({
-      arguments: { command: 'pwd' },
-      id: '1',
-      name: 'bash',
-    })
-    expect(calls).toEqual([{ command: 'pwd' }])
-    expect(result.summary).toBe('bash succeeded')
-  })
-
-  test('runs tool calls before final response', async () => {
-    const { calls, tool } = createFakeTool()
-    const runtime = createAgentRuntime({
-      model: createModel(
-        {
-          assistant: {
-            content: [
-              { type: 'text', text: 'run ls' },
-              { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'ls' } },
-            ],
-            role: 'assistant',
+describe('VBIAgent', () => {
+  test('returns a Pi Agent and runs builder tool calls before the final response', async () => {
+    const builder = { build: () => ({ chartType: 'line' }) }
+    const { options } = createOptions(
+      assistantMessage(
+        [
+          { text: '查询 Chart1', type: 'text' },
+          {
+            arguments: {
+              code: "const b = await chart.open('Chart1'); return json({ chartType: b.build().chartType })",
+            },
+            id: 'call-1',
+            name: 'vbi_chart_builder',
+            type: 'toolCall',
           },
-          outcome: {
-            calls: [{ arguments: { command: 'ls' }, id: '1', name: 'bash' }],
-            type: 'tool',
-          },
-        },
-        { assistant: { content: 'done', role: 'assistant' }, outcome: { content: 'done', type: 'final' } },
+        ],
+        'toolUse',
       ),
-      tool,
+      assistantMessage([{ text: 'Chart1 的图表类型是 line', type: 'text' }]),
+    )
+    const agent = new VBIAgent(options, { chart: { open: async () => builder as never } })
+    const events: AgentEvent[] = []
+    agent.subscribe((event) => {
+      events.push(event)
     })
-    await runtime.start('list files')
-    expect(calls).toEqual([{ command: 'ls' }])
-    const assistantActivity = runtime.getState().activities.find((activity) => activity.kind === 'assistant')
-    expect(assistantActivity?.text).toBe('run ls')
-    expect(assistantActivity?.detail).toContain('1. bash')
-    expect(assistantActivity?.detail).toContain('"command": "ls"')
-    expect(runtime.getState().activities.at(-1)?.text).toBe('done')
+
+    await agent.prompt('查询Chart1的图表类型')
+
+    expect(agent).toBeInstanceOf(VBIAgent)
+    expect(agent).toBeInstanceOf(Agent)
+    expect(events.map((event) => event.type)).toContain('tool_execution_end')
+    expect(agent.state.messages.map((message) => message.role)).toEqual(['user', 'assistant', 'toolResult', 'assistant'])
+    const toolResult = agent.state.messages.find((message) => message.role === 'toolResult')
+    expect(toolResult?.content.find((part) => part.type === 'text')?.text).toContain('"chartType": "line"')
+    expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
   })
 
-  test('runs risky-looking commands without manual approval', async () => {
-    const { calls, tool } = createFakeTool()
-    const runtime = createAgentRuntime({
-      model: createModel(
-        {
-          assistant: {
-            content: [
-              { type: 'text', text: 'dangerous' },
-              { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'rm -rf tmp' } },
-            ],
-            role: 'assistant',
-          },
-          outcome: {
-            calls: [{ arguments: { command: 'rm -rf tmp' }, id: '1', name: 'bash' }],
-            type: 'tool',
-          },
-        },
-        { assistant: { content: 'ok, done', role: 'assistant' }, outcome: { content: 'ok, done', type: 'final' } },
-      ),
-      tool,
-    })
-    await runtime.start('clean up')
-    expect(calls).toEqual([{ command: 'rm -rf tmp' }])
-    expect(runtime.getState().activities.at(-1)?.text).toBe('ok, done')
+  test('keeps the Pi Agent transcript across follow-up turns', async () => {
+    const { contexts, options } = createOptions(
+      assistantMessage([{ text: 'first response', type: 'text' }]),
+      assistantMessage([{ text: 'second response', type: 'text' }]),
+    )
+    const agent = new VBIAgent(options, {})
+
+    await agent.prompt('first')
+    await agent.prompt('second')
+
+    expect(contexts).toHaveLength(2)
+    expect(agent.state.messages.filter((message) => message.role === 'user').map((message) => message.content)).toEqual([
+      [{ text: 'first', type: 'text' }],
+      [{ text: 'second', type: 'text' }],
+    ])
+    expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
   })
 
-  test('runs multiple tool calls from one model turn', async () => {
-    const { calls, tool } = createFakeTool()
-    const runtime = createAgentRuntime({
-      model: createModel(
-        {
-          assistant: {
-            content: [
-              { type: 'text', text: 'inspect project' },
-              { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'pwd' } },
-              { type: 'tool-call', toolCallId: '2', toolName: 'bash', input: { command: 'ls' } },
-            ],
-            role: 'assistant',
-          },
-          outcome: {
-            calls: [
-              { arguments: { command: 'pwd' }, id: '1', name: 'bash' },
-              { arguments: { command: 'ls' }, id: '2', name: 'bash' },
-            ],
-            type: 'tool',
-          },
-        },
-        { assistant: { content: 'done', role: 'assistant' }, outcome: { content: 'done', type: 'final' } },
-      ),
-      tool,
-    })
-    await runtime.start('inspect')
-    expect(calls).toEqual([{ command: 'pwd' }, { command: 'ls' }])
-    expect(runtime.getState().activities.filter((activity) => activity.kind === 'tool')).toHaveLength(2)
-  })
-
-  test('returns tool error messages to the model when execution fails', async () => {
-    const historyRoles: string[][] = []
-    const agentTool: AgentTool = {
-      name: 'bash',
-      descriptor: {
-        description: 'demo',
-        inputSchema: { jsonSchema: { type: 'object' } },
-        strict: true,
-      } as AgentTool['descriptor'],
+  test('preserves caller-provided Pi tools and emits Pi tool failure events', async () => {
+    const failingTool: AgentTool = {
+      description: 'Always fail',
       execute: async () => {
         throw new Error('command failed')
       },
+      label: 'Failing Tool',
+      name: 'failing_tool',
+      parameters: Type.Object({}, { additionalProperties: false }),
     }
-    const runtime = createAgentRuntime({
-      model: {
-        streamTurn: async ({ history }) => {
-          historyRoles.push(history.map((entry) => entry.role))
-          if (historyRoles.length === 1) {
-            return {
-              assistant: {
-                content: [
-                  { type: 'text', text: 'run command' },
-                  { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'bad' } },
-                ],
-                role: 'assistant',
-              },
-              outcome: {
-                calls: [{ arguments: { command: 'bad' }, id: '1', name: 'bash' }],
-                type: 'tool',
-              },
-            }
-          }
-          const last = history.at(-1)!
-          expect(last.role).toBe('tool')
-          const contentPart = (last.content as Array<Record<string, unknown>>)[0]
-          expect(contentPart.type).toBe('tool-result')
-          expect(contentPart.toolCallId).toBe('1')
-          return {
-            assistant: { content: 'handled failure', role: 'assistant' },
-            outcome: { content: 'handled failure', type: 'final' },
-          }
-        },
-      },
-      tool: createToolKit([agentTool]),
+    const { options } = createOptions(
+      assistantMessage([{ arguments: {}, id: 'call-1', name: 'failing_tool', type: 'toolCall' }], 'toolUse'),
+      assistantMessage([{ text: 'handled failure', type: 'text' }]),
+    )
+    const agent = new VBIAgent({ ...options, initialState: { ...options.initialState, tools: [failingTool] } }, {})
+    const toolEvents: ToolExecutionEndEvent[] = []
+    agent.subscribe((event) => {
+      if (event.type === 'tool_execution_end') toolEvents.push(event)
     })
-    await runtime.start('run bad command')
-    expect(historyRoles).toEqual([
-      ['system', 'user'],
-      ['system', 'user', 'assistant', 'tool'],
+
+    await agent.prompt('run bad command')
+
+    expect(agent.state.tools.map((tool) => tool.name)).toEqual([
+      'vbi_chart_builder',
+      'vbi_insight_builder',
+      'vbi_report_builder',
+      'failing_tool',
     ])
-    const failedActivity = runtime.getState().activities.find((activity) => activity.kind === 'tool')
-    expect(failedActivity?.text).toBe('bash failed: command failed')
-    expect(failedActivity?.detail).toContain('Status: failed')
-    expect(failedActivity?.detail).toContain('Error: command failed')
-    expect(failedActivity?.detail).toContain('"command": "bad"')
-    expect(runtime.getState().activities.at(-1)?.text).toBe('handled failure')
+    expect(toolEvents[0]).toMatchObject({ isError: true, toolName: 'failing_tool' })
+    expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
   })
 
-  test('keeps reasoning content during a tool-call loop', async () => {
-    const { tool } = createFakeTool()
-    const runtime = createAgentRuntime({
-      model: {
-        streamTurn: async ({ history }) => {
-          if (history.length === 2) {
-            return {
-              assistant: {
-                content: [
-                  { type: 'reasoning', text: 'need to inspect files' },
-                  { type: 'tool-call', toolCallId: '1', toolName: 'bash', input: { command: 'ls' } },
-                ],
-                role: 'assistant',
-              },
-              outcome: {
-                calls: [{ arguments: { command: 'ls' }, id: '1', name: 'bash' }],
-                type: 'tool',
-              },
-            }
-          }
-          const prevAssistant = history.at(-2)!
-          const reasoning = (prevAssistant.content as Array<{ type: string; text: string }>).find(
-            (p) => p.type === 'reasoning',
-          )
-          expect(reasoning?.text).toBe('need to inspect files')
-          return { assistant: { content: 'done', role: 'assistant' }, outcome: { content: 'done', type: 'final' } }
-        },
+  test('preserves caller-provided Pi tools and emits Pi tool success events', async () => {
+    const calls: string[] = []
+    const lookupTool: AgentTool = {
+      description: 'Lookup caller data',
+      execute: async (_toolCallId, input) => {
+        const params = input as Record<string, unknown>
+        calls.push(String(params.key))
+        const text = JSON.stringify({ value: 'demo' }, null, 2)
+        return {
+          content: [{ text, type: 'text' }],
+          details: { display: text, summary: `custom_lookup ${params.key} completed` },
+        }
       },
-      tool,
+      label: 'Custom Lookup',
+      name: 'custom_lookup',
+      parameters: Type.Object({ key: Type.String() }, { additionalProperties: false }),
+    }
+    const { options } = createOptions(
+      assistantMessage(
+        [
+          { text: '查询调用方数据。', type: 'text' },
+          {
+            arguments: { key: 'demo' },
+            id: 'call-lookup',
+            name: 'custom_lookup',
+            type: 'toolCall',
+          },
+        ],
+        'toolUse',
+      ),
+      assistantMessage([{ text: '查询完成。', type: 'text' }]),
+    )
+    const agent = new VBIAgent({ ...options, initialState: { ...options.initialState, tools: [lookupTool] } }, {})
+    const toolEvents: ToolExecutionEndEvent[] = []
+    agent.subscribe((event) => {
+      if (event.type === 'tool_execution_end') toolEvents.push(event)
     })
-    await runtime.start('inspect')
-    expect(runtime.getState().activities.at(-1)?.text).toBe('done')
-  })
 
-  test('supports follow-up turns with preserved history', async () => {
-    const historySizes: number[] = []
-    const runtime = createAgentRuntime({
-      model: {
-        streamTurn: async ({ history }) => {
-          historySizes.push(history.length)
-          return {
-            assistant: { content: `turn ${historySizes.length}`, role: 'assistant' },
-            outcome: { content: `turn ${historySizes.length}`, type: 'final' },
-          }
-        },
-      },
-      tool: createToolKit([]),
-    })
-    await runtime.start('first turn')
-    await runtime.start('second turn')
-    expect(historySizes).toEqual([2, 4])
-    expect(
-      runtime
-        .getState()
-        .activities.filter((activity) => activity.kind === 'user')
-        .map((activity) => activity.text),
-    ).toEqual(['first turn', 'second turn'])
-  })
+    await agent.prompt('查询调用方数据')
 
-  test('preserves reasoning content across follow-up user turns', async () => {
-    const previousReasoning: Array<string | undefined> = []
-    const runtime = createAgentRuntime({
-      model: {
-        streamTurn: async ({ history }) => {
-          const prev = history.find((entry) => entry.role === 'assistant')
-          const reasoning = prev
-            ? (prev.content as Array<{ type: string; text: string }>).find((p) => p.type === 'reasoning')?.text
-            : undefined
-          previousReasoning.push(reasoning)
-          return {
-            assistant: {
-              content: [
-                { type: 'reasoning', text: 'private turn reasoning' },
-                { type: 'text', text: `turn ${previousReasoning.length}` },
-              ],
-              role: 'assistant',
-            },
-            outcome: { content: `turn ${previousReasoning.length}`, type: 'final' },
-          }
-        },
-      },
-      tool: createToolKit([]),
-    })
-    await runtime.start('first turn')
-    await runtime.start('second turn')
-    expect(previousReasoning).toEqual([undefined, 'private turn reasoning'])
+    expect(agent.state.tools.map((tool) => tool.name)).toEqual([
+      'vbi_chart_builder',
+      'vbi_insight_builder',
+      'vbi_report_builder',
+      'custom_lookup',
+    ])
+    expect(calls).toEqual(['demo'])
+    expect(toolEvents[0]).toMatchObject({ isError: false, toolName: 'custom_lookup' })
+    expect(JSON.parse(toolEvents[0].result.content[0].text)).toEqual({ value: 'demo' })
+    expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
+    expect(agent.state.errorMessage).toBeUndefined()
   })
 })
