@@ -17,7 +17,9 @@ type VBIChartRenderCleanup = (() => void) | undefined
  */
 @customElement('vbi-chart-render')
 export class VBIChartRender extends VdashElement {
-  static override styles = styles
+  static override get styles() {
+    return styles
+  }
 
   @property({ attribute: false }) accessor spec: ISpec | undefined = undefined
   private readonly chartContainerRef = createRef<HTMLDivElement>()
@@ -57,7 +59,7 @@ export class VBIChartRender extends VdashElement {
   }
 
   override render() {
-    return html`<div ${ref(this.chartContainerRef)}></div>`
+    return html`<div class="vbi-chart-render__container" ${ref(this.chartContainerRef)}></div>`
   }
 }
 

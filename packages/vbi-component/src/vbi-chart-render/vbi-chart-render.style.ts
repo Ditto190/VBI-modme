@@ -7,6 +7,11 @@ const styles: CSSResultGroup = [
     :host {
       display: block;
     }
+
+    .vbi-chart-render__container {
+      height: 100%;
+      width: 100%;
+    }
   `,
 ]
 
