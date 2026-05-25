@@ -98,7 +98,12 @@ describe('runPromptAgent', () => {
     expect(output[3]).toContain('[tool] vbi_chart_builder succeeded')
     expect(output[4]).toBe('[assistant] Chart1 的图表类型是 line')
     expect(output.at(-1)).toBe('执行成功')
-    expect(agent.state.messages.map((message) => message.role)).toEqual(['user', 'assistant', 'toolResult', 'assistant'])
+    expect(agent.state.messages.map((message) => message.role)).toEqual([
+      'user',
+      'assistant',
+      'toolResult',
+      'assistant',
+    ])
   })
 
   test('reports Pi Agent failures without throwing', async () => {

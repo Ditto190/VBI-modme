@@ -135,6 +135,21 @@ describe('executeAgentScript', () => {
 
     expect(result).toEqual({ logs: ['using builder'], result: { name: 'builder' } })
   })
+
+  test('allows snippets to shadow injected global names', async () => {
+    const result = await executeAgentScript({
+      code: `
+        const builder = await chart.open('Chart1');
+        return json({ chartType: builder.build().chartType });
+      `,
+      globals: {
+        builder: { open: async () => ({ build: () => ({ chartType: 'unused' }) }) },
+        chart: { open: async () => ({ build: () => ({ chartType: 'line' }) }) },
+      },
+    })
+
+    expect(result).toEqual({ logs: [], result: { chartType: 'line' } })
+  })
 })
 
 describe('createBuilderTools', () => {

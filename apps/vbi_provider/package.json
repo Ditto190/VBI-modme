@@ -34,9 +34,9 @@
     "format": "oxfmt .",
     "lint": "oxlint .",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
-    "test": "node ../../tools/run-rstest.mjs",
-    "test:update": "node ../../tools/run-rstest.mjs --update",
-    "test:coverage": "node ../../tools/run-rstest.mjs --coverage"
+    "test": "rstest",
+    "test:update": "rstest --update",
+    "test:coverage": "rstest --coverage"
   },
   "dependencies": {
     "@hocuspocus/provider": "3.4.3",

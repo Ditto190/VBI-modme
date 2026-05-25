@@ -101,7 +101,12 @@ describe('VBIAgent', () => {
     expect(agent).toBeInstanceOf(VBIAgent)
     expect(agent).toBeInstanceOf(Agent)
     expect(events.map((event) => event.type)).toContain('tool_execution_end')
-    expect(agent.state.messages.map((message) => message.role)).toEqual(['user', 'assistant', 'toolResult', 'assistant'])
+    expect(agent.state.messages.map((message) => message.role)).toEqual([
+      'user',
+      'assistant',
+      'toolResult',
+      'assistant',
+    ])
     const toolResult = agent.state.messages.find((message) => message.role === 'toolResult')
     expect(toolResult?.content.find((part) => part.type === 'text')?.text).toContain('"chartType": "line"')
     expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
@@ -118,10 +123,9 @@ describe('VBIAgent', () => {
     await agent.prompt('second')
 
     expect(contexts).toHaveLength(2)
-    expect(agent.state.messages.filter((message) => message.role === 'user').map((message) => message.content)).toEqual([
-      [{ text: 'first', type: 'text' }],
-      [{ text: 'second', type: 'text' }],
-    ])
+    expect(agent.state.messages.filter((message) => message.role === 'user').map((message) => message.content)).toEqual(
+      [[{ text: 'first', type: 'text' }], [{ text: 'second', type: 'text' }]],
+    )
     expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
   })
 

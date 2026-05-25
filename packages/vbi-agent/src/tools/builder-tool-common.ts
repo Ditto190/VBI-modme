@@ -41,7 +41,8 @@ const createToolResult = (summary: string, content: string, display: string) => 
 })
 
 const readCode = (toolName: string, input: unknown) => {
-  if (typeof input !== 'object' || input === null || Array.isArray(input)) throw new Error(`${toolName}.code is required`)
+  if (typeof input !== 'object' || input === null || Array.isArray(input))
+    throw new Error(`${toolName}.code is required`)
   const code = (input as Record<string, unknown>).code
   if (typeof code !== 'string' || !code.trim()) throw new Error(`${toolName}.code is required`)
   return code

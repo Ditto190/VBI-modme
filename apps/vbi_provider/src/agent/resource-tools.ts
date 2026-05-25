@@ -114,7 +114,7 @@ const executeStandardResourceAction = (client: VBIProviderClient, input: VBIReso
   const resource = readResource(input)
   const action = requireString(input, 'action')
   if (action === 'list') {
-    return ({ chart: client.listCharts, insight: client.listInsights, report: client.listReports })[resource].call(client)
+    return { chart: client.listCharts, insight: client.listInsights, report: client.listReports }[resource].call(client)
   }
   if (resource === 'chart') return executeChartAction(client, action, input)
   if (resource === 'insight') return executeInsightAction(client, action, input)

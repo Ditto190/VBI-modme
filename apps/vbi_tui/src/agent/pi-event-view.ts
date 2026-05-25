@@ -53,13 +53,7 @@ const formatToolCalls = (message: AgentMessage) => {
   return {
     detail: calls
       .map((call, index) =>
-        [
-          `${index + 1}. ${call.name}`,
-          'Arguments:',
-          '```json',
-          stringifyJson(call.arguments),
-          '```',
-        ].join('\n'),
+        [`${index + 1}. ${call.name}`, 'Arguments:', '```json', stringifyJson(call.arguments), '```'].join('\n'),
       )
       .join('\n\n'),
     text: `Calling tool: ${calls.map((call) => call.name).join(', ')}`,

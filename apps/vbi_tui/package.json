@@ -11,8 +11,8 @@
     "build": "node scripts/build.mjs",
     "format": "oxfmt .",
     "lint": "oxlint .",
-    "test": "node ../../tools/run-rstest.mjs",
-    "test:update": "node ../../tools/run-rstest.mjs --update",
+    "test": "rstest",
+    "test:update": "rstest --update",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

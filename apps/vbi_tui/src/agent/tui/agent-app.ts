@@ -287,7 +287,10 @@ const renderEmptyState = (width: number) => {
   if (width < 8) return [pad(dim('Ready.'), width)]
   return [
     '',
-    pad(`${bold('Tip:')} Ask VBI Agent to list resources, inspect DSL, update Builder state, or answer directly.`, width),
+    pad(
+      `${bold('Tip:')} Ask VBI Agent to list resources, inspect DSL, update Builder state, or answer directly.`,
+      width,
+    ),
     '',
     pad(`${gray('›')} ${dim('Try: list charts, inspect Chart1, or update a report page')}`, width),
   ]
@@ -570,11 +573,6 @@ export class AgentApp implements Component, Focusable {
     const transcriptPanel = transcript.length
       ? fillLines(transcript, Math.max(transcriptLimit, transcript.length), 'bottom')
       : fillLines(renderEmptyState(safeWidth), transcriptLimit, 'top')
-    return [
-      ...header,
-      ...transcriptPanel,
-      ...editor,
-      statusLine,
-    ].map((line) => pad(line, safeWidth))
+    return [...header, ...transcriptPanel, ...editor, statusLine].map((line) => pad(line, safeWidth))
   }
 }

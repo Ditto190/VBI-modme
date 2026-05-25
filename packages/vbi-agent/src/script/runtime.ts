@@ -31,6 +31,6 @@ export const executeAgentScript = async ({
 
   const names = [...Object.keys(globals), 'json', 'assert', 'console']
   const values = [...Object.values(globals), (value: unknown) => value, assert, runtimeConsole]
-  const result = await new AsyncFunction(...names, code)(...values)
+  const result = await new AsyncFunction(...names, `{\n${code}\n}`)(...values)
   return { logs, result }
 }
