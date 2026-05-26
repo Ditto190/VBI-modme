@@ -8,7 +8,7 @@ const styles: CSSResultGroup = [
       display: block;
     }
 
-    .vbi-chart-render__container {
+    .vbi-vseed-render__container {
       height: 100%;
       width: 100%;
     }

@@ -4,26 +4,26 @@ import { html, type PropertyValues } from 'lit'
 import { property } from 'lit/decorators.js'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { customElement, VdashElement } from 'src/shared/element'
-import styles from './vbi-chart-render.style'
+import styles from './vbi-vseed-render.style'
 
-type VBIChartRenderCleanup = (() => void) | undefined
+type VBIVSeedRenderCleanup = (() => void) | undefined
 
 /**
  * Chart container for rendering VChart specifications.
  *
- * @tag vbi-chart-render
+ * @tag vbi-vseed-render
  *
  * @prop {ISpec | undefined} spec - VChart specification rendered inside the chart container.
  */
-@customElement('vbi-chart-render')
-export class VBIChartRender extends VdashElement {
+@customElement('vbi-vseed-render')
+export class VBIVSeedRender extends VdashElement {
   static override get styles() {
     return styles
   }
 
   @property({ attribute: false }) accessor spec: ISpec | undefined = undefined
   private readonly chartContainerRef = createRef<HTMLDivElement>()
-  private cleanup: VBIChartRenderCleanup = undefined
+  private cleanup: VBIVSeedRenderCleanup = undefined
 
   override disconnectedCallback(): void {
     this.cleanupRender()
@@ -59,12 +59,12 @@ export class VBIChartRender extends VdashElement {
   }
 
   override render() {
-    return html`<div class="vbi-chart-render__container" ${ref(this.chartContainerRef)}></div>`
+    return html`<div class="vbi-vseed-render__container" ${ref(this.chartContainerRef)}></div>`
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'vbi-chart-render': VBIChartRender
+    'vbi-vseed-render': VBIVSeedRender
   }
 }

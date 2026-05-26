@@ -1,7 +1,7 @@
 import type { ISpec } from '@visactor/vchart'
 import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { elementUpdated, fixture, fixtureCleanup, html } from '@open-wc/testing'
-import { VBIChartRender } from '@visactor/vbi-component'
+import { VBIVSeedRender } from '@visactor/vbi-component'
 
 type VChartMockInstance = {
   options: { dom: HTMLElement }
@@ -49,7 +49,7 @@ const createSpec = (type: string): ISpec =>
     yField: 'value',
   }) as unknown as ISpec
 
-describe('vbi-chart-render', () => {
+describe('vbi-vseed-render', () => {
   beforeEach(async () => {
     const state = await getVChartMockState()
     state.instances.length = 0
@@ -61,22 +61,22 @@ describe('vbi-chart-render', () => {
   })
 
   test('registers the custom element', () => {
-    expect(customElements.get('vbi-chart-render')).toBe(VBIChartRender)
+    expect(customElements.get('vbi-vseed-render')).toBe(VBIVSeedRender)
   })
 
   test('renders chart container when spec is missing', async () => {
-    const element = await fixture<VBIChartRender>(html`<vbi-chart-render></vbi-chart-render>`)
+    const element = await fixture<VBIVSeedRender>(html`<vbi-vseed-render></vbi-vseed-render>`)
     const state = await getVChartMockState()
 
-    expect(element.shadowRoot?.querySelector('.vbi-chart-render__container')).toBeInstanceOf(HTMLElement)
+    expect(element.shadowRoot?.querySelector('.vbi-vseed-render__container')).toBeInstanceOf(HTMLElement)
     expect(state.constructor).not.toHaveBeenCalled()
   })
 
   test('renders VChart into the chart container when spec is provided', async () => {
     const spec = createSpec('bar')
-    const element = await fixture<VBIChartRender>(html`<vbi-chart-render .spec=${spec}></vbi-chart-render>`)
+    const element = await fixture<VBIVSeedRender>(html`<vbi-vseed-render .spec=${spec}></vbi-vseed-render>`)
     const state = await getVChartMockState()
-    const container = element.shadowRoot?.querySelector('.vbi-chart-render__container')
+    const container = element.shadowRoot?.querySelector('.vbi-vseed-render__container')
 
     expect(container).toBeInstanceOf(HTMLElement)
     expect(state.constructor).toHaveBeenCalledWith(spec, { dom: container })
@@ -85,8 +85,8 @@ describe('vbi-chart-render', () => {
   })
 
   test('releases the previous VChart instance before rendering a new spec', async () => {
-    const element = await fixture<VBIChartRender>(
-      html`<vbi-chart-render .spec=${createSpec('bar')}></vbi-chart-render>`,
+    const element = await fixture<VBIVSeedRender>(
+      html`<vbi-vseed-render .spec=${createSpec('bar')}></vbi-vseed-render>`,
     )
     const state = await getVChartMockState()
     const firstInstance = state.instances[0]
@@ -100,7 +100,7 @@ describe('vbi-chart-render', () => {
   })
 
   test('releases the VChart instance when disconnected', async () => {
-    await fixture<VBIChartRender>(html`<vbi-chart-render .spec=${createSpec('bar')}></vbi-chart-render>`)
+    await fixture<VBIVSeedRender>(html`<vbi-vseed-render .spec=${createSpec('bar')}></vbi-vseed-render>`)
     const state = await getVChartMockState()
     const instance = state.instances[0]
 
