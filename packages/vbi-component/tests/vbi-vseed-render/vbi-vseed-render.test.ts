@@ -1,111 +1,109 @@
-import type { ISpec } from '@visactor/vchart'
-import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
-import { elementUpdated, fixture, fixtureCleanup, html } from '@open-wc/testing'
-import { VBIVSeedRender } from '@visactor/vbi-component'
+import { rs } from '@rstest/core'
+import { fixture, fixtureCleanup } from '@open-wc/testing'
+import { html } from 'lit'
+import type { Line, Bar } from '@visactor/vseed'
 
-type VChartMockInstance = {
-  options: { dom: HTMLElement }
-  release: ReturnType<typeof rs.fn>
-  renderSync: ReturnType<typeof rs.fn>
-  spec: ISpec
+rs.mock('src/vbi-vseed-render/renderer', () => ({
+  renderVSeed: rs.fn(),
+}))
+
+const { VBIVSeedRender } = await import('src/vbi-vseed-render/vbi-vseed-render')
+const { renderVSeed } = await import('src/vbi-vseed-render/renderer')
+
+type VBIVSeedRenderInstance = InstanceType<typeof VBIVSeedRender>
+
+const mockRenderVSeed = renderVSeed as ReturnType<typeof rs.fn>
+
+const MOCK_VSEED: Line = {
+  chartType: 'line',
+  dataset: [
+    { date: '2024-01', sales: 100 },
+    { date: '2024-02', sales: 200 },
+  ],
+  dimensions: [{ id: 'date', alias: 'Date' }],
+  measures: [{ id: 'sales', alias: 'Sales' }],
 }
 
-type VChartMockState = {
-  constructor: ReturnType<typeof rs.fn>
-  instances: VChartMockInstance[]
+const ANOTHER_VSEED: Bar = {
+  chartType: 'bar',
+  dataset: [{ category: 'A', revenue: 500 }],
+  dimensions: [{ id: 'category', alias: 'Category' }],
+  measures: [{ id: 'revenue', alias: 'Revenue' }],
 }
-
-rs.mock('@visactor/vchart', () => {
-  const state: VChartMockState = {
-    constructor: rs.fn((spec: ISpec, options: { dom: HTMLElement }) => {
-      const instance: VChartMockInstance = {
-        options,
-        release: rs.fn(),
-        renderSync: rs.fn(),
-        spec,
-      }
-      state.instances.push(instance)
-      return instance
-    }),
-    instances: [],
-  }
-
-  return {
-    default: state.constructor,
-    __vchartMockState: state,
-  }
-})
-
-const getVChartMockState = async () => {
-  const module = (await import('@visactor/vchart')) as unknown as { __vchartMockState: VChartMockState }
-  return module.__vchartMockState
-}
-
-const createSpec = (type: string): ISpec =>
-  ({
-    data: [{ id: 'source', values: [{ category: 'A', value: 1 }] }],
-    type,
-    xField: 'category',
-    yField: 'value',
-  }) as unknown as ISpec
 
 describe('vbi-vseed-render', () => {
-  beforeEach(async () => {
-    const state = await getVChartMockState()
-    state.instances.length = 0
-    rs.clearAllMocks()
-  })
-
   afterEach(() => {
     fixtureCleanup()
+    mockRenderVSeed.mockClear()
   })
 
-  test('registers the custom element', () => {
-    expect(customElements.get('vbi-vseed-render')).toBe(VBIVSeedRender)
+  it('should register as a custom element and render shadow DOM container', async () => {
+    expect(customElements.get('vbi-vseed-render')).toBeDefined()
+
+    const el = await fixture<VBIVSeedRenderInstance>(html`<vbi-vseed-render></vbi-vseed-render>`)
+    expect(el).toBeInstanceOf(VBIVSeedRender)
+    expect(el.vseed).toBeUndefined()
+
+    const container = el.shadowRoot?.querySelector('.vbi-vseed-render__container')
+    expect(container).toBeInstanceOf(HTMLDivElement)
   })
 
-  test('renders chart container when spec is missing', async () => {
-    const element = await fixture<VBIVSeedRender>(html`<vbi-vseed-render></vbi-vseed-render>`)
-    const state = await getVChartMockState()
+  it('should call renderVSeed when vseed is set', async () => {
+    const el = await fixture<VBIVSeedRenderInstance>(html`<vbi-vseed-render></vbi-vseed-render>`)
+    expect(mockRenderVSeed).not.toHaveBeenCalled()
 
-    expect(element.shadowRoot?.querySelector('.vbi-vseed-render__container')).toBeInstanceOf(HTMLElement)
-    expect(state.constructor).not.toHaveBeenCalled()
-  })
+    el.vseed = MOCK_VSEED
+    await el.updateComplete
 
-  test('renders VChart into the chart container when spec is provided', async () => {
-    const spec = createSpec('bar')
-    const element = await fixture<VBIVSeedRender>(html`<vbi-vseed-render .spec=${spec}></vbi-vseed-render>`)
-    const state = await getVChartMockState()
-    const container = element.shadowRoot?.querySelector('.vbi-vseed-render__container')
-
-    expect(container).toBeInstanceOf(HTMLElement)
-    expect(state.constructor).toHaveBeenCalledWith(spec, { dom: container })
-    expect(state.instances).toHaveLength(1)
-    expect(state.instances[0].renderSync).toHaveBeenCalledTimes(1)
-  })
-
-  test('releases the previous VChart instance before rendering a new spec', async () => {
-    const element = await fixture<VBIVSeedRender>(
-      html`<vbi-vseed-render .spec=${createSpec('bar')}></vbi-vseed-render>`,
+    expect(mockRenderVSeed).toHaveBeenCalledTimes(1)
+    expect(mockRenderVSeed).toHaveBeenCalledWith(
+      expect.objectContaining({
+        container: el.shadowRoot?.querySelector('.vbi-vseed-render__container'),
+        vseed: MOCK_VSEED,
+        onError: expect.any(Function),
+      }),
     )
-    const state = await getVChartMockState()
-    const firstInstance = state.instances[0]
-
-    element.spec = createSpec('line')
-    await elementUpdated(element)
-
-    expect(firstInstance.release).toHaveBeenCalledTimes(1)
-    expect(state.instances).toHaveLength(2)
-    expect(state.instances[1].renderSync).toHaveBeenCalledTimes(1)
   })
 
-  test('releases the VChart instance when disconnected', async () => {
-    await fixture<VBIVSeedRender>(html`<vbi-vseed-render .spec=${createSpec('bar')}></vbi-vseed-render>`)
-    const state = await getVChartMockState()
-    const instance = state.instances[0]
+  it('should cleanup previous render when vseed changes', async () => {
+    const mockCleanup = rs.fn()
+    mockRenderVSeed.mockReturnValue(mockCleanup)
 
-    fixtureCleanup()
+    const el = await fixture<VBIVSeedRenderInstance>(html`<vbi-vseed-render></vbi-vseed-render>`)
+    el.vseed = MOCK_VSEED
+    await el.updateComplete
+    expect(mockCleanup).not.toHaveBeenCalled()
 
-    expect(instance.release).toHaveBeenCalledTimes(1)
+    el.vseed = ANOTHER_VSEED
+    await el.updateComplete
+    expect(mockCleanup).toHaveBeenCalledTimes(1)
+    expect(mockRenderVSeed).toHaveBeenCalledTimes(2)
+  })
+
+  it('should cleanup on disconnect', async () => {
+    const mockCleanup = rs.fn()
+    mockRenderVSeed.mockReturnValue(mockCleanup)
+
+    const el = await fixture<VBIVSeedRenderInstance>(html`<vbi-vseed-render></vbi-vseed-render>`)
+    el.vseed = MOCK_VSEED
+    await el.updateComplete
+
+    el.remove()
+    expect(mockCleanup).toHaveBeenCalledTimes(1)
+  })
+
+  it('should delegate render errors to console.error via onError', async () => {
+    const errorSpy = rs.spyOn(console, 'error').mockImplementation(() => {})
+
+    const el = await fixture<VBIVSeedRenderInstance>(html`<vbi-vseed-render></vbi-vseed-render>`)
+    el.vseed = MOCK_VSEED
+    await el.updateComplete
+
+    const { onError } = mockRenderVSeed.mock.calls[0][0]
+    onError(new Error('test render failure'))
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('VBI render error:'), el)
+
+    errorSpy.mockRestore()
   })
 })
