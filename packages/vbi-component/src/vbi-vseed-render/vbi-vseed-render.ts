@@ -1,19 +1,17 @@
-import type { ISpec } from '@visactor/vchart'
-import VChart from '@visactor/vchart'
+import type { VSeed } from '@visactor/vseed'
 import { html, type PropertyValues } from 'lit'
 import { property } from 'lit/decorators.js'
 import { createRef, ref } from 'lit/directives/ref.js'
 import { customElement, VdashElement } from 'src/shared/element'
 import styles from './vbi-vseed-render.style'
-
-type VBIVSeedRenderCleanup = (() => void) | undefined
+import { renderVSeed, type VBIVSeedRenderCleanup } from './renderer'
 
 /**
  * Chart container for rendering VChart specifications.
  *
  * @tag vbi-vseed-render
  *
- * @prop {ISpec | undefined} spec - VChart specification rendered inside the chart container.
+ * @prop {VSeed | undefined} vseed - VSeed DSL rendered inside the container.
  */
 @customElement('vbi-vseed-render')
 export class VBIVSeedRender extends VdashElement {
@@ -21,7 +19,7 @@ export class VBIVSeedRender extends VdashElement {
     return styles
   }
 
-  @property({ attribute: false }) accessor spec: ISpec | undefined = undefined
+  @property({ attribute: false }) accessor vseed: VSeed | undefined = undefined
   private readonly chartContainerRef = createRef<HTMLDivElement>()
   private cleanup: VBIVSeedRenderCleanup = undefined
 
@@ -31,10 +29,10 @@ export class VBIVSeedRender extends VdashElement {
   }
 
   protected override updated(changedProperties: PropertyValues<this>): void {
-    if (!changedProperties.has('spec')) {
+    if (!changedProperties.has('vseed')) {
       return
     }
-    this.renderChart()
+    this.renderContent()
   }
 
   private cleanupRender(): void {
@@ -42,20 +40,18 @@ export class VBIVSeedRender extends VdashElement {
     this.cleanup = undefined
   }
 
-  private renderChart(): void {
+  private renderContent(): void {
     this.cleanupRender()
     const container = this.chartContainerRef.value
-    if (!container || !this.spec) {
+    if (!container) {
       return
     }
 
-    try {
-      const vchart = new VChart(this.spec, { dom: container })
-      vchart.renderSync()
-      this.cleanup = () => vchart.release()
-    } catch (error) {
-      this.error(`VBI chart render error: ${String(error)}`)
-    }
+    this.cleanup = renderVSeed({
+      container,
+      onError: (error) => this.error(`VBI render error: ${String(error)}`),
+      vseed: this.vseed,
+    })
   }
 
   override render() {
