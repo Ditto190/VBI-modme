@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { AppLocale } from '../../i18n'
 import { appLocales, useTranslation } from '../../i18n'
-import { Button } from '../../components/ui/button'
 import { DropdownMenu } from '../../components/ui/dropdown-menu'
 import { ChevronDown, Globe2, Palette } from '../../components/ui/icons'
 import { type AppThemeMode, useAppPreferencesStore } from '../../stores/app-preferences.store'
@@ -42,7 +41,7 @@ export const ManagePreferences = () => {
 
   return (
     <div
-      className='vbi-motion-soft-reveal mx-4 mt-auto flex h-12 w-[calc(100%-32px)] items-center justify-between gap-3 border-t border-[var(--vbi-border)] py-2 max-[720px]:mx-3 max-[720px]:mb-3 max-[720px]:mt-0 max-[720px]:w-80 max-[720px]:max-w-[calc(100%-24px)]'
+      className='mx-4 mt-auto flex h-12 w-[calc(100%-32px)] items-center justify-between gap-3 border-t border-[var(--vbi-border)] py-2 max-[720px]:mx-3 max-[720px]:mb-3 max-[720px]:mt-0 max-[720px]:w-80 max-[720px]:max-w-[calc(100%-24px)]'
       aria-label={t('app.theme.switch')}
     >
       <DropdownMenu
@@ -68,7 +67,7 @@ export const ManagePreferences = () => {
                     <button
                       aria-checked={themeMode === mode}
                       aria-label={t(`app.theme.${mode}`)}
-                      className='grid size-6 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 outline-none transition duration-150 ease-out hover:scale-110 hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-surface-solid)] focus-visible:border-[var(--vbi-primary)] focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] data-[active=true]:scale-110 data-[active=true]:animate-[vbi-subtle-pop_var(--vbi-motion)_var(--vbi-ease-pop)] data-[active=true]:border-[var(--vbi-border-strong)] data-[active=true]:bg-[var(--vbi-surface-solid)] data-[active=true]:[&_span]:scale-110'
+                      className='grid size-6 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 outline-none transition-[background-color,border-color,box-shadow] duration-150 ease-out hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-surface-solid)] focus-visible:border-[var(--vbi-primary)] focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] data-[active=true]:border-[var(--vbi-border-strong)] data-[active=true]:bg-[var(--vbi-surface-solid)]'
                       data-active={themeMode === mode}
                       key={mode}
                       role='radio'
@@ -85,17 +84,16 @@ export const ManagePreferences = () => {
           </div>
         )}
         trigger={
-          <Button
-            className='h-8 min-w-20 justify-center gap-2.5 px-1.5 text-[var(--vbi-text-muted)] [&_svg:last-child]:text-[var(--vbi-placeholder)]'
-            icon={<Palette className='h-4 w-4' />}
-            size='sm'
-            variant='ghost'
+          <button
+            className='inline-flex h-8 min-w-20 cursor-pointer items-center justify-center gap-2.5 rounded-md border border-transparent bg-transparent px-1.5 text-xs font-medium text-[var(--vbi-text-muted)] transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)] [&_svg:last-child]:text-[var(--vbi-placeholder)]'
+            type='button'
             aria-label={t('app.theme.switch')}
             title={t('app.theme.switch')}
           >
+            <Palette className='h-4 w-4' />
             <ThemeSwatch mode={themeMode} />
             <ChevronDown className='h-4 w-4' />
-          </Button>
+          </button>
         }
       />
       <DropdownMenu
@@ -106,15 +104,14 @@ export const ManagePreferences = () => {
           onSelect: () => setLocale(key),
         }))}
         trigger={
-          <Button
-            className='h-8 w-24 min-w-0 justify-center gap-2.5 overflow-hidden px-1.5 text-xs text-[var(--vbi-text-muted)] hover:text-[var(--vbi-text-strong)] [&_span]:min-w-0 [&_span]:shrink [&_span]:truncate [&_span]:text-center [&_svg:last-child]:text-[var(--vbi-placeholder)]'
-            icon={<Globe2 className='h-4 w-4' />}
-            size='sm'
-            variant='ghost'
+          <button
+            className='inline-flex h-8 w-24 min-w-0 cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-md border border-transparent bg-transparent px-1.5 text-xs font-medium text-[var(--vbi-text-muted)] transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)] [&_span]:min-w-0 [&_span]:shrink [&_span]:truncate [&_span]:text-center [&_svg:last-child]:text-[var(--vbi-placeholder)]'
+            type='button'
           >
+            <Globe2 className='h-4 w-4' />
             <span>{t(localeLabels[locale])}</span>
             <ChevronDown className='h-4 w-4' />
-          </Button>
+          </button>
         }
       />
     </div>

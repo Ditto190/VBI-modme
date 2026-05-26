@@ -24,6 +24,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@earendil-works/pi-ai": "0.75.5",
     "@hocuspocus/extension-database": "3.4.3",
     "@hocuspocus/extension-logger": "3.4.3",
     "@hocuspocus/server": "3.4.3",

@@ -1,4 +1,57 @@
 -- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "name" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Post" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "content" TEXT,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "authorId" INTEGER NOT NULL,
+
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Report" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "data" BYTEA NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Report_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Chart" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "data" BYTEA NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Chart_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Insight" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "data" BYTEA NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Insight_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "ReportCollaborationUpdate" (
     "id" BIGSERIAL NOT NULL,
     "reportId" TEXT NOT NULL,
@@ -35,6 +88,18 @@ CREATE TABLE "InsightCollaborationUpdate" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE INDEX "Report_updatedAt_idx" ON "Report"("updatedAt");
+
+-- CreateIndex
+CREATE INDEX "Chart_updatedAt_idx" ON "Chart"("updatedAt");
+
+-- CreateIndex
+CREATE INDEX "Insight_updatedAt_idx" ON "Insight"("updatedAt");
+
+-- CreateIndex
 CREATE INDEX "ReportCollaborationUpdate_reportId_id_idx" ON "ReportCollaborationUpdate"("reportId", "id");
 
 -- CreateIndex
@@ -52,24 +117,5 @@ CREATE INDEX "InsightCollaborationUpdate_insightId_id_idx" ON "InsightCollaborat
 -- CreateIndex
 CREATE INDEX "InsightCollaborationUpdate_insightId_merged_idx" ON "InsightCollaborationUpdate"("insightId", "merged");
 
--- MigrateData
-INSERT INTO "ReportCollaborationUpdate" ("reportId", "data", "merged", "createdAt", "updatedAt")
-SELECT "resourceId", "data", "merged", "createdAt", "updatedAt"
-FROM "CollaborationUpdate"
-WHERE "resourceType" = 'report';
-
-INSERT INTO "ChartCollaborationUpdate" ("chartId", "data", "merged", "createdAt", "updatedAt")
-SELECT "resourceId", "data", "merged", "createdAt", "updatedAt"
-FROM "CollaborationUpdate"
-WHERE "resourceType" = 'chart';
-
-INSERT INTO "InsightCollaborationUpdate" ("insightId", "data", "merged", "createdAt", "updatedAt")
-SELECT "resourceId", "data", "merged", "createdAt", "updatedAt"
-FROM "CollaborationUpdate"
-WHERE "resourceType" = 'insight';
-
--- DropTable
-DROP TABLE "CollaborationUpdate";
-
--- DropEnum
-DROP TYPE "ResourceType";
+-- AddForeignKey
+ALTER TABLE "Post" ADD CONSTRAINT "Post_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

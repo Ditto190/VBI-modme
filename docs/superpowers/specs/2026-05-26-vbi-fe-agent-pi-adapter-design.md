@@ -23,17 +23,16 @@ The VBI frontend must stay on this path where possible, adding only the minimum 
 
 ## Design
 
-### 1. Public Pi Web UI Entry
+### 1. Page-Level Pi Boundary
 
-Prefer importing from the public `@earendil-works/pi-web-ui` package entry instead of VBI-local deep aliases such as `@vbi/pi-web-ui/ChatPanel` and `@vbi/pi-web-ui/storage/*`.
+Do not use `next.config.ts` aliases for the Agent integration. Keep `turbopack.resolveAlias` empty.
 
-`next.config.ts` should only keep aliases that are required for browser compatibility:
+Avoid large SSR/page builds by making `apps/vbi_fe/src/app/manage/agent/page.tsx` a small dynamic boundary:
 
-- `@earendil-works/pi-agent-core` -> `src/views/agent/pi-agent-core-browser.ts`
-- `@earendil-works/pi-ai` -> `src/views/agent/pi-ai-browser.ts`
-- `@visactor/vbi-agent` -> built package output when the frontend container needs package resolution stability
-
-If Turbopack cannot consume the public Pi Web UI entry safely, keep the smallest necessary aliases and document why in code.
+- The route page dynamically imports `src/views/AgentPage`.
+- `AgentPage` and its runtime modules remain client-only.
+- Pi Web UI loading stays behind runtime-level dynamic imports so the route's SSR graph does not eagerly include Pi Web UI, attachments, PDF handling, or agent runtime code.
+- If Pi Web UI's package `exports` blocks subpath imports and the public package entry eagerly pulls heavyweight modules, load the needed Pi Web UI dist files from the Agent runtime instead of adding Next aliases.
 
 ### 2. Runtime Boundary
 

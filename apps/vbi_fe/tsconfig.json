@@ -23,7 +23,9 @@
     "paths": {
       "src/*": ["./src/*"],
       "@visactor/headless-bi-provider": ["../vbi_provider/src/index.ts"],
-      "@visactor/headless-bi-provider/*": ["../vbi_provider/src/*"]
+      "@visactor/headless-bi-provider/*": ["../vbi_provider/src/*"],
+      "@visactor/vbi-agent": ["../../packages/vbi-agent/src/index.ts"],
+      "@visactor/vbi-agent/*": ["../../packages/vbi-agent/src/*"]
     }
   },
   "references": [
@@ -32,6 +34,9 @@
     },
     {
       "path": "../../packages/vbi"
+    },
+    {
+      "path": "../../packages/vbi-agent"
     },
     {
       "path": "../../practices/standard"

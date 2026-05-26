@@ -5,6 +5,9 @@ const collaborationOrigin = process.env.VBI_COLLABORATION_ORIGIN?.trim() || 'htt
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  turbopack: {
+    resolveAlias: {},
+  },
   async rewrites() {
     return [
       {

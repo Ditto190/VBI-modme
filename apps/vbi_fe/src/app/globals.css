@@ -33,6 +33,210 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.vbi-agent-shell {
+  --background: var(--vbi-surface-solid);
+  --foreground: var(--vbi-text-strong);
+  --card: var(--vbi-surface-solid);
+  --card-foreground: var(--vbi-text-strong);
+  --popover: var(--vbi-surface-solid);
+  --popover-foreground: var(--vbi-text-strong);
+  --primary: var(--vbi-text-strong);
+  --primary-foreground: var(--vbi-surface-solid);
+  --secondary: var(--vbi-control-muted);
+  --secondary-foreground: var(--vbi-text-strong);
+  --muted: var(--vbi-control-muted);
+  --muted-foreground: var(--vbi-text-muted);
+  --accent: var(--vbi-hover-bg);
+  --accent-foreground: var(--vbi-text-strong);
+  --destructive: var(--vbi-danger);
+  --destructive-foreground: var(--vbi-surface-solid);
+  --border: var(--vbi-border);
+  --input: var(--vbi-border);
+  --ring: var(--vbi-focus);
+  --radius: 0.75rem;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--vbi-surface-solid) 92%, white),
+    var(--vbi-shadow-soft);
+}
+
+.vbi-agent-shell pi-chat-panel,
+.vbi-agent-shell agent-interface,
+.vbi-agent-shell message-editor,
+.vbi-agent-shell message-list,
+.vbi-agent-shell user-message,
+.vbi-agent-shell assistant-message,
+.vbi-agent-shell tool-message {
+  font-family: inherit;
+}
+
+.vbi-agent-shell agent-interface > .flex {
+  background: var(--vbi-surface-solid);
+}
+
+.vbi-agent-shell agent-interface .overflow-y-auto {
+  scroll-padding: 32px 0 128px;
+}
+
+.vbi-agent-shell agent-interface .max-w-3xl {
+  max-width: min(790px, calc(100vw - 40px));
+}
+
+.vbi-agent-shell agent-interface .overflow-y-auto > .max-w-3xl {
+  padding: 32px 8px 0;
+}
+
+.vbi-agent-shell message-list > .flex {
+  gap: 1.15rem;
+}
+
+.vbi-agent-shell user-message > .flex {
+  justify-content: flex-end;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.vbi-agent-shell .user-message-container {
+  max-width: min(82%, 520px);
+  border-color: color-mix(in srgb, var(--vbi-border) 72%, transparent);
+  border-radius: 14px;
+  background: var(--vbi-control-muted);
+  color: var(--vbi-text-strong);
+  box-shadow: none;
+  backdrop-filter: none;
+  line-height: 1.55;
+}
+
+.vbi-agent-shell assistant-message > div > .px-4 {
+  gap: 0.8rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.vbi-agent-shell assistant-message markdown-block,
+.vbi-agent-shell user-message markdown-block {
+  font-size: 14px;
+  line-height: 1.72;
+}
+
+.vbi-agent-shell assistant-message > div > .text-xs {
+  margin-top: 0.4rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.vbi-agent-shell assistant-message > div > .px-4.mt-2.text-xs.text-muted-foreground,
+.vbi-agent-shell agent-interface > .flex > .shrink-0 > .max-w-3xl > .text-xs > .ml-auto {
+  display: none;
+}
+
+.vbi-agent-shell .vbi-agent-usage-stats {
+  justify-content: flex-end;
+  padding-right: 12px;
+  color: var(--vbi-text-muted);
+}
+
+.vbi-agent-shell .vbi-agent-context-usage {
+  font-variant-numeric: tabular-nums;
+}
+
+.vbi-agent-shell tool-message > div {
+  border-color: color-mix(in srgb, var(--vbi-border) 82%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--vbi-surface-solid) 92%, var(--vbi-control-muted));
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.vbi-agent-shell tool-message code-block {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.vbi-agent-shell agent-interface > .flex > .shrink-0 {
+  padding-bottom: 20px;
+  background: linear-gradient(
+    to top,
+    var(--vbi-surface-solid) 78%,
+    color-mix(in srgb, var(--vbi-surface-solid) 0%, transparent)
+  );
+}
+
+.vbi-agent-shell agent-interface > .flex > .shrink-0 > .max-w-3xl {
+  max-width: min(816px, calc(100vw - 40px));
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.vbi-agent-shell message-editor > div {
+  border-color: color-mix(in srgb, var(--vbi-border-strong) 72%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--vbi-surface-solid) 96%, var(--vbi-control-muted));
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.08),
+    0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.vbi-agent-shell message-editor textarea {
+  min-height: 48px;
+  padding: 18px 18px 14px;
+  color: var(--vbi-text-strong);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.vbi-agent-shell message-editor textarea::placeholder {
+  color: var(--vbi-text-soft);
+}
+
+.vbi-agent-shell message-editor > div > .px-2.pb-2 {
+  padding: 0 12px 12px;
+}
+
+.vbi-agent-shell message-editor button {
+  border-radius: 10px;
+}
+
+.vbi-agent-shell message-editor button:hover {
+  background: var(--vbi-hover-bg);
+}
+
+.vbi-agent-shell agent-interface .text-muted-foreground {
+  color: var(--vbi-text-muted);
+}
+
+[data-theme-tone='dark'] .vbi-agent-shell {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    var(--vbi-shadow-soft);
+}
+
+[data-theme-tone='dark'] .vbi-agent-shell .user-message-container {
+  background: color-mix(in srgb, var(--vbi-control-muted) 82%, var(--vbi-surface-solid));
+}
+
+[data-theme-tone='dark'] .vbi-agent-shell message-editor > div,
+[data-theme-tone='dark'] .vbi-agent-shell tool-message > div {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 720px) {
+  .vbi-agent-shell agent-interface .overflow-y-auto > .max-w-3xl {
+    padding-top: 56px;
+  }
+
+  .vbi-agent-shell .user-message-container {
+    max-width: min(88%, 520px);
+  }
+
+  .vbi-agent-shell agent-interface > .flex > .shrink-0 {
+    padding-bottom: 14px;
+  }
+}
+
 [data-theme-tone='dark'] {
   color-scheme: dark;
 }
@@ -340,6 +544,20 @@ body {
 
 .vbi-motion-press:active {
   transform: translate3d(0, 0, 0) scale(0.985);
+}
+
+.vbi-static-sidebar .vbi-motion-press {
+  transition:
+    background-color var(--vbi-motion) var(--vbi-ease-standard),
+    border-color var(--vbi-motion) var(--vbi-ease-standard),
+    color var(--vbi-motion) var(--vbi-ease-standard),
+    box-shadow var(--vbi-motion) var(--vbi-ease-standard);
+  will-change: auto;
+}
+
+.vbi-static-sidebar .vbi-motion-press:hover,
+.vbi-static-sidebar .vbi-motion-press:active {
+  transform: none;
 }
 
 .vbi-motion-shimmer {
