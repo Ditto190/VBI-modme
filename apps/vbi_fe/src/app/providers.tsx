@@ -11,6 +11,7 @@ import {
 } from '../stores/app-preferences.store'
 import type { AppLocale } from '../i18n'
 import { getVbiThemeStyle, isDarkVbiTheme } from '../theme'
+import { ManagedRouteShell } from '../views/ManagedRouteShell'
 
 type VbiAppProvidersProps = {
   children: React.ReactNode
@@ -39,7 +40,7 @@ export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: V
       style={getVbiThemeStyle(themeMode)}
     >
       <NavigationBinder />
-      {children}
+      <ManagedRouteShell>{children}</ManagedRouteShell>
       <div data-vbi-portal-root='' />
       <ToastViewport />
     </div>

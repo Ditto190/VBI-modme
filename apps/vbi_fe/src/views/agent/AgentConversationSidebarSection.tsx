@@ -19,6 +19,7 @@ import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
 import { useNavigationStore } from '../../stores/navigation.store'
+import { createAgentConversationRoute, isAgentConversationRoute } from '../manage-sidebar-routes'
 import { ManageSidebarGroup, manageSidebarChildListClassName, manageSidebarItemClassName } from '../ManageSidebarNav'
 import type { AgentConversationSummary } from './agent-storage'
 
@@ -53,11 +54,12 @@ const formatConversationTime = (value: string, locale: string) => {
 
 type AgentConversationRowProps = {
   conversation: AgentConversationSummary
+  expanded: boolean
   locale: string
   t: Translate
 }
 
-const AgentConversationRow = memo(({ conversation, locale, t }: AgentConversationRowProps) => {
+const AgentConversationRow = memo(({ conversation, expanded, locale, t }: AgentConversationRowProps) => {
   const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
   const deleteConversation = useAgentConversationsStore((state) => state.deleteConversation)
   const renameConversation = useAgentConversationsStore((state) => state.renameConversation)
@@ -69,8 +71,9 @@ const AgentConversationRow = memo(({ conversation, locale, t }: AgentConversatio
   const [isRenaming, setIsRenaming] = useState(false)
   const title = conversation.title || t('agent.newConversation')
   const displayTime = formatConversationTime(conversation.lastModified, locale)
-  const targetPath = `/agent/${encodeURIComponent(conversation.id)}`
-  const isActive = activeConversationId === conversation.id || pathname === targetPath
+  const targetPath = createAgentConversationRoute(conversation.id)
+  const isActive = isAgentConversationRoute(pathname, conversation.id)
+  const tabIndex = expanded ? undefined : -1
 
   useEffect(() => {
     if (!isRenameOpen) setDraftTitle(title)
@@ -114,6 +117,7 @@ const AgentConversationRow = memo(({ conversation, locale, t }: AgentConversatio
         <button
           className={conversationOpenButtonClassName}
           aria-current={isActive ? 'page' : undefined}
+          tabIndex={tabIndex}
           title={title}
           type='button'
           onClick={openConversation}
@@ -145,6 +149,7 @@ const AgentConversationRow = memo(({ conversation, locale, t }: AgentConversatio
               <button
                 className={conversationActionClassName}
                 aria-label={`${t('common.rename')} ${title}`}
+                tabIndex={tabIndex}
                 type='button'
                 onClick={beginRename}
               >
@@ -158,16 +163,17 @@ const AgentConversationRow = memo(({ conversation, locale, t }: AgentConversatio
               message={t('agent.deleteConversationTitle')}
               onConfirm={async () => {
                 await deleteConversation(conversation.id)
-                if (!isActive && pathname !== `/agent/${encodeURIComponent(conversation.id)}`) return
+                if (!isActive) return
 
                 const nextConversationId = useAgentConversationsStore.getState().activeConversationId
-                go(nextConversationId ? `/agent/${encodeURIComponent(nextConversationId)}` : '/agent')
+                go(nextConversationId ? createAgentConversationRoute(nextConversationId) : '/agent')
               }}
             >
               <Tooltip side='right' title={t('common.delete')}>
                 <button
                   className={conversationActionClassName}
                   aria-label={`${t('common.delete')} ${title}`}
+                  tabIndex={tabIndex}
                   type='button'
                 >
                   <Trash2 className='h-3.5 w-3.5' />
@@ -218,7 +224,6 @@ const AgentConversationRow = memo(({ conversation, locale, t }: AgentConversatio
 AgentConversationRow.displayName = 'AgentConversationRow'
 
 export const AgentConversationSidebarSection = () => {
-  const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
   const conversations = useAgentConversationsStore((state) => state.conversations)
   const initialize = useAgentConversationsStore((state) => state.initialize)
   const isInitialized = useAgentConversationsStore((state) => state.isInitialized)
@@ -226,30 +231,34 @@ export const AgentConversationSidebarSection = () => {
   const pathname = useNavigationStore((state) => state.pathname)
   const [expanded, setExpanded] = useState(true)
   const { locale, t } = useTranslation()
-  const isConversationGroupActive =
-    pathname.startsWith('/agent/') ||
-    ((pathname === '/agent' || pathname === '/manage/agent') && Boolean(activeConversationId))
+  const isConversationPath = isAgentConversationRoute(pathname)
 
   useEffect(() => {
     if (!isInitialized && !isLoading) void initialize()
   }, [initialize, isInitialized, isLoading])
 
   useEffect(() => {
-    if (isConversationGroupActive) setExpanded(true)
-  }, [isConversationGroupActive])
+    if (isConversationPath) setExpanded(true)
+  }, [isConversationPath])
 
   const conversationRows = useMemo(
     () =>
       conversations.map((conversation) => (
-        <AgentConversationRow key={conversation.id} conversation={conversation} locale={locale} t={t} />
+        <AgentConversationRow
+          key={conversation.id}
+          conversation={conversation}
+          expanded={expanded}
+          locale={locale}
+          t={t}
+        />
       )),
-    [conversations, locale, t],
+    [conversations, expanded, locale, t],
   )
 
   return (
     <section className='mt-3 flex min-h-0 flex-1 flex-col border-t border-[var(--vbi-border)] px-2 pt-3 max-[720px]:mt-0 max-[720px]:max-h-56 max-[720px]:border-t-0 max-[720px]:px-3 max-[720px]:pb-3'>
       <ManageSidebarGroup
-        active={isConversationGroupActive}
+        active={isConversationPath && !expanded}
         childrenClassName='overflow-y-auto'
         className='min-h-0 flex flex-1 flex-col'
         contentClassName='min-h-0 flex-1'

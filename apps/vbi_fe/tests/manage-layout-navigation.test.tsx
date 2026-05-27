@@ -107,7 +107,7 @@ describe('manage layout navigation', () => {
     expect(newConversation).toHaveAttribute('data-active', 'false')
     expect(resources).toHaveAttribute('aria-expanded', 'false')
     expect(resources).toHaveAttribute('data-active', 'false')
-    expect(conversations).toHaveAttribute('data-active', 'true')
+    expect(conversations).toHaveAttribute('data-active', 'false')
     expect(conversation.closest('[data-active]')).toHaveAttribute('data-active', 'true')
     expect(newConversation.compareDocumentPosition(resources) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(resources.compareDocumentPosition(conversations) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
@@ -146,11 +146,48 @@ describe('manage layout navigation', () => {
     )
 
     expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'true')
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'false')
     expect(screen.getByRole('button', { name: 'Reports' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Charts' })).toHaveAttribute('data-active', 'true')
     expect(screen.getByRole('button', { name: 'Insights' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
+  })
+
+  test('keeps active styling tied to the current route instead of conversation state', () => {
+    useNavigationStore.setState({ pathname: '/manage/reports' })
+    useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
+    useAgentConversationsStore.getState().selectConversation('conversation-1')
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    expect(screen.getByRole('button', { name: /new conversation/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Reports' })).toHaveAttribute('data-active', 'true')
+    expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: /^Revenue follow-up$/i }).closest('[data-active]')).toHaveAttribute(
+      'data-active',
+      'false',
+    )
+  })
+
+  test('marks report navigation active on report detail routes', () => {
+    useNavigationStore.setState({ pathname: '/manage/reports/report-1' })
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Reports' })).toHaveAttribute('data-active', 'true')
+    expect(screen.getByRole('button', { name: 'Charts' })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Insights' })).toHaveAttribute('data-active', 'false')
   })
 
   test('marks the new conversation item active on the agent root route', () => {

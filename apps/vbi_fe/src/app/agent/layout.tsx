@@ -1,7 +1,5 @@
-import { AgentRouteClient } from './AgentRouteClient'
-
 export const dynamic = 'force-dynamic'
 
-const AgentLayout = () => <AgentRouteClient />
+const AgentLayout = ({ children }: { children: React.ReactNode }) => <>{children}</>
 
 export default AgentLayout

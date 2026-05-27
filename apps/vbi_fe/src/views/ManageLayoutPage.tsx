@@ -16,6 +16,12 @@ import { useTranslation } from '../i18n'
 import { useAgentConversationsStore } from '../stores/agent-conversations.store'
 import { useNavigationStore } from '../stores/navigation.store'
 import { AgentConversationSidebarSection } from './agent/AgentConversationSidebarSection'
+import {
+  isAgentRoute,
+  isNewConversationRoute,
+  matchRouteBranch,
+  readAgentConversationRouteId,
+} from './manage-sidebar-routes'
 import { ManageSidebarButton, ManageSidebarGroup, manageSidebarChildListClassName } from './ManageSidebarNav'
 import { ManagePreferences } from './manage-resource/ManagePreferences'
 
@@ -26,7 +32,6 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
   const pathname = useNavigationStore((state) => state.pathname)
   const go = useNavigationStore((state) => state.go)
   const clearActiveConversation = useAgentConversationsStore((state) => state.clearActiveConversation)
-  const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
   const conversations = useAgentConversationsStore((state) => state.conversations)
   const { t } = useTranslation()
   const resourceNavItems = [
@@ -46,19 +51,19 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
       label: t('nav.insights'),
     },
   ]
-  const isResourcePath = resourceNavItems.some((item) => pathname === item.href)
+  const activeResourceHref = resourceNavItems.find((item) => matchRouteBranch(pathname, item.href))?.href ?? ''
+  const isResourcePath = Boolean(activeResourceHref)
   const [resourcesExpanded, setResourcesExpanded] = useState(isResourcePath)
   const [sidebarHidden, setSidebarHidden] = useState(false)
-  const isAgentPath = pathname === '/agent' || pathname === '/manage/agent' || pathname.startsWith('/agent/')
-  const isNewConversationPath = pathname === '/agent' || pathname === '/manage/agent'
-  const routeConversationId = pathname.startsWith('/agent/') ? pathname.slice('/agent/'.length).split('/')[0] : ''
+  const isAgentPath = isAgentRoute(pathname)
+  const isNewConversationPath = isNewConversationRoute(pathname)
+  const routeConversationId = readAgentConversationRouteId(pathname)
   const routeConversation = routeConversationId
     ? conversations.find((conversation) => conversation.id === routeConversationId)
     : undefined
-  const activeConversation = activeConversationId
-    ? conversations.find((conversation) => conversation.id === activeConversationId)
-    : undefined
-  const currentConversationTitle = routeConversation?.title ?? activeConversation?.title ?? t('nav.newConversation')
+  const currentConversationTitle = routeConversationId
+    ? (routeConversation?.title ?? t('nav.newConversation'))
+    : t('nav.newConversation')
 
   useEffect(() => {
     if (isResourcePath) {
@@ -99,7 +104,7 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
               {t('nav.newConversation')}
             </ManageSidebarButton>
             <ManageSidebarGroup
-              active={isResourcePath}
+              active={isResourcePath && !resourcesExpanded}
               expanded={resourcesExpanded}
               icon={<FolderKanban className='h-4 w-4' />}
               label={t('nav.resources')}
@@ -108,7 +113,7 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
               <div className={manageSidebarChildListClassName}>
                 {resourceNavItems.map((item) => (
                   <ManageSidebarButton
-                    active={pathname === item.href}
+                    active={activeResourceHref === item.href}
                     icon={item.icon}
                     key={item.href}
                     tabIndex={resourcesExpanded ? undefined : -1}
