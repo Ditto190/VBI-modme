@@ -43,7 +43,7 @@ export const DropdownMenu = ({
         <DropdownMenuPrimitive.Content
           align={align}
           className={cn(
-            'ui-dropdown-menu z-[95] min-w-40 origin-top-right overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] shadow-lg will-change-[transform,opacity] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
+            'ui-dropdown-menu z-[95] min-w-40 origin-top-right overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] p-1 shadow-lg will-change-[transform,opacity] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
             menuClassName,
           )}
           side={side}
@@ -64,7 +64,7 @@ export const DropdownMenu = ({
                   <DropdownMenuPrimitive.Item
                     key={item.key}
                     className={cn(
-                      'ui-dropdown-item flex w-full cursor-pointer items-center gap-2 border-0 bg-transparent px-2.5 py-2 text-left text-xs text-[var(--vbi-text)] transition duration-150 ease-out hover:translate-x-0.5 hover:bg-[var(--vbi-hover-bg)] active:translate-x-px active:scale-[0.99] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45',
+                      'ui-dropdown-item flex w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-2.5 py-2 text-left text-xs text-[var(--vbi-text)] outline-none transition duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus:bg-[var(--vbi-hover-bg)] focus:text-[var(--vbi-text-strong)] data-[highlighted]:bg-[var(--vbi-hover-bg)] data-[highlighted]:text-[var(--vbi-text-strong)] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45',
                       item.danger && 'text-[var(--vbi-danger)]',
                     )}
                     disabled={item.disabled}

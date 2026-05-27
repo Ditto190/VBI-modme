@@ -165,24 +165,28 @@ export const ManagePreferences = () => {
           </button>
         }
       />
-      <DropdownMenu
-        placement='top-end'
-        items={appLocales.map((key) => ({
-          key,
-          label: t(localeLabels[key]),
-          onSelect: () => setLocale(key),
-        }))}
-        trigger={
-          <button
-            className='inline-flex h-8 w-24 min-w-0 cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-md border border-transparent bg-transparent px-1.5 text-xs font-medium text-[var(--vbi-text-muted)] transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)] [&_span]:min-w-0 [&_span]:shrink [&_span]:truncate [&_span]:text-center [&_svg:last-child]:text-[var(--vbi-placeholder)]'
-            type='button'
-          >
-            <Globe2 className='h-4 w-4' />
-            <span>{t(localeLabels[locale])}</span>
-            <ChevronDown className='h-4 w-4' />
-          </button>
-        }
-      />
+      <div className='ml-auto flex min-w-0 justify-end'>
+        <DropdownMenu
+          placement='top-end'
+          items={appLocales.map((key) => ({
+            key,
+            label: t(localeLabels[key]),
+            onSelect: () => setLocale(key),
+          }))}
+          trigger={
+            <button
+              className='inline-flex h-8 w-auto max-w-full cursor-pointer items-center justify-center gap-2.5 rounded-md border border-transparent bg-transparent px-1.5 text-xs font-medium text-[var(--vbi-text-muted)] transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)] [&_span]:min-w-0 [&_span]:whitespace-nowrap [&_svg]:shrink-0 [&_svg:last-child]:text-[var(--vbi-placeholder)]'
+              type='button'
+              aria-label={t('app.language.switch')}
+              title={t('app.language.switch')}
+            >
+              <Globe2 className='h-4 w-4' />
+              <span>{t(localeLabels[locale])}</span>
+              <ChevronDown className='h-4 w-4' />
+            </button>
+          }
+        />
+      </div>
     </div>
   )
 }
