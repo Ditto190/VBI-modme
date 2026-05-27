@@ -16,6 +16,8 @@
   "app.theme.rose": "玫瑰",
   "app.theme.slate": "石墨",
   "app.theme.switch": "切换主题",
+  "app.theme.primaryColor": "主色",
+  "app.theme.secondaryColor": "辅色",
   "app.theme.violet": "紫罗兰",
   "app.theme.zinc": "锌灰",
   "app.language.en": "English",

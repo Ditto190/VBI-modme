@@ -16,6 +16,8 @@
   "app.theme.rose": "로즈",
   "app.theme.slate": "슬레이트",
   "app.theme.switch": "테마 전환",
+  "app.theme.primaryColor": "주 색상",
+  "app.theme.secondaryColor": "보조 색상",
   "app.theme.violet": "바이올렛",
   "app.theme.zinc": "징크",
   "app.language.en": "English",

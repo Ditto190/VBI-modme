@@ -16,6 +16,8 @@
   "app.theme.rose": "Rose",
   "app.theme.slate": "Ardoise",
   "app.theme.switch": "Changer de thème",
+  "app.theme.primaryColor": "Primaire",
+  "app.theme.secondaryColor": "Secondaire",
   "app.theme.violet": "Violet",
   "app.theme.zinc": "Zinc",
   "app.language.en": "English",
