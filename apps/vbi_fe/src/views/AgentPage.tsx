@@ -24,13 +24,13 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import {
+  ArrowUp,
   CheckCircle2,
   ChevronDown,
   CircleAlert,
   FileSearch,
   LoaderCircle,
   Plus,
-  SendHorizontal,
   Square,
   X,
 } from '../components/ui/icons'
@@ -727,7 +727,7 @@ const AgentAssistantThread = ({
                     className='vbi-agent-composer-action vbi-agent-composer-submit'
                     type='button'
                   >
-                    <SendHorizontal className='h-4 w-4' />
+                    <ArrowUp className='h-5 w-5' />
                   </ComposerPrimitive.Send>
                 </AuiIf>
               </div>

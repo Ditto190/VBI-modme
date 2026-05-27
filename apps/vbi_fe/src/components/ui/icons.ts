@@ -1,5 +1,6 @@
 export {
   ArrowLeft,
+  ArrowUp,
   BarChart3,
   Bot,
   Boxes,
@@ -31,7 +32,6 @@ export {
   PlusCircle,
   Presentation,
   Search,
-  SendHorizontal,
   Square,
   Trash2,
   TriangleAlert,
