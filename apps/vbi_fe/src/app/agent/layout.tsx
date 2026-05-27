@@ -1,16 +1,7 @@
-'use client'
-
-import dynamic from 'next/dynamic'
 import { ManageLayoutPage } from '../../views/ManageLayoutPage'
 
-const AgentPage = dynamic(() => import('../../views/AgentPage').then((module) => module.AgentPage), {
-  ssr: false,
-})
+export const dynamic = 'force-dynamic'
 
-const AgentLayout = () => (
-  <ManageLayoutPage>
-    <AgentPage />
-  </ManageLayoutPage>
-)
+const AgentLayout = ({ children }: { children: React.ReactNode }) => <ManageLayoutPage>{children}</ManageLayoutPage>
 
 export default AgentLayout

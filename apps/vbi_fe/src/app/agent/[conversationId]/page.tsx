@@ -1,5 +1,7 @@
+import { AgentRouteClient } from '../AgentRouteClient'
+
 export const dynamic = 'force-dynamic'
 
-const AgentConversationPage = () => null
+const AgentConversationPage = () => <AgentRouteClient />
 
 export default AgentConversationPage

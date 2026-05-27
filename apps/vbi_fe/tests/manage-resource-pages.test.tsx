@@ -244,7 +244,11 @@ describe('resource management pages', () => {
         )
       }
 
-      fireEvent.click(within(getRowForText(`${scenario.kind} resource 2`)).getByRole('button', { name: 'Delete' }))
+      fireEvent.click(
+        within(getRowForText(`${scenario.kind} resource 2`)).getByRole('button', {
+          name: `Delete ${scenario.kind} resource 2`,
+        }),
+      )
       clickVisibleDeleteConfirmation()
       if (scenario.kind === 'insight') {
         await waitFor(() => expect(insightApi.deleteInsight).toHaveBeenCalledWith(`${scenario.kind}-2`))

@@ -52,33 +52,38 @@ const createResourceColumns = ({
     title: t('common.actions'),
     className: 'w-44 text-right',
     key: 'actions',
-    render: (_, record) => (
-      <div className='flex translate-x-0.5 flex-wrap justify-end gap-1.5 opacity-90 transition duration-150 group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100'>
-        {onOpen ? (
-          <Button variant='primary' onClick={() => onOpen(record.id)}>
-            {t('common.open')}
-          </Button>
-        ) : null}
-        {onEdit ? <Button onClick={() => onEdit(record.id)}>{t('common.edit')}</Button> : null}
-        {onRename ? <Button onClick={() => onRename(record)}>{t('common.rename')}</Button> : null}
-        <ConfirmAction
-          cancelLabel={t('common.cancel')}
-          confirmLabel={t('common.delete')}
-          message={deleteTitle}
-          onConfirm={() => onRemove(record.id)}
-        >
-          <Button
-            aria-label={t('common.delete')}
-            className='text-[var(--vbi-text-soft)] hover:text-[var(--vbi-danger)]'
-            size='icon'
-            title={t('common.delete')}
-            variant='ghost'
+    render: (_, record) => {
+      const displayName = record.name || fallbackName
+      const deleteLabel = `${t('common.delete')} ${displayName}`
+
+      return (
+        <div className='flex translate-x-0.5 flex-wrap justify-end gap-1.5 opacity-90 transition duration-150 group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100'>
+          {onOpen ? (
+            <Button variant='primary' onClick={() => onOpen(record.id)}>
+              {t('common.open')}
+            </Button>
+          ) : null}
+          {onEdit ? <Button onClick={() => onEdit(record.id)}>{t('common.edit')}</Button> : null}
+          {onRename ? <Button onClick={() => onRename(record)}>{t('common.rename')}</Button> : null}
+          <ConfirmAction
+            cancelLabel={t('common.cancel')}
+            confirmLabel={t('common.delete')}
+            message={deleteTitle}
+            onConfirm={() => onRemove(record.id)}
           >
-            <Trash2 className='h-3.5 w-3.5' />
-          </Button>
-        </ConfirmAction>
-      </div>
-    ),
+            <Button
+              aria-label={deleteLabel}
+              className='text-[var(--vbi-text-soft)] hover:text-[var(--vbi-danger)]'
+              size='icon'
+              title={deleteLabel}
+              variant='ghost'
+            >
+              <Trash2 className='h-3.5 w-3.5' />
+            </Button>
+          </ConfirmAction>
+        </div>
+      )
+    },
   },
 ]
 
