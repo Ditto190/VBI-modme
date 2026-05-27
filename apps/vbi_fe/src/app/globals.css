@@ -10,11 +10,41 @@
   --vbi-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --vbi-ease-pop: cubic-bezier(0.2, 0.9, 0.18, 1);
   --vbi-ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --vbi-scrollbar-track: transparent;
+  --vbi-scrollbar-thumb: color-mix(in srgb, var(--vbi-text-muted, #6b7280) 22%, transparent);
+  --vbi-scrollbar-thumb-hover: color-mix(in srgb, var(--vbi-text-muted, #6b7280) 34%, transparent);
 }
 
 html,
 body {
   min-height: 100%;
+}
+
+* {
+  scrollbar-color: var(--vbi-scrollbar-thumb) var(--vbi-scrollbar-track);
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: var(--vbi-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--vbi-scrollbar-thumb);
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--vbi-scrollbar-thumb-hover);
+  background-clip: content-box;
 }
 
 body {
