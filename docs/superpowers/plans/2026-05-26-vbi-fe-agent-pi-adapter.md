@@ -246,19 +246,14 @@ Expected: PASS.
 - Create: `apps/vbi_fe/tests/agent-stream-proxy.test.ts`
 - Modify: `apps/vbi_fe/src/views/agent/agent-stream-proxy.ts`
 
-- [ ] **Step 1: Export only testable helper if needed**
+- [ ] **Step 1: Test the SSE bridge end to end**
 
-If full stream testing is awkward, export the event processor with an internal-looking name:
+Prefer testing `streamProxy` end-to-end with a mocked `fetch` response stream. The stream should pass through
+native `AssistantMessageEvent` payloads from SSE without a custom event conversion layer.
 
-```ts
-export const processAgentProxyEvent = processProxyEvent
-```
+- [ ] **Step 2: Add stream pass-through test**
 
-Prefer testing `streamProxy` end-to-end with a mocked `fetch` response stream if possible.
-
-- [ ] **Step 2: Add stream conversion test**
-
-Create a test that feeds SSE chunks for `start`, `text_start`, `text_delta`, `text_end`, and `done`, then asserts the final message content and usage.
+Create a test that feeds native SSE chunks for `start`, `text_start`, `text_delta`, `text_end`, and `done`, then asserts the final message content and usage.
 
 ```ts
 expect(events.at(-1)).toMatchObject({

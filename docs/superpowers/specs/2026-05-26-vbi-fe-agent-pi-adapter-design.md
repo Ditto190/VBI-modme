@@ -68,7 +68,7 @@ The stream adapter must:
 
 - Send `{ model, context, options }` to `/api/v1/agent/stream` through the resolved proxy URL.
 - Preserve abort behavior through `AbortSignal`.
-- Convert backend text, thinking, tool call, done, and error events into the event shape expected by `pi-agent-core`.
+- Pass through the native `AssistantMessageEvent` stream expected by `pi-agent-core`.
 - Forward only serializable stream options.
 
 ### 5. VBI Resource Tools

@@ -7,14 +7,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import type { Request, Response } from 'express'
-import type { AssistantMessageEvent, Context, Model, SimpleStreamOptions } from '@earendil-works/pi-ai'
+import type { AssistantMessage, AssistantMessageEvent, Context, Model, SimpleStreamOptions } from '@earendil-works/pi-ai'
 import {
   emptyUsage,
   resolveModelIdAlias,
   sanitizeModel,
   sanitizeStreamOptions,
-  toProxyAssistantMessageEvent,
-  type ProxyAssistantMessageEvent,
 } from './agent-stream-proxy'
 
 type PiAiModule = typeof import('@earendil-works/pi-ai')
@@ -29,16 +27,27 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const readString = (value: unknown) => (typeof value === 'string' && value.trim() ? value.trim() : undefined)
 
-const writeSseEvent = (response: Response, event: ProxyAssistantMessageEvent) => {
+const writeSseEvent = (response: Response, event: AssistantMessageEvent) => {
   if (response.writableEnded || response.destroyed) return
   response.write(`data: ${JSON.stringify(event)}\n\n`)
 }
 
-const proxyErrorEvent = (error: unknown): ProxyAssistantMessageEvent => ({
+const createErrorMessage = (error: unknown, model: Model<any> | undefined): AssistantMessage => ({
+  role: 'assistant',
+  content: [],
+  api: model?.api ?? 'unknown',
+  provider: model?.provider ?? 'unknown',
+  model: model?.id ?? 'unknown',
+  usage: emptyUsage(),
+  stopReason: 'error',
+  errorMessage: error instanceof Error ? error.message : String(error),
+  timestamp: Date.now(),
+})
+
+const proxyErrorEvent = (error: unknown, model: Model<any> | undefined): AssistantMessageEvent => ({
   type: 'error',
   reason: 'error',
-  errorMessage: error instanceof Error ? error.message : String(error),
-  usage: emptyUsage(),
+  error: createErrorMessage(error, model),
 })
 
 const readErrorMessage = (error: unknown) => {
@@ -75,6 +84,7 @@ export class AgentStreamService {
     request.on('close', abortOnClose)
 
     let isStreaming = false
+    let resolvedModel: Model<any> | undefined
 
     try {
       this.assertAuthorized(authorization)
@@ -89,6 +99,7 @@ export class AgentStreamService {
 
       const { streamSimple } = await this.loadPiAi()
       const model = await this.resolveModel(payload.model)
+      resolvedModel = model
       const apiKey = this.getApiKey()
       const options: SimpleStreamOptions = {
         ...sanitizeStreamOptions(payload.options),
@@ -98,11 +109,11 @@ export class AgentStreamService {
       const eventStream = streamSimple(model, payload.context, options) as AsyncIterable<AssistantMessageEvent>
 
       for await (const event of eventStream) {
-        writeSseEvent(response, toProxyAssistantMessageEvent(event))
+        writeSseEvent(response, event)
       }
     } catch (error) {
       if (isStreaming || response.headersSent) {
-        writeSseEvent(response, proxyErrorEvent(error))
+        writeSseEvent(response, proxyErrorEvent(error, resolvedModel))
       } else {
         writeProxyHttpError(response, error)
       }

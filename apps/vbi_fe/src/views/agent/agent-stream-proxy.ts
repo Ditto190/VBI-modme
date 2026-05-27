@@ -1,4 +1,4 @@
-import { EventStream, parseStreamingJson } from './pi-ai-browser'
+import { EventStream } from './pi-ai-browser'
 
 type AgentModel = {
   api: string
@@ -32,20 +32,6 @@ type AssistantMessage = {
   timestamp: number
   usage: Usage
 }
-
-type ProxyAssistantMessageEvent =
-  | { type: 'start' }
-  | { type: 'text_start'; contentIndex: number }
-  | { type: 'text_delta'; contentIndex: number; delta: string }
-  | { type: 'text_end'; contentIndex: number; contentSignature?: string }
-  | { type: 'thinking_start'; contentIndex: number }
-  | { type: 'thinking_delta'; contentIndex: number; delta: string }
-  | { type: 'thinking_end'; contentIndex: number; contentSignature?: string }
-  | { type: 'toolcall_start'; contentIndex: number; id: string; toolName: string }
-  | { type: 'toolcall_delta'; contentIndex: number; delta: string }
-  | { type: 'toolcall_end'; contentIndex: number }
-  | { type: 'done'; reason: 'stop' | 'length' | 'toolUse'; usage: Usage }
-  | { type: 'error'; reason: 'aborted' | 'error'; errorMessage?: string; usage: Usage }
 
 type AssistantMessageEvent =
   | { type: 'start'; partial: AssistantMessage }
@@ -116,99 +102,32 @@ class ProxyMessageEventStream extends EventStream<AssistantMessageEvent, Assista
   }
 }
 
-const createPartialMessage = (model: AgentModel): AssistantMessage => ({
+const createErrorMessage = (model: AgentModel, error: unknown, stopReason: 'error' | 'aborted'): AssistantMessage => ({
   role: 'assistant',
-  stopReason: 'stop',
+  stopReason,
   content: [],
   api: model.api,
   provider: model.provider,
   model: model.id,
+  errorMessage: error instanceof Error ? error.message : String(error),
   usage: emptyUsage(),
   timestamp: Date.now(),
 })
 
-const processProxyEvent = (
-  proxyEvent: ProxyAssistantMessageEvent,
-  partial: AssistantMessage,
-): AssistantMessageEvent | undefined => {
-  if (proxyEvent.type === 'start') return { type: 'start', partial }
-  if (proxyEvent.type === 'text_start') {
-    partial.content[proxyEvent.contentIndex] = { type: 'text', text: '' }
-    return { type: 'text_start', contentIndex: proxyEvent.contentIndex, partial }
+const readProxyError = async (response: Response) => {
+  const fallback = `Proxy error: ${response.status} ${response.statusText}`
+  try {
+    const payload = (await response.json()) as { error?: unknown }
+    return typeof payload.error === 'string' && payload.error ? `Proxy error: ${payload.error}` : fallback
+  } catch {
+    return fallback
   }
-  if (proxyEvent.type === 'text_delta') {
-    const content = partial.content[proxyEvent.contentIndex]
-    if (content?.type !== 'text') throw new Error('Received text_delta for non-text content')
-    content.text = `${content.text ?? ''}${proxyEvent.delta}`
-    return { type: 'text_delta', contentIndex: proxyEvent.contentIndex, delta: proxyEvent.delta, partial }
-  }
-  if (proxyEvent.type === 'text_end') {
-    const content = partial.content[proxyEvent.contentIndex]
-    if (content?.type !== 'text') throw new Error('Received text_end for non-text content')
-    if (proxyEvent.contentSignature) content.textSignature = proxyEvent.contentSignature
-    return { type: 'text_end', contentIndex: proxyEvent.contentIndex, content: String(content.text ?? ''), partial }
-  }
-  if (proxyEvent.type === 'thinking_start') {
-    partial.content[proxyEvent.contentIndex] = { type: 'thinking', thinking: '' }
-    return { type: 'thinking_start', contentIndex: proxyEvent.contentIndex, partial }
-  }
-  if (proxyEvent.type === 'thinking_delta') {
-    const content = partial.content[proxyEvent.contentIndex]
-    if (content?.type !== 'thinking') throw new Error('Received thinking_delta for non-thinking content')
-    content.thinking = `${content.thinking ?? ''}${proxyEvent.delta}`
-    return { type: 'thinking_delta', contentIndex: proxyEvent.contentIndex, delta: proxyEvent.delta, partial }
-  }
-  if (proxyEvent.type === 'thinking_end') {
-    const content = partial.content[proxyEvent.contentIndex]
-    if (content?.type !== 'thinking') throw new Error('Received thinking_end for non-thinking content')
-    if (proxyEvent.contentSignature) content.thinkingSignature = proxyEvent.contentSignature
-    return {
-      type: 'thinking_end',
-      contentIndex: proxyEvent.contentIndex,
-      content: String(content.thinking ?? ''),
-      partial,
-    }
-  }
-  if (proxyEvent.type === 'toolcall_start') {
-    partial.content[proxyEvent.contentIndex] = {
-      type: 'toolCall',
-      id: proxyEvent.id,
-      name: proxyEvent.toolName,
-      arguments: {},
-      partialJson: '',
-    }
-    return { type: 'toolcall_start', contentIndex: proxyEvent.contentIndex, partial }
-  }
-  if (proxyEvent.type === 'toolcall_delta') {
-    const content = partial.content[proxyEvent.contentIndex]
-    if (content?.type !== 'toolCall') throw new Error('Received toolcall_delta for non-toolCall content')
-    content.partialJson = `${content.partialJson ?? ''}${proxyEvent.delta}`
-    content.arguments = parseStreamingJson(String(content.partialJson))
-    partial.content[proxyEvent.contentIndex] = { ...content }
-    return { type: 'toolcall_delta', contentIndex: proxyEvent.contentIndex, delta: proxyEvent.delta, partial }
-  }
-  if (proxyEvent.type === 'toolcall_end') {
-    const content = partial.content[proxyEvent.contentIndex]
-    if (content?.type !== 'toolCall') return undefined
-    delete content.partialJson
-    return { type: 'toolcall_end', contentIndex: proxyEvent.contentIndex, toolCall: content, partial }
-  }
-  if (proxyEvent.type === 'done') {
-    partial.stopReason = proxyEvent.reason
-    partial.usage = proxyEvent.usage
-    return { type: 'done', reason: proxyEvent.reason, message: partial }
-  }
-  partial.stopReason = proxyEvent.reason
-  partial.errorMessage = proxyEvent.errorMessage
-  partial.usage = proxyEvent.usage
-  return { type: 'error', reason: proxyEvent.reason, error: partial }
 }
 
 export const streamProxy = (model: AgentModel, context: unknown, options: StreamProxyOptions) => {
   const stream = new ProxyMessageEventStream()
 
   void (async () => {
-    const partial = createPartialMessage(model)
     let reader: ReadableStreamDefaultReader<Uint8Array> | undefined
     const abortHandler = () => {
       void reader?.cancel('Request aborted by user')
@@ -227,7 +146,7 @@ export const streamProxy = (model: AgentModel, context: unknown, options: Stream
         signal: options.signal,
       })
 
-      if (!response.ok) throw new Error(`Proxy error: ${response.status} ${response.statusText}`)
+      if (!response.ok) throw new Error(await readProxyError(response))
 
       reader = response.body?.getReader()
       if (!reader) throw new Error('Proxy response body is empty')
@@ -245,15 +164,13 @@ export const streamProxy = (model: AgentModel, context: unknown, options: Stream
           if (!line.startsWith('data: ')) continue
           const data = line.slice(6).trim()
           if (!data) continue
-          const event = processProxyEvent(JSON.parse(data) as ProxyAssistantMessageEvent, partial)
-          if (event) stream.push(event)
+          stream.push(JSON.parse(data) as AssistantMessageEvent)
         }
       }
       stream.end()
     } catch (error) {
-      partial.stopReason = options.signal?.aborted ? 'aborted' : 'error'
-      partial.errorMessage = error instanceof Error ? error.message : String(error)
-      stream.push({ type: 'error', reason: partial.stopReason, error: partial })
+      const reason = options.signal?.aborted ? 'aborted' : 'error'
+      stream.push({ type: 'error', reason, error: createErrorMessage(model, error, reason) })
       stream.end()
     } finally {
       options.signal?.removeEventListener('abort', abortHandler)

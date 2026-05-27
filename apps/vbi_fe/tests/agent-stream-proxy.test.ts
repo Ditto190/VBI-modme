@@ -29,6 +29,26 @@ const createSseResponse = (events: unknown[]) => {
   )
 }
 
+const usage = {
+  cacheRead: 0,
+  cacheWrite: 0,
+  cost: { cacheRead: 0, cacheWrite: 0, input: 0, output: 0, total: 0 },
+  input: 2,
+  output: 3,
+  totalTokens: 5,
+}
+
+const createAssistantMessage = (content: unknown[] = []) => ({
+  api: model.api,
+  content,
+  model: model.id,
+  provider: model.provider,
+  role: 'assistant',
+  stopReason: 'stop',
+  timestamp: 1,
+  usage,
+})
+
 describe('streamProxy', () => {
   let restoreRequestAnimationFrame: (() => void) | undefined
 
@@ -38,25 +58,16 @@ describe('streamProxy', () => {
     restoreRequestAnimationFrame = undefined
   })
 
-  test('converts backend SSE text events into Pi assistant message events', async () => {
+  test('passes backend Pi assistant message events through from SSE', async () => {
+    const finalMessage = createAssistantMessage([{ text: 'hello', type: 'text' }])
+
     globalThis.fetch = rs.fn(async () =>
       createSseResponse([
-        { type: 'start' },
-        { type: 'text_start', contentIndex: 0 },
-        { type: 'text_delta', contentIndex: 0, delta: 'hello' },
-        { type: 'text_end', contentIndex: 0 },
-        {
-          type: 'done',
-          reason: 'stop',
-          usage: {
-            cacheRead: 0,
-            cacheWrite: 0,
-            cost: { cacheRead: 0, cacheWrite: 0, input: 0, output: 0, total: 0 },
-            input: 2,
-            output: 3,
-            totalTokens: 5,
-          },
-        },
+        { type: 'start', partial: createAssistantMessage() },
+        { type: 'text_start', contentIndex: 0, partial: createAssistantMessage([{ text: '', type: 'text' }]) },
+        { type: 'text_delta', contentIndex: 0, delta: 'hello', partial: finalMessage },
+        { type: 'text_end', contentIndex: 0, content: 'hello', partial: finalMessage },
+        { type: 'done', reason: 'stop', message: finalMessage },
       ]),
     ) as typeof fetch
 
@@ -125,14 +136,7 @@ describe('streamProxy', () => {
         {
           type: 'done',
           reason: 'stop',
-          usage: {
-            cacheRead: 0,
-            cacheWrite: 0,
-            cost: { cacheRead: 0, cacheWrite: 0, input: 0, output: 0, total: 0 },
-            input: 1,
-            output: 1,
-            totalTokens: 2,
-          },
+          message: createAssistantMessage(),
         },
       ]),
     ) as typeof fetch
