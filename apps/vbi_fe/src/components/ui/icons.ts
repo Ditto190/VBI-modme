@@ -3,6 +3,7 @@ export {
   BarChart3,
   Bot,
   Boxes,
+  Check,
   CheckCircle2,
   ChevronDown,
   ChevronRight,

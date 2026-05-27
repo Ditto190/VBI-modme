@@ -3,7 +3,7 @@
 import { ActionBarPrimitive, type MessageState } from '@assistant-ui/react'
 import type { FC } from 'react'
 import { cn } from '../../lib/utils'
-import { Copy } from '../ui/icons'
+import { Check, Copy } from '../ui/icons'
 import { Tooltip } from '../ui/tooltip'
 import { MessageTiming } from './message-timing'
 
@@ -55,8 +55,8 @@ export const MessageActionBar: FC<MessageActionBarProps> = ({
           copiedDuration={1800}
           type='button'
         >
-          <Copy className='h-3.5 w-3.5' />
-          <span>Copy</span>
+          <Copy className='vbi-agent-message-copy-icon h-3.5 w-3.5' data-slot='copy-icon' aria-hidden='true' />
+          <Check className='vbi-agent-message-copied-icon h-3.5 w-3.5' data-slot='copied-icon' aria-hidden='true' />
         </ActionBarPrimitive.Copy>
         {isCompleteAssistant ? <MessageTiming className='vbi-agent-message-meta-control' side='top' /> : null}
         <MessageTimestamp date={message.createdAt} label={timestampLabel} />

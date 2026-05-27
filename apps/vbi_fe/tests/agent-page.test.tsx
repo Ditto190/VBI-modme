@@ -353,8 +353,22 @@ describe('AgentPage', () => {
 
     fireEvent.mouseEnter(messageRoot!)
 
-    expect(await screen.findByRole('button', { name: /copy message/i })).toBeInTheDocument()
+    const copyMessageButton = await screen.findByRole('button', { name: /copy message/i })
+    expect(copyMessageButton).toBeInTheDocument()
+    expect(copyMessageButton.textContent).toBe('')
+    expect(copyMessageButton.querySelector('[data-slot="copy-icon"]')).toBeTruthy()
+    expect(copyMessageButton.querySelector('[data-slot="copied-icon"]')).toBeTruthy()
     expect(screen.getByLabelText(/sent at \d{2}:\d{2}/i)).toBeInTheDocument()
+
+    const writeText = rs.fn(async () => undefined)
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    })
+    fireEvent.click(copyMessageButton)
+
+    await waitFor(() => expect(copyMessageButton).toHaveAttribute('data-copied', 'true'))
+    expect(writeText).toHaveBeenCalledWith('panel:conversation-user-actions')
   })
 
   test('groups resource tool calls and keeps technical tool result logs out of the transcript', async () => {
@@ -459,6 +473,7 @@ describe('AgentPage', () => {
     expect(screen.getByRole('table')).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: '类型' })).toBeInTheDocument()
     expect(screen.getAllByRole('button', { name: /copy response/i })).toHaveLength(1)
+    expect(screen.getByRole('button', { name: /copy response/i }).textContent).toBe('')
     expect(screen.getByLabelText(/completed at \d{2}:\d{2}/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /message timing/i })).toHaveTextContent('120.00s')
 

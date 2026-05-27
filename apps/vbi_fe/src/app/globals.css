@@ -409,10 +409,11 @@ body {
 
 .vbi-agent-message-copy {
   display: inline-flex;
+  width: 28px;
   height: 28px;
   cursor: pointer;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -420,7 +421,7 @@ body {
   font: inherit;
   font-size: 12px;
   line-height: 1;
-  padding: 0 7px;
+  padding: 0;
   transition:
     background-color var(--vbi-motion-fast) var(--vbi-ease-out),
     color var(--vbi-motion-fast) var(--vbi-ease-out);
@@ -437,13 +438,16 @@ body {
   opacity: 0.45;
 }
 
-.vbi-agent-message-copy[data-copied] span {
-  font-size: 0;
+.vbi-agent-message-copied-icon {
+  display: none;
 }
 
-.vbi-agent-message-copy[data-copied] span::after {
-  content: 'Copied';
-  font-size: 12px;
+.vbi-agent-message-copy[data-copied] .vbi-agent-message-copy-icon {
+  display: none;
+}
+
+.vbi-agent-message-copy[data-copied] .vbi-agent-message-copied-icon {
+  display: block;
 }
 
 .vbi-agent-message-meta-control {
