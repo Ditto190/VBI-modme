@@ -3,6 +3,7 @@
 import { ActionBarPrimitive, type MessageState } from '@assistant-ui/react'
 import type { FC } from 'react'
 import { cn } from '../../lib/utils'
+import { useTranslation } from '../../i18n'
 import { Check, Copy } from '../ui/icons'
 import { Tooltip } from '../ui/tooltip'
 import { MessageTiming } from './message-timing'
@@ -19,12 +20,13 @@ const formatClockTime = (date: Date) => {
   return `${hours}:${minutes}`
 }
 
-const MessageTimestamp = ({ date, label }: { date: Date; label: string }) => {
+const MessageTimestamp = ({ date, label }: { date: Date; label: (time: string) => string }) => {
   const time = formatClockTime(date)
+  const timestampLabel = label(time)
 
   return (
-    <Tooltip title={`${label} ${time}`}>
-      <span aria-label={`${label} ${time}`} className='vbi-agent-message-timestamp'>
+    <Tooltip title={timestampLabel}>
+      <span aria-label={timestampLabel} className='vbi-agent-message-timestamp'>
         {time}
       </span>
     </Tooltip>
@@ -36,6 +38,7 @@ export const MessageActionBar: FC<MessageActionBarProps> = ({
   isLatestAssistantMessage = false,
   message,
 }) => {
+  const { t } = useTranslation()
   const isAssistant = message.role === 'assistant'
   const isUser = message.role === 'user'
   const isCompleteAssistant = isAssistant && message.status?.type === 'complete'
@@ -43,8 +46,10 @@ export const MessageActionBar: FC<MessageActionBarProps> = ({
   if (!isUser && !isCompleteAssistant) return null
 
   const autohide = isCompleteAssistant && isLatestAssistantMessage ? 'never' : 'always'
-  const copyLabel = isUser ? 'Copy message' : 'Copy response'
-  const timestampLabel = isUser ? 'Sent at' : 'Completed at'
+  const copyLabel = isUser ? t('agent.copyMessage') : t('agent.copyResponse')
+  const timestampLabel = isUser
+    ? (time: string) => t('agent.messageSentAt', { time })
+    : (time: string) => t('agent.messageCompletedAt', { time })
 
   return (
     <div className='vbi-agent-message-action-slot'>

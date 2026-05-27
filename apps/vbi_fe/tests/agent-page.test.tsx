@@ -332,6 +332,7 @@ describe('AgentPage', () => {
 
   test('shows user message copy and sent time only on hover', async () => {
     metadataList = [createMetadata('conversation-user-actions', '2026-05-26T01:00:00.000Z')]
+    useAppPreferencesStore.setState({ locale: 'zh-CN' })
     useNavigationStore.setState({ pathname: '/agent/conversation-user-actions' })
 
     render(<AgentPage />)
@@ -349,16 +350,16 @@ describe('AgentPage', () => {
     const messageRoot = userMessage.closest('.vbi-agent-message')
     expect(messageRoot).toBeTruthy()
     expect(messageRoot?.querySelector('.vbi-agent-message-action-slot')).toBeTruthy()
-    expect(screen.queryByRole('button', { name: /copy message/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /复制消息/ })).not.toBeInTheDocument()
 
     fireEvent.mouseEnter(messageRoot!)
 
-    const copyMessageButton = await screen.findByRole('button', { name: /copy message/i })
+    const copyMessageButton = await screen.findByRole('button', { name: /复制消息/ })
     expect(copyMessageButton).toBeInTheDocument()
     expect(copyMessageButton.textContent).toBe('')
     expect(copyMessageButton.querySelector('[data-slot="copy-icon"]')).toBeTruthy()
     expect(copyMessageButton.querySelector('[data-slot="copied-icon"]')).toBeTruthy()
-    expect(screen.getByLabelText(/sent at \d{2}:\d{2}/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/\d{2}:\d{2} 发送/)).toBeInTheDocument()
 
     const writeText = rs.fn(async () => undefined)
     Object.defineProperty(navigator, 'clipboard', {
@@ -373,6 +374,7 @@ describe('AgentPage', () => {
 
   test('groups resource tool calls and keeps technical tool result logs out of the transcript', async () => {
     metadataList = [createMetadata('conversation-tools', '2026-05-26T01:00:00.000Z')]
+    useAppPreferencesStore.setState({ locale: 'zh-CN' })
     useNavigationStore.setState({ pathname: '/agent/conversation-tools' })
     const resourceToolMessages = [
       {
@@ -472,9 +474,9 @@ describe('AgentPage', () => {
     expect(screen.queryByText('vbi_resource report.list completed')).not.toBeInTheDocument()
     expect(screen.getByRole('table')).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: '类型' })).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: /copy response/i })).toHaveLength(1)
-    expect(screen.getByRole('button', { name: /copy response/i }).textContent).toBe('')
-    expect(screen.getByLabelText(/completed at \d{2}:\d{2}/i)).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
+    expect(screen.getByRole('button', { name: /复制回复/ }).textContent).toBe('')
+    expect(screen.getByLabelText(/\d{2}:\d{2} 完成/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /message timing/i })).toHaveTextContent('120.00s')
 
     const earlierAssistantMessage = screen.getByText('我来查看一下当前的数据资源数量。').closest('.vbi-agent-message')
@@ -484,7 +486,7 @@ describe('AgentPage', () => {
     fireEvent.mouseEnter(earlierAssistantMessage!)
 
     expect(await screen.findByText('10.00s')).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: /copy response/i })).toHaveLength(2)
+    expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(2)
   })
 
   test('does not reorder conversations just because the user switches between them', async () => {
