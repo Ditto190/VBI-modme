@@ -1,7 +1,7 @@
-import { ManageLayoutPage } from '../../views/ManageLayoutPage'
+import { AgentRouteClient } from './AgentRouteClient'
 
 export const dynamic = 'force-dynamic'
 
-const AgentLayout = ({ children }: { children: React.ReactNode }) => <ManageLayoutPage>{children}</ManageLayoutPage>
+const AgentLayout = () => <AgentRouteClient />
 
 export default AgentLayout

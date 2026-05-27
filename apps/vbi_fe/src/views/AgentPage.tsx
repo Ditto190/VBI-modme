@@ -82,6 +82,10 @@ type AssistantContentPart = Exclude<ThreadMessageLike['content'], string>[number
 type RenderedMessagePart = ThreadAssistantMessagePart | ThreadUserMessagePart
 type AgentToolPart = Extract<EnrichedPartState, { type: 'tool-call' }>
 type ToolDisplayStatus = 'done' | 'error' | 'running'
+type ActivateConversationOptions = {
+  fallbackTitle?: string
+  showLoading?: boolean
+}
 
 type AgentThreadMessage = AgentMessage | Record<string, unknown>
 type ToolResultPayload = {
@@ -815,16 +819,17 @@ export const AgentPage = () => {
   }, [clearActiveConversation])
 
   const activateConversation = useCallback(
-    async (conversationId: string, options: { fallbackTitle?: string } = {}) => {
+    async (conversationId: string, options: ActivateConversationOptions = {}) => {
       const storage = storageRef.current
       if (!storage) return null
+      const showLoading = options.showLoading ?? true
 
       const activationSeq = activationSeqRef.current + 1
       activationSeqRef.current = activationSeq
       const isCurrentActivation = () => activationSeqRef.current === activationSeq
 
       setErrorMessage('')
-      setIsLoading(true)
+      if (showLoading) setIsLoading(true)
       try {
         const currentConversationId = activeConversationIdRef.current
         const currentRuntime = currentConversationId ? runtimeMapRef.current.get(currentConversationId) : null
@@ -889,6 +894,7 @@ export const AgentPage = () => {
       const conversationId = createAgentConversationId()
       const runtime = await activateConversation(conversationId, {
         fallbackTitle: input.slice(0, 80) || t('agent.newConversation'),
+        showLoading: false,
       })
       if (!runtime) return
 
@@ -977,12 +983,12 @@ export const AgentPage = () => {
         t={t}
       />
       {isLoading ? (
-        <div className='absolute inset-0 grid place-items-center bg-[var(--vbi-surface)]'>
+        <div className='absolute inset-0 grid place-items-center bg-[var(--vbi-bg-solid)]'>
           <Spinner label={t('agent.loading')} />
         </div>
       ) : null}
       {errorMessage ? (
-        <div className='absolute inset-0 grid place-items-center bg-[var(--vbi-surface)] px-6 text-center text-sm text-[var(--vbi-text-muted)]'>
+        <div className='absolute inset-0 grid place-items-center bg-[var(--vbi-bg-solid)] px-6 text-center text-sm text-[var(--vbi-text-muted)]'>
           <div>
             <div className='font-medium text-[var(--vbi-text-strong)]'>{t('agent.error')}</div>
             <div className='mt-2 max-w-xl break-words'>{errorMessage}</div>

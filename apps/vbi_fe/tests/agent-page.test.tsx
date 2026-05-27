@@ -275,6 +275,7 @@ describe('AgentPage', () => {
         }),
       ),
     )
+    expect(screen.queryByText('Connecting agent...')).not.toBeInTheDocument()
 
     const runtime = createRuntime('conversation-new', { messages: [] })
     await act(async () => {
