@@ -16,7 +16,7 @@ export const ReportPageDivider = ({ index, title }: ReportPageDividerProps) => {
       data-report-divider='page'
       role='separator'
     >
-      <span className='inline-flex h-6 max-w-[min(320px,72vw)] min-w-0 items-center gap-1.5 rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] px-2.5'>
+      <span className='inline-flex h-6 max-w-[min(320px,72vw)] min-w-0 items-center gap-1.5 rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] px-2.5'>
         <strong className='block min-w-0 text-[10px] font-inherit text-[var(--vbi-text-soft)] [font-variant-numeric:tabular-nums]'>
           {String(pageNumber).padStart(2, '0')}
         </strong>

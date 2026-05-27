@@ -56,7 +56,7 @@ export const ToastViewport = () => (
     position='top-right'
     toastOptions={{
       className:
-        '!border-[var(--vbi-border)] !bg-[var(--vbi-surface-solid)] !text-[var(--vbi-text)] !shadow-[0_18px_42px_color-mix(in_srgb,var(--vbi-text-strong)_14%,transparent)]',
+        '!border-[var(--vbi-border)] !bg-[var(--vbi-secondary)] !text-[var(--vbi-text)] !shadow-[0_18px_42px_color-mix(in_srgb,var(--vbi-text-strong)_14%,transparent)]',
       duration: 3200,
     }}
   />

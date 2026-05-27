@@ -67,10 +67,8 @@ export const ManageResourcePageShell = ({
 
   return (
     <section className='vbi-motion-presence mx-auto flex min-h-[calc(100vh-44px)] w-full max-w-[1200px] min-w-0 flex-col gap-2 max-[720px]:min-h-0'>
-      <header className='vbi-motion-soft-reveal flex w-full min-w-0 items-center justify-between gap-2.5 pb-2 max-[1100px]:flex-col max-[1100px]:items-start max-[720px]:justify-start max-[720px]:p-4'>
-        <h1 className='m-0 text-[19px] font-[680] leading-[1.1] text-[var(--vbi-text-strong)] max-[720px]:text-[26px]'>
-          {title}
-        </h1>
+      <header className='vbi-motion-soft-reveal flex min-h-8 w-full min-w-0 items-center justify-end gap-2.5 pb-2'>
+        <h1 className='sr-only'>{title}</h1>
         <span className='text-xs text-[var(--vbi-text-muted)]'>
           {dataSource.length} {t('common.visible')}
         </span>
@@ -87,14 +85,14 @@ export const ManageResourcePageShell = ({
         searchText={searchText}
         selectedRowKeys={selectedRowKeys}
       />
-      <div className='vbi-motion-panel w-full min-w-0 overflow-auto rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] shadow-[var(--vbi-shadow-soft)]'>
+      <div className='vbi-motion-panel w-full min-w-0 overflow-auto rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] shadow-[var(--vbi-shadow)]'>
         {loading ? (
           <CenteredState>
             <Spinner />
           </CenteredState>
         ) : dataSource.length ? (
           <>
-            <table className='w-full min-w-[720px] table-fixed border-collapse bg-[var(--vbi-surface-solid)]'>
+            <table className='w-full min-w-[720px] table-fixed border-collapse bg-[var(--vbi-secondary)]'>
               <thead>
                 <tr>
                   <th className={cn('w-11', tableHeadClassName)} aria-label={t('common.selected')}>

@@ -31,7 +31,7 @@ export const ManageResourceToolbar = ({
   const hasSearchText = searchText.trim().length > 0
 
   return (
-    <div className='vbi-motion-soft-reveal vbi-motion-panel flex w-full min-w-0 max-w-full items-center justify-between gap-2 overflow-visible rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] p-2 max-[1100px]:flex-col max-[1100px]:items-start max-[720px]:justify-start'>
+    <div className='vbi-motion-soft-reveal vbi-motion-panel flex w-full min-w-0 max-w-full items-center justify-between gap-2 overflow-visible rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] p-2 max-[1100px]:flex-col max-[1100px]:items-start max-[720px]:justify-start'>
       <div
         className={cn(
           'group relative h-8 w-10 max-w-full min-w-10 flex-none origin-left rounded-md transition-[width] duration-500 ease-[var(--vbi-ease-spring)] focus-within:w-[clamp(220px,30vw,340px)] max-[720px]:focus-within:w-full',

@@ -23,7 +23,7 @@ const buttonVariants = cva(
         destructive: 'border-transparent bg-[var(--vbi-danger)] text-white hover:brightness-95 dark:text-white',
         ghost: 'border-transparent bg-transparent text-[var(--vbi-text)] hover:bg-[var(--vbi-hover-bg)]',
         primary:
-          'border-transparent bg-[var(--vbi-primary)] text-[var(--vbi-primary-text)] shadow-[var(--vbi-primary-shadow)] hover:bg-[var(--vbi-primary-hover)]',
+          'border-transparent bg-[var(--vbi-primary)] text-[var(--vbi-primary-text)] hover:bg-[var(--vbi-primary-hover)]',
         secondary:
           'border-[var(--vbi-border)] bg-[var(--vbi-control-muted)] text-[var(--vbi-text)] hover:bg-[var(--vbi-hover-bg)]',
       },

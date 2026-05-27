@@ -60,7 +60,7 @@ export const VerticalReportRenderer = memo(
       className='flex min-h-0 flex-1 flex-col items-center justify-start overflow-auto overflow-x-hidden overscroll-contain px-3.5 pb-[26px] pt-2.5 scroll-smooth [contain:layout] [overflow-anchor:none] [scrollbar-gutter:stable] max-[1100px]:min-h-0'
       data-report-stage='vertical'
     >
-      <div className='vbi-motion-panel flex min-h-0 w-[min(100%,1040px)] min-w-0 shrink-0 flex-col gap-5 rounded-lg border border-[var(--vbi-border)] bg-[color-mix(in_srgb,var(--vbi-surface-solid)_96%,var(--vbi-bg-solid))] px-[30px] pb-8 pt-7 shadow-[0_18px_44px_color-mix(in_srgb,var(--vbi-text-strong)_5%,transparent)] max-[640px]:px-3.5 max-[640px]:pb-[22px] max-[640px]:pt-[18px]'>
+      <div className='vbi-motion-panel flex min-h-0 w-[min(100%,1040px)] min-w-0 shrink-0 flex-col gap-5 rounded-lg border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] px-[30px] pb-8 pt-7 shadow-[0_18px_44px_color-mix(in_srgb,var(--vbi-text-strong)_5%,transparent)] max-[640px]:px-3.5 max-[640px]:pb-[22px] max-[640px]:pt-[18px]'>
         {pages.map((page, index) => (
           <Fragment key={page.page.id}>
             {index > 0 ? <ReportPageDivider index={index} title={page.page.title} /> : null}

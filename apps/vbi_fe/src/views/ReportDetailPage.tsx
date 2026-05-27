@@ -49,8 +49,8 @@ export const ReportDetailPage = memo(({ id = '' }: { id?: string }) => {
   if (!reportSession.builder) return <FullscreenSpinner />
 
   return (
-    <div className='flex h-screen min-h-screen flex-col bg-[var(--vbi-bg-solid)]'>
-      <header className='flex h-11 items-center justify-between gap-3 border-b border-[var(--vbi-border)] bg-[var(--vbi-header)] px-3 max-[768px]:h-[52px]'>
+    <div className='flex h-screen min-h-screen flex-col bg-[var(--vbi-bg)] transition-colors duration-300'>
+      <header className='flex h-11 items-center justify-between gap-3 border-b border-[var(--vbi-border)] bg-[var(--vbi-secondary)] px-3 max-[768px]:h-[52px]'>
         <div className='flex min-w-0 items-center gap-2'>
           <Button
             className='h-7 w-7 min-w-7 border border-[var(--vbi-border)] bg-[var(--vbi-control)] text-[var(--vbi-text)] shadow-none'

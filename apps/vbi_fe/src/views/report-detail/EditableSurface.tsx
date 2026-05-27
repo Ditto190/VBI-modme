@@ -25,7 +25,7 @@ const renderAction = (action: EditableSurfaceAction) => {
       <Button
         aria-label={action.ariaLabel}
         className={cn(
-          'h-7 w-7 min-w-7 border border-[var(--vbi-border)] bg-[var(--vbi-control)] text-xs text-[var(--vbi-text)] shadow-sm hover:border-[var(--vbi-active-text)] hover:bg-[var(--vbi-surface-solid)] hover:text-[var(--vbi-active-text)]',
+          'h-7 w-7 min-w-7 border border-[var(--vbi-border)] bg-[var(--vbi-control)] text-xs text-[var(--vbi-text)] shadow-sm hover:border-[var(--vbi-active-text)] hover:bg-[var(--vbi-secondary)] hover:text-[var(--vbi-active-text)]',
           action.className,
         )}
         disabled={action.disabled}

@@ -29,7 +29,7 @@ export const DialogContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEl
         <DialogPrimitive.Content
           ref={ref}
           className={cn(
-            'ui-dialog-content relative flex w-[min(420px,calc(100vw_-_32px))] flex-col overflow-hidden rounded-lg border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] text-[var(--vbi-text)] shadow-[var(--vbi-shadow)] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
+            'ui-dialog-content relative flex w-[min(420px,calc(100vw_-_32px))] flex-col overflow-hidden rounded-lg border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] text-[var(--vbi-text)] shadow-[var(--vbi-shadow)] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
             className,
           )}
           {...props}

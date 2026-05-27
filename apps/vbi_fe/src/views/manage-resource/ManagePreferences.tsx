@@ -43,18 +43,10 @@ const ThemeSwatch = ({ mode }: { mode: AppThemeMode }) => (
 const getThemeColorSummary = (mode: AppThemeMode, t: Translate) => {
   const palette = vbiThemePalettes[mode]
 
-  return `${t(`app.theme.${mode}`)} | ${t('app.theme.primaryColor')} ${palette.primary} | ${t('app.theme.secondaryColor')} ${palette.accentSoft}`
+  return `${t(`app.theme.${mode}`)} | ${t('app.theme.primaryColor')} ${palette.primary} | ${t('app.theme.secondaryColor')} ${palette.secondary}`
 }
 
-const ThemeColorRow = ({
-  label,
-  tone,
-  value,
-}: {
-  label: string
-  tone: 'primary' | 'secondary'
-  value: string
-}) => (
+const ThemeColorRow = ({ label, tone, value }: { label: string; tone: 'primary' | 'secondary'; value: string }) => (
   <span className='flex min-w-0 items-center gap-1.5 text-[10px] leading-4 text-[var(--vbi-text-muted)]'>
     <span
       className={cn(
@@ -76,7 +68,7 @@ const ThemeColorInfo = ({ mode, t }: { mode: AppThemeMode; t: Translate }) => {
       style={
         {
           '--theme-primary': palette.primary,
-          '--theme-secondary': palette.accentSoft,
+          '--theme-secondary': palette.secondary,
         } as ThemeColorInfoStyle
       }
     >
@@ -84,16 +76,8 @@ const ThemeColorInfo = ({ mode, t }: { mode: AppThemeMode; t: Translate }) => {
         {t(`app.theme.${mode}`)}
       </span>
       <div className='grid gap-0.5'>
-        <ThemeColorRow
-          label={t('app.theme.primaryColor')}
-          tone='primary'
-          value={palette.primary}
-        />
-        <ThemeColorRow
-          label={t('app.theme.secondaryColor')}
-          tone='secondary'
-          value={palette.accentSoft}
-        />
+        <ThemeColorRow label={t('app.theme.primaryColor')} tone='primary' value={palette.primary} />
+        <ThemeColorRow label={t('app.theme.secondaryColor')} tone='secondary' value={palette.secondary} />
       </div>
     </div>
   )
@@ -148,7 +132,7 @@ export const ManagePreferences = () => {
                       <button
                         aria-checked={themeMode === mode}
                         aria-label={colorSummary}
-                        className='grid size-6 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 outline-none transition-[background-color,border-color,box-shadow] duration-150 ease-out hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-surface-solid)] focus-visible:border-[var(--vbi-primary)] focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] data-[active=true]:border-[var(--vbi-border-strong)] data-[active=true]:bg-[var(--vbi-surface-solid)]'
+                        className='grid size-6 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 outline-none transition-[background-color,border-color,box-shadow] duration-150 ease-out hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-secondary)] focus-visible:border-[var(--vbi-primary)] focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] data-[active=true]:border-[var(--vbi-border-strong)] data-[active=true]:bg-[var(--vbi-secondary)]'
                         data-active={themeMode === mode}
                         key={mode}
                         role='radio'

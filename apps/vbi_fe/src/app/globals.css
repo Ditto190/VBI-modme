@@ -19,7 +19,7 @@ body {
 
 body {
   margin: 0;
-  background: var(--vbi-bg-solid, #f4f4f5);
+  background-color: var(--vbi-bg);
   color: var(--vbi-text, #111827);
   font-family:
     Inter,
@@ -31,30 +31,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-.vbi-agent-shell {
-  --background: var(--vbi-surface-solid);
-  --foreground: var(--vbi-text-strong);
-  --card: var(--vbi-surface-solid);
-  --card-foreground: var(--vbi-text-strong);
-  --popover: var(--vbi-surface-solid);
-  --popover-foreground: var(--vbi-text-strong);
-  --primary: var(--vbi-text-strong);
-  --primary-foreground: var(--vbi-surface-solid);
-  --secondary: var(--vbi-control-muted);
-  --secondary-foreground: var(--vbi-text-strong);
-  --muted: var(--vbi-control-muted);
-  --muted-foreground: var(--vbi-text-muted);
-  --accent: var(--vbi-hover-bg);
-  --accent-foreground: var(--vbi-text-strong);
-  --destructive: var(--vbi-danger);
-  --destructive-foreground: var(--vbi-surface-solid);
-  --border: var(--vbi-border);
-  --input: var(--vbi-border);
-  --ring: var(--vbi-focus);
-  --radius: 0.75rem;
-  background: var(--vbi-bg-solid);
+  transition: background-color 300ms var(--vbi-ease-standard);
 }
 
 .vbi-agent-thread {
@@ -62,15 +39,7 @@ body {
   height: 100%;
   min-height: 0;
   flex-direction: column;
-  background: var(--vbi-bg-solid);
-}
-
-.vbi-agent-thread[data-empty='true'] {
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--vbi-bg-solid) 78%, var(--vbi-surface-solid)) 0%,
-    var(--vbi-bg-solid) 44%
-  );
+  background: transparent;
 }
 
 .vbi-agent-thread-viewport {
@@ -178,7 +147,7 @@ body {
   overflow-x: auto;
   border: 1px solid color-mix(in srgb, var(--vbi-border) 74%, transparent);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--vbi-surface-solid) 90%, var(--vbi-control-muted));
+  background: color-mix(in srgb, var(--vbi-secondary) 90%, var(--vbi-control-muted));
   padding: 10px;
   font-size: 12px;
   line-height: 1.55;
@@ -193,7 +162,7 @@ body {
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--vbi-border) 72%, transparent);
   border-radius: 9px;
-  background: var(--vbi-surface-solid);
+  background: var(--vbi-secondary);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -224,7 +193,7 @@ body {
 .vbi-agent-reasoning-part {
   border: 1px solid color-mix(in srgb, var(--vbi-border) 68%, transparent);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--vbi-surface-solid) 84%, var(--vbi-control-muted));
+  background: color-mix(in srgb, var(--vbi-secondary) 84%, var(--vbi-control-muted));
   padding: 8px 10px;
 }
 
@@ -244,7 +213,7 @@ body {
   margin: 12px 0 14px;
   border: 1px solid color-mix(in srgb, var(--vbi-border-strong) 62%, transparent);
   border-radius: 13px;
-  background: color-mix(in srgb, var(--vbi-surface-solid) 92%, var(--vbi-control-muted));
+  background: color-mix(in srgb, var(--vbi-secondary) 92%, var(--vbi-control-muted));
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
@@ -318,7 +287,7 @@ body {
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--vbi-border) 62%, transparent);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--vbi-bg-solid) 70%, var(--vbi-surface-solid));
+  background: var(--vbi-secondary);
 }
 
 .vbi-agent-tool-part > summary {
@@ -484,7 +453,7 @@ body {
   bottom: 0;
   margin-top: auto;
   padding: 18px 0 24px;
-  background: linear-gradient(to top, var(--vbi-bg-solid) 76%, color-mix(in srgb, var(--vbi-bg-solid) 0%, transparent));
+  background: transparent;
 }
 
 .vbi-agent-thread-footer > * {
@@ -517,11 +486,9 @@ body {
   width: 100%;
   min-height: 112px;
   border-radius: 20px;
-  background: color-mix(in srgb, var(--vbi-surface-solid) 96%, var(--vbi-control-muted));
+  background: color-mix(in srgb, var(--vbi-secondary) 96%, var(--vbi-control-muted));
   padding: 10px 12px;
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.05),
-    0 10px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: none;
   transition:
     border-color var(--vbi-motion-fast) var(--vbi-ease-out),
     box-shadow var(--vbi-motion-fast) var(--vbi-ease-out);
@@ -529,15 +496,12 @@ body {
 
 .vbi-agent-composer-dropzone[data-dragging] .vbi-agent-composer {
   border-color: color-mix(in srgb, var(--vbi-focus) 72%, var(--vbi-border));
-  background: color-mix(in srgb, var(--vbi-focus) 5%, var(--vbi-surface-solid));
+  background: color-mix(in srgb, var(--vbi-focus) 5%, var(--vbi-secondary));
 }
 
 .vbi-agent-composer:focus-within {
   border-color: color-mix(in srgb, var(--vbi-focus) 72%, var(--vbi-border));
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.06),
-    0 12px 28px rgba(15, 23, 42, 0.09),
-    0 0 0 3px color-mix(in srgb, var(--vbi-focus) 14%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vbi-focus) 14%, transparent);
 }
 
 .vbi-agent-composer-field {
@@ -586,7 +550,7 @@ body {
   gap: 8px;
   border: 1px solid color-mix(in srgb, var(--vbi-border) 70%, transparent);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--vbi-control-muted) 70%, var(--vbi-surface-solid));
+  background: color-mix(in srgb, var(--vbi-control-muted) 70%, var(--vbi-secondary));
   padding: 5px 6px 5px 5px;
 }
 
@@ -597,7 +561,7 @@ body {
   flex: 0 0 auto;
   place-items: center;
   border-radius: 8px;
-  background: var(--vbi-surface-solid);
+  background: var(--vbi-secondary);
   color: var(--vbi-text-muted);
   font-size: 10px;
   font-weight: 650;
@@ -673,7 +637,7 @@ body {
 
 .vbi-agent-composer-submit:not(:disabled) {
   background: var(--vbi-text-strong);
-  color: var(--vbi-bg-solid);
+  color: var(--vbi-secondary);
 }
 
 .vbi-agent-composer-submit:not(:disabled):hover {
@@ -693,11 +657,6 @@ body {
   text-align: right;
 }
 
-[data-theme-tone='dark'] .vbi-agent-shell {
-  background: var(--vbi-bg-solid);
-}
-
-[data-theme-tone='dark'] .vbi-agent-composer,
 [data-theme-tone='dark'] .vbi-agent-message-content pre {
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.28),
@@ -752,7 +711,7 @@ body {
   border: 1px solid color-mix(in srgb, var(--vbi-text-strong) 10%, transparent);
   border-radius: 6px;
   background: var(--vbi-text-strong);
-  color: var(--vbi-bg-solid);
+  color: var(--vbi-secondary);
   font-size: 11px;
   font-weight: 500;
   line-height: 1;
@@ -768,7 +727,7 @@ body {
 
 .ui-tooltip-content--rich {
   border-color: var(--vbi-border);
-  background: var(--vbi-surface-solid);
+  background: var(--vbi-secondary);
   color: var(--vbi-text-strong);
   line-height: 1.2;
   padding: 8px 12px;
@@ -783,7 +742,7 @@ body {
   transform: translateX(-50%);
   border-radius: 6px;
   background: var(--vbi-text-strong);
-  color: var(--vbi-bg-solid);
+  color: var(--vbi-secondary);
   content: attr(data-tooltip);
   font-size: 11px;
   line-height: 1;
