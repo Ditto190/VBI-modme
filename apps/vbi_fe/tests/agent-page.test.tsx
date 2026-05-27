@@ -243,7 +243,12 @@ describe('AgentPage', () => {
 
     expect(await screen.findByRole('heading', { name: /what should we do/i })).toBeInTheDocument()
     expect(screen.queryByText(/chart and insight resources/i)).not.toBeInTheDocument()
-    expect(screen.getByRole('textbox', { name: /agent/i })).toHaveAttribute('rows', '2')
+    const composerInput = screen.getByRole('textbox', { name: /agent/i })
+    expect(composerInput).toHaveAttribute('rows', '2')
+    const composerFooter = composerInput.closest('.vbi-agent-thread-footer')
+    expect(composerFooter).toBeTruthy()
+    expect(composerFooter?.parentElement).toHaveClass('vbi-agent-thread')
+    expect(composerFooter?.previousElementSibling).toHaveClass('vbi-agent-thread-viewport')
     expect(screen.getByPlaceholderText(/attach an image/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /attach image/i })).toBeInTheDocument()
   })

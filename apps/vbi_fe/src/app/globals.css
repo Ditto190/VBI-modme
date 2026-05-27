@@ -35,21 +35,20 @@ body {
 }
 
 .vbi-agent-thread {
-  display: flex;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   height: 100%;
   min-height: 0;
-  flex-direction: column;
   background: transparent;
 }
 
 .vbi-agent-thread-viewport {
   display: flex;
   min-height: 0;
-  flex: 1;
   flex-direction: column;
   overflow-y: auto;
-  padding-top: 42px;
-  scroll-padding: 46px 0 148px;
+  padding: 42px 0 16px;
+  scroll-padding: 46px 0 24px;
 }
 
 .vbi-agent-thread[data-empty='true'] .vbi-agent-thread-viewport {
@@ -476,10 +475,10 @@ body {
 }
 
 .vbi-agent-thread-footer {
-  position: sticky;
-  bottom: 0;
-  margin-top: auto;
-  padding: 18px 0 24px;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  padding: 0 0 16px;
   background: transparent;
 }
 
@@ -490,10 +489,7 @@ body {
 }
 
 .vbi-agent-thread[data-empty='true'] .vbi-agent-thread-footer {
-  position: relative;
-  bottom: auto;
-  margin-top: 18px;
-  padding: 0 0 4px;
+  padding-bottom: 16px;
   background: transparent;
 }
 

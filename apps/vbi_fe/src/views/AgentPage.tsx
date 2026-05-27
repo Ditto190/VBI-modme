@@ -687,54 +687,54 @@ const AgentAssistantThread = ({
               <ThreadMessage isLatestAssistantMessage={message.id === latestAssistantMessageId} message={message} />
             )}
           </ThreadPrimitive.Messages>
-          <ThreadPrimitive.ViewportFooter className='vbi-agent-thread-footer'>
-            <ComposerPrimitive.AttachmentDropzone className='vbi-agent-composer-dropzone'>
-              <ComposerPrimitive.Root className='vbi-agent-composer'>
-                <div className='vbi-agent-composer-field'>
-                  <ComposerPrimitive.Input
-                    aria-label={t('nav.agent')}
-                    className='vbi-agent-composer-input'
-                    placeholder={t('agent.composerPlaceholder')}
-                    rows={2}
-                    submitMode='enter'
-                  />
-                  <div className='vbi-agent-composer-attachments'>
-                    <ComposerPrimitive.Attachments>{() => <ComposerAttachment />}</ComposerPrimitive.Attachments>
-                  </div>
+        </ThreadPrimitive.Viewport>
+        <div className='vbi-agent-thread-footer'>
+          <ComposerPrimitive.AttachmentDropzone className='vbi-agent-composer-dropzone'>
+            <ComposerPrimitive.Root className='vbi-agent-composer'>
+              <div className='vbi-agent-composer-field'>
+                <ComposerPrimitive.Input
+                  aria-label={t('nav.agent')}
+                  className='vbi-agent-composer-input'
+                  placeholder={t('agent.composerPlaceholder')}
+                  rows={2}
+                  submitMode='enter'
+                />
+                <div className='vbi-agent-composer-attachments'>
+                  <ComposerPrimitive.Attachments>{() => <ComposerAttachment />}</ComposerPrimitive.Attachments>
                 </div>
-                <div className='vbi-agent-composer-toolbar'>
-                  <ComposerPrimitive.AddAttachment
-                    aria-label='Attach image'
-                    className='vbi-agent-composer-action vbi-agent-composer-attach'
-                    multiple
+              </div>
+              <div className='vbi-agent-composer-toolbar'>
+                <ComposerPrimitive.AddAttachment
+                  aria-label='Attach image'
+                  className='vbi-agent-composer-action vbi-agent-composer-attach'
+                  multiple
+                  type='button'
+                >
+                  <Plus className='h-5 w-5' />
+                </ComposerPrimitive.AddAttachment>
+                <AuiIf condition={(state) => state.thread.isRunning}>
+                  <ComposerPrimitive.Cancel
+                    aria-label='Stop'
+                    className='vbi-agent-composer-action vbi-agent-composer-submit'
                     type='button'
                   >
-                    <Plus className='h-5 w-5' />
-                  </ComposerPrimitive.AddAttachment>
-                  <AuiIf condition={(state) => state.thread.isRunning}>
-                    <ComposerPrimitive.Cancel
-                      aria-label='Stop'
-                      className='vbi-agent-composer-action vbi-agent-composer-submit'
-                      type='button'
-                    >
-                      <Square className='h-4 w-4' />
-                    </ComposerPrimitive.Cancel>
-                  </AuiIf>
-                  <AuiIf condition={(state) => !state.thread.isRunning}>
-                    <ComposerPrimitive.Send
-                      aria-label='Send'
-                      className='vbi-agent-composer-action vbi-agent-composer-submit'
-                      type='button'
-                    >
-                      <SendHorizontal className='h-4 w-4' />
-                    </ComposerPrimitive.Send>
-                  </AuiIf>
-                </div>
-              </ComposerPrimitive.Root>
-            </ComposerPrimitive.AttachmentDropzone>
-            <div className='vbi-agent-context-usage'>{usageText}</div>
-          </ThreadPrimitive.ViewportFooter>
-        </ThreadPrimitive.Viewport>
+                    <Square className='h-4 w-4' />
+                  </ComposerPrimitive.Cancel>
+                </AuiIf>
+                <AuiIf condition={(state) => !state.thread.isRunning}>
+                  <ComposerPrimitive.Send
+                    aria-label='Send'
+                    className='vbi-agent-composer-action vbi-agent-composer-submit'
+                    type='button'
+                  >
+                    <SendHorizontal className='h-4 w-4' />
+                  </ComposerPrimitive.Send>
+                </AuiIf>
+              </div>
+            </ComposerPrimitive.Root>
+          </ComposerPrimitive.AttachmentDropzone>
+          <div className='vbi-agent-context-usage'>{usageText}</div>
+        </div>
       </ThreadPrimitive.Root>
     </AssistantRuntimeProvider>
   )
