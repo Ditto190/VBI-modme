@@ -68,7 +68,7 @@ describe('streamProxy', () => {
     const events = await collectStreamEvents(stream)
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/v1/agent/api/stream',
+      '/api/v1/agent/stream',
       expect.objectContaining({
         headers: expect.objectContaining({ Authorization: 'Bearer token-1' }),
         method: 'POST',

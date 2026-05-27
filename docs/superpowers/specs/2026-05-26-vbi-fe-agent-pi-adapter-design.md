@@ -66,7 +66,7 @@ Keep VBI's backend stream proxy. Browser-side Pi should not call provider APIs d
 
 The stream adapter must:
 
-- Send `{ model, context, options }` to `/api/v1/agent/api/stream` through the resolved proxy URL.
+- Send `{ model, context, options }` to `/api/v1/agent/stream` through the resolved proxy URL.
 - Preserve abort behavior through `AbortSignal`.
 - Convert backend text, thinking, tool call, done, and error events into the event shape expected by `pi-agent-core`.
 - Forward only serializable stream options.

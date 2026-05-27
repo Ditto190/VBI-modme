@@ -23,7 +23,7 @@ export class AgentController {
     return this.agentStreamService.getConfig()
   }
 
-  @Post('api/stream')
+  @Post('stream')
   @HttpCode(200)
   @SkipResponseEnvelope()
   @ApiOperation({ summary: 'Proxy Pi assistant stream events' })
@@ -50,33 +50,7 @@ export class AgentController {
     message: 'Agent stream context.messages must be an array',
     status: 400,
   })
-  streamForPiProxy(
-    @Body() dto: AgentStreamDto,
-    @Headers('authorization') authorization: string | undefined,
-    @Req() request: Request,
-    @Res() response: Response,
-  ) {
-    return this.agentStreamService.stream(dto, authorization, request, response)
-  }
-
-  @Post('stream')
-  @HttpCode(200)
-  @SkipResponseEnvelope()
-  @ApiOperation({ summary: 'Proxy Pi assistant stream events without streamProxy path suffix' })
-  @ApiBody({ type: AgentStreamDto })
-  @ApiResponse({
-    status: 200,
-    description: 'SSE stream of Pi proxy assistant message events',
-    content: {
-      'text/event-stream': {
-        schema: {
-          type: 'string',
-          example: 'data: {"type":"text_delta","contentIndex":0,"delta":"Hello"}\n\n',
-        },
-      },
-    },
-  })
-  streamDirect(
+  stream(
     @Body() dto: AgentStreamDto,
     @Headers('authorization') authorization: string | undefined,
     @Req() request: Request,

@@ -217,7 +217,7 @@ export const streamProxy = (model: AgentModel, context: unknown, options: Stream
     try {
       options.signal?.addEventListener('abort', abortHandler)
       await waitForNextPaint()
-      const response = await fetch(`${options.proxyUrl}/api/stream`, {
+      const response = await fetch(`${options.proxyUrl}/stream`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${options.authToken}`,
