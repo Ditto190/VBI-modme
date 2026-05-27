@@ -47,18 +47,20 @@ export const MessageActionBar: FC<MessageActionBarProps> = ({
   const timestampLabel = isUser ? 'Sent at' : 'Completed at'
 
   return (
-    <ActionBarPrimitive.Root autohide={autohide} className={cn('vbi-agent-message-actions', className)}>
-      <ActionBarPrimitive.Copy
-        aria-label={copyLabel}
-        className='vbi-agent-message-copy'
-        copiedDuration={1800}
-        type='button'
-      >
-        <Copy className='h-3.5 w-3.5' />
-        <span>Copy</span>
-      </ActionBarPrimitive.Copy>
-      {isCompleteAssistant ? <MessageTiming className='vbi-agent-message-meta-control' side='top' /> : null}
-      <MessageTimestamp date={message.createdAt} label={timestampLabel} />
-    </ActionBarPrimitive.Root>
+    <div className='vbi-agent-message-action-slot'>
+      <ActionBarPrimitive.Root autohide={autohide} className={cn('vbi-agent-message-actions', className)}>
+        <ActionBarPrimitive.Copy
+          aria-label={copyLabel}
+          className='vbi-agent-message-copy'
+          copiedDuration={1800}
+          type='button'
+        >
+          <Copy className='h-3.5 w-3.5' />
+          <span>Copy</span>
+        </ActionBarPrimitive.Copy>
+        {isCompleteAssistant ? <MessageTiming className='vbi-agent-message-meta-control' side='top' /> : null}
+        <MessageTimestamp date={message.createdAt} label={timestampLabel} />
+      </ActionBarPrimitive.Root>
+    </div>
   )
 }

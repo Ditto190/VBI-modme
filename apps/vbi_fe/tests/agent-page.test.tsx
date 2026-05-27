@@ -348,6 +348,7 @@ describe('AgentPage', () => {
     const userMessage = await screen.findByText('panel:conversation-user-actions')
     const messageRoot = userMessage.closest('.vbi-agent-message')
     expect(messageRoot).toBeTruthy()
+    expect(messageRoot?.querySelector('.vbi-agent-message-action-slot')).toBeTruthy()
     expect(screen.queryByRole('button', { name: /copy message/i })).not.toBeInTheDocument()
 
     fireEvent.mouseEnter(messageRoot!)
@@ -463,6 +464,7 @@ describe('AgentPage', () => {
 
     const earlierAssistantMessage = screen.getByText('我来查看一下当前的数据资源数量。').closest('.vbi-agent-message')
     expect(earlierAssistantMessage).toBeTruthy()
+    expect(earlierAssistantMessage?.querySelector('.vbi-agent-message-action-slot')).toBeTruthy()
 
     fireEvent.mouseEnter(earlierAssistantMessage!)
 

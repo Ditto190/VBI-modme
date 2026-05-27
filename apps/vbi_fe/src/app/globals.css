@@ -81,12 +81,12 @@ body {
   width: min(820px, calc(100% - 64px));
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: 26px;
+  margin-bottom: 34px;
 }
 
 .vbi-agent-message[data-role='user'] {
   justify-items: end;
-  margin-bottom: 22px;
+  margin-bottom: 32px;
 }
 
 .vbi-agent-message-body {
@@ -387,18 +387,24 @@ body {
   font-size: 12px;
 }
 
-.vbi-agent-message-actions {
+.vbi-agent-message-action-slot {
   display: flex;
   min-height: 28px;
   align-items: center;
-  gap: 4px;
-  margin-top: 9px;
+  margin-top: 10px;
   color: var(--vbi-text-muted);
   font-size: 12px;
 }
 
-.vbi-agent-message[data-role='user'] .vbi-agent-message-actions {
+.vbi-agent-message[data-role='user'] .vbi-agent-message-action-slot {
   justify-content: flex-end;
+}
+
+.vbi-agent-message-actions {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 4px;
 }
 
 .vbi-agent-message-copy {
