@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from '@rstest/core'
 import { useAgentConversationsStore } from '../src/stores/agent-conversations.store'
+import { resetVbiAgentStorageForTests, setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
 
 const metadata = {
   id: 'conversation-1',
@@ -21,6 +22,22 @@ const metadata = {
 
 describe('agent conversations store', () => {
   beforeEach(() => {
+    const records = new Map<string, { metadata: typeof metadata; session: { id: string; title: string } }>()
+    records.set(metadata.id, {
+      metadata,
+      session: { id: metadata.id, title: metadata.title },
+    })
+    setVbiAgentIndexedDBFactoryForTests(async () => ({
+      get: async (id) => records.get(id) ?? null,
+      getAll: async () => [...records.values()],
+      put: async (record) => {
+        records.set(record.session.id, record as never)
+      },
+      delete: async (id) => {
+        records.delete(id)
+      },
+    }))
+    resetVbiAgentStorageForTests()
     useAgentConversationsStore.setState({
       activeConversationId: '',
       conversations: [],
@@ -35,8 +52,9 @@ describe('agent conversations store', () => {
     useAgentConversationsStore.getState().upsertConversation(metadata, 'completed')
     useAgentConversationsStore.getState().selectConversation('conversation-1')
     useAgentConversationsStore.getState().requestNewConversation()
+    useAgentConversationsStore.getState().clearActiveConversation()
 
-    expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-1')
+    expect(useAgentConversationsStore.getState().activeConversationId).toBe('')
     expect(useAgentConversationsStore.getState().newConversationRequestSeq).toBe(1)
     expect(useAgentConversationsStore.getState().conversations).toMatchObject([
       {
@@ -44,6 +62,45 @@ describe('agent conversations store', () => {
         status: 'completed',
         title: 'Revenue follow-up',
       },
+    ])
+  })
+
+  test('ignores selecting the already active conversation', () => {
+    const calls: string[] = []
+    const unsubscribe = useAgentConversationsStore.subscribe((state) => {
+      calls.push(state.activeConversationId)
+    })
+
+    useAgentConversationsStore.getState().selectConversation('conversation-1')
+    useAgentConversationsStore.getState().selectConversation('conversation-1')
+    unsubscribe()
+
+    expect(calls).toEqual(['conversation-1'])
+    expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-1')
+  })
+
+  test('renames conversations and selects the next item when deleting the active one', async () => {
+    const newer = {
+      ...metadata,
+      id: 'conversation-2',
+      title: 'Second conversation',
+      lastModified: '2026-05-26T01:03:00.000Z',
+    }
+    useAgentConversationsStore.getState().upsertConversation(metadata, 'completed')
+    useAgentConversationsStore.getState().upsertConversation(newer, 'completed')
+    useAgentConversationsStore.getState().selectConversation('conversation-1')
+
+    await useAgentConversationsStore.getState().renameConversation('conversation-1', 'Renamed analysis')
+
+    expect(useAgentConversationsStore.getState().conversations).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'conversation-1', title: 'Renamed analysis' })]),
+    )
+
+    await useAgentConversationsStore.getState().deleteConversation('conversation-1')
+
+    expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-2')
+    expect(useAgentConversationsStore.getState().conversations.map((conversation) => conversation.id)).toEqual([
+      'conversation-2',
     ])
   })
 })

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
-import { act, cleanup, render, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 type ConversationMetadata = {
   createdAt: string
@@ -19,12 +19,23 @@ type ConversationMetadata = {
   }
 }
 
+type RuntimeSnapshot = {
+  isRunning: boolean
+  messages: unknown[]
+}
+
 type Runtime = {
-  agent: { state: { isStreaming: boolean } }
+  agent: {
+    state: { isStreaming: boolean; messages: unknown[]; model: { contextWindow: number } }
+    abort: ReturnType<typeof rs.fn>
+  }
   conversationId: string
   destroy: ReturnType<typeof rs.fn>
-  panel: HTMLElement
+  getSnapshot: ReturnType<typeof rs.fn>
   persist: ReturnType<typeof rs.fn>
+  send: ReturnType<typeof rs.fn>
+  setTitle: ReturnType<typeof rs.fn>
+  subscribe: ReturnType<typeof rs.fn>
 }
 
 const emptyUsage = {
@@ -37,6 +48,7 @@ const emptyUsage = {
 }
 
 let metadataList: ConversationMetadata[] = []
+let persistCounter = 5
 
 const createMetadata = (id: string, lastModified: string): ConversationMetadata => ({
   id,
@@ -65,34 +77,71 @@ const mapAgentConversationMetadata = (metadata: ConversationMetadata, status = '
   status,
 })
 
-const setupPiAgentIndexedDBStorage = rs.fn(async () => ({
-  backend: {},
-  sessions: {
+const setupVbiAgentIndexedDBStorage = rs.fn(async () => ({
+  conversations: {
     getAllMetadata: rs.fn(async () => metadataList),
   },
 }))
 
 const createAgentConversationId = rs.fn(() => 'conversation-new')
+const readAgentContentText = (content: unknown) => {
+  if (typeof content === 'string') return content
+  if (!Array.isArray(content)) return ''
+  return content
+    .map((part) => (typeof part === 'object' && part && 'text' in part ? String(part.text) : ''))
+    .filter(Boolean)
+    .join(' ')
+}
 const listAgentConversations = rs.fn(
-  async (storage: { sessions: { getAllMetadata(): Promise<ConversationMetadata[]> } }) =>
-    sortAgentConversations((await storage.sessions.getAllMetadata()).map((item) => mapAgentConversationMetadata(item))),
+  async (storage: { conversations: { getAllMetadata(): Promise<ConversationMetadata[]> } }) =>
+    sortAgentConversations(
+      (await storage.conversations.getAllMetadata()).map((item) => mapAgentConversationMetadata(item)),
+    ),
 )
 
 const pendingRuntimes = new Map<string, ReturnType<typeof createDeferred<Runtime>>>()
-const createRuntime = (conversationId: string): Runtime => {
-  const panel = document.createElement('div')
-  panel.textContent = `panel:${conversationId}`
+const createRuntime = (
+  conversationId: string,
+  options: { isRunning?: boolean; messages?: unknown[] } = {},
+): Runtime => {
+  const snapshot: RuntimeSnapshot = {
+    isRunning: options.isRunning ?? false,
+    messages: options.messages ?? [
+      {
+        role: 'user',
+        content: [{ type: 'text', text: `panel:${conversationId}` }],
+        timestamp: 1,
+      },
+    ],
+  }
 
   return {
-    agent: { state: { isStreaming: false } },
+    agent: {
+      state: { isStreaming: false, messages: [], model: { contextWindow: 1000 } },
+      abort: rs.fn(),
+    },
     conversationId,
     destroy: rs.fn(),
-    panel,
-    persist: rs.fn(async () => createMetadata(conversationId, '2026-05-26T01:05:00.000Z')),
+    getSnapshot: rs.fn(() => snapshot),
+    persist: rs.fn(async (options?: { touch?: boolean }) => {
+      const lastModified =
+        options?.touch === false
+          ? conversationId === 'conversation-b'
+            ? '2026-05-26T01:01:00.000Z'
+            : '2026-05-26T01:00:00.000Z'
+          : `2026-05-26T01:${String(persistCounter++).padStart(2, '0')}:00.000Z`
+      return createMetadata(conversationId, lastModified)
+    }),
+    send: rs.fn(),
+    setTitle: rs.fn(),
+    subscribe: rs.fn((listener: (value: RuntimeSnapshot) => void) => {
+      listener(snapshot)
+      return rs.fn()
+    }),
   }
 }
 
-const createAgentChatPanel = rs.fn(({ conversationId }: { conversationId: string }) => {
+const createAgentConversationRuntime = rs.fn(({ conversationId }: { conversationId: string }) => {
   const deferred = createDeferred<Runtime>()
   pendingRuntimes.set(conversationId, deferred)
   return deferred.promise
@@ -102,22 +151,34 @@ rs.mock('../src/views/agent/agent-storage', () => ({
   createAgentConversationId,
   listAgentConversations,
   mapAgentConversationMetadata,
-  setupPiAgentIndexedDBStorage,
+  readAgentContentText,
+  setupVbiAgentIndexedDBStorage,
   sortAgentConversations,
 }))
 
 rs.mock('../src/views/agent/agent-runtime', () => ({
-  createAgentChatPanel,
+  createAgentConversationRuntime,
 }))
 
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
+const { useNavigationStore } = await import('../src/stores/navigation.store')
 const { AgentPage } = await import('../src/views/AgentPage')
 
 describe('AgentPage', () => {
   beforeEach(() => {
     rs.clearAllMocks()
+    Object.defineProperty(globalThis, 'ResizeObserver', {
+      configurable: true,
+      value: class ResizeObserver {
+        disconnect() {}
+        observe() {}
+        unobserve() {}
+      },
+    })
+    Element.prototype.scrollTo = rs.fn()
     pendingRuntimes.clear()
+    persistCounter = 5
     metadataList = [
       createMetadata('conversation-a', '2026-05-26T01:00:00.000Z'),
       createMetadata('conversation-b', '2026-05-26T01:01:00.000Z'),
@@ -131,6 +192,10 @@ describe('AgentPage', () => {
       isLoading: false,
       newConversationRequestSeq: 0,
     })
+    useNavigationStore.setState({
+      navigate: null,
+      pathname: '/agent/conversation-b',
+    })
   })
 
   afterEach(() => {
@@ -141,31 +206,273 @@ describe('AgentPage', () => {
     render(<AgentPage />)
 
     await waitFor(() =>
-      expect(createAgentChatPanel).toHaveBeenCalledWith(expect.objectContaining({ conversationId: 'conversation-b' })),
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-b' }),
+      ),
     )
 
     await act(async () => {
-      useAgentConversationsStore.getState().selectConversation('conversation-a')
+      useNavigationStore.setState({ pathname: '/agent/conversation-a' })
     })
 
     await waitFor(() =>
-      expect(createAgentChatPanel).toHaveBeenCalledWith(expect.objectContaining({ conversationId: 'conversation-a' })),
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-a' }),
+      ),
     )
 
     await act(async () => {
       pendingRuntimes.get('conversation-a')?.resolve(createRuntime('conversation-a'))
     })
-    await waitFor(() =>
-      expect(document.querySelector('.vbi-agent-panel-host')?.textContent).toBe('panel:conversation-a'),
-    )
+    await waitFor(() => expect(screen.getByText('panel:conversation-a')).toBeTruthy())
 
     await act(async () => {
       pendingRuntimes.get('conversation-b')?.resolve(createRuntime('conversation-b'))
     })
 
-    await waitFor(() =>
-      expect(document.querySelector('.vbi-agent-panel-host')?.textContent).toBe('panel:conversation-a'),
-    )
+    await waitFor(() => expect(screen.getByText('panel:conversation-a')).toBeTruthy())
+    expect(screen.queryByText('panel:conversation-b')).toBeNull()
     expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-a')
+  })
+
+  test('shows a centered welcome composer when no conversation has content yet', async () => {
+    metadataList = []
+    useNavigationStore.setState({ pathname: '/agent' })
+
+    render(<AgentPage />)
+
+    expect(await screen.findByRole('heading', { name: /what should we do/i })).toBeInTheDocument()
+    expect(screen.queryByText(/chart and insight resources/i)).not.toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /agent/i })).toHaveAttribute('rows', '2')
+    expect(screen.getByPlaceholderText(/attach an image/i)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /attach image/i })).toBeInTheDocument()
+  })
+
+  test('keeps the new conversation route as a draft until the first message is sent', async () => {
+    metadataList = []
+    const navigatedTo: string[] = []
+    useNavigationStore.setState({ pathname: '/agent' })
+    useNavigationStore.getState().setNavigate((path) => {
+      navigatedTo.push(path)
+      useNavigationStore.setState({ pathname: path })
+    })
+
+    render(<AgentPage />)
+
+    expect(await screen.findByRole('heading', { name: /what should we do/i })).toBeInTheDocument()
+    expect(createAgentConversationRuntime).not.toHaveBeenCalled()
+
+    fireEvent.change(screen.getByRole('textbox', { name: /agent/i }), {
+      target: { value: '当前洞察资源列表' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /^send$/i }))
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({
+          conversationId: 'conversation-new',
+          fallbackTitle: '当前洞察资源列表',
+        }),
+      ),
+    )
+
+    const runtime = createRuntime('conversation-new', { messages: [] })
+    await act(async () => {
+      pendingRuntimes.get('conversation-new')?.resolve(runtime)
+    })
+
+    await waitFor(() => expect(runtime.send).toHaveBeenCalledWith('当前洞察资源列表'))
+    expect(navigatedTo).toEqual(['/agent/conversation-new'])
+    expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-new')
+  })
+
+  test('uses one composer action slot for sending and stopping', async () => {
+    metadataList = [createMetadata('conversation-running', '2026-05-26T01:00:00.000Z')]
+    useNavigationStore.setState({ pathname: '/agent/conversation-running' })
+
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-running' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes.get('conversation-running')?.resolve(createRuntime('conversation-running', { isRunning: true }))
+    })
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /^stop$/i })).toBeInTheDocument())
+    expect(screen.queryByRole('button', { name: /^send$/i })).not.toBeInTheDocument()
+  })
+
+  test('renders very large user messages as compact previews', async () => {
+    metadataList = [createMetadata('conversation-large', '2026-05-26T01:00:00.000Z')]
+    useNavigationStore.setState({ pathname: '/agent/conversation-large' })
+    const largeText = `${'a'.repeat(25_000)} tail-marker`
+
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-large' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes.get('conversation-large')?.resolve(
+        createRuntime('conversation-large', {
+          messages: [{ role: 'user', content: [{ type: 'text', text: largeText }], timestamp: 1 }],
+        }),
+      )
+    })
+
+    expect(await screen.findByText(/25K chars/)).toBeInTheDocument()
+    expect(screen.queryByText(/tail-marker/)).not.toBeInTheDocument()
+  })
+
+  test('groups resource tool calls and keeps technical tool result logs out of the transcript', async () => {
+    metadataList = [createMetadata('conversation-tools', '2026-05-26T01:00:00.000Z')]
+    useNavigationStore.setState({ pathname: '/agent/conversation-tools' })
+    const resourceToolMessages = [
+      {
+        role: 'user',
+        content: [{ type: 'text', text: '当前有多少数据资源?' }],
+        timestamp: 0,
+      },
+      {
+        role: 'assistant',
+        content: [
+          { type: 'text', text: '我来查看一下当前的数据资源数量。' },
+          {
+            type: 'toolCall',
+            id: 'tool-chart',
+            name: 'vbi_resource',
+            arguments: { action: 'list', resource: 'chart' },
+          },
+          {
+            type: 'toolCall',
+            id: 'tool-insight',
+            name: 'vbi_resource',
+            arguments: { action: 'list', resource: 'insight' },
+          },
+          {
+            type: 'toolCall',
+            id: 'tool-report',
+            name: 'vbi_resource',
+            arguments: { action: 'list', resource: 'report' },
+          },
+        ],
+        timestamp: 10_000,
+      },
+      {
+        role: 'toolResult',
+        toolCallId: 'tool-chart',
+        toolName: 'vbi_resource',
+        content: [{ type: 'text', text: '{"items":[{"name":"我的折线图"}]}' }],
+        details: {
+          display: '{"items":[{"name":"我的折线图"}]}',
+          summary: 'vbi_resource chart.list completed',
+        },
+        timestamp: 40_000,
+      },
+      {
+        role: 'toolResult',
+        toolCallId: 'tool-insight',
+        toolName: 'vbi_resource',
+        content: [{ type: 'text', text: '{"items":[{"name":"关于公式"}]}' }],
+        details: {
+          display: '{"items":[{"name":"关于公式"}]}',
+          summary: 'vbi_resource insight.list completed',
+        },
+        timestamp: 70_000,
+      },
+      {
+        role: 'toolResult',
+        toolCallId: 'tool-report',
+        toolName: 'vbi_resource',
+        content: [{ type: 'text', text: '{"items":[]}' }],
+        details: {
+          display: '{"items":[]}',
+          summary: 'vbi_resource report.list completed',
+        },
+        timestamp: 100_000,
+      },
+      {
+        role: 'assistant',
+        content: [
+          {
+            type: 'text',
+            text: '当前共有 **2 个数据资源**：\n\n类型\t名称\t创建时间\n图表\t我的折线图\t2026-05-26\n洞察\t关于公式\t2026-05-26\n\n没有报告资源。',
+          },
+        ],
+        timestamp: 120_000,
+      },
+    ]
+
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-tools' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes
+        .get('conversation-tools')
+        ?.resolve(createRuntime('conversation-tools', { messages: resourceToolMessages }))
+    })
+
+    expect(await screen.findByText('3 tool calls')).toBeInTheDocument()
+    expect(screen.getByText('chart.list')).toBeInTheDocument()
+    expect(screen.getByText('insight.list')).toBeInTheDocument()
+    expect(screen.getByText('report.list')).toBeInTheDocument()
+    expect(screen.queryByText('vbi_resource chart.list completed')).not.toBeInTheDocument()
+    expect(screen.queryByText('vbi_resource insight.list completed')).not.toBeInTheDocument()
+    expect(screen.queryByText('vbi_resource report.list completed')).not.toBeInTheDocument()
+    expect(screen.getByRole('table')).toBeInTheDocument()
+    expect(screen.getByRole('columnheader', { name: '类型' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /copy response/i })).toBeInTheDocument()
+    expect(screen.getByText('2.0 min')).toBeInTheDocument()
+  })
+
+  test('does not reorder conversations just because the user switches between them', async () => {
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-b' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes.get('conversation-b')?.resolve(createRuntime('conversation-b'))
+    })
+    await waitFor(() => expect(screen.getByText('panel:conversation-b')).toBeTruthy())
+
+    await act(async () => {
+      useNavigationStore.setState({ pathname: '/agent/conversation-a' })
+    })
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-a' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes.get('conversation-a')?.resolve(createRuntime('conversation-a'))
+    })
+    await waitFor(() => expect(screen.getByText('panel:conversation-a')).toBeTruthy())
+
+    await act(async () => {
+      useNavigationStore.setState({ pathname: '/agent/conversation-b' })
+    })
+    await waitFor(() => expect(screen.getByText('panel:conversation-b')).toBeTruthy())
+
+    expect(pendingRuntimes.get('conversation-a')).toBeDefined()
+    expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+      expect.objectContaining({ conversationId: 'conversation-a' }),
+    )
+
+    expect(useAgentConversationsStore.getState().conversations.map((conversation) => conversation.id)).toEqual([
+      'conversation-b',
+      'conversation-a',
+    ])
   })
 })

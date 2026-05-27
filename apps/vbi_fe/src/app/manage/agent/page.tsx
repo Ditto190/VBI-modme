@@ -1,11 +1,9 @@
-'use client'
+import { redirect } from 'next/navigation'
 
-import dynamic from 'next/dynamic'
+export const dynamic = 'force-dynamic'
 
-const AgentPage = dynamic(() => import('../../../views/AgentPage').then((module) => module.AgentPage), {
-  ssr: false,
-})
-
-const ManageAgentPage = () => <AgentPage />
+const ManageAgentPage = () => {
+  redirect('/agent')
+}
 
 export default ManageAgentPage

@@ -1,27 +1,5 @@
 import type { AgentMessage, AgentState, ThinkingLevel } from '@earendil-works/pi-agent-core'
 
-type PiStorageStore = {
-  getConfig(): unknown
-  setBackend(backend: unknown): void
-}
-type PiStorageStoreConstructor<TStore extends PiStorageStore = PiStorageStore> = new () => TStore
-type PiWebUIStorageModule = {
-  AppStorage: new (
-    settings: PiStorageStore,
-    providerKeys: PiStorageStore,
-    sessions: PiStorageStore,
-    customProviders: PiStorageStore,
-    backend: unknown,
-  ) => PiAgentStorage
-  CustomProvidersStore: PiStorageStoreConstructor
-  IndexedDBStorageBackend: new (config: unknown) => unknown
-  ProviderKeysStore: PiStorageStoreConstructor
-  SessionsStore: PiStorageStoreConstructor & { getMetadataConfig(): unknown }
-  SettingsStore: PiStorageStoreConstructor
-  setAppStorage(storage: PiAgentStorage): void
-}
-type PiWebUIStorageLoader = () => Promise<PiWebUIStorageModule>
-
 type Usage = {
   cacheRead: number
   cacheWrite: number
@@ -66,16 +44,30 @@ export type AgentConversationSummary = AgentConversationMetadata & {
   status: AgentConversationStatus
 }
 
-export type PiAgentSessionsStore = {
+export type VbiAgentConversationRecord = {
+  metadata: AgentConversationMetadata
+  schemaVersion: 1
+  session: AgentConversationSession
+}
+
+export type VbiAgentConversationDatabase = {
+  delete(id: string): Promise<void>
+  getAll(): Promise<VbiAgentConversationRecord[]>
+  get(id: string): Promise<VbiAgentConversationRecord | null>
+  put(record: VbiAgentConversationRecord): Promise<void>
+}
+
+export type VbiAgentConversationsStore = {
+  delete(id: string): Promise<void>
   get(id: string): Promise<AgentConversationSession | null>
   getAllMetadata(): Promise<AgentConversationMetadata[]>
   loadSession(id: string): Promise<AgentConversationSession | null>
+  rename(id: string, title: string): Promise<AgentConversationMetadata | null>
   save(data: AgentConversationSession, metadata: AgentConversationMetadata): Promise<void>
 }
 
-export type PiAgentStorage = {
-  backend: unknown
-  sessions: PiAgentSessionsStore
+export type VbiAgentStorage = {
+  conversations: VbiAgentConversationsStore
 }
 
 type CreateAgentSessionMetadataInput = {
@@ -96,6 +88,8 @@ type SaveAgentConversationInput = {
   title?: string
 }
 
+type VbiAgentIndexedDBFactory = () => Promise<VbiAgentConversationDatabase>
+
 const emptyUsage: Usage = {
   cacheRead: 0,
   cacheWrite: 0,
@@ -111,45 +105,16 @@ const emptyUsage: Usage = {
   totalTokens: 0,
 }
 
-let storageSetup: Promise<PiAgentStorage> | undefined
+const databaseName = 'vbi-agent-conversations'
+const databaseVersion = 1
+const conversationStoreName = 'conversations'
 
-const defaultLoadPiWebUIStorage: PiWebUIStorageLoader = async () => {
-  const [
-    { AppStorage, setAppStorage },
-    { CustomProvidersStore },
-    { IndexedDBStorageBackend },
-    { ProviderKeysStore },
-    { SessionsStore },
-    { SettingsStore },
-  ] = await Promise.all([
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/storage/app-storage.js'),
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/storage/stores/custom-providers-store.js'),
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/storage/backends/indexeddb-storage-backend.js'),
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/storage/stores/provider-keys-store.js'),
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/storage/stores/sessions-store.js'),
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/storage/stores/settings-store.js'),
-  ])
-
-  return {
-    AppStorage,
-    CustomProvidersStore,
-    IndexedDBStorageBackend,
-    ProviderKeysStore,
-    SessionsStore,
-    SettingsStore,
-    setAppStorage,
-  } as unknown as PiWebUIStorageModule
-}
-let loadPiWebUIStorage = defaultLoadPiWebUIStorage
-
-export const setPiWebUIStorageLoaderForTests = (loader?: PiWebUIStorageLoader) => {
-  loadPiWebUIStorage = loader ?? defaultLoadPiWebUIStorage
-}
+let storageSetup: Promise<VbiAgentStorage> | undefined
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
-const readContentText = (content: unknown): string => {
+export const readAgentContentText = (content: unknown): string => {
   if (typeof content === 'string') return content
   if (!Array.isArray(content)) return ''
 
@@ -158,16 +123,17 @@ const readContentText = (content: unknown): string => {
       if (!isRecord(part)) return ''
       if (typeof part.text === 'string') return part.text
       if (typeof part.content === 'string') return part.content
+      if (typeof part.thinking === 'string') return part.thinking
       return ''
     })
     .filter(Boolean)
     .join(' ')
 }
 
-const readMessageText = (message: unknown) => {
+export const readAgentMessageText = (message: unknown) => {
   if (!isRecord(message)) return ''
   if (message.role !== 'user' && message.role !== 'assistant' && message.role !== 'user-with-attachments') return ''
-  return readContentText(message.content).replace(/\s+/g, ' ').trim()
+  return readAgentContentText(message.content).replace(/\s+/g, ' ').trim()
 }
 
 const readMessageUsage = (message: unknown): Usage => {
@@ -222,7 +188,7 @@ export const createAgentConversationId = () => {
 }
 
 export const extractAgentConversationPreview = (messages: unknown[] = []) =>
-  messages.map(readMessageText).filter(Boolean).join('\n').slice(0, 2048)
+  messages.map(readAgentMessageText).filter(Boolean).join('\n').slice(0, 2048)
 
 export const createAgentSessionMetadata = ({
   createdAt,
@@ -260,56 +226,136 @@ export const mapAgentConversationMetadata = (
 export const sortAgentConversations = <T extends Pick<AgentConversationMetadata, 'lastModified'>>(items: T[]) =>
   [...items].sort((left, right) => right.lastModified.localeCompare(left.lastModified))
 
-export const setupPiAgentIndexedDBStorage = async (): Promise<PiAgentStorage> => {
-  if (typeof window === 'undefined') {
-    throw new Error('Pi Agent storage is only available in the browser')
+const requestToPromise = <T>(request: IDBRequest<T>) =>
+  new Promise<T>((resolve, reject) => {
+    request.addEventListener('success', () => resolve(request.result))
+    request.addEventListener('error', () => reject(request.error ?? new Error('IndexedDB request failed')))
+  })
+
+const transactionDone = (transaction: IDBTransaction) =>
+  new Promise<void>((resolve, reject) => {
+    transaction.addEventListener('complete', () => resolve())
+    transaction.addEventListener('abort', () => reject(transaction.error ?? new Error('IndexedDB transaction aborted')))
+    transaction.addEventListener('error', () => reject(transaction.error ?? new Error('IndexedDB transaction failed')))
+  })
+
+const openVbiAgentDatabase = () =>
+  new Promise<IDBDatabase>((resolve, reject) => {
+    const request = indexedDB.open(databaseName, databaseVersion)
+
+    request.addEventListener('upgradeneeded', () => {
+      const db = request.result
+      if (!db.objectStoreNames.contains(conversationStoreName)) {
+        const store = db.createObjectStore(conversationStoreName, { keyPath: 'session.id' })
+        store.createIndex('lastModified', 'metadata.lastModified')
+      }
+    })
+    request.addEventListener('success', () => {
+      const db = request.result
+      db.addEventListener('versionchange', () => db.close())
+      resolve(db)
+    })
+    request.addEventListener('error', () => reject(request.error ?? new Error('Unable to open VBI Agent storage')))
+  })
+
+const createBrowserIndexedDBConversationDatabase = async (): Promise<VbiAgentConversationDatabase> => {
+  const db = await openVbiAgentDatabase()
+
+  const withStore = async <T>(
+    mode: IDBTransactionMode,
+    action: (store: IDBObjectStore) => Promise<T> | T,
+  ): Promise<T> => {
+    const transaction = db.transaction(conversationStoreName, mode)
+    const store = transaction.objectStore(conversationStoreName)
+    const result = await action(store)
+    await transactionDone(transaction)
+    return result
   }
 
-  storageSetup ??= (async () => {
-    const {
-      AppStorage,
-      CustomProvidersStore,
-      IndexedDBStorageBackend,
-      ProviderKeysStore,
-      SessionsStore,
-      SettingsStore,
-      setAppStorage,
-    } = await loadPiWebUIStorage()
+  return {
+    delete: (id) =>
+      withStore('readwrite', async (store) => {
+        await requestToPromise(store.delete(id))
+      }),
+    get: (id) => withStore('readonly', async (store) => (await requestToPromise(store.get(id))) ?? null),
+    getAll: () => withStore('readonly', (store) => requestToPromise(store.getAll())),
+    put: (record) =>
+      withStore('readwrite', async (store) => {
+        await requestToPromise(store.put(record))
+      }),
+  }
+}
 
-    const settings = new SettingsStore()
-    const providerKeys = new ProviderKeysStore()
-    const sessions = new SessionsStore()
-    const customProviders = new CustomProvidersStore()
-    const backend = new IndexedDBStorageBackend({
-      dbName: 'vbi-agent',
-      version: 1,
-      stores: [
-        settings.getConfig(),
-        providerKeys.getConfig(),
-        sessions.getConfig(),
-        SessionsStore.getMetadataConfig(),
-        customProviders.getConfig(),
-      ],
-    })
+let createIndexedDBConversationDatabase: VbiAgentIndexedDBFactory = createBrowserIndexedDBConversationDatabase
 
-    ;[settings, providerKeys, sessions, customProviders].forEach((store) => store.setBackend(backend))
+export const setVbiAgentIndexedDBFactoryForTests = (factory?: VbiAgentIndexedDBFactory) => {
+  createIndexedDBConversationDatabase = factory ?? createBrowserIndexedDBConversationDatabase
+}
 
-    const appStorage = new AppStorage(settings, providerKeys, sessions, customProviders, backend) as PiAgentStorage
-    setAppStorage(appStorage)
-    return appStorage
-  })()
+export const createVbiAgentStorage = (database: VbiAgentConversationDatabase): VbiAgentStorage => ({
+  conversations: {
+    delete: (id) => database.delete(id),
+    get: async (id) => (await database.get(id))?.session ?? null,
+    getAllMetadata: async () => (await database.getAll()).map((record) => record.metadata),
+    loadSession: async (id) => (await database.get(id))?.session ?? null,
+    rename: async (id, title) => {
+      const nextTitle = title.trim()
+      if (!nextTitle) return null
 
+      const record = await database.get(id)
+      if (!record) return null
+
+      const metadata: AgentConversationMetadata = {
+        ...record.metadata,
+        title: nextTitle,
+      }
+      const session: AgentConversationSession = {
+        ...record.session,
+        title: nextTitle,
+      }
+
+      await database.put({
+        ...record,
+        metadata,
+        session,
+      })
+
+      return metadata
+    },
+    save: async (session, metadata) => {
+      await database.put({
+        metadata,
+        schemaVersion: 1,
+        session,
+      })
+    },
+  },
+})
+
+export const setupVbiAgentIndexedDBStorage = async (): Promise<VbiAgentStorage> => {
+  if (typeof window === 'undefined') {
+    throw new Error('VBI Agent storage is only available in the browser')
+  }
+
+  storageSetup ??= createIndexedDBConversationDatabase().then(createVbiAgentStorage)
   return storageSetup
 }
 
-export const listAgentConversations = async (storage: PiAgentStorage) =>
-  sortAgentConversations((await storage.sessions.getAllMetadata()).map((item) => mapAgentConversationMetadata(item)))
+export const listAgentConversations = async (storage: VbiAgentStorage) =>
+  sortAgentConversations(
+    (await storage.conversations.getAllMetadata()).map((item) => mapAgentConversationMetadata(item)),
+  )
 
-export const loadAgentConversation = async (storage: PiAgentStorage, id: string) =>
-  (await storage.sessions.loadSession(id)) ?? storage.sessions.get(id)
+export const deleteAgentConversation = (storage: VbiAgentStorage, id: string) => storage.conversations.delete(id)
+
+export const loadAgentConversation = async (storage: VbiAgentStorage, id: string) =>
+  (await storage.conversations.loadSession(id)) ?? storage.conversations.get(id)
+
+export const renameAgentConversation = (storage: VbiAgentStorage, id: string, title: string) =>
+  storage.conversations.rename(id, title)
 
 export const saveAgentConversation = async (
-  storage: PiAgentStorage,
+  storage: VbiAgentStorage,
   { createdAt, fallbackTitle, id, lastModified, state, title }: SaveAgentConversationInput,
 ) => {
   const now = new Date().toISOString()
@@ -334,10 +380,10 @@ export const saveAgentConversation = async (
     lastModified: nextLastModified,
   }
 
-  await storage.sessions.save(data, metadata)
+  await storage.conversations.save(data, metadata)
   return metadata
 }
 
-export const resetPiAgentStorageForTests = () => {
+export const resetVbiAgentStorageForTests = () => {
   storageSetup = undefined
 }

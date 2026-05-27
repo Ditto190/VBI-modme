@@ -1,100 +1,100 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 
-const setAppStorage = rs.fn()
-const createdBackends: unknown[] = []
-
-class MockAppStorage {
-  constructor(
-    readonly settings: unknown,
-    readonly providerKeys: unknown,
-    readonly sessions: unknown,
-    readonly customProviders: unknown,
-    readonly backend: unknown,
-  ) {}
+type RecordValue = {
+  metadata: { id: string; lastModified: string; title?: string }
+  session: { id: string; title?: string }
 }
 
-class MockIndexedDBStorageBackend {
-  constructor(readonly config: unknown) {
-    createdBackends.push(config)
+const createMemoryDatabase = () => {
+  const records = new Map<string, RecordValue>()
+
+  return {
+    database: {
+      get: rs.fn(async (id: string) => records.get(id) ?? null),
+      getAll: rs.fn(async () => [...records.values()]),
+      put: rs.fn(async (record: RecordValue) => {
+        records.set(record.session.id, record)
+      }),
+      delete: rs.fn(async (id: string) => {
+        records.delete(id)
+      }),
+    },
+    records,
   }
 }
 
-class MockSettingsStore {
-  getConfig() {
-    return { name: 'settings' }
-  }
-  setBackend = rs.fn()
-}
-
-class MockProviderKeysStore {
-  getConfig() {
-    return { name: 'provider-keys' }
-  }
-  setBackend = rs.fn()
-}
-
-class MockSessionsStore {
-  static getMetadataConfig() {
-    return { name: 'sessions-metadata', keyPath: 'id' }
-  }
-  getConfig() {
-    return { name: 'sessions', keyPath: 'id' }
-  }
-  setBackend = rs.fn()
-}
-
-class MockCustomProvidersStore {
-  getConfig() {
-    return { name: 'custom-providers' }
-  }
-  setBackend = rs.fn()
-}
-
-const loadMockPiWebUI = async () =>
-  ({
-    AppStorage: MockAppStorage,
-    CustomProvidersStore: MockCustomProvidersStore,
-    IndexedDBStorageBackend: MockIndexedDBStorageBackend,
-    ProviderKeysStore: MockProviderKeysStore,
-    SessionsStore: MockSessionsStore,
-    SettingsStore: MockSettingsStore,
-    setAppStorage,
-  }) as never
+let memory = createMemoryDatabase()
+const createDatabase = rs.fn(async () => memory.database)
 
 const {
   createAgentSessionMetadata,
+  deleteAgentConversation,
   extractAgentConversationPreview,
-  resetPiAgentStorageForTests,
-  setPiWebUIStorageLoaderForTests,
-  setupPiAgentIndexedDBStorage,
+  listAgentConversations,
+  renameAgentConversation,
+  resetVbiAgentStorageForTests,
+  saveAgentConversation,
+  setVbiAgentIndexedDBFactoryForTests,
+  setupVbiAgentIndexedDBStorage,
 } = await import('../src/views/agent/agent-storage')
 
 describe('agent storage', () => {
   beforeEach(() => {
     rs.clearAllMocks()
-    createdBackends.length = 0
-    setPiWebUIStorageLoaderForTests(loadMockPiWebUI)
-    resetPiAgentStorageForTests()
+    memory = createMemoryDatabase()
+    setVbiAgentIndexedDBFactoryForTests(createDatabase as never)
+    resetVbiAgentStorageForTests()
   })
 
-  test('initializes Pi Web UI storage with IndexedDB session stores once', async () => {
-    const first = await setupPiAgentIndexedDBStorage()
-    const second = await setupPiAgentIndexedDBStorage()
+  test('initializes VBI-owned IndexedDB storage once and persists conversations', async () => {
+    const first = await setupVbiAgentIndexedDBStorage()
+    const second = await setupVbiAgentIndexedDBStorage()
 
     expect(first).toBe(second)
-    expect(createdBackends).toHaveLength(1)
-    expect(createdBackends[0]).toMatchObject({
-      dbName: 'vbi-agent',
-      version: 1,
-      stores: [
-        { name: 'settings' },
-        { name: 'provider-keys' },
-        { name: 'sessions' },
-        { name: 'sessions-metadata' },
-        { name: 'custom-providers' },
-      ],
+    expect(createDatabase).toHaveBeenCalledTimes(1)
+
+    const metadata = await saveAgentConversation(first, {
+      createdAt: '2026-05-26T01:00:00.000Z',
+      fallbackTitle: 'New conversation',
+      id: 'conversation-1',
+      lastModified: '2026-05-26T01:02:00.000Z',
+      state: {
+        messages: [{ role: 'user', content: 'Build a revenue chart', timestamp: 1 }],
+        model: { id: 'test-model' },
+        thinkingLevel: 'off',
+      } as never,
     })
-    expect(setAppStorage).toHaveBeenCalledTimes(1)
+
+    expect(metadata).toMatchObject({ id: 'conversation-1', title: 'Build a revenue chart' })
+    expect(await listAgentConversations(first)).toMatchObject([{ id: 'conversation-1' }])
+    expect(memory.records.get('conversation-1')?.metadata.id).toBe('conversation-1')
+  })
+
+  test('renames and deletes persisted conversations', async () => {
+    const storage = await setupVbiAgentIndexedDBStorage()
+
+    await saveAgentConversation(storage, {
+      createdAt: '2026-05-26T01:00:00.000Z',
+      fallbackTitle: 'New conversation',
+      id: 'conversation-1',
+      lastModified: '2026-05-26T01:02:00.000Z',
+      state: {
+        messages: [{ role: 'user', content: 'Build a revenue chart', timestamp: 1 }],
+        model: { id: 'test-model' },
+        thinkingLevel: 'off',
+      } as never,
+    })
+
+    const renamed = await renameAgentConversation(storage, 'conversation-1', 'Renamed analysis')
+
+    expect(renamed).toMatchObject({ id: 'conversation-1', title: 'Renamed analysis' })
+    expect(memory.records.get('conversation-1')?.metadata.title).toBe('Renamed analysis')
+    expect(memory.records.get('conversation-1')?.session.title).toBe('Renamed analysis')
+
+    await deleteAgentConversation(storage, 'conversation-1')
+
+    expect(await listAgentConversations(storage)).toEqual([])
+    expect(memory.records.has('conversation-1')).toBe(false)
   })
 
   test('creates searchable session metadata from agent messages', () => {

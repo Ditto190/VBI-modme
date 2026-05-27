@@ -93,6 +93,16 @@ const buildProxyRequestOptions = (options: StreamProxyOptions) =>
     serializableOptionKeys.filter((key) => options[key] !== undefined).map((key) => [key, options[key]]),
   )
 
+const waitForNextPaint = () =>
+  new Promise<void>((resolve) => {
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(() => resolve())
+      return
+    }
+
+    setTimeout(resolve, 0)
+  })
+
 class ProxyMessageEventStream extends EventStream<AssistantMessageEvent, AssistantMessage> {
   constructor() {
     super(
@@ -206,6 +216,7 @@ export const streamProxy = (model: AgentModel, context: unknown, options: Stream
 
     try {
       options.signal?.addEventListener('abort', abortHandler)
+      await waitForNextPaint()
       const response = await fetch(`${options.proxyUrl}/api/stream`, {
         method: 'POST',
         headers: {

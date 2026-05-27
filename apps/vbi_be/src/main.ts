@@ -13,9 +13,11 @@ import { PrismaService } from './app/prisma.service'
 import { getCollaborationPort } from './common/collaboration'
 import { TransformInterceptor } from './common/interceptors/transform.interceptor'
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter'
+import { configureHttpBodyLimit } from './common/http-body-limit'
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule)
+  configureHttpBodyLimit(app)
 
   // 1. Normalize API prefix to 'api'
   app.setGlobalPrefix('api')

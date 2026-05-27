@@ -72,30 +72,3 @@ export const formatAgentContextUsage = (usage: AgentContextUsage) => {
 
   return `${used} / ${context} · ${percent}`
 }
-
-export const attachAgentUsageDisplay = (panel: HTMLElement, readState: () => AgentStateLike) => {
-  const sync = () => {
-    const editor = panel.querySelector('message-editor')
-    const stats = editor?.nextElementSibling instanceof HTMLElement ? editor.nextElementSibling : null
-    if (!stats) return
-
-    const text = formatAgentContextUsage(resolveAgentContextUsage(readState()))
-    if (stats.dataset.vbiAgentUsageText === text && stats.querySelector('.vbi-agent-context-usage')) return
-
-    stats.dataset.vbiAgentUsageText = text
-    stats.classList.add('vbi-agent-usage-stats')
-    const value = document.createElement('span')
-    value.className = 'vbi-agent-context-usage'
-    value.textContent = text
-    stats.replaceChildren(value)
-  }
-
-  const observer = new MutationObserver(sync)
-  observer.observe(panel, { childList: true, subtree: true })
-  requestAnimationFrame(sync)
-
-  return {
-    disconnect: () => observer.disconnect(),
-    refresh: sync,
-  }
-}

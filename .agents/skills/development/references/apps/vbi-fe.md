@@ -105,6 +105,51 @@ docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter 
   the frontend container, validate in the running Docker frontend so workspace
   dependency behavior matches the app runtime.
 
+## UI Design System Rules
+
+- Build frontend UI with Tailwind CSS utilities and shadcn/ui components. Do not
+  introduce CSS modules, page-specific stylesheet files, handwritten component
+  class systems, inline style objects, or raw Radix primitives when a shadcn
+  component or local shadcn-derived wrapper fits the job.
+- `apps/vbi_fe/components.json` is the source of truth for the UI stack:
+  `radix-nova`, Tailwind v4 CSS variables in `src/app/globals.css`, lucide
+  icons, RSC-enabled Next.js App Router, and UI components under
+  `src/components/ui`.
+- Add or update reusable UI by using the shadcn CLI from `apps/vbi_fe`, then
+  read the generated files and adapt them to local aliases and tokens. Do not
+  paste registry code blindly, manually fetch upstream component files, or
+  import a shadcn component that has not been added to `src/components/ui`.
+- Compose screens from existing shadcn primitives first: `Button`, `Input`,
+  `DropdownMenu`, `Tooltip`, `Drawer`, `Empty`, `Spinner`, `Toast`,
+  confirmation helpers, and any newly added local shadcn wrappers. If a missing
+  primitive would be reused, add it through shadcn instead of inventing a one-off
+  styled `div`.
+- Tailwind classes own layout, spacing, responsive behavior, state styling, and
+  small visual adjustments. Keep class names complete and static; use `cn()` for
+  conditional classes and `tailwind-merge`-compatible composition instead of
+  string-built utilities.
+- Use semantic design tokens and shadcn variables for color, radius, border,
+  focus, background, muted text, destructive actions, and surface treatment.
+  Avoid raw hex values, hard-coded dark-mode overrides, and one-off color scales
+  in components.
+- Keep `src/app/globals.css` small and token-oriented: Tailwind import, shadcn
+  theme variables, global reset/body rules, and rare third-party integration
+  fixes. When a style can live as Tailwind classes on a component, do not add a
+  global selector.
+- Prefer `gap-*` over `space-*`, `size-*` over paired width/height utilities,
+  `truncate` over manual truncation classes, and lucide icons through the local
+  icon exports. Icons inside buttons should be icon-sized by the button/component
+  contract, not by ad hoc SVG CSS.
+- Forms and option controls should use shadcn form/input/select/toggle patterns
+  once those components exist locally. Keep labels, descriptions, invalid state,
+  disabled state, and keyboard focus accessible instead of styling raw controls.
+- Operational UI should remain compact, quiet, and efficient: dense but scannable
+  tables, restrained borders, stable toolbars, predictable drawers, clear empty
+  and loading states, and subtle motion that respects `prefers-reduced-motion`.
+- Do not build nested card layouts for app chrome or report bodies. Use cards
+  only for repeated items, contained tools, dialogs, or intentionally framed
+  panels; sections and workspaces should be unframed layouts or full-width bands.
+
 ## Architecture Habits
 
 - Treat `chart`, `insight`, and `report` management pages as three adapters over
@@ -130,6 +175,33 @@ docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter 
 - Avoid barrel exports that expose internal helpers just because they exist.
   Public exports from `src/i18n`, `src/theme`, `src/models`, and `src/types`
   should be intentionally consumed by app modules.
+
+## Agent UI Rules
+
+- Agent conversation UI should be built on the agent UI libraries already in the
+  app: `@assistant-ui/react` for thread, message, composer, runtime-provider, and
+  external-store adapter behavior; `@earendil-works/pi-agent-core` and
+  `@earendil-works/pi-ai` for agent message/runtime semantics.
+- Do not hand-roll chat protocols, scroll-to-bottom behavior, composer
+  submission/cancel flows, message status mapping, or tool-call rendering when
+  they can be represented through assistant-ui primitives and the existing
+  `src/views/agent/*` runtime/storage modules.
+- Agent page shells, sidebars, model/config controls, conversation lists,
+  popovers, confirmations, status badges, loading states, and error feedback
+  should use shadcn components plus Tailwind utilities. Keep assistant-ui
+  primitives for the chat surface and shadcn primitives for product chrome.
+- Keep agent runtime, storage, stream proxying, and Provider/Builder tool wiring
+  outside React presentation components. React components should receive
+  projections, commands, and adapter state instead of mutating agent internals or
+  rebuilding resource DSL payloads.
+- Tool calls, reasoning parts, attachments, usage indicators, abort/retry, and
+  partial streaming states are first-class Agent UI states. Model them through
+  typed adapters and accessible disclosure/status components; do not hide them
+  in console-only diagnostics or toast loops.
+- Agent styling must follow the same Tailwind/shadcn token rules as the rest of
+  `vbi_fe`. If legacy `.vbi-agent-*` global classes are touched, prefer moving
+  the affected styling into component-level Tailwind classes or a local shadcn
+  wrapper unless a third-party primitive truly requires a global override.
 
 ## UI And Interaction Notes
 
@@ -159,8 +231,9 @@ docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter 
   support double-click and a hover-only edit icon. Avoid adding a second full-row
   input for the same title.
 - Loading states should be scoped to the component or panel that is loading.
-  Avoid global overlays for Standard/chart rendering, report panels, or detail
-  drawers unless the whole app is genuinely blocked.
+  Use shadcn `Skeleton`, `Spinner`, `Empty`, and inline status affordances where
+  they fit. Avoid global overlays for Standard/chart rendering, report panels,
+  or detail drawers unless the whole app is genuinely blocked.
 - Prefer subtle animation for open/close, popovers, search focus, hover actions,
   and page transitions. Respect `prefers-reduced-motion` for global motion.
 
@@ -180,11 +253,9 @@ docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter 
   constrained with `height: 100%`, `min-height: 0`, and `overflow: hidden`; the
   inner Standard app uses `demo-app-*` classes and expects the parent to provide
   a bounded height.
-- Global drawer CSS in `src/app/globals.css` is imported after report-detail
-  CSS. Drawer-specific overrides must have enough specificity, for example
-  `.ui-drawer-body.report-detail-chart-drawer-body`, otherwise the global
-  `.ui-drawer-body` padding and `overflow: auto` rules can reintroduce unwanted
-  scrollbars in full-height editors.
+- Drawer-specific layout should be expressed through shadcn drawer composition
+  and Tailwind classes on the drawer body/content. Avoid adding global drawer CSS
+  selectors unless a third-party embedded runtime requires an integration fix.
 - When checking report detail regressions, start from
   `http://localhost:3000/manage/reports`, then enter the report detail through
   the list action. This catches lifecycle issues that direct detail URLs can

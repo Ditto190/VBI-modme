@@ -30,8 +30,12 @@ const createSseResponse = (events: unknown[]) => {
 }
 
 describe('streamProxy', () => {
+  let restoreRequestAnimationFrame: (() => void) | undefined
+
   beforeEach(() => {
     rs.clearAllMocks()
+    restoreRequestAnimationFrame?.()
+    restoreRequestAnimationFrame = undefined
   })
 
   test('converts backend SSE text events into Pi assistant message events', async () => {
@@ -103,5 +107,48 @@ describe('streamProxy', () => {
       reason: 'error',
       type: 'error',
     })
+  })
+
+  test('defers the proxy request until the browser can paint running state', async () => {
+    const originalRequestAnimationFrame = globalThis.requestAnimationFrame
+    let nextFrame: FrameRequestCallback | undefined
+    globalThis.requestAnimationFrame = rs.fn((callback: FrameRequestCallback) => {
+      nextFrame = callback
+      return 1
+    }) as typeof requestAnimationFrame
+    restoreRequestAnimationFrame = () => {
+      globalThis.requestAnimationFrame = originalRequestAnimationFrame
+    }
+
+    globalThis.fetch = rs.fn(async () =>
+      createSseResponse([
+        {
+          type: 'done',
+          reason: 'stop',
+          usage: {
+            cacheRead: 0,
+            cacheWrite: 0,
+            cost: { cacheRead: 0, cacheWrite: 0, input: 0, output: 0, total: 0 },
+            input: 1,
+            output: 1,
+            totalTokens: 2,
+          },
+        },
+      ]),
+    ) as typeof fetch
+
+    const stream = streamProxy(model, [{ role: 'user', content: 'large prompt' }], {
+      authToken: 'token-1',
+      proxyUrl: '/api/v1/agent',
+    })
+
+    await Promise.resolve()
+    expect(fetch).not.toHaveBeenCalled()
+
+    nextFrame?.(0)
+    const events = await collectStreamEvents(stream)
+
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(events.at(-1)).toMatchObject({ type: 'done' })
   })
 })

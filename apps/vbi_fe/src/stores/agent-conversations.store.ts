@@ -1,8 +1,10 @@
 import { create } from 'zustand'
 import {
+  deleteAgentConversation,
   listAgentConversations,
   mapAgentConversationMetadata,
-  setupPiAgentIndexedDBStorage,
+  renameAgentConversation,
+  setupVbiAgentIndexedDBStorage,
   sortAgentConversations,
   type AgentConversationMetadata,
   type AgentConversationStatus,
@@ -16,8 +18,11 @@ type AgentConversationsState = {
   isInitialized: boolean
   isLoading: boolean
   newConversationRequestSeq: number
+  clearActiveConversation(): void
+  deleteConversation(id: string): Promise<void>
   initialize(): Promise<AgentConversationSummary[]>
   markNewConversationRequestHandled(seq: number): void
+  renameConversation(id: string, title: string): Promise<void>
   refresh(): Promise<AgentConversationSummary[]>
   requestNewConversation(): void
   selectConversation(id: string): void
@@ -50,6 +55,22 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
   isInitialized: false,
   isLoading: false,
   newConversationRequestSeq: 0,
+  clearActiveConversation: () => {
+    set((state) => (state.activeConversationId ? { activeConversationId: '' } : state))
+  },
+  deleteConversation: async (id) => {
+    const storage = await setupVbiAgentIndexedDBStorage()
+    await deleteAgentConversation(storage, id)
+    set((state) => {
+      const conversations = state.conversations.filter((conversation) => conversation.id !== id)
+
+      return {
+        activeConversationId:
+          state.activeConversationId === id ? (conversations[0]?.id ?? '') : state.activeConversationId,
+        conversations,
+      }
+    })
+  },
   initialize: async () => {
     const state = get()
     if (state.isInitialized) return state.conversations
@@ -57,7 +78,7 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
 
     set({ isLoading: true })
     try {
-      const storage = await setupPiAgentIndexedDBStorage()
+      const storage = await setupVbiAgentIndexedDBStorage()
       const conversations = withPreservedStatuses(await listAgentConversations(storage), get().conversations)
       set({ conversations, isInitialized: true, isLoading: false })
       return conversations
@@ -72,10 +93,32 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
     }))
   },
   refresh: async () => {
-    const storage = await setupPiAgentIndexedDBStorage()
+    const storage = await setupVbiAgentIndexedDBStorage()
     const conversations = withPreservedStatuses(await listAgentConversations(storage), get().conversations)
     set({ conversations, isInitialized: true })
     return conversations
+  },
+  renameConversation: async (id, title) => {
+    const nextTitle = title.trim()
+    if (!nextTitle) return
+
+    const storage = await setupVbiAgentIndexedDBStorage()
+    const metadata = await renameAgentConversation(storage, id, nextTitle)
+    if (!metadata) return
+
+    set((state) => ({
+      conversations: sortAgentConversations(
+        state.conversations.map((conversation) =>
+          conversation.id === id
+            ? {
+                ...conversation,
+                ...metadata,
+                status: conversation.status,
+              }
+            : conversation,
+        ),
+      ),
+    }))
   },
   requestNewConversation: () => {
     set((state) => ({
@@ -83,7 +126,7 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
     }))
   },
   selectConversation: (id) => {
-    set({ activeConversationId: id })
+    set((state) => (state.activeConversationId === id ? state : { activeConversationId: id }))
   },
   setConversationStatus: (id, status) => {
     set((state) => ({

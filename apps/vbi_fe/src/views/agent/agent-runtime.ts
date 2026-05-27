@@ -1,16 +1,17 @@
-/* 'use client' keeps Pi Web UI's browser-only modules out of the Next server graph. */
+/* 'use client' keeps Pi Agent's browser runtime out of the Next server graph. */
 'use client'
 
+import type { AgentMessage } from '@earendil-works/pi-agent-core'
 import type { AgentOptions, VBIAgent } from '@visactor/vbi-agent'
 import { createAgentProviderKit } from './agent-provider-kit'
 import {
   loadAgentConversation,
   saveAgentConversation,
-  setupPiAgentIndexedDBStorage,
+  setupVbiAgentIndexedDBStorage,
   type AgentConversationMetadata,
   type AgentConversationSession,
   type AgentConversationStatus,
-  type PiAgentStorage,
+  type VbiAgentStorage,
 } from './agent-storage'
 import {
   resolveAgentModel,
@@ -19,14 +20,26 @@ import {
   type AgentModelInput,
 } from './agent-model-config'
 import { streamProxy } from './agent-stream-proxy'
-import { attachAgentUsageDisplay } from './agent-usage-display'
 
-export type AgentChatPanelRuntime = {
+export type AgentConversationRuntimeSnapshot = {
+  errorMessage?: string
+  isRunning: boolean
+  messages: AgentMessage[]
+}
+
+export type AgentConversationRuntime = {
   agent: VBIAgent
   conversationId: string
   destroy(): void
-  persist(): Promise<AgentConversationMetadata>
-  panel: HTMLElement
+  getSnapshot(): AgentConversationRuntimeSnapshot
+  persist(options?: AgentConversationPersistOptions): Promise<AgentConversationMetadata>
+  send(input: string): Promise<void>
+  setTitle(title: string): void
+  subscribe(listener: (snapshot: AgentConversationRuntimeSnapshot) => void): () => void
+}
+
+export type AgentConversationPersistOptions = {
+  touch?: boolean
 }
 
 export type AgentConversationRuntimeUpdate = {
@@ -35,17 +48,12 @@ export type AgentConversationRuntimeUpdate = {
   status: AgentConversationStatus
 }
 
-type CreateAgentChatPanelOptions = {
+type CreateAgentConversationRuntimeOptions = {
   conversationId?: string
   fallbackTitle?: string
   onConversationChange?: (update: AgentConversationRuntimeUpdate) => void
   session?: AgentConversationSession | null
-  storage?: PiAgentStorage
-}
-
-type AgentPanelElement = HTMLElement & {
-  agentInterface?: { requestUpdate?: () => void }
-  requestUpdate?: () => void
+  storage?: VbiAgentStorage
 }
 
 const defaultProviderApiBaseUrl = '/api/v1'
@@ -66,21 +74,22 @@ const readPublicAgentConfig = async (): Promise<AgentModelInput> => {
   }
 }
 
-export const createAgentChatPanel = async ({
+const getRuntimeMessages = (agent: VBIAgent): AgentMessage[] => [
+  ...agent.state.messages,
+  ...(agent.state.streamingMessage ? [agent.state.streamingMessage] : []),
+]
+
+export const createAgentConversationRuntime = async ({
   conversationId = crypto.randomUUID(),
   fallbackTitle = 'New Conversation',
   onConversationChange,
   session = null,
   storage,
-}: CreateAgentChatPanelOptions = {}): Promise<AgentChatPanelRuntime> => {
-  const piStorage = storage ?? (await setupPiAgentIndexedDBStorage())
-  const loadedSession = session ?? (await loadAgentConversation(piStorage, conversationId))
+}: CreateAgentConversationRuntimeOptions = {}): Promise<AgentConversationRuntime> => {
+  const vbiStorage = storage ?? (await setupVbiAgentIndexedDBStorage())
+  const loadedSession = session ?? (await loadAgentConversation(vbiStorage, conversationId))
 
-  const [{ ChatPanel }, { VBIAgent }] = await Promise.all([
-    import('../../../node_modules/@earendil-works/pi-web-ui/dist/ChatPanel.js'),
-    import('../../../node_modules/@visactor/vbi-agent/dist/index.js'),
-  ])
-
+  const { VBIAgent } = await import('../../../node_modules/@visactor/vbi-agent/dist/index.js')
   const publicConfig = await readPublicAgentConfig()
   const modelInput = resolveAgentModelInput({
     provider: process.env.NEXT_PUBLIC_AGENT_PROVIDER ?? publicConfig.provider,
@@ -114,57 +123,79 @@ export const createAgentChatPanel = async ({
     },
     providerKit.workspace,
   )
-  const baseTools = agent.state.tools
-  const panel = new ChatPanel()
-  panel.classList.add('vbi-pi-chat-panel')
-  const panelRefreshTarget = panel as AgentPanelElement
-  let usageDisplay: ReturnType<typeof attachAgentUsageDisplay> | null = null
   const createdAt = loadedSession?.createdAt ?? new Date().toISOString()
-  const persist = async () =>
-    saveAgentConversation(piStorage, {
+  let lastModified = loadedSession?.lastModified ?? createdAt
+  let hasStoredConversation = loadedSession !== null
+  let conversationTitle = loadedSession?.messages.length ? loadedSession.title : undefined
+  const listeners = new Set<(snapshot: AgentConversationRuntimeSnapshot) => void>()
+  const getSnapshot = (): AgentConversationRuntimeSnapshot => ({
+    errorMessage: agent.state.errorMessage,
+    isRunning: agent.state.isStreaming,
+    messages: getRuntimeMessages(agent),
+  })
+  const emit = () => {
+    const snapshot = getSnapshot()
+    listeners.forEach((listener) => listener(snapshot))
+  }
+  const persist = async ({ touch = true }: AgentConversationPersistOptions = {}) => {
+    const metadata = await saveAgentConversation(vbiStorage, {
       createdAt,
       fallbackTitle,
       id: conversationId,
+      lastModified: touch ? undefined : lastModified,
       state: agent.state,
-      title: loadedSession?.messages.length ? loadedSession.title : undefined,
+      title: conversationTitle,
     })
+    lastModified = metadata.lastModified
+    hasStoredConversation = true
+    return metadata
+  }
   const notify = (status: AgentConversationStatus, metadata?: AgentConversationMetadata) => {
     onConversationChange?.({ id: conversationId, metadata, status })
   }
-  const refreshPanel = () => {
-    agent.state.messages = [...agent.state.messages]
-    panelRefreshTarget.requestUpdate?.()
-    panelRefreshTarget.agentInterface?.requestUpdate?.()
-    usageDisplay?.refresh()
-  }
-  const unsubscribeMessageRefresh = agent.subscribe(async (event) => {
+  const unsubscribeAgent = agent.subscribe((event) => {
     if (event.type === 'agent_start') notify('running')
-    if (event.type === 'message_end') refreshPanel()
+    emit()
+
     if (event.type === 'agent_end') {
       void agent.waitForIdle().then(async () => {
-        refreshPanel()
+        emit()
         notify('completed', await persist())
       })
     }
   })
 
-  await panel.setAgent(agent, {
-    onBeforeSend: async () => notify('running'),
-    onApiKeyRequired: async () => true,
-    toolsFactory: () => baseTools,
-  })
-  usageDisplay = attachAgentUsageDisplay(panel, () => agent.state)
-
   return {
     agent,
     conversationId,
-    panel,
+    getSnapshot,
     persist,
+    send: async (input: string) => {
+      const prompt = input.trim()
+      if (!prompt) return
+      if (agent.state.isStreaming) {
+        throw new Error('Agent is already processing a prompt')
+      }
+
+      notify('running')
+      if (!hasStoredConversation) {
+        notify('running', await persist())
+      }
+      emit()
+      await agent.prompt(prompt)
+    },
+    setTitle: (title: string) => {
+      conversationTitle = title.trim() || undefined
+    },
+    subscribe: (listener) => {
+      listeners.add(listener)
+      listener(getSnapshot())
+      return () => listeners.delete(listener)
+    },
     destroy: () => {
-      usageDisplay?.disconnect()
-      unsubscribeMessageRefresh()
+      listeners.clear()
+      unsubscribeAgent()
       agent.abort()
-      panel.remove()
     },
   }
 }

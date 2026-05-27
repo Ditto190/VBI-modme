@@ -1,23 +1,34 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { BarChart3, ChevronDown, ChevronRight, FileText, FolderKanban, Lightbulb, Plus } from '../components/ui/icons'
+import {
+  BarChart3,
+  FileText,
+  FolderKanban,
+  Lightbulb,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Plus,
+} from '../components/ui/icons'
+import { Tooltip } from '../components/ui/tooltip'
 import { useTranslation } from '../i18n'
 import { useAgentConversationsStore } from '../stores/agent-conversations.store'
 import { useNavigationStore } from '../stores/navigation.store'
 import { AgentConversationSidebarSection } from './agent/AgentConversationSidebarSection'
+import { ManageSidebarButton, ManageSidebarGroup, manageSidebarChildListClassName } from './ManageSidebarNav'
 import { ManagePreferences } from './manage-resource/ManagePreferences'
 
-const navButtonClassName =
-  'group flex h-8 w-full cursor-pointer items-center gap-2 rounded-md border border-transparent bg-transparent px-2.5 text-left text-[13px] font-medium text-[var(--vbi-text-muted)] transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] data-[active=true]:bg-[var(--vbi-active-bg)] data-[active=true]:text-[var(--vbi-text-strong)] data-[active=true]:shadow-[inset_2px_0_0_var(--vbi-primary)] max-[720px]:w-auto max-[720px]:shrink-0'
+const sidebarToggleButtonClassName =
+  'grid h-8 w-8 shrink-0 cursor-pointer place-items-center rounded-md border border-transparent bg-transparent text-[var(--vbi-text-muted)] transition-[background-color,border-color,color,box-shadow] duration-150 ease-out hover:border-[var(--vbi-border)] hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-primary)]/35'
 
 export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
   const pathname = useNavigationStore((state) => state.pathname)
   const go = useNavigationStore((state) => state.go)
-  const requestNewConversation = useAgentConversationsStore((state) => state.requestNewConversation)
+  const clearActiveConversation = useAgentConversationsStore((state) => state.clearActiveConversation)
+  const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
+  const conversations = useAgentConversationsStore((state) => state.conversations)
   const { t } = useTranslation()
-  const [resourcesExpanded, setResourcesExpanded] = useState(false)
   const resourceNavItems = [
     {
       href: '/manage/reports',
@@ -36,69 +47,110 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
     },
   ]
   const isResourcePath = resourceNavItems.some((item) => pathname === item.href)
+  const [resourcesExpanded, setResourcesExpanded] = useState(isResourcePath)
+  const [sidebarHidden, setSidebarHidden] = useState(false)
+  const isAgentPath = pathname === '/agent' || pathname === '/manage/agent' || pathname.startsWith('/agent/')
+  const isNewConversationPath = pathname === '/agent' || pathname === '/manage/agent'
+  const routeConversationId = pathname.startsWith('/agent/') ? pathname.slice('/agent/'.length).split('/')[0] : ''
+  const routeConversation = routeConversationId
+    ? conversations.find((conversation) => conversation.id === routeConversationId)
+    : undefined
+  const activeConversation = activeConversationId
+    ? conversations.find((conversation) => conversation.id === activeConversationId)
+    : undefined
+  const currentConversationTitle = routeConversation?.title ?? activeConversation?.title ?? t('nav.newConversation')
+
+  useEffect(() => {
+    if (isResourcePath) {
+      setResourcesExpanded(true)
+    }
+  }, [isResourcePath])
 
   const handleNewConversation = () => {
-    requestNewConversation()
-    go('/manage/agent')
+    clearActiveConversation()
+    go('/agent')
   }
 
   return (
     <div className='flex min-h-screen bg-[var(--vbi-bg-solid)] text-[var(--vbi-text)] transition-colors duration-300 max-[720px]:flex-col'>
-      <aside className='vbi-static-sidebar sticky top-0 flex h-screen w-52 shrink-0 flex-col border-r border-[var(--vbi-border)] bg-[var(--vbi-sider)] transition-colors duration-300 max-[720px]:relative max-[720px]:h-auto max-[720px]:w-full max-[720px]:border-r-0 max-[720px]:border-b'>
-        <div className='flex flex-col gap-1 px-4 pb-3 pt-4 max-[720px]:pb-2.5'>
-          <div className='text-sm font-bold leading-none text-[var(--vbi-text-strong)]'>{t('app.brand.title')}</div>
-          <div className='text-[11px] text-[var(--vbi-text-muted)]'>{t('app.brand.meta')}</div>
-        </div>
-        <nav
-          className='grid gap-1 px-2 max-[720px]:flex max-[720px]:gap-2 max-[720px]:overflow-x-auto max-[720px]:px-3 max-[720px]:pb-3'
-          aria-label={t('app.nav.primary')}
-        >
-          <button className={navButtonClassName} type='button' onClick={handleNewConversation}>
-            <span className='grid h-4 w-4 shrink-0 place-items-center'>
-              <Plus className='h-4 w-4' />
-            </span>
-            <span>{t('nav.newConversation')}</span>
-          </button>
-          <div className='grid gap-1 max-[720px]:contents'>
-            <button
-              className={navButtonClassName}
-              aria-expanded={resourcesExpanded}
-              data-active={isResourcePath}
-              type='button'
-              onClick={() => setResourcesExpanded((expanded) => !expanded)}
+      {sidebarHidden ? null : (
+        <aside className='vbi-static-sidebar sticky top-0 flex h-screen w-[300px] shrink-0 flex-col border-r border-[var(--vbi-border)] bg-[var(--vbi-sider)] transition-colors duration-300 max-[720px]:relative max-[720px]:h-auto max-[720px]:w-full max-[720px]:border-r-0 max-[720px]:border-b'>
+          <div className='flex h-11 shrink-0 items-center justify-end px-2 pt-3'>
+            <Tooltip side='right' title='Hide Sidebar'>
+              <button
+                aria-label='Hide Sidebar'
+                className={sidebarToggleButtonClassName}
+                type='button'
+                onClick={() => setSidebarHidden(true)}
+              >
+                <PanelLeftClose className='h-4 w-4' />
+              </button>
+            </Tooltip>
+          </div>
+          <nav
+            className='grid gap-1 px-2 pt-1 max-[720px]:flex max-[720px]:gap-2 max-[720px]:overflow-x-auto max-[720px]:px-3 max-[720px]:pb-3 max-[720px]:pt-1'
+            aria-label={t('app.nav.primary')}
+          >
+            <ManageSidebarButton
+              active={isNewConversationPath}
+              icon={<Plus className='h-4 w-4' />}
+              onClick={handleNewConversation}
             >
-              <span className='grid h-4 w-4 shrink-0 place-items-center'>
-                <FolderKanban className='h-4 w-4' />
-              </span>
-              <span className='min-w-0 flex-1'>{t('nav.resources')}</span>
-              <span className='grid h-4 w-4 shrink-0 place-items-center text-[var(--vbi-placeholder)]'>
-                {resourcesExpanded ? <ChevronDown className='h-3.5 w-3.5' /> : <ChevronRight className='h-3.5 w-3.5' />}
-              </span>
-            </button>
-            {resourcesExpanded ? (
-              <div className='grid gap-1 pl-3 max-[720px]:contents'>
+              {t('nav.newConversation')}
+            </ManageSidebarButton>
+            <ManageSidebarGroup
+              active={isResourcePath}
+              expanded={resourcesExpanded}
+              icon={<FolderKanban className='h-4 w-4' />}
+              label={t('nav.resources')}
+              onToggle={() => setResourcesExpanded((expanded) => !expanded)}
+            >
+              <div className={manageSidebarChildListClassName}>
                 {resourceNavItems.map((item) => (
-                  <button
+                  <ManageSidebarButton
+                    active={pathname === item.href}
+                    icon={item.icon}
                     key={item.href}
-                    className={navButtonClassName}
-                    data-active={pathname === item.href}
-                    type='button'
+                    tabIndex={resourcesExpanded ? undefined : -1}
                     onClick={() => go(item.href)}
                   >
-                    <span className='grid h-4 w-4 shrink-0 place-items-center'>{item.icon}</span>
-                    <span>{item.label}</span>
-                  </button>
+                    {item.label}
+                  </ManageSidebarButton>
                 ))}
               </div>
-            ) : null}
-          </div>
-        </nav>
-        <AgentConversationSidebarSection />
-        <ManagePreferences />
-      </aside>
-      <main className='vbi-motion-presence w-full min-w-0 bg-transparent px-5 py-[18px] max-[720px]:w-screen max-[720px]:max-w-full max-[720px]:px-4 max-[720px]:py-4'>
-        {children}
-      </main>
+            </ManageSidebarGroup>
+          </nav>
+          <AgentConversationSidebarSection />
+          <ManagePreferences />
+        </aside>
+      )}
+      <section className='relative flex min-w-0 flex-1 flex-col'>
+        <div className='pointer-events-none absolute left-5 top-3 z-20 flex h-8 max-w-[calc(100%-40px)] items-center gap-2 max-[720px]:left-4'>
+          {sidebarHidden ? (
+            <Tooltip side='right' title='Show Sidebar'>
+              <button
+                aria-label='Show Sidebar'
+                className={`${sidebarToggleButtonClassName} pointer-events-auto border-[var(--vbi-border)] bg-[var(--vbi-bg-solid)] shadow-[0_6px_18px_rgba(15,23,42,0.08)]`}
+                type='button'
+                onClick={() => setSidebarHidden(false)}
+              >
+                <PanelLeftOpen className='h-4 w-4' />
+              </button>
+            </Tooltip>
+          ) : null}
+          {isAgentPath ? (
+            <span
+              className='min-w-0 max-w-[min(520px,calc(100vw-120px))] truncate text-[13px] font-medium leading-8 text-[var(--vbi-text-muted)]'
+              title={currentConversationTitle}
+            >
+              {currentConversationTitle}
+            </span>
+          ) : null}
+        </div>
+        <main className='vbi-motion-presence w-full min-w-0 flex-1 bg-transparent px-5 py-[18px] max-[720px]:w-screen max-[720px]:max-w-full max-[720px]:px-4 max-[720px]:py-4'>
+          {children}
+        </main>
+      </section>
     </div>
   )
 }
