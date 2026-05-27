@@ -53,27 +53,12 @@ import type {
   AgentConversationRuntimeUpdate,
 } from './agent/agent-runtime'
 import { formatAgentContextUsage, formatCompactTokenCount, resolveAgentContextUsage } from './agent/agent-usage-display'
+import { createAgentConversationRoute, readAgentConversationRouteId } from './manage-sidebar-routes'
 
 const emptySnapshot: AgentConversationRuntimeSnapshot = {
   isRunning: false,
   messages: [],
 }
-
-const agentConversationRoutePrefix = '/agent/'
-
-const readAgentRouteConversationId = (pathname: string) => {
-  if (!pathname.startsWith(agentConversationRoutePrefix)) return ''
-
-  const segment = pathname.slice(agentConversationRoutePrefix.length).split('/')[0] ?? ''
-  try {
-    return decodeURIComponent(segment)
-  } catch {
-    return segment
-  }
-}
-
-const createAgentConversationRoute = (conversationId: string) =>
-  `${agentConversationRoutePrefix}${encodeURIComponent(conversationId)}`
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -775,7 +760,7 @@ export const AgentPage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [storageReady, setStorageReady] = useState(false)
   const { t } = useTranslation()
-  const routeConversationId = useMemo(() => readAgentRouteConversationId(pathname), [pathname])
+  const routeConversationId = useMemo(() => readAgentConversationRouteId(pathname), [pathname])
 
   const handleConversationChange = useCallback(
     (update: AgentConversationRuntimeUpdate) => {

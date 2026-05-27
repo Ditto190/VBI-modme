@@ -80,7 +80,10 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
     <div className='flex min-h-screen bg-[var(--vbi-bg-solid)] text-[var(--vbi-text)] transition-colors duration-300 max-[720px]:flex-col'>
       {sidebarHidden ? null : (
         <aside className='vbi-static-sidebar sticky top-0 flex h-screen w-[300px] shrink-0 flex-col border-r border-[var(--vbi-border)] bg-[var(--vbi-sider)] transition-colors duration-300 max-[720px]:relative max-[720px]:h-auto max-[720px]:w-full max-[720px]:border-r-0 max-[720px]:border-b'>
-          <div className='flex h-11 shrink-0 items-center justify-end px-2 pt-3'>
+          <div className='flex h-11 shrink-0 items-center justify-between px-4 pt-3'>
+            <div className='min-w-0 pl-1 text-[15px] font-semibold leading-8 text-[var(--vbi-text-strong)]'>
+              VBI
+            </div>
             <Tooltip side='right' title='Hide Sidebar'>
               <button
                 aria-label='Hide Sidebar'
