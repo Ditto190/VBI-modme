@@ -330,6 +330,32 @@ describe('AgentPage', () => {
     expect(screen.queryByText(/tail-marker/)).not.toBeInTheDocument()
   })
 
+  test('shows user message copy and sent time only on hover', async () => {
+    metadataList = [createMetadata('conversation-user-actions', '2026-05-26T01:00:00.000Z')]
+    useNavigationStore.setState({ pathname: '/agent/conversation-user-actions' })
+
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-user-actions' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes.get('conversation-user-actions')?.resolve(createRuntime('conversation-user-actions'))
+    })
+
+    const userMessage = await screen.findByText('panel:conversation-user-actions')
+    const messageRoot = userMessage.closest('.vbi-agent-message')
+    expect(messageRoot).toBeTruthy()
+    expect(screen.queryByRole('button', { name: /copy message/i })).not.toBeInTheDocument()
+
+    fireEvent.mouseEnter(messageRoot!)
+
+    expect(await screen.findByRole('button', { name: /copy message/i })).toBeInTheDocument()
+    expect(screen.getByLabelText(/sent at \d{2}:\d{2}/i)).toBeInTheDocument()
+  })
+
   test('groups resource tool calls and keeps technical tool result logs out of the transcript', async () => {
     metadataList = [createMetadata('conversation-tools', '2026-05-26T01:00:00.000Z')]
     useNavigationStore.setState({ pathname: '/agent/conversation-tools' })
@@ -431,8 +457,17 @@ describe('AgentPage', () => {
     expect(screen.queryByText('vbi_resource report.list completed')).not.toBeInTheDocument()
     expect(screen.getByRole('table')).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: '类型' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /copy response/i })).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: /copy response/i })).toHaveLength(1)
+    expect(screen.getByLabelText(/completed at \d{2}:\d{2}/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /message timing/i })).toHaveTextContent('120.00s')
+
+    const earlierAssistantMessage = screen.getByText('我来查看一下当前的数据资源数量。').closest('.vbi-agent-message')
+    expect(earlierAssistantMessage).toBeTruthy()
+
+    fireEvent.mouseEnter(earlierAssistantMessage!)
+
+    expect(await screen.findByText('10.00s')).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: /copy response/i })).toHaveLength(2)
   })
 
   test('does not reorder conversations just because the user switches between them', async () => {

@@ -387,20 +387,18 @@ body {
   font-size: 12px;
 }
 
-.vbi-agent-message-footer {
+.vbi-agent-message-actions {
   display: flex;
   min-height: 28px;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   margin-top: 9px;
   color: var(--vbi-text-muted);
   font-size: 12px;
 }
 
-.vbi-agent-message-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+.vbi-agent-message[data-role='user'] .vbi-agent-message-actions {
+  justify-content: flex-end;
 }
 
 .vbi-agent-message-copy {
@@ -440,6 +438,22 @@ body {
 .vbi-agent-message-copy[data-copied] span::after {
   content: 'Copied';
   font-size: 12px;
+}
+
+.vbi-agent-message-meta-control {
+  height: 28px;
+}
+
+.vbi-agent-message-timestamp {
+  display: inline-flex;
+  height: 28px;
+  align-items: center;
+  border-radius: 8px;
+  color: var(--vbi-text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  padding: 0 6px;
 }
 
 .vbi-agent-message-pending {

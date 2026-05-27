@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  ActionBarPrimitive,
   AssistantRuntimeProvider,
   AttachmentPrimitive,
   AuiIf,
@@ -28,7 +27,6 @@ import {
   CheckCircle2,
   ChevronDown,
   CircleAlert,
-  Copy,
   FileSearch,
   LoaderCircle,
   Plus,
@@ -36,7 +34,7 @@ import {
   Square,
   X,
 } from '../components/ui/icons'
-import { MessageTiming } from '../components/assistant-ui/message-timing'
+import { MessageActionBar } from '../components/assistant-ui/message-actions'
 import { Spinner } from '../components/ui/spinner'
 import { useTranslation, type Translate } from '../i18n'
 import { useAgentConversationsStore } from '../stores/agent-conversations.store'
@@ -258,6 +256,16 @@ const createAssistantMessageTiming = (messages: readonly AgentThreadMessage[], i
   }
 
   return undefined
+}
+
+const findLatestAssistantMessageId = (conversationId: string, messages: readonly AgentThreadMessage[]) => {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index]
+    if (readMessageRole(message) !== 'assistant') continue
+    return createMessageId(conversationId, message, index)
+  }
+
+  return ''
 }
 
 export const convertAgentMessageToThreadMessage =
@@ -531,27 +539,6 @@ const MessagePart = ({ part, role }: { part: EnrichedPartState; role: MessageSta
   return null
 }
 
-const AssistantMessageFooter = ({ message }: { message: MessageState }) => {
-  if (message.role !== 'assistant' || !message.isLast || message.status?.type !== 'complete') return null
-
-  return (
-    <div className='vbi-agent-message-footer'>
-      <ActionBarPrimitive.Root autohide='never' className='vbi-agent-message-actions' hideWhenRunning>
-        <ActionBarPrimitive.Copy
-          aria-label='Copy response'
-          className='vbi-agent-message-copy'
-          copiedDuration={1800}
-          type='button'
-        >
-          <Copy className='h-3.5 w-3.5' />
-          <span>Copy</span>
-        </ActionBarPrimitive.Copy>
-        <MessageTiming side='top' />
-      </ActionBarPrimitive.Root>
-    </div>
-  )
-}
-
 const AgentEmptyThread = ({ t }: { t: Translate }) => (
   <div className='vbi-agent-thread-empty'>
     <h1>{t('agent.emptyTitle')}</h1>
@@ -574,7 +561,13 @@ const ComposerAttachment = () => (
   </AttachmentPrimitive.Root>
 )
 
-const ThreadMessage = ({ message }: { message: MessageState }) => {
+const ThreadMessage = ({
+  isLatestAssistantMessage,
+  message,
+}: {
+  isLatestAssistantMessage: boolean
+  message: MessageState
+}) => {
   const parts = message.content as readonly RenderedMessagePart[]
 
   return (
@@ -619,7 +612,7 @@ const ThreadMessage = ({ message }: { message: MessageState }) => {
             <span>{String(message.status.error ?? message.status.reason)}</span>
           </div>
         ) : null}
-        <AssistantMessageFooter message={message} />
+        <MessageActionBar isLatestAssistantMessage={isLatestAssistantMessage} message={message} />
       </div>
     </MessagePrimitive.Root>
   )
@@ -646,6 +639,10 @@ const AgentAssistantThread = ({
     : '0 / - · -'
   const attachmentAdapter = useMemo(() => new SimpleImageAttachmentAdapter(), [])
   const mergedMessages = useMemo(() => mergeAgentToolResults(snapshot.messages), [snapshot.messages])
+  const latestAssistantMessageId = useMemo(
+    () => (runtime ? findLatestAssistantMessageId(runtime.conversationId, mergedMessages) : ''),
+    [mergedMessages, runtime],
+  )
   const adapter = useMemo<ExternalStoreAdapter<AgentThreadMessage>>(
     () => ({
       messages: mergedMessages,
@@ -685,7 +682,11 @@ const AgentAssistantThread = ({
           <AuiIf condition={(state) => state.thread.isEmpty}>
             <AgentEmptyThread t={t} />
           </AuiIf>
-          <ThreadPrimitive.Messages>{({ message }) => <ThreadMessage message={message} />}</ThreadPrimitive.Messages>
+          <ThreadPrimitive.Messages>
+            {({ message }) => (
+              <ThreadMessage isLatestAssistantMessage={message.id === latestAssistantMessageId} message={message} />
+            )}
+          </ThreadPrimitive.Messages>
           <ThreadPrimitive.ViewportFooter className='vbi-agent-thread-footer'>
             <ComposerPrimitive.AttachmentDropzone className='vbi-agent-composer-dropzone'>
               <ComposerPrimitive.Root className='vbi-agent-composer'>
