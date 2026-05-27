@@ -1,12 +1,14 @@
 import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { cn } from '../../lib/utils'
 
-type TooltipSide = 'top' | 'right'
+type TooltipSide = 'top' | 'right' | 'bottom' | 'left'
 
 type TooltipProps = {
   children: ReactNode
+  contentClassName?: string
   side?: TooltipSide
-  title: string
+  title: ReactNode
 }
 
 const getPortalRoot = () => document.querySelector('[data-vbi-portal-root]') ?? document.body
@@ -20,6 +22,22 @@ const getTooltipStyle = (rect: DOMRect, side: TooltipSide): CSSProperties => {
     }
   }
 
+  if (side === 'left') {
+    return {
+      left: rect.left - 9,
+      top: rect.top + rect.height / 2,
+      transform: 'translate(-100%, -50%)',
+    }
+  }
+
+  if (side === 'bottom') {
+    return {
+      left: rect.left + rect.width / 2,
+      top: rect.bottom + 8,
+      transform: 'translateX(-50%)',
+    }
+  }
+
   return {
     left: rect.left + rect.width / 2,
     top: rect.top - 8,
@@ -27,11 +45,12 @@ const getTooltipStyle = (rect: DOMRect, side: TooltipSide): CSSProperties => {
   }
 }
 
-export const Tooltip = ({ children, side = 'top', title }: TooltipProps) => {
+export const Tooltip = ({ children, contentClassName, side = 'top', title }: TooltipProps) => {
   const id = useId()
   const triggerRef = useRef<HTMLSpanElement>(null)
   const [open, setOpen] = useState(false)
   const [style, setStyle] = useState<CSSProperties | null>(null)
+  const stringTitle = typeof title === 'string' ? title : undefined
 
   useEffect(() => {
     if (!open) return
@@ -53,7 +72,8 @@ export const Tooltip = ({ children, side = 'top', title }: TooltipProps) => {
     <>
       <span
         className='ui-tooltip-trigger'
-        data-tooltip={title}
+        aria-describedby={open ? id : undefined}
+        data-tooltip={stringTitle}
         data-tooltip-side={side}
         ref={triggerRef}
         onBlur={() => setOpen(false)}
@@ -65,7 +85,13 @@ export const Tooltip = ({ children, side = 'top', title }: TooltipProps) => {
       </span>
       {open && style
         ? createPortal(
-            <span className='ui-tooltip-content' data-side={side} id={id} role='tooltip' style={style}>
+            <span
+              className={cn('ui-tooltip-content', contentClassName)}
+              data-side={side}
+              id={id}
+              role='tooltip'
+              style={style}
+            >
               {title}
             </span>,
             getPortalRoot(),

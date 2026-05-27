@@ -473,10 +473,6 @@ body {
   font-size: 12px;
 }
 
-.vbi-agent-message-duration {
-  font-variant-numeric: tabular-nums;
-}
-
 .vbi-agent-message-pending {
   display: inline-flex;
   align-items: center;
@@ -768,6 +764,15 @@ body {
 
 .ui-tooltip-content[data-side='right'] {
   transform-origin: left center;
+}
+
+.ui-tooltip-content--rich {
+  border-color: var(--vbi-border);
+  background: var(--vbi-surface-solid);
+  color: var(--vbi-text-strong);
+  line-height: 1.2;
+  padding: 8px 12px;
+  white-space: normal;
 }
 
 .ui-tooltip:hover::after {

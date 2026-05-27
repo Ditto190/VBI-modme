@@ -432,7 +432,7 @@ describe('AgentPage', () => {
     expect(screen.getByRole('table')).toBeInTheDocument()
     expect(screen.getByRole('columnheader', { name: '类型' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /copy response/i })).toBeInTheDocument()
-    expect(screen.getByText('2.0 min')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /message timing/i })).toHaveTextContent('120.00s')
   })
 
   test('does not reorder conversations just because the user switches between them', async () => {

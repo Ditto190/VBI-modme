@@ -10,7 +10,6 @@ import {
   SimpleImageAttachmentAdapter,
   ThreadPrimitive,
   useExternalStoreRuntime,
-  useMessageTiming,
   type AppendMessage,
   type EnrichedPartState,
   type ExternalStoreAdapter,
@@ -37,6 +36,7 @@ import {
   Square,
   X,
 } from '../components/ui/icons'
+import { MessageTiming } from '../components/assistant-ui/message-timing'
 import { Spinner } from '../components/ui/spinner'
 import { useTranslation, type Translate } from '../i18n'
 import { useAgentConversationsStore } from '../stores/agent-conversations.store'
@@ -423,19 +423,6 @@ const UserTextPart = ({ text }: { text: string }) => {
   )
 }
 
-const formatDurationMinutes = (milliseconds: number) => {
-  const minutes = milliseconds / 60_000
-  if (minutes < 0.1) return '<0.1 min'
-  if (minutes < 10) return `${minutes.toFixed(1)} min`
-  return `${Math.round(minutes)} min`
-}
-
-const MessageDuration = () => {
-  const timing = useMessageTiming()
-  if (timing?.totalStreamTime === undefined) return null
-  return <span className='vbi-agent-message-duration'>{formatDurationMinutes(timing.totalStreamTime)}</span>
-}
-
 const groupAgentMessagePart = (part: PartState) => (part.type === 'tool-call' ? (['group-agent-tools'] as const) : null)
 
 const formatToolName = (toolName: string) =>
@@ -574,8 +561,8 @@ const AssistantMessageFooter = ({ message }: { message: MessageState }) => {
           <Copy className='h-3.5 w-3.5' />
           <span>Copy</span>
         </ActionBarPrimitive.Copy>
+        <MessageTiming side='top' />
       </ActionBarPrimitive.Root>
-      <MessageDuration />
     </div>
   )
 }
