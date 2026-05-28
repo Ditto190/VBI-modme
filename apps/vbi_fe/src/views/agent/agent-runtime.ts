@@ -166,6 +166,8 @@ export const createAgentConversationRuntime = async ({
   let hasStoredConversation = loadedSession !== null
   let conversationTitle = loadedSession?.messages.length ? loadedSession.title : undefined
   const listeners = new Set<(snapshot: AgentConversationRuntimeSnapshot) => void>()
+  let emitFrame: number | null = null
+  let emitTimeout: ReturnType<typeof setTimeout> | null = null
   const getSnapshot = (): AgentConversationRuntimeSnapshot => ({
     errorMessage: agent.state.errorMessage,
     isRunning: agent.state.isStreaming,
@@ -173,9 +175,34 @@ export const createAgentConversationRuntime = async ({
     modelId: resolveAgentModelId(agent.state.model.id),
     thinkingLevel: resolveAgentThinkingLevel(agent.state.thinkingLevel),
   })
-  const emit = () => {
+  const clearScheduledEmit = () => {
+    if (emitFrame !== null && typeof cancelAnimationFrame === 'function') {
+      cancelAnimationFrame(emitFrame)
+    }
+    if (emitTimeout !== null) {
+      clearTimeout(emitTimeout)
+    }
+    emitFrame = null
+    emitTimeout = null
+  }
+  const emitNow = () => {
+    clearScheduledEmit()
     const snapshot = getSnapshot()
     listeners.forEach((listener) => listener(snapshot))
+  }
+  const scheduleEmit = () => {
+    if (emitFrame !== null || emitTimeout !== null) return
+    if (typeof requestAnimationFrame === 'function') {
+      emitFrame = requestAnimationFrame(() => {
+        emitFrame = null
+        emitNow()
+      })
+      return
+    }
+    emitTimeout = setTimeout(() => {
+      emitTimeout = null
+      emitNow()
+    }, 16)
   }
   const persist = async ({ touch = true }: AgentConversationPersistOptions = {}) => {
     const metadata = await saveAgentConversation(vbiStorage, {
@@ -197,14 +224,27 @@ export const createAgentConversationRuntime = async ({
     if (event.type === 'agent_start') {
       notify('running')
     }
-    emit()
 
     if (event.type === 'agent_end') {
+      emitNow()
       void agent.waitForIdle().then(async () => {
-        emit()
+        emitNow()
         notify('completed', await persist())
       })
+      return
     }
+
+    if (
+      event.type === 'agent_error' ||
+      event.type === 'agent_abort' ||
+      event.type === 'error' ||
+      event.type === 'abort'
+    ) {
+      emitNow()
+      return
+    }
+
+    scheduleEmit()
   })
 
   return {
@@ -223,7 +263,7 @@ export const createAgentConversationRuntime = async ({
       if (!hasStoredConversation) {
         notify('running', await persist())
       }
-      emit()
+      emitNow()
       await agent.prompt(prompt)
     },
     setModel: async (nextModelId: AgentModelId) => {
@@ -234,7 +274,7 @@ export const createAgentConversationRuntime = async ({
         model: resolvedModelId,
       })
       agent.state.thinkingLevel = resolveAgentThinkingLevel(agent.state.thinkingLevel || defaultAgentThinkingLevel)
-      emit()
+      emitNow()
       if (hasStoredConversation) {
         notify('completed', await persist({ touch: false }))
       }
@@ -242,7 +282,7 @@ export const createAgentConversationRuntime = async ({
     setThinkingLevel: async (nextThinkingLevel: AgentThinkingLevel) => {
       if (agent.state.isStreaming) return
       agent.state.thinkingLevel = resolveAgentThinkingLevel(nextThinkingLevel)
-      emit()
+      emitNow()
       if (hasStoredConversation) {
         notify('completed', await persist({ touch: false }))
       }
@@ -256,6 +296,7 @@ export const createAgentConversationRuntime = async ({
       return () => listeners.delete(listener)
     },
     destroy: () => {
+      clearScheduledEmit()
       listeners.clear()
       unsubscribeAgent()
       agent.abort()

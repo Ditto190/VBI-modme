@@ -38,7 +38,7 @@ export const MessageActionBar = ({
   const { t } = useTranslation()
   const isAssistant = message.role === 'assistant'
   const isUser = message.role === 'user'
-  const isCompleteAssistant = isAssistant && message.status?.type === 'complete'
+  const isCompleteAssistant = isAssistant && (message.status === undefined || message.status.type === 'complete')
 
   if (!isUser && !isCompleteAssistant) return null
   if (isCompleteAssistant && !canCopy) return null
