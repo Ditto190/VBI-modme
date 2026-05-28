@@ -1,7 +1,7 @@
-import { createVBIProviderAgentAdapter, createVBIProviderResourceTools } from '../src'
+import { createVBIProviderAgentAdapter } from '../src'
 import { describe, expect, rs, test } from '@rstest/core'
 
-const readText = (result: Awaited<ReturnType<ReturnType<typeof createVBIProviderResourceTools>[number]['execute']>>) =>
+const readText = (result: { content: Array<{ text: string; type: string }> }) =>
   result.content.find((part) => part.type === 'text')?.text ?? ''
 
 describe('createVBIProviderAgentAdapter', () => {
@@ -27,7 +27,13 @@ describe('createVBIProviderAgentAdapter', () => {
       insightId: 'insight-1',
     })
 
-    expect(adapter.tools.map((tool) => tool.name)).toEqual(['vbi_resource'])
+    expect(adapter.tools.map((tool) => tool.name)).toEqual([
+      'read_skill',
+      'vbi_resource_lookup',
+      'vbi_chart',
+      'vbi_insight',
+      'vbi_report',
+    ])
     await expect(adapter.workspace.chart.open()).resolves.toBe(chartBuilder)
     await expect(adapter.workspace.insight.open()).resolves.toBe(insightBuilder)
     await expect(adapter.workspace.chart.describe()).resolves.toEqual({ id: 'chart-1', name: 'Chart' })
@@ -36,98 +42,81 @@ describe('createVBIProviderAgentAdapter', () => {
   })
 })
 
-describe('createVBIProviderResourceTools', () => {
-  test('lists resources through the provider client', async () => {
-    const listCharts = rs.fn(async () => [{ id: 'chart-1', name: 'Chart' }])
+describe('createVBIProviderAgentTools', () => {
+  test('reads complete built-in skills and lists provider resources', async () => {
     const client = {
-      listCharts,
+      chart: rs.fn(),
+      insight: rs.fn(),
+      report: rs.fn(),
+      listCharts: rs.fn(async () => [
+        { id: 'chart-1', name: 'Regional margin review', createdAt: '2026-04-09', updatedAt: '2026-04-09' },
+        { id: 'chart-2', name: 'Customer discount scatter', createdAt: '2026-04-09', updatedAt: '2026-04-09' },
+      ]),
+      listInsights: rs.fn(async () => [
+        { id: 'insight-1', name: 'Retention risk summary', createdAt: '2026-04-09', updatedAt: '2026-04-09' },
+      ]),
+      listReports: rs.fn(async () => [
+        { id: 'report-1', name: 'Monthly report', createdAt: '2026-04-09', updatedAt: '2026-04-09' },
+      ]),
     }
-    const [tool] = createVBIProviderResourceTools(client as never)
+    const adapter = createVBIProviderAgentAdapter({ client: client as never })
+    const readSkill = adapter.tools.find((tool) => tool.name === 'read_skill')
+    const lookup = adapter.tools.find((tool) => tool.name === 'vbi_resource_lookup')
 
-    const result = await tool.execute('call-1', { action: 'list', resource: 'chart' })
+    const skillResult = await readSkill?.execute('call-skill', { action: 'read', skill: 'chart' })
+    const skillPayload = JSON.parse(readText(skillResult as never)) as { content: string; skill: string }
+    expect(skillPayload.skill).toBe('chart')
+    expect(skillPayload.content).toContain('const chartBuilder = await chart.open();')
+    expect(skillPayload.content).toContain('regional sales and profit')
 
-    expect(JSON.parse(readText(result))).toEqual([{ id: 'chart-1', name: 'Chart' }])
-    expect(listCharts).toHaveBeenCalledTimes(1)
-  })
-
-  test('reads resource metadata without returning DSL', async () => {
-    const getDetail = rs.fn(async () => ({ dsl: { chartType: 'line' }, id: 'chart-1', name: 'Chart' }))
-    const getSummary = rs.fn(async () => ({ id: 'chart-1', name: 'Chart' }))
-    const client = {
-      chart: rs.fn(() => ({ getDetail, getSummary })),
-    }
-    const [tool] = createVBIProviderResourceTools(client as never)
-
-    const result = await tool.execute('call-1', { action: 'get', id: 'chart-1', resource: 'chart' })
-
-    expect(JSON.parse(readText(result))).toEqual({ id: 'chart-1', name: 'Chart' })
-    expect(getSummary).toHaveBeenCalledTimes(1)
-    expect(getDetail).not.toHaveBeenCalled()
-  })
-
-  test('rejects resource snapshot so DSL must come from builder workspace', async () => {
-    const snapshot = rs.fn(async () => ({ dsl: { chartType: 'line' }, resource: { id: 'chart-1' } }))
-    const client = {
-      chart: rs.fn(() => ({ getReferences: rs.fn(), snapshot })),
-    }
-    const [tool] = createVBIProviderResourceTools(client as never)
-
-    await expect(tool.execute('call-1', { action: 'snapshot', id: 'chart-1', resource: 'chart' })).rejects.toThrow(
-      'vbi_resource.action must be list, create, get, rename, remove, references, exportSnapshot, or page',
-    )
-    expect(snapshot).not.toHaveBeenCalled()
-  })
-
-  test('updates report pages through provider resource tools', async () => {
-    const updatePage = rs.fn(async () => ({
-      dsl: { pages: [{ id: 'page-1', title: 'Updated' }] },
-      id: 'report-1',
-      name: 'Report',
-    }))
-    const client = {
-      report: rs.fn(() => ({ updatePage })),
-    }
-    const [tool] = createVBIProviderResourceTools(client as never)
-
-    const result = await tool.execute('call-1', {
-      action: 'page',
-      id: 'report-1',
-      pageAction: 'update',
-      pageId: 'page-1',
-      resource: 'report',
-      title: 'Updated',
-    })
-
-    expect(JSON.parse(readText(result))).toEqual({ id: 'report-1', name: 'Report' })
-    expect(updatePage).toHaveBeenCalledWith('page-1', {
-      chartId: undefined,
-      insightId: undefined,
-      title: 'Updated',
+    const lookupResult = await lookup?.execute('call-lookup', { query: 'regional', resource: 'chart' })
+    expect(JSON.parse(readText(lookupResult as never))).toEqual({
+      resource: 'chart',
+      items: [{ id: 'chart-1', name: 'Regional margin review', createdAt: '2026-04-09', updatedAt: '2026-04-09' }],
     })
   })
 
-  test('exports report snapshots when the caller explicitly requests it', async () => {
-    const exportSnapshot = rs.fn(async () => ({
-      charts: { 'chart-1': { chartType: 'line' } },
-      insights: { 'insight-1': { content: 'summary' } },
-      report: { pages: [] },
-    }))
+  test('runs scoped chart scripts and resource management actions', async () => {
+    const chartBuilder = { build: () => ({ chartType: 'line' }) }
+    const rename = rs.fn(async (name: string) => ({ id: 'chart-1', name }))
     const client = {
-      report: rs.fn(() => ({ exportSnapshot })),
+      chart: rs.fn(() => ({
+        create: rs.fn(async () => ({ id: 'chart-1', name: 'Chart' })),
+        getReferences: rs.fn(async () => []),
+        getSummary: rs.fn(async () => ({ id: 'chart-1', name: 'Chart' })),
+        remove: rs.fn(async () => ({ id: 'chart-1', name: 'Chart' })),
+        rename,
+      })),
+      insight: rs.fn(),
+      report: rs.fn(),
+      listCharts: rs.fn(),
+      listInsights: rs.fn(),
+      listReports: rs.fn(),
     }
-    const [tool] = createVBIProviderResourceTools(client as never)
-
-    const result = await tool.execute('call-1', {
-      action: 'exportSnapshot',
-      id: 'report-1',
-      resource: 'report',
+    const adapter = createVBIProviderAgentAdapter({
+      chartId: 'chart-1',
+      client: client as never,
     })
+    adapter.workspace.chart.open = rs.fn(async () => chartBuilder as never)
+    const chartTool = adapter.tools.find((tool) => tool.name === 'vbi_chart')
 
-    expect(JSON.parse(readText(result))).toEqual({
-      charts: { 'chart-1': { chartType: 'line' } },
-      insights: { 'insight-1': { content: 'summary' } },
-      report: { pages: [] },
+    const runResult = await chartTool?.execute('call-run', {
+      action: 'run',
+      code: 'const chartBuilder = await chart.open(); return json({ chartType: chartBuilder.build().chartType });',
+      id: 'chart-1',
     })
-    expect(exportSnapshot).toHaveBeenCalledTimes(1)
+    expect(JSON.parse(readText(runResult as never))).toEqual({
+      logs: [],
+      result: { chartType: 'line' },
+    })
+    expect(adapter.workspace.chart.open).toHaveBeenCalledWith('chart-1')
+
+    const renameResult = await chartTool?.execute('call-rename', {
+      action: 'rename',
+      id: 'chart-1',
+      name: 'Updated Chart',
+    })
+    expect(JSON.parse(readText(renameResult as never))).toEqual({ id: 'chart-1', name: 'Updated Chart' })
+    expect(rename).toHaveBeenCalledWith('Updated Chart')
   })
 })

@@ -7,7 +7,7 @@ type ConversationMetadata = {
   lastModified: string
   messageCount: number
   preview: string
-  thinkingLevel: 'off'
+  thinkingLevel: 'high'
   title: string
   usage: {
     cacheRead: number
@@ -22,6 +22,8 @@ type ConversationMetadata = {
 type RuntimeSnapshot = {
   isRunning: boolean
   messages: unknown[]
+  modelId: 'deepseek-v4-flash' | 'deepseek-v4-pro'
+  thinkingLevel: 'high' | 'xhigh'
 }
 
 type Runtime = {
@@ -31,9 +33,12 @@ type Runtime = {
   }
   conversationId: string
   destroy: ReturnType<typeof rs.fn>
+  emitSnapshot: (next?: Partial<RuntimeSnapshot>) => void
   getSnapshot: ReturnType<typeof rs.fn>
   persist: ReturnType<typeof rs.fn>
   send: ReturnType<typeof rs.fn>
+  setModel: ReturnType<typeof rs.fn>
+  setThinkingLevel: ReturnType<typeof rs.fn>
   setTitle: ReturnType<typeof rs.fn>
   subscribe: ReturnType<typeof rs.fn>
 }
@@ -57,7 +62,7 @@ const createMetadata = (id: string, lastModified: string): ConversationMetadata 
   lastModified,
   messageCount: 1,
   preview: `Preview ${id}`,
-  thinkingLevel: 'off',
+  thinkingLevel: 'high',
   usage: emptyUsage,
 })
 
@@ -113,7 +118,10 @@ const createRuntime = (
         timestamp: 1,
       },
     ],
+    modelId: 'deepseek-v4-flash',
+    thinkingLevel: 'high',
   }
+  const listeners = new Set<(value: RuntimeSnapshot) => void>()
 
   return {
     agent: {
@@ -122,6 +130,10 @@ const createRuntime = (
     },
     conversationId,
     destroy: rs.fn(),
+    emitSnapshot: (next = {}) => {
+      Object.assign(snapshot, next)
+      listeners.forEach((listener) => listener({ ...snapshot }))
+    },
     getSnapshot: rs.fn(() => snapshot),
     persist: rs.fn(async (options?: { touch?: boolean }) => {
       const lastModified =
@@ -133,10 +145,17 @@ const createRuntime = (
       return createMetadata(conversationId, lastModified)
     }),
     send: rs.fn(),
+    setModel: rs.fn(async (modelId: RuntimeSnapshot['modelId']) => {
+      snapshot.modelId = modelId
+    }),
+    setThinkingLevel: rs.fn(async (thinkingLevel: RuntimeSnapshot['thinkingLevel']) => {
+      snapshot.thinkingLevel = thinkingLevel
+    }),
     setTitle: rs.fn(),
     subscribe: rs.fn((listener: (value: RuntimeSnapshot) => void) => {
+      listeners.add(listener)
       listener(snapshot)
-      return rs.fn()
+      return rs.fn(() => listeners.delete(listener))
     }),
   }
 }
@@ -177,6 +196,7 @@ describe('AgentPage', () => {
       },
     })
     Element.prototype.scrollTo = rs.fn()
+    window.localStorage.clear()
     pendingRuntimes.clear()
     persistCounter = 5
     metadataList = [
@@ -246,9 +266,11 @@ describe('AgentPage', () => {
     const composerInput = screen.getByRole('textbox', { name: /agent/i })
     expect(composerInput).toHaveAttribute('rows', '2')
     const composerFooter = composerInput.closest('.vbi-agent-thread-footer')
+    const viewport = composerInput.closest('.vbi-agent-thread-viewport')
     expect(composerFooter).toBeTruthy()
-    expect(composerFooter?.parentElement).toHaveClass('vbi-agent-thread')
-    expect(composerFooter?.previousElementSibling).toHaveClass('vbi-agent-thread-viewport')
+    expect(composerFooter?.parentElement).toBe(viewport)
+    expect(viewport?.parentElement).toHaveClass('vbi-agent-thread')
+    expect(document.querySelector('.vbi-agent-thread-scroll-spacer')).not.toBeInTheDocument()
     expect(screen.getByPlaceholderText(/attach an image/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /attach image/i })).toBeInTheDocument()
   })
@@ -292,6 +314,77 @@ describe('AgentPage', () => {
     expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-new')
   })
 
+  test('applies selected DeepSeek model and thinking depth to the first draft message', async () => {
+    metadataList = []
+    const navigatedTo: string[] = []
+    useNavigationStore.setState({ pathname: '/agent' })
+    useNavigationStore.getState().setNavigate((path) => {
+      navigatedTo.push(path)
+      useNavigationStore.setState({ pathname: path })
+    })
+
+    render(<AgentPage />)
+
+    expect(await screen.findByRole('heading', { name: /what should we do/i })).toBeInTheDocument()
+
+    fireEvent.pointerDown(screen.getByRole('button', { name: /flash.*high/i }))
+    fireEvent.click(await screen.findByRole('menuitem', { name: /pro/i }))
+    fireEvent.pointerDown(screen.getByRole('button', { name: /pro.*high/i }))
+    fireEvent.click(await screen.findByRole('menuitem', { name: /max/i }))
+    fireEvent.change(screen.getByRole('textbox', { name: /agent/i }), {
+      target: { value: 'Build a sales report' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /^send$/i }))
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({
+          conversationId: 'conversation-new',
+          modelId: 'deepseek-v4-pro',
+          thinkingLevel: 'xhigh',
+        }),
+      ),
+    )
+
+    const runtime = createRuntime('conversation-new', { messages: [] })
+    await act(async () => {
+      pendingRuntimes.get('conversation-new')?.resolve(runtime)
+    })
+
+    await waitFor(() => expect(runtime.send).toHaveBeenCalledWith('Build a sales report'))
+    expect(navigatedTo).toEqual(['/agent/conversation-new'])
+  })
+
+  test('opens slash commands for model switching', async () => {
+    metadataList = [createMetadata('conversation-commands', '2026-05-26T01:00:00.000Z')]
+    useNavigationStore.setState({ pathname: '/agent/conversation-commands' })
+
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-commands' }),
+      ),
+    )
+    const runtime = createRuntime('conversation-commands')
+    await act(async () => {
+      pendingRuntimes.get('conversation-commands')?.resolve(runtime)
+    })
+
+    const composerInput = await screen.findByRole('textbox', { name: /agent/i })
+    fireEvent.change(composerInput, { target: { value: '/' } })
+
+    expect(await screen.findByRole('option', { name: /\/pro/i })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('option', { name: /\/pro/i }))
+    expect(runtime.setModel).toHaveBeenCalledWith('deepseek-v4-pro')
+
+    fireEvent.change(composerInput, { target: { value: '/' } })
+    expect(await screen.findByRole('option', { name: /\/flash/i })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('option', { name: /\/flash/i }))
+    expect(runtime.setModel).toHaveBeenCalledWith('deepseek-v4-flash')
+    await waitFor(() => expect(composerInput).toHaveValue(''))
+  })
+
   test('uses one composer action slot for sending and stopping', async () => {
     metadataList = [createMetadata('conversation-running', '2026-05-26T01:00:00.000Z')]
     useNavigationStore.setState({ pathname: '/agent/conversation-running' })
@@ -311,7 +404,7 @@ describe('AgentPage', () => {
     expect(screen.queryByRole('button', { name: /^send$/i })).not.toBeInTheDocument()
   })
 
-  test('renders very large user messages as compact previews', async () => {
+  test('renders very large user messages as abbreviated previews', async () => {
     metadataList = [createMetadata('conversation-large', '2026-05-26T01:00:00.000Z')]
     useNavigationStore.setState({ pathname: '/agent/conversation-large' })
     const largeText = `${'a'.repeat(25_000)} tail-marker`
@@ -470,10 +563,15 @@ describe('AgentPage', () => {
         ?.resolve(createRuntime('conversation-tools', { messages: resourceToolMessages }))
     })
 
-    expect(await screen.findByText('3 tool calls')).toBeInTheDocument()
+    expect(await screen.findByText('Actions')).toBeInTheDocument()
+    expect(screen.getByText('3 actions')).toBeInTheDocument()
     expect(screen.getByText('chart.list')).toBeInTheDocument()
     expect(screen.getByText('insight.list')).toBeInTheDocument()
     expect(screen.getByText('report.list')).toBeInTheDocument()
+    const toolFallback = screen.getByText('Actions').closest('.vbi-agent-tool-fallback')
+    expect(toolFallback).toBeTruthy()
+    expect(toolFallback?.closest('[data-slot="reasoning-root"]')).toBeTruthy()
+    expect(toolFallback?.querySelectorAll('.vbi-agent-tool-order')).toHaveLength(3)
     expect(screen.queryByText('vbi_resource chart.list completed')).not.toBeInTheDocument()
     expect(screen.queryByText('vbi_resource insight.list completed')).not.toBeInTheDocument()
     expect(screen.queryByText('vbi_resource report.list completed')).not.toBeInTheDocument()
@@ -482,16 +580,88 @@ describe('AgentPage', () => {
     expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
     expect(screen.getByRole('button', { name: /复制回复/ }).textContent).toBe('')
     expect(screen.getByLabelText(/\d{2}:\d{2} 完成/)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /message timing/i })).toHaveTextContent('120.00s')
+    expect(screen.queryByRole('button', { name: /message timing/i })).not.toBeInTheDocument()
 
     const earlierAssistantMessage = screen.getByText('我来查看一下当前的数据资源数量。').closest('.vbi-agent-message')
     expect(earlierAssistantMessage).toBeTruthy()
-    expect(earlierAssistantMessage?.querySelector('.vbi-agent-message-action-slot')).toBeTruthy()
+    expect(earlierAssistantMessage?.querySelector('.vbi-agent-message-action-slot')).toBeNull()
 
     fireEvent.mouseEnter(earlierAssistantMessage!)
 
-    expect(await screen.findByText('10.00s')).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(2)
+    expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
+  })
+
+  test('opens reasoning while running and auto-collapses after completion', async () => {
+    metadataList = [createMetadata('conversation-thinking', '2026-05-26T01:00:00.000Z')]
+    useNavigationStore.setState({ pathname: '/agent/conversation-thinking' })
+
+    render(<AgentPage />)
+
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-thinking' }),
+      ),
+    )
+    const streamingRuntime = createRuntime('conversation-thinking', {
+      isRunning: true,
+      messages: [
+        {
+          role: 'assistant',
+          content: [{ type: 'thinking', thinking: 'I am checking the chart resources.' }],
+          timestamp: 10_000,
+        },
+      ],
+    })
+    await act(async () => {
+      pendingRuntimes.get('conversation-thinking')?.resolve(streamingRuntime)
+    })
+
+    const runningReasoning = await screen.findByText('I am checking the chart resources.')
+    const runningDetails = runningReasoning.closest('.vbi-agent-chain-of-thought')
+    expect(runningDetails).toHaveAttribute('data-state', 'open')
+    expect(runningDetails).toHaveAttribute('data-slot', 'reasoning-root')
+    expect(runningDetails).toHaveAttribute('data-variant', 'ghost')
+    expect(runningDetails?.querySelector('[data-slot="reasoning-trigger-icon"]')).toBeNull()
+    expect(runningDetails?.querySelector('[data-slot="reasoning-trigger-loading"]')).toBeTruthy()
+    expect(screen.getByText('Reasoning')).toBeInTheDocument()
+    expect(screen.queryByText('Thinking steps')).not.toBeInTheDocument()
+
+    await act(async () => {
+      streamingRuntime.emitSnapshot({ isRunning: false })
+    })
+
+    expect(runningDetails).toHaveAttribute('data-state', 'open')
+    await waitFor(() => expect(runningDetails).toHaveAttribute('data-state', 'closed'), { timeout: 1000 })
+    expect(runningDetails?.querySelector('[data-slot="reasoning-trigger-loading"]')).toBeNull()
+
+    await act(async () => {
+      useNavigationStore.setState({ pathname: '/agent/conversation-tools' })
+    })
+    await waitFor(() =>
+      expect(createAgentConversationRuntime).toHaveBeenCalledWith(
+        expect.objectContaining({ conversationId: 'conversation-tools' }),
+      ),
+    )
+    await act(async () => {
+      pendingRuntimes.get('conversation-tools')?.resolve(
+        createRuntime('conversation-tools', {
+          messages: [
+            {
+              role: 'assistant',
+              content: [{ type: 'thinking', thinking: 'I found the chart resources.' }],
+              timestamp: 20_000,
+            },
+          ],
+        }),
+      )
+    })
+
+    const completedReasoning = await screen.findByText('I found the chart resources.')
+    const completedDetails = completedReasoning.closest('.vbi-agent-chain-of-thought')
+    expect(completedDetails).toHaveAttribute('data-state', 'closed')
+
+    fireEvent.click(completedDetails!.querySelector('.vbi-agent-chain-of-thought-trigger')!)
+    expect(completedDetails).toHaveAttribute('data-state', 'open')
   })
 
   test('does not reorder conversations just because the user switches between them', async () => {

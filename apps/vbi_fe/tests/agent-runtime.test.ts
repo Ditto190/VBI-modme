@@ -1,5 +1,10 @@
 import { describe, expect, test } from '@rstest/core'
-import { resolveAgentModelInput, resolveAgentProxyUrl } from '../src/views/agent/agent-model-config'
+import {
+  createAgentModel,
+  resolveAgentModelInput,
+  resolveAgentProxyUrl,
+  resolveAgentThinkingLevel,
+} from '../src/views/agent/agent-model-config'
 import { formatAgentContextUsage, resolveAgentContextUsage } from '../src/views/agent/agent-usage-display'
 
 describe('agent runtime helpers', () => {
@@ -11,6 +16,18 @@ describe('agent runtime helpers', () => {
     expect(resolveAgentModelInput({ provider: 'deepseek', model: 'deepseek-reasoner' })).toEqual({
       provider: 'deepseek',
       model: 'deepseek-v4-pro',
+    })
+  })
+
+  test('keeps DeepSeek reasoning enabled with high and max thinking levels', () => {
+    expect(resolveAgentThinkingLevel(undefined)).toBe('high')
+    expect(resolveAgentThinkingLevel('off')).toBe('high')
+    expect(resolveAgentThinkingLevel('xhigh')).toBe('xhigh')
+    expect(createAgentModel({ provider: 'deepseek', model: 'deepseek-v4-pro' })).toMatchObject({
+      id: 'deepseek-v4-pro',
+      name: 'DeepSeek V4 Pro',
+      reasoning: true,
+      thinkingLevelMap: { high: 'high', xhigh: 'max' },
     })
   })
 

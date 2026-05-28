@@ -46,11 +46,8 @@ TUI commands:
 
 Tools:
 
-- `vbi_chart_builder`: runs JavaScript against the injected chart Builder workspace
-  - use `chart.open(id?)` / `chart.snapshot(id?)` as the chart DSL inspection path
-  - workspace may expose `workspace.connectors.register(...)` and `workspace.connectors.registerChart(...)` for connector-dependent chart APIs like `builder.getSchema()`
-- `vbi_insight_builder`: runs JavaScript against the injected insight Builder workspace
-  - use `insight.open(id?)` / `insight.snapshot(id?)` as the insight DSL inspection path
-- `vbi_report_builder`: runs JavaScript against the injected report Builder workspace
-  - use `report.open(id?)` / `report.snapshot(id?)` as the report DSL inspection path
-- `vbi_resource`: provider adapter resource CRUD, references, report export snapshot, and report page operations; the TUI explicitly injects this tool alongside the Builder workspace
+- `read_skill`: lists and reads the built-in VBI teaching skills
+- `vbi_resource_lookup`: searches chart, insight, and report ids
+- `vbi_chart`: chart resource CRUD, references, and `run` scripts against the chart Builder workspace
+- `vbi_insight`: insight resource CRUD, references, and `run` scripts against the insight Builder workspace
+- `vbi_report`: report CRUD, page operations, snapshot export, and `run` scripts against the report Builder workspace

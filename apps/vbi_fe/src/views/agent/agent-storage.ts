@@ -1,4 +1,5 @@
 import type { AgentMessage, AgentState, ThinkingLevel } from '@earendil-works/pi-agent-core'
+import { resolveAgentThinkingLevel } from './agent-model-config'
 
 type Usage = {
   cacheRead: number
@@ -124,6 +125,8 @@ export const readAgentContentText = (content: unknown): string => {
       if (typeof part.text === 'string') return part.text
       if (typeof part.content === 'string') return part.content
       if (typeof part.thinking === 'string') return part.thinking
+      if (typeof part.reasoning === 'string') return part.reasoning
+      if (typeof part.reasoning_content === 'string') return part.reasoning_content
       return ''
     })
     .filter(Boolean)
@@ -172,16 +175,6 @@ const addUsage = (left: Usage, right: Usage): Usage => ({
   totalTokens: left.totalTokens + right.totalTokens,
 })
 
-const resolveThinkingLevel = (value: unknown): ThinkingLevel =>
-  value === 'minimal' ||
-  value === 'low' ||
-  value === 'medium' ||
-  value === 'high' ||
-  value === 'xhigh' ||
-  value === 'off'
-    ? value
-    : 'off'
-
 export const createAgentConversationId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID()
   return `conversation-${Date.now()}`
@@ -210,7 +203,7 @@ export const createAgentSessionMetadata = ({
     lastModified,
     messageCount: messages.length,
     usage,
-    thinkingLevel: resolveThinkingLevel(state.thinkingLevel),
+    thinkingLevel: resolveAgentThinkingLevel(state.thinkingLevel),
     preview,
   }
 }

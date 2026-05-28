@@ -19,7 +19,6 @@ export const createCliAgent = (command: AgentCommand, providerInput?: CliAgentPr
       getApiKey: provider.getApiKey,
       initialState: {
         model: provider.model,
-        tools: providerKit.tools,
       },
       streamFn: provider.streamFn,
     },

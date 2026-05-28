@@ -1,5 +1,5 @@
 import type { VBIChartBuilder, VBIInsightBuilder, VBIReportBuilder } from '@visactor/vbi'
-import type { VBIAgentWorkspace, VBIWorkspaceConnectors, VBIWorkspaceSlot } from './types/index.js'
+import type { VBIAgentWorkspace, VBIWorkspaceConnectors, VBIWorkspaceSlot } from './types/index'
 
 type Buildable = {
   build(): unknown

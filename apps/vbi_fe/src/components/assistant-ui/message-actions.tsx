@@ -1,15 +1,12 @@
 'use client'
 
 import { ActionBarPrimitive, type MessageState } from '@assistant-ui/react'
-import type { FC } from 'react'
-import { cn } from '../../lib/utils'
 import { useTranslation } from '../../i18n'
 import { Check, Copy } from '../ui/icons'
 import { Tooltip } from '../ui/tooltip'
-import { MessageTiming } from './message-timing'
 
 type MessageActionBarProps = {
-  className?: string
+  canCopy?: boolean
   isLatestAssistantMessage?: boolean
   message: MessageState
 }
@@ -33,17 +30,18 @@ const MessageTimestamp = ({ date, label }: { date: Date; label: (time: string) =
   )
 }
 
-export const MessageActionBar: FC<MessageActionBarProps> = ({
-  className,
+export const MessageActionBar = ({
+  canCopy = true,
   isLatestAssistantMessage = false,
   message,
-}) => {
+}: MessageActionBarProps) => {
   const { t } = useTranslation()
   const isAssistant = message.role === 'assistant'
   const isUser = message.role === 'user'
   const isCompleteAssistant = isAssistant && message.status?.type === 'complete'
 
   if (!isUser && !isCompleteAssistant) return null
+  if (isCompleteAssistant && !canCopy) return null
 
   const autohide = isCompleteAssistant && isLatestAssistantMessage ? 'never' : 'always'
   const copyLabel = isUser ? t('agent.copyMessage') : t('agent.copyResponse')
@@ -53,17 +51,18 @@ export const MessageActionBar: FC<MessageActionBarProps> = ({
 
   return (
     <div className='vbi-agent-message-action-slot'>
-      <ActionBarPrimitive.Root autohide={autohide} className={cn('vbi-agent-message-actions', className)}>
-        <ActionBarPrimitive.Copy
-          aria-label={copyLabel}
-          className='vbi-agent-message-copy'
-          copiedDuration={1800}
-          type='button'
-        >
-          <Copy className='vbi-agent-message-copy-icon h-3.5 w-3.5' data-slot='copy-icon' aria-hidden='true' />
-          <Check className='vbi-agent-message-copied-icon h-3.5 w-3.5' data-slot='copied-icon' aria-hidden='true' />
-        </ActionBarPrimitive.Copy>
-        {isCompleteAssistant ? <MessageTiming className='vbi-agent-message-meta-control' side='top' /> : null}
+      <ActionBarPrimitive.Root autohide={autohide} className='vbi-agent-message-actions'>
+        {canCopy ? (
+          <ActionBarPrimitive.Copy
+            aria-label={copyLabel}
+            className='vbi-agent-message-copy'
+            copiedDuration={1800}
+            type='button'
+          >
+            <Copy className='vbi-agent-message-copy-icon h-3.5 w-3.5' data-slot='copy-icon' aria-hidden='true' />
+            <Check className='vbi-agent-message-copied-icon h-3.5 w-3.5' data-slot='copied-icon' aria-hidden='true' />
+          </ActionBarPrimitive.Copy>
+        ) : null}
         <MessageTimestamp date={message.createdAt} label={timestampLabel} />
       </ActionBarPrimitive.Root>
     </div>

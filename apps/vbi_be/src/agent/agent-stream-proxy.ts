@@ -12,6 +12,8 @@ const allowedStreamOptionKeys = [
   'transport',
 ] as const
 
+const supportedDeepSeekModelIds = ['deepseek-v4-flash', 'deepseek-v4-pro'] as const
+
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
@@ -36,6 +38,9 @@ export const resolveModelIdAlias = (provider: string, modelId: string) => {
   if (provider === 'deepseek' && modelId === 'deepseek-reasoner') return 'deepseek-v4-pro'
   return modelId
 }
+
+export const getSupportedAgentModelIds = (provider: string, configuredModelId: string) =>
+  provider === 'deepseek' ? [...supportedDeepSeekModelIds] : [configuredModelId]
 
 export const sanitizeModel = <TApi extends string>(model: Model<TApi>, baseUrl?: string): Model<TApi> =>
   baseUrl ? ({ ...model, baseUrl } as Model<TApi>) : model

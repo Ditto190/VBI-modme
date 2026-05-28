@@ -1,8 +1,7 @@
 /* 'use client' keeps Pi Agent's browser runtime out of the Next server graph. */
 'use client'
 
-import type { AgentMessage } from '@earendil-works/pi-agent-core'
-import type { AgentOptions, VBIAgent } from '@visactor/vbi-agent'
+import { convertToLlm, type AgentMessage, type AgentOptions, type AgentState } from '@earendil-works/pi-agent-core'
 import { createAgentProviderKit } from './agent-provider-kit'
 import {
   loadAgentConversation,
@@ -14,10 +13,16 @@ import {
   type VbiAgentStorage,
 } from './agent-storage'
 import {
+  createAgentModel,
+  defaultAgentThinkingLevel,
   resolveAgentModel,
+  resolveAgentModelId,
   resolveAgentModelInput,
   resolveAgentProxyUrl,
+  resolveAgentThinkingLevel,
+  type AgentModelId,
   type AgentModelInput,
+  type AgentThinkingLevel,
 } from './agent-model-config'
 import { streamProxy } from './agent-stream-proxy'
 
@@ -25,15 +30,41 @@ export type AgentConversationRuntimeSnapshot = {
   errorMessage?: string
   isRunning: boolean
   messages: AgentMessage[]
+  modelId: AgentModelId
+  thinkingLevel: AgentThinkingLevel
+}
+
+type BrowserVBIAgent = {
+  abort(): void
+  prompt(input: string): Promise<void>
+  state: Omit<AgentState, 'tools'> & {
+    errorMessage?: string
+    isStreaming: boolean
+    streamingMessage?: AgentMessage
+    tools: unknown[]
+  }
+  subscribe(listener: (event: { type: string }) => void): () => void
+  waitForIdle(): Promise<void>
+}
+
+type BrowserVBIAgentConstructor = new (
+  options: AgentOptions,
+  workspace: ReturnType<typeof createAgentProviderKit>['workspace'],
+) => BrowserVBIAgent
+
+type BrowserVBIAgentModule = {
+  VBIAgent: BrowserVBIAgentConstructor
 }
 
 export type AgentConversationRuntime = {
-  agent: VBIAgent
+  agent: BrowserVBIAgent
   conversationId: string
   destroy(): void
   getSnapshot(): AgentConversationRuntimeSnapshot
   persist(options?: AgentConversationPersistOptions): Promise<AgentConversationMetadata>
   send(input: string): Promise<void>
+  setModel(modelId: AgentModelId): Promise<void>
+  setThinkingLevel(thinkingLevel: AgentThinkingLevel): Promise<void>
   setTitle(title: string): void
   subscribe(listener: (snapshot: AgentConversationRuntimeSnapshot) => void): () => void
 }
@@ -51,9 +82,11 @@ export type AgentConversationRuntimeUpdate = {
 type CreateAgentConversationRuntimeOptions = {
   conversationId?: string
   fallbackTitle?: string
+  modelId?: AgentModelId
   onConversationChange?: (update: AgentConversationRuntimeUpdate) => void
   session?: AgentConversationSession | null
   storage?: VbiAgentStorage
+  thinkingLevel?: AgentThinkingLevel
 }
 
 const defaultProviderApiBaseUrl = '/api/v1'
@@ -74,7 +107,7 @@ const readPublicAgentConfig = async (): Promise<AgentModelInput> => {
   }
 }
 
-const getRuntimeMessages = (agent: VBIAgent): AgentMessage[] => [
+const getRuntimeMessages = (agent: BrowserVBIAgent): AgentMessage[] => [
   ...agent.state.messages,
   ...(agent.state.streamingMessage ? [agent.state.streamingMessage] : []),
 ]
@@ -82,20 +115,25 @@ const getRuntimeMessages = (agent: VBIAgent): AgentMessage[] => [
 export const createAgentConversationRuntime = async ({
   conversationId = crypto.randomUUID(),
   fallbackTitle = 'New Conversation',
+  modelId,
   onConversationChange,
   session = null,
   storage,
+  thinkingLevel,
 }: CreateAgentConversationRuntimeOptions = {}): Promise<AgentConversationRuntime> => {
   const vbiStorage = storage ?? (await setupVbiAgentIndexedDBStorage())
   const loadedSession = session ?? (await loadAgentConversation(vbiStorage, conversationId))
 
-  const { VBIAgent } = await import('../../../node_modules/@visactor/vbi-agent/dist/index.js')
+  // @ts-ignore The built browser bundle may not have declarations until workspace dependencies are built; importing the source package breaks Next's client graph.
+  const { VBIAgent } =
+    (await import('../../../node_modules/@visactor/vbi-agent/dist/index.js')) as BrowserVBIAgentModule
   const publicConfig = await readPublicAgentConfig()
   const modelInput = resolveAgentModelInput({
     provider: process.env.NEXT_PUBLIC_AGENT_PROVIDER ?? publicConfig.provider,
-    model: process.env.NEXT_PUBLIC_AGENT_MODEL ?? publicConfig.model,
+    model: modelId ?? process.env.NEXT_PUBLIC_AGENT_MODEL ?? publicConfig.model,
   })
   const model = resolveAgentModel(loadedSession?.model, modelInput)
+  const initialThinkingLevel = resolveAgentThinkingLevel(loadedSession?.thinkingLevel ?? thinkingLevel)
 
   const providerKit = createAgentProviderKit({
     baseUrl: process.env.NEXT_PUBLIC_VBI_API_BASE_URL?.trim() || defaultProviderApiBaseUrl,
@@ -113,11 +151,11 @@ export const createAgentConversationRuntime = async ({
         ...(loadedSession
           ? {
               messages: loadedSession.messages,
-              thinkingLevel: loadedSession.thinkingLevel,
+              thinkingLevel: initialThinkingLevel,
             }
-          : {}),
-        tools: providerKit.tools,
+          : { thinkingLevel: initialThinkingLevel }),
       },
+      convertToLlm,
       sessionId: conversationId,
       streamFn,
     },
@@ -132,6 +170,8 @@ export const createAgentConversationRuntime = async ({
     errorMessage: agent.state.errorMessage,
     isRunning: agent.state.isStreaming,
     messages: getRuntimeMessages(agent),
+    modelId: resolveAgentModelId(agent.state.model.id),
+    thinkingLevel: resolveAgentThinkingLevel(agent.state.thinkingLevel),
   })
   const emit = () => {
     const snapshot = getSnapshot()
@@ -154,7 +194,9 @@ export const createAgentConversationRuntime = async ({
     onConversationChange?.({ id: conversationId, metadata, status })
   }
   const unsubscribeAgent = agent.subscribe((event) => {
-    if (event.type === 'agent_start') notify('running')
+    if (event.type === 'agent_start') {
+      notify('running')
+    }
     emit()
 
     if (event.type === 'agent_end') {
@@ -183,6 +225,27 @@ export const createAgentConversationRuntime = async ({
       }
       emit()
       await agent.prompt(prompt)
+    },
+    setModel: async (nextModelId: AgentModelId) => {
+      if (agent.state.isStreaming) return
+      const resolvedModelId = resolveAgentModelId(nextModelId)
+      agent.state.model = createAgentModel({
+        provider: agent.state.model.provider || modelInput.provider,
+        model: resolvedModelId,
+      })
+      agent.state.thinkingLevel = resolveAgentThinkingLevel(agent.state.thinkingLevel || defaultAgentThinkingLevel)
+      emit()
+      if (hasStoredConversation) {
+        notify('completed', await persist({ touch: false }))
+      }
+    },
+    setThinkingLevel: async (nextThinkingLevel: AgentThinkingLevel) => {
+      if (agent.state.isStreaming) return
+      agent.state.thinkingLevel = resolveAgentThinkingLevel(nextThinkingLevel)
+      emit()
+      if (hasStoredConversation) {
+        notify('completed', await persist({ touch: false }))
+      }
     },
     setTitle: (title: string) => {
       conversationTitle = title.trim() || undefined

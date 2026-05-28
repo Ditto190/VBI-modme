@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@rstest/core'
-import { createBuilderWorkspace, createStaticBuilderSlot } from '../src/index.js'
+import { createBuilderWorkspace, createStaticBuilderSlot } from '../src/index'
 
 describe('builder workspace helpers', () => {
   test('wraps a caller-provided builder as a workspace slot', async () => {

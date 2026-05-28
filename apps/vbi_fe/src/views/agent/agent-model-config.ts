@@ -1,27 +1,67 @@
 import type { AgentConversationSession } from './agent-storage'
+import type { ThinkingLevel } from '@earendil-works/pi-agent-core'
 
 export type AgentModelInput = {
   model?: string
   provider?: string
 }
 
+export type AgentModelId = 'deepseek-v4-flash' | 'deepseek-v4-pro'
+export type AgentThinkingLevel = Extract<ThinkingLevel, 'high' | 'xhigh'>
+
 const defaultAgentProvider = 'deepseek'
-const defaultAgentModel = 'deepseek-v4-flash'
+export const defaultAgentModel: AgentModelId = 'deepseek-v4-flash'
+export const defaultAgentThinkingLevel: AgentThinkingLevel = 'high'
 const defaultAgentProxyUrl = '/api/v1/agent'
-const defaultContextWindowByModel: Record<string, number> = {
-  'deepseek-v4-flash': 1_000_000,
-  'deepseek-v4-pro': 1_000_000,
+
+const agentModelConfigById: Record<
+  AgentModelId,
+  {
+    cost: { input: number; output: number; cacheRead: number; cacheWrite: number }
+    contextWindow: number
+    maxTokens: number
+    name: string
+  }
+> = {
+  'deepseek-v4-flash': {
+    name: 'DeepSeek V4 Flash',
+    cost: { input: 0.14, output: 0.28, cacheRead: 0.0028, cacheWrite: 0 },
+    contextWindow: 1_000_000,
+    maxTokens: 384_000,
+  },
+  'deepseek-v4-pro': {
+    name: 'DeepSeek V4 Pro',
+    cost: { input: 0.435, output: 0.87, cacheRead: 0.003625, cacheWrite: 0 },
+    contextWindow: 1_000_000,
+    maxTokens: 384_000,
+  },
 }
-const defaultMaxTokensByModel: Record<string, number> = {
-  'deepseek-v4-flash': 384_000,
-  'deepseek-v4-pro': 384_000,
+
+export const agentModelOptions = [
+  { id: 'deepseek-v4-flash' as const, labelKey: 'agent.modelFlash' },
+  { id: 'deepseek-v4-pro' as const, labelKey: 'agent.modelPro' },
+]
+
+export const agentThinkingLevelOptions = [
+  { id: 'high' as const, labelKey: 'agent.thinkingHigh' },
+  { id: 'xhigh' as const, labelKey: 'agent.thinkingMax' },
+]
+
+export const isAgentModelId = (value: unknown): value is AgentModelId =>
+  value === 'deepseek-v4-flash' || value === 'deepseek-v4-pro'
+
+export const resolveAgentModelId = (value: unknown): AgentModelId => {
+  if (value === 'deepseek-chat') return 'deepseek-v4-flash'
+  if (value === 'deepseek-reasoner') return 'deepseek-v4-pro'
+  return isAgentModelId(value) ? value : defaultAgentModel
 }
+
+export const resolveAgentThinkingLevel = (value: unknown): AgentThinkingLevel =>
+  value === 'xhigh' ? 'xhigh' : defaultAgentThinkingLevel
 
 export const resolveAgentModelInput = (input: AgentModelInput = {}) => {
   const provider = input.provider?.trim() || defaultAgentProvider
-  const model = input.model?.trim() || defaultAgentModel
-  if (provider === 'deepseek' && model === 'deepseek-chat') return { provider, model: 'deepseek-v4-flash' }
-  if (provider === 'deepseek' && model === 'deepseek-reasoner') return { provider, model: 'deepseek-v4-pro' }
+  const model = resolveAgentModelId(input.model?.trim())
   return { provider, model }
 }
 
@@ -29,17 +69,17 @@ export const resolveAgentProxyUrl = (value: string | undefined) =>
   (value?.trim() || defaultAgentProxyUrl).replace(/\/+$/, '')
 
 export const createAgentModel = ({ provider, model }: Required<AgentModelInput>) => ({
-  id: model,
-  name: model,
+  id: resolveAgentModelId(model),
+  name: agentModelConfigById[resolveAgentModelId(model)].name,
   api: 'openai-completions',
   provider,
   baseUrl: '',
   reasoning: true,
-  thinkingLevelMap: {},
+  thinkingLevelMap: { minimal: null, low: null, medium: null, high: 'high', xhigh: 'max' },
   input: ['text' as const],
-  cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-  contextWindow: defaultContextWindowByModel[model] ?? 0,
-  maxTokens: defaultMaxTokensByModel[model] ?? 0,
+  cost: agentModelConfigById[resolveAgentModelId(model)].cost,
+  contextWindow: agentModelConfigById[resolveAgentModelId(model)].contextWindow,
+  maxTokens: agentModelConfigById[resolveAgentModelId(model)].maxTokens,
 })
 
 const readPositiveNumber = (value: unknown) =>
@@ -49,12 +89,16 @@ export const resolveAgentModel = (
   loadedModel: AgentConversationSession['model'] | undefined,
   input: Required<AgentModelInput>,
 ) => {
-  const defaults = createAgentModel(input)
+  const loadedModelId = resolveAgentModelId(loadedModel?.id)
+  const defaults = createAgentModel({
+    provider: loadedModel?.provider || input.provider,
+    model: loadedModel ? loadedModelId : input.model,
+  })
   if (!loadedModel) return defaults
 
   return {
-    ...defaults,
     ...loadedModel,
+    ...defaults,
     contextWindow: readPositiveNumber(loadedModel.contextWindow) || defaults.contextWindow,
     maxTokens: readPositiveNumber(loadedModel.maxTokens) || defaults.maxTokens,
   }

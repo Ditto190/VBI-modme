@@ -1,4 +1,4 @@
-import type { AgentScriptRuntimeInput, AgentScriptRuntimeResult } from '../types/index.js'
+import type { AgentScriptRuntimeInput, AgentScriptRuntimeResult } from '../types/script'
 
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor as new (
   ...args: string[]

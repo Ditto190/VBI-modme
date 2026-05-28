@@ -63,9 +63,9 @@ const createChartTypeOptions = () => {
       [
         { text: '查询 Chart1', type: 'text' },
         {
-          arguments: { code: chartTypeScript },
+          arguments: { action: 'run', code: chartTypeScript },
           id: 'call-1',
-          name: 'vbi_chart_builder',
+          name: 'vbi_chart',
           type: 'toolCall',
         },
       ],
@@ -82,7 +82,7 @@ const createChartTypeOptions = () => {
 }
 
 describe('runPromptAgent', () => {
-  test('runs a no-TUI prompt through Pi Agent and builder tool events', async () => {
+  test('runs a no-TUI prompt through Pi Agent and VBI tool events', async () => {
     const builder = VBI.chart.create(VBI.chart.createEmpty('demo'))
     builder.chartType.changeChartType('line')
     const workspace = createBuilderWorkspace({ chart: builder })
@@ -94,8 +94,8 @@ describe('runPromptAgent', () => {
     expect(code).toBe(0)
     expect(output[0]).toBe('[user] 查询Chart1的图表类型')
     expect(output[1]).toContain('[assistant] 查询 Chart1')
-    expect(output[2]).toContain('[tool] vbi_chart_builder running')
-    expect(output[3]).toContain('[tool] vbi_chart_builder succeeded')
+    expect(output[2]).toContain('[tool] vbi_chart running')
+    expect(output[3]).toContain('[tool] vbi_chart succeeded')
     expect(output[4]).toBe('[assistant] Chart1 的图表类型是 line')
     expect(output.at(-1)).toBe('执行成功')
     expect(agent.state.messages.map((message) => message.role)).toEqual([

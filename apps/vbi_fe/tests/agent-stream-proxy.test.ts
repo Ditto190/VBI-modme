@@ -74,6 +74,7 @@ describe('streamProxy', () => {
     const stream = streamProxy(model, [{ role: 'user', content: 'hi' }], {
       authToken: 'token-1',
       proxyUrl: '/api/v1/agent',
+      reasoning: 'xhigh',
       temperature: 0.2,
     })
     const events = await collectStreamEvents(stream)
@@ -87,7 +88,7 @@ describe('streamProxy', () => {
     )
     expect(JSON.parse(String((fetch as ReturnType<typeof rs.fn>).mock.calls[0]?.[1]?.body))).toMatchObject({
       model,
-      options: { temperature: 0.2 },
+      options: { reasoning: 'xhigh', temperature: 0.2 },
     })
     expect(events.at(-1)).toMatchObject({
       type: 'done',

@@ -61,7 +61,7 @@ describe('agent storage', () => {
       state: {
         messages: [{ role: 'user', content: 'Build a revenue chart', timestamp: 1 }],
         model: { id: 'test-model' },
-        thinkingLevel: 'off',
+        thinkingLevel: 'high',
       } as never,
     })
 
@@ -81,7 +81,7 @@ describe('agent storage', () => {
       state: {
         messages: [{ role: 'user', content: 'Build a revenue chart', timestamp: 1 }],
         model: { id: 'test-model' },
-        thinkingLevel: 'off',
+        thinkingLevel: 'high',
       } as never,
     })
 
@@ -123,7 +123,7 @@ describe('agent storage', () => {
       lastModified: '2026-05-26T01:02:00.000Z',
       messageCount: 2,
       preview: 'Build a revenue chart\nCreated the chart.',
-      thinkingLevel: 'off',
+      thinkingLevel: 'high',
     })
   })
 })

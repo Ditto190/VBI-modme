@@ -9,7 +9,7 @@ const metadata = {
   lastModified: '2026-05-26T01:02:00.000Z',
   messageCount: 2,
   preview: 'Continue the revenue analysis',
-  thinkingLevel: 'off' as const,
+  thinkingLevel: 'high' as const,
   usage: {
     cacheRead: 0,
     cacheWrite: 0,

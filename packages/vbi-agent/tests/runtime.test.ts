@@ -1,9 +1,6 @@
 import { describe, expect, test } from '@rstest/core'
-import { Type } from 'typebox'
-import { Agent, VBIAgent } from '../src/index.js'
-import type { AgentEvent, AgentOptions, AgentTool, StreamFn } from '../src/index.js'
-
-type ToolExecutionEndEvent = Extract<AgentEvent, { type: 'tool_execution_end' }>
+import { Agent, VBIAgent } from '../src/index'
+import type { AgentEvent, AgentOptions, StreamFn } from '../src/index'
 
 const usage = {
   cacheRead: 0,
@@ -71,7 +68,7 @@ const createOptions = (...messages: ScriptedAssistantMessage[]) => {
 }
 
 describe('VBIAgent', () => {
-  test('returns a Pi Agent and runs builder tool calls before the final response', async () => {
+  test('returns a Pi Agent and runs built-in VBI resource tool calls before the final response', async () => {
     const builder = { build: () => ({ chartType: 'line' }) }
     const { options } = createOptions(
       assistantMessage(
@@ -79,10 +76,11 @@ describe('VBIAgent', () => {
           { text: '查询 Chart1', type: 'text' },
           {
             arguments: {
+              action: 'run',
               code: "const b = await chart.open('Chart1'); return json({ chartType: b.build().chartType })",
             },
             id: 'call-1',
-            name: 'vbi_chart_builder',
+            name: 'vbi_chart',
             type: 'toolCall',
           },
         ],
@@ -100,6 +98,13 @@ describe('VBIAgent', () => {
 
     expect(agent).toBeInstanceOf(VBIAgent)
     expect(agent).toBeInstanceOf(Agent)
+    expect(agent.state.tools.map((tool) => tool.name)).toEqual([
+      'read_skill',
+      'vbi_resource_lookup',
+      'vbi_chart',
+      'vbi_insight',
+      'vbi_report',
+    ])
     expect(events.map((event) => event.type)).toContain('tool_execution_end')
     expect(agent.state.messages.map((message) => message.role)).toEqual([
       'user',
@@ -127,90 +132,5 @@ describe('VBIAgent', () => {
       [[{ text: 'first', type: 'text' }], [{ text: 'second', type: 'text' }]],
     )
     expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
-  })
-
-  test('preserves caller-provided Pi tools and emits Pi tool failure events', async () => {
-    const failingTool: AgentTool = {
-      description: 'Always fail',
-      execute: async () => {
-        throw new Error('command failed')
-      },
-      label: 'Failing Tool',
-      name: 'failing_tool',
-      parameters: Type.Object({}, { additionalProperties: false }),
-    }
-    const { options } = createOptions(
-      assistantMessage([{ arguments: {}, id: 'call-1', name: 'failing_tool', type: 'toolCall' }], 'toolUse'),
-      assistantMessage([{ text: 'handled failure', type: 'text' }]),
-    )
-    const agent = new VBIAgent({ ...options, initialState: { ...options.initialState, tools: [failingTool] } }, {})
-    const toolEvents: ToolExecutionEndEvent[] = []
-    agent.subscribe((event) => {
-      if (event.type === 'tool_execution_end') toolEvents.push(event)
-    })
-
-    await agent.prompt('run bad command')
-
-    expect(agent.state.tools.map((tool) => tool.name)).toEqual([
-      'vbi_chart_builder',
-      'vbi_insight_builder',
-      'vbi_report_builder',
-      'failing_tool',
-    ])
-    expect(toolEvents[0]).toMatchObject({ isError: true, toolName: 'failing_tool' })
-    expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
-  })
-
-  test('preserves caller-provided Pi tools and emits Pi tool success events', async () => {
-    const calls: string[] = []
-    const lookupTool: AgentTool = {
-      description: 'Lookup caller data',
-      execute: async (_toolCallId, input) => {
-        const params = input as Record<string, unknown>
-        calls.push(String(params.key))
-        const text = JSON.stringify({ value: 'demo' }, null, 2)
-        return {
-          content: [{ text, type: 'text' }],
-          details: { display: text, summary: `custom_lookup ${params.key} completed` },
-        }
-      },
-      label: 'Custom Lookup',
-      name: 'custom_lookup',
-      parameters: Type.Object({ key: Type.String() }, { additionalProperties: false }),
-    }
-    const { options } = createOptions(
-      assistantMessage(
-        [
-          { text: '查询调用方数据。', type: 'text' },
-          {
-            arguments: { key: 'demo' },
-            id: 'call-lookup',
-            name: 'custom_lookup',
-            type: 'toolCall',
-          },
-        ],
-        'toolUse',
-      ),
-      assistantMessage([{ text: '查询完成。', type: 'text' }]),
-    )
-    const agent = new VBIAgent({ ...options, initialState: { ...options.initialState, tools: [lookupTool] } }, {})
-    const toolEvents: ToolExecutionEndEvent[] = []
-    agent.subscribe((event) => {
-      if (event.type === 'tool_execution_end') toolEvents.push(event)
-    })
-
-    await agent.prompt('查询调用方数据')
-
-    expect(agent.state.tools.map((tool) => tool.name)).toEqual([
-      'vbi_chart_builder',
-      'vbi_insight_builder',
-      'vbi_report_builder',
-      'custom_lookup',
-    ])
-    expect(calls).toEqual(['demo'])
-    expect(toolEvents[0]).toMatchObject({ isError: false, toolName: 'custom_lookup' })
-    expect(JSON.parse(toolEvents[0].result.content[0].text)).toEqual({ value: 'demo' })
-    expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
-    expect(agent.state.errorMessage).toBeUndefined()
   })
 })

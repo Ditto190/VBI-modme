@@ -10,6 +10,12 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./resource-tools": {
+      "source": "./src/tools/resource-tools.ts",
+      "types": "./dist/tools/resource-tools.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",

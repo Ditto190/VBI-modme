@@ -1,26 +1,14 @@
 import type { VBIChartBuilder, VBIConnector, VBIInsightBuilder, VBIReportBuilder } from '@visactor/vbi'
+import { createVBIResourceTools } from '@visactor/vbi-agent/resource-tools'
+import type {
+  VBIReferenceWorkspaceSlot,
+  VBIReportPageInput,
+  VBIReportWorkspaceSlot,
+  VBIResourceCreateInput,
+} from '@visactor/vbi-agent'
 import type { ResourceKind } from '../../types'
 
 type Resource = 'chart' | 'insight' | 'report'
-
-type ResourceToolInput = {
-  action?: string
-  chartId?: string
-  content?: string
-  id?: string
-  insightId?: string
-  name?: string
-  pageAction?: string
-  pageId?: string
-  pageIds?: string[]
-  resource?: Resource
-  title?: string
-}
-
-type AgentToolResult = {
-  content: Array<{ text: string; type: 'text' }>
-  details: { display: string; summary: string }
-}
 
 type BuilderByResource = {
   chart: VBIChartBuilder
@@ -112,13 +100,8 @@ const requestJson = async <T>(baseUrl: string, path: string, init?: { body?: unk
   return payload.data as T
 }
 
-const readInput = (input: unknown): ResourceToolInput => {
-  if (typeof input === 'object' && input !== null && !Array.isArray(input)) return input as ResourceToolInput
-  throw new Error('vbi_resource input must be an object')
-}
-
 const requireString = (value: string | undefined, label: string) => {
-  if (!value) throw new Error(`vbi_resource.${label} is required`)
+  if (!value) throw new Error(`${label} is required`)
   return value
 }
 
@@ -128,50 +111,13 @@ const resourcePath = (resource: Resource) => {
   return '/reports'
 }
 
-const executeResourceAction = async (baseUrl: string, input: ResourceToolInput) => {
-  const resource = requireString(input.resource, 'resource') as Resource
-  const action = requireString(input.action, 'action')
-  const collection = resourcePath(resource)
-  const idPath = input.id ? `${collection}/${input.id}` : collection
+const createResourceBody = (resource: Resource, input?: VBIResourceCreateInput) => ({
+  ...(input?.name === undefined ? {} : { name: input.name }),
+  ...(resource === 'insight' && input?.content !== undefined ? { content: input.content } : {}),
+})
 
-  if (action === 'list') return requestJson(baseUrl, collection)
-  if (action === 'create') return requestJson(baseUrl, collection, { method: 'POST', body: { name: input.name } })
-  if (action === 'get') return requestJson(baseUrl, idPath)
-  if (action === 'rename')
-    return requestJson(baseUrl, idPath, { method: 'PATCH', body: { name: requireString(input.name, 'name') } })
-  if (action === 'remove') return requestJson(baseUrl, idPath, { method: 'DELETE' })
-
-  if ((resource === 'chart' || resource === 'insight') && action === 'references') {
-    return requestJson(baseUrl, `${collection}/${requireString(input.id, 'id')}/references`)
-  }
-  if (resource === 'report' && action === 'exportSnapshot') {
-    return requestJson(baseUrl, `${collection}/${requireString(input.id, 'id')}/snapshot`)
-  }
-  if (resource === 'report' && action === 'page') {
-    const reportId = requireString(input.id, 'id')
-    if (input.pageAction === 'create') {
-      return requestJson(baseUrl, `${collection}/${reportId}/pages`, { method: 'POST', body: { title: input.title } })
-    }
-    if (input.pageAction === 'remove') {
-      return requestJson(baseUrl, `${collection}/${reportId}/pages/${requireString(input.pageId, 'pageId')}`, {
-        method: 'DELETE',
-      })
-    }
-    if (input.pageAction === 'reorder') {
-      return requestJson(baseUrl, `${collection}/${reportId}/pages/reorder`, {
-        method: 'PATCH',
-        body: { pageIds: input.pageIds ?? [] },
-      })
-    }
-    if (input.pageAction === 'update') {
-      return requestJson(baseUrl, `${collection}/${reportId}/pages/${requireString(input.pageId, 'pageId')}`, {
-        method: 'PATCH',
-        body: { chartId: input.chartId, insightId: input.insightId, title: input.title },
-      })
-    }
-  }
-  throw new Error('Unsupported vbi_resource action')
-}
+const resourceIdPath = (resource: Resource, id: string) =>
+  `${resourcePath(resource)}/${requireString(id, `${resource} id`)}`
 
 const resolveWorkspaceId = (resource: ResourceKind, defaultId?: string, id?: string, activeId?: string) => {
   const resourceId = id?.trim() || activeId?.trim() || defaultId?.trim()
@@ -399,7 +345,7 @@ const createBuilderSlot = <TKind extends ResourceKind>({
 
 export const createAgentProviderKit = ({ baseUrl, chartId, insightId, reportId }: AgentProviderKitOptions) => {
   let connectors: BrowserConnectorRegistry
-  const chart = createBuilderSlot({
+  const chartSlot = createBuilderSlot({
     afterOpen: async (builder) => {
       const connectorId = getOptionalConnectorId(builder.build())
       if (connectorId) await connectors.ensureKnownConnector(connectorId)
@@ -408,51 +354,70 @@ export const createAgentProviderKit = ({ baseUrl, chartId, insightId, reportId }
     defaultId: chartId,
     kind: 'chart',
   })
-  connectors = createConnectorRegistry(chart.open)
+  connectors = createConnectorRegistry(chartSlot.open)
+  const insightSlot = createBuilderSlot({ baseUrl, defaultId: insightId, kind: 'insight' })
+  const reportSlot = createBuilderSlot({ baseUrl, defaultId: reportId, kind: 'report' })
+  const chart: VBIReferenceWorkspaceSlot<VBIChartBuilder> = {
+    ...chartSlot,
+    create: (input?: VBIResourceCreateInput) =>
+      requestJson(baseUrl, resourcePath('chart'), { method: 'POST', body: createResourceBody('chart', input) }),
+    list: () =>
+      requestJson<Array<{ id: string; name?: string | null; [key: string]: unknown }>>(baseUrl, resourcePath('chart')),
+    references: (id: string) => requestJson(baseUrl, `${resourceIdPath('chart', id)}/references`),
+    remove: (id: string) => requestJson(baseUrl, resourceIdPath('chart', id), { method: 'DELETE' }),
+    rename: (id: string, name: string) =>
+      requestJson(baseUrl, resourceIdPath('chart', id), { method: 'PATCH', body: { name } }),
+  }
+  const insight: VBIReferenceWorkspaceSlot<VBIInsightBuilder> = {
+    ...insightSlot,
+    create: (input?: VBIResourceCreateInput) =>
+      requestJson(baseUrl, resourcePath('insight'), { method: 'POST', body: createResourceBody('insight', input) }),
+    list: () =>
+      requestJson<Array<{ id: string; name?: string | null; [key: string]: unknown }>>(
+        baseUrl,
+        resourcePath('insight'),
+      ),
+    references: (id: string) => requestJson(baseUrl, `${resourceIdPath('insight', id)}/references`),
+    remove: (id: string) => requestJson(baseUrl, resourceIdPath('insight', id), { method: 'DELETE' }),
+    rename: (id: string, name: string) =>
+      requestJson(baseUrl, resourceIdPath('insight', id), { method: 'PATCH', body: { name } }),
+  }
+  const report: VBIReportWorkspaceSlot<VBIReportBuilder> = {
+    ...reportSlot,
+    create: (input?: VBIResourceCreateInput) =>
+      requestJson(baseUrl, resourcePath('report'), { method: 'POST', body: createResourceBody('report', input) }),
+    createPage: (id: string, input?: { title?: string }) =>
+      requestJson(baseUrl, `${resourceIdPath('report', id)}/pages`, {
+        method: 'POST',
+        body: { title: input?.title },
+      }),
+    exportSnapshot: (id: string) => requestJson(baseUrl, `${resourceIdPath('report', id)}/snapshot`),
+    list: () =>
+      requestJson<Array<{ id: string; name?: string | null; [key: string]: unknown }>>(baseUrl, resourcePath('report')),
+    remove: (id: string) => requestJson(baseUrl, resourceIdPath('report', id), { method: 'DELETE' }),
+    removePage: (id: string, pageId: string) =>
+      requestJson(baseUrl, `${resourceIdPath('report', id)}/pages/${requireString(pageId, 'page id')}`, {
+        method: 'DELETE',
+      }),
+    rename: (id: string, name: string) =>
+      requestJson(baseUrl, resourceIdPath('report', id), { method: 'PATCH', body: { name } }),
+    reorderPages: (id: string, pageIds: string[]) =>
+      requestJson(baseUrl, `${resourceIdPath('report', id)}/pages/reorder`, { method: 'PATCH', body: { pageIds } }),
+    updatePage: (id: string, pageId: string, input: VBIReportPageInput) =>
+      requestJson(baseUrl, `${resourceIdPath('report', id)}/pages/${requireString(pageId, 'page id')}`, {
+        method: 'PATCH',
+        body: input,
+      }),
+  }
+  const workspace = {
+    chart,
+    connectors,
+    insight,
+    report,
+  }
 
   return {
-    tools: [
-      {
-        description:
-          'Discover and manage VBI resources. Supports list/create/get/rename/remove for chart, insight, and report; references for chart and insight; report exportSnapshot; and report page create/remove/reorder/update.',
-        execute: async (_toolCallId: string, input: unknown): Promise<AgentToolResult> => {
-          const params = readInput(input)
-          const result = await executeResourceAction(baseUrl, params)
-          const content = JSON.stringify(result, null, 2)
-          return {
-            content: [{ text: content, type: 'text' }],
-            details: {
-              display: content,
-              summary: `vbi_resource ${params.resource}.${params.action} completed`,
-            },
-          }
-        },
-        label: 'VBI Resource',
-        name: 'vbi_resource',
-        parameters: {
-          type: 'object',
-          additionalProperties: true,
-          properties: {
-            action: { type: 'string' },
-            chartId: { type: 'string' },
-            content: { type: 'string' },
-            id: { type: 'string' },
-            insightId: { type: 'string' },
-            name: { type: 'string' },
-            pageAction: { type: 'string' },
-            pageId: { type: 'string' },
-            pageIds: { type: 'array', items: { type: 'string' } },
-            resource: { type: 'string', enum: ['chart', 'insight', 'report'] },
-            title: { type: 'string' },
-          },
-        },
-      },
-    ],
-    workspace: {
-      chart,
-      connectors,
-      insight: createBuilderSlot({ baseUrl, defaultId: insightId, kind: 'insight' }),
-      report: createBuilderSlot({ baseUrl, defaultId: reportId, kind: 'report' }),
-    },
+    tools: createVBIResourceTools({ workspace }),
+    workspace,
   }
 }

@@ -148,6 +148,13 @@ describe('createAgentProviderKit', () => {
   test('opens builder workspace slots through collaboration sessions', async () => {
     const kit = createAgentProviderKit({ baseUrl: '/api/v1' })
 
+    expect(kit.tools.map((tool) => tool.name)).toEqual([
+      'read_skill',
+      'vbi_resource_lookup',
+      'vbi_chart',
+      'vbi_insight',
+      'vbi_report',
+    ])
     await expect(kit.workspace.chart.open('chart-1')).resolves.toBeInstanceOf(FakeChartBuilder)
     await expect(kit.workspace.chart.snapshot()).resolves.toEqual({
       dsl: { connectorId: 'demo', kind: 'chart' },

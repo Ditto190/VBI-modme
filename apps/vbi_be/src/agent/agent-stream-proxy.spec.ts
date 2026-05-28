@@ -1,4 +1,4 @@
-import { sanitizeStreamOptions } from './agent-stream-proxy'
+import { getSupportedAgentModelIds, resolveModelIdAlias, sanitizeStreamOptions } from './agent-stream-proxy'
 
 describe('agent stream proxy', () => {
   test('drops client supplied credentials and custom headers from stream options', () => {
@@ -17,5 +17,12 @@ describe('agent stream proxy', () => {
       reasoning: 'low',
       temperature: 0.2,
     })
+  })
+
+  test('supports DeepSeek flash and pro model selection through the proxy', () => {
+    expect(resolveModelIdAlias('deepseek', 'deepseek-chat')).toBe('deepseek-v4-flash')
+    expect(resolveModelIdAlias('deepseek', 'deepseek-reasoner')).toBe('deepseek-v4-pro')
+    expect(getSupportedAgentModelIds('deepseek', 'deepseek-v4-flash')).toEqual(['deepseek-v4-flash', 'deepseek-v4-pro'])
+    expect(getSupportedAgentModelIds('custom', 'custom-model')).toEqual(['custom-model'])
   })
 })

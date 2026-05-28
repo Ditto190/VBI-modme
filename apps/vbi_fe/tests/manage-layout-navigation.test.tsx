@@ -22,9 +22,12 @@ const conversationMetadata = {
   lastModified: '2026-05-26T01:02:00.000Z',
   messageCount: 4,
   preview: 'Continue the revenue analysis',
-  thinkingLevel: 'off' as const,
+  thinkingLevel: 'high' as const,
   usage: emptyUsage,
 }
+
+const hasVisibleConversationTitle = () =>
+  screen.getAllByText('Revenue follow-up').some((element) => !element.closest('[aria-hidden="true"]'))
 
 const seedConversationStorage = () => {
   const records = new Map([
@@ -221,7 +224,7 @@ describe('manage layout navigation', () => {
 
     expect(screen.queryByRole('button', { name: /new conversation/i })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: /show sidebar/i })).toBeInTheDocument()
-    expect(screen.getByText('Revenue follow-up')).toBeInTheDocument()
+    expect(hasVisibleConversationTitle()).toBe(true)
 
     fireEvent.click(screen.getByRole('button', { name: /show sidebar/i }))
 

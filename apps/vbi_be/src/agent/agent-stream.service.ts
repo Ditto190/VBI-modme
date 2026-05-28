@@ -7,9 +7,16 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import type { Request, Response } from 'express'
-import type { AssistantMessage, AssistantMessageEvent, Context, Model, SimpleStreamOptions } from '@earendil-works/pi-ai'
+import type {
+  AssistantMessage,
+  AssistantMessageEvent,
+  Context,
+  Model,
+  SimpleStreamOptions,
+} from '@earendil-works/pi-ai'
 import {
   emptyUsage,
+  getSupportedAgentModelIds,
   resolveModelIdAlias,
   sanitizeModel,
   sanitizeStreamOptions,
@@ -72,9 +79,11 @@ export class AgentStreamService {
 
   getConfig() {
     const provider = this.getConfiguredProvider()
+    const model = this.getConfiguredModel(provider)
     return {
       provider,
-      model: this.getConfiguredModel(provider),
+      model,
+      models: getSupportedAgentModelIds(provider, model),
     }
   }
 
@@ -173,13 +182,15 @@ export class AgentStreamService {
   private async resolveModel(input: unknown): Promise<Model<any>> {
     const { getModel, getModels } = await this.loadPiAi()
     const provider = this.getConfiguredProvider()
-    const modelId = this.getConfiguredModel(provider)
+    const configuredModelId = this.getConfiguredModel(provider)
     const requested = this.readRequestedModel(input)
+    const supportedModelIds = getSupportedAgentModelIds(provider, configuredModelId)
 
-    if (requested && (requested.provider !== provider || requested.id !== modelId)) {
+    if (requested && (requested.provider !== provider || !supportedModelIds.includes(requested.id))) {
       throw new BadRequestException(`Unsupported agent model: ${requested.provider}/${requested.id}`)
     }
 
+    const modelId = requested?.id ?? configuredModelId
     const model = getModel(provider as never, modelId as never)
     if (!model) {
       const available = getModels(provider as never)

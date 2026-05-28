@@ -1,6 +1,6 @@
-import { createVBIProviderResourceTools, type VBIProviderAgentTool } from './resource-tools'
 import { createVBIProviderWorkspace, type VBIProviderWorkspace } from './workspace'
 import type { VBIProviderClient } from '../types'
+import { createVBIResourceTools, type AgentTool } from '@visactor/vbi-agent'
 
 export interface VBIProviderAgentAdapterOptions {
   chartId?: string
@@ -10,7 +10,7 @@ export interface VBIProviderAgentAdapterOptions {
 }
 
 export interface VBIProviderAgentAdapter {
-  tools: VBIProviderAgentTool[]
+  tools: AgentTool[]
   workspace: VBIProviderWorkspace
 }
 
@@ -19,7 +19,10 @@ export const createVBIProviderAgentAdapter = ({
   client,
   insightId,
   reportId,
-}: VBIProviderAgentAdapterOptions): VBIProviderAgentAdapter => ({
-  tools: createVBIProviderResourceTools(client),
-  workspace: createVBIProviderWorkspace({ chartId, client, insightId, reportId }),
-})
+}: VBIProviderAgentAdapterOptions): VBIProviderAgentAdapter => {
+  const workspace = createVBIProviderWorkspace({ chartId, client, insightId, reportId })
+  return {
+    tools: createVBIResourceTools({ workspace }),
+    workspace,
+  }
+}

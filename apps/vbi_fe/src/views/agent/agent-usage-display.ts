@@ -27,7 +27,7 @@ type AgentContextUsage = {
   usedTokens: number
 }
 
-const compactTokenFormatter = new Intl.NumberFormat('en-US', {
+const abbreviatedNumberFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 1,
   minimumFractionDigits: 0,
 })
@@ -43,11 +43,11 @@ const readUsageTokens = (usage: UsageLike | undefined) => {
   )
 }
 
-export const formatCompactTokenCount = (value: number) => {
+export const formatAbbreviatedTokenCount = (value: number) => {
   if (!Number.isFinite(value) || value <= 0) return '0'
-  if (value >= 1_000_000) return `${compactTokenFormatter.format(value / 1_000_000)}M`
-  if (value >= 1_000) return `${compactTokenFormatter.format(value / 1_000)}K`
-  return compactTokenFormatter.format(Math.round(value))
+  if (value >= 1_000_000) return `${abbreviatedNumberFormatter.format(value / 1_000_000)}M`
+  if (value >= 1_000) return `${abbreviatedNumberFormatter.format(value / 1_000)}K`
+  return abbreviatedNumberFormatter.format(Math.round(value))
 }
 
 export const resolveAgentContextUsage = (state: AgentStateLike): AgentContextUsage => {
@@ -63,8 +63,8 @@ export const resolveAgentContextUsage = (state: AgentStateLike): AgentContextUsa
 }
 
 export const formatAgentContextUsage = (usage: AgentContextUsage) => {
-  const used = formatCompactTokenCount(usage.usedTokens)
-  const context = usage.contextWindow > 0 ? formatCompactTokenCount(usage.contextWindow) : '-'
+  const used = formatAbbreviatedTokenCount(usage.usedTokens)
+  const context = usage.contextWindow > 0 ? formatAbbreviatedTokenCount(usage.contextWindow) : '-'
   const percent =
     usage.contextWindow > 0
       ? `${usage.percent > 0 && usage.percent < 1 ? usage.percent.toFixed(1) : Math.round(usage.percent).toString()}%`

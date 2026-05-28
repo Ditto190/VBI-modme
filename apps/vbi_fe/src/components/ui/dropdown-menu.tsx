@@ -4,14 +4,25 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import type { ReactElement, ReactNode } from 'react'
 import { cn } from '../../lib/utils'
 
-export type DropdownItem = {
-  danger?: boolean
-  disabled?: boolean
-  icon?: ReactNode
-  key: string
-  label: ReactNode
-  onSelect: () => void
-}
+export type DropdownItem =
+  | {
+      danger?: boolean
+      disabled?: boolean
+      icon?: ReactNode
+      key: string
+      label: ReactNode
+      onSelect: () => void
+      type?: 'item'
+    }
+  | {
+      key: string
+      label: ReactNode
+      type: 'label'
+    }
+  | {
+      key: string
+      type: 'separator'
+    }
 
 const getDropdownPortalRoot = () => document.querySelector<HTMLElement>('[data-vbi-portal-root]') ?? document.body
 
@@ -51,8 +62,28 @@ export const DropdownMenu = ({
         >
           {renderContent
             ? renderContent(items)
-            : items.map((item) =>
-                renderItem ? (
+            : items.map((item) => {
+                if (item.type === 'label') {
+                  return (
+                    <DropdownMenuPrimitive.Label
+                      className='px-2.5 py-1.5 text-xs font-semibold text-[var(--vbi-text-muted)]'
+                      key={item.key}
+                    >
+                      {item.label}
+                    </DropdownMenuPrimitive.Label>
+                  )
+                }
+
+                if (item.type === 'separator') {
+                  return (
+                    <DropdownMenuPrimitive.Separator
+                      className='my-1 h-px bg-[color-mix(in_srgb,var(--vbi-border)_70%,transparent)]'
+                      key={item.key}
+                    />
+                  )
+                }
+
+                return renderItem ? (
                   <DropdownMenuPrimitive.Item
                     asChild
                     key={item.key}
@@ -76,8 +107,8 @@ export const DropdownMenu = ({
                     {item.icon}
                     <span>{item.label}</span>
                   </DropdownMenuPrimitive.Item>
-                ),
-              )}
+                )
+              })}
         </DropdownMenuPrimitive.Content>
       </DropdownMenuPrimitive.Portal>
     </DropdownMenuPrimitive.Root>
