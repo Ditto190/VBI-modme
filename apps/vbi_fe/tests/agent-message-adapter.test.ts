@@ -4,6 +4,8 @@ import {
   convertAgentMessageToThreadMessage,
   mergeAgentToolResults,
   normalizeTabSeparatedTables,
+  prepareAgentMessagesForAssistantUi,
+  projectAgentMessagesForAssistantUi,
   readAppendMessageText,
 } from '../src/views/agent/chat/agent-message-adapter'
 
@@ -84,7 +86,7 @@ describe('agent message adapter', () => {
     )
   })
 
-  test('coalesces repeated assistant reasoning parts into a single reasoning block', () => {
+  test('preserves assistant content order for streaming text, reasoning, and tool calls', () => {
     const converted = convertAgentMessageToThreadMessage(
       'conversation-1',
       {
@@ -114,12 +116,14 @@ describe('agent message adapter', () => {
 
     expect(converted.content).toEqual([
       { type: 'text', text: 'I will inspect resources.' },
-      { type: 'reasoning', text: 'List charts.\n\nList insights.\n\nSummarize totals.' },
+      { type: 'reasoning', text: 'List charts.' },
       expect.objectContaining({ toolCallId: 'tool-chart', type: 'tool-call' }),
+      { type: 'reasoning', text: 'List insights.' },
       expect.objectContaining({ toolCallId: 'tool-insight', type: 'tool-call' }),
+      { type: 'reasoning', text: 'Summarize totals.' },
       { type: 'text', text: 'Done.' },
     ])
-    expect((converted.content as { type: string }[]).filter((part) => part.type === 'reasoning')).toHaveLength(1)
+    expect((converted.content as { type: string }[]).filter((part) => part.type === 'reasoning')).toHaveLength(3)
   })
 
   test('keeps existing part references when there is at most one reasoning part', () => {
@@ -132,7 +136,7 @@ describe('agent message adapter', () => {
     expect(coalesceReasoningParts(parts)).toBe(parts)
   })
 
-  test('packs split reasoning and tool-call runs into one chain-of-thought block', () => {
+  test('keeps separated progress runs separated so GroupedParts can stream them naturally', () => {
     const parts = [
       { type: 'text' as const, text: 'before' },
       { type: 'reasoning' as const, text: 'first step' },
@@ -157,9 +161,15 @@ describe('agent message adapter', () => {
 
     const coalesced = coalesceReasoningParts(parts as never)
 
-    expect(coalesced.map((part) => part.type)).toEqual(['text', 'reasoning', 'tool-call', 'tool-call', 'text', 'text'])
-    expect(coalesced.filter((part) => part.type === 'reasoning')).toEqual([
-      { type: 'reasoning', text: 'first step\n\nsecond step' },
+    expect(coalesced).toBe(parts)
+    expect(coalesced.map((part) => part.type)).toEqual([
+      'text',
+      'reasoning',
+      'tool-call',
+      'text',
+      'reasoning',
+      'tool-call',
+      'text',
     ])
   })
 
@@ -171,5 +181,73 @@ describe('agent message adapter', () => {
         attachments: [{ id: 'image-1', type: 'image', name: 'chart.png', contentType: 'image/png' }],
       } as never),
     ).toBe('Build a report\n\nAttached files:\n- image: chart.png')
+  })
+
+  test('projects same-name tool results by call order when ids are unavailable', () => {
+    const prepared = prepareAgentMessagesForAssistantUi('conversation-1', [
+      {
+        role: 'assistant',
+        content: [
+          { type: 'toolCall', name: 'vbi_resource', arguments: { action: 'list', resource: 'chart' } },
+          { type: 'toolCall', name: 'vbi_resource', arguments: { action: 'list', resource: 'report' } },
+        ],
+      },
+      {
+        role: 'toolResult',
+        toolName: 'vbi_resource',
+        content: [{ type: 'text', text: 'chart-result' }],
+      },
+      {
+        role: 'toolResult',
+        toolName: 'vbi_resource',
+        content: [{ type: 'text', text: 'report-result' }],
+      },
+    ] as never)
+
+    const converted = convertAgentMessageToThreadMessage(prepared.context, prepared.messages[0])
+    const content = converted.content as Array<{ result?: { content?: Array<{ text?: string }> } }>
+
+    expect(content[0]?.result?.content?.[0]?.text).toBe('chart-result')
+    expect(content[1]?.result?.content?.[0]?.text).toBe('report-result')
+  })
+
+  test('projects VBI messages into assistant-ui messages through a single pure entrypoint', () => {
+    const projected = projectAgentMessagesForAssistantUi({
+      conversationId: 'conversation-1',
+      isRunning: false,
+      messages: [
+        {
+          role: 'assistant',
+          content: [
+            { type: 'thinking', thinking: 'Read charts.' },
+            { type: 'toolCall', id: 'tool-1', name: 'vbi_resource', arguments: { resource: 'chart' } },
+          ],
+          timestamp: 1,
+        },
+        {
+          role: 'toolResult',
+          toolCallId: 'tool-1',
+          toolName: 'vbi_resource',
+          content: [{ type: 'text', text: 'chart-result' }],
+          timestamp: 2,
+        },
+      ] as never,
+    })
+
+    expect(projected).toHaveLength(1)
+    expect(projected[0]?.threadMessage).toEqual(
+      expect.objectContaining({
+        content: [
+          { type: 'reasoning', text: 'Read charts.' },
+          expect.objectContaining({
+            result: expect.objectContaining({ content: [{ type: 'text', text: 'chart-result' }] }),
+            toolCallId: 'tool-1',
+            type: 'tool-call',
+          }),
+        ],
+        id: 'conversation-1:0:1:assistant',
+        role: 'assistant',
+      }),
+    )
   })
 })

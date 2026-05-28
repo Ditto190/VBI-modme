@@ -24,13 +24,11 @@ type RuntimeSnapshot = {
   messages: unknown[]
   modelId: 'deepseek-v4-flash' | 'deepseek-v4-pro'
   thinkingLevel: 'high' | 'xhigh'
+  usageText: string
 }
 
 type Runtime = {
-  agent: {
-    state: { isStreaming: boolean; messages: unknown[]; model: { contextWindow: number } }
-    abort: ReturnType<typeof rs.fn>
-  }
+  cancel: ReturnType<typeof rs.fn>
   conversationId: string
   destroy: ReturnType<typeof rs.fn>
   emitSnapshot: (next?: Partial<RuntimeSnapshot>) => void
@@ -121,14 +119,15 @@ const createRuntime = (
     ],
     modelId: 'deepseek-v4-flash',
     thinkingLevel: 'high',
+    usageText: '0 / 1K · 0%',
   }
   const listeners = new Set<(value: RuntimeSnapshot) => void>()
 
   return {
-    agent: {
-      state: { isStreaming: false, messages: [], model: { contextWindow: 1000 } },
-      abort: rs.fn(),
-    },
+    cancel: rs.fn(async () => {
+      snapshot.isRunning = false
+      listeners.forEach((listener) => listener({ ...snapshot }))
+    }),
     conversationId,
     destroy: rs.fn(),
     emitSnapshot: (next = {}) => {
@@ -269,11 +268,15 @@ describe('AgentPage', () => {
     expect(screen.queryByText(/chart and insight resources/i)).not.toBeInTheDocument()
     const composerInput = screen.getByRole('textbox', { name: /agent/i })
     expect(composerInput).toHaveAttribute('rows', '2')
-    const composerFooter = composerInput.closest('.vbi-agent-thread-footer')
-    const viewport = composerInput.closest('.vbi-agent-thread-viewport')
-    expect(composerFooter).toBeTruthy()
-    expect(composerFooter?.parentElement).toBe(viewport)
-    expect(viewport?.closest('.vbi-agent-thread')).toBeTruthy()
+    const composerDock = composerInput.closest('.vbi-agent-composer-dock')
+    const viewport = document.querySelector('.vbi-agent-thread-viewport')
+    const transcript = document.querySelector('.vbi-agent-thread-transcript')
+    expect(composerDock).toBeTruthy()
+    expect(transcript).toBeTruthy()
+    expect(viewport).toBeTruthy()
+    expect(composerDock?.parentElement).toBe(transcript?.parentElement)
+    expect(composerInput.closest('.vbi-agent-thread-viewport')).toBeNull()
+    expect(viewport?.compareDocumentPosition(composerDock!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(document.querySelector('.vbi-agent-thread-scroll-spacer')).not.toBeInTheDocument()
     expect(screen.getByPlaceholderText(/attach an image/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /attach image/i })).toBeInTheDocument()
@@ -400,12 +403,18 @@ describe('AgentPage', () => {
         expect.objectContaining({ conversationId: 'conversation-running' }),
       ),
     )
+    const runtime = createRuntime('conversation-running', { isRunning: true })
     await act(async () => {
-      pendingRuntimes.get('conversation-running')?.resolve(createRuntime('conversation-running', { isRunning: true }))
+      pendingRuntimes.get('conversation-running')?.resolve(runtime)
     })
 
     await waitFor(() => expect(screen.getByRole('button', { name: /^stop$/i })).toBeInTheDocument())
     expect(screen.queryByRole('button', { name: /^send$/i })).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /^stop$/i }))
+
+    await waitFor(() => expect(runtime.cancel).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(screen.getByRole('button', { name: /^send$/i })).toBeInTheDocument())
   })
 
   test('shows failed assistant messages without a pending spinner', async () => {
@@ -604,31 +613,25 @@ describe('AgentPage', () => {
         ?.resolve(createRuntime('conversation-tools', { messages: resourceToolMessages }))
     })
 
-    const earlierAssistantMessage = await screen
-      .findByText('我来查看一下当前的数据资源数量。')
-      .then((element) => element.closest('.vbi-agent-message'))
-    expect(earlierAssistantMessage).toBeTruthy()
-    expect(earlierAssistantMessage?.querySelectorAll('.vbi-agent-chain-of-thought-trigger')).toHaveLength(1)
+    expect(await screen.findByRole('table')).toBeInTheDocument()
+    const progressGroup = document.querySelector('.vbi-agent-progress-group')
+    expect(progressGroup).toBeTruthy()
+    expect(progressGroup).toHaveAttribute('data-state', 'closed')
+    expect(screen.getByText('我来查看一下当前的数据资源数量。')).toBeInTheDocument()
     expect(screen.queryByText('Actions')).not.toBeInTheDocument()
 
-    fireEvent.click(earlierAssistantMessage!.querySelector('.vbi-agent-chain-of-thought-trigger')!)
+    fireEvent.click(progressGroup!.querySelector('summary')!)
 
-    expect(await screen.findByText('Actions')).toBeInTheDocument()
+    expect(await screen.findByText('Reasoning')).toBeInTheDocument()
     expect(screen.getByText('先查询图表资源。')).toBeInTheDocument()
     expect(screen.getByText('继续查询洞察资源。')).toBeInTheDocument()
     expect(screen.getByText('最后查询报告资源。')).toBeInTheDocument()
-    expect(screen.getByText('3 actions')).toBeInTheDocument()
-    const toolFallback = screen.getByText('Actions').closest('.vbi-agent-tool-fallback')
-    expect(toolFallback).toBeTruthy()
-    expect(toolFallback?.closest('[data-slot="reasoning-root"]')).toBeTruthy()
-    expect(screen.queryByText('chart.list')).not.toBeInTheDocument()
-
-    fireEvent.click(toolFallback!.querySelector('summary')!)
+    expect(screen.getByText('6 steps')).toBeInTheDocument()
 
     expect(screen.getByText('chart.list')).toBeInTheDocument()
     expect(screen.getByText('insight.list')).toBeInTheDocument()
     expect(screen.getByText('report.list')).toBeInTheDocument()
-    expect(toolFallback?.querySelectorAll('.vbi-agent-tool-order')).toHaveLength(3)
+    expect(progressGroup?.querySelectorAll('.vbi-agent-tool-order')).toHaveLength(6)
     expect(screen.queryByText('vbi_resource chart.list completed')).not.toBeInTheDocument()
     expect(screen.queryByText('vbi_resource insight.list completed')).not.toBeInTheDocument()
     expect(screen.queryByText('vbi_resource report.list completed')).not.toBeInTheDocument()
@@ -638,10 +641,6 @@ describe('AgentPage', () => {
     expect(screen.getByRole('button', { name: /复制回复/ }).textContent).toBe('')
     expect(screen.getByLabelText(/\d{2}:\d{2} 完成/)).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /message timing/i })).not.toBeInTheDocument()
-
-    expect(earlierAssistantMessage?.querySelector('.vbi-agent-message-action-slot')).toBeNull()
-
-    fireEvent.mouseEnter(earlierAssistantMessage!)
 
     expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
   })
@@ -672,12 +671,9 @@ describe('AgentPage', () => {
     })
 
     const runningReasoning = await screen.findByText('I am checking the chart resources.')
-    const runningDetails = runningReasoning.closest('.vbi-agent-chain-of-thought')
+    const runningDetails = runningReasoning.closest('.vbi-agent-progress-group')
     expect(runningDetails).toHaveAttribute('data-state', 'open')
-    expect(runningDetails).toHaveAttribute('data-slot', 'reasoning-root')
-    expect(runningDetails).toHaveAttribute('data-variant', 'ghost')
-    expect(runningDetails?.querySelector('[data-slot="reasoning-trigger-icon"]')).toBeNull()
-    expect(runningDetails?.querySelector('[data-slot="reasoning-trigger-loading"]')).toBeTruthy()
+    expect(runningDetails?.querySelector('.animate-spin')).toBeTruthy()
     expect(screen.getByText('Reasoning')).toBeInTheDocument()
     expect(screen.queryByText('Thinking steps')).not.toBeInTheDocument()
 
@@ -686,7 +682,8 @@ describe('AgentPage', () => {
     })
 
     expect(runningDetails).toHaveAttribute('data-state', 'closed')
-    expect(runningDetails?.querySelector('[data-slot="reasoning-trigger-loading"]')).toBeNull()
+    expect(runningDetails?.querySelector('.animate-spin')).toBeNull()
+    expect(screen.queryByText('I am checking the chart resources.')).not.toBeInTheDocument()
 
     await act(async () => {
       useNavigationStore.setState({ pathname: '/agent/conversation-tools' })
@@ -711,10 +708,10 @@ describe('AgentPage', () => {
     })
 
     expect(screen.queryByText('I found the chart resources.')).not.toBeInTheDocument()
-    const completedDetails = screen.getByText('Reasoning').closest('.vbi-agent-chain-of-thought')
+    const completedDetails = screen.getByText('Reasoning').closest('.vbi-agent-progress-group')
     expect(completedDetails).toHaveAttribute('data-state', 'closed')
 
-    fireEvent.click(completedDetails!.querySelector('.vbi-agent-chain-of-thought-trigger')!)
+    fireEvent.click(completedDetails!.querySelector('summary')!)
     expect(completedDetails).toHaveAttribute('data-state', 'open')
     expect(screen.getByText('I found the chart resources.')).toBeInTheDocument()
   })
@@ -774,7 +771,7 @@ describe('AgentPage', () => {
     expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
   })
 
-  test('observes only the footer and running message for pinned scrolling', async () => {
+  test('keeps streaming transcript and composer in separate layout regions', async () => {
     metadataList = [createMetadata('conversation-scroll', '2026-05-26T01:00:00.000Z')]
     useNavigationStore.setState({ pathname: '/agent/conversation-scroll' })
     const runtime = createRuntime('conversation-scroll', {
@@ -799,18 +796,16 @@ describe('AgentPage', () => {
     })
 
     await screen.findByText('running response')
-    const observedClasses = resizeObserverObservedTargets.map((target) => target.className)
-    expect(observedClasses.some((className) => String(className).includes('vbi-agent-thread-footer'))).toBe(true)
-    expect(
-      resizeObserverObservedTargets.some(
-        (target) => target.classList.contains('vbi-agent-message') && target.getAttribute('data-running') === 'true',
-      ),
-    ).toBe(true)
-    expect(
-      resizeObserverObservedTargets.some(
-        (target) => target.classList.contains('vbi-agent-message') && target.textContent?.includes('older response'),
-      ),
-    ).toBe(false)
+    const viewport = document.querySelector('.vbi-agent-thread-viewport')
+    const composerDock = screen.getByRole('textbox', { name: /agent/i }).closest('.vbi-agent-composer-dock')
+    const runningMessage = screen.getByText('running response').closest('.vbi-agent-message')
+    expect(viewport).toBeTruthy()
+    expect(composerDock).toBeTruthy()
+    expect(runningMessage).toBeTruthy()
+    expect(composerDock?.parentElement).toBe(viewport?.parentElement?.parentElement)
+    expect(composerDock?.contains(viewport)).toBe(false)
+    expect(viewport?.contains(composerDock)).toBe(false)
+    expect(viewport?.contains(runningMessage)).toBe(true)
   })
 
   test('does not reorder conversations just because the user switches between them', async () => {

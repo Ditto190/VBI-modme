@@ -25,6 +25,7 @@ const emptySnapshot: AgentConversationRuntimeSnapshot = {
   messages: [],
   modelId: defaultAgentModel,
   thinkingLevel: defaultAgentThinkingLevel,
+  usageText: '0 / - · -',
 }
 
 type ActivateConversationOptions = {
@@ -144,7 +145,7 @@ export const useAgentConversationController = (t: Translate) => {
           if (!currentConversationStillExists) {
             currentRuntime.destroy()
             runtimeMapRef.current.delete(currentConversationId)
-          } else if (!currentRuntime.agent.state.isStreaming) {
+          } else if (!currentRuntime.getSnapshot().isRunning) {
             const metadata = await currentRuntime.persist({ touch: false })
             if (!isCurrentActivation()) return null
             upsertConversation(metadata, 'completed')

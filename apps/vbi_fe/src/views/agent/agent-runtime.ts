@@ -13,6 +13,10 @@ import {
   type VbiAgentStorage,
 } from './agent-storage'
 import {
+  formatAgentContextUsage,
+  resolveAgentContextUsage,
+} from './agent-usage-display'
+import {
   createAgentModel,
   defaultAgentThinkingLevel,
   resolveAgentModel,
@@ -32,6 +36,7 @@ export type AgentConversationRuntimeSnapshot = {
   messages: AgentMessage[]
   modelId: AgentModelId
   thinkingLevel: AgentThinkingLevel
+  usageText: string
 }
 
 type BrowserVBIAgent = {
@@ -57,7 +62,7 @@ type BrowserVBIAgentModule = {
 }
 
 export type AgentConversationRuntime = {
-  agent: BrowserVBIAgent
+  cancel(): Promise<void>
   conversationId: string
   destroy(): void
   getSnapshot(): AgentConversationRuntimeSnapshot
@@ -174,6 +179,12 @@ export const createAgentConversationRuntime = async ({
     messages: getRuntimeMessages(agent),
     modelId: resolveAgentModelId(agent.state.model.id),
     thinkingLevel: resolveAgentThinkingLevel(agent.state.thinkingLevel),
+    usageText: formatAgentContextUsage(
+      resolveAgentContextUsage({
+        messages: agent.state.messages,
+        model: agent.state.model,
+      }),
+    ),
   })
   const clearScheduledEmit = () => {
     if (emitFrame !== null && typeof cancelAnimationFrame === 'function') {
@@ -220,17 +231,35 @@ export const createAgentConversationRuntime = async ({
   const notify = (status: AgentConversationStatus, metadata?: AgentConversationMetadata) => {
     onConversationChange?.({ id: conversationId, metadata, status })
   }
+  let isDestroying = false
+  let finishRunPromise: Promise<void> | null = null
+  const finishRun = async () => {
+    if (finishRunPromise) return finishRunPromise
+
+    finishRunPromise = (async () => {
+      emitNow()
+      await agent.waitForIdle()
+      emitNow()
+      if (!isDestroying) {
+        notify('completed', await persist())
+      }
+    })()
+
+    try {
+      await finishRunPromise
+    } finally {
+      finishRunPromise = null
+    }
+  }
   const unsubscribeAgent = agent.subscribe((event) => {
+    if (isDestroying) return
+
     if (event.type === 'agent_start') {
       notify('running')
     }
 
     if (event.type === 'agent_end') {
-      emitNow()
-      void agent.waitForIdle().then(async () => {
-        emitNow()
-        notify('completed', await persist())
-      })
+      void finishRun()
       return
     }
 
@@ -240,7 +269,7 @@ export const createAgentConversationRuntime = async ({
       event.type === 'error' ||
       event.type === 'abort'
     ) {
-      emitNow()
+      void finishRun()
       return
     }
 
@@ -248,7 +277,11 @@ export const createAgentConversationRuntime = async ({
   })
 
   return {
-    agent,
+    cancel: async () => {
+      if (!agent.state.isStreaming) return
+      agent.abort()
+      await finishRun()
+    },
     conversationId,
     getSnapshot,
     persist,
@@ -296,6 +329,7 @@ export const createAgentConversationRuntime = async ({
       return () => listeners.delete(listener)
     },
     destroy: () => {
+      isDestroying = true
       clearScheduledEmit()
       listeners.clear()
       unsubscribeAgent()

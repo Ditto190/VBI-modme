@@ -11,6 +11,29 @@ type AssistantContentPart = Exclude<ThreadMessageLike['content'], string>[number
 
 export type AgentThreadMessage = (AgentMessage | Record<string, unknown>) & object
 
+type AgentToolResult = {
+  content: unknown
+  details?: Record<string, unknown>
+  isError: boolean
+}
+
+export type AgentMessageConversionContext = {
+  conversationId: string
+  indices: WeakMap<object, number>
+  toolResultsById: Map<string, AgentToolResult>
+  toolResultsByPart: WeakMap<object, AgentToolResult>
+}
+
+export type PreparedAgentMessages = {
+  context: AgentMessageConversionContext
+  messages: AgentThreadMessage[]
+}
+
+export type ProjectedAgentThreadMessage = {
+  source: AgentThreadMessage
+  threadMessage: ThreadMessageLike
+}
+
 export const largeUserMessagePreviewLength = 4_000
 export const largeUserMessageThreshold = 20_000
 
@@ -38,25 +61,46 @@ const readToolName = (part: unknown) => {
 
 const isToolCallBlock = (part: unknown) => isRecord(part) && part.type === 'toolCall'
 
-const readMessageRole = (message: unknown) =>
-  isRecord(message) && typeof message.role === 'string' ? message.role : ''
-
 export const createAgentThreadMessageId = (conversationId: string, message: unknown, index: number) => {
   const timestamp = isRecord(message) && typeof message.timestamp === 'number' ? message.timestamp : index
   const role = isRecord(message) && typeof message.role === 'string' ? message.role : 'message'
   return `${conversationId}:${index}:${timestamp}:${role}`
 }
 
+export const createAgentMessageConversionContext = (
+  conversationId: string,
+  messages: readonly AgentThreadMessage[],
+  toolResults: Pick<AgentMessageConversionContext, 'toolResultsById' | 'toolResultsByPart'> = {
+    toolResultsById: new Map(),
+    toolResultsByPart: new WeakMap(),
+  },
+): AgentMessageConversionContext => {
+  const indices = new WeakMap<object, number>()
+
+  messages.forEach((message, index) => {
+    indices.set(message, index)
+  })
+
+  return {
+    conversationId,
+    indices,
+    toolResultsById: toolResults.toolResultsById,
+    toolResultsByPart: toolResults.toolResultsByPart,
+  }
+}
+
+const readToolResult = (message: Record<string, unknown>): AgentToolResult => ({
+  content: message.content,
+  details: isRecord(message.details) ? message.details : undefined,
+  isError: message.isError === true,
+})
+
 const mergeToolResultIntoAssistantMessage = (message: Record<string, unknown>, result: Record<string, unknown>) => {
   if (message.role !== 'assistant' || !Array.isArray(message.content)) return null
 
   const toolCallId = typeof result.toolCallId === 'string' ? result.toolCallId : ''
   const toolName = typeof result.toolName === 'string' ? result.toolName : ''
-  const toolResult = {
-    content: result.content,
-    details: isRecord(result.details) ? result.details : undefined,
-    isError: result.isError === true,
-  }
+  const toolResult = readToolResult(result)
   let matched = false
   const nextContent = message.content.map((part) => {
     if (!isToolCallBlock(part)) return part
@@ -77,6 +121,7 @@ const mergeToolResultIntoAssistantMessage = (message: Record<string, unknown>, r
   return matched ? { ...message, content: nextContent } : null
 }
 
+/** @deprecated UI rendering uses prepareAgentMessagesForAssistantUi to project tool results without rewriting messages. */
 export const mergeAgentToolResults = (messages: AgentMessage[]): AgentThreadMessage[] => {
   const mergedMessages: AgentThreadMessage[] = []
 
@@ -106,7 +151,110 @@ export const mergeAgentToolResults = (messages: AgentMessage[]): AgentThreadMess
   return mergedMessages
 }
 
-const mapAssistantPart = (part: unknown): AssistantContentPart | null => {
+const collectRawToolCalls = (messages: readonly AgentMessage[]) => {
+  const toolCallsById = new Map<string, Record<string, unknown>>()
+  const toolCallsByName = new Map<string, Record<string, unknown>[]>()
+
+  for (const message of messages) {
+    const record = message as unknown
+    if (!isRecord(record) || !Array.isArray(record.content)) continue
+
+    for (const part of record.content) {
+      if (!isToolCallBlock(part)) continue
+      const toolCallId = readToolCallId(part)
+      const toolName = readToolName(part)
+      if (toolCallId) toolCallsById.set(toolCallId, part)
+      if (toolName) {
+        const toolCalls = toolCallsByName.get(toolName) ?? []
+        toolCalls.push(part)
+        toolCallsByName.set(toolName, toolCalls)
+      }
+    }
+  }
+
+  return { toolCallsById, toolCallsByName }
+}
+
+const shouldProjectToolResultIntoToolCall = (
+  message: Record<string, unknown>,
+  toolCalls: ReturnType<typeof collectRawToolCalls>,
+) => {
+  const toolCallId = typeof message.toolCallId === 'string' ? message.toolCallId : ''
+  const toolName = typeof message.toolName === 'string' ? message.toolName : ''
+
+  if (toolCallId) return toolCalls.toolCallsById.has(toolCallId)
+  return toolName ? toolCalls.toolCallsByName.has(toolName) : false
+}
+
+export const prepareAgentMessagesForAssistantUi = (
+  conversationId: string,
+  messages: readonly AgentMessage[],
+): PreparedAgentMessages => {
+  const projectedMessages: AgentThreadMessage[] = []
+  const toolResultsById = new Map<string, AgentToolResult>()
+  const toolResultsByPart = new WeakMap<object, AgentToolResult>()
+  const consumedNameFallbacks = new Map<string, number>()
+  const toolCalls = collectRawToolCalls(messages)
+
+  for (const message of messages) {
+    const record = message as unknown
+    if (!isRecord(record) || record.role !== 'toolResult' || !shouldProjectToolResultIntoToolCall(record, toolCalls)) {
+      projectedMessages.push(message)
+      continue
+    }
+
+    const toolResult = readToolResult(record)
+    const toolCallId = typeof record.toolCallId === 'string' ? record.toolCallId : ''
+    const toolName = typeof record.toolName === 'string' ? record.toolName : ''
+    if (toolCallId) {
+      toolResultsById.set(toolCallId, toolResult)
+      const toolCall = toolCalls.toolCallsById.get(toolCallId)
+      if (toolCall) toolResultsByPart.set(toolCall, toolResult)
+      continue
+    }
+
+    const nameFallbacks = toolName ? toolCalls.toolCallsByName.get(toolName) : undefined
+    if (nameFallbacks?.length) {
+      const fallbackIndex = consumedNameFallbacks.get(toolName) ?? 0
+      const toolCall = nameFallbacks[fallbackIndex]
+      consumedNameFallbacks.set(toolName, fallbackIndex + 1)
+      if (toolCall) toolResultsByPart.set(toolCall, toolResult)
+    }
+  }
+
+  return {
+    context: createAgentMessageConversionContext(conversationId, projectedMessages, {
+      toolResultsById,
+      toolResultsByPart,
+    }),
+    messages: projectedMessages,
+  }
+}
+
+const resolveProjectedToolResult = (
+  part: Record<string, unknown>,
+  context: AgentMessageConversionContext,
+): AgentToolResult | undefined => {
+  if (isRecord(part.result)) {
+    return {
+      content: part.result.content,
+      details: isRecord(part.result.details) ? part.result.details : undefined,
+      isError: part.isError === true,
+    }
+  }
+
+  const directResult = context.toolResultsByPart.get(part)
+  if (directResult) return directResult
+
+  const toolCallId = readToolCallId(part)
+  if (toolCallId) return context.toolResultsById.get(toolCallId)
+  return undefined
+}
+
+const mapAssistantPart = (
+  part: unknown,
+  context: AgentMessageConversionContext,
+): AssistantContentPart | null => {
   if (!isRecord(part) || typeof part.type !== 'string') return null
 
   if (part.type === 'text' && typeof part.text === 'string') {
@@ -123,20 +271,15 @@ const mapAssistantPart = (part: unknown): AssistantContentPart | null => {
   }
   if (part.type === 'toolCall' && typeof part.name === 'string') {
     const args = isRecord(part.arguments) ? part.arguments : {}
-    const result = isRecord(part.result)
-      ? {
-          content: part.result.content,
-          details: isRecord(part.result.details) ? part.result.details : undefined,
-        }
-      : undefined
+    const result = resolveProjectedToolResult(part, context)
     return {
       type: 'tool-call',
       toolCallId: typeof part.id === 'string' ? part.id : `${part.name}:${stringifyJson(args)}`,
       toolName: part.name,
       args: args as never,
       argsText: stringifyJson(args),
-      ...(result ? { result } : {}),
-      ...(part.isError === true ? { isError: true } : {}),
+      ...(result ? { result: { content: result.content, details: result.details } } : {}),
+      ...(result?.isError || part.isError === true ? { isError: true } : {}),
     }
   }
 
@@ -144,64 +287,9 @@ const mapAssistantPart = (part: unknown): AssistantContentPart | null => {
   return text ? { type: 'text', text } : null
 }
 
-const isChainOfThoughtPart = (part: AssistantContentPart) => part.type === 'reasoning' || part.type === 'tool-call'
-
-const countChainOfThoughtRuns = (parts: AssistantContentPart[]) => {
-  let runs = 0
-  let inRun = false
-
-  for (const part of parts) {
-    if (isChainOfThoughtPart(part)) {
-      if (!inRun) runs += 1
-      inRun = true
-      continue
-    }
-
-    inRun = false
-  }
-
-  return runs
-}
-
+/** @deprecated assistant-ui GroupedParts now preserves stream order and groups adjacent progress parts. */
 export const coalesceReasoningParts = (parts: AssistantContentPart[]): AssistantContentPart[] => {
-  const reasoningParts = parts.filter((part) => part.type === 'reasoning')
-  const chainRunCount = countChainOfThoughtRuns(parts)
-  if (reasoningParts.length <= 1 && chainRunCount <= 1) return parts
-
-  const reasoningText = reasoningParts
-    .map((part) => part.text.trim())
-    .filter(Boolean)
-    .join('\n\n')
-  let insertedReasoning = false
-  const chainParts: AssistantContentPart[] = []
-
-  for (const part of parts) {
-    if (part.type === 'tool-call') {
-      chainParts.push(part)
-      continue
-    }
-
-    if (part.type === 'reasoning' && !insertedReasoning && reasoningText) {
-      insertedReasoning = true
-      chainParts.push({ type: 'reasoning', text: reasoningText } as AssistantContentPart)
-    }
-  }
-
-  let insertedChain = false
-  const coalescedParts: AssistantContentPart[] = []
-  for (const part of parts) {
-    if (!isChainOfThoughtPart(part)) {
-      coalescedParts.push(part)
-      continue
-    }
-
-    if (!insertedChain) {
-      insertedChain = true
-      coalescedParts.push(...chainParts)
-    }
-  }
-
-  return coalescedParts
+  return parts
 }
 
 const mapToolResultMessage = (message: Record<string, unknown>): ThreadMessageLike['content'] => {
@@ -225,15 +313,31 @@ const mapToolResultMessage = (message: Record<string, unknown>): ThreadMessageLi
   ]
 }
 
-export const convertAgentMessageToThreadMessage = (
+export function convertAgentMessageToThreadMessage(
+  context: AgentMessageConversionContext,
+  message: AgentThreadMessage,
+): ThreadMessageLike
+export function convertAgentMessageToThreadMessage(
   conversationId: string,
   message: AgentThreadMessage,
   index: number,
-): ThreadMessageLike => {
+): ThreadMessageLike
+export function convertAgentMessageToThreadMessage(
+  contextOrConversationId: AgentMessageConversionContext | string,
+  message: AgentThreadMessage,
+  legacyIndex = 0,
+): ThreadMessageLike {
+  const context =
+    typeof contextOrConversationId === 'string'
+      ? createAgentMessageConversionContext(contextOrConversationId, [message])
+      : contextOrConversationId
+  if (typeof contextOrConversationId === 'string') context.indices.set(message, legacyIndex)
+
   const record = message as unknown
+  const index = context.indices.get(message) ?? 0
   const timestamp = isRecord(record) && typeof record.timestamp === 'number' ? record.timestamp : Date.now()
   const createdAt = new Date(timestamp)
-  const id = createAgentThreadMessageId(conversationId, record, index)
+  const id = createAgentThreadMessageId(context.conversationId, record, index)
 
   if (!isRecord(record)) {
     return { id, role: 'assistant', content: '', createdAt }
@@ -263,9 +367,9 @@ export const convertAgentMessageToThreadMessage = (
 
   if (record.role === 'assistant') {
     const content = Array.isArray(record.content)
-      ? coalesceReasoningParts(
-          record.content.map(mapAssistantPart).filter((part): part is AssistantContentPart => Boolean(part)),
-        )
+      ? record.content
+          .map((part) => mapAssistantPart(part, context))
+          .filter((part): part is AssistantContentPart => Boolean(part))
       : [{ type: 'text' as const, text: readAgentContentText(record.content) }]
 
     return {
@@ -287,29 +391,32 @@ export const convertAgentMessageToThreadMessage = (
   }
 }
 
-export const findLatestAssistantMessageId = (conversationId: string, messages: readonly AgentThreadMessage[]) => {
-  for (let index = messages.length - 1; index >= 0; index -= 1) {
-    const message = messages[index]
-    if (readMessageRole(message) !== 'assistant') continue
-    return createAgentThreadMessageId(conversationId, message, index)
-  }
+export const convertAgentMessageForAssistantUi = (
+  context: AgentMessageConversionContext,
+  message: AgentThreadMessage,
+): ThreadMessageLike => convertAgentMessageToThreadMessage(context, message)
 
-  return ''
-}
+export const projectAgentMessagesForAssistantUi = ({
+  conversationId,
+  isRunning,
+  messages,
+}: {
+  conversationId: string
+  isRunning: boolean
+  messages: readonly AgentMessage[]
+}): ProjectedAgentThreadMessage[] => {
+  const nextMessages =
+    isRunning && messages.length > 0
+      ? messages.map((message, index) =>
+          index === messages.length - 1 && isRecord(message) ? ({ ...message } as AgentMessage) : message,
+        )
+      : messages
+  const prepared = prepareAgentMessagesForAssistantUi(conversationId, nextMessages)
 
-export const findLatestCopyableAssistantMessageId = (
-  conversationId: string,
-  messages: readonly AgentThreadMessage[],
-  isRunning: boolean,
-) => {
-  for (let index = messages.length - 1; index >= 0; index -= 1) {
-    const message = messages[index]
-    if (readMessageRole(message) !== 'assistant') continue
-    if (isRunning && index === messages.length - 1) continue
-    return createAgentThreadMessageId(conversationId, message, index)
-  }
-
-  return ''
+  return prepared.messages.map((message) => ({
+    source: message,
+    threadMessage: convertAgentMessageForAssistantUi(prepared.context, message),
+  }))
 }
 
 export const readAppendMessageText = (message: AppendMessage) => {

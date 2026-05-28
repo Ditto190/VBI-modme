@@ -12,13 +12,6 @@ import { MarkdownTextPrimitive } from '@assistant-ui/react-markdown'
 import { useEffect, useState, type ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningRoot,
-  ReasoningText,
-  ReasoningTrigger,
-} from '../../../components/assistant-ui/reasoning'
 import { MessageActionBar } from '../../../components/assistant-ui/message-actions'
 import { CheckCircle2, ChevronDown, CircleAlert, FileSearch, LoaderCircle } from '../../../components/ui/icons'
 import { formatAbbreviatedTokenCount } from '../agent-usage-display'
@@ -63,8 +56,7 @@ const UserTextPart = ({ text }: { text: string }) => {
 }
 
 const groupAgentMessagePart = (part: PartState) => {
-  if (part.type === 'reasoning') return ['group-chainOfThought', 'group-reasoning'] as const
-  if (part.type === 'tool-call') return ['group-chainOfThought', 'group-tool'] as const
+  if (part.type === 'reasoning' || part.type === 'tool-call') return ['group-progress'] as const
   return null
 }
 
@@ -96,6 +88,15 @@ const resolveToolGroupStatus = (status: PartState['status']): ToolDisplayStatus 
   if (status.type === 'incomplete') return 'error'
   if (status.type === 'running' || status.type === 'requires-action') return 'running'
   return 'done'
+}
+
+const resolveActionsGroupStatus = (
+  messageStatus: MessageState['status'],
+  groupStatus: PartState['status'],
+): ToolDisplayStatus => {
+  if (messageStatus?.type === 'running') return 'running'
+  if (messageStatus?.type === 'incomplete') return 'error'
+  return resolveToolGroupStatus(groupStatus)
 }
 
 const ToolPart = ({ part }: { part: AgentToolPart }) => {
@@ -159,41 +160,7 @@ const ToolPart = ({ part }: { part: AgentToolPart }) => {
   )
 }
 
-const ChainOfThoughtGroup = ({ children, status }: { children: ReactNode; status: ToolDisplayStatus }) => {
-  const [open, setOpen] = useState(status === 'running')
-  const renderContent = open || status === 'running'
-
-  useEffect(() => {
-    if (status === 'running') {
-      setOpen(true)
-      return undefined
-    }
-
-    setOpen(false)
-    return undefined
-  }, [status])
-
-  return (
-    <ReasoningRoot
-      className='vbi-agent-chain-of-thought'
-      data-status={status}
-      onOpenChange={setOpen}
-      open={open}
-      variant='ghost'
-    >
-      <ReasoningTrigger
-        active={status === 'running'}
-        className='vbi-agent-chain-of-thought-trigger'
-        label={<span className='vbi-agent-chain-of-thought-title'>Reasoning</span>}
-      />
-      <ReasoningContent className='vbi-agent-chain-of-thought-content' aria-busy={status === 'running'}>
-        <ReasoningText className='vbi-agent-chain-of-thought-text'>{renderContent ? children : null}</ReasoningText>
-      </ReasoningContent>
-    </ReasoningRoot>
-  )
-}
-
-const ToolFallback = ({
+const ProgressGroup = ({
   children,
   count,
   status,
@@ -206,18 +173,18 @@ const ToolFallback = ({
   const renderContent = open || status === 'running'
 
   useEffect(() => {
-    if (status === 'running') setOpen(true)
+    setOpen(status === 'running')
   }, [status])
 
   return (
-    <details className='vbi-agent-tool-group vbi-agent-tool-fallback' open={open}>
+    <details className='vbi-agent-progress-group' data-state={open ? 'open' : 'closed'} open={open}>
       <summary
         onClick={(event) => {
           event.preventDefault()
           setOpen((current) => !current)
         }}
       >
-        <span className='vbi-agent-tool-group-icon' data-status={status} aria-hidden='true'>
+        <span className='vbi-agent-progress-icon' data-status={status} aria-hidden='true'>
           {status === 'running' ? (
             <LoaderCircle className='h-4 w-4 animate-spin' />
           ) : status === 'error' ? (
@@ -226,33 +193,37 @@ const ToolFallback = ({
             <FileSearch className='h-4 w-4' />
           )}
         </span>
-        <span>Actions</span>
-        <span className='vbi-agent-tool-group-status'>
+        <span className='vbi-agent-progress-copy'>
+          <span className='vbi-agent-progress-title'>Reasoning</span>
+          <span className='vbi-agent-progress-description'>Task progress and tool calls</span>
+        </span>
+        <span className='vbi-agent-progress-status'>
           {status === 'running'
-            ? 'Running'
+            ? 'Working'
             : status === 'error'
               ? 'Needs attention'
-              : `${count} ${count === 1 ? 'action' : 'actions'}`}
+              : `${count} ${count === 1 ? 'step' : 'steps'}`}
         </span>
         <ChevronDown className='vbi-agent-tool-chevron h-4 w-4' aria-hidden='true' />
       </summary>
-      {renderContent ? (
-        <div className='vbi-agent-tool-group-content vbi-agent-tool-fallback-content'>{children}</div>
-      ) : null}
+      {renderContent ? <div className='vbi-agent-progress-content'>{children}</div> : null}
     </details>
   )
 }
 
-const ReasoningPart = ({ text }: { text: string }) => (
-  <Reasoning className='vbi-agent-reasoning-part'>
-    <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
-  </Reasoning>
+const ReasoningAction = ({ text }: { text: string }) => (
+  <div className='vbi-agent-action-reasoning'>
+    <span className='vbi-agent-tool-order' aria-hidden='true' />
+    <div className='vbi-agent-action-reasoning-text'>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+    </div>
+  </div>
 )
 
 const MessagePart = ({ part, role }: { part: EnrichedPartState; role: MessageState['role'] }) => {
   if (part.type === 'text' && role === 'user') return <UserTextPart text={part.text} />
   if (part.type === 'text') return <AgentMarkdown />
-  if (part.type === 'reasoning') return <ReasoningPart text={part.text} />
+  if (part.type === 'reasoning') return <ReasoningAction text={part.text} />
   if (part.type === 'tool-call') return part.toolUI ?? <ToolPart part={part} />
   if (part.type === 'image') return <img className='vbi-agent-image-part' alt='' src={part.image} />
   if (part.type === 'file') return <pre>{part.filename || part.mimeType}</pre>
@@ -284,17 +255,14 @@ export const AgentThreadMessage = ({
             <MessagePrimitive.GroupedParts groupBy={groupAgentMessagePart}>
               {({ part, children }) => {
                 switch (part.type) {
-                  case 'group-chainOfThought':
+                  case 'group-progress':
                     return (
-                      <ChainOfThoughtGroup status={resolveToolGroupStatus(part.status)}>{children}</ChainOfThoughtGroup>
-                    )
-                  case 'group-reasoning':
-                    return <div className='vbi-agent-reasoning-group'>{children}</div>
-                  case 'group-tool':
-                    return (
-                      <ToolFallback count={part.indices.length} status={resolveToolGroupStatus(part.status)}>
+                      <ProgressGroup
+                        count={part.indices.length}
+                        status={resolveActionsGroupStatus(message.status, part.status)}
+                      >
                         {children}
-                      </ToolFallback>
+                      </ProgressGroup>
                     )
                   case 'text':
                   case 'reasoning':

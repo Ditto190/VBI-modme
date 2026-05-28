@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Button } from '../../components/ui/button'
 import { ConfirmAction } from '../../components/ui/confirm-action'
 import {
@@ -53,185 +53,204 @@ const formatConversationTime = (value: string, locale: string) => {
 }
 
 type AgentConversationRowProps = {
+  activeConversationId: string
   conversation: AgentConversationSummary
+  deleteConversation(id: string): Promise<void>
   expanded: boolean
+  go(path: string): void
   locale: string
+  pathname: string
+  renameConversation(id: string, title: string): Promise<void>
+  selectConversation(id: string): void
   t: Translate
 }
 
-const AgentConversationRow = memo(({ conversation, expanded, locale, t }: AgentConversationRowProps) => {
-  const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
-  const deleteConversation = useAgentConversationsStore((state) => state.deleteConversation)
-  const renameConversation = useAgentConversationsStore((state) => state.renameConversation)
-  const selectConversation = useAgentConversationsStore((state) => state.selectConversation)
-  const go = useNavigationStore((state) => state.go)
-  const pathname = useNavigationStore((state) => state.pathname)
-  const [draftTitle, setDraftTitle] = useState(conversation.title)
-  const [isRenameOpen, setIsRenameOpen] = useState(false)
-  const [isRenaming, setIsRenaming] = useState(false)
-  const title = conversation.title || t('agent.newConversation')
-  const displayTime = formatConversationTime(conversation.lastModified, locale)
-  const targetPath = createAgentConversationRoute(conversation.id)
-  const isActive = isAgentConversationRoute(pathname, conversation.id)
-  const tabIndex = expanded ? undefined : -1
+const AgentConversationRow = memo(
+  ({
+    activeConversationId,
+    conversation,
+    deleteConversation,
+    expanded,
+    go,
+    locale,
+    pathname,
+    renameConversation,
+    selectConversation,
+    t,
+  }: AgentConversationRowProps) => {
+    const [draftTitle, setDraftTitle] = useState(conversation.title)
+    const [isRenameOpen, setIsRenameOpen] = useState(false)
+    const [isRenaming, setIsRenaming] = useState(false)
+    const title = conversation.title || t('agent.newConversation')
+    const displayTime = formatConversationTime(conversation.lastModified, locale)
+    const targetPath = createAgentConversationRoute(conversation.id)
+    const isActive = isAgentConversationRoute(pathname, conversation.id)
+    const tabIndex = expanded ? undefined : -1
 
-  useEffect(() => {
-    if (!isRenameOpen) setDraftTitle(title)
-  }, [isRenameOpen, title])
+    useEffect(() => {
+      if (!isRenameOpen) setDraftTitle(title)
+    }, [isRenameOpen, title])
 
-  const openConversation = () => {
-    if (activeConversationId !== conversation.id) {
-      selectConversation(conversation.id)
-    }
-    if (pathname !== targetPath) {
-      go(targetPath)
-    }
-  }
-
-  const beginRename = () => {
-    setDraftTitle(title)
-    setIsRenameOpen(true)
-  }
-
-  const commitRename = async () => {
-    const nextTitle = draftTitle.trim()
-    if (!nextTitle || nextTitle === title) {
-      setIsRenameOpen(false)
-      return
-    }
-
-    setIsRenaming(true)
-    if (nextTitle && nextTitle !== title) {
-      try {
-        await renameConversation(conversation.id, nextTitle)
-        setIsRenameOpen(false)
-      } finally {
-        setIsRenaming(false)
+    const openConversation = () => {
+      if (activeConversationId !== conversation.id) {
+        selectConversation(conversation.id)
+      }
+      if (pathname !== targetPath) {
+        go(targetPath)
       }
     }
-  }
 
-  return (
-    <>
-      <div className={conversationRowClassName} data-active={isActive}>
-        <button
-          className={conversationOpenButtonClassName}
-          aria-current={isActive ? 'page' : undefined}
-          tabIndex={tabIndex}
-          title={title}
-          type='button'
-          onClick={openConversation}
-        >
-          <span className='min-w-0 flex-1 truncate text-[var(--vbi-text-strong)]'>{title}</span>
-        </button>
-        <div className='relative flex h-full w-[68px] shrink-0 items-center justify-end pr-1'>
-          <div className='flex h-full items-center justify-end transition-opacity duration-150 ease-out group-hover:opacity-0'>
-            {conversation.status === 'running' ? (
-              <span
-                className='grid h-6 w-6 shrink-0 place-items-center text-[var(--vbi-primary)]'
-                aria-label={t('agent.running')}
-                role='status'
-              >
-                <LoaderCircle className='h-3.5 w-3.5 animate-spin' />
-              </span>
-            ) : (
-              <span
-                className='max-w-[62px] truncate text-right text-[12px] font-medium tabular-nums text-[var(--vbi-text-soft)]'
-                aria-label={t('agent.completedAt', { time: displayTime })}
-                title={displayTime}
-              >
-                {displayTime}
-              </span>
-            )}
-          </div>
-          <div className='pointer-events-none absolute inset-y-0 right-1 flex items-center gap-1 opacity-0 transition-opacity duration-150 ease-out group-hover:pointer-events-auto group-hover:opacity-100 focus-within:pointer-events-auto focus-within:opacity-100'>
-            <Tooltip side='right' title={t('common.rename')}>
-              <button
-                className={conversationActionClassName}
-                aria-label={`${t('common.rename')} ${title}`}
-                tabIndex={tabIndex}
-                type='button'
-                onClick={beginRename}
-              >
-                <Pencil className='h-3.5 w-3.5' />
-              </button>
-            </Tooltip>
-            <ConfirmAction
-              cancelLabel={t('common.cancel')}
-              confirmLabel={t('common.delete')}
-              description={t('agent.deleteConversationDescription', { title })}
-              message={t('agent.deleteConversationTitle')}
-              onConfirm={async () => {
-                await deleteConversation(conversation.id)
-                if (!isActive) return
+    const beginRename = () => {
+      setDraftTitle(title)
+      setIsRenameOpen(true)
+    }
 
-                const nextConversationId = useAgentConversationsStore.getState().activeConversationId
-                go(nextConversationId ? createAgentConversationRoute(nextConversationId) : '/agent')
-              }}
-            >
-              <Tooltip side='right' title={t('common.delete')}>
+    const commitRename = async () => {
+      const nextTitle = draftTitle.trim()
+      if (!nextTitle || nextTitle === title) {
+        setIsRenameOpen(false)
+        return
+      }
+
+      setIsRenaming(true)
+      if (nextTitle && nextTitle !== title) {
+        try {
+          await renameConversation(conversation.id, nextTitle)
+          setIsRenameOpen(false)
+        } finally {
+          setIsRenaming(false)
+        }
+      }
+    }
+
+    return (
+      <>
+        <div className={conversationRowClassName} data-active={isActive}>
+          <button
+            className={conversationOpenButtonClassName}
+            aria-current={isActive ? 'page' : undefined}
+            tabIndex={tabIndex}
+            title={title}
+            type='button'
+            onClick={openConversation}
+          >
+            <span className='min-w-0 flex-1 truncate text-[var(--vbi-text-strong)]'>{title}</span>
+          </button>
+          <div className='relative flex h-full w-[68px] shrink-0 items-center justify-end pr-1'>
+            <div className='flex h-full items-center justify-end transition-opacity duration-150 ease-out group-hover:opacity-0'>
+              {conversation.status === 'running' ? (
+                <span
+                  className='grid h-6 w-6 shrink-0 place-items-center text-[var(--vbi-primary)]'
+                  aria-label={t('agent.running')}
+                  role='status'
+                >
+                  <LoaderCircle className='h-3.5 w-3.5 animate-spin' />
+                </span>
+              ) : (
+                <span
+                  className='max-w-[62px] truncate text-right text-[12px] font-medium tabular-nums text-[var(--vbi-text-soft)]'
+                  aria-label={t('agent.completedAt', { time: displayTime })}
+                  title={displayTime}
+                >
+                  {displayTime}
+                </span>
+              )}
+            </div>
+            <div className='pointer-events-none absolute inset-y-0 right-1 flex items-center gap-1 opacity-0 transition-opacity duration-150 ease-out group-hover:pointer-events-auto group-hover:opacity-100 focus-within:pointer-events-auto focus-within:opacity-100'>
+              <Tooltip side='right' title={t('common.rename')}>
                 <button
                   className={conversationActionClassName}
-                  aria-label={`${t('common.delete')} ${title}`}
+                  aria-label={`${t('common.rename')} ${title}`}
                   tabIndex={tabIndex}
                   type='button'
+                  onClick={beginRename}
                 >
-                  <Trash2 className='h-3.5 w-3.5' />
+                  <Pencil className='h-3.5 w-3.5' />
                 </button>
               </Tooltip>
-            </ConfirmAction>
+              <ConfirmAction
+                cancelLabel={t('common.cancel')}
+                confirmLabel={t('common.delete')}
+                description={t('agent.deleteConversationDescription', { title })}
+                message={t('agent.deleteConversationTitle')}
+                onConfirm={async () => {
+                  await deleteConversation(conversation.id)
+                  if (!isActive) return
+
+                  const nextConversationId = useAgentConversationsStore.getState().activeConversationId
+                  go(nextConversationId ? createAgentConversationRoute(nextConversationId) : '/agent')
+                }}
+              >
+                <Tooltip side='right' title={t('common.delete')}>
+                  <button
+                    className={conversationActionClassName}
+                    aria-label={`${t('common.delete')} ${title}`}
+                    tabIndex={tabIndex}
+                    type='button'
+                  >
+                    <Trash2 className='h-3.5 w-3.5' />
+                  </button>
+                </Tooltip>
+              </ConfirmAction>
+            </div>
           </div>
         </div>
-      </div>
-      <Dialog open={isRenameOpen} onOpenChange={setIsRenameOpen}>
-        <DialogContent>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault()
-              void commitRename()
-            }}
-          >
-            <DialogHeader>
-              <DialogTitle>{t('agent.renameConversationTitle')}</DialogTitle>
-              <DialogDescription>{t('agent.renameConversationDescription')}</DialogDescription>
-            </DialogHeader>
-            <DialogBody>
-              <label className='flex flex-col gap-1.5 text-xs font-medium text-[var(--vbi-text-muted)]'>
-                <span>{t('agent.conversationTitle')}</span>
-                <Input
-                  autoFocus
-                  aria-label={t('agent.conversationTitle')}
-                  value={draftTitle}
-                  onChange={(event) => setDraftTitle(event.currentTarget.value)}
-                />
-              </label>
-            </DialogBody>
-            <DialogFooter>
-              <Button variant='secondary' onClick={() => setIsRenameOpen(false)}>
-                {t('common.cancel')}
-              </Button>
-              <Button loading={isRenaming} type='submit' variant='primary'>
-                {t('common.save')}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </>
-  )
-})
+        <Dialog open={isRenameOpen} onOpenChange={setIsRenameOpen}>
+          <DialogContent>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault()
+                void commitRename()
+              }}
+            >
+              <DialogHeader>
+                <DialogTitle>{t('agent.renameConversationTitle')}</DialogTitle>
+                <DialogDescription>{t('agent.renameConversationDescription')}</DialogDescription>
+              </DialogHeader>
+              <DialogBody>
+                <label className='flex flex-col gap-1.5 text-xs font-medium text-[var(--vbi-text-muted)]'>
+                  <span>{t('agent.conversationTitle')}</span>
+                  <Input
+                    autoFocus
+                    aria-label={t('agent.conversationTitle')}
+                    value={draftTitle}
+                    onChange={(event) => setDraftTitle(event.currentTarget.value)}
+                  />
+                </label>
+              </DialogBody>
+              <DialogFooter>
+                <Button variant='secondary' onClick={() => setIsRenameOpen(false)}>
+                  {t('common.cancel')}
+                </Button>
+                <Button loading={isRenaming} type='submit' variant='primary'>
+                  {t('common.save')}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </>
+    )
+  },
+)
 
 AgentConversationRow.displayName = 'AgentConversationRow'
 
 export const AgentConversationSidebarSection = () => {
+  const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
   const conversations = useAgentConversationsStore((state) => state.conversations)
+  const deleteConversation = useAgentConversationsStore((state) => state.deleteConversation)
   const initialize = useAgentConversationsStore((state) => state.initialize)
   const isInitialized = useAgentConversationsStore((state) => state.isInitialized)
   const isLoading = useAgentConversationsStore((state) => state.isLoading)
+  const renameConversation = useAgentConversationsStore((state) => state.renameConversation)
+  const selectConversation = useAgentConversationsStore((state) => state.selectConversation)
+  const go = useNavigationStore((state) => state.go)
   const pathname = useNavigationStore((state) => state.pathname)
   const [expanded, setExpanded] = useState(true)
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
+  const toggleExpanded = useCallback(() => setExpanded((value) => !value), [])
 
   useEffect(() => {
     if (!isInitialized && !isLoading) void initialize()
@@ -245,14 +264,31 @@ export const AgentConversationSidebarSection = () => {
     () =>
       conversations.map((conversation) => (
         <AgentConversationRow
+          activeConversationId={activeConversationId}
           key={conversation.id}
           conversation={conversation}
+          deleteConversation={deleteConversation}
           expanded={expanded}
+          go={go}
           locale={locale}
+          pathname={pathname}
+          renameConversation={renameConversation}
+          selectConversation={selectConversation}
           t={t}
         />
       )),
-    [conversations, expanded, locale, t],
+    [
+      activeConversationId,
+      conversations,
+      deleteConversation,
+      expanded,
+      go,
+      locale,
+      pathname,
+      renameConversation,
+      selectConversation,
+      t,
+    ],
   )
 
   return (
@@ -265,7 +301,7 @@ export const AgentConversationSidebarSection = () => {
         expanded={expanded}
         icon={<MessageSquare className='h-4 w-4' />}
         label={t('agent.conversations')}
-        onToggle={() => setExpanded((value) => !value)}
+        onToggle={toggleExpanded}
       >
         <div className={cn(manageSidebarChildListClassName, 'py-1')}>
           {conversations.length === 0 ? (
