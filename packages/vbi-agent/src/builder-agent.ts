@@ -12,10 +12,10 @@ export interface VBIAgentOptions extends Omit<AgentOptions, 'initialState'> {
 const createVBIAgentOptions = (options: VBIAgentOptions, workspace: VBIAgentWorkspace): AgentOptions => ({
   ...options,
   initialState: {
-    ...options.initialState,
-    messages: options.initialState?.messages ?? [],
-    systemPrompt: options.initialState?.systemPrompt ?? defaultSystemPrompt,
+    messages: [],
+    systemPrompt: defaultSystemPrompt,
     tools: createVBIResourceTools({ workspace }),
+    ...options.initialState,
   },
 })
 

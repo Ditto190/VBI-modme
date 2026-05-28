@@ -1,6 +1,6 @@
-export { Agent } from '@earendil-works/pi-agent-core'
 export { estimateContextTokens } from '@earendil-works/pi-agent-core'
 export type {
+  Agent,
   AgentEvent,
   AgentMessage,
   AgentOptions,
@@ -24,8 +24,4 @@ export type {
   VBIResourceCreateInput,
   VBIResourceKind,
   VBIResourceSummary,
-  VBIWorkspaceConnector,
-  VBIWorkspaceConnectorRegistration,
-  VBIWorkspaceConnectors,
-  VBIWorkspaceSlot,
 } from './types/index'

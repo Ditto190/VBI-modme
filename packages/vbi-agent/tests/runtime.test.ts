@@ -1,5 +1,6 @@
 import { describe, expect, test } from '@rstest/core'
-import { Agent, VBIAgent } from '../src/index'
+import { Agent } from '@earendil-works/pi-agent-core'
+import { VBIAgent } from '../src/index'
 import type { AgentEvent, AgentOptions, StreamFn } from '../src/index'
 
 const usage = {
