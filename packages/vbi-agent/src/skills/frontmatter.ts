@@ -67,7 +67,8 @@ const toMeta = (data: FrontmatterMap): SkillAssetMeta => ({
 })
 
 export const parseSkillAsset = (source: string): ParsedSkillAsset => {
-  const match = source.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
+  const normalized = source.replace(/\r\n/g, '\n')
+  const match = normalized.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!match) throw new Error('skill markdown must start with frontmatter')
   return { content: match[2].trim(), meta: toMeta(parseFrontmatter(match[1])) }
 }
