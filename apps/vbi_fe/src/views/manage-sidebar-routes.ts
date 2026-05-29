@@ -27,7 +27,3 @@ export const isAgentConversationRoute = (pathname: string, conversationId?: stri
 }
 
 export const isAgentRoute = (pathname: string) => isNewConversationRoute(pathname) || isAgentConversationRoute(pathname)
-
-export const isManageRoute = (pathname: string) => matchRouteBranch(pathname, '/manage')
-
-export const isManagedRoute = (pathname: string) => isAgentRoute(pathname) || isManageRoute(pathname)

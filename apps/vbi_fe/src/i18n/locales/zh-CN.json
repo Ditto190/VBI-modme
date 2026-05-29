@@ -82,6 +82,7 @@
   "common.name": "名称",
   "common.updatedAt": "更新时间",
   "common.actions": "操作",
+  "common.back": "返回",
   "common.open": "打开",
   "common.edit": "编辑",
   "common.rename": "重命名",

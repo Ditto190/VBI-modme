@@ -192,6 +192,38 @@ describe('manage layout navigation', () => {
     expect(screen.getByRole('button', { name: 'Insights' })).toHaveAttribute('data-active', 'false')
   })
 
+  test('marks chart navigation active on chart detail routes', () => {
+    useNavigationStore.setState({ pathname: '/manage/charts/chart-1' })
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'Reports' })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Charts' })).toHaveAttribute('data-active', 'true')
+    expect(screen.getByRole('button', { name: 'Insights' })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('heading', { name: 'Charts' })).toBeInTheDocument()
+  })
+
+  test('marks insight navigation active on insight detail routes', () => {
+    useNavigationStore.setState({ pathname: '/manage/insights/insight-1' })
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'Reports' })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Charts' })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Insights' })).toHaveAttribute('data-active', 'true')
+    expect(screen.getByRole('heading', { name: 'Insights' })).toBeInTheDocument()
+  })
+
   test('marks the new conversation item active on the agent root route', () => {
     useNavigationStore.setState({ pathname: '/agent' })
 
@@ -216,18 +248,24 @@ describe('manage layout navigation', () => {
       </ManageLayoutPage>,
     )
 
-    expect(screen.getByRole('button', { name: /hide sidebar/i })).toBeInTheDocument()
+    const hideSidebarButton = screen.getByRole('button', { name: /hide sidebar/i })
+    expect(hideSidebarButton).toBeInTheDocument()
+    expect(hideSidebarButton.closest('aside')).not.toBeNull()
+    expect(hideSidebarButton.closest('header')).toBeNull()
     expect(screen.getAllByText('Revenue follow-up')).toHaveLength(2)
 
-    fireEvent.click(screen.getByRole('button', { name: /hide sidebar/i }))
+    fireEvent.click(hideSidebarButton)
 
     expect(screen.queryByRole('button', { name: /new conversation/i })).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /show sidebar/i })).toBeInTheDocument()
+    const showSidebarButton = screen.getByRole('button', { name: /show sidebar/i })
+    expect(showSidebarButton).toBeInTheDocument()
+    expect(showSidebarButton.closest('header')).not.toBeNull()
+    expect(showSidebarButton.closest('[data-manage-header-sidebar-handle]')).not.toBeNull()
     expect(hasVisibleConversationTitle()).toBe(true)
 
-    fireEvent.click(screen.getByRole('button', { name: /show sidebar/i }))
+    fireEvent.click(showSidebarButton)
 
-    expect(screen.getByRole('button', { name: /hide sidebar/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')).not.toBeNull()
     expect(screen.getByRole('button', { name: /new conversation/i })).toBeInTheDocument()
   })
 

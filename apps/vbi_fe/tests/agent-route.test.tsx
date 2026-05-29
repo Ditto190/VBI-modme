@@ -26,7 +26,6 @@ const { default: LegacyManageAgentPage } = await import('../src/app/manage/agent
 const { default: ManageLayout } = await import('../src/app/manage/layout')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { ManagedRouteShell } = await import('../src/views/ManagedRouteShell')
 
 describe('agent app routes', () => {
   afterEach(() => {
@@ -34,36 +33,38 @@ describe('agent app routes', () => {
     navigationMock.redirect.mockReset()
   })
 
-  test('keeps the managed sidebar mounted across agent and manager routes', () => {
+  test('keeps the managed sidebar mounted on agent and manager segment layouts', () => {
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     navigationMock.pathname = '/agent/conversation-1'
     useNavigationStore.setState({ navigate: null, pathname: '/agent/conversation-1' })
 
     const { container, rerender } = render(
-      <ManagedRouteShell>
+      <AgentLayout>
         <AgentConversationPage />
-      </ManagedRouteShell>,
+      </AgentLayout>,
     )
-    const sidebar = container.querySelector('aside')
 
-    expect(sidebar).not.toBeNull()
+    expect(container.querySelector('aside')).not.toBeNull()
     expect(screen.getByTestId('agent-page')).toBeInTheDocument()
     expect(screen.queryByTestId('manager-page')).not.toBeInTheDocument()
 
     navigationMock.pathname = '/manage/reports'
     useNavigationStore.setState({ pathname: '/manage/reports' })
     rerender(
-      <ManagedRouteShell>
+      <ManageLayout>
         <div data-testid='manager-page' />
-      </ManagedRouteShell>,
+      </ManageLayout>,
     )
 
-    expect(container.querySelector('aside')).toBe(sidebar)
+    expect(container.querySelector('aside')).not.toBeNull()
     expect(screen.getByTestId('manager-page')).toBeInTheDocument()
     expect(screen.queryByTestId('agent-page')).not.toBeInTheDocument()
   })
 
-  test('keeps segment layouts thin because the shared shell owns the chrome', () => {
+  test('lets segment layouts own the persistent sidebar and header chrome', () => {
+    useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
+    useNavigationStore.setState({ navigate: null, pathname: '/agent' })
+
     render(
       <AgentLayout>
         <div data-testid='agent-child' />
@@ -71,8 +72,10 @@ describe('agent app routes', () => {
     )
 
     expect(screen.getByTestId('agent-child')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /hide sidebar/i })).toBeInTheDocument()
 
     cleanup()
+    useNavigationStore.setState({ pathname: '/manage/reports' })
     render(
       <ManageLayout>
         <div data-testid='manager-child' />
@@ -80,6 +83,7 @@ describe('agent app routes', () => {
     )
 
     expect(screen.getByTestId('manager-child')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /hide sidebar/i })).toBeInTheDocument()
 
     cleanup()
     const { container: draftContainer } = render(<AgentDraftPage />)

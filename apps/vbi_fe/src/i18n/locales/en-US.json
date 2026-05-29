@@ -82,6 +82,7 @@
   "common.name": "Name",
   "common.updatedAt": "Updated At",
   "common.actions": "Actions",
+  "common.back": "Back",
   "common.open": "Open",
   "common.edit": "Edit",
   "common.rename": "Rename",

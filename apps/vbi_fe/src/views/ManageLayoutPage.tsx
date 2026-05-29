@@ -15,15 +15,28 @@ import {
   matchRouteBranch,
   readAgentConversationRouteId,
 } from './manage-sidebar-routes'
-import { ManageRouteHeader, manageSidebarToggleButtonClassName } from './ManageRouteHeader'
+import { ManageRouteChromeProvider, useManageRouteChromeState } from './ManageRouteChrome'
+import { ManageRouteHeader } from './ManageRouteHeader'
 import { ManageSidebarButton, ManageSidebarGroup, manageSidebarChildListClassName } from './ManageSidebarNav'
 import { ManagePreferences } from './manage-resource/ManagePreferences'
 
+const hideSidebarButtonClassName =
+  'grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent text-[var(--vbi-text-muted)] transition-[background-color,border-color,color,box-shadow] duration-150 ease-out hover:border-[var(--vbi-border)] hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-primary)]/35'
+
 export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
+  return (
+    <ManageRouteChromeProvider>
+      <ManageLayoutContent>{children}</ManageLayoutContent>
+    </ManageRouteChromeProvider>
+  )
+}
+
+const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
   const pathname = useNavigationStore((state) => state.pathname)
   const go = useNavigationStore((state) => state.go)
   const clearActiveConversation = useAgentConversationsStore((state) => state.clearActiveConversation)
   const conversations = useAgentConversationsStore((state) => state.conversations)
+  const routeChrome = useManageRouteChromeState()
   const { t } = useTranslation()
   const resourceNavItems = [
     {
@@ -58,6 +71,15 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
   const currentPageLabel = isAgentPath
     ? currentConversationTitle
     : (resourceNavItems.find((item) => item.href === activeResourceHref)?.label ?? '')
+  const resourceDetailBackHref = (() => {
+    const [root, resource, id, ...rest] = pathname.split('/').filter(Boolean)
+    if (root !== 'manage' || !id || rest.length) return ''
+    if (!['charts', 'insights', 'reports'].includes(resource ?? '')) return ''
+    return `/manage/${resource}`
+  })()
+  const headerTitle = routeChrome.title ?? currentPageLabel
+  const headerBackLabel = routeChrome.backLabel ?? (resourceDetailBackHref ? t('common.back') : undefined)
+  const handleHeaderBack = routeChrome.onBack ?? (resourceDetailBackHref ? () => go(resourceDetailBackHref) : undefined)
 
   useEffect(() => {
     if (isResourcePath) {
@@ -86,11 +108,11 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
           <Tooltip side='right' title='Hide Sidebar'>
             <button
               aria-label='Hide Sidebar'
-              className={manageSidebarToggleButtonClassName}
+              className={hideSidebarButtonClassName}
               type='button'
               onClick={() => setSidebarHidden(true)}
             >
-              <PanelLeftClose className='h-4 w-4' />
+              <PanelLeftClose className='h-3.5 w-3.5' />
             </button>
           </Tooltip>
         </div>
@@ -132,13 +154,22 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
           <ManagePreferences />
         </div>
       </aside>
-      <section className='relative flex min-w-0 flex-1 flex-col bg-[var(--vbi-bg)] transition-colors duration-300'>
+      <section className='flex h-screen min-w-0 flex-1 flex-col bg-[var(--vbi-bg)] transition-colors duration-300 max-[720px]:h-auto max-[720px]:min-h-0'>
         <ManageRouteHeader
+          actions={routeChrome.actions}
+          rename={routeChrome.rename}
           sidebarHidden={sidebarHidden}
-          title={currentPageLabel}
+          title={headerTitle}
+          onBack={handleHeaderBack}
+          backLabel={headerBackLabel}
           onShowSidebar={() => setSidebarHidden(false)}
         />
-        <main className='vbi-motion-presence w-full min-w-0 flex-1 bg-transparent px-5 py-[18px] max-[720px]:w-screen max-[720px]:max-w-full max-[720px]:px-4 max-[720px]:py-4'>
+        <main
+          className={cn(
+            'vbi-motion-presence min-h-0 w-full min-w-0 flex-1 overflow-auto bg-transparent',
+            routeChrome.contentClassName,
+          )}
+        >
           {children}
         </main>
       </section>
