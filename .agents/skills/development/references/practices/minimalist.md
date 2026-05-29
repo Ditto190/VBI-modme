@@ -1,58 +1,36 @@
 # Minimalist Practice
 
-Reference material for `practices/minimalist`. It is the smallest standalone VBI
-app, suited to tasks that need a compact, readable implementation rather than a
-full demo.
+Reference for `practices/minimalist`, the smallest standalone VBI practice app:
+compact, readable, and learning-oriented rather than a source of standard
+architecture patterns.
 
 ## Positioning
 
-Minimalist is a low-ceremony app:
-
-- It currently has the smallest source surface: about 30 source files and one
-  focused test file.
-- Its only custom hook is `useFullscreen`.
-- It uses native HTML drag/drop instead of `@dnd-kit`.
-- It uses a remote CSV demo connector and a hard-coded schema.
-- It has no i18n module; labels live in `src/config/labels.ts`.
-- It does not provide CSV upload, source switching, a full hook suite, or complex
-  modals.
-
-Compared with `streamlined`, it is flatter and has fewer workflows. Compared
-with `standard` and `professional`, it is a learning sample rather than the
-source for standard implementation patterns.
+Keep Minimalist flat and local: native HTML drag/drop, a remote CSV demo
+connector, compact store/rendering code, and lightweight locale/theme/limit
+controls. Do not absorb standard/professional hook suites, drag/drop systems,
+upload/source-switching flows, or business UI polish unless explicitly
+requested.
 
 ## Structure
 
-- Entry: `src/index.tsx`, `src/App/App.tsx`.
-- Editing UI: `src/components/EditMode.tsx`.
-- UI panels: kept flat under `src/components/**`.
+- Entry/app shell: `src/index.tsx`, `src/App/App.tsx`.
+- Edit composition: `src/components/EditMode.tsx` and flat `src/components/**`.
 - State: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`.
-- Rendering: `src/components/Render/VSeedRender.tsx`.
-- Bootstrap: `src/utils/demoConnector.ts`.
-- Field/filter helpers: `src/utils/fields.ts`, `src/utils/filter.ts`.
+- Data/render/utils: `src/utils/demoConnector.ts`,
+  `src/components/Render/VSeedRender.tsx`, and focused `src/utils/*`.
 
-## Differences
+## Rules
 
-- The store initializes immediately in `createVBIStore`; there is no explicit
-  `initialize` lifecycle.
-- The connector registers `demo` and creates a VQuery CSV dataset from the public
-  supermarket URL.
-- Drag payloads are stored through `dataTransfer` and the in-memory fallback in
-  `src/utils/fields.ts`.
-- `VSeedRender` is the barest renderer: VChart, list table, pivot table, and
-  pivot chart. It has no legend filtering helper and no Ant Design error
-  message.
-- View/edit mode stays in `AppContent`; edit mode directly composes the toolbar,
-  field panel, shelf panel, filter panel, and chart body.
-
-## Development Rules
-
+- `createVBIStore` initializes immediately; there is no explicit initialize
+  lifecycle.
+- The demo connector owns CSV-backed dataset bootstrap.
+- Builder APIs are the mutation boundary for chart type, fields, filters,
+  locale, theme, and limit.
+- Native drag/drop and field/filter helpers stay local.
+- `VSeedRender` remains compact, not the reference for advanced rendering,
+  overlays, or error handling.
 - Do not import from other practices.
-- Keep components short; extract only when rendering, state, and mutation logic
-  are mixed together.
-- Use the Builder API as the mutation boundary.
-- Do not add standard/professional features unless the task explicitly asks to
-  expand the minimal sample.
 - Prefer local utilities over new abstraction layers.
 
 ## Validation

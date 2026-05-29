@@ -1,67 +1,39 @@
 # Professional Practice
 
-Reference material for `practices/professional`. It is the most complete
-business-oriented practice and the main reference for real hook signatures, edge
-cases, drag/drop, and production-grade interaction behavior.
+Reference for `practices/professional`, the high-fidelity business practice for
+real hook signatures, tested drag/drop, overlays, slot behavior,
+filter/having-filter models, and production-grade interaction behavior.
 
-## Positioning
+## Role and Boundaries
 
-Professional is a high-fidelity app:
-
-- It has a broad source surface: about 110 source files, with focused tests for
-  the drag/drop model, field token menu, overlay, slot behavior, and more.
-- It has the full hook suite, plus `useInitializeProfessional` and
-  `useProfessionalFields`.
-- It uses `@dnd-kit/core` for custom drag/drop, overlay positioning, and slot
-  drop targets.
-- It uses local JSON data through `professionalLocalData`.
-- It has complete `src/i18n/**`, theme config, slot config, and segmented style
-  files.
-- It depends on `@visactor/vbi-react`, but practice behavior is still
-  implemented through local hooks and models.
-
-Compared with `standard`, it is a richer behavior reference rather than a simpler
-template. Compared with `streamlined`, it replaces direct slot logic with tested
-drag/drop and editor models. Compared with `minimalist`, it sits at the other end
-of the complexity ladder.
-
-## Structure
-
-- Entry: `src/index.tsx`, `src/App.tsx`.
-- Editor shell: `src/components/Editor/**`.
-- Filters: `src/components/Filter/**`.
-- Drag/drop: `src/components/Editor/dnd/**`.
-- Hooks: `src/hooks/**`, exported from `src/hooks/index.ts`.
-- Store: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`.
-- Connector/data: `src/utils/localConnector.ts`, `localDataset.ts`,
-  `parseCsv.ts`, `supermarketSchema.ts`.
-- Styles: `src/App.css` imports `src/styles/**`.
-
-## Differences
-
-- `createDefaultBuilder()` registers the connector and immediately sets the
-  default locale, theme, and limit.
-- Initialization is delegated to `useInitializeProfessional`, which calls
-  `prepareProfessionalVBI()` before running store `initialize`.
-- Editor state is assembled through `useProfessionalEditorModel`; shell
-  components keep composition responsibility.
-- Drag/drop behavior is split into payload, target model, drop logic, overlay
-  position, and provider files, with tests for pure decision logic.
-- Filter and having-filter UI use modal/model composition instead of the standard
-  shelf-panel style.
-- `VSeedRender` delegates to `renderVSeed` and reports render failures through
-  Ant Design `message.error`.
-
-## Development Rules
-
+- Treat it as the richest behavior reference, not the baseline template.
+- Compared with `standard`, it prioritizes business interaction polish.
+- Compared with `streamlined`, it uses tested drag/drop and editor models.
+- It depends on `@visactor/vbi-react`, but behavior belongs in local hooks,
+  models, utils, and config.
 - Do not import from other practices.
-- Put behavior in hooks, models, or utils; components should focus on view and
-  interaction composition.
-- Preserve full hook signatures and edge-case handling.
-- Keep drag/drop model logic testable outside React where possible.
-- Update visible copy in both locales.
-- Use `localConnector.ts` as the boundary for local data and schema
-  normalization.
+
+## Primary Surfaces
+
+- Initialization: `createDefaultBuilder()`, `useInitializeProfessional`,
+  `prepareProfessionalVBI()`.
+- Editor/drag/drop: `components/Editor/**`, `components/Editor/dnd/**`,
+  `types/dnd.ts`, and focused tests.
+- Filters: `components/Filter/**` and filter/having-filter model hooks.
+- Store/data/rendering: `model/VBIStore.ts`, `model/VBIStoreProvider.tsx`,
+  `utils/localConnector.ts`, dataset/schema utilities, `components/Render/**`.
+
+## Rules
+
+- Keep Builder mutation in hooks, models, or focused utils; components compose
+  UI and interactions.
+- Preserve full hook signatures and edge-case behavior.
+- Keep drag/drop payload, target, drop, and overlay decisions testable outside
+  React where practical.
+- Use `localConnector.ts` as the local data and schema normalization boundary.
+- Update visible copy across supported locale files, or document intentional
+  fallback behavior.
+- Surface render failures through the existing user-facing message pattern.
 
 ## Validation
 
