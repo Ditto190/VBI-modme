@@ -282,7 +282,8 @@ describe('AgentPage', () => {
     expect(await screen.findByRole('heading', { name: /what should we do/i })).toBeInTheDocument()
     expect(createAgentConversationRuntime).not.toHaveBeenCalled()
 
-    fireEvent.change(screen.getByRole('textbox', { name: /agent/i }), {
+    const composerInput = screen.getByRole('textbox', { name: /agent/i })
+    fireEvent.change(composerInput, {
       target: { value: '当前洞察资源列表' },
     })
     fireEvent.click(screen.getByRole('button', { name: /^send$/i }))
@@ -303,6 +304,8 @@ describe('AgentPage', () => {
     })
 
     await waitFor(() => expect(runtime.send).toHaveBeenCalledWith('当前洞察资源列表'))
+    expect(runtime.destroy).not.toHaveBeenCalled()
+    expect(screen.getByRole('textbox', { name: /agent/i })).toBe(composerInput)
     expect(navigatedTo).toEqual(['/agent/conversation-new'])
     expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-new')
   })

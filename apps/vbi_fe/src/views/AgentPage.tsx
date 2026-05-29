@@ -26,7 +26,6 @@ export const AgentPage = () => {
       aria-label={t('nav.agent')}
     >
       <AgentChatPanel
-        key={activeRuntime?.conversationId ?? 'empty'}
         modelId={selectedModelId}
         modelOptions={modelOptions}
         onDraftSubmit={startDraftConversation}
