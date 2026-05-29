@@ -3,9 +3,11 @@ import { cleanup, render, screen } from '@testing-library/react'
 
 const navigationMock = rs.hoisted(() => ({
   pathname: '/agent/conversation-1',
+  redirect: rs.fn(),
 }))
 
 rs.mock('next/navigation', () => ({
+  redirect: navigationMock.redirect,
   usePathname: () => navigationMock.pathname,
 }))
 
@@ -20,6 +22,7 @@ rs.mock('../src/views/agent/AgentConversationSidebarSection', () => ({
 const { default: AgentLayout } = await import('../src/app/agent/layout')
 const { default: AgentDraftPage } = await import('../src/app/agent/page')
 const { default: AgentConversationPage } = await import('../src/app/agent/[conversationId]/page')
+const { default: LegacyManageAgentPage } = await import('../src/app/manage/agent/page')
 const { default: ManageLayout } = await import('../src/app/manage/layout')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
@@ -28,6 +31,7 @@ const { ManagedRouteShell } = await import('../src/views/ManagedRouteShell')
 describe('agent app routes', () => {
   afterEach(() => {
     cleanup()
+    navigationMock.redirect.mockReset()
   })
 
   test('keeps the managed sidebar mounted across agent and manager routes', () => {
@@ -37,7 +41,7 @@ describe('agent app routes', () => {
 
     const { container, rerender } = render(
       <ManagedRouteShell>
-        <div data-testid='manager-page' />
+        <AgentConversationPage />
       </ManagedRouteShell>,
     )
     const sidebar = container.querySelector('aside')
@@ -79,10 +83,18 @@ describe('agent app routes', () => {
 
     cleanup()
     const { container: draftContainer } = render(<AgentDraftPage />)
-    expect(draftContainer).toBeEmptyDOMElement()
+    expect(draftContainer).not.toBeEmptyDOMElement()
+    expect(screen.getByTestId('agent-page')).toBeInTheDocument()
 
     cleanup()
     const { container: conversationContainer } = render(<AgentConversationPage />)
-    expect(conversationContainer).toBeEmptyDOMElement()
+    expect(conversationContainer).not.toBeEmptyDOMElement()
+    expect(screen.getByTestId('agent-page')).toBeInTheDocument()
+  })
+
+  test('redirects the legacy manage agent route to the explicit agent route', () => {
+    render(<LegacyManageAgentPage />)
+
+    expect(navigationMock.redirect).toHaveBeenCalledWith('/agent')
   })
 })
