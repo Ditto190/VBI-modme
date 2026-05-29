@@ -77,6 +77,7 @@ export const proxyRuntimeRequest = async (
     headers: copyHeaders(request.headers, requestHeaderBlocklist),
     method: request.method,
     redirect: 'manual',
+    signal: request.signal,
   }
 
   if (hasRequestBody) {
