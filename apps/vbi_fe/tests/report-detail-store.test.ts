@@ -8,9 +8,8 @@ rs.mock('../src/stores/resource-session.store', () => ({
   releaseResourceSession,
 }))
 
-const { useInsightBuilderModel, useReportBuilderModel } = await import('../src/models')
+const { useReportBuilderModel } = await import('../src/models')
 const { useReportDetailStore } = await import('../src/stores/report-detail.store')
-const initialInsightBuilderState = useInsightBuilderModel.getState()
 const initialReportBuilderState = useReportBuilderModel.getState()
 const initialReportDetailState = useReportDetailStore.getState()
 const getReportDetailSnapshot = () => useReportDetailStore.getState()
@@ -57,7 +56,6 @@ describe('report detail store', () => {
   beforeEach(() => {
     rs.clearAllMocks()
     releaseResourceSession.mockResolvedValue(undefined)
-    useInsightBuilderModel.setState(initialInsightBuilderState, true)
     useReportBuilderModel.setState(initialReportBuilderState, true)
     useReportDetailStore.setState(initialReportDetailState, true)
   })
@@ -199,7 +197,6 @@ describe('report detail store', () => {
     })
     useReportDetailStore.setState({
       activePageId: 'page-1',
-      chartEditorOpen: true,
       connectedChartId: 'chart-1',
       connectedInsightId: 'insight-1',
       reportId: 'report-1',
@@ -209,30 +206,9 @@ describe('report detail store', () => {
     await useReportDetailStore.getState().removeChart()
 
     expect(reportBuilder.build().pages[0].chartId).toBe('')
-    expect(getReportDetailSnapshot().chartEditorOpen).toBe(false)
     expect(getReportDetailSnapshot().connectedChartId).toBe('')
     expect(releaseResourceSession).toHaveBeenCalledWith('chart', 'chart-1')
     expect(connectResourceSession).not.toHaveBeenCalled()
-  })
-
-  test('updates the active insight builder content from report editor', () => {
-    const setContent = rs.fn()
-    useInsightBuilderModel.setState({
-      sessions: {
-        'insight-1': {
-          builder: {
-            setContent,
-          },
-        },
-      },
-    })
-    useReportDetailStore.setState({
-      connectedInsightId: 'insight-1',
-    })
-
-    useReportDetailStore.getState().setInsightContent('Updated insight text')
-
-    expect(setContent).toHaveBeenCalledWith('Updated insight text')
   })
 
   test('does not leave stale report subscriptions when disposed before bootstrap finishes', async () => {

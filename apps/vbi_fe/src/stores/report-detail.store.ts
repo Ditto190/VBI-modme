@@ -2,37 +2,30 @@ import { create } from 'zustand'
 import type { ReportPageBuilder } from '@visactor/vbi'
 import { createInsight } from '../services/insightApi'
 import { createResource } from '../services/resourceApi'
-import { useInsightBuilderModel, useReportBuilderModel } from '../models'
+import { useReportBuilderModel } from '../models'
 import { resolveActivePageId } from '../views/report-detail/page-state'
 import { connectResourceSession, releaseResourceSession } from './resource-session.store'
 import type { ReportPage, ResourceKind } from '../types'
 
 type ReportDetailState = {
   activePageId: string
-  chartEditorOpen: boolean
   connectedChartId: string
   connectedChartIds: string[]
   connectedInsightId: string
   connectedInsightIds: string[]
-  insightEditorOpen: boolean
   pageActionBusy: boolean
   reportId: string
   stopReportSync: (() => void) | null
   userName: string
   addPage(): Promise<void>
   bootstrap(reportId: string, userName: string): Promise<void>
-  closeChartEditor(): void
-  closeInsightEditor(): void
   dispose(): Promise<void>
-  openChartEditor(pageId?: string): Promise<void>
-  openInsightEditor(pageId?: string): Promise<void>
   addChart(pageId: string): Promise<void>
   addInsight(pageId: string): Promise<void>
   removeChart(pageId?: string): Promise<void>
   removeInsight(pageId?: string): Promise<void>
   removePage(pageId: string): Promise<void>
   selectPage(pageId: string): Promise<void>
-  setInsightContent(value: string): void
   setScrolledPage(pageId: string): void
   syncActivePage(): Promise<void>
 }
@@ -41,8 +34,6 @@ const getReportPages = (reportId: string): ReportPage[] =>
   useReportBuilderModel.getState().sessions[reportId]?.builder?.build().pages ?? []
 
 const getReportBuilder = (reportId: string) => useReportBuilderModel.getState().sessions[reportId]?.builder
-
-const getInsightBuilder = (insightId: string) => useInsightBuilderModel.getState().sessions[insightId]?.builder
 
 const getActivePage = (reportId: string, activePageId: string) =>
   getReportPages(reportId).find((page) => page.id === activePageId)
@@ -67,12 +58,10 @@ let reportDetailLifecycleToken = 0
 
 const createReportDetailResetPatch = () => ({
   activePageId: '',
-  chartEditorOpen: false,
   connectedChartId: '',
   connectedChartIds: [],
   connectedInsightId: '',
   connectedInsightIds: [],
-  insightEditorOpen: false,
   pageActionBusy: false,
   reportId: '',
   stopReportSync: null,
@@ -128,16 +117,6 @@ const syncReportResources = async (state: ReportDetailState, pages: ReportPage[]
   ])
 }
 
-const getPageResourcePatch = (reportId: string, pageId: string) => {
-  const page = getActivePage(reportId, pageId)
-  if (!page) return null
-  return {
-    activePageId: pageId,
-    connectedChartId: page.chartId ?? '',
-    connectedInsightId: page.insightId ?? '',
-  }
-}
-
 const subscribeReportSession = (reportId: string) => {
   let current = useReportBuilderModel.getState().sessions[reportId]
   let lastBuilder = current?.builder ?? null
@@ -156,12 +135,10 @@ const subscribeReportSession = (reportId: string) => {
 
 export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   activePageId: '',
-  chartEditorOpen: false,
   connectedChartId: '',
   connectedChartIds: [],
   connectedInsightId: '',
   connectedInsightIds: [],
-  insightEditorOpen: false,
   pageActionBusy: false,
   reportId: '',
   stopReportSync: null,
@@ -190,8 +167,6 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
       )
       set({
         activePageId: nextPageId,
-        chartEditorOpen: false,
-        insightEditorOpen: false,
       })
       await get().syncActivePage()
     } finally {
@@ -217,8 +192,6 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
     set({ stopReportSync })
     await get().syncActivePage()
   },
-  closeChartEditor: () => set({ chartEditorOpen: false }),
-  closeInsightEditor: () => set({ insightEditorOpen: false }),
   dispose: async () => {
     reportDetailLifecycleToken += 1
     const state = get()
@@ -231,32 +204,6 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
       ...insightIds.map((id) => releaseResourceSession('insight', id)),
       releaseResourceSession('report', state.reportId),
     ])
-  },
-  openChartEditor: async (pageId) => {
-    if (!pageId) {
-      set({ chartEditorOpen: true })
-      return
-    }
-    const patch = getPageResourcePatch(get().reportId, pageId)
-    if (!patch) return
-    set({ ...patch, chartEditorOpen: true, insightEditorOpen: false })
-    await syncReportResources(
-      { ...get(), ...patch, chartEditorOpen: true, insightEditorOpen: false },
-      getReportPages(get().reportId),
-    )
-  },
-  openInsightEditor: async (pageId) => {
-    if (!pageId) {
-      set({ insightEditorOpen: true })
-      return
-    }
-    const patch = getPageResourcePatch(get().reportId, pageId)
-    if (!patch) return
-    set({ ...patch, chartEditorOpen: false, insightEditorOpen: true })
-    await syncReportResources(
-      { ...get(), ...patch, chartEditorOpen: false, insightEditorOpen: true },
-      getReportPages(get().reportId),
-    )
   },
   addChart: async (pageId) => {
     const state = get()
@@ -301,7 +248,6 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
       updatePageResource(state.reportId, targetPageId, (builder) => {
         builder.setChartId('')
       })
-      if (targetPageId === state.activePageId) set({ chartEditorOpen: false })
       await get().syncActivePage()
     } finally {
       set({ pageActionBusy: false })
@@ -317,9 +263,6 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
       updatePageResource(state.reportId, targetPageId, (builder) => {
         builder.setInsightId('')
       })
-      if (targetPageId === state.activePageId) {
-        set({ insightEditorOpen: false })
-      }
       await get().syncActivePage()
     } finally {
       set({ pageActionBusy: false })
@@ -340,17 +283,11 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
   selectPage: async (pageId) => {
     set({
       activePageId: pageId,
-      chartEditorOpen: false,
-      insightEditorOpen: false,
     })
     await get().syncActivePage()
   },
-  setInsightContent: (value) => {
-    getInsightBuilder(get().connectedInsightId)?.setContent(value)
-  },
   setScrolledPage: (pageId) => {
     const state = get()
-    if (state.chartEditorOpen || state.insightEditorOpen) return
     if (!pageId || pageId === state.activePageId) return
     const page = getActivePage(state.reportId, pageId)
     if (!page) return
@@ -364,11 +301,9 @@ export const useReportDetailStore = create<ReportDetailState>((set, get) => ({
     const state = get()
     const pages = getReportPages(state.reportId)
     const nextActivePageId = resolveActivePageId(pages, state.activePageId)
-    set((current) => ({
+    set({
       activePageId: nextActivePageId,
-      chartEditorOpen: current.activePageId === nextActivePageId ? current.chartEditorOpen : false,
-      insightEditorOpen: current.activePageId === nextActivePageId ? current.insightEditorOpen : false,
-    }))
+    })
     await syncReportResources({ ...get(), activePageId: nextActivePageId }, pages)
   },
 }))

@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { useShallow } from 'zustand/shallow'
 import dynamic from 'next/dynamic'
 import { Empty } from '../../components/ui/empty'
@@ -9,15 +9,6 @@ import { useReportDetailStore } from '../../stores/report-detail.store'
 import { PageSidebar } from './PageSidebar'
 import { useReportStageScroll } from './useReportStageScroll'
 
-const InsightEditorDrawer = dynamic(
-  () => import('./InsightEditorDrawer').then((module) => module.InsightEditorDrawer),
-  {
-    ssr: false,
-  },
-)
-const ReportEditorDrawer = dynamic(() => import('./ReportEditorDrawer').then((module) => module.ReportEditorDrawer), {
-  ssr: false,
-})
 const ReportStage = dynamic(() => import('./ReportStage').then((module) => module.ReportStage), {
   loading: () => (
     <section className='flex min-h-0 flex-1 items-center justify-center overflow-auto overscroll-contain scroll-smooth [contain:layout] [overflow-anchor:none] [scrollbar-gutter:stable]'>
@@ -35,21 +26,9 @@ const emptyStageClassName =
 
 export const ReportWorkspace = memo(() => {
   const { t } = useTranslation()
-  const {
-    activePageId,
-    chartEditorOpen,
-    insightEditorOpen,
-    openChartEditor,
-    openInsightEditor,
-    reportId,
-    setScrolledPage,
-  } = useReportDetailStore(
+  const { activePageId, reportId, setScrolledPage } = useReportDetailStore(
     useShallow((state) => ({
       activePageId: state.activePageId,
-      chartEditorOpen: state.chartEditorOpen,
-      insightEditorOpen: state.insightEditorOpen,
-      openChartEditor: state.openChartEditor,
-      openInsightEditor: state.openInsightEditor,
       reportId: state.reportId,
       setScrolledPage: state.setScrolledPage,
     })),
@@ -104,24 +83,6 @@ export const ReportWorkspace = memo(() => {
     [chartBuilders, insightBuilders, pages],
   )
 
-  const editChart = useCallback(
-    (pageId: string) => {
-      void (async () => {
-        await openChartEditor(pageId)
-      })()
-    },
-    [openChartEditor],
-  )
-
-  const editInsight = useCallback(
-    (pageId: string) => {
-      void (async () => {
-        await openInsightEditor(pageId)
-      })()
-    },
-    [openInsightEditor],
-  )
-
   if (!pages.length) {
     return (
       <div className={reportShellClassName}>
@@ -136,16 +97,7 @@ export const ReportWorkspace = memo(() => {
   return (
     <div className={reportShellClassName}>
       <PageSidebar pages={pages} />
-      <ReportStage
-        activePageId={activePageId}
-        onEditChart={editChart}
-        onEditInsight={editInsight}
-        onPageRef={setPageNode}
-        pageSections={viewPages}
-        stageRef={stageRef}
-      />
-      {chartEditorOpen ? <ReportEditorDrawer /> : null}
-      {insightEditorOpen ? <InsightEditorDrawer /> : null}
+      <ReportStage activePageId={activePageId} onPageRef={setPageNode} pageSections={viewPages} stageRef={stageRef} />
     </div>
   )
 })

@@ -12,8 +12,6 @@ rs.mock('../src/views/report-detail/ReportInsightPanel', () => ({
 
 const { ReportStage } = await import('../src/views/report-detail/ReportStage')
 
-const noop = () => {}
-
 const emptyPage = {
   chartBuilder: null,
   hasChart: false,
@@ -49,14 +47,7 @@ const secondPage = {
 
 test('report stage renders empty when page has no resources', () => {
   render(
-    <ReportStage
-      activePageId='page-1'
-      onEditChart={noop}
-      onEditInsight={noop}
-      onPageRef={() => () => undefined}
-      pageSections={[]}
-      stageRef={createRef()}
-    />,
+    <ReportStage activePageId='page-1' onPageRef={() => () => undefined} pageSections={[]} stageRef={createRef()} />,
   )
 
   expect(screen.getByText(/This page has no chart or insight|当前页面暂无图表和洞察/)).toBeInTheDocument()
@@ -66,8 +57,6 @@ test('report stage places insight before chart when both resources exist', async
   const { container } = render(
     <ReportStage
       activePageId='page-1'
-      onEditChart={noop}
-      onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[bothPage]}
       stageRef={createRef()}
@@ -86,8 +75,6 @@ test('report stage renders page title dividers between pages', () => {
   const { container } = render(
     <ReportStage
       activePageId='page-1'
-      onEditChart={noop}
-      onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[bothPage, secondPage]}
       stageRef={createRef()}
@@ -103,8 +90,6 @@ test('report stage renders report DSL pages in order and marks the active page',
   const { container } = render(
     <ReportStage
       activePageId='page-2'
-      onEditChart={noop}
-      onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[bothPage, secondPage]}
       stageRef={createRef()}
@@ -121,8 +106,6 @@ test('report stage renders insight-only pages without chart panel', () => {
   const { container } = render(
     <ReportStage
       activePageId='page-1'
-      onEditChart={noop}
-      onEditInsight={noop}
       onPageRef={() => () => undefined}
       pageSections={[
         {
