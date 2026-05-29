@@ -29,7 +29,7 @@ export type AgentConversationMetadata = {
   usage: Usage
 }
 
-export type AgentConversationSession = {
+type AgentConversationSession = {
   createdAt: string
   id: string
   lastModified: string
@@ -41,28 +41,23 @@ export type AgentConversationSession = {
 
 export type AgentConversationStatus = 'completed' | 'running'
 
-export type AgentConversationSummary = AgentConversationMetadata & {
-  status: AgentConversationStatus
-}
-
-export type VbiAgentConversationRecord = {
+type VbiAgentConversationRecord = {
   metadata: AgentConversationMetadata
   schemaVersion: 1
   session: AgentConversationSession
 }
 
-export type VbiAgentConversationDatabase = {
+type VbiAgentConversationDatabase = {
   delete(id: string): Promise<void>
   getAll(): Promise<VbiAgentConversationRecord[]>
   get(id: string): Promise<VbiAgentConversationRecord | null>
   put(record: VbiAgentConversationRecord): Promise<void>
 }
 
-export type VbiAgentConversationsStore = {
+type VbiAgentConversationsStore = {
   delete(id: string): Promise<void>
   get(id: string): Promise<AgentConversationSession | null>
   getAllMetadata(): Promise<AgentConversationMetadata[]>
-  loadSession(id: string): Promise<AgentConversationSession | null>
   rename(id: string, title: string): Promise<AgentConversationMetadata | null>
   save(data: AgentConversationSession, metadata: AgentConversationMetadata): Promise<void>
 }
@@ -76,7 +71,7 @@ type CreateAgentSessionMetadataInput = {
   fallbackTitle: string
   id: string
   lastModified: string
-  state: Pick<AgentStateSnapshot, 'messages' | 'thinkingLevel'> | { messages?: unknown[]; thinkingLevel?: unknown }
+  state: Pick<AgentStateSnapshot, 'messages' | 'thinkingLevel'>
   title?: string
 }
 
@@ -133,7 +128,7 @@ export const readAgentContentText = (content: unknown): string => {
     .join(' ')
 }
 
-export const readAgentMessageText = (message: unknown) => {
+const readAgentMessageText = (message: unknown) => {
   if (!isRecord(message)) return ''
   if (message.role !== 'user' && message.role !== 'assistant' && message.role !== 'user-with-attachments') return ''
   return readAgentContentText(message.content).replace(/\s+/g, ' ').trim()
@@ -175,15 +170,10 @@ const addUsage = (left: Usage, right: Usage): Usage => ({
   totalTokens: left.totalTokens + right.totalTokens,
 })
 
-export const createAgentConversationId = () => {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID()
-  return `conversation-${Date.now()}`
-}
-
-export const extractAgentConversationPreview = (messages: unknown[] = []) =>
+const extractAgentConversationPreview = (messages: unknown[] = []) =>
   messages.map(readAgentMessageText).filter(Boolean).join('\n').slice(0, 2048)
 
-export const createAgentSessionMetadata = ({
+const createAgentSessionMetadata = ({
   createdAt,
   fallbackTitle,
   id,
@@ -191,33 +181,21 @@ export const createAgentSessionMetadata = ({
   state,
   title,
 }: CreateAgentSessionMetadataInput): AgentConversationMetadata => {
-  const messages = Array.isArray(state.messages) ? state.messages : []
-  const preview = extractAgentConversationPreview(messages)
+  const preview = extractAgentConversationPreview(state.messages)
   const resolvedTitle = (title?.trim() || preview.split('\n')[0]?.trim() || fallbackTitle).slice(0, 80)
-  const usage = messages.map(readMessageUsage).reduce(addUsage, emptyUsage)
+  const usage = state.messages.map(readMessageUsage).reduce(addUsage, emptyUsage)
 
   return {
     id,
     title: resolvedTitle,
     createdAt,
     lastModified,
-    messageCount: messages.length,
+    messageCount: state.messages.length,
     usage,
     thinkingLevel: resolveAgentThinkingLevel(state.thinkingLevel),
     preview,
   }
 }
-
-export const mapAgentConversationMetadata = (
-  metadata: AgentConversationMetadata,
-  status: AgentConversationStatus = 'completed',
-): AgentConversationSummary => ({
-  ...metadata,
-  status,
-})
-
-export const sortAgentConversations = <T extends Pick<AgentConversationMetadata, 'lastModified'>>(items: T[]) =>
-  [...items].sort((left, right) => right.lastModified.localeCompare(left.lastModified))
 
 const requestToPromise = <T>(request: IDBRequest<T>) =>
   new Promise<T>((resolve, reject) => {
@@ -283,14 +261,14 @@ let createIndexedDBConversationDatabase: VbiAgentIndexedDBFactory = createBrowse
 
 export const setVbiAgentIndexedDBFactoryForTests = (factory?: VbiAgentIndexedDBFactory) => {
   createIndexedDBConversationDatabase = factory ?? createBrowserIndexedDBConversationDatabase
+  storageSetup = undefined
 }
 
-export const createVbiAgentStorage = (database: VbiAgentConversationDatabase): VbiAgentStorage => ({
+const createVbiAgentStorage = (database: VbiAgentConversationDatabase): VbiAgentStorage => ({
   conversations: {
     delete: (id) => database.delete(id),
     get: async (id) => (await database.get(id))?.session ?? null,
     getAllMetadata: async () => (await database.getAll()).map((record) => record.metadata),
-    loadSession: async (id) => (await database.get(id))?.session ?? null,
     rename: async (id, title) => {
       const nextTitle = title.trim()
       if (!nextTitle) return null
@@ -334,19 +312,6 @@ export const setupVbiAgentIndexedDBStorage = async (): Promise<VbiAgentStorage> 
   return storageSetup
 }
 
-export const listAgentConversations = async (storage: VbiAgentStorage) =>
-  sortAgentConversations(
-    (await storage.conversations.getAllMetadata()).map((item) => mapAgentConversationMetadata(item)),
-  )
-
-export const deleteAgentConversation = (storage: VbiAgentStorage, id: string) => storage.conversations.delete(id)
-
-export const loadAgentConversation = async (storage: VbiAgentStorage, id: string) =>
-  (await storage.conversations.loadSession(id)) ?? storage.conversations.get(id)
-
-export const renameAgentConversation = (storage: VbiAgentStorage, id: string, title: string) =>
-  storage.conversations.rename(id, title)
-
 export const saveAgentConversation = async (
   storage: VbiAgentStorage,
   { createdAt, fallbackTitle, id, lastModified, state, title }: SaveAgentConversationInput,
@@ -375,8 +340,4 @@ export const saveAgentConversation = async (
 
   await storage.conversations.save(data, metadata)
   return metadata
-}
-
-export const resetVbiAgentStorageForTests = () => {
-  storageSetup = undefined
 }

@@ -15,7 +15,9 @@ import type {
   SimpleStreamOptions,
 } from '@earendil-works/pi-ai'
 import {
+  agentStreamOptionKeys,
   emptyUsage,
+  getAgentModelAliases,
   getSupportedAgentModelIds,
   resolveModelIdAlias,
   sanitizeModel,
@@ -77,13 +79,23 @@ const writeProxyHttpError = (response: Response, error: unknown) => {
 export class AgentStreamService {
   private piAiModule?: Promise<PiAiModule>
 
-  getConfig() {
+  async getConfig() {
     const provider = this.getConfiguredProvider()
     const model = this.getConfiguredModel(provider)
+    const { getModel } = await this.loadPiAi()
+    const modelIds = getSupportedAgentModelIds(provider, model)
+    const modelDescriptors = modelIds.flatMap((modelId) => {
+      const descriptor = getModel(provider as never, modelId as never)
+      return descriptor ? [sanitizeModel(descriptor, readString(process.env.AGENT_BASE_URL))] : []
+    })
+
     return {
       provider,
       model,
-      models: getSupportedAgentModelIds(provider, model),
+      models: modelIds,
+      modelAliases: getAgentModelAliases(provider),
+      modelDescriptors,
+      streamOptionKeys: [...agentStreamOptionKeys],
     }
   }
 

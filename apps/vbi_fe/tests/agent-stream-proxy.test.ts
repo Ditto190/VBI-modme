@@ -72,8 +72,6 @@ describe('streamProxy', () => {
     ) as typeof fetch
 
     const stream = streamProxy(model, [{ role: 'user', content: 'hi' }], {
-      authToken: 'token-1',
-      proxyUrl: '/api/v1/agent',
       reasoning: 'xhigh',
       temperature: 0.2,
     })
@@ -82,7 +80,7 @@ describe('streamProxy', () => {
     expect(fetch).toHaveBeenCalledWith(
       '/api/v1/agent/stream',
       expect.objectContaining({
-        headers: expect.objectContaining({ Authorization: 'Bearer token-1' }),
+        headers: { 'Content-Type': 'application/json' },
         method: 'POST',
       }),
     )
@@ -104,10 +102,7 @@ describe('streamProxy', () => {
   test('emits Pi error message when the backend rejects the stream request', async () => {
     globalThis.fetch = rs.fn(async () => new Response('', { status: 502, statusText: 'Bad Gateway' })) as typeof fetch
 
-    const stream = streamProxy(model, [], {
-      authToken: 'token-1',
-      proxyUrl: '/api/v1/agent',
-    })
+    const stream = streamProxy(model, [])
     const events = await collectStreamEvents(stream)
 
     expect(events.at(-1)).toMatchObject({
@@ -119,6 +114,48 @@ describe('streamProxy', () => {
       reason: 'error',
       type: 'error',
     })
+  })
+
+  test('emits an aborted terminal event when cancellation closes the stream before backend done', async () => {
+    const abortController = new AbortController()
+    const encoder = new TextEncoder()
+
+    globalThis.fetch = rs.fn(
+      async () =>
+        new Response(
+          new ReadableStream({
+            start(controller) {
+              controller.enqueue(
+                encoder.encode(`data: ${JSON.stringify({ type: 'start', partial: createAssistantMessage() })}\n\n`),
+              )
+            },
+          }),
+        ),
+    ) as typeof fetch
+
+    const stream = streamProxy(model, [], { signal: abortController.signal })
+    const iterator = stream[Symbol.asyncIterator]()
+
+    await expect(iterator.next()).resolves.toMatchObject({
+      done: false,
+      value: { type: 'start' },
+    })
+
+    abortController.abort()
+
+    await expect(iterator.next()).resolves.toMatchObject({
+      done: false,
+      value: {
+        error: {
+          errorMessage: 'Request aborted by user',
+          role: 'assistant',
+          stopReason: 'aborted',
+        },
+        reason: 'aborted',
+        type: 'error',
+      },
+    })
+    await expect(iterator.next()).resolves.toMatchObject({ done: true })
   })
 
   test('defers the proxy request until the browser can paint running state', async () => {
@@ -142,10 +179,7 @@ describe('streamProxy', () => {
       ]),
     ) as typeof fetch
 
-    const stream = streamProxy(model, [{ role: 'user', content: 'large prompt' }], {
-      authToken: 'token-1',
-      proxyUrl: '/api/v1/agent',
-    })
+    const stream = streamProxy(model, [{ role: 'user', content: 'large prompt' }])
 
     await Promise.resolve()
     expect(fetch).not.toHaveBeenCalled()

@@ -1,15 +1,14 @@
 import { create } from 'zustand'
 import {
-  deleteAgentConversation,
-  listAgentConversations,
-  mapAgentConversationMetadata,
-  renameAgentConversation,
   setupVbiAgentIndexedDBStorage,
-  sortAgentConversations,
   type AgentConversationMetadata,
   type AgentConversationStatus,
-  type AgentConversationSummary,
+  type VbiAgentStorage,
 } from '../views/agent/agent-storage'
+
+export type AgentConversationSummary = AgentConversationMetadata & {
+  status: AgentConversationStatus
+}
 
 type AgentConversationsState = {
   activeConversationId: string
@@ -30,13 +29,21 @@ type AgentConversationsState = {
   upsertConversation(metadata: AgentConversationMetadata, status: AgentConversationStatus): void
 }
 
+const sortAgentConversations = <T extends Pick<AgentConversationMetadata, 'lastModified'>>(items: T[]) =>
+  [...items].sort((left, right) => right.lastModified.localeCompare(left.lastModified))
+
+const listAgentConversations = async (storage: VbiAgentStorage) =>
+  sortAgentConversations(
+    (await storage.conversations.getAllMetadata()).map((metadata) => ({ ...metadata, status: 'completed' as const })),
+  )
+
 const mergeConversation = (
   conversations: AgentConversationSummary[],
   metadata: AgentConversationMetadata,
   status: AgentConversationStatus,
 ) =>
   sortAgentConversations([
-    mapAgentConversationMetadata(metadata, status),
+    { ...metadata, status },
     ...conversations.filter((conversation) => conversation.id !== metadata.id),
   ])
 
@@ -60,7 +67,7 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
   },
   deleteConversation: async (id) => {
     const storage = await setupVbiAgentIndexedDBStorage()
-    await deleteAgentConversation(storage, id)
+    await storage.conversations.delete(id)
     set((state) => {
       const conversations = state.conversations.filter((conversation) => conversation.id !== id)
 
@@ -103,7 +110,7 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
     if (!nextTitle) return
 
     const storage = await setupVbiAgentIndexedDBStorage()
-    const metadata = await renameAgentConversation(storage, id, nextTitle)
+    const metadata = await storage.conversations.rename(id, nextTitle)
     if (!metadata) return
 
     set((state) => ({

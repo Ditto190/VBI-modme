@@ -73,21 +73,13 @@ const createDeferred = <T,>() => {
   return { promise, resolve }
 }
 
-const sortAgentConversations = <T extends { lastModified: string }>(items: T[]) =>
-  [...items].sort((left, right) => right.lastModified.localeCompare(left.lastModified))
-
-const mapAgentConversationMetadata = (metadata: ConversationMetadata, status = 'completed') => ({
-  ...metadata,
-  status,
-})
-
 const setupVbiAgentIndexedDBStorage = rs.fn(async () => ({
   conversations: {
     getAllMetadata: rs.fn(async () => metadataList),
   },
 }))
 
-const createAgentConversationId = rs.fn(() => 'conversation-new')
+const randomUUID = rs.fn(() => 'conversation-new')
 const readAgentContentText = (content: unknown) => {
   if (typeof content === 'string') return content
   if (!Array.isArray(content)) return ''
@@ -96,12 +88,6 @@ const readAgentContentText = (content: unknown) => {
     .filter(Boolean)
     .join(' ')
 }
-const listAgentConversations = rs.fn(
-  async (storage: { conversations: { getAllMetadata(): Promise<ConversationMetadata[]> } }) =>
-    sortAgentConversations(
-      (await storage.conversations.getAllMetadata()).map((item) => mapAgentConversationMetadata(item)),
-    ),
-)
 
 const pendingRuntimes = new Map<string, ReturnType<typeof createDeferred<Runtime>>>()
 const createRuntime = (
@@ -167,12 +153,8 @@ const createAgentConversationRuntime = rs.fn(({ conversationId }: { conversation
 })
 
 rs.mock('../src/views/agent/agent-storage', () => ({
-  createAgentConversationId,
-  listAgentConversations,
-  mapAgentConversationMetadata,
   readAgentContentText,
   setupVbiAgentIndexedDBStorage,
-  sortAgentConversations,
 }))
 
 rs.mock('../src/views/agent/agent-runtime', () => ({
@@ -188,6 +170,10 @@ describe('AgentPage', () => {
   beforeEach(() => {
     rs.clearAllMocks()
     resizeObserverObservedTargets = []
+    Object.defineProperty(globalThis, 'crypto', {
+      configurable: true,
+      value: { ...globalThis.crypto, randomUUID },
+    })
     Object.defineProperty(globalThis, 'ResizeObserver', {
       configurable: true,
       value: class ResizeObserver {

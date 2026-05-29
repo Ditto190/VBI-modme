@@ -176,10 +176,7 @@ importers:
         version: 0.14.1(@assistant-ui/react@0.14.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.6.0(react@19.2.5)))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@earendil-works/pi-agent-core':
         specifier: 0.75.5
-        version: 0.75.5(ws@8.20.0)(zod@4.4.3)
-      '@earendil-works/pi-ai':
-        specifier: 0.75.5
-        version: 0.75.5(ws@8.20.0)(zod@4.4.3)
+        version: 0.75.5
       '@hocuspocus/provider':
         specifier: 3.4.3
         version: 3.4.3(y-protocols@1.0.7(yjs@13.6.28))(yjs@13.6.28)
@@ -12768,20 +12765,6 @@ snapshots:
   '@earendil-works/pi-agent-core@0.75.5':
     dependencies:
       '@earendil-works/pi-ai': 0.75.5
-      ignore: 7.0.5
-      typebox: 1.1.38
-      yaml: 2.9.0
-    transitivePeerDependencies:
-      - '@modelcontextprotocol/sdk'
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-      - ws
-      - zod
-
-  '@earendil-works/pi-agent-core@0.75.5(ws@8.20.0)(zod@4.4.3)':
-    dependencies:
-      '@earendil-works/pi-ai': 0.75.5(ws@8.20.0)(zod@4.4.3)
       ignore: 7.0.5
       typebox: 1.1.38
       yaml: 2.9.0

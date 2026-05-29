@@ -5,10 +5,14 @@ import type { Translate } from '../../../i18n'
 import { useAgentConversationsStore } from '../../../stores/agent-conversations.store'
 import { useNavigationStore } from '../../../stores/navigation.store'
 import {
+  createAgentModelOptions,
   defaultAgentModel,
   defaultAgentThinkingLevel,
+  fallbackAgentBackendConfig,
+  readAgentBackendConfig,
   resolveAgentModelId,
   resolveAgentThinkingLevel,
+  type AgentBackendConfig,
   type AgentModelId,
   type AgentThinkingLevel,
 } from '../agent-model-config'
@@ -17,7 +21,7 @@ import type {
   AgentConversationRuntimeSnapshot,
   AgentConversationRuntimeUpdate,
 } from '../agent-runtime'
-import { createAgentConversationId, setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from '../agent-storage'
+import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from '../agent-storage'
 import { createAgentConversationRoute, readAgentConversationRouteId } from '../../manage-sidebar-routes'
 
 const emptySnapshot: AgentConversationRuntimeSnapshot = {
@@ -71,18 +75,20 @@ export const useAgentConversationController = (t: Translate) => {
   const pathname = useNavigationStore((state) => state.pathname)
   const [activeRuntime, setActiveRuntime] = useState<AgentConversationRuntime | null>(null)
   const [activeSnapshot, setActiveSnapshot] = useState<AgentConversationRuntimeSnapshot>(emptySnapshot)
-  const [preferredModelId, setPreferredModelIdState] = useState<AgentModelId>(() =>
-    resolveAgentModelId(readStoredString(preferredAgentModelStorageKey)),
+  const [preferredModelId, setPreferredModelIdState] = useState<AgentModelId>(
+    () => readStoredString(preferredAgentModelStorageKey) || defaultAgentModel,
   )
   const [preferredThinkingLevel, setPreferredThinkingLevelState] = useState<AgentThinkingLevel>(() =>
     resolveAgentThinkingLevel(readStoredString(preferredAgentThinkingLevelStorageKey)),
   )
   const [errorMessage, setErrorMessage] = useState('')
+  const [agentConfig, setAgentConfig] = useState<AgentBackendConfig>(fallbackAgentBackendConfig)
   const [isLoading, setIsLoading] = useState(true)
   const [storageReady, setStorageReady] = useState(false)
   const routeConversationId = useMemo(() => readAgentConversationRouteId(pathname), [pathname])
   const selectedModelId = activeRuntime ? activeSnapshot.modelId : preferredModelId
   const selectedThinkingLevel = activeRuntime ? activeSnapshot.thinkingLevel : preferredThinkingLevel
+  const modelOptions = useMemo(() => createAgentModelOptions(agentConfig), [agentConfig])
 
   const setPreferredModelId = useCallback((modelId: AgentModelId) => {
     setPreferredModelIdState(modelId)
@@ -158,6 +164,7 @@ export const useAgentConversationController = (t: Translate) => {
           const { createAgentConversationRuntime } = await import('../agent-runtime')
           runtime = await createAgentConversationRuntime({
             conversationId,
+            agentConfig,
             fallbackTitle: options.fallbackTitle ?? t('agent.newConversation'),
             modelId: preferredModelId,
             onConversationChange: handleConversationChange,
@@ -192,6 +199,7 @@ export const useAgentConversationController = (t: Translate) => {
     },
     [
       handleConversationChange,
+      agentConfig,
       preferredModelId,
       preferredThinkingLevel,
       selectConversation,
@@ -221,7 +229,10 @@ export const useAgentConversationController = (t: Translate) => {
     async (input: string) => {
       if (!storageRef.current) return
 
-      const conversationId = createAgentConversationId()
+      const conversationId =
+        typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : `conversation-${Date.now()}`
       const runtime = await activateConversation(conversationId, {
         fallbackTitle: input.slice(0, 80) || t('agent.newConversation'),
         showLoading: false,
@@ -241,6 +252,11 @@ export const useAgentConversationController = (t: Translate) => {
       try {
         storageRef.current = await setupVbiAgentIndexedDBStorage()
         if (disposed) return
+
+        const config = await readAgentBackendConfig()
+        if (disposed) return
+        setAgentConfig(config)
+        setPreferredModelIdState((current) => resolveAgentModelId(current, config))
 
         await initializeConversations()
         if (disposed) return
@@ -306,6 +322,7 @@ export const useAgentConversationController = (t: Translate) => {
     handleModelChange,
     handleThinkingLevelChange,
     isLoading,
+    modelOptions,
     selectedModelId,
     selectedSnapshot: activeSnapshot,
     selectedThinkingLevel,

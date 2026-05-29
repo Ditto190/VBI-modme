@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from '@rstest/core'
 import { useAgentConversationsStore } from '../src/stores/agent-conversations.store'
-import { resetVbiAgentStorageForTests, setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
+import { setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
 
 const metadata = {
   id: 'conversation-1',
@@ -37,7 +37,6 @@ describe('agent conversations store', () => {
         records.delete(id)
       },
     }))
-    resetVbiAgentStorageForTests()
     useAgentConversationsStore.setState({
       activeConversationId: '',
       conversations: [],

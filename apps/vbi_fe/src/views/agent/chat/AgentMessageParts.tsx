@@ -16,19 +16,60 @@ import { MessageActionBar } from '../../../components/assistant-ui/message-actio
 import { CheckCircle2, ChevronDown, CircleAlert, FileSearch, LoaderCircle } from '../../../components/ui/icons'
 import { formatAbbreviatedTokenCount } from '../agent-usage-display'
 import { readAgentContentText } from '../agent-storage'
-import {
-  largeUserMessagePreviewLength,
-  largeUserMessageThreshold,
-  normalizeTabSeparatedTables,
-  stringifyJson,
-} from './agent-message-adapter'
 
 type RenderedMessagePart = ThreadAssistantMessagePart | ThreadUserMessagePart
 type AgentToolPart = Extract<EnrichedPartState, { type: 'tool-call' }>
 type ToolDisplayStatus = 'done' | 'error' | 'running'
+const largeUserMessagePreviewLength = 4_000
+const largeUserMessageThreshold = 20_000
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const stringifyJson = (value: unknown) => {
+  try {
+    return JSON.stringify(value ?? {}, null, 2)
+  } catch {
+    return '{}'
+  }
+}
+
+const escapeMarkdownTableCell = (value: string) => value.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').trim()
+
+const normalizeTabSeparatedTables = (text: string) => {
+  const lines = text.split('\n')
+  const normalizedLines: string[] = []
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index]
+    if (!line.includes('\t')) {
+      normalizedLines.push(line)
+      continue
+    }
+
+    const tableLines: string[] = []
+    while (index < lines.length && lines[index].includes('\t') && lines[index].trim()) {
+      tableLines.push(lines[index])
+      index += 1
+    }
+    index -= 1
+
+    const rows = tableLines.map((row) => row.split('\t').map(escapeMarkdownTableCell))
+    const columnCount = Math.max(...rows.map((row) => row.length))
+    if (rows.length < 2 || columnCount < 2) {
+      normalizedLines.push(...tableLines)
+      continue
+    }
+
+    const padRow = (row: string[]) => Array.from({ length: columnCount }, (_, columnIndex) => row[columnIndex] ?? '')
+    const [header, ...body] = rows.map(padRow)
+    normalizedLines.push(`| ${header.join(' | ')} |`)
+    normalizedLines.push(`| ${header.map(() => '---').join(' | ')} |`)
+    body.forEach((row) => normalizedLines.push(`| ${row.join(' | ')} |`))
+  }
+
+  return normalizedLines.join('\n')
+}
 
 const AgentMarkdown = () => (
   <MarkdownTextPrimitive

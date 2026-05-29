@@ -11,15 +11,18 @@ import { useMemo } from 'react'
 import { DropdownMenu } from '../../../components/ui/dropdown-menu'
 import { ArrowUp, Bot, CheckCircle2, ChevronDown, Plus, Square, X } from '../../../components/ui/icons'
 import type { Translate } from '../../../i18n'
-import {
-  agentModelOptions,
-  agentThinkingLevelOptions,
-  type AgentModelId,
-  type AgentThinkingLevel,
-} from '../agent-model-config'
+import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../agent-model-config'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const agentThinkingLevelOptions = [
+  { id: 'high' as const, labelKey: 'agent.thinkingHigh' },
+  { id: 'xhigh' as const, labelKey: 'agent.thinkingMax' },
+]
+
+const resolveAgentModelOptionLabel = (option: AgentModelOption, t: (key: string) => string) =>
+  option.labelKey ? t(option.labelKey) : option.label
 
 const ComposerAttachment = () => (
   <AttachmentPrimitive.Root className='vbi-agent-composer-attachment'>
@@ -47,9 +50,7 @@ const SlashCommandItems = ({ modelId, t }: { modelId: AgentModelId; t: Translate
     {(items) =>
       items.map((item, index) => {
         const metadata = isRecord(item.metadata) ? item.metadata : {}
-        const selected =
-          (item.id === 'model-flash' && modelId === 'deepseek-v4-flash') ||
-          (item.id === 'model-pro' && modelId === 'deepseek-v4-pro')
+        const selected = metadata.modelId === modelId
 
         return (
           <ComposerPrimitive.Unstable_TriggerPopoverItem
@@ -80,6 +81,7 @@ const SlashCommandItems = ({ modelId, t }: { modelId: AgentModelId; t: Translate
 const AgentConfigControls = ({
   disabled,
   modelId,
+  modelOptions,
   onModelChange,
   onThinkingLevelChange,
   thinkingLevel,
@@ -87,15 +89,16 @@ const AgentConfigControls = ({
 }: {
   disabled: boolean
   modelId: AgentModelId
+  modelOptions: AgentModelOption[]
   onModelChange: (modelId: AgentModelId) => void
   onThinkingLevelChange: (thinkingLevel: AgentThinkingLevel) => void
   thinkingLevel: AgentThinkingLevel
   t: Translate
 }) => {
-  const selectedModel = agentModelOptions.find((option) => option.id === modelId) ?? agentModelOptions[0]
+  const selectedModel = modelOptions.find((option) => option.id === modelId) ?? modelOptions[0]
   const selectedThinkingLevel =
     agentThinkingLevelOptions.find((option) => option.id === thinkingLevel) ?? agentThinkingLevelOptions[0]
-  const selectedModelLabel = t(selectedModel.labelKey)
+  const selectedModelLabel = selectedModel ? resolveAgentModelOptionLabel(selectedModel, t) : modelId
   const selectedThinkingLabel = t(selectedThinkingLevel.labelKey)
 
   return (
@@ -114,11 +117,11 @@ const AgentConfigControls = ({
         })),
         { key: 'model-separator', type: 'separator' as const },
         { key: 'model-label', label: t('agent.modelSection'), type: 'label' as const },
-        ...agentModelOptions.map((option) => ({
+        ...modelOptions.map((option) => ({
           key: `model-${option.id}`,
           label: (
             <span className='vbi-agent-option-label'>
-              <span>{t(option.labelKey)}</span>
+              <span>{resolveAgentModelOptionLabel(option, t)}</span>
               {option.id === modelId ? <CheckCircle2 className='h-3.5 w-3.5' aria-hidden='true' /> : null}
             </span>
           ),
@@ -146,6 +149,7 @@ const AgentConfigControls = ({
 export const AgentComposer = ({
   disabled,
   modelId,
+  modelOptions,
   onModelChange,
   onThinkingLevelChange,
   t,
@@ -154,6 +158,7 @@ export const AgentComposer = ({
 }: {
   disabled: boolean
   modelId: AgentModelId
+  modelOptions: AgentModelOption[]
   onModelChange: (modelId: AgentModelId) => void
   onThinkingLevelChange: (thinkingLevel: AgentThinkingLevel) => void
   t: Translate
@@ -161,23 +166,16 @@ export const AgentComposer = ({
   usageText: string
 }) => {
   const slashCommands = useMemo<readonly Unstable_SlashCommand[]>(
-    () => [
-      {
-        id: 'model-flash',
-        label: '/flash',
-        description: t('agent.commandModelFlashDescription'),
+    () =>
+      modelOptions.map((option) => ({
+        id: `model-${option.id}`,
+        label: `/${option.id.replace(/^deepseek-v4-/, '')}`,
+        description: resolveAgentModelOptionLabel(option, t),
         icon: 'model',
-        execute: () => onModelChange('deepseek-v4-flash'),
-      },
-      {
-        id: 'model-pro',
-        label: '/pro',
-        description: t('agent.commandModelProDescription'),
-        icon: 'model',
-        execute: () => onModelChange('deepseek-v4-pro'),
-      },
-    ],
-    [onModelChange, t],
+        metadata: { modelId: option.id },
+        execute: () => onModelChange(option.id),
+      })),
+    [modelOptions, onModelChange, t],
   )
   const slash = unstable_useSlashCommandAdapter({ commands: slashCommands, removeOnExecute: true })
 
@@ -225,6 +223,7 @@ export const AgentComposer = ({
               <AgentConfigControls
                 disabled={disabled}
                 modelId={modelId}
+                modelOptions={modelOptions}
                 onModelChange={onModelChange}
                 onThinkingLevelChange={onThinkingLevelChange}
                 thinkingLevel={thinkingLevel}

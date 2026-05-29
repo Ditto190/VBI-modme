@@ -1,22 +1,27 @@
 import { describe, expect, test } from '@rstest/core'
 import {
   createAgentModel,
-  resolveAgentModelInput,
-  resolveAgentProxyUrl,
+  fallbackAgentBackendConfig,
+  resolveAgentModelId,
   resolveAgentThinkingLevel,
 } from '../src/views/agent/agent-model-config'
 import { formatAgentContextUsage, resolveAgentContextUsage } from '../src/views/agent/agent-usage-display'
 
 describe('agent runtime helpers', () => {
-  test('resolves legacy DeepSeek model aliases before creating the browser agent', () => {
-    expect(resolveAgentModelInput({ provider: 'deepseek', model: 'deepseek-chat' })).toEqual({
+  test('resolves model aliases from the backend agent config before creating the browser agent', () => {
+    const backendConfig = {
+      ...fallbackAgentBackendConfig,
       provider: 'deepseek',
       model: 'deepseek-v4-flash',
-    })
-    expect(resolveAgentModelInput({ provider: 'deepseek', model: 'deepseek-reasoner' })).toEqual({
-      provider: 'deepseek',
-      model: 'deepseek-v4-pro',
-    })
+      models: ['deepseek-v4-flash', 'deepseek-v4-pro'],
+      modelAliases: {
+        'deepseek-chat': 'deepseek-v4-flash',
+        'deepseek-reasoner': 'deepseek-v4-pro',
+      },
+    }
+
+    expect(resolveAgentModelId('deepseek-chat', backendConfig)).toBe('deepseek-v4-flash')
+    expect(resolveAgentModelId('deepseek-reasoner', backendConfig)).toBe('deepseek-v4-pro')
   })
 
   test('keeps DeepSeek reasoning enabled with high and max thinking levels', () => {
@@ -29,11 +34,6 @@ describe('agent runtime helpers', () => {
       reasoning: true,
       thinkingLevelMap: { high: 'high', xhigh: 'max' },
     })
-  })
-
-  test('uses the streamProxy-compatible backend route prefix', () => {
-    expect(resolveAgentProxyUrl(undefined)).toBe('/api/v1/agent')
-    expect(resolveAgentProxyUrl('https://example.com/api/v1/agent/')).toBe('https://example.com/api/v1/agent')
   })
 
   test('formats usage as used tokens, context window, and percentage only', () => {

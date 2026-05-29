@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Button } from '../../components/ui/button'
 import { ConfirmAction } from '../../components/ui/confirm-action'
 import {
@@ -17,11 +17,10 @@ import { Input } from '../../components/ui/input'
 import { Tooltip } from '../../components/ui/tooltip'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
+import { useAgentConversationsStore, type AgentConversationSummary } from '../../stores/agent-conversations.store'
 import { useNavigationStore } from '../../stores/navigation.store'
 import { createAgentConversationRoute, isAgentConversationRoute } from '../manage-sidebar-routes'
 import { ManageSidebarGroup, manageSidebarChildListClassName, manageSidebarItemClassName } from '../ManageSidebarNav'
-import type { AgentConversationSummary } from './agent-storage'
 
 const conversationRowClassName = cn(
   manageSidebarItemClassName,
@@ -113,13 +112,11 @@ const AgentConversationRow = memo(
       }
 
       setIsRenaming(true)
-      if (nextTitle && nextTitle !== title) {
-        try {
-          await renameConversation(conversation.id, nextTitle)
-          setIsRenameOpen(false)
-        } finally {
-          setIsRenaming(false)
-        }
+      try {
+        await renameConversation(conversation.id, nextTitle)
+        setIsRenameOpen(false)
+      } finally {
+        setIsRenaming(false)
       }
     }
 
@@ -250,7 +247,6 @@ export const AgentConversationSidebarSection = () => {
   const [expanded, setExpanded] = useState(true)
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
-  const toggleExpanded = useCallback(() => setExpanded((value) => !value), [])
 
   useEffect(() => {
     if (!isInitialized && !isLoading) void initialize()
@@ -259,37 +255,6 @@ export const AgentConversationSidebarSection = () => {
   useEffect(() => {
     if (isConversationPath) setExpanded(true)
   }, [isConversationPath])
-
-  const conversationRows = useMemo(
-    () =>
-      conversations.map((conversation) => (
-        <AgentConversationRow
-          activeConversationId={activeConversationId}
-          key={conversation.id}
-          conversation={conversation}
-          deleteConversation={deleteConversation}
-          expanded={expanded}
-          go={go}
-          locale={locale}
-          pathname={pathname}
-          renameConversation={renameConversation}
-          selectConversation={selectConversation}
-          t={t}
-        />
-      )),
-    [
-      activeConversationId,
-      conversations,
-      deleteConversation,
-      expanded,
-      go,
-      locale,
-      pathname,
-      renameConversation,
-      selectConversation,
-      t,
-    ],
-  )
 
   return (
     <section className='mt-3 flex min-h-0 flex-1 flex-col border-t border-[var(--vbi-border)] px-2 pt-3 max-[720px]:mt-0 max-[720px]:max-h-56 max-[720px]:border-t-0 max-[720px]:px-3 max-[720px]:pb-3'>
@@ -301,7 +266,7 @@ export const AgentConversationSidebarSection = () => {
         expanded={expanded}
         icon={<MessageSquare className='h-4 w-4' />}
         label={t('agent.conversations')}
-        onToggle={toggleExpanded}
+        onToggle={() => setExpanded((value) => !value)}
       >
         <div className={cn(manageSidebarChildListClassName, 'py-1')}>
           {conversations.length === 0 ? (
@@ -309,7 +274,21 @@ export const AgentConversationSidebarSection = () => {
               {t('agent.noConversations')}
             </div>
           ) : (
-            conversationRows
+            conversations.map((conversation) => (
+              <AgentConversationRow
+                activeConversationId={activeConversationId}
+                key={conversation.id}
+                conversation={conversation}
+                deleteConversation={deleteConversation}
+                expanded={expanded}
+                go={go}
+                locale={locale}
+                pathname={pathname}
+                renameConversation={renameConversation}
+                selectConversation={selectConversation}
+                t={t}
+              />
+            ))
           )}
         </div>
       </ManageSidebarGroup>

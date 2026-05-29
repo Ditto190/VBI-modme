@@ -4,7 +4,7 @@ import { ManageLayoutPage } from '../src/views/ManageLayoutPage'
 import { useAgentConversationsStore } from '../src/stores/agent-conversations.store'
 import { useAppPreferencesStore } from '../src/stores/app-preferences.store'
 import { useNavigationStore } from '../src/stores/navigation.store'
-import { resetVbiAgentStorageForTests, setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
+import { setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
 
 const emptyUsage = {
   cacheRead: 0,
@@ -58,7 +58,6 @@ const seedConversationStorage = () => {
       records.delete(id)
     },
   }))
-  resetVbiAgentStorageForTests()
 }
 
 describe('manage layout navigation', () => {

@@ -7,20 +7,18 @@ import {
   ThreadPrimitive,
   useExternalMessageConverter,
   useExternalStoreRuntime,
+  type AppendMessage,
   type ExternalStoreAdapter,
   type ThreadMessage,
+  type ThreadMessageLike,
 } from '@assistant-ui/react'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import type { Translate } from '../../../i18n'
 import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from '../agent-runtime'
-import type { AgentModelId, AgentThinkingLevel } from '../agent-model-config'
+import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../agent-model-config'
 import { AgentComposer } from './AgentComposer'
 import { AgentThreadMessage } from './AgentMessageParts'
-import {
-  projectAgentMessagesForAssistantUi,
-  readAppendMessageText,
-  type ProjectedAgentThreadMessage,
-} from './agent-message-adapter'
+import { projectAgentMessagesForAssistantUi } from './agent-message-adapter'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -52,8 +50,29 @@ const findLatestCopyableThreadMessageId = (messages: readonly ThreadMessage[]) =
   return ''
 }
 
+const readAppendMessageText = (message: AppendMessage) => {
+  const text = message.content
+    .map((part) => {
+      if (part.type === 'text') return part.text
+      if (part.type === 'image') return part.filename ? `[Image: ${part.filename}]` : '[Image attached]'
+      if (part.type === 'file') return `[File: ${part.filename || part.mimeType}]`
+      return ''
+    })
+    .filter(Boolean)
+    .join('\n')
+    .trim()
+  const attachments = (message.attachments ?? [])
+    .map((attachment) => `- ${attachment.type}: ${attachment.name}`)
+    .filter(Boolean)
+    .join('\n')
+
+  if (!attachments) return text
+  return [text, `Attached files:\n${attachments}`].filter(Boolean).join('\n\n').trim()
+}
+
 export const AgentChatPanel = ({
   modelId,
+  modelOptions,
   onDraftSubmit,
   onModelChange,
   onThinkingLevelChange,
@@ -63,6 +82,7 @@ export const AgentChatPanel = ({
   thinkingLevel,
 }: {
   modelId: AgentModelId
+  modelOptions: AgentModelOption[]
   onDraftSubmit?: (input: string) => Promise<void>
   onModelChange: (modelId: AgentModelId) => void
   onThinkingLevelChange: (thinkingLevel: AgentThinkingLevel) => void
@@ -76,14 +96,12 @@ export const AgentChatPanel = ({
     () =>
       projectAgentMessagesForAssistantUi({
         conversationId: runtime?.conversationId ?? '',
-        isRunning: snapshot.isRunning,
         messages: snapshot.messages,
       }),
-    [runtime?.conversationId, snapshot.isRunning, snapshot.messages],
+    [runtime?.conversationId, snapshot.messages],
   )
-  const convertProjectedMessage = useCallback((message: ProjectedAgentThreadMessage) => message.threadMessage, [])
-  const convertedMessages = useExternalMessageConverter<ProjectedAgentThreadMessage>({
-    callback: convertProjectedMessage,
+  const convertedMessages = useExternalMessageConverter<ThreadMessageLike>({
+    callback: (message) => message,
     messages: projectedMessages,
     isRunning: snapshot.isRunning,
     joinStrategy: 'concat-content',
@@ -144,6 +162,7 @@ export const AgentChatPanel = ({
           <AgentComposer
             disabled={snapshot.isRunning}
             modelId={modelId}
+            modelOptions={modelOptions}
             onModelChange={onModelChange}
             onThinkingLevelChange={onThinkingLevelChange}
             t={t}

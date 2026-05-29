@@ -13,6 +13,7 @@ export const AgentPage = () => {
     handleModelChange,
     handleThinkingLevelChange,
     isLoading,
+    modelOptions,
     selectedModelId,
     selectedSnapshot,
     selectedThinkingLevel,
@@ -27,6 +28,7 @@ export const AgentPage = () => {
       <AgentChatPanel
         key={activeRuntime?.conversationId ?? 'empty'}
         modelId={selectedModelId}
+        modelOptions={modelOptions}
         onDraftSubmit={startDraftConversation}
         onModelChange={handleModelChange}
         onThinkingLevelChange={handleThinkingLevelChange}

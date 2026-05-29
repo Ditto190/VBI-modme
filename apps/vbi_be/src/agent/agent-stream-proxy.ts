@@ -1,6 +1,6 @@
 import type { Model, SimpleStreamOptions, Usage } from '@earendil-works/pi-ai'
 
-const allowedStreamOptionKeys = [
+export const agentStreamOptionKeys = [
   'cacheRetention',
   'maxRetryDelayMs',
   'maxTokens',
@@ -13,6 +13,10 @@ const allowedStreamOptionKeys = [
 ] as const
 
 const supportedDeepSeekModelIds = ['deepseek-v4-flash', 'deepseek-v4-pro'] as const
+const deepSeekModelAliases = {
+  'deepseek-chat': 'deepseek-v4-flash',
+  'deepseek-reasoner': 'deepseek-v4-pro',
+} as const
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -20,7 +24,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 export const sanitizeStreamOptions = (options: unknown): Partial<SimpleStreamOptions> => {
   if (!isRecord(options)) return {}
   return Object.fromEntries(
-    allowedStreamOptionKeys.filter((key) => options[key] !== undefined).map((key) => [key, options[key]]),
+    agentStreamOptionKeys.filter((key) => options[key] !== undefined).map((key) => [key, options[key]]),
   ) as Partial<SimpleStreamOptions>
 }
 
@@ -34,13 +38,17 @@ export const emptyUsage = (): Usage => ({
 })
 
 export const resolveModelIdAlias = (provider: string, modelId: string) => {
-  if (provider === 'deepseek' && modelId === 'deepseek-chat') return 'deepseek-v4-flash'
-  if (provider === 'deepseek' && modelId === 'deepseek-reasoner') return 'deepseek-v4-pro'
+  if (provider === 'deepseek' && modelId in deepSeekModelAliases) {
+    return deepSeekModelAliases[modelId as keyof typeof deepSeekModelAliases]
+  }
   return modelId
 }
 
 export const getSupportedAgentModelIds = (provider: string, configuredModelId: string) =>
   provider === 'deepseek' ? [...supportedDeepSeekModelIds] : [configuredModelId]
+
+export const getAgentModelAliases = (provider: string): Record<string, string> =>
+  provider === 'deepseek' ? { ...deepSeekModelAliases } : {}
 
 export const sanitizeModel = <TApi extends string>(model: Model<TApi>, baseUrl?: string): Model<TApi> =>
   baseUrl ? ({ ...model, baseUrl } as Model<TApi>) : model
