@@ -56,10 +56,11 @@ The following features **exist in the main entry**:
 | `useVBI`          | ✅ Available | Gets builder and DSL snapshot                                                              |
 | `useVSeed`        | ✅ Available | Runs the buildVSeed pipeline                                                               |
 | `useChartType`    | ✅ Available | Subscribes to chart type state                                                             |
-| `useDimensions`   | ✅ Available | Subscribes to dimensions. `updateDimension` currently only updates `alias`.                |
+| `useDimensions`   | ✅ Available | Subscribes to dimensions. `updateDimension` supports `alias/encoding/aggregate`.           |
 | `useMeasures`     | ✅ Available | Subscribes to measures. `updateMeasure` currently only updates `alias/aggregate/encoding`. |
 | `useWhereFilter`  | ✅ Available | Subscribes to WHERE filters                                                                |
 | `useHavingFilter` | ✅ Available | Subscribes to HAVING filters                                                               |
+| `useTheme`        | ✅ Available | Subscribes to theme state                                                                  |
 
 **Note**: Hooks in `@visactor/vbi-react` have completely different signatures from the same-named hooks in `practices/standard/src/hooks/`. Real development should prefer standard hooks. See [05-react-integration.md](./05-react-integration.md).
 
@@ -72,6 +73,8 @@ The following features **exist in the main entry**:
 | `ChartRenderer`     | ✅ Available | Chart rendering container. Accepts the `renderVSeed` prop                                                                              |
 | `ChartTypeSelector` | ✅ Available | Chart type selector                                                                                                                    |
 | `FieldPanel`        | ✅ Available | Field management panel. Accepts props such as `dimensionOptions`/`measureOptions`; **does not accept** `onAddDimension`/`onAddMeasure` |
+| `FilterPanel`       | ✅ Available | WHERE/HAVING filter panel. Accepts field/operator/aggregate options and mutates the builder directly                                   |
+| `ThemeSelector`     | ✅ Available | Theme selector. Accepts optional `themeOptions`                                                                                        |
 | `BuilderLayout`     | ✅ Available | Layout container                                                                                                                       |
 
 ---

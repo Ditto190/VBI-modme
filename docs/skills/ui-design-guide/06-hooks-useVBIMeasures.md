@@ -57,7 +57,7 @@ removeMeasure(meaId)
 ```ts
 const node = findMeasure(meaId)
 if (node) {
-  console.log(node.getField(), node.getAggregate())
+  console.log(node.getField(), node.getEncoding(), node.getFormat())
 }
 ```
 
@@ -74,9 +74,11 @@ if (node) {
 | `node.setSort({ order })`                | Sets sorting: `asc`/`desc`                                                                                                                                                                     |
 | `node.clearFormat()`                     | Clears format                                                                                                                                                                                  |
 | `node.clearSort()`                       | Clears sorting                                                                                                                                                                                 |
-| `node.clearAggregate()`                  | Clears aggregation (not recommended)                                                                                                                                                           |
 | `node.getId()`                           | Gets the measure ID                                                                                                                                                                            |
 | `node.getField()`                        | Gets the field name                                                                                                                                                                            |
+| `node.getEncoding()`                     | Gets the current encoding                                                                                                                                                                      |
+| `node.getFormat()`                       | Gets the current format config                                                                                                                                                                 |
+| `node.getSort()`                         | Gets the current sort config                                                                                                                                                                   |
 
 ---
 

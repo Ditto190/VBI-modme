@@ -110,10 +110,11 @@ export const ChartPanel = () => {
 Register all dependencies at the top of VSeedRender:
 
 ```tsx
-import { registerAll } from '@visactor/vtable'
 import VChart from '@visactor/vchart'
+import { ListTable, PivotChart, PivotTable, register } from '@visactor/vtable'
+import { registerAll } from '@visactor/vseed'
 
-registerAll() // Register all VTable components
+registerAll() // Register VSeed chart pipelines and themes
 register.chartModule('vchart', VChart) // Register VChart
 ```
 

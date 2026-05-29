@@ -8,9 +8,14 @@
 
 ```ts
 builder.chartType.changeChartType('column')
-builder.dimensions.add('category')
+builder.dimensions.add('category', (node) => {
+  node.setAlias('Category')
+  node.setEncoding('xAxis')
+})
 builder.measures.add('sales', (node) => {
+  node.setAlias('Sales')
   node.setAggregate({ func: 'sum' })
+  node.setEncoding('yAxis')
 })
 ```
 

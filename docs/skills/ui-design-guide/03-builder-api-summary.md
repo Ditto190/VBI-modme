@@ -148,7 +148,6 @@ node.getId()
 node.getField()
 node.getEncoding()                   // → MeaEncoding | undefined
 node.setEncoding('yAxis' | 'size' | 'color' | ...)
-node.getAggregate()                  // → { func: string; quantile?: number } | undefined
 node.setAggregate({ func: 'sum' })
 node.getFormat()                     // → VBIMeasureFormat | undefined
 node.setFormat({ autoFormat: false, prefix: '$', decimalCount: 2 })
@@ -192,16 +191,20 @@ node.setValue(5000)
 // Read a value by path from Y.Map
 builder.dsl.get('chartType') // → 'column'
 
-// Mutate Y.Map directly (advanced usage)
-builder.dsl.get('whereFilter').set('op', 'or')
+// Avoid direct Y.Map writes in generated UI.
+// Use Builder APIs instead of:
+// builder.dsl.get('whereFilter').set('op', 'or')
 
 // Batched Yjs transaction: merge multiple changes into a single undo/redo step
 builder.doc.transact(() => {
-  builder.dimensions.add('category')
-  builder.measures.add('sales', (node) => {
-    node.setAggregate({ func: 'sum' })
-  })
   builder.chartType.changeChartType('column')
+  builder.dimensions.add('category', (node) => {
+    node.setAlias('Category')
+    node.setEncoding('xAxis')
+  })
+  builder.measures.add('sales', (node) => {
+    node.setAlias('Sales').setAggregate({ func: 'sum' }).setEncoding('yAxis')
+  })
 })
 
 // Listen for Yjs document changes
@@ -212,3 +215,6 @@ builder.dsl.observe((event) => {
   /* Y.Map change event */
 })
 ```
+
+Direct `builder.dsl` mutation is a low-level escape hatch. Use it only when there is no
+public Builder API, and keep the logic inside a practice-local utility.

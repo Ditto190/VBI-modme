@@ -45,6 +45,18 @@
 
 ---
 
+### minimalist
+
+- **Location**: `practices/minimalist/`
+- **Reference value**: the smallest self-contained UI that still follows the VBI data-flow.
+- **Coverage**:
+  - Compact app shell.
+  - Minimal VBIStore and VSeedRender.
+  - Direct Builder API usage for fields, shelves, filters, and toolbar.
+  - Good reference when a generated UI should stay small but still draw charts correctly.
+
+---
+
 ### vbi-react-starter
 
 - **Location**: `practices/vbi-react-starter/`
@@ -57,24 +69,28 @@
 
 ## API-Grouped Reference Sources
 
-| API / Feature                          | Primary Reference   | Alternative Reference |
-| -------------------------------------- | ------------------- | --------------------- |
-| Connector/bootstrap (CSV URL)          | `streamlined`       | -                     |
-| Connector/bootstrap (local data)       | `standard`          | `professional`        |
-| VBIStore                               | `professional`      | `streamlined`         |
-| VBIStoreProvider                       | `standard`          | -                     |
-| Hook signatures (practice version)     | `professional`      | `standard`            |
-| VSeedRender                            | `professional`      | `standard`            |
-| WHERE filters                          | `professional`      | `streamlined`         |
-| HAVING filters                         | `professional`      | `standard`            |
-| ChartTypeSelector                      | `standard`          | `professional`        |
-| FieldsPanel                            | `standard`          | `professional`        |
-| FilterPanel / HavingFilterPanel        | `professional`      | `standard`            |
-| Theme switching                        | `standard`          | `professional`        |
-| i18n internationalization              | `standard`          | `professional`        |
-| CSV upload + schema inference          | `professional`      | `standard`            |
-| Undo/Redo                              | `professional`      | `standard`            |
-| `@visactor/vbi-react` hooks/components | `vbi-react-starter` | -                     |
+| API / Feature                           | Primary Reference                                        | Alternative Reference                                     |
+| --------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------- |
+| Connector/bootstrap (CSV URL)           | `streamlined`                                            | `minimalist`                                              |
+| Connector/bootstrap (local data)        | `standard`                                               | `professional`                                            |
+| VBIStore                                | `professional`                                           | `standard`                                                |
+| VBIStoreProvider                        | `standard`                                               | -                                                         |
+| Hook signatures (practice version)      | `professional`                                           | `standard`                                                |
+| VSeedRender                             | `professional`                                           | `standard`                                                |
+| WHERE filters                           | `professional`                                           | `streamlined`                                             |
+| HAVING filters                          | `professional`                                           | `standard`                                                |
+| WHERE operator serialization            | `standard/src/components/Filter/whereFilterUtils.ts`     | `professional/src/components/Filter/`                     |
+| HAVING aggregate/operator normalization | `standard/src/components/Filter/havingFilterUtils.ts`    | `standard/src/components/Shelves/shelves/HavingShelf.tsx` |
+| Filter shelf Builder writes             | `standard/src/components/Shelves/shelves/WhereShelf.tsx` | `standard/src/components/Shelves/shelves/HavingShelf.tsx` |
+| VBI -> VQuery pipeline                  | `packages/vbi/src/chart-builder/pipeline/vqueryDSL/`     | `packages/vquery/src/sql-builder/builders/`               |
+| ChartTypeSelector                       | `standard`                                               | `professional`                                            |
+| FieldsPanel                             | `standard`                                               | `professional`                                            |
+| FilterPanel / HavingFilterPanel         | `professional`                                           | `standard`                                                |
+| Theme switching                         | `standard`                                               | `professional`                                            |
+| i18n internationalization               | `standard`                                               | `professional`                                            |
+| CSV upload + schema inference           | `professional`                                           | `standard`                                                |
+| Undo/Redo                               | `professional`                                           | `standard`                                                |
+| `@visactor/vbi-react` hooks/components  | `vbi-react-starter`                                      | -                                                         |
 
 ---
 
@@ -85,7 +101,8 @@
 1. Use `standard` as the structure template (folders, Provider, Store, component layering).
 2. Use `professional` as the logic reference (complete hook behavior and edge handling).
 3. Use `streamlined` as the simplest Connector reference (quickly wire the data path).
-4. If you explicitly need the `@visactor/vbi-react` package, then reference `vbi-react-starter`.
+4. Use `minimalist` when the target UI should be compact but still complete.
+5. If you explicitly need the `@visactor/vbi-react` package, then reference `vbi-react-starter`.
 
 ### Patterns Not to Mix
 
