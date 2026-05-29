@@ -95,7 +95,7 @@ describe('runPromptAgent', () => {
     expect(output[0]).toBe('[user] 查询Chart1的图表类型')
     expect(output[1]).toContain('[assistant] 查询 Chart1')
     expect(output[2]).toContain('[tool] vbi_chart running')
-    expect(output[3]).toContain('[tool] vbi_chart succeeded')
+    expect(output[3]).toContain('[tool] vbi_chart run succeeded')
     expect(output[4]).toBe('[assistant] Chart1 的图表类型是 line')
     expect(output.at(-1)).toBe('执行成功')
     expect(agent.state.messages.map((message) => message.role)).toEqual([

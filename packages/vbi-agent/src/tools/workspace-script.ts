@@ -22,7 +22,7 @@ export const createWorkspaceScriptToolResult = (
   logs: string[],
   result: unknown,
 ): AgentToolResult<unknown> => {
-  const content = clipJson({ logs, result: result ?? null })
+  const content = stringifyJson({ logs, result: result ?? null })
   const display = [
     'Status: succeeded',
     `Logs: ${logs.length ? pluralize(logs.length, 'entry') : 'none'}`,

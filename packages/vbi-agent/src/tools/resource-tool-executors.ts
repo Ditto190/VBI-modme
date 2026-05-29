@@ -29,10 +29,10 @@ const stripDsl = (value: unknown): unknown => {
 }
 
 const createResult = (summary: string, value: unknown): AgentToolResult<unknown> => {
-  const text = clipOutput(stringifyJson(value))
+  const text = stringifyJson(value)
   return {
     content: [{ text, type: 'text' }],
-    details: { display: text, summary },
+    details: { display: clipOutput(text), summary },
   }
 }
 
