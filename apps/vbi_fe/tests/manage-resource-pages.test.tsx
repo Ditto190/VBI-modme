@@ -94,11 +94,17 @@ const getRowForText = (text: string) => {
   return row as HTMLTableRowElement
 }
 
-const clickVisibleDeleteConfirmation = () => {
-  const deleteButtons = screen.getAllByRole('button', { name: /^Delete$/ })
-  const confirmationButton = deleteButtons.at(-1)
+const clickVisibleDeleteConfirmation = async () => {
+  const confirmationButton = await waitFor(() => {
+    const deleteButtons = screen.getAllByRole('button', { name: /^Delete$/ })
+    const button = deleteButtons.at(-1)
+    expect(button).toBeTruthy()
+    expect(button).toBeEnabled()
+    return button as HTMLButtonElement
+  })
   expect(confirmationButton).toBeTruthy()
   fireEvent.click(confirmationButton as HTMLButtonElement)
+  await waitFor(() => expect(confirmationButton).not.toBeInTheDocument())
 }
 
 const setupResourceMocks = () => {
@@ -234,7 +240,7 @@ describe('resource management pages', () => {
           name: `Delete ${scenario.kind} resource 2`,
         }),
       )
-      clickVisibleDeleteConfirmation()
+      await clickVisibleDeleteConfirmation()
       if (scenario.kind === 'insight') {
         await waitFor(() => expect(insightApi.deleteInsight).toHaveBeenCalledWith(`${scenario.kind}-2`))
       } else {
@@ -249,7 +255,7 @@ describe('resource management pages', () => {
         .find((button) => button.textContent === 'Delete')
       expect(toolbarDelete).toBeEnabled()
       fireEvent.click(toolbarDelete as HTMLButtonElement)
-      clickVisibleDeleteConfirmation()
+      await clickVisibleDeleteConfirmation()
       if (scenario.kind === 'insight') {
         await waitFor(() => expect(insightApi.deleteInsight).toHaveBeenCalledWith(`${scenario.kind}-3`))
       } else {
