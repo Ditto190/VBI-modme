@@ -104,13 +104,10 @@ Add or update focused frontend tests for:
 
 Run validation through Docker:
 
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe typecheck
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe build
-```
-
-If containers are not running, use the documented `vbi_fe` Docker workflow from the repository root.
+Run the five Docker commands documented in
+`.agents/skills/development/references/apps/vbi-fe.md`. They cover `lint`,
+`format`, `typecheck`, `test`, and `build`. If containers are not running, use
+the documented `vbi_fe` Docker workflow from the repository root.
 
 ## Non-Goals
 

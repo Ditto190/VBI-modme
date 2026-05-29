@@ -73,15 +73,11 @@ rg -n "@vbi/pi-web-ui|@earendil-works/pi-agent-core':|@earendil-works/pi-ai':|@v
 
 Expected: no matches.
 
-- [ ] **Step 6: Run focused test**
+- [ ] **Step 6: Defer frontend validation to the final gate**
 
-Run in Docker:
-
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test -- agent-storage.test.ts
-```
-
-Expected: PASS. If the container is not running, start the stack with `pnpm run vbi:dev`.
+The final frontend validation sequence covers this test path. If the container
+is not running, start the stack with `pnpm run vbi:dev` before running the five
+Docker commands documented in `.agents/skills/development/references/apps/vbi-fe.md`.
 
 ### Task 2: Extract Agent Model Configuration
 
@@ -182,13 +178,9 @@ If `apps/vbi_fe/tests/agent-runtime.test.ts` imports helpers from `agent-runtime
 import { resolveAgentModelInput, resolveAgentProxyUrl } from '../src/views/agent/agent-model-config'
 ```
 
-- [ ] **Step 4: Run focused test**
+- [ ] **Step 4: Defer frontend validation to the final gate**
 
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test -- agent-runtime.test.ts
-```
-
-Expected: PASS.
+The final frontend validation sequence covers this test path.
 
 ### Task 3: Tighten Runtime Factory Responsibilities
 
@@ -231,13 +223,9 @@ Do not set Pi artifacts tools manually outside `ChatPanel`.
 
 `AgentPage.tsx` should continue passing a `PiAgentStorage` object into `createAgentChatPanel` and only receive `persist`, `panel`, `agent`, and `destroy`.
 
-- [ ] **Step 4: Run focused React test**
+- [ ] **Step 4: Defer frontend validation to the final gate**
 
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test -- agent-page.test.tsx
-```
-
-Expected: PASS.
+The final frontend validation sequence covers this React test path.
 
 ### Task 4: Add Stream Proxy Regression Tests
 
@@ -281,13 +269,9 @@ expect(events.at(-1)).toMatchObject({
 })
 ```
 
-- [ ] **Step 4: Run focused test**
+- [ ] **Step 4: Defer frontend validation to the final gate**
 
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test -- agent-stream-proxy.test.ts
-```
-
-Expected: PASS.
+The final frontend validation sequence covers this test path.
 
 ### Task 5: Dependency Latest Check And Lockfile Discipline
 
@@ -332,29 +316,12 @@ Expected: only Pi package entries and lockfile entries change.
 
 - No source edits.
 
-- [ ] **Step 1: Run frontend tests**
+- [ ] **Step 1: Run final frontend validation**
 
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test
-```
+Run the five Docker commands documented in
+`.agents/skills/development/references/apps/vbi-fe.md`.
 
-Expected: PASS.
-
-- [ ] **Step 2: Run frontend typecheck**
-
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe typecheck
-```
-
-Expected: PASS.
-
-- [ ] **Step 3: Run frontend build**
-
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe build
-```
-
-Expected: PASS.
+Expected: `lint`, `format`, `typecheck`, `test`, and `build` all PASS.
 
 - [ ] **Step 4: Inspect diff**
 

@@ -38,13 +38,19 @@ or compose changes. Use `vbi:dev` for mounted source-only changes.
 
 ## Validation
 
+Run final frontend validation from the repository root:
+
 ```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe typecheck
 docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe lint
+docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe format
+docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe typecheck
+docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test
 docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe build
-docker compose -f ./docker/docker-compose.dev.yml run --rm vbi_fe pnpm --filter @visactor/headless-bi-fe <script>
 ```
+
+Treat these five commands as atomic for final frontend validation: either run
+all five in order, or report that frontend validation was not run. Do not report
+a partial subset as passed validation.
 
 ## Docker Runtime Ownership
 

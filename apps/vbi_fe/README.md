@@ -15,11 +15,5 @@ The frontend is served at `http://localhost:3000` by default.
 
 ## Validation
 
-Run validation inside the frontend container:
-
-```bash
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe typecheck
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe test
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe lint
-docker compose -f ./docker/docker-compose.dev.yml exec vbi_fe pnpm --filter @visactor/headless-bi-fe build
-```
+Run final frontend validation with the five Docker commands documented in
+`.agents/skills/development/references/apps/vbi-fe.md`.
