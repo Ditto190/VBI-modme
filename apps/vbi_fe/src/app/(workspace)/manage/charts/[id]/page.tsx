@@ -1,4 +1,4 @@
-import { ChartEditorPage } from '../../../../views/manage-resource/ChartEditorPage'
+import { ChartEditorPage } from '../../../../../views/manage-resource/ChartEditorPage'
 
 type ManageChartEditorRouteProps = {
   params: Promise<{ id: string }>

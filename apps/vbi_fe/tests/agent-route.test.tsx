@@ -19,11 +19,11 @@ rs.mock('../src/views/agent/AgentConversationSidebarSection', () => ({
   AgentConversationSidebarSection: () => <div data-testid='agent-conversation-sidebar' />,
 }))
 
-const { default: AgentLayout } = await import('../src/app/agent/layout')
-const { default: AgentDraftPage } = await import('../src/app/agent/page')
-const { default: AgentConversationPage } = await import('../src/app/agent/[conversationId]/page')
-const { default: LegacyManageAgentPage } = await import('../src/app/manage/agent/page')
-const { default: ManageLayout } = await import('../src/app/manage/layout')
+const { default: AgentLayout } = await import('../src/app/(workspace)/agent/layout')
+const { default: AgentDraftPage } = await import('../src/app/(workspace)/agent/page')
+const { default: AgentConversationPage } = await import('../src/app/(workspace)/agent/[conversationId]/page')
+const { default: LegacyManageAgentPage } = await import('../src/app/(workspace)/manage/agent/page')
+const { default: WorkspaceLayout } = await import('../src/app/(workspace)/layout')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
 
@@ -33,53 +33,58 @@ describe('agent app routes', () => {
     navigationMock.redirect.mockReset()
   })
 
-  test('keeps the managed sidebar mounted on agent and manager segment layouts', () => {
+  test('keeps the managed sidebar mounted across agent and manager routes', () => {
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     navigationMock.pathname = '/agent/conversation-1'
     useNavigationStore.setState({ navigate: null, pathname: '/agent/conversation-1' })
 
     const { container, rerender } = render(
-      <AgentLayout>
-        <AgentConversationPage />
-      </AgentLayout>,
+      <WorkspaceLayout>
+        <AgentLayout>
+          <AgentConversationPage />
+        </AgentLayout>
+      </WorkspaceLayout>,
     )
 
-    expect(container.querySelector('aside')).not.toBeNull()
+    const initialAside = container.querySelector('aside')
+    expect(initialAside).not.toBeNull()
     expect(screen.getByTestId('agent-page')).toBeInTheDocument()
     expect(screen.queryByTestId('manager-page')).not.toBeInTheDocument()
 
     navigationMock.pathname = '/manage/reports'
     useNavigationStore.setState({ pathname: '/manage/reports' })
     rerender(
-      <ManageLayout>
+      <WorkspaceLayout>
         <div data-testid='manager-page' />
-      </ManageLayout>,
+      </WorkspaceLayout>,
     )
 
-    expect(container.querySelector('aside')).not.toBeNull()
+    expect(container.querySelector('aside')).toBe(initialAside)
     expect(screen.getByTestId('manager-page')).toBeInTheDocument()
     expect(screen.queryByTestId('agent-page')).not.toBeInTheDocument()
   })
 
-  test('lets segment layouts own the persistent sidebar and header chrome', () => {
+  test('lets segment layouts own the persistent sidebar, header chrome, and agent workspace', () => {
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     useNavigationStore.setState({ navigate: null, pathname: '/agent' })
 
     render(
-      <AgentLayout>
-        <div data-testid='agent-child' />
-      </AgentLayout>,
+      <WorkspaceLayout>
+        <AgentLayout>
+          <AgentDraftPage />
+        </AgentLayout>
+      </WorkspaceLayout>,
     )
 
-    expect(screen.getByTestId('agent-child')).toBeInTheDocument()
+    expect(screen.getByTestId('agent-page')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /hide sidebar/i })).toBeInTheDocument()
 
     cleanup()
     useNavigationStore.setState({ pathname: '/manage/reports' })
     render(
-      <ManageLayout>
+      <WorkspaceLayout>
         <div data-testid='manager-child' />
-      </ManageLayout>,
+      </WorkspaceLayout>,
     )
 
     expect(screen.getByTestId('manager-child')).toBeInTheDocument()
@@ -87,13 +92,11 @@ describe('agent app routes', () => {
 
     cleanup()
     const { container: draftContainer } = render(<AgentDraftPage />)
-    expect(draftContainer).not.toBeEmptyDOMElement()
-    expect(screen.getByTestId('agent-page')).toBeInTheDocument()
+    expect(draftContainer).toBeEmptyDOMElement()
 
     cleanup()
     const { container: conversationContainer } = render(<AgentConversationPage />)
-    expect(conversationContainer).not.toBeEmptyDOMElement()
-    expect(screen.getByTestId('agent-page')).toBeInTheDocument()
+    expect(conversationContainer).toBeEmptyDOMElement()
   })
 
   test('redirects the legacy manage agent route to the explicit agent route', () => {

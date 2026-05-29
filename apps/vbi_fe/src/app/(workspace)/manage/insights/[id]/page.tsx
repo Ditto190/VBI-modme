@@ -1,4 +1,4 @@
-import { InsightEditorPage } from '../../../../views/manage-resource/InsightEditorPage'
+import { InsightEditorPage } from '../../../../../views/manage-resource/InsightEditorPage'
 
 type ManageInsightEditorRouteProps = {
   params: Promise<{ id: string }>

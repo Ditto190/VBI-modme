@@ -1,4 +1,4 @@
-import { ReportDetailPage } from '../../../../views/ReportDetailPage'
+import { ReportDetailPage } from '../../../../../views/ReportDetailPage'
 
 type ManageReportDetailRouteProps = {
   params: Promise<{ id: string }>
