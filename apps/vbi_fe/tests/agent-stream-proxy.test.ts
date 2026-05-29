@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, rs, test } from '@rstest/core'
+import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { streamProxy } from '../src/views/agent/agent-stream-proxy'
 
 const model = {
@@ -54,6 +54,11 @@ describe('streamProxy', () => {
 
   beforeEach(() => {
     rs.clearAllMocks()
+    restoreRequestAnimationFrame?.()
+    restoreRequestAnimationFrame = undefined
+  })
+
+  afterEach(() => {
     restoreRequestAnimationFrame?.()
     restoreRequestAnimationFrame = undefined
   })
