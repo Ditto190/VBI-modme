@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import type { ComponentType } from 'react'
 
 type ResourceKind = 'chart' | 'insight' | 'report'
@@ -78,6 +78,14 @@ const createResourceItem = (kind: ResourceKind, index: number): ResourceItem => 
 
 const seedResourceItems = (kind: ResourceKind, count = 9) => {
   resourcesByKind[kind] = Array.from({ length: count }, (_, index) => createResourceItem(kind, index + 1))
+}
+
+const createDeferred = <T,>() => {
+  let resolve!: (value: T) => void
+  const promise = new Promise<T>((next) => {
+    resolve = next
+  })
+  return { promise, resolve }
 }
 
 const getRowForText = (text: string) => {
@@ -176,6 +184,7 @@ describe('resource management pages', () => {
       expect(screen.getByText('9 Visible')).toBeInTheDocument()
       expect(screen.getByText(`${scenario.kind} resource 1`)).toBeInTheDocument()
       expect(screen.queryByText(`${scenario.kind} resource 9`)).not.toBeInTheDocument()
+      expect(getRowForText(`${scenario.kind} resource 1`)).not.toHaveClass('vbi-motion-row')
 
       fireEvent.click(screen.getByRole('button', { name: 'Next' }))
       expect(screen.getByText(`${scenario.kind} resource 9`)).toBeInTheDocument()
@@ -248,6 +257,38 @@ describe('resource management pages', () => {
           expect(resourceApi.removeResource).toHaveBeenCalledWith(scenario.kind, `${scenario.kind}-3`),
         )
       }
+    })
+  })
+
+  test('keeps cached resource rows visible while a reload is pending', async () => {
+    seedResourceItems('chart')
+    const { container } = render(<ManageChartsPage />)
+
+    expect(await screen.findByText('chart resource 1')).toBeInTheDocument()
+
+    const pendingReload = createDeferred<ResourceItem[]>()
+    ;(
+      resourceApi.listResources as unknown as {
+        mockImplementation(implementation: (kind: ResourceKind) => Promise<ResourceItem[]>): void
+      }
+    ).mockImplementation(async (kind) => {
+      if (kind === 'chart') return pendingReload.promise
+      return resourcesByKind[kind]
+    })
+
+    let reloadPromise!: Promise<void>
+    await act(async () => {
+      reloadPromise = useManageChartsStore.getState().load()
+      await Promise.resolve()
+    })
+
+    expect(screen.getByText('chart resource 1')).toBeInTheDocument()
+    expect(screen.getByRole('table')).toBeInTheDocument()
+    expect(container.querySelector('.animate-spin')).toBeNull()
+
+    pendingReload.resolve(resourcesByKind.chart)
+    await act(async () => {
+      await reloadPromise
     })
   })
 })
