@@ -42,6 +42,8 @@ type VBIAgentModule = {
   VBIAgent: BrowserVBIAgentConstructor
 }
 
+export const loadVBIAgentModule = async (): Promise<VBIAgentModule> => import('@visactor/vbi-agent')
+
 export type AgentConversationRuntime = {
   cancel(): Promise<void>
   conversationId: string
@@ -90,8 +92,7 @@ export const createAgentConversationRuntime = async ({
   const vbiStorage = storage ?? (await setupVbiAgentIndexedDBStorage())
   const loadedSession = await vbiStorage.conversations.get(conversationId)
 
-  // @ts-ignore The built browser bundle may not have declarations until workspace dependencies are built; importing the source package breaks Next's client graph.
-  const { VBIAgent } = (await import('../../../node_modules/@visactor/vbi-agent/dist/index.js')) as VBIAgentModule
+  const { VBIAgent } = await loadVBIAgentModule()
   const publicConfig = agentConfig ?? (await readAgentBackendConfig())
   const modelInput = {
     provider: process.env.NEXT_PUBLIC_AGENT_PROVIDER?.trim() || publicConfig.provider,

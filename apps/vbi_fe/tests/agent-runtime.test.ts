@@ -5,6 +5,7 @@ import {
   resolveAgentModelId,
   resolveAgentThinkingLevel,
 } from '../src/views/agent/agent-model-config'
+import { loadVBIAgentModule } from '../src/views/agent/agent-runtime'
 import { formatAgentContextUsage, resolveAgentContextUsage } from '../src/views/agent/agent-usage-display'
 
 describe('agent runtime helpers', () => {
@@ -59,5 +60,11 @@ describe('agent runtime helpers', () => {
     expect(text).not.toContain('↑')
     expect(text).not.toContain('↓')
     expect(text).not.toContain('R')
+  })
+
+  test('loads the browser VBI agent through the package export', async () => {
+    await expect(loadVBIAgentModule()).resolves.toMatchObject({
+      VBIAgent: expect.any(Function),
+    })
   })
 })
