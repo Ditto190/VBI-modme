@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { VBI } from '@visactor/vbi'
 import { useVBI } from '@visactor/vbi-react'
+import '@visactor/vbi-react/components.css'
 import { BuilderLayout, FilterPanel } from '@visactor/vbi-react/components'
 import type { DatasetColumn } from '@visactor/vquery'
 
