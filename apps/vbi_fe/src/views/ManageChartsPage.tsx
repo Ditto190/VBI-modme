@@ -4,33 +4,29 @@ import { useShallow } from 'zustand/shallow'
 import { useTranslation } from '../i18n'
 import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
 import { selectManageChartsPageState, useManageChartsStore } from '../stores/manage-charts.store'
+import { useNavigationStore } from '../stores/navigation.store'
 import { ChartResourceModals } from './manage-resource/ChartResourceModals'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageChartsPage = () => {
   const { locale, t } = useTranslation()
+  const openChart = useNavigationStore((state) => state.openChart)
   const state = useManageChartsStore(useShallow(selectManageChartsPageState))
   const {
     bootstrap: bootstrapStore,
     closeCreate,
-    closeDetail,
     create,
     createName,
     createOpen,
     deleteOne,
     deleteSelected,
     dispose,
-    editorName,
     filteredItems,
     loading,
     openCreate,
-    openDetail,
-    renameSelected,
     searchText,
-    selectedId,
     selectedRowKeys,
     setCreateName,
-    setEditorName,
     setSearchText,
     setSelectedRowKeys,
   } = state
@@ -46,7 +42,7 @@ export const ManageChartsPage = () => {
         filteredItems,
         loading,
         openCreate,
-        openDetail,
+        openDetail: openChart,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -58,15 +54,10 @@ export const ManageChartsPage = () => {
     >
       <ChartResourceModals
         closeCreate={closeCreate}
-        closeDetail={closeDetail}
         create={create}
         createName={createName}
         createOpen={createOpen}
-        editorName={editorName}
-        renameSelected={renameSelected}
-        selectedId={selectedId}
         setCreateName={setCreateName}
-        setEditorName={setEditorName}
         t={t}
       />
     </ResourceManagementPage>

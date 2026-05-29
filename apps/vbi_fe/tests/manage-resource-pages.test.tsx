@@ -14,15 +14,16 @@ type ResourceItem = {
 type ResourceScenario = {
   createButton: string
   createTitle: string
-  editorFallback: string
   kind: ResourceKind
   namePlaceholder: string
   pageTitle: string
   renderPage: ComponentType
+  route: string
 }
 
 const connectResourceSession = rs.fn()
 const releaseResourceSession = rs.fn()
+const navigate = rs.fn()
 
 rs.mock('next/dynamic', () => ({
   default: () => () => null,
@@ -52,6 +53,7 @@ const insightApi = await import('../src/services/insightApi')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useManageChartsStore } = await import('../src/stores/manage-charts.store')
 const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
+const { useNavigationStore } = await import('../src/stores/navigation.store')
 const { useReportsStore } = await import('../src/stores/reports.store')
 const { ManageChartsPage } = await import('../src/views/ManageChartsPage')
 const { ManageInsightsPage } = await import('../src/views/ManageInsightsPage')
@@ -121,29 +123,29 @@ const scenarios: ResourceScenario[] = [
   {
     createButton: 'New Chart',
     createTitle: 'New Chart',
-    editorFallback: 'Chart Editor',
     kind: 'chart',
     namePlaceholder: 'Chart Name',
     pageTitle: 'Charts',
     renderPage: ManageChartsPage,
+    route: '/manage/charts/chart-1',
   },
   {
     createButton: 'New Insight',
     createTitle: 'New Insight',
-    editorFallback: 'Insight Editor',
     kind: 'insight',
     namePlaceholder: 'Title',
     pageTitle: 'Insights',
     renderPage: ManageInsightsPage,
+    route: '/manage/insights/insight-1',
   },
   {
     createButton: 'New Report',
     createTitle: 'New Report',
-    editorFallback: 'Report Workspace',
     kind: 'report',
     namePlaceholder: 'Report Name',
     pageTitle: 'Reports',
     renderPage: ReportsPage,
+    route: '/manage/reports/report-1',
   },
 ]
 
@@ -153,6 +155,7 @@ describe('resource management pages', () => {
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     useManageChartsStore.setState(initialChartsState, true)
     useManageInsightsStore.setState(initialInsightsState, true)
+    useNavigationStore.setState({ navigate, pathname: '' })
     useReportsStore.setState(initialReportsState, true)
     resourcesByKind.chart = []
     resourcesByKind.insight = []
@@ -165,7 +168,7 @@ describe('resource management pages', () => {
   })
 
   scenarios.forEach((scenario) => {
-    test(`${scenario.kind} management supports list, search, pagination, selection, create, edit, rename, and delete`, async () => {
+    test(`${scenario.kind} management supports list, search, pagination, selection, create, edit navigation, and delete`, async () => {
       seedResourceItems(scenario.kind)
       renderScenarioPage(scenario)
 
@@ -190,34 +193,7 @@ describe('resource management pages', () => {
       expect(screen.getByText(`${scenario.kind} resource 1`)).toBeInTheDocument()
 
       fireEvent.click(within(getRowForText(`${scenario.kind} resource 1`)).getByRole('button', { name: 'Edit' }))
-      const editorDialog = await screen.findByRole('dialog')
-      expect(within(editorDialog).getByText(`${scenario.kind} resource 1`)).toBeInTheDocument()
-      fireEvent.click(within(editorDialog).getByRole('button', { name: 'Rename' }))
-      const titleInput = within(editorDialog).getByDisplayValue(`${scenario.kind} resource 1`)
-      fireEvent.change(titleInput, { target: { value: `${scenario.kind} renamed` } })
-      fireEvent.blur(titleInput)
-
-      if (scenario.kind === 'insight') {
-        await waitFor(() =>
-          expect(insightApi.updateInsight).toHaveBeenCalledWith(`${scenario.kind}-1`, {
-            name: `${scenario.kind} renamed`,
-          }),
-        )
-      } else {
-        await waitFor(() =>
-          expect(resourceApi.renameResource).toHaveBeenCalledWith(
-            scenario.kind,
-            `${scenario.kind}-1`,
-            `${scenario.kind} renamed`,
-          ),
-        )
-      }
-
-      fireEvent.click(within(editorDialog).getByRole('button', { name: 'Close' }))
-      await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
-      if (scenario.kind !== 'report') {
-        await waitFor(() => expect(releaseResourceSession).toHaveBeenCalledWith(scenario.kind, `${scenario.kind}-1`))
-      }
+      expect(navigate).toHaveBeenCalledWith(scenario.route)
 
       fireEvent.click(screen.getByRole('button', { name: scenario.createButton }))
       const createDialog = await screen.findByRole('dialog')

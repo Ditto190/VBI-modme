@@ -4,16 +4,17 @@ import { useShallow } from 'zustand/shallow'
 import { useTranslation } from '../i18n'
 import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
 import { selectManageInsightsPageState, useManageInsightsStore } from '../stores/manage-insights.store'
+import { useNavigationStore } from '../stores/navigation.store'
 import { InsightResourceModals } from './manage-resource/InsightResourceModals'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageInsightsPage = () => {
   const { locale, t } = useTranslation()
+  const openInsight = useNavigationStore((state) => state.openInsight)
   const state = useManageInsightsStore(useShallow(selectManageInsightsPageState))
   const {
     bootstrap: bootstrapStore,
     closeCreate,
-    closeDetail,
     create,
     createContent,
     createName,
@@ -21,18 +22,13 @@ export const ManageInsightsPage = () => {
     deleteOne,
     deleteSelected,
     dispose,
-    editorName,
     filteredItems,
     loading,
     openCreate,
-    openDetail,
-    renameSelected,
     searchText,
-    selectedId,
     selectedRowKeys,
     setCreateContent,
     setCreateName,
-    setEditorName,
     setSearchText,
     setSelectedRowKeys,
   } = state
@@ -48,7 +44,7 @@ export const ManageInsightsPage = () => {
         filteredItems,
         loading,
         openCreate,
-        openDetail,
+        openDetail: openInsight,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -60,17 +56,12 @@ export const ManageInsightsPage = () => {
     >
       <InsightResourceModals
         closeCreate={closeCreate}
-        closeDetail={closeDetail}
         create={create}
         createContent={createContent}
         createName={createName}
         createOpen={createOpen}
-        editorName={editorName}
-        renameSelected={renameSelected}
-        selectedId={selectedId}
         setCreateContent={setCreateContent}
         setCreateName={setCreateName}
-        setEditorName={setEditorName}
         t={t}
       />
     </ResourceManagementPage>
