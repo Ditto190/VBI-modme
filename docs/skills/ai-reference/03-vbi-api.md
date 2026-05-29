@@ -50,22 +50,29 @@ builder.limit // Row limit sub-builder.
 
 ## 3.3.2 Native Y.Map / Yjs Methods
 
-`builder.dsl` is a `Y.Map<any>` and `builder.doc` is a `Y.Doc`, so native Yjs/Y.Map methods can be used directly:
+`builder.dsl` is a `Y.Map<any>` and `builder.doc` is a `Y.Doc`. UI code should treat
+`builder.dsl` as a low-level implementation detail. Prefer Builder APIs for mutations.
+Use native Yjs/Y.Map writes only when there is no public Builder API, such as local
+reorder utilities inside a practice.
 
 ```ts
 // Read a value from Y.Map by path.
 const whereFilterNode = builder.dsl.get('whereFilter')
 
-// Modify Y.Map directly. This is advanced usage and requires understanding the DSL structure.
-whereFilterNode.set('op', 'or')
+// Avoid direct writes in generated UI:
+// whereFilterNode.set('op', 'or')
+// Prefer builder.whereFilter / builder.havingFilter APIs instead.
 
 // Batched Yjs transaction: merge multiple changes into one undo/redo step.
 builder.doc.transact(() => {
-  builder.dimensions.add('category')
-  builder.measures.add('sales', (node) => {
-    node.setAggregate({ func: 'sum' })
-  })
   builder.chartType.changeChartType('column')
+  builder.dimensions.add('category', (node) => {
+    node.setAlias('Category')
+    node.setEncoding('xAxis')
+  })
+  builder.measures.add('sales', (node) => {
+    node.setAlias('Sales').setAggregate({ func: 'sum' }).setEncoding('yAxis')
+  })
 })
 
 // Listen to Yjs document changes.
@@ -77,7 +84,7 @@ builder.doc.on('update', () => {
 | API                                   | Description                                                                      |
 | ------------------------------------- | -------------------------------------------------------------------------------- |
 | `builder.dsl.get(path)`               | Reads a value from Y.Map by path, such as `'whereFilter'` or `'chartType'`       |
-| `builder.dsl.get(path).set(key, val)` | Directly sets a value in Y.Map                                                   |
+| `builder.dsl.get(path).set(key, val)` | Low-level escape hatch only; do not use when a Builder API exists                |
 | `builder.dsl.observe(fn)`             | Observes Y.Map changes                                                           |
 | `builder.dsl.unobserve(fn)`           | Stops observing Y.Map changes                                                    |
 | `builder.doc.transact(fn)`            | Runs a batched Yjs transaction, merging multiple changes into one undo/redo step |
@@ -209,7 +216,6 @@ builder.measures.observe(() => {
 | `node.getId()`                           | Gets the measure ID                                                                                                                                      |
 | `node.getField()`                        | Gets the field name                                                                                                                                      |
 | `node.getEncoding()`                     | Gets the current encoding, or undefined if unset                                                                                                         |
-| `node.getAggregate()`                    | Gets the aggregate config                                                                                                                                |
 | `node.getFormat()`                       | Gets the format config, or undefined if unset                                                                                                            |
 | `node.getSort()`                         | Gets the sort config, or undefined if unset                                                                                                              |
 | `node.setAlias(alias)`                   | Sets the display alias                                                                                                                                   |
@@ -217,7 +223,6 @@ builder.measures.observe(() => {
 | `node.setAggregate({ func, quantile? })` | Sets aggregation: count/countDistinct/sum/avg/min/max/variance/variancePop/stddev/median/quantile                                                        |
 | `node.setFormat(cfg)`                    | Sets formatting, either autoFormat or manual prefix/suffix/decimalCount/thousandsSeparator                                                               |
 | `node.setSort({ order })`                | Sets sorting                                                                                                                                             |
-| `node.clearAggregate()`                  | Clears aggregation                                                                                                                                       |
 | `node.clearFormat()`                     | Clears formatting                                                                                                                                        |
 | `node.clearSort()`                       | Clears sorting                                                                                                                                           |
 

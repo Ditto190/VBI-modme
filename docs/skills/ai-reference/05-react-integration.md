@@ -17,7 +17,7 @@
 
 ## 5.2 What the VBI-react Package Provides (Only Used by vbi-react-starter)
 
-The VBI-react package lives in `packages/vbi-react/` and contains **7 hooks** and **4 components**. Only `vbi-react-starter` uses this package. Other practices (minimalist/streamlined/professional/standard) use their own independent implementations.
+The VBI-react package lives in `packages/vbi-react/` and contains **8 hooks** and **6 components**. Only `vbi-react-starter` uses this package. Other practices (minimalist/streamlined/professional/standard) use their own independent implementations.
 
 ### Hooks
 
@@ -30,6 +30,7 @@ The VBI-react package lives in `packages/vbi-react/` and contains **7 hooks** an
 | `useWhereFilter`  | Subscribes to WHERE filter state     | `{ whereFilter, mutateWhereFilter, clearWhereFilter, removeWhereEntry }`     |
 | `useHavingFilter` | Subscribes to HAVING filter state    | `{ havingFilter, mutateHavingFilter, clearHavingFilter, removeHavingEntry }` |
 | `useChartType`    | Subscribes to chart type state       | `{ chartType, availableChartTypes, setChartType }`                           |
+| `useTheme`        | Subscribes to theme state            | `{ theme, setTheme }`                                                        |
 
 ### Components
 
@@ -38,6 +39,8 @@ The VBI-react package lives in `packages/vbi-react/` and contains **7 hooks** an
 | `ChartRenderer`     | Chart rendering container. Requires the `renderVSeed` prop for rendering. |
 | `ChartTypeSelector` | Chart type selector dropdown                                              |
 | `FieldPanel`        | Field management panel for dimension/measure lists                        |
+| `FilterPanel`       | WHERE/HAVING filter editing panel                                         |
+| `ThemeSelector`     | Theme selector dropdown                                                   |
 | `BuilderLayout`     | Layout container: leftPanel/main/rightPanel                               |
 
 ### Internal Mechanism
@@ -62,9 +65,14 @@ function ChartConfig() {
   // -> useVSeed observes the change -> buildVSeed runs automatically -> chart re-renders.
   const configureChart = () => {
     builder.chartType.changeChartType('column')
-    builder.dimensions.add('category')
+    builder.dimensions.add('category', (node) => {
+      node.setAlias('Category')
+      node.setEncoding('xAxis')
+    })
     builder.measures.add('sales', (node) => {
+      node.setAlias('Sales')
       node.setAggregate({ func: 'sum' })
+      node.setEncoding('yAxis')
     })
   }
 
@@ -197,7 +205,7 @@ function DimensionPanel() {
 }
 ```
 
-> ⚠️ `useDimensions.updateDimension` currently only supports updating `alias`. To update `aggregate`/`encoding`/`sort`, use `builder.dimensions.update(id, callback)` directly.
+> Note: `useDimensions.updateDimension` supports `alias`, `encoding`, and `aggregate`. It does not expose `sort`; use `builder.dimensions.update(id, callback)` directly for sorting.
 
 ---
 
@@ -321,10 +329,29 @@ function ChartTypeSelector() {
 
 ---
 
-## 5.11 ChartRenderer Component
+## 5.11 useTheme: Theme
 
 ```tsx
-import { ChartRenderer } from '@visactor/vbi-react'
+import { useTheme } from '@visactor/vbi-react'
+
+function ThemeControl() {
+  const { theme, setTheme } = useTheme(builder)
+
+  return (
+    <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+      <option value='light'>Light</option>
+      <option value='dark'>Dark</option>
+    </select>
+  )
+}
+```
+
+---
+
+## 5.12 ChartRenderer Component
+
+```tsx
+import { ChartRenderer } from '@visactor/vbi-react/components'
 ;<ChartRenderer
   builder={builder}
   debounce={300}
@@ -341,10 +368,10 @@ import { ChartRenderer } from '@visactor/vbi-react'
 
 ---
 
-## 5.12 ChartTypeSelector Component
+## 5.13 ChartTypeSelector Component
 
 ```tsx
-import { ChartTypeSelector } from '@visactor/vbi-react'
+import { ChartTypeSelector } from '@visactor/vbi-react/components'
 ;<ChartTypeSelector
   builder={builder}
   label='Chart type'
@@ -361,14 +388,30 @@ import { ChartTypeSelector } from '@visactor/vbi-react'
 
 ---
 
-## 5.13 FieldPanel Component
+## 5.14 ThemeSelector Component
+
+```tsx
+import { ThemeSelector } from '@visactor/vbi-react/components'
+;<ThemeSelector
+  builder={builder}
+  label='Theme'
+  themeOptions={[
+    { label: 'Light', value: 'light' },
+    { label: 'Dark', value: 'dark' },
+  ]}
+/>
+```
+
+---
+
+## 5.15 FieldPanel Component
 
 > ⚠️ Note: The `FieldPanel` API differs from older documentation.
 
 The actual `FieldPanel` accepts these props:
 
 ```tsx
-import { FieldPanel } from '@visactor/vbi-react'
+import { FieldPanel } from '@visactor/vbi-react/components'
 ;<FieldPanel
   builder={builder}
   dimensionOptions={[
@@ -398,10 +441,30 @@ import { FieldPanel } from '@visactor/vbi-react'
 
 ---
 
-## 5.14 BuilderLayout Component
+## 5.16 FilterPanel Component
 
 ```tsx
-import { BuilderLayout } from '@visactor/vbi-react'
+import { FilterPanel } from '@visactor/vbi-react/components'
+;<FilterPanel
+  builder={builder}
+  fieldOptions={[
+    { label: 'Region', value: 'region' },
+    { label: 'Sales', value: 'sales' },
+  ]}
+  havingFieldOptions={[{ label: 'Sales', value: 'sales' }]}
+  whereTitle='Where'
+  havingTitle='Having'
+/>
+```
+
+`FilterPanel` mutates `builder.whereFilter` and `builder.havingFilter` directly. Use `fieldOptions` for WHERE fields and `havingFieldOptions` for measure fields used in HAVING conditions.
+
+---
+
+## 5.17 BuilderLayout Component
+
+```tsx
+import { BuilderLayout } from '@visactor/vbi-react/components'
 ;<BuilderLayout
   topBar={<TopBar />}
   leftPanel={<FieldsPanel />}
@@ -415,7 +478,7 @@ import { BuilderLayout } from '@visactor/vbi-react'
 
 ---
 
-## 5.15 Complete Signatures for Practice-owned Hooks
+## 5.18 Complete Signatures for Practice-owned Hooks
 
 > The hooks below come from each practice's own `src/hooks/` directory. When AI operates on a specific practice, import from that practice's `src/hooks/`; do not reference hooks across practices. Each practice's hooks have mostly the same signatures and behavior.
 

@@ -89,10 +89,18 @@ import {
   useWhereFilter,
   useHavingFilter,
   useChartType,
+  useTheme,
 } from '@visactor/vbi-react'
 
 // Components used by vbi-react-starter.
-import { ChartRenderer, ChartTypeSelector, FieldPanel, BuilderLayout } from '@visactor/vbi-react'
+import {
+  BuilderLayout,
+  ChartRenderer,
+  ChartTypeSelector,
+  FieldPanel,
+  FilterPanel,
+  ThemeSelector,
+} from '@visactor/vbi-react/components'
 ```
 
 > **About the @visactor/vbi main entry**: The current `@visactor/vbi` package main entry already exports core APIs such as `VBI`, `VBIChartBuilder`, `VBI.connectors`, and `createEmptyChart`. Even so, each practice still **implements its own** connector/bootstrap module, such as `demoConnector.ts` or `localConnector.ts`, to wrap connector registration and default builder initialization. When AI operates on a specific practice, it should still prefer that practice's own implementation. See [10-feature-status.md](./10-feature-status.md).

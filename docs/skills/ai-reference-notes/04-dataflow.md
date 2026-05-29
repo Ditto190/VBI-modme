@@ -16,14 +16,16 @@ User interaction (drag/input)
 
 ## AI Usage Boundaries
 
-AI **only needs to operate on the VBI + VBI-react layers**. The following layers are invisible to AI and do not need to be understood:
+AI normally operates on the VBI + VBI-react layers. The following layers are not
+direct UI authoring surfaces, but agents must understand their contracts when
+building complete UIs or debugging chart correctness:
 
-| Layer        | Package                          | Description                                                         |
-| ------------ | -------------------------------- | ------------------------------------------------------------------- |
-| Query layer  | `@visactor/vquery`               | Called automatically inside VBI; AI does not operate on it.         |
-| Render layer | `@visactor/vseed`                | Called automatically inside VBI; AI does not operate on it.         |
-| VSeedBuilder | `@visactor/vseed`                | Converts VSeed -> VChart Spec; handled internally by the framework. |
-| Renderer     | practices/standard's VSeedRender | Implemented by standard itself; AI does not operate on it.          |
+| Layer        | Package                          | Description                                                                                                    |
+| ------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Query layer  | `@visactor/vquery`               | Called automatically inside VBI; agents do not hand-write SQL, but must preserve queryDSL and alias contracts. |
+| Render layer | `@visactor/vseed`                | Called automatically inside VBI; agents do not build specs manually, but must implement VSeedRender correctly. |
+| VSeedBuilder | `@visactor/vseed`                | Converts VSeed -> VChart Spec; handled internally by the framework.                                            |
+| Renderer     | practices/standard's VSeedRender | Implemented by standard itself; AI does not operate on it.                                                     |
 
 ## Layer Responsibilities
 
@@ -67,4 +69,7 @@ VSeed rendering is not provided by any npm package. It is **implemented independ
 3. The target practice's own VBIStore listens for the change and calls `builder.buildVSeed()` to rebuild rendering data.
 4. The target practice's own `VSeedRender` component automatically renders the new chart.
 
-AI only participates in step 1; everything after that is handled automatically by the framework.
+AI directly participates in step 1 and implements the practice-owned plumbing
+that lets steps 2-4 run. It should not hand-write SQL or VChart specs, but it
+must preserve the connector/query/VSeedRender contracts documented in
+`ui-design-guide/ui-generation`.

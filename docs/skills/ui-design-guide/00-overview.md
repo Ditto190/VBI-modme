@@ -1,6 +1,29 @@
 # UI Design Guide
 
-> A complete reference for AI agents designing UI panels for the VBI project. Use the **professional** / **streamlined** practices as the primary references, with **standard** and **vbi-react-starter** as supporting references. See [20-practices-reference.md](./20-practices-reference.md).
+> A complete reference for AI agents designing UI panels for the VBI project. For complete UI generation, start from [ui-generation/README.md](./ui-generation/README.md). Use **professional** and **standard** as the primary references, with **streamlined** and **minimalist** as supporting references. See [20-practices-reference.md](./20-practices-reference.md).
+
+---
+
+## Complete UI Generation
+
+优先阅读这组中文文档。它们面向“agent 独立生成完整 VBI UI”的场景，比旧编号 API 文档更接近实际生成流程。
+
+| File                                                                                           | Contents                                                      |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [ui-generation/README.md](./ui-generation/README.md)                                           | 完整 UI 生成指南主入口和阅读顺序                              |
+| [ui-generation/01-complete-flow.md](./ui-generation/01-complete-flow.md)                       | connector -> builder -> store -> UI -> VSeedRender 总流程     |
+| [ui-generation/02-react-usage.md](./ui-generation/02-react-usage.md)                           | React 使用方式、practice hooks、vbi-react、Builder API 的边界 |
+| [ui-generation/03-state-store.md](./ui-generation/03-state-store.md)                           | 完整 UI 推荐的 Zustand store 模型                             |
+| [ui-generation/04-data-connector.md](./ui-generation/04-data-connector.md)                     | connector、schema、CSV/本地数据加载                           |
+| [ui-generation/05-vseed-render.md](./ui-generation/05-vseed-render.md)                         | VSeedRender 实现规则和实例生命周期                            |
+| [ui-generation/06-slot-encoding.md](./ui-generation/06-slot-encoding.md)                       | 图表类型敏感的 slot / encoding 设计                           |
+| [ui-generation/07-component-patterns.md](./ui-generation/07-component-patterns.md)             | 字段面板、配置面板、筛选、toolbar、workspace 组件模式         |
+| [ui-generation/08-visual-design.md](./ui-generation/08-visual-design.md)                       | VBI builder 的视觉设计规则                                    |
+| [ui-generation/09-validation-checklist.md](./ui-generation/09-validation-checklist.md)         | 完整 UI 生成后的验证清单                                      |
+| [ui-generation/10-builder-correctness.md](./ui-generation/10-builder-correctness.md)           | 避免生成不能绘图的坏 builder                                  |
+| [ui-generation/templates/compact-template.md](./ui-generation/templates/compact-template.md)   | 紧凑模板，参考 `minimalist`                                   |
+| [ui-generation/templates/standard-template.md](./ui-generation/templates/standard-template.md) | 标准模板，参考 `standard`                                     |
+| [ui-generation/templates/product-template.md](./ui-generation/templates/product-template.md)   | 产品级模板，参考 `professional`                               |
 
 ---
 
@@ -29,6 +52,7 @@
 | [19-ui-considerations.md](./19-ui-considerations.md)               | UI development notes: floating dropdowns, light mode, filter operators, Connector type rules  |
 | [20-practices-reference.md](./20-practices-reference.md)           | Practice reference index and API-grouped reference sources                                    |
 | [21-undocumented-apis.md](./21-undocumented-apis.md)               | Correct usage found by reading practice code: WHERE op+value rules, TidyDatum, replaceFilters |
+| [22-ui-skill-update-plan.md](./22-ui-skill-update-plan.md)         | Draft plan for rewriting the skills into a complete UI generation guide                       |
 
 ---
 
@@ -56,7 +80,8 @@ AI agents only need to operate through the Builder API (`builder.dimensions.add`
 | What you need                              | Import source                                                                      |
 | ------------------------------------------ | ---------------------------------------------------------------------------------- |
 | VBI types (VBIDimension, etc.)             | `@visactor/vbi`                                                                    |
-| VSeed / VSeedBuilder                       | `@visactor/vbi` (types), `@visactor/vseed` (implementation)                        |
+| VSeed / VSeedBuilder                       | `@visactor/vseed`                                                                  |
+| vbi-react starter components               | `@visactor/vbi-react/components`                                                   |
 | VChart rendering                           | `@visactor/vchart`                                                                 |
 | VTable rendering                           | `@visactor/vtable`                                                                 |
 | hooks (standard/minimalist/professional)   | `src/hooks/` (the current practice)                                                |

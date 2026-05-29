@@ -76,9 +76,16 @@ All operations wrapped with `builder.doc.transact()` (dimension/measure add/upda
 ```ts
 // One undo reverts the whole transaction.
 builder.doc.transact(() => {
-  builder.dimensions.add('category')
-  builder.measures.add('sales')
   builder.chartType.changeChartType('column')
+  builder.dimensions.add('category', (node) => {
+    node.setAlias('Category')
+    node.setEncoding('xAxis')
+  })
+  builder.measures.add('sales', (node) => {
+    node.setAlias('Sales')
+    node.setAggregate({ func: 'sum' })
+    node.setEncoding('yAxis')
+  })
 })
 // Ctrl+Z undoes all three operations above at once.
 ```
