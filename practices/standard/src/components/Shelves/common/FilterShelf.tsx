@@ -18,6 +18,7 @@ import { ShelfTrack, type ShelfTone } from './ShelfTrack'
 const REMOVE_ICON_DEFAULT_COLOR = '#8c8c8c'
 const REMOVE_ICON_HOVER_COLOR = '#ff4d4f'
 const SHELF_ITEM_SPACING = 6
+type PopoverContent = Parameters<typeof Popover>[0]['content']
 
 export type FilterShelfTone = ShelfTone
 
@@ -170,11 +171,13 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
         isAfterOver={dropTargets.after.isOver}
       />
       <Popover
-        content={renderEditor({
-          item,
-          isOpen,
-          close,
-        })}
+        content={
+          renderEditor({
+            item,
+            isOpen,
+            close,
+          }) as PopoverContent
+        }
         trigger='click'
         placement='bottom'
         open={isOpen}

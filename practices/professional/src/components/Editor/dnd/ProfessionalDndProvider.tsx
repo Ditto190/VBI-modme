@@ -33,6 +33,7 @@ type ProfessionalDndProviderProps = {
 }
 
 const ProfessionalDndContext = createContext<DndContextValue | null>(null)
+type DndContextChildren = Parameters<typeof DndContext>[0]['children']
 
 export const ProfessionalDndProvider = (props: ProfessionalDndProviderProps) => {
   const [activeDrag, setActiveDrag] = useState<ProfessionalDragPayload | null>(null)
@@ -70,7 +71,7 @@ export const ProfessionalDndProvider = (props: ProfessionalDndProviderProps) => 
         onDragEnd={handleDragEnd}
         onDragStart={handleDragStart}
       >
-        {props.children}
+        {props.children as DndContextChildren}
         <DragOverlay adjustScale={false} dropAnimation={null} modifiers={[keepDragOverlayNearPointer]}>
           {activeDrag ? <DragGhost payload={activeDrag} sourceRect={activeRect} /> : null}
         </DragOverlay>

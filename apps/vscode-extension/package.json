@@ -44,7 +44,8 @@
     "@types/node": "^18.19.130",
     "@types/vscode": "^1.80.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "webview-ui": "workspace:*"
   },
   "dependencies": {
     "sql.js": "1.14.1"
