@@ -41,7 +41,7 @@ export const PageSidebar = ({ pages }: PageSidebarProps) => {
   )
 
   return (
-    <section className='vbi-motion-panel flex min-h-0 flex-col overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] max-[900px]:flex-row max-[640px]:flex-col'>
+    <section className='vbi-motion-panel flex min-h-0 flex-col overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] max-[900px]:flex-row max-[640px]:flex-col'>
       <div className='vbi-motion-stagger flex min-h-0 flex-1 flex-col gap-1 overflow-auto p-2 max-[900px]:flex-row max-[640px]:shrink-0 max-[640px]:pb-0'>
         {pages.map((page, index) => (
           <PageSidebarItem

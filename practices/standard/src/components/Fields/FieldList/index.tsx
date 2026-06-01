@@ -8,8 +8,9 @@ import {
   SearchOutlined,
   UpOutlined,
 } from '@ant-design/icons'
-import { Badge, Button, Card, Checkbox, Divider, Flex, Input, Popover, Typography, theme } from 'antd'
-import { memo, useEffect, useMemo, useRef, useState } from 'react'
+import { Badge, Button, Checkbox, Divider, Flex, Input, Popover, Typography, theme } from 'antd'
+import { memo, useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
+import { CompatCard as Card } from '../../antdCompat'
 import { createSchemaFieldDragId, type SchemaFieldDragData } from '../../Shelves/dnd'
 import { getDefaultDimensionDateAggregate } from '../../Shelves/dimensionDateAggregateUtils'
 import type { VBISchemaField } from '../../../hooks/useVBISchemaFields'
@@ -284,7 +285,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
         <Typography.Text type='secondary' style={{ fontSize: 11, lineHeight: '16px' }}>
           {t('panelsFieldsFiltersRole')}
         </Typography.Text>
-        <Checkbox.Group value={selectedRoles} onChange={(values) => setSelectedRoles(values as FieldRole[])}>
+        <Checkbox.Group value={selectedRoles} onChange={(values: unknown[]) => setSelectedRoles(values as FieldRole[])}>
           <Flex vertical gap={4}>
             {FIELD_ROLE_OPTIONS.map((role) => (
               <Checkbox key={role} value={role}>
@@ -301,7 +302,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
         <Typography.Text type='secondary' style={{ fontSize: 11, lineHeight: '16px' }}>
           {t('panelsFieldsFiltersType')}
         </Typography.Text>
-        <Checkbox.Group value={selectedTypes} onChange={(values) => setSelectedTypes(values as string[])}>
+        <Checkbox.Group value={selectedTypes} onChange={(values: unknown[]) => setSelectedTypes(values as string[])}>
           <Flex vertical gap={4}>
             {fieldTypeOptions.map((fieldType) => (
               <Checkbox key={fieldType} value={fieldType}>
@@ -345,7 +346,7 @@ export const FieldList = memo(({ style }: { style?: React.CSSProperties }) => {
           size='small'
           allowClear
           value={keyword}
-          onChange={(event) => setKeyword(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setKeyword(event.target.value)}
           placeholder={t('panelsFieldsSearchPlaceholder')}
           style={{ flex: 1 }}
           prefix={<SearchOutlined style={{ color: token.colorTextQuaternary, fontSize: 12 }} />}

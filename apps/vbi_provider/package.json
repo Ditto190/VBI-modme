@@ -41,7 +41,9 @@
   "dependencies": {
     "@hocuspocus/provider": "3.4.3",
     "@visactor/vbi": "workspace:*",
+    "@visactor/vbi-agent": "workspace:*",
     "@visactor/vquery": "workspace:*",
+    "typebox": "1.1.38",
     "yjs": "13.6.28"
   },
   "devDependencies": {

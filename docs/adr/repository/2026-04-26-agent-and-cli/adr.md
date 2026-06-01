@@ -12,13 +12,13 @@ LLMs need both Builder capabilities and platform resource capabilities. The issu
 
 ## Decision
 
-Rename and narrow the existing `apps/vbi_agent` into `apps/vbi_cli`. CLI is an application shell: it only connects providers, handles platform resources, and hosts concrete interaction flows.
+Rename and narrow the existing `apps/vbi_agent` into `apps/vbi_tui`. CLI is an application shell: it only connects providers, handles platform resources, and hosts concrete interaction flows.
 
 Add `packages/vbi-agent`. The Agent package provides general runtime/tool abstractions and BuilderToolset. Resource CRUD is created by the CLI as ResourceToolset from provider and then injected into runtime. Dependency inversion happens at the general tool layer, not in the resource domain layer.
 
 ### Responsibility Boundaries
 
-`apps/vbi_cli`:
+`apps/vbi_tui`:
 
 - Integrates with `apps/vbi_provider`, `@visactor/vbi-provider`, or other platform providers.
 - Opens remote resources and obtains `VBIChartBuilder`, `VBIReportBuilder`, or other Builder instances.
@@ -34,9 +34,9 @@ Add `packages/vbi-agent`. The Agent package provides general runtime/tool abstra
 - Does not create platform clients, define ResourceToolset, read environment variables, or know about `resourceId`, HTTP, Hocuspocus, authorization, or resource lists.
 
 ```text
-apps/vbi_cli -> packages/vbi-agent
-apps/vbi_cli -> @visactor/vbi-provider or apps/vbi_provider
-apps/vbi_cli -> model provider SDK
+apps/vbi_tui -> packages/vbi-agent
+apps/vbi_tui -> @visactor/vbi-provider or apps/vbi_provider
+apps/vbi_tui -> model provider SDK
 packages/vbi-agent -> @visactor/vbi
 @visactor/vbi -> @visactor/vquery -> @visactor/vseed
 ```
@@ -83,20 +83,20 @@ Positive impact:
 
 - `packages/vbi`, `packages/vquery`, and `packages/vseed` remain platform-agnostic and easier to open source independently.
 - `packages/vbi-agent` can be reused independently as the Builder intelligence layer.
-- `apps/vbi_cli` can compose different platform providers, model providers, permission systems, and resource tools.
+- `apps/vbi_tui` can compose different platform providers, model providers, permission systems, and resource tools.
 - Platform resource logic does not pollute Builder and Agent; adding a new mode only requires a new CLI adapter.
 
 Costs:
 
 - CLI must explicitly implement the provider-to-Builder adapter layer and ResourceToolset.
 - Agent runtime needs a stable generic tool protocol.
-- The existing `apps/vbi_agent` must be split into `apps/vbi_cli` and `packages/vbi-agent`.
+- The existing `apps/vbi_agent` must be split into `apps/vbi_tui` and `packages/vbi-agent`.
 
 ## Migration Plan
 
 1. Extract `VBIAgentWorkspace` and builder operation tools from `apps/vbi_agent`, making the tools depend only on Builder.
 2. Create `packages/vbi-agent` and move runtime, history, activity-log, agent types, context building, and builder tools into it.
-3. Rename `apps/vbi_agent` to `apps/vbi_cli`, keeping `cli.ts`, `parse.ts`, `tui/*`, model provider, and platform provider integration.
-4. Implement the provider-to-`VBIAgentWorkspace` adapter layer and ResourceToolset in `apps/vbi_cli`.
+3. Rename `apps/vbi_agent` to `apps/vbi_tui`, keeping `cli.ts`, `parse.ts`, `tui/*`, model provider, and platform provider integration.
+4. Implement the provider-to-`VBIAgentWorkspace` adapter layer and ResourceToolset in `apps/vbi_tui`.
 5. Add unit tests for `packages/vbi-agent` that do not depend on platform provider.
 6. Clean up old `apps/vbi_agent` paths, package names, scripts, imports, docs, and test references.

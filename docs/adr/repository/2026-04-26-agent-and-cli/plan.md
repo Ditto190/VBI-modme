@@ -1,14 +1,14 @@
 # Plan: Split `vbi_agent` Into A CLI Shell And Builder Agent Package
 
 > Based on [`./adr.md`](./adr.md)
-> This file guides the migration order from `apps/vbi_agent` to `apps/vbi_cli` + `packages/vbi-agent`.
+> This file guides the migration order from `apps/vbi_agent` to `apps/vbi_tui` + `packages/vbi-agent`.
 
 ## Goal
 
 Separate the agent runtime, model integration, TUI, platform provider, resource CRUD, and builder tools currently mixed inside the application directory:
 
 - `packages/vbi-agent` becomes a general Agent package that only operates Builder.
-- `apps/vbi_cli` becomes the application shell that connects provider, model provider, resource tools, and TUI.
+- `apps/vbi_tui` becomes the application shell that connects provider, model provider, resource tools, and TUI.
 - `packages/vbi`, `packages/vquery`, and `packages/vseed` remain platform-agnostic.
 - Resource CRUD is injected into generic tools through the CLI and does not enter the Agent package or Builder workspace abstraction.
 
@@ -21,7 +21,7 @@ Does not include: permission system, multi-tenancy, resource version history, pr
 ## Smell Scan
 
 1. `apps/vbi_agent` owns runtime, TUI, model provider, provider integration, resource capabilities, and builder tools at the same time, so its responsibility is too broad.
-2. The package name is `@visactor/vbi-agent`, but README and usage examples already show `vbi_cli` semantics, so naming facts are inconsistent.
+2. The package name is `@visactor/vbi-agent`, but README and usage examples already show `vbi_tui` semantics, so naming facts are inconsistent.
 3. Builder tools live inside an application directory, blocking package-level reuse.
 4. The CLI build script directly depends on the provider build, creating tight coupling between the application shell and platform integration.
 
@@ -35,7 +35,7 @@ Forbidden: creating platform clients, reading environment variables, knowing abo
 
 ### CLI Composition
 
-`apps/vbi_cli` composes the provider workspace adapter layer, BuilderToolset, ResourceToolset, model provider, TUI, command parsing, and concrete application flow.
+`apps/vbi_tui` composes the provider workspace adapter layer, BuilderToolset, ResourceToolset, model provider, TUI, command parsing, and concrete application flow.
 
 ### Quality Constraints
 
@@ -49,7 +49,7 @@ Forbidden: creating platform clients, reading environment variables, knowing abo
 
 1. Define the public interface for `packages/vbi-agent`.
 2. Extract BuilderToolset and Agent runtime.
-3. Rename and narrow `apps/vbi_cli`.
+3. Rename and narrow `apps/vbi_tui`.
 4. Implement the provider workspace adapter layer and ResourceToolset in CLI.
 5. Complete tests and boundary validation.
 6. Clean up old references and complete repository-level validation.
@@ -76,9 +76,9 @@ Definition of done: runtime, history, activity-log, tool protocol, and context b
 
 Blockers: depends on Step 1
 
-### Step 4: Narrow `apps/vbi_cli`
+### Step 4: Narrow `apps/vbi_tui`
 
-Definition of done: `apps/vbi_agent` is renamed to `apps/vbi_cli`; the CLI application no longer occupies the `@visactor/vbi-agent` package name; `cli.ts`, `parse.ts`, `tui/*`, model provider, and platform provider integration are retained; CLI imports runtime and BuilderToolset from `@visactor/vbi-agent`; README, bin, scripts, and test paths all change to `apps/vbi_cli`.
+Definition of done: `apps/vbi_agent` is renamed to `apps/vbi_tui`; the TUI application no longer occupies the `@visactor/vbi-agent` package name; `cli.ts`, `parse.ts`, `tui/*`, model provider, and platform provider integration are retained; CLI imports runtime and BuilderToolset from `@visactor/vbi-agent`; README, bin, scripts, and test paths all change to `apps/vbi_tui`.
 
 Blockers: depends on Step 2 and Step 3
 
@@ -90,7 +90,7 @@ Blockers: depends on Step 4
 
 ### Step 6: Cleanup, Validation, And Acceptance
 
-Definition of done: old `apps/vbi_agent` paths, imports, scripts, docs, and test references are all cleaned up; `packages/vbi-agent` unit tests do not depend on platform provider; `apps/vbi_cli` unit tests cover command parsing, model configuration, workspace adapter, and ResourceToolset; repository-level `pnpm run lint` and `pnpm run typecheck` pass.
+Definition of done: old `apps/vbi_agent` paths, imports, scripts, docs, and test references are all cleaned up; `packages/vbi-agent` unit tests do not depend on platform provider; `apps/vbi_tui` unit tests cover command parsing, model configuration, workspace adapter, and ResourceToolset; repository-level `pnpm run lint` and `pnpm run typecheck` pass.
 
 ## Acceptance Scenarios
 

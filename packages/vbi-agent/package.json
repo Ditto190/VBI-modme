@@ -10,6 +10,12 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./resource-tools": {
+      "source": "./src/tools/resource-tools.ts",
+      "types": "./dist/tools/resource-tools.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -26,11 +32,9 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
   },
   "dependencies": {
-    "@ai-sdk/deepseek": "2.0.29",
-    "@ai-sdk/openai": "3.0.53",
-    "ai": "6.0.168",
+    "@earendil-works/pi-agent-core": "0.75.5",
     "@visactor/vbi": "workspace:*",
-    "zod": "4.1.8"
+    "typebox": "1.1.38"
   },
   "devDependencies": {
     "@rstest/core": "0.8.3",

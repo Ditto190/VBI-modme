@@ -11,7 +11,7 @@ export type ResourceManagementPageState = {
   selectedRowKeys: Key[]
   deleteSelected(): Promise<void>
   openCreate(): void
-  openDetail(id: string): Promise<void>
+  openDetail(id: string): void | Promise<void>
   setSearchText(searchText: string): void
   setSelectedRowKeys(selectedRowKeys: string[]): void
 }

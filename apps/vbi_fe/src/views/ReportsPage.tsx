@@ -4,34 +4,30 @@ import { useShallow } from 'zustand/shallow'
 import { useTranslation } from '../i18n'
 import { selectReportsPageState, useReportsStore } from '../stores/reports.store'
 import { useStoreLifecycle } from '../hooks/useStoreLifecycle'
+import { useNavigationStore } from '../stores/navigation.store'
 import { ReportResourceModals } from './reports/ReportResourceModals'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ReportsPage = () => {
   const { locale, t } = useTranslation()
+  const openReport = useNavigationStore((state) => state.openReport)
   const state = useReportsStore(useShallow(selectReportsPageState))
 
   const {
     bootstrap,
     closeCreate,
-    closeDetail,
     create,
     createName,
     deleteSelected,
     dispose,
-    editorName,
     filteredItems,
     isCreateOpen,
     loading,
     openCreate,
-    openDetail,
-    renameSelected,
     remove,
     searchText,
-    selectedId,
     selectedRowKeys,
     setCreateName,
-    setEditorName,
     setSearchText,
     setSelectedRowKeys,
   } = state
@@ -49,7 +45,7 @@ export const ReportsPage = () => {
         filteredItems,
         loading,
         openCreate,
-        openDetail,
+        openDetail: openReport,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -61,15 +57,10 @@ export const ReportsPage = () => {
     >
       <ReportResourceModals
         createName={createName}
-        editorName={editorName}
         isCreateOpen={isCreateOpen}
-        selectedId={selectedId}
         onCloseCreate={closeCreate}
-        onCloseDetail={closeDetail}
         onConfirmCreate={create}
         onCreateNameChange={setCreateName}
-        onEditorNameChange={setEditorName}
-        onRenameSelected={renameSelected}
       />
     </ResourceManagementPage>
   )

@@ -1,5 +1,5 @@
 import { Button, Flex, Input, InputNumber, Select, Segmented, Switch, Typography, theme } from 'antd'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, type ChangeEvent } from 'react'
 import type { VBIMeasureFormat } from '@visactor/vbi'
 import { useTranslation } from '../../../i18n'
 
@@ -78,7 +78,7 @@ const FormatForm = (props: {
           { label: t('formatAuto'), value: 'auto' },
           { label: t('formatCustom'), value: 'custom' },
         ]}
-        onChange={(value) => handleAutoToggle(value === 'auto')}
+        onChange={(value: 'auto' | 'custom') => handleAutoToggle(value === 'auto')}
       />
 
       {!isAutoFormat && (
@@ -89,7 +89,7 @@ const FormatForm = (props: {
               size='small'
               variant='filled'
               value={customFormat.type ?? 'number'}
-              onChange={(v) => updateField('type', v)}
+              onChange={(v: (typeof FORMAT_TYPES)[number]) => updateField('type', v)}
               style={{ width: 140 }}
               options={FORMAT_TYPES.map((type) => ({
                 value: type,
@@ -104,7 +104,7 @@ const FormatForm = (props: {
               size='small'
               variant='filled'
               value={customFormat.prefix ?? ''}
-              onChange={(e) => updateField('prefix', e.target.value || undefined)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateField('prefix', e.target.value || undefined)}
               style={{ width: 140 }}
               placeholder='$, \u00A5...'
             />
@@ -116,7 +116,7 @@ const FormatForm = (props: {
               size='small'
               variant='filled'
               value={customFormat.suffix ?? ''}
-              onChange={(e) => updateField('suffix', e.target.value || undefined)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateField('suffix', e.target.value || undefined)}
               style={{ width: 140 }}
             />
           </Flex>
@@ -127,7 +127,7 @@ const FormatForm = (props: {
               size='small'
               variant='filled'
               value={customFormat.ratio ?? 1}
-              onChange={(v) => updateField('ratio', v ?? undefined)}
+              onChange={(v: number | string | null) => updateField('ratio', v ?? undefined)}
               style={{ width: 140 }}
               min={0.0001}
             />
@@ -139,7 +139,7 @@ const FormatForm = (props: {
               size='small'
               variant='filled'
               value={customFormat.symbol ?? ''}
-              onChange={(e) => updateField('symbol', e.target.value || undefined)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateField('symbol', e.target.value || undefined)}
               style={{ width: 140 }}
               placeholder='\u4E07, K...'
             />
@@ -151,7 +151,7 @@ const FormatForm = (props: {
               size='small'
               variant='filled'
               value={customFormat.fractionDigits ?? 2}
-              onChange={(v) => updateField('fractionDigits', v ?? undefined)}
+              onChange={(v: number | string | null) => updateField('fractionDigits', v ?? undefined)}
               style={{ width: 140 }}
               min={0}
               max={10}
@@ -163,7 +163,7 @@ const FormatForm = (props: {
             <Switch
               size='small'
               checked={customFormat.thousandSeparator ?? false}
-              onChange={(checked) => updateField('thousandSeparator', checked)}
+              onChange={(checked: boolean) => updateField('thousandSeparator', checked)}
             />
           </Flex>
         </>

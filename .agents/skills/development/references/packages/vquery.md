@@ -1,33 +1,24 @@
 # VQuery Development Reference
 
-`packages/vquery` owns VQueryDSL-to-SQL compilation and query execution. Keep the
-package small and layered:
+`packages/vquery` owns QueryDSL-to-SQL compilation and query execution.
 
-- `src/types/dsl/*` defines the public DSL shape.
-- `src/sql-builder/*` compiles DSL with Kysely and inlines parameters for stable
-  SQL snapshots.
-- `src/dataset/*` connects stored dataset metadata to DuckDB views.
-- `src/adapters/*` isolates runtime details: QueryAdapter executes DuckDB work;
-  StorageAdapter stores dataset schemas and sources.
-- `src/node.ts` and `src/browser.ts` are the public runtime-specific entrypoints.
+- `src/types/dsl/*`: public QueryDSL shape.
+- `src/sql-builder/*`: Kysely SQL compilation with stable inline SQL snapshots.
+- `src/data-source-builder/*` and `src/dataset/*`: source metadata to DuckDB
+  query surfaces.
+- `src/adapters/*`: QueryAdapter and StorageAdapter runtime isolation.
+- `src/node.ts` and `src/browser.ts`: public runtime entrypoints.
 
-## Development Rules
+## Tests
 
-Use TDD for every behavior change. Add or update the focused failing test first,
-then implement the smallest source change that makes it pass.
+Behavior changes need focused tests first. SQL builder behavior belongs in
+`tests/unit/sql-builder/**`; DSL examples are paired `.json` and `.test.ts`
+files under `tests/examples/**`; dataset, adapter, and VQuery lifecycle tests
+belong in `tests/unit/**` near the owned module.
 
-Preserve the existing test shape:
+After example JSON changes, run `pnpm --filter @visactor/vquery run g`.
 
-- SQL builder behavior belongs in `tests/unit/sql-builder/**` with inline SQL
-  snapshots.
-- End-to-end DSL examples belong in `tests/examples/**` as paired `.json` and
-  `.test.ts` files. Run `pnpm --filter @visactor/vquery run g` after adding or
-  changing example JSON so generated tests, docs, and snapshots stay aligned.
-- Dataset, adapter, and VQuery lifecycle behavior belongs in `tests/unit/**`
-  close to the owned source module.
-
-Maintain 100% line, statement, and function coverage. Before finishing VQuery
-work, run:
+## Validation
 
 ```bash
 pnpm --filter @visactor/vquery run test
@@ -35,7 +26,5 @@ pnpm --filter @visactor/vquery exec rstest --coverage
 pnpm --filter @visactor/vquery run typecheck
 ```
 
-Do not lower coverage thresholds, exclude newly touched source, or accept
-untested branches as a shortcut. If a branch exists only for runtime adaptation,
-cover it with focused adapter tests or explain why it cannot be covered in the
-current environment.
+Do not lower coverage thresholds, exclude newly touched source, or leave
+QueryDSL/runtime branches untested.

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { cookies, headers } from 'next/headers'
+import 'katex/dist/katex.min.css'
 import './globals.css'
 import { VbiAppProviders } from './providers'
 import { isAppLocale, resolveLocaleFromAcceptLanguage, translate } from '../i18n/utils'

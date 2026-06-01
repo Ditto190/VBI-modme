@@ -9,6 +9,7 @@ const CONNECTOR_ID = 'vscode-sql'
 
 let requestId = 0
 const pending = new Map<number, (value: any) => void>()
+let bridgeConnectorRegistered = false
 
 function sendToHost(type: string, data: Record<string, any> = {}): Promise<any> {
   const id = ++requestId
@@ -32,14 +33,13 @@ const hostListener = (event: MessageEvent) => {
 window.addEventListener('message', hostListener)
 
 function registerBridgeConnector() {
-  let registered = false
-  if (registered) return
-  registered = true
+  if (bridgeConnectorRegistered) return
+  bridgeConnectorRegistered = true
 
   let currentSchema: { name: string; type: string }[] = []
   let currentTableName = 'data'
 
-  VBI.registerConnector(CONNECTOR_ID, async () => ({
+  VBI.connectors.register(CONNECTOR_ID, async () => ({
     discoverSchema: async () => {
       const result = await sendToHost('get-schema')
       if (result.schema && result.schema.length > 0) {

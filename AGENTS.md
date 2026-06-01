@@ -8,7 +8,7 @@ This file provides guidance to Coding Agent when working with code in this repos
 VBI/
 ├── apps/                           # Application layer: docs site, frontend, backend
 │   ├── vbi_be/                     # VBI backend application
-│   ├── vbi_cli/                    # VBI CLI application shell
+│   ├── vbi_tui/                    # VBI TUI application shell
 │   ├── vbi_fe/                     # VBI frontend application
 │   ├── vbi_provider/               # VBI Provider application
 │   └── website/                    # Official documentation, examples, and playground

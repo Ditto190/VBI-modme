@@ -1,4 +1,5 @@
 import { Input, Modal, message } from 'antd'
+import type { ChangeEvent } from 'react'
 
 export const openShelfRenameModal = (params: {
   title: string
@@ -23,7 +24,7 @@ export const openShelfRenameModal = (params: {
         defaultValue={currentAlias}
         placeholder={placeholder}
         maxLength={50}
-        onChange={(event) => {
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
           nextAlias = event.target.value
         }}
       />

@@ -1,24 +1,24 @@
 import { createVBIProviderClient } from '../client'
-import { createVBIProviderWorkspace } from './workspace'
+import { createVBIProviderAgentAdapter } from './adapter'
 import type { VBIProviderClient, VBIProviderClientOptions } from '../types'
-import type { VBIProviderWorkspace } from './workspace'
+import type { VBIProviderAgentAdapter } from './adapter'
 
 export interface VBIProviderAgentKitOptions extends VBIProviderClientOptions {
   chartId?: string
+  insightId?: string
   reportId?: string
 }
 
-export interface VBIProviderAgentKit {
+export interface VBIProviderAgentKit extends VBIProviderAgentAdapter {
   client: VBIProviderClient
-  workspace: VBIProviderWorkspace
 }
 
 export const createVBIProviderAgentKit = ({
   chartId,
+  insightId,
   reportId,
   ...clientOptions
 }: VBIProviderAgentKitOptions): VBIProviderAgentKit => {
   const client = createVBIProviderClient(clientOptions)
-  const workspace = createVBIProviderWorkspace({ chartId, client, reportId })
-  return { client, workspace }
+  return { client, ...createVBIProviderAgentAdapter({ chartId, client, insightId, reportId }) }
 }

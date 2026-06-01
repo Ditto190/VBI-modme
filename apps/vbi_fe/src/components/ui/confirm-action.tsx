@@ -32,7 +32,7 @@ export const ConfirmAction = ({
       <PopoverPrimitive.Portal container={typeof document === 'undefined' ? undefined : getPopoverPortalRoot()}>
         <PopoverPrimitive.Content
           align='end'
-          className='ui-confirm-popover z-[96] grid w-[min(240px,calc(100vw_-_24px))] gap-2 rounded-lg border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] p-2.5 text-[var(--vbi-text)] shadow-[0_18px_38px_color-mix(in_srgb,var(--vbi-text-strong)_14%,transparent)] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]'
+          className='ui-confirm-popover z-[96] grid w-[min(240px,calc(100vw_-_24px))] gap-2 rounded-lg border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] p-2.5 text-[var(--vbi-text)] shadow-[0_18px_38px_color-mix(in_srgb,var(--vbi-text-strong)_14%,transparent)] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]'
           side='bottom'
           sideOffset={8}
           onClick={(event) => event.stopPropagation()}

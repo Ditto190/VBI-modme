@@ -1,4 +1,5 @@
-import { Card, Empty, Flex, Space, Typography, theme } from 'antd'
+import { Empty, Flex, Space, Typography, theme } from 'antd'
+import { CompatCard as Card } from '../../components/antdCompat'
 import { VSeedRender } from '../../components/Render'
 import { useConfiguredVSeed } from '../../hooks'
 import { useTranslation } from '../../i18n'

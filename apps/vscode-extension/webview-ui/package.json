@@ -12,15 +12,15 @@
     "@duckdb/duckdb-wasm": "1.30.0",
     "@visactor/vbi": "workspace:*",
     "@visactor/vquery": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "streamlined": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "4.0.3",
+    "typescript": "6.0.2",
+    "vite": "4.4.5"
   }
 }

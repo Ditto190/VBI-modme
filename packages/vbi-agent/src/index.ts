@@ -1,30 +1,27 @@
-export { jsonSchema } from 'ai'
-export { createActivityLog } from './activity-log.js'
-export { createHistory } from './history.js'
-export { createDeepSeekModelProvider } from './model/deepseek-provider.js'
-export { createOpenAIModelProvider } from './model/openai-provider.js'
-export { createAgentRuntime } from './runtime.js'
-export { executeAgentScript } from './script/runtime.js'
-export { createBuilderTools } from './tools/builder-tools.js'
-export { createToolKit } from './tools/toolkit.js'
-export { createVBIBuilderAgent } from './builder-agent.js'
+export { estimateContextTokens } from '@earendil-works/pi-agent-core'
 export type {
-  AgentActivity,
-  AgentModelConfig,
-  AgentRuntimeController,
-  AgentState,
+  Agent,
+  AgentEvent,
+  AgentMessage,
+  AgentOptions,
   AgentTool,
-  AgentToolKit,
-  ModelProvider,
-  ModelStreamHandlers,
-  ModelTurnResult,
-  PendingToolCall,
-  ToolExecutionResult,
+  AgentToolResult,
+  StreamFn,
+} from '@earendil-works/pi-agent-core'
+export { createVBIResourceTools } from './tools/resource-tools'
+export { createBuilderWorkspace, createStaticBuilderSlot } from './workspace'
+export { VBIAgent } from './builder-agent'
+export { listVBIAgentSkills, readVBIAgentSkill } from './skills/skill-texts'
+export type { VBIAgentOptions } from './builder-agent'
+export type { VBIAgentSkillName } from './skills/skill-texts'
+export type { VBIResourceToolsOptions } from './tools/resource-tools'
+export type { VBIBuilderWorkspaceInput, VBIWorkspaceSlotInput } from './workspace'
+export type {
   VBIAgentWorkspace,
-  VBIBuilderAgentInput,
-  VBIWorkspaceConnector,
-  VBIWorkspaceConnectorRegistration,
-  VBIWorkspaceConnectors,
-  VBIWorkspaceSlot,
-  VBITool,
-} from './types/index.js'
+  VBIReferenceWorkspaceSlot,
+  VBIReportPageInput,
+  VBIReportWorkspaceSlot,
+  VBIResourceCreateInput,
+  VBIResourceKind,
+  VBIResourceSummary,
+} from './types/index'

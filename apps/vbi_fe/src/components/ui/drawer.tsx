@@ -87,7 +87,7 @@ export const DrawerContent = forwardRef<HTMLElement, DrawerContentProps>(
             <section
               ref={ref}
               className={cn(
-                'ui-drawer-content flex flex-col overflow-hidden border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] text-[var(--vbi-text)] shadow-[var(--vbi-shadow)] will-change-[transform,opacity] data-[direction=bottom]:max-h-[min(85dvh,720px)] data-[direction=bottom]:w-[min(calc(100vw_-_32px),1480px)] data-[direction=bottom]:rounded-t-lg data-[direction=bottom]:animate-[vbi-drawer-slide-bottom_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=left]:h-dvh data-[direction=left]:w-[92vw] data-[direction=left]:max-w-[1480px] data-[direction=left]:animate-[vbi-drawer-slide-left_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=right]:h-dvh data-[direction=right]:w-[92vw] data-[direction=right]:max-w-[1480px] data-[direction=right]:animate-[vbi-drawer-slide-right_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=top]:max-h-[min(85dvh,720px)] data-[direction=top]:w-[min(calc(100vw_-_32px),1480px)] data-[direction=top]:rounded-b-lg data-[direction=top]:animate-[vbi-drawer-slide-top_var(--vbi-motion-slow)_var(--vbi-ease-spring)]',
+                'ui-drawer-content flex flex-col overflow-hidden border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] text-[var(--vbi-text)] shadow-[var(--vbi-shadow)] will-change-[transform,opacity] data-[direction=bottom]:max-h-[min(85dvh,720px)] data-[direction=bottom]:w-[min(calc(100vw_-_32px),1480px)] data-[direction=bottom]:rounded-t-lg data-[direction=bottom]:animate-[vbi-drawer-slide-bottom_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=left]:h-dvh data-[direction=left]:w-[92vw] data-[direction=left]:max-w-[1480px] data-[direction=left]:animate-[vbi-drawer-slide-left_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=right]:h-dvh data-[direction=right]:w-[92vw] data-[direction=right]:max-w-[1480px] data-[direction=right]:animate-[vbi-drawer-slide-right_var(--vbi-motion-slow)_var(--vbi-ease-spring)] data-[direction=top]:max-h-[min(85dvh,720px)] data-[direction=top]:w-[min(calc(100vw_-_32px),1480px)] data-[direction=top]:rounded-b-lg data-[direction=top]:animate-[vbi-drawer-slide-top_var(--vbi-motion-slow)_var(--vbi-ease-spring)]',
                 className,
               )}
               data-direction={direction}
@@ -112,7 +112,7 @@ DrawerContent.displayName = 'DrawerContent'
 export const DrawerHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'ui-drawer-header flex shrink-0 items-center justify-between gap-3 border-b border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] px-3.5 py-3',
+      'ui-drawer-header flex shrink-0 items-center justify-between gap-3 border-b border-[var(--vbi-border)] bg-[var(--vbi-secondary)] px-3.5 py-3',
       className,
     )}
     {...props}
@@ -122,7 +122,7 @@ export const DrawerHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElem
 export const DrawerFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'ui-drawer-footer flex shrink-0 justify-end gap-2 border-t border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] px-3.5 py-3',
+      'ui-drawer-footer flex shrink-0 justify-end gap-2 border-t border-[var(--vbi-border)] bg-[var(--vbi-secondary)] px-3.5 py-3',
       className,
     )}
     {...props}
@@ -131,7 +131,7 @@ export const DrawerFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElem
 
 export const DrawerBody = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('ui-drawer-body min-h-0 flex-auto overflow-auto bg-[var(--vbi-surface-solid)] p-3.5', className)}
+    className={cn('ui-drawer-body min-h-0 flex-auto overflow-auto bg-[var(--vbi-secondary)] p-3.5', className)}
     {...props}
   />
 )

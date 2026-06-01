@@ -15,8 +15,8 @@ The main path for this topic has converged to:
 2. Page manages insight: `apps/vbi_fe/src/services/insightApi.ts` calls only `listInsights / insight(id)` through the SDK.
 3. Page manages report: `apps/vbi_fe/src/services/reportApi.ts` calls only `listReports / report(id)` through the SDK.
 4. Page opens report / chart / insight builder: `apps/vbi_fe/src/hooks/useCollaborativeBuilder.ts`.
-5. CLI manages three resource types: `apps/vbi_cli/src/chart-command.ts`, `apps/vbi_cli/src/insight-command.ts`, `apps/vbi_cli/src/report-command.ts`.
-6. CLI orchestrates report page: `apps/vbi_cli/src/report-command.ts`.
+5. CLI manages three resource types: `apps/vbi_tui/src/chart-command.ts`, `apps/vbi_tui/src/insight-command.ts`, `apps/vbi_tui/src/report-command.ts`.
+6. CLI orchestrates report page: `apps/vbi_tui/src/report-command.ts`.
 7. Node.js script opens Builder through SDK: `apps/packages/vbi-provider/README.md`.
 8. Builder collaboration path: `apps/packages/vbi-provider/src/remote-collaboration.ts` connects to Hocuspocus through session metadata.
 9. REST does not leak `Bytes`: `apps/vbi_be/src/chart/chart.controller.ts`, `apps/vbi_be/src/insight/insight.controller.ts`, `apps/vbi_be/src/report/report.controller.ts`.
@@ -38,10 +38,10 @@ pnpm --filter=vbi_be run typecheck
 pnpm --filter=vbi_fe run test
 pnpm --filter=vbi_fe run lint
 pnpm --filter=vbi_fe run typecheck
-pnpm --filter=vbi_cli run test
-pnpm --filter=vbi_cli run build
-pnpm --filter=vbi_cli run lint
-pnpm --filter=vbi_cli run typecheck
+pnpm --filter=vbi_tui run test
+pnpm --filter=vbi_tui run build
+pnpm --filter=vbi_tui run lint
+pnpm --filter=vbi_tui run typecheck
 pnpm run lint
 pnpm run typecheck
 ```
@@ -52,11 +52,11 @@ Docker integration validation that passed:
 docker compose -f docker/docker-compose.dev.yml up --build -d
 curl http://localhost:3000
 curl http://localhost:3030/api/v1/charts
-node apps/vbi_cli/dist/cli.js chart list
-node apps/vbi_cli/dist/cli.js chart create --name AcceptanceChart-20260409
-node apps/vbi_cli/dist/cli.js report create --name AcceptanceCliReport-20260409
-node apps/vbi_cli/dist/cli.js report get <reportId>
-node apps/vbi_cli/dist/cli.js report snapshot <reportId>
+node apps/vbi_tui/dist/cli.js chart list
+node apps/vbi_tui/dist/cli.js chart create --name AcceptanceChart-20260409
+node apps/vbi_tui/dist/cli.js report create --name AcceptanceCliReport-20260409
+node apps/vbi_tui/dist/cli.js report get <reportId>
+node apps/vbi_tui/dist/cli.js report snapshot <reportId>
 ```
 
 SDK runtime validation that passed:
@@ -73,17 +73,17 @@ Real issues fixed during integration:
 - `remote-collaboration.ts` did not call `provider.attach()` when using an external `websocketProvider`, causing the websocket to connect while the provider never synchronized.
 - `remote-collaboration.ts` had a listener race in `waitForSync`; it has been replaced with a race-free implementation.
 - `remote-report-provider.ts` projected the DTO for report page orchestration incorrectly. The backend returned `pages`, while the SDK previously read `dsl.pages`.
-- `vbi_cli` explicitly loads the SDK CJS entry in the Node runtime to avoid ESM dependency-chain interference on the CLI management-plane path.
+- `vbi_tui` explicitly loads the SDK CJS entry in the Node runtime to avoid ESM dependency-chain interference on the CLI management-plane path.
 
 Recommended integration order:
 
 ```bash
 pnpm --filter=vbi_be run start:dev
 pnpm --filter=vbi_fe run dev
-pnpm --filter=vbi_cli run build
-node apps/vbi_cli/dist/cli.js chart create --name Revenue
-node apps/vbi_cli/dist/cli.js report create --name Review
-node apps/vbi_cli/dist/cli.js report page reorder <reportId> --page-ids <pageIds>
+pnpm --filter=vbi_tui run build
+node apps/vbi_tui/dist/cli.js chart create --name Revenue
+node apps/vbi_tui/dist/cli.js report create --name Review
+node apps/vbi_tui/dist/cli.js report page reorder <reportId> --page-ids <pageIds>
 ```
 
 ## Exit Check

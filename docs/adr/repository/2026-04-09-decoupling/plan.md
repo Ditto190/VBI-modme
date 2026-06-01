@@ -14,7 +14,7 @@ After completion, the system should have:
 - Provider can directly return the corresponding Builder.
 - The backend is clearly split into management plane and data plane.
 - `vbi_fe` accesses resources through SDK rather than page-private logic.
-- A new `vbi_cli` acts as a command-line consumer of SDK.
+- A new `vbi_tui` acts as a command-line consumer of SDK.
 
 ## Scope
 
@@ -24,7 +24,7 @@ Includes:
 - `packages/vbi`
 - `apps/vbi_be`
 - `apps/vbi_fe`
-- `apps/vbi_cli`
+- `apps/vbi_tui`
 
 Does not include:
 
@@ -72,7 +72,7 @@ Proceed in this order:
 2. Converge backend management-plane / data-plane layering.
 3. Implement SDK remote Provider runtime.
 4. Connect `vbi_fe` to SDK.
-5. Connect `vbi_cli` to SDK.
+5. Connect `vbi_tui` to SDK.
 6. Perform integration acceptance and documentation examples.
 
 Reasons:
@@ -188,7 +188,7 @@ Blockers:
 
 - depends on SDK runtime from Step 3
 
-### Step 5: Create `apps/vbi_cli` As A Command-Line SDK Consumer
+### Step 5: Create `apps/vbi_tui` As A Command-Line SDK Consumer
 
 Goal:
 
@@ -196,7 +196,7 @@ Goal:
 
 Includes:
 
-- Create `apps/vbi_cli`.
+- Create `apps/vbi_tui`.
 - Design the first command set:
   - `chart create/get/update/remove`
   - `insight create/get/update/remove`
@@ -281,6 +281,6 @@ This topic is complete only when all of the following are true:
 2. The three Provider boundaries are clear and can directly return Builder.
 3. The backend has completed management-plane / data-plane layering.
 4. `vbi_fe` uses SDK as the main path.
-5. `vbi_cli` can operate resources through SDK.
+5. `vbi_tui` can operate resources through SDK.
 6. Any JS runtime can connect resources through SDK.
 7. The business layer no longer leaks raw collaboration binary data.

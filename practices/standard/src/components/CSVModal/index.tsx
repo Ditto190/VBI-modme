@@ -1,7 +1,7 @@
 import { InboxOutlined } from '@ant-design/icons'
-import type { DatasetColumn } from '@visactor/vquery'
+import type { DatasetColumn, DataType } from '@visactor/vquery'
 import { Button, Input, message, Modal, Select, Space, Table, Typography, Upload } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, type ChangeEvent } from 'react'
 import { useTranslation } from '../../i18n'
 import { inferSchema, rowsToDataset } from '../../utils/dataset'
 import type { LocalRow } from '../../utils/localConnector'
@@ -9,6 +9,11 @@ import { parseCsv } from '../../utils/parseCsv'
 
 const { Dragger } = Upload
 const { Text } = Typography
+
+type DataTypeOption = {
+  label: string
+  value: DataType
+}
 
 interface CSVModalProps {
   open: boolean
@@ -72,7 +77,7 @@ export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm })
       render: (text: string, record: DatasetColumn, index: number) => (
         <Input
           value={text}
-          onChange={(e) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const newSchema = [...schema]
             newSchema[index].name = e.target.value
             setSchema(newSchema)
@@ -84,22 +89,24 @@ export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm })
       title: t('csvModalColType'),
       dataIndex: 'type',
       key: 'type',
-      render: (text: string, record: DatasetColumn, index: number) => (
-        <Select
+      render: (text: DatasetColumn['type'], record: DatasetColumn, index: number) => (
+        <Select<DataType>
           value={text}
           style={{ width: 120 }}
           onChange={(value) => {
             const newSchema = [...schema]
-            newSchema[index].type = value as DatasetColumn['type']
+            newSchema[index].type = value
             setSchema(newSchema)
           }}
-          options={[
-            { label: t('csvModalTypeString'), value: 'string' },
-            { label: t('csvModalTypeNumber'), value: 'number' },
-            { label: t('csvModalTypeDate'), value: 'date' },
-            { label: t('csvModalTypeDateTime'), value: 'datetime' },
-            { label: t('csvModalTypeTimestamp'), value: 'timestamp' },
-          ]}
+          options={
+            [
+              { label: t('csvModalTypeString'), value: 'string' },
+              { label: t('csvModalTypeNumber'), value: 'number' },
+              { label: t('csvModalTypeDate'), value: 'date' },
+              { label: t('csvModalTypeDateTime'), value: 'datetime' },
+              { label: t('csvModalTypeTimestamp'), value: 'timestamp' },
+            ] satisfies DataTypeOption[]
+          }
         />
       ),
     },

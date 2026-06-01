@@ -65,7 +65,7 @@ export const Collaborators = ({ provider }: CollaboratorsProps) => {
             .map((user) => (
               <Tooltip title={user.name} key={user.id}>
                 <span
-                  className='flex h-8 w-8 items-center justify-center rounded-full border-2 border-[var(--vbi-surface-solid)] text-xs font-semibold text-white shadow-sm'
+                  className='flex h-8 w-8 items-center justify-center rounded-full border-2 border-[var(--vbi-secondary)] text-xs font-semibold text-white shadow-sm'
                   style={{ backgroundColor: user.color }}
                 >
                   {user.name[0]?.toUpperCase()}

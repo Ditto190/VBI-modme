@@ -13,8 +13,6 @@ export type ReportStagePage = {
 export type ReportRendererProps = {
   activePageId: string
   emptyDescription: string
-  onEditChart: (pageId: string) => void
-  onEditInsight: (pageId: string) => void
   onPageRef: (pageId: string) => (node: HTMLDivElement | null) => void
   pages: ReportStagePage[]
   stageRef: RefObject<HTMLDivElement | null>

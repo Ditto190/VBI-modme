@@ -1,5 +1,5 @@
 import { Input, Select } from 'antd'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ChangeEvent } from 'react'
 import { SearchOutlined, TableOutlined } from '@ant-design/icons'
 import { FieldGroup } from './FieldGroup'
 import type { ProfessionalLabels } from 'src/config/labels'
@@ -40,7 +40,7 @@ export const FieldBrowser = (props: FieldBrowserProps) => {
         placeholder={props.labels.search}
         prefix={<SearchOutlined />}
         value={keyword}
-        onChange={(event) => setKeyword(event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setKeyword(event.target.value)}
       />
       <div className='pro-field-scroll'>
         <FieldGroup

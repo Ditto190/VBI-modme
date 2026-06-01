@@ -10,17 +10,4 @@ export default defineConfig({
   coverage: {
     enabled: false,
   },
-  tools: {
-    rspack: {
-      module: {
-        rules: [
-          {
-            resourceQuery: /raw/,
-            test: /\.md$/,
-            type: 'asset/source',
-          },
-        ],
-      },
-    },
-  },
 })

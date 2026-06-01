@@ -63,35 +63,29 @@ describe('manage resource edit stores', () => {
     expect(resourceApi.renameResource).toHaveBeenCalledWith('report', 'report-1', 'Q1 Report Updated')
   })
 
-  test('opens and renames chart editor sessions', async () => {
+  test('renames chart resources from route editor state', async () => {
     useManageChartsStore.setState({
       items: [createResourceItem('chart-1', 'Old Chart'), createResourceItem('chart-2', 'Revenue Chart')],
-      selectedId: 'chart-1',
+      editorName: 'Revenue Chart Updated',
+      selectedId: 'chart-2',
       userName: 'user-1',
     })
 
-    await useManageChartsStore.getState().openDetail('chart-2')
-    useManageChartsStore.getState().setEditorName('Revenue Chart Updated')
     await useManageChartsStore.getState().renameSelected()
 
-    expect(releaseResourceSession).toHaveBeenCalledWith('chart', 'chart-1')
-    expect(connectResourceSession).toHaveBeenCalledWith('chart', 'chart-2', 'user-1')
     expect(resourceApi.renameResource).toHaveBeenCalledWith('chart', 'chart-2', 'Revenue Chart Updated')
   })
 
-  test('opens and renames insight editor sessions', async () => {
+  test('renames insight resources from route editor state', async () => {
     useManageInsightsStore.setState({
       items: [createResourceItem('insight-1', 'Old Insight'), createResourceItem('insight-2', 'Insight')],
-      selectedId: 'insight-1',
+      editorName: 'Insight Updated',
+      selectedId: 'insight-2',
       userName: 'user-1',
     })
 
-    await useManageInsightsStore.getState().openDetail('insight-2')
-    useManageInsightsStore.getState().setEditorName('Insight Updated')
     await useManageInsightsStore.getState().renameSelected()
 
-    expect(releaseResourceSession).toHaveBeenCalledWith('insight', 'insight-1')
-    expect(connectResourceSession).toHaveBeenCalledWith('insight', 'insight-2', 'user-1')
     expect(insightApi.updateInsight).toHaveBeenCalledWith('insight-2', {
       name: 'Insight Updated',
     })

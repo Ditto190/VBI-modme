@@ -17,17 +17,4 @@ export default defineConfig({
   output: {
     sourceMap: true,
   },
-  tools: {
-    rspack: {
-      module: {
-        rules: [
-          {
-            resourceQuery: /raw/,
-            test: /\.md$/,
-            type: 'asset/source',
-          },
-        ],
-      },
-    },
-  },
 })

@@ -1,4 +1,5 @@
-import { Card } from 'antd'
+import { Card, type CardProps } from 'antd'
+import type { ComponentType } from 'react'
 import { FilterList } from './FilterList'
 import { FilterActions, FilterTitle } from './FilterCardParts'
 import type { FilterItem, RootOperator } from './filterTypes'
@@ -14,9 +15,10 @@ type FilterPanelCardProps = {
   onEdit: (index: number) => void
   onRootOperatorChange?: (operator: RootOperator) => void
 }
+const AntCard = Card as unknown as ComponentType<CardProps>
 
 export const FilterPanelCard = (props: FilterPanelCardProps) => (
-  <Card
+  <AntCard
     className='pro-filter-card'
     size='small'
     title={<FilterTitle text={props.title} />}
@@ -35,5 +37,5 @@ export const FilterPanelCard = (props: FilterPanelCardProps) => (
       onDelete={props.onDelete}
       onEdit={props.onEdit}
     />
-  </Card>
+  </AntCard>
 )

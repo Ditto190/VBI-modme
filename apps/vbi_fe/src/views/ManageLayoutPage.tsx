@@ -1,19 +1,44 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { BarChart3, FileText, Lightbulb } from '../components/ui/icons'
+import { BarChart3, FileText, FolderKanban, Lightbulb, PanelLeftClose, Plus } from '../components/ui/icons'
+import { Tooltip } from '../components/ui/tooltip'
 import { useTranslation } from '../i18n'
+import { cn } from '../lib/utils'
+import { useAgentConversationsStore } from '../stores/agent-conversations.store'
 import { useNavigationStore } from '../stores/navigation.store'
+import { AgentConversationSidebarSection } from './agent/AgentConversationSidebarSection'
+import {
+  isAgentRoute,
+  isNewConversationRoute,
+  matchRouteBranch,
+  readAgentConversationRouteId,
+} from './manage-sidebar-routes'
+import { ManageRouteChromeProvider, useManageRouteChromeState } from './ManageRouteChrome'
+import { ManageRouteHeader } from './ManageRouteHeader'
+import { ManageSidebarButton, ManageSidebarGroup, manageSidebarChildListClassName } from './ManageSidebarNav'
 import { ManagePreferences } from './manage-resource/ManagePreferences'
 
-const navButtonClassName =
-  'group flex h-8 w-full origin-left cursor-pointer items-center gap-2 rounded-md border border-transparent bg-transparent px-2.5 text-left text-[13px] font-medium text-[var(--vbi-text-muted)] transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--vbi-ease-spring)] hover:translate-x-0.5 hover:bg-[var(--vbi-hover-bg)] active:translate-x-0 active:scale-[0.985] data-[active=true]:bg-[var(--vbi-active-bg)] data-[active=true]:text-[var(--vbi-text-strong)] data-[active=true]:shadow-[inset_2px_0_0_var(--vbi-primary)] max-[720px]:w-auto max-[720px]:shrink-0 max-[720px]:origin-center max-[720px]:hover:translate-x-0 max-[720px]:hover:-translate-y-0.5'
+const hideSidebarButtonClassName =
+  'grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent text-[var(--vbi-text-muted)] transition-[background-color,border-color,color,box-shadow] duration-150 ease-out hover:border-[var(--vbi-border)] hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-primary)]/35'
 
 export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
+  return (
+    <ManageRouteChromeProvider>
+      <ManageLayoutContent>{children}</ManageLayoutContent>
+    </ManageRouteChromeProvider>
+  )
+}
+
+const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
   const pathname = useNavigationStore((state) => state.pathname)
   const go = useNavigationStore((state) => state.go)
+  const clearActiveConversation = useAgentConversationsStore((state) => state.clearActiveConversation)
+  const conversations = useAgentConversationsStore((state) => state.conversations)
+  const routeChrome = useManageRouteChromeState()
   const { t } = useTranslation()
-  const navItems = [
+  const resourceNavItems = [
     {
       href: '/manage/reports',
       icon: <FileText className='h-4 w-4' />,
@@ -30,40 +55,124 @@ export const ManageLayoutPage = ({ children }: { children: ReactNode }) => {
       label: t('nav.insights'),
     },
   ]
+  const activeResourceHref = resourceNavItems.find((item) => matchRouteBranch(pathname, item.href))?.href ?? ''
+  const isResourcePath = Boolean(activeResourceHref)
+  const [resourcesExpanded, setResourcesExpanded] = useState(isResourcePath)
+  const [sidebarHidden, setSidebarHidden] = useState(false)
+  const isAgentPath = isAgentRoute(pathname)
+  const isNewConversationPath = isNewConversationRoute(pathname)
+  const routeConversationId = readAgentConversationRouteId(pathname)
+  const routeConversation = routeConversationId
+    ? conversations.find((conversation) => conversation.id === routeConversationId)
+    : undefined
+  const currentConversationTitle = routeConversationId
+    ? (routeConversation?.title ?? t('nav.newConversation'))
+    : t('nav.newConversation')
+  const currentPageLabel = isAgentPath
+    ? currentConversationTitle
+    : (resourceNavItems.find((item) => item.href === activeResourceHref)?.label ?? '')
+  const resourceDetailBackHref = (() => {
+    const [root, resource, id, ...rest] = pathname.split('/').filter(Boolean)
+    if (root !== 'manage' || !id || rest.length) return ''
+    if (!['charts', 'insights', 'reports'].includes(resource ?? '')) return ''
+    return `/manage/${resource}`
+  })()
+  const headerTitle = routeChrome.title ?? currentPageLabel
+  const headerBackLabel = routeChrome.backLabel ?? (resourceDetailBackHref ? t('common.back') : undefined)
+  const handleHeaderBack = routeChrome.onBack ?? (resourceDetailBackHref ? () => go(resourceDetailBackHref) : undefined)
+
+  useEffect(() => {
+    if (isResourcePath) {
+      setResourcesExpanded(true)
+    }
+  }, [isResourcePath])
+
+  const handleNewConversation = () => {
+    clearActiveConversation()
+    go('/agent')
+  }
 
   return (
-    <div className='flex min-h-screen bg-[var(--vbi-bg-solid)] text-[var(--vbi-text)] transition-colors duration-300 max-[720px]:flex-col'>
-      <aside className='vbi-motion-sidebar sticky top-0 flex h-screen w-52 shrink-0 flex-col border-r border-[var(--vbi-border)] bg-[var(--vbi-sider)] transition-colors duration-300 max-[720px]:relative max-[720px]:h-auto max-[720px]:w-full max-[720px]:border-r-0 max-[720px]:border-b'>
-        <div className='flex flex-col gap-1 px-4 pb-3 pt-4 max-[720px]:pb-2.5'>
-          <div className='text-sm font-bold leading-none text-[var(--vbi-text-strong)]'>{t('app.brand.title')}</div>
-          <div className='text-[11px] text-[var(--vbi-text-muted)]'>{t('app.brand.meta')}</div>
+    <div className='flex min-h-screen bg-[var(--vbi-bg)] text-[var(--vbi-text)] transition-colors duration-300 max-[720px]:flex-col'>
+      <aside
+        aria-hidden={sidebarHidden}
+        className={cn(
+          'vbi-static-sidebar sticky top-0 flex h-screen w-[300px] shrink-0 flex-col overflow-hidden border-r border-[var(--vbi-border)] bg-[var(--vbi-sider)] opacity-100 transition-[width,height,opacity,transform,border-color,background-color] duration-300 ease-out max-[720px]:relative max-[720px]:h-auto max-[720px]:w-full max-[720px]:border-r-0 max-[720px]:border-b',
+          sidebarHidden &&
+            'pointer-events-none w-0 -translate-x-2 border-r-0 opacity-0 max-[720px]:h-0 max-[720px]:w-full max-[720px]:-translate-y-2 max-[720px]:translate-x-0 max-[720px]:border-b-0',
+        )}
+        inert={sidebarHidden ? true : undefined}
+      >
+        <div className='flex h-11 w-[300px] shrink-0 items-center justify-between px-4 pt-3 max-[720px]:w-full'>
+          <div className='min-w-0 pl-1 text-[15px] font-semibold leading-8 text-[var(--vbi-text-strong)]'>VBI</div>
+          <Tooltip side='right' title='Hide Sidebar'>
+            <button
+              aria-label='Hide Sidebar'
+              className={hideSidebarButtonClassName}
+              type='button'
+              onClick={() => setSidebarHidden(true)}
+            >
+              <PanelLeftClose className='h-3.5 w-3.5' />
+            </button>
+          </Tooltip>
         </div>
         <nav
-          className='vbi-motion-stagger vbi-motion-sidebar-menu grid gap-1 px-2 max-[720px]:flex max-[720px]:gap-2 max-[720px]:overflow-x-auto max-[720px]:px-3 max-[720px]:pb-3'
+          className='grid w-[300px] shrink-0 gap-1 px-2 pt-1 max-[720px]:flex max-[720px]:w-full max-[720px]:gap-2 max-[720px]:overflow-x-auto max-[720px]:px-3 max-[720px]:pb-3 max-[720px]:pt-1'
           aria-label={t('app.nav.primary')}
         >
-          {navItems.map((item) => (
-            <button
-              key={item.href}
-              className={navButtonClassName}
-              data-active={pathname === item.href}
-              type='button'
-              onClick={() => go(item.href)}
-            >
-              <span className='grid h-4 w-4 shrink-0 place-items-center transition-transform duration-300 ease-[var(--vbi-ease-spring)] group-hover:scale-110 group-data-[active=true]:animate-[vbi-subtle-pop_var(--vbi-motion)_var(--vbi-ease-pop)] group-data-[active=true]:scale-110'>
-                {item.icon}
-              </span>
-              <span className='transition-transform duration-300 ease-[var(--vbi-ease-spring)] group-hover:translate-x-0.5 group-data-[active=true]:translate-x-0.5 max-[720px]:group-hover:translate-x-0'>
-                {item.label}
-              </span>
-            </button>
-          ))}
+          <ManageSidebarButton
+            active={isNewConversationPath}
+            icon={<Plus className='h-4 w-4' />}
+            onClick={handleNewConversation}
+          >
+            {t('nav.newConversation')}
+          </ManageSidebarButton>
+          <ManageSidebarGroup
+            active={isResourcePath && !resourcesExpanded}
+            expanded={resourcesExpanded}
+            icon={<FolderKanban className='h-4 w-4' />}
+            label={t('nav.resources')}
+            onToggle={() => setResourcesExpanded((expanded) => !expanded)}
+          >
+            <div className={manageSidebarChildListClassName}>
+              {resourceNavItems.map((item) => (
+                <ManageSidebarButton
+                  active={activeResourceHref === item.href}
+                  icon={item.icon}
+                  key={item.href}
+                  tabIndex={resourcesExpanded ? undefined : -1}
+                  onClick={() => go(item.href)}
+                >
+                  {item.label}
+                </ManageSidebarButton>
+              ))}
+            </div>
+          </ManageSidebarGroup>
         </nav>
-        <ManagePreferences />
+        <div className='flex min-h-0 w-[300px] flex-1 flex-col max-[720px]:w-full'>
+          <AgentConversationSidebarSection />
+          <ManagePreferences />
+        </div>
       </aside>
-      <main className='vbi-motion-presence w-full min-w-0 bg-transparent px-5 py-[18px] max-[720px]:w-screen max-[720px]:max-w-full max-[720px]:px-4 max-[720px]:py-4'>
-        {children}
-      </main>
+      <section className='flex h-screen min-w-0 flex-1 flex-col bg-[var(--vbi-bg)] transition-colors duration-300 max-[720px]:h-auto max-[720px]:min-h-0'>
+        <ManageRouteHeader
+          actions={routeChrome.actions}
+          rename={routeChrome.rename}
+          sidebarHidden={sidebarHidden}
+          title={headerTitle}
+          onBack={handleHeaderBack}
+          backLabel={headerBackLabel}
+          onShowSidebar={() => setSidebarHidden(false)}
+        />
+        <main
+          className={cn(
+            'vbi-motion-presence min-h-0 w-full min-w-0 flex-1 overflow-auto bg-transparent',
+            routeChrome.contentClassName,
+          )}
+        >
+          {children}
+        </main>
+      </section>
     </div>
   )
 }

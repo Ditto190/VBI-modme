@@ -12,11 +12,6 @@ export interface InsightCreateInput extends ResourceCreateInput {
   content?: string
 }
 
-export interface InsightUpdateInput {
-  content?: string
-  name?: string
-}
-
 export interface InsightResponse extends InsightSummary {
   content?: string
 }
@@ -33,6 +28,5 @@ export interface InsightProvider {
   getSummary(): Promise<InsightSummary>
   getDetail(): Promise<InsightDetail>
   snapshot(): Promise<ResourceSnapshot<VBIInsightDSL>>
-  update(input: InsightUpdateInput): Promise<InsightDetail>
   getReferences(): Promise<ReportReference[]>
 }

@@ -1,4 +1,5 @@
 import { Input, Modal } from 'antd'
+import type { ChangeEvent } from 'react'
 import type { VBIChartBuilder } from '@visactor/vbi'
 import type { MappedField } from 'src/types'
 import type { ProfessionalLabels } from 'src/config/labels'
@@ -14,7 +15,7 @@ export const openRenameModal = (builder: VBIChartBuilder, item: MappedField, lab
       <Input
         autoFocus
         defaultValue={alias}
-        onChange={(event) => {
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
           alias = event.target.value
         }}
       />

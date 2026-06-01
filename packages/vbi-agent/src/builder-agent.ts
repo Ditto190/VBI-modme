@@ -1,10 +1,26 @@
-import { createAgentRuntime } from './runtime.js'
-import { createBuilderTools } from './tools/builder-tools.js'
-import { createToolKit } from './tools/toolkit.js'
-import type { AgentRuntimeController, VBIBuilderAgentInput } from './types/index.js'
+import { Agent, type AgentOptions } from '@earendil-works/pi-agent-core'
+import { systemPrompt as defaultSystemPrompt } from './history'
+import { createVBIResourceTools } from './tools/resource-tools'
+import type { VBIAgentWorkspace } from './types/index'
 
-export const createVBIBuilderAgent = ({ model, tools = [], workspace }: VBIBuilderAgentInput): AgentRuntimeController =>
-  createAgentRuntime({
-    model,
-    tool: createToolKit([...createBuilderTools(workspace), ...tools]),
-  })
+type VBIAgentInitialState = Omit<NonNullable<AgentOptions['initialState']>, 'tools'>
+
+export interface VBIAgentOptions extends Omit<AgentOptions, 'initialState'> {
+  initialState?: VBIAgentInitialState
+}
+
+const createVBIAgentOptions = (options: VBIAgentOptions, workspace: VBIAgentWorkspace): AgentOptions => ({
+  ...options,
+  initialState: {
+    messages: [],
+    systemPrompt: defaultSystemPrompt,
+    tools: createVBIResourceTools({ workspace }),
+    ...options.initialState,
+  },
+})
+
+export class VBIAgent extends Agent {
+  constructor(options: VBIAgentOptions, workspace: VBIAgentWorkspace) {
+    super(createVBIAgentOptions(options, workspace))
+  }
+}

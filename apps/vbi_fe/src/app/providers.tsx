@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { NavigationBinder } from '../components/NavigationBinder'
 import { ToastViewport } from '../components/ui/toast'
 import {
@@ -19,7 +19,10 @@ type VbiAppProvidersProps = {
 }
 
 export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: VbiAppProvidersProps) => {
-  initializeAppPreferences({ locale: initialLocale, themeMode: initialThemeMode })
+  useState(() => {
+    initializeAppPreferences({ locale: initialLocale, themeMode: initialThemeMode })
+    return null
+  })
 
   const locale = useAppPreferencesStore((state) => state.locale)
   const themeMode = useAppPreferencesStore((state) => state.themeMode)
