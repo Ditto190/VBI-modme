@@ -21,7 +21,7 @@ export const ChartToolbar = (props: ChartToolbarProps) => (
       <span className='stream-row-count'>{`${props.rowCount} ${props.labels.rowCount}`}</span>
       <Popover
         content={<ChartSettings {...props} />}
-        getPopupContainer={(node) => node.closest('.stream-app') ?? document.body}
+        getPopupContainer={(node: HTMLElement) => node.closest('.stream-app') ?? document.body}
         placement='bottomRight'
         trigger='click'
       >

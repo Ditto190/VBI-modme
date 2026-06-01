@@ -103,7 +103,7 @@ export const FilterSlot = ({ builder, dsl, fields, kind, labels }: FilterSlotPro
         open={Boolean(draft)}
         placement='right'
         trigger='click'
-        onOpenChange={(open) => !open && setDraft(undefined)}
+        onOpenChange={(open: boolean) => !open && setDraft(undefined)}
       >
         <div
           className='stream-slot__box'
@@ -139,7 +139,7 @@ export const FilterSlot = ({ builder, dsl, fields, kind, labels }: FilterSlotPro
             showSearch
             value={undefined}
             options={fields.map((field) => ({ label: field.name, value: field.name }))}
-            onChange={(fieldName) => {
+            onChange={(fieldName: string) => {
               const field = fields.find((item) => item.name === fieldName)
               if (field) setDraft(createDraft(kind, field))
             }}

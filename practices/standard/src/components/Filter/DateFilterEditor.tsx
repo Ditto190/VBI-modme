@@ -2,11 +2,11 @@ import React, { useCallback } from 'react'
 import { DatePicker, InputNumber, Select, Space } from 'antd'
 import type { DatePickerProps, GetProps } from 'antd'
 import type { VBIWhereDatePredicate } from '@visactor/vbi'
+import { CompatSelectOption as Option } from '../antdCompat'
 import { useTranslation } from '../../i18n'
 import { formatPickerDate, fromPeriodPickerDate, toPeriodPickerValue, toRangePickerValue } from './datePickerValueUtils'
 import { getDefaultDatePredicate } from './dateFilterUtils'
 
-const { Option } = Select
 const { RangePicker } = DatePicker
 
 interface DateFilterEditorProps {
@@ -128,7 +128,7 @@ const RelativeFields: React.FC<{
         size='small'
         variant='filled'
         value={value.mode}
-        onChange={(mode) => onChange({ ...value, mode })}
+        onChange={(mode: RelativeValue['mode']) => onChange({ ...value, mode })}
         style={{ width: 80 }}
       >
         {RELATIVE_MODES.map((m) => (
@@ -142,7 +142,7 @@ const RelativeFields: React.FC<{
         variant='filled'
         min={1}
         value={value.amount}
-        onChange={(v) => v != null && onChange({ ...value, amount: v })}
+        onChange={(v: number | string | null) => v != null && onChange({ ...value, amount: Number(v) })}
         style={{ width: 64 }}
         controls={false}
       />
@@ -168,7 +168,7 @@ const CurrentFields: React.FC<{
         size='small'
         variant='filled'
         value={value.offset ?? 0}
-        onChange={(v) => onChange({ ...value, offset: v ?? 0 })}
+        onChange={(v: number | string | null) => onChange({ ...value, offset: v == null ? 0 : Number(v) })}
         style={{ width: 64 }}
         controls={false}
         placeholder={t('dateFilterOffsetPlaceholder')}

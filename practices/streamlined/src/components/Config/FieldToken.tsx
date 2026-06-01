@@ -6,6 +6,8 @@ import type { SchemaField } from 'src/types'
 
 const measureAggregates = ['sum', 'count', 'countDistinct', 'avg', 'min', 'max', 'median'] as const
 const dateAggregates = ['toYear', 'toQuarter', 'toMonth', 'toWeek', 'toDay'] as const
+type MeasureAggregate = (typeof measureAggregates)[number]
+type DateAggregate = (typeof dateAggregates)[number] | 'raw'
 
 type FieldTokenProps = {
   builder: VBIChartBuilder
@@ -22,7 +24,9 @@ const AggregateSelect = ({ builder, item, role }: AggregateSelectProps) => {
   return (
     <Select
       className='stream-token__select'
-      onChange={(func) => builder.measures.update(item.id, (node) => node.setAggregate({ func: func as any }))}
+      onChange={(func: MeasureAggregate) =>
+        builder.measures.update(item.id, (node) => node.setAggregate({ func: func as any }))
+      }
       options={measureAggregates.map((func) => ({ label: func, value: func }))}
       size='small'
       value={(item as VBIMeasure).aggregate?.func ?? 'sum'}
@@ -36,7 +40,7 @@ const DateSelect = ({ builder, fieldMeta, item, labels, role }: FieldTokenProps)
   return (
     <Select
       className='stream-token__select'
-      onChange={(func) => {
+      onChange={(func: DateAggregate) => {
         builder.dimensions.update(item.id, (node) =>
           func === 'raw' ? node.clearAggregate() : node.setAggregate({ func: func as (typeof dateAggregates)[number] }),
         )

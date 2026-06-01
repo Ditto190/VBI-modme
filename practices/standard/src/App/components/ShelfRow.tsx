@@ -1,7 +1,5 @@
 import { Flex, theme } from 'antd'
 
-type FlexChildren = Parameters<typeof Flex>[0]['children']
-
 export const ShelfRow = ({
   label,
   shelf,
@@ -48,7 +46,7 @@ export const ShelfRow = ({
         >
           {label}
         </div>
-        {operator as FlexChildren}
+        {operator}
       </Flex>
       <Flex
         style={{
@@ -58,7 +56,7 @@ export const ShelfRow = ({
           minWidth: 0,
         }}
       >
-        {shelf as FlexChildren}
+        {shelf}
       </Flex>
     </Flex>
   )

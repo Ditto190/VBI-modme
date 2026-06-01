@@ -1,6 +1,6 @@
 import { CalendarOutlined, FontSizeOutlined, NumberOutlined, SearchOutlined, TableOutlined } from '@ant-design/icons'
 import { Input, Select } from 'antd'
-import { useState } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import { writeDraggedField } from 'src/utils/dragDrop'
 import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
@@ -83,7 +83,7 @@ export const FieldListPanel = ({ fields, labels, onAddField, sourceName }: Field
         placeholder={labels.search}
         prefix={<SearchOutlined />}
         value={keyword}
-        onChange={(event) => setKeyword(event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setKeyword(event.target.value)}
       />
       <div className='stream-field-scroll'>
         <FieldGroup fields={metrics} title={labels.metrics} onAddField={onAddField} />

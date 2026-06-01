@@ -2,7 +2,7 @@ import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CloseOutlined, DownOutlined } from '@ant-design/icons'
 import { Popover, Typography, theme } from 'antd'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
 import {
   ShelfItemDropZones,
   createShelfItemDragId,
@@ -225,7 +225,7 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
           </Typography.Text>
           <span style={getRemoveIconWrapperStyle(isHovered)}>
             <CloseOutlined
-              onClick={(event) => {
+              onClick={(event: MouseEvent<HTMLElement>) => {
                 event.stopPropagation()
                 onRemove(item.id)
               }}
@@ -234,10 +234,10 @@ const FilterShelfTag = <TItem extends FilterShelfItem>(props: {
                 cursor: 'pointer',
                 color: REMOVE_ICON_DEFAULT_COLOR,
               }}
-              onMouseEnter={(event) => {
+              onMouseEnter={(event: MouseEvent<HTMLElement>) => {
                 event.currentTarget.style.color = REMOVE_ICON_HOVER_COLOR
               }}
-              onMouseLeave={(event) => {
+              onMouseLeave={(event: MouseEvent<HTMLElement>) => {
                 event.currentTarget.style.color = REMOVE_ICON_DEFAULT_COLOR
               }}
             />

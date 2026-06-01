@@ -1,7 +1,7 @@
 import { InboxOutlined } from '@ant-design/icons'
 import type { DatasetColumn } from '@visactor/vquery'
 import { Button, Input, message, Modal, Select, Space, Table, Typography, Upload } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, type ChangeEvent } from 'react'
 import { useTranslation } from '../../i18n'
 import { inferSchema, rowsToDataset } from '../../utils/dataset'
 import type { LocalRow } from '../../utils/localConnector'
@@ -72,7 +72,7 @@ export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm })
       render: (text: string, record: DatasetColumn, index: number) => (
         <Input
           value={text}
-          onChange={(e) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const newSchema = [...schema]
             newSchema[index].name = e.target.value
             setSchema(newSchema)
@@ -88,7 +88,7 @@ export const CSVModal: React.FC<CSVModalProps> = ({ open, onCancel, onConfirm })
         <Select
           value={text}
           style={{ width: 120 }}
-          onChange={(value) => {
+          onChange={(value: DatasetColumn['type']) => {
             const newSchema = [...schema]
             newSchema[index].type = value as DatasetColumn['type']
             setSchema(newSchema)

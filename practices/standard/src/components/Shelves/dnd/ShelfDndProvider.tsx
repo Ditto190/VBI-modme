@@ -21,8 +21,6 @@ type ShelfDndContextValue = {
 
 const ShelfDndContext = createContext<ShelfDndContextValue | undefined>(undefined)
 
-type DndContextChildren = Parameters<typeof DndContext>[0]['children']
-
 export const ShelfDndProvider = ({ children }: { children: React.ReactNode }) => {
   const { token } = theme.useToken()
   const [activeDrag, setActiveDrag] = useState<ShelfDragData | null>(null)
@@ -137,7 +135,7 @@ export const ShelfDndProvider = ({ children }: { children: React.ReactNode }) =>
         onDragEnd={handleDragEnd}
         onDragCancel={() => setActiveDrag(null)}
       >
-        {children as DndContextChildren}
+        {children}
         <DragOverlay dropAnimation={null}>
           {activeDrag ? (
             <div

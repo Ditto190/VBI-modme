@@ -94,7 +94,7 @@ export const ConfigPanel = (props: ConfigPanelProps) => {
                 ),
                 value: type,
               }))}
-            onChange={(type) => builder.chartType.changeChartType(type)}
+            onChange={(type: string) => builder.chartType.changeChartType(type)}
           />
         </ConfigSection>
         <ConfigSection

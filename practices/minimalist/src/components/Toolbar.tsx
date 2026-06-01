@@ -22,7 +22,12 @@ const Settings = ({ builder, dsl, hideLocale, hideTheme, labels }: ToolbarProps)
   <div className='mini-settings'>
     <label>
       <span>{labels.limit}</span>
-      <InputNumber min={1} size='small' value={readLimit(dsl.limit)} onChange={(v) => v && builder.limit.setLimit(v)} />
+      <InputNumber
+        min={1}
+        size='small'
+        value={readLimit(dsl.limit)}
+        onChange={(value: number | null) => value && builder.limit.setLimit(value)}
+      />
     </label>
     {!hideLocale && (
       <label>
@@ -31,7 +36,7 @@ const Settings = ({ builder, dsl, hideLocale, hideTheme, labels }: ToolbarProps)
           options={DEMO_SUPPORTED_LOCALES.map((value) => ({ label: DEMO_LOCALE_LABELS[value], value }))}
           size='small'
           value={(dsl.locale as DemoLocale | undefined) ?? 'zh-CN'}
-          onChange={(value) => builder.locale.setLocale(value)}
+          onChange={(value: DemoLocale) => builder.locale.setLocale(value)}
         />
       </label>
     )}
@@ -39,7 +44,7 @@ const Settings = ({ builder, dsl, hideLocale, hideTheme, labels }: ToolbarProps)
       <label>
         <span>{labels.theme}</span>
         <Segmented<DemoTheme>
-          onChange={(value) => builder.theme.setTheme(value)}
+          onChange={(value: DemoTheme) => builder.theme.setTheme(value)}
           options={[
             { label: labels.themeLight, value: 'light' },
             { label: labels.themeDark, value: 'dark' },
@@ -63,7 +68,7 @@ export const Toolbar = (props: ToolbarProps) => (
           .filter((type) => !HIDDEN_CHART_TYPE_ENTRIES.has(type))
           .map((type) => ({ label: type, value: type }))}
         value={props.dsl.chartType}
-        onChange={(type) => props.builder.chartType.changeChartType(type)}
+        onChange={(type: string) => props.builder.chartType.changeChartType(type)}
       />
     </div>
     <div className='mini-toolbar__actions'>

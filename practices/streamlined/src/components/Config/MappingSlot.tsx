@@ -101,7 +101,7 @@ export const MappingSlot = ({ builder, dimensions, fields, labels, measures, slo
           showSearch
           value={undefined}
           options={acceptedFields.map((field) => ({ label: field.name, value: field.name }))}
-          onChange={(fieldName) => {
+          onChange={(fieldName: string) => {
             const field = fields.find((item) => item.name === fieldName)
             if (field) addOrMoveField(builder, field, slot)
           }}

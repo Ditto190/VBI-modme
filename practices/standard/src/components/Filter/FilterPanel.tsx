@@ -34,9 +34,9 @@ import {
 import { DateFilterEditor } from './DateFilterEditor'
 import { getDefaultDatePredicate } from './dateFilterUtils'
 import type { VBIWhereDatePredicate } from '@visactor/vbi'
+import { CompatSelectOption as Option } from '../antdCompat'
 import { useTranslation } from '../../i18n'
 
-const { Option = Select.Option } = Select
 const { Text } = Typography
 
 const POPOVER_TEXT_BUTTON_STYLE: React.CSSProperties = {
@@ -389,7 +389,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             placeholder={t('filtersFormSelectField')}
             showSearch
             variant='filled'
-            onChange={(fieldName) => {
+            onChange={(fieldName: string) => {
               const nextField = fields.find((f) => f.name === fieldName)
               const nextFieldRole = nextField?.role ?? 'dimension'
               if (nextField?.isDate) {
