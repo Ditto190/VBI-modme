@@ -4,3 +4,19 @@
 .rp-playground-horizontal {
   height: calc(100vh - 72px) !important;
 }
+
+.starter-page .vbi-react-builder-layout__body > aside > div {
+  grid-template-rows: minmax(0, 0.8fr) minmax(0, 1.2fr) !important;
+}
+
+.starter-page .vbi-react-builder-layout__body > aside > div > :last-child,
+.starter-page .vbi-react-filter-panel,
+.starter-page .vbi-react-filter-panel__sections {
+  min-height: 0 !important;
+}
+
+.starter-page .vbi-react-filter-panel,
+.starter-page .vbi-react-filter-panel__sections {
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
