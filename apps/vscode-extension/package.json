@@ -41,10 +41,10 @@
     "watch": "tsup src/extension.ts --external vscode --external sql.js --format cjs --watch"
   },
   "devDependencies": {
-    "@types/node": "^18.19.130",
-    "@types/vscode": "^1.80.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0",
+    "@types/node": "24.10.1",
+    "@types/vscode": "1.80.0",
+    "tsup": "8.0.0",
+    "typescript": "6.0.2",
     "webview-ui": "workspace:*"
   },
   "dependencies": {
