@@ -1,6 +1,7 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
 import { fixture, fixtureCleanup } from '@open-wc/testing'
 import { html } from 'lit'
+import { setVBIComponentLocale } from 'src/localization'
 import { VBIChartType } from 'src/vbi-chart-editor/vbi-chart-type'
 
 type VBIChartTypeInstance = InstanceType<typeof VBIChartType>
@@ -48,7 +49,8 @@ const createBuilder = () => {
 }
 
 describe('vbi-chart-type', () => {
-  afterEach(() => {
+  afterEach(async () => {
+    await setVBIComponentLocale('en-US')
     fixtureCleanup()
   })
 
@@ -140,5 +142,21 @@ describe('vbi-chart-type', () => {
 
     expect(el.shadowRoot?.querySelector('.panel__title')?.textContent).toBe('Chon loai bieu do')
     expect(findCardByLabel(el, 'Bieu do thanh')).toBeTruthy()
+  })
+
+  it('should render built-in localized chart type text', async () => {
+    await setVBIComponentLocale('vi-VN')
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type .availableChartTypes=${['table', 'bar', 'line']}></vbi-chart-type>`,
+    )
+
+    trigger(el).click()
+    await el.updateComplete
+
+    const headings = Array.from(el.shadowRoot?.querySelectorAll('.group__heading') ?? []).map((item) =>
+      item.textContent?.trim(),
+    )
+    expect(headings).toEqual(['Bảng', 'So sánh', 'Xu hướng'])
+    expect(findCardByLabel(el, 'Biểu đồ thanh')).toBeTruthy()
   })
 })

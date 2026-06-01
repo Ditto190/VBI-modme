@@ -1,4 +1,5 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
+import { msg } from '@lit/localize'
 import { html, nothing, svg, type PropertyValues } from 'lit'
 import { property, state } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js'
@@ -62,85 +63,126 @@ export interface VBIChartTypeChangeDetail {
 
 export type VBIChartTypeText = Partial<Record<string, string>>
 
-const DEFAULT_TEXT: Record<string, string> = {
-  toolbarChartTypePanelTitle: 'Choose a chart type',
-  toolbarChartTypeFallbackDescription: 'Current chart type',
-  toolbarChartTypeGroupsTableLabel: 'Tables',
-  toolbarChartTypeGroupsTableDescription: 'Detail views and pivots',
-  toolbarChartTypeGroupsComparisonLabel: 'Comparison',
-  toolbarChartTypeGroupsComparisonDescription: 'Category comparisons and dual-axis views',
-  toolbarChartTypeGroupsTrendLabel: 'Trends',
-  toolbarChartTypeGroupsTrendDescription: 'Change over time and cumulative motion',
-  toolbarChartTypeGroupsProportionLabel: 'Proportion',
-  toolbarChartTypeGroupsProportionDescription: 'Composition, share and funnel views',
-  toolbarChartTypeGroupsDistributionLabel: 'Distribution',
-  toolbarChartTypeGroupsDistributionDescription: 'Correlation, density and statistical spread',
-  toolbarChartTypeGroupsHierarchyLabel: 'Hierarchy',
-  toolbarChartTypeGroupsHierarchyDescription: 'Nested and hierarchical structures',
-  toolbarChartTypeGroupsDynamicLabel: 'Animated Race',
-  toolbarChartTypeGroupsDynamicDescription: 'Animated visuals across ordered time',
-  toolbarChartTypeItemsTableLabel: 'Table',
-  toolbarChartTypeItemsTableDescription: 'Inspect raw records',
-  toolbarChartTypeItemsPivotTableLabel: 'Pivot Table',
-  toolbarChartTypeItemsPivotTableDescription: 'Cross-tab summarization',
-  toolbarChartTypeItemsColumnLabel: 'Column',
-  toolbarChartTypeItemsColumnDescription: 'Vertical category comparison',
-  toolbarChartTypeItemsColumnParallelLabel: 'Grouped Column',
-  toolbarChartTypeItemsColumnParallelDescription: 'Side-by-side metrics',
-  toolbarChartTypeItemsColumnPercentLabel: '100% Column',
-  toolbarChartTypeItemsColumnPercentDescription: 'Show proportional shares',
-  toolbarChartTypeItemsBarLabel: 'Bar',
-  toolbarChartTypeItemsBarDescription: 'Better for long labels',
-  toolbarChartTypeItemsBarParallelLabel: 'Grouped Bar',
-  toolbarChartTypeItemsBarParallelDescription: 'Horizontal grouped comparison',
-  toolbarChartTypeItemsBarPercentLabel: '100% Bar',
-  toolbarChartTypeItemsBarPercentDescription: 'Horizontal proportional stack',
-  toolbarChartTypeItemsDualAxisLabel: 'Dual Axis',
-  toolbarChartTypeItemsDualAxisDescription: 'Compare different scales',
-  toolbarChartTypeItemsLineLabel: 'Line',
-  toolbarChartTypeItemsLineDescription: 'Track change over time',
-  toolbarChartTypeItemsAreaLabel: 'Area',
-  toolbarChartTypeItemsAreaDescription: 'Emphasize accumulated volume',
-  toolbarChartTypeItemsAreaPercentLabel: '100% Area',
-  toolbarChartTypeItemsAreaPercentDescription: 'Share changes over time',
-  toolbarChartTypeItemsPieLabel: 'Pie',
-  toolbarChartTypeItemsPieDescription: 'Part-to-whole view',
-  toolbarChartTypeItemsDonutLabel: 'Donut',
-  toolbarChartTypeItemsDonutDescription: 'Highlights a center metric',
-  toolbarChartTypeItemsRoseLabel: 'Rose',
-  toolbarChartTypeItemsRoseDescription: 'Polar proportion display',
-  toolbarChartTypeItemsRoseParallelLabel: 'Grouped Rose',
-  toolbarChartTypeItemsRoseParallelDescription: 'Parallel polar metrics',
-  toolbarChartTypeItemsFunnelLabel: 'Funnel',
-  toolbarChartTypeItemsFunnelDescription: 'Stage conversion analysis',
-  toolbarChartTypeItemsScatterLabel: 'Scatter',
-  toolbarChartTypeItemsScatterDescription: 'Reveal correlation',
-  toolbarChartTypeItemsHeatmapLabel: 'Heatmap',
-  toolbarChartTypeItemsHeatmapDescription: 'Show matrix density',
-  toolbarChartTypeItemsRadarLabel: 'Radar',
-  toolbarChartTypeItemsRadarDescription: 'Multi-axis scoring view',
-  toolbarChartTypeItemsTreeMapLabel: 'Treemap',
-  toolbarChartTypeItemsTreeMapDescription: 'Compact hierarchical layout',
-  toolbarChartTypeItemsSunburstLabel: 'Sunburst',
-  toolbarChartTypeItemsSunburstDescription: 'Radial hierarchy view',
-  toolbarChartTypeItemsCirclePackingLabel: 'Circle Packing',
-  toolbarChartTypeItemsCirclePackingDescription: 'Nested containment view',
-  toolbarChartTypeItemsSankeyLabel: 'Sankey',
-  toolbarChartTypeItemsSankeyDescription: 'Flow allocation between source and target nodes',
-  toolbarChartTypeItemsHierarchySankeyLabel: 'Hierarchy Sankey',
-  toolbarChartTypeItemsHierarchySankeyDescription: 'Hierarchical flow allocation',
-  toolbarChartTypeItemsRaceBarLabel: 'Race Bar',
-  toolbarChartTypeItemsRaceBarDescription: 'Ranking race over time',
-  toolbarChartTypeItemsRaceColumnLabel: 'Race Column',
-  toolbarChartTypeItemsRaceColumnDescription: 'Animated vertical ranking',
-  toolbarChartTypeItemsRaceLineLabel: 'Race Line',
-  toolbarChartTypeItemsRaceLineDescription: 'Animated trend trajectory',
-  toolbarChartTypeItemsRaceScatterLabel: 'Race Scatter',
-  toolbarChartTypeItemsRaceScatterDescription: 'Animated multi-metric motion',
-  toolbarChartTypeItemsRacePieLabel: 'Race Pie',
-  toolbarChartTypeItemsRacePieDescription: 'Animated composition share',
-  toolbarChartTypeItemsRaceDonutLabel: 'Race Donut',
-  toolbarChartTypeItemsRaceDonutDescription: 'Animated donut with center focus',
+const DEFAULT_TEXT = {
+  toolbarChartTypePanelTitle: () => msg('Choose a chart type', { id: 'toolbarChartTypePanelTitle' }),
+  toolbarChartTypeFallbackDescription: () => msg('Current chart type', { id: 'toolbarChartTypeFallbackDescription' }),
+  toolbarChartTypeEmpty: () => msg('No chart types available', { id: 'toolbarChartTypeEmpty' }),
+  toolbarChartTypeGroupsTableLabel: () => msg('Tables', { id: 'toolbarChartTypeGroupsTableLabel' }),
+  toolbarChartTypeGroupsTableDescription: () =>
+    msg('Detail views and pivots', { id: 'toolbarChartTypeGroupsTableDescription' }),
+  toolbarChartTypeGroupsComparisonLabel: () => msg('Comparison', { id: 'toolbarChartTypeGroupsComparisonLabel' }),
+  toolbarChartTypeGroupsComparisonDescription: () =>
+    msg('Category comparisons and dual-axis views', { id: 'toolbarChartTypeGroupsComparisonDescription' }),
+  toolbarChartTypeGroupsTrendLabel: () => msg('Trends', { id: 'toolbarChartTypeGroupsTrendLabel' }),
+  toolbarChartTypeGroupsTrendDescription: () =>
+    msg('Change over time and cumulative motion', { id: 'toolbarChartTypeGroupsTrendDescription' }),
+  toolbarChartTypeGroupsProportionLabel: () => msg('Proportion', { id: 'toolbarChartTypeGroupsProportionLabel' }),
+  toolbarChartTypeGroupsProportionDescription: () =>
+    msg('Composition, share and funnel views', { id: 'toolbarChartTypeGroupsProportionDescription' }),
+  toolbarChartTypeGroupsDistributionLabel: () => msg('Distribution', { id: 'toolbarChartTypeGroupsDistributionLabel' }),
+  toolbarChartTypeGroupsDistributionDescription: () =>
+    msg('Correlation, density and statistical spread', { id: 'toolbarChartTypeGroupsDistributionDescription' }),
+  toolbarChartTypeGroupsHierarchyLabel: () => msg('Hierarchy', { id: 'toolbarChartTypeGroupsHierarchyLabel' }),
+  toolbarChartTypeGroupsHierarchyDescription: () =>
+    msg('Nested and hierarchical structures', { id: 'toolbarChartTypeGroupsHierarchyDescription' }),
+  toolbarChartTypeGroupsDynamicLabel: () => msg('Animated Race', { id: 'toolbarChartTypeGroupsDynamicLabel' }),
+  toolbarChartTypeGroupsDynamicDescription: () =>
+    msg('Animated visuals across ordered time', { id: 'toolbarChartTypeGroupsDynamicDescription' }),
+  toolbarChartTypeItemsTableLabel: () => msg('Table', { id: 'toolbarChartTypeItemsTableLabel' }),
+  toolbarChartTypeItemsTableDescription: () =>
+    msg('Inspect raw records', { id: 'toolbarChartTypeItemsTableDescription' }),
+  toolbarChartTypeItemsPivotTableLabel: () => msg('Pivot Table', { id: 'toolbarChartTypeItemsPivotTableLabel' }),
+  toolbarChartTypeItemsPivotTableDescription: () =>
+    msg('Cross-tab summarization', { id: 'toolbarChartTypeItemsPivotTableDescription' }),
+  toolbarChartTypeItemsColumnLabel: () => msg('Column', { id: 'toolbarChartTypeItemsColumnLabel' }),
+  toolbarChartTypeItemsColumnDescription: () =>
+    msg('Vertical category comparison', { id: 'toolbarChartTypeItemsColumnDescription' }),
+  toolbarChartTypeItemsColumnParallelLabel: () =>
+    msg('Grouped Column', { id: 'toolbarChartTypeItemsColumnParallelLabel' }),
+  toolbarChartTypeItemsColumnParallelDescription: () =>
+    msg('Side-by-side metrics', { id: 'toolbarChartTypeItemsColumnParallelDescription' }),
+  toolbarChartTypeItemsColumnPercentLabel: () => msg('100% Column', { id: 'toolbarChartTypeItemsColumnPercentLabel' }),
+  toolbarChartTypeItemsColumnPercentDescription: () =>
+    msg('Show proportional shares', { id: 'toolbarChartTypeItemsColumnPercentDescription' }),
+  toolbarChartTypeItemsBarLabel: () => msg('Bar', { id: 'toolbarChartTypeItemsBarLabel' }),
+  toolbarChartTypeItemsBarDescription: () =>
+    msg('Better for long labels', { id: 'toolbarChartTypeItemsBarDescription' }),
+  toolbarChartTypeItemsBarParallelLabel: () => msg('Grouped Bar', { id: 'toolbarChartTypeItemsBarParallelLabel' }),
+  toolbarChartTypeItemsBarParallelDescription: () =>
+    msg('Horizontal grouped comparison', { id: 'toolbarChartTypeItemsBarParallelDescription' }),
+  toolbarChartTypeItemsBarPercentLabel: () => msg('100% Bar', { id: 'toolbarChartTypeItemsBarPercentLabel' }),
+  toolbarChartTypeItemsBarPercentDescription: () =>
+    msg('Horizontal proportional stack', { id: 'toolbarChartTypeItemsBarPercentDescription' }),
+  toolbarChartTypeItemsDualAxisLabel: () => msg('Dual Axis', { id: 'toolbarChartTypeItemsDualAxisLabel' }),
+  toolbarChartTypeItemsDualAxisDescription: () =>
+    msg('Compare different scales', { id: 'toolbarChartTypeItemsDualAxisDescription' }),
+  toolbarChartTypeItemsLineLabel: () => msg('Line', { id: 'toolbarChartTypeItemsLineLabel' }),
+  toolbarChartTypeItemsLineDescription: () =>
+    msg('Track change over time', { id: 'toolbarChartTypeItemsLineDescription' }),
+  toolbarChartTypeItemsAreaLabel: () => msg('Area', { id: 'toolbarChartTypeItemsAreaLabel' }),
+  toolbarChartTypeItemsAreaDescription: () =>
+    msg('Emphasize accumulated volume', { id: 'toolbarChartTypeItemsAreaDescription' }),
+  toolbarChartTypeItemsAreaPercentLabel: () => msg('100% Area', { id: 'toolbarChartTypeItemsAreaPercentLabel' }),
+  toolbarChartTypeItemsAreaPercentDescription: () =>
+    msg('Share changes over time', { id: 'toolbarChartTypeItemsAreaPercentDescription' }),
+  toolbarChartTypeItemsPieLabel: () => msg('Pie', { id: 'toolbarChartTypeItemsPieLabel' }),
+  toolbarChartTypeItemsPieDescription: () => msg('Part-to-whole view', { id: 'toolbarChartTypeItemsPieDescription' }),
+  toolbarChartTypeItemsDonutLabel: () => msg('Donut', { id: 'toolbarChartTypeItemsDonutLabel' }),
+  toolbarChartTypeItemsDonutDescription: () =>
+    msg('Highlights a center metric', { id: 'toolbarChartTypeItemsDonutDescription' }),
+  toolbarChartTypeItemsRoseLabel: () => msg('Rose', { id: 'toolbarChartTypeItemsRoseLabel' }),
+  toolbarChartTypeItemsRoseDescription: () =>
+    msg('Polar proportion display', { id: 'toolbarChartTypeItemsRoseDescription' }),
+  toolbarChartTypeItemsRoseParallelLabel: () => msg('Grouped Rose', { id: 'toolbarChartTypeItemsRoseParallelLabel' }),
+  toolbarChartTypeItemsRoseParallelDescription: () =>
+    msg('Parallel polar metrics', { id: 'toolbarChartTypeItemsRoseParallelDescription' }),
+  toolbarChartTypeItemsFunnelLabel: () => msg('Funnel', { id: 'toolbarChartTypeItemsFunnelLabel' }),
+  toolbarChartTypeItemsFunnelDescription: () =>
+    msg('Stage conversion analysis', { id: 'toolbarChartTypeItemsFunnelDescription' }),
+  toolbarChartTypeItemsScatterLabel: () => msg('Scatter', { id: 'toolbarChartTypeItemsScatterLabel' }),
+  toolbarChartTypeItemsScatterDescription: () =>
+    msg('Reveal correlation', { id: 'toolbarChartTypeItemsScatterDescription' }),
+  toolbarChartTypeItemsHeatmapLabel: () => msg('Heatmap', { id: 'toolbarChartTypeItemsHeatmapLabel' }),
+  toolbarChartTypeItemsHeatmapDescription: () =>
+    msg('Show matrix density', { id: 'toolbarChartTypeItemsHeatmapDescription' }),
+  toolbarChartTypeItemsRadarLabel: () => msg('Radar', { id: 'toolbarChartTypeItemsRadarLabel' }),
+  toolbarChartTypeItemsRadarDescription: () =>
+    msg('Multi-axis scoring view', { id: 'toolbarChartTypeItemsRadarDescription' }),
+  toolbarChartTypeItemsTreeMapLabel: () => msg('Treemap', { id: 'toolbarChartTypeItemsTreeMapLabel' }),
+  toolbarChartTypeItemsTreeMapDescription: () =>
+    msg('Compact hierarchical layout', { id: 'toolbarChartTypeItemsTreeMapDescription' }),
+  toolbarChartTypeItemsSunburstLabel: () => msg('Sunburst', { id: 'toolbarChartTypeItemsSunburstLabel' }),
+  toolbarChartTypeItemsSunburstDescription: () =>
+    msg('Radial hierarchy view', { id: 'toolbarChartTypeItemsSunburstDescription' }),
+  toolbarChartTypeItemsCirclePackingLabel: () =>
+    msg('Circle Packing', { id: 'toolbarChartTypeItemsCirclePackingLabel' }),
+  toolbarChartTypeItemsCirclePackingDescription: () =>
+    msg('Nested containment view', { id: 'toolbarChartTypeItemsCirclePackingDescription' }),
+  toolbarChartTypeItemsSankeyLabel: () => msg('Sankey', { id: 'toolbarChartTypeItemsSankeyLabel' }),
+  toolbarChartTypeItemsSankeyDescription: () =>
+    msg('Flow allocation between source and target nodes', { id: 'toolbarChartTypeItemsSankeyDescription' }),
+  toolbarChartTypeItemsHierarchySankeyLabel: () =>
+    msg('Hierarchy Sankey', { id: 'toolbarChartTypeItemsHierarchySankeyLabel' }),
+  toolbarChartTypeItemsHierarchySankeyDescription: () =>
+    msg('Hierarchical flow allocation', { id: 'toolbarChartTypeItemsHierarchySankeyDescription' }),
+  toolbarChartTypeItemsRaceBarLabel: () => msg('Race Bar', { id: 'toolbarChartTypeItemsRaceBarLabel' }),
+  toolbarChartTypeItemsRaceBarDescription: () =>
+    msg('Ranking race over time', { id: 'toolbarChartTypeItemsRaceBarDescription' }),
+  toolbarChartTypeItemsRaceColumnLabel: () => msg('Race Column', { id: 'toolbarChartTypeItemsRaceColumnLabel' }),
+  toolbarChartTypeItemsRaceColumnDescription: () =>
+    msg('Animated vertical ranking', { id: 'toolbarChartTypeItemsRaceColumnDescription' }),
+  toolbarChartTypeItemsRaceLineLabel: () => msg('Race Line', { id: 'toolbarChartTypeItemsRaceLineLabel' }),
+  toolbarChartTypeItemsRaceLineDescription: () =>
+    msg('Animated trend trajectory', { id: 'toolbarChartTypeItemsRaceLineDescription' }),
+  toolbarChartTypeItemsRaceScatterLabel: () => msg('Race Scatter', { id: 'toolbarChartTypeItemsRaceScatterLabel' }),
+  toolbarChartTypeItemsRaceScatterDescription: () =>
+    msg('Animated multi-metric motion', { id: 'toolbarChartTypeItemsRaceScatterDescription' }),
+  toolbarChartTypeItemsRacePieLabel: () => msg('Race Pie', { id: 'toolbarChartTypeItemsRacePieLabel' }),
+  toolbarChartTypeItemsRacePieDescription: () =>
+    msg('Animated composition share', { id: 'toolbarChartTypeItemsRacePieDescription' }),
+  toolbarChartTypeItemsRaceDonutLabel: () => msg('Race Donut', { id: 'toolbarChartTypeItemsRaceDonutLabel' }),
+  toolbarChartTypeItemsRaceDonutDescription: () =>
+    msg('Animated donut with center focus', { id: 'toolbarChartTypeItemsRaceDonutDescription' }),
 }
 
 export const VBI_CHART_TYPE_GROUPS: VBIChartTypeGroupMeta[] = [
@@ -440,7 +482,8 @@ export const DEFAULT_AVAILABLE_CHART_TYPES = [
 ]
 
 const translate = (key: string, text?: VBIChartTypeText): string => {
-  return text?.[key] ?? DEFAULT_TEXT[key] ?? key
+  const defaultText = DEFAULT_TEXT[key as keyof typeof DEFAULT_TEXT]
+  return text?.[key] ?? defaultText?.() ?? key
 }
 
 const showTextConverter = {
@@ -738,7 +781,7 @@ export class VBIChartType extends VdashElement {
                 )}
               </div>
             `
-          : html`<div class="panel__empty">No chart types available</div>`}
+          : html`<div class="panel__empty">${translate('toolbarChartTypeEmpty', this.text)}</div>`}
       </div>
     `
   }

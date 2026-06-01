@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="id-ID" source-language="en-US" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="toolbarChartTypePanelTitle">
+  <source>Choose a chart type</source>
+  <target>Pilih jenis bagan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeFallbackDescription">
+  <source>Current chart type</source>
+  <target>Jenis bagan saat ini</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeEmpty">
+  <source>No chart types available</source>
+  <target>Tidak ada jenis bagan yang tersedia</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTableLabel">
+  <source>Tables</source>
+  <target>Tabel</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTableDescription">
+  <source>Detail views and pivots</source>
+  <target>Tampilan detail dan pivot</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsComparisonLabel">
+  <source>Comparison</source>
+  <target>Perbandingan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsComparisonDescription">
+  <source>Category comparisons and dual-axis views</source>
+  <target>Perbandingan kategori, tampilan berdampingan, dan sumbu ganda</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTrendLabel">
+  <source>Trends</source>
+  <target>Tren</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTrendDescription">
+  <source>Change over time and cumulative motion</source>
+  <target>Perubahan dari waktu ke waktu dan pergerakan kumulatif</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsProportionLabel">
+  <source>Proportion</source>
+  <target>Proporsi</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsProportionDescription">
+  <source>Composition, share and funnel views</source>
+  <target>Komposisi, pangsa, dan tampilan funnel</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDistributionLabel">
+  <source>Distribution</source>
+  <target>Distribusi</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDistributionDescription">
+  <source>Correlation, density and statistical spread</source>
+  <target>Korelasi, kepadatan, dan sebaran statistik</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsHierarchyLabel">
+  <source>Hierarchy</source>
+  <target>Hierarki</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsHierarchyDescription">
+  <source>Nested and hierarchical structures</source>
+  <target>Struktur bertingkat dan hierarkis</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDynamicLabel">
+  <source>Animated Race</source>
+  <target>Balapan Animasi</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDynamicDescription">
+  <source>Animated visuals across ordered time</source>
+  <target>Visual animasi sepanjang waktu terurut</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTableLabel">
+  <source>Table</source>
+  <target>Tabel</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTableDescription">
+  <source>Inspect raw records</source>
+  <target>Memeriksa rekaman mentah</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPivotTableLabel">
+  <source>Pivot Table</source>
+  <target>Tabel Pivot</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPivotTableDescription">
+  <source>Cross-tab summarization</source>
+  <target>Ringkasan tabulasi silang</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnLabel">
+  <source>Column</source>
+  <target>Bagan Kolom</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnDescription">
+  <source>Vertical category comparison</source>
+  <target>Perbandingan kategori vertikal</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnParallelLabel">
+  <source>Grouped Column</source>
+  <target>Kolom Berkelompok</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnParallelDescription">
+  <source>Side-by-side metrics</source>
+  <target>Membandingkan beberapa metrik berdampingan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnPercentLabel">
+  <source>100% Column</source>
+  <target>Kolom 100%</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnPercentDescription">
+  <source>Show proportional shares</source>
+  <target>Menampilkan proporsi bagian</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarLabel">
+  <source>Bar</source>
+  <target>Bagan Batang</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarDescription">
+  <source>Better for long labels</source>
+  <target>Lebih cocok untuk label panjang</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarParallelLabel">
+  <source>Grouped Bar</source>
+  <target>Batang Berkelompok</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarParallelDescription">
+  <source>Horizontal grouped comparison</source>
+  <target>Perbandingan berkelompok horizontal</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarPercentLabel">
+  <source>100% Bar</source>
+  <target>Batang 100%</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarPercentDescription">
+  <source>Horizontal proportional stack</source>
+  <target>Tumpukan proporsional horizontal</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDualAxisLabel">
+  <source>Dual Axis</source>
+  <target>Bagan Sumbu Ganda</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDualAxisDescription">
+  <source>Compare different scales</source>
+  <target>Membandingkan skala berbeda</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsLineLabel">
+  <source>Line</source>
+  <target>Bagan Garis</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsLineDescription">
+  <source>Track change over time</source>
+  <target>Melacak perubahan dari waktu ke waktu</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaLabel">
+  <source>Area</source>
+  <target>Bagan Area</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaDescription">
+  <source>Emphasize accumulated volume</source>
+  <target>Menekankan volume kumulatif</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaPercentLabel">
+  <source>100% Area</source>
+  <target>Area 100%</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaPercentDescription">
+  <source>Share changes over time</source>
+  <target>Perubahan pangsa dari waktu ke waktu</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPieLabel">
+  <source>Pie</source>
+  <target>Bagan Pai</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPieDescription">
+  <source>Part-to-whole view</source>
+  <target>Tampilan bagian terhadap keseluruhan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDonutLabel">
+  <source>Donut</source>
+  <target>Bagan Donat</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDonutDescription">
+  <source>Highlights a center metric</source>
+  <target>Menonjolkan metrik pusat</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseLabel">
+  <source>Rose</source>
+  <target>Bagan Mawar</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseDescription">
+  <source>Polar proportion display</source>
+  <target>Tampilan proporsi polar</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseParallelLabel">
+  <source>Grouped Rose</source>
+  <target>Mawar Berkelompok</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseParallelDescription">
+  <source>Parallel polar metrics</source>
+  <target>Metrik polar paralel</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsFunnelLabel">
+  <source>Funnel</source>
+  <target>Bagan Funnel</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsFunnelDescription">
+  <source>Stage conversion analysis</source>
+  <target>Analisis konversi tahap</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsScatterLabel">
+  <source>Scatter</source>
+  <target>Bagan Sebar</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsScatterDescription">
+  <source>Reveal correlation</source>
+  <target>Mengungkap korelasi</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHeatmapLabel">
+  <source>Heatmap</source>
+  <target>Peta Panas</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHeatmapDescription">
+  <source>Show matrix density</source>
+  <target>Menampilkan kepadatan matriks</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRadarLabel">
+  <source>Radar</source>
+  <target>Bagan Radar</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRadarDescription">
+  <source>Multi-axis scoring view</source>
+  <target>Tampilan skor multi-sumbu</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTreeMapLabel">
+  <source>Treemap</source>
+  <target>Peta Pohon</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTreeMapDescription">
+  <source>Compact hierarchical layout</source>
+  <target>Tata letak hierarki yang ringkas</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSunburstLabel">
+  <source>Sunburst</source>
+  <target>Diagram Sunburst</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSunburstDescription">
+  <source>Radial hierarchy view</source>
+  <target>Tampilan hierarki radial</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsCirclePackingLabel">
+  <source>Circle Packing</source>
+  <target>Kemasan Lingkaran</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsCirclePackingDescription">
+  <source>Nested containment view</source>
+  <target>Tampilan relasi ketercakupan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSankeyLabel">
+  <source>Sankey</source>
+  <target>Sankey</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSankeyDescription">
+  <source>Flow allocation between source and target nodes</source>
+  <target>Alokasi aliran antara node sumber dan target</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHierarchySankeyLabel">
+  <source>Hierarchy Sankey</source>
+  <target>Sankey Hierarki</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHierarchySankeyDescription">
+  <source>Hierarchical flow allocation</source>
+  <target>Menampilkan alokasi aliran hierarkis</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceBarLabel">
+  <source>Race Bar</source>
+  <target>Batang Balapan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceBarDescription">
+  <source>Ranking race over time</source>
+  <target>Perubahan peringkat dari waktu ke waktu</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceColumnLabel">
+  <source>Race Column</source>
+  <target>Kolom Balapan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceColumnDescription">
+  <source>Animated vertical ranking</source>
+  <target>Animasi peringkat vertikal</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceLineLabel">
+  <source>Race Line</source>
+  <target>Garis Balapan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceLineDescription">
+  <source>Animated trend trajectory</source>
+  <target>Lintasan tren animasi</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceScatterLabel">
+  <source>Race Scatter</source>
+  <target>Sebar Balapan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceScatterDescription">
+  <source>Animated multi-metric motion</source>
+  <target>Gerak animasi multi-metrik</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRacePieLabel">
+  <source>Race Pie</source>
+  <target>Pai Balapan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRacePieDescription">
+  <source>Animated composition share</source>
+  <target>Animasi perubahan komposisi</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceDonutLabel">
+  <source>Race Donut</source>
+  <target>Donat Balapan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceDonutDescription">
+  <source>Animated donut with center focus</source>
+  <target>Donat animasi dengan fokus tengah</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

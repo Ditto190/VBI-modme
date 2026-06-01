@@ -1,3 +1,4 @@
+import { updateWhenLocaleChanges } from '@lit/localize'
 import { LitElement } from 'lit'
 
 const VERSION = __VBI_COMPONENT_VERSION__
@@ -12,6 +13,11 @@ const error = (message: unknown, componentInstance?: VdashElement): void => {
 }
 
 export class VdashElement extends LitElement {
+  constructor() {
+    super()
+    updateWhenLocaleChanges(this)
+  }
+
   get version(): string {
     return VERSION
   }

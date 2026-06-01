@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="vi-VN" source-language="en-US" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="toolbarChartTypePanelTitle">
+  <source>Choose a chart type</source>
+  <target>Chọn loại biểu đồ</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeFallbackDescription">
+  <source>Current chart type</source>
+  <target>Loại biểu đồ hiện tại</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeEmpty">
+  <source>No chart types available</source>
+  <target>Không có loại biểu đồ khả dụng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTableLabel">
+  <source>Tables</source>
+  <target>Bảng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTableDescription">
+  <source>Detail views and pivots</source>
+  <target>Dạng xem chi tiết và bảng tổng hợp</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsComparisonLabel">
+  <source>Comparison</source>
+  <target>So sánh</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsComparisonDescription">
+  <source>Category comparisons and dual-axis views</source>
+  <target>So sánh danh mục, dạng song song và hai trục</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTrendLabel">
+  <source>Trends</source>
+  <target>Xu hướng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsTrendDescription">
+  <source>Change over time and cumulative motion</source>
+  <target>Thay đổi theo thời gian và diễn biến tích lũy</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsProportionLabel">
+  <source>Proportion</source>
+  <target>Tỷ trọng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsProportionDescription">
+  <source>Composition, share and funnel views</source>
+  <target>Cơ cấu, tỷ trọng và dạng phễu</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDistributionLabel">
+  <source>Distribution</source>
+  <target>Phân bố</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDistributionDescription">
+  <source>Correlation, density and statistical spread</source>
+  <target>Tương quan, mật độ và độ phân tán thống kê</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsHierarchyLabel">
+  <source>Hierarchy</source>
+  <target>Phân cấp</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsHierarchyDescription">
+  <source>Nested and hierarchical structures</source>
+  <target>Cấu trúc lồng nhau và phân cấp</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDynamicLabel">
+  <source>Animated Race</source>
+  <target>Đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeGroupsDynamicDescription">
+  <source>Animated visuals across ordered time</source>
+  <target>Trực quan động theo thời gian có thứ tự</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTableLabel">
+  <source>Table</source>
+  <target>Bảng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTableDescription">
+  <source>Inspect raw records</source>
+  <target>Xem bản ghi gốc</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPivotTableLabel">
+  <source>Pivot Table</source>
+  <target>Bảng tổng hợp</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPivotTableDescription">
+  <source>Cross-tab summarization</source>
+  <target>Tổng hợp chéo</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnLabel">
+  <source>Column</source>
+  <target>Biểu đồ cột</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnDescription">
+  <source>Vertical category comparison</source>
+  <target>So sánh danh mục theo chiều dọc</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnParallelLabel">
+  <source>Grouped Column</source>
+  <target>Cột nhóm</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnParallelDescription">
+  <source>Side-by-side metrics</source>
+  <target>So sánh nhiều chỉ số cạnh nhau</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnPercentLabel">
+  <source>100% Column</source>
+  <target>Cột 100%</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsColumnPercentDescription">
+  <source>Show proportional shares</source>
+  <target>Hiển thị tỷ trọng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarLabel">
+  <source>Bar</source>
+  <target>Biểu đồ thanh</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarDescription">
+  <source>Better for long labels</source>
+  <target>Phù hợp với nhãn dài</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarParallelLabel">
+  <source>Grouped Bar</source>
+  <target>Thanh nhóm</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarParallelDescription">
+  <source>Horizontal grouped comparison</source>
+  <target>So sánh nhóm theo chiều ngang</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarPercentLabel">
+  <source>100% Bar</source>
+  <target>Thanh 100%</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsBarPercentDescription">
+  <source>Horizontal proportional stack</source>
+  <target>Xếp chồng tỷ trọng theo chiều ngang</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDualAxisLabel">
+  <source>Dual Axis</source>
+  <target>Biểu đồ hai trục</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDualAxisDescription">
+  <source>Compare different scales</source>
+  <target>So sánh các thang đo khác nhau</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsLineLabel">
+  <source>Line</source>
+  <target>Biểu đồ đường</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsLineDescription">
+  <source>Track change over time</source>
+  <target>Theo dõi thay đổi theo thời gian</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaLabel">
+  <source>Area</source>
+  <target>Biểu đồ miền</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaDescription">
+  <source>Emphasize accumulated volume</source>
+  <target>Nhấn mạnh khối lượng tích lũy</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaPercentLabel">
+  <source>100% Area</source>
+  <target>Miền 100%</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsAreaPercentDescription">
+  <source>Share changes over time</source>
+  <target>Biến động tỷ trọng theo thời gian</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPieLabel">
+  <source>Pie</source>
+  <target>Biểu đồ tròn</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsPieDescription">
+  <source>Part-to-whole view</source>
+  <target>Dạng phần-trên-tổng thể</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDonutLabel">
+  <source>Donut</source>
+  <target>Biểu đồ vành khuyên</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsDonutDescription">
+  <source>Highlights a center metric</source>
+  <target>Làm nổi bật chỉ số trung tâm</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseLabel">
+  <source>Rose</source>
+  <target>Biểu đồ hoa hồng</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseDescription">
+  <source>Polar proportion display</source>
+  <target>Hiển thị tỷ trọng theo tọa độ cực</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseParallelLabel">
+  <source>Grouped Rose</source>
+  <target>Hoa hồng nhóm</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRoseParallelDescription">
+  <source>Parallel polar metrics</source>
+  <target>So sánh nhiều chỉ số theo cực</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsFunnelLabel">
+  <source>Funnel</source>
+  <target>Biểu đồ phễu</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsFunnelDescription">
+  <source>Stage conversion analysis</source>
+  <target>Phân tích chuyển đổi theo giai đoạn</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsScatterLabel">
+  <source>Scatter</source>
+  <target>Biểu đồ phân tán</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsScatterDescription">
+  <source>Reveal correlation</source>
+  <target>Làm rõ tương quan</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHeatmapLabel">
+  <source>Heatmap</source>
+  <target>Bản đồ nhiệt</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHeatmapDescription">
+  <source>Show matrix density</source>
+  <target>Hiển thị mật độ ma trận</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRadarLabel">
+  <source>Radar</source>
+  <target>Biểu đồ radar</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRadarDescription">
+  <source>Multi-axis scoring view</source>
+  <target>Dạng điểm số đa trục</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTreeMapLabel">
+  <source>Treemap</source>
+  <target>Bản đồ cây</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsTreeMapDescription">
+  <source>Compact hierarchical layout</source>
+  <target>Bố cục phân cấp gọn</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSunburstLabel">
+  <source>Sunburst</source>
+  <target>Biểu đồ mặt trời</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSunburstDescription">
+  <source>Radial hierarchy view</source>
+  <target>Dạng phân cấp hướng tâm</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsCirclePackingLabel">
+  <source>Circle Packing</source>
+  <target>Biểu đồ đóng gói hình tròn</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsCirclePackingDescription">
+  <source>Nested containment view</source>
+  <target>Dạng quan hệ bao hàm</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSankeyLabel">
+  <source>Sankey</source>
+  <target>Sankey</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsSankeyDescription">
+  <source>Flow allocation between source and target nodes</source>
+  <target>Phân bổ dòng chảy giữa nút nguồn và nút đích</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHierarchySankeyLabel">
+  <source>Hierarchy Sankey</source>
+  <target>Sankey phân cấp</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsHierarchySankeyDescription">
+  <source>Hierarchical flow allocation</source>
+  <target>Hiển thị phân bổ dòng chảy theo cấp</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceBarLabel">
+  <source>Race Bar</source>
+  <target>Thanh đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceBarDescription">
+  <source>Ranking race over time</source>
+  <target>Xếp hạng thay đổi theo thời gian</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceColumnLabel">
+  <source>Race Column</source>
+  <target>Cột đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceColumnDescription">
+  <source>Animated vertical ranking</source>
+  <target>Thứ hạng dọc dạng động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceLineLabel">
+  <source>Race Line</source>
+  <target>Đường đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceLineDescription">
+  <source>Animated trend trajectory</source>
+  <target>Quỹ đạo xu hướng dạng động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceScatterLabel">
+  <source>Race Scatter</source>
+  <target>Phân tán đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceScatterDescription">
+  <source>Animated multi-metric motion</source>
+  <target>Chuyển động nhiều chỉ số dạng động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRacePieLabel">
+  <source>Race Pie</source>
+  <target>Tròn đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRacePieDescription">
+  <source>Animated composition share</source>
+  <target>Tỷ trọng cơ cấu dạng động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceDonutLabel">
+  <source>Race Donut</source>
+  <target>Vành khuyên đua động</target>
+</trans-unit>
+<trans-unit id="toolbarChartTypeItemsRaceDonutDescription">
+  <source>Animated donut with center focus</source>
+  <target>Vành khuyên động với chỉ số trung tâm</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

@@ -38,15 +38,19 @@
     "dev": "rslib build --watch --no-clean",
     "format": "oxfmt .",
     "lint": "oxlint .",
+    "localize:build": "lit-localize build --config lit-localize.json && oxfmt src/localization/generated",
+    "localize:extract": "lit-localize extract --config lit-localize.json",
     "test": "rstest",
     "test:update": "rstest --update",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
   },
   "devDependencies": {
+    "@lit/localize-tools": "0.8.2",
     "@open-wc/testing": "4.0.0",
     "@rslib/core": "0.20.3",
     "@rstest/core": "0.8.3",
     "@types/node": "24.10.1",
+    "@visactor/vbi": "workspace:*",
     "@visactor/vchart": "2.0.23-alpha.6",
     "@visactor/vseed": "workspace:*",
     "@visactor/vtable": "1.23.1",
@@ -54,11 +58,13 @@
     "typescript": "6.0.2"
   },
   "peerDependencies": {
+    "@visactor/vbi": "workspace:*",
     "@visactor/vchart": "2.0.23-alpha.6",
     "@visactor/vseed": "workspace:*",
     "@visactor/vtable": "1.23.1"
   },
   "dependencies": {
+    "@lit/localize": "0.12.2",
     "lit": "3.3.3"
   }
 }
