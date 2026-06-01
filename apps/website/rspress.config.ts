@@ -5,9 +5,6 @@ import * as path from 'node:path'
 
 import i18nJson from './i18n.json'
 
-const vbiReactStarterSourceEntry = path.resolve(__dirname, '../../practices/vbi-react-starter/src/index.tsx')
-const vbiReactComponentsCssEntry = path.resolve(__dirname, '../../packages/vbi-react/src/components/entry.css')
-
 const allLocales = [
   {
     lang: 'zh-CN',
@@ -59,8 +56,8 @@ const allLocales = [
   },
 ]
 
-const isDev = process.env.NODE_ENV === 'development'
-const devEnableLocales = allLocales.map((locale) => locale.lang).slice(0, 2)
+const isDev = process.env.NODE_ENV !== 'development'
+const devEnableLocales = allLocales.map((locale) => locale.lang).slice(0, 1)
 const devLocales = allLocales.filter((locale) => devEnableLocales.includes(locale.lang))
 const devLocaleSet = new Set(devLocales.map((locale) => locale.lang))
 const devLocaleExcludes = allLocales
@@ -116,9 +113,6 @@ export default defineConfig({
       rspack: (config, { isServer }) => {
         config.resolve.alias = {
           ...config.resolve.alias,
-          '@visactor/vquery': path.join(__dirname, '../../packages/vquery/src/browser.ts'),
-          '@visactor/vbi-react/components.css$': vbiReactComponentsCssEntry,
-          'vbi-react-starter$': vbiReactStarterSourceEntry,
         }
 
         if (isServer) {
