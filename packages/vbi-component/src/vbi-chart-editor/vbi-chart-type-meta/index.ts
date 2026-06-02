@@ -6,8 +6,7 @@ export {
   VBI_CHART_TYPE_GROUPS,
   VBI_CHART_TYPE_METAS,
   VBI_CHART_TYPE_META_MAP,
-} from './chart-type-meta'
-export { VBIChartType } from './vbi-chart-type'
+} from '../vbi-chart-type/chart-type-meta'
 export type {
   ResolvedVBIChartTypeGroup,
   ResolvedVBIChartTypeMeta,
@@ -19,4 +18,4 @@ export type {
   VBIChartTypeText,
   VBIChartTypeTextSource,
   VBIChartTypeTranslate,
-} from './chart-type-meta'
+} from '../vbi-chart-type/chart-type-meta'

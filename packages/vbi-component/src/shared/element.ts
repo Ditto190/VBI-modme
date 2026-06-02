@@ -1,5 +1,5 @@
-import { updateWhenLocaleChanges } from '@lit/localize'
 import { LitElement } from 'lit'
+import { subscribeVBIComponentLocaleChange } from 'src/localization'
 
 const VERSION = __VBI_COMPONENT_VERSION__
 const CONFIG_KEY = '__vbiComponent_disableRegistryWarning__'
@@ -13,9 +13,19 @@ const error = (message: unknown, componentInstance?: VdashElement): void => {
 }
 
 export class VdashElement extends LitElement {
-  constructor() {
-    super()
-    updateWhenLocaleChanges(this)
+  private _unsubscribeLocaleChange: (() => void) | undefined
+
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this._unsubscribeLocaleChange = subscribeVBIComponentLocaleChange(() => {
+      this.requestUpdate()
+    })
+  }
+
+  override disconnectedCallback(): void {
+    this._unsubscribeLocaleChange?.()
+    this._unsubscribeLocaleChange = undefined
+    super.disconnectedCallback()
   }
 
   get version(): string {

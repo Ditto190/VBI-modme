@@ -8,5 +8,5 @@
       "src/*": ["./src/*"]
     }
   },
-  "include": ["src", "tests", "rstest.config.ts", "package.json"]
+  "include": ["src", "src/**/*.json", "tests", "rstest.config.ts", "package.json"]
 }
