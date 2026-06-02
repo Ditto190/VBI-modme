@@ -9,7 +9,6 @@ export { VBIChartType } from './vbi-chart-type'
 export type {
   ResolvedVBIChartTypeGroup,
   ResolvedVBIChartTypeMeta,
-  VBIChartTypeChangeDetail,
   VBIChartTypeGroupKey,
   VBIChartTypeGroupMeta,
   VBIChartTypeIcon,

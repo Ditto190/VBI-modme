@@ -216,7 +216,7 @@ const styles: CSSResultGroup = [
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--vbi-chart-type-primary, #1677ff) 16%, transparent);
     }
 
-    .card[data-selected] {
+    .card[aria-selected='true'] {
       background: var(--vbi-chart-type-primary-bg, #e6f4ff);
       border-color: var(--vbi-chart-type-primary-border, #91caff);
       color: var(--vbi-chart-type-primary, #1677ff);
@@ -237,6 +237,13 @@ const styles: CSSResultGroup = [
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
+    }
+
+    .panel--above {
+      bottom: 100%;
+      margin-bottom: 6px;
+      margin-top: 0;
+      top: auto;
     }
 
     .panel__empty {

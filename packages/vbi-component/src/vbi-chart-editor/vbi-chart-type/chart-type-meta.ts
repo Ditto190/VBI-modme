@@ -36,11 +36,6 @@ export interface ResolvedVBIChartTypeMeta extends VBIChartTypeMeta {
   description: string
 }
 
-export interface VBIChartTypeChangeDetail {
-  chartType: string
-  type: string
-}
-
 export const VBI_CHART_TYPE_GROUPS: VBIChartTypeGroupMeta[] = [
   {
     key: 'table',
@@ -303,6 +298,23 @@ export const VBI_CHART_TYPE_META_MAP = Object.fromEntries(
   VBI_CHART_TYPE_METAS.map((meta) => [meta.type, meta]),
 ) as Record<string, VBIChartTypeMeta>
 
+const chartTypeMetaMapCache = new WeakMap<VBIChartTypeMeta[], Record<string, VBIChartTypeMeta>>()
+
+const getVBIChartTypeMetaMap = (metas: VBIChartTypeMeta[]): Record<string, VBIChartTypeMeta> => {
+  if (metas === VBI_CHART_TYPE_METAS) {
+    return VBI_CHART_TYPE_META_MAP
+  }
+
+  const cached = chartTypeMetaMapCache.get(metas)
+  if (cached) {
+    return cached
+  }
+
+  const map = Object.fromEntries(metas.map((meta) => [meta.type, meta])) as Record<string, VBIChartTypeMeta>
+  chartTypeMetaMapCache.set(metas, map)
+  return map
+}
+
 export const getVBIChartTypeGroups = (
   text?: VBIComponentTextSource,
   groups: VBIChartTypeGroupMeta[] = VBI_CHART_TYPE_GROUPS,
@@ -319,10 +331,7 @@ export const getVBIChartTypeMeta = (
   text?: VBIComponentTextSource,
   metas: VBIChartTypeMeta[] = VBI_CHART_TYPE_METAS,
 ): ResolvedVBIChartTypeMeta => {
-  const meta =
-    metas === VBI_CHART_TYPE_METAS
-      ? VBI_CHART_TYPE_META_MAP[chartType]
-      : Object.fromEntries(metas.map((item) => [item.type, item]))[chartType]
+  const meta = getVBIChartTypeMetaMap(metas)[chartType]
 
   if (!meta) {
     return {

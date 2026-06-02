@@ -7,8 +7,7 @@ const styles: CSSResultGroup = [
     /* ── Host ────────────────────────────────────────── */
 
     :host {
-      font-size: var(--vbi-modal-font-size, 14px);
-      line-height: var(--vbi-modal-line-height, 1.5714285714);
+      display: block;
     }
 
     /* ── Root ────────────────────────────────────────── */

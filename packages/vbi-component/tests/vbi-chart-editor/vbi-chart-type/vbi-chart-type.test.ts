@@ -81,7 +81,6 @@ describe('vbi-chart-type', () => {
   it('should render custom chart type groups and metadata', async () => {
     const el = await fixture<VBIChartTypeInstance>(
       html`<vbi-chart-type
-        chart-type="customBar"
         .chartTypeGroups=${[
           {
             key: 'custom',
@@ -115,25 +114,18 @@ describe('vbi-chart-type', () => {
     expect(findCardByLabel(el, 'Custom bar')).toBeTruthy()
   })
 
-  it('should update standalone chart type and dispatch change event on selection', async () => {
+  it('should ignore chart type selection without a builder', async () => {
     const el = await fixture<VBIChartTypeInstance>(
       html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar'])}></vbi-chart-type>`,
     )
-    let selectedChartType = ''
-
-    el.addEventListener('vbi-chart-type-change', ((event: CustomEvent<{ chartType: string }>) => {
-      selectedChartType = event.detail.chartType
-    }) as EventListener)
 
     trigger(el).click()
     await el.updateComplete
     findCardByLabel(el, 'Bar').click()
     await el.updateComplete
 
-    expect(el.chartType).toBe('bar')
-    expect(selectedChartType).toBe('bar')
-    expect(el.shadowRoot?.querySelector('.panel')).toBeNull()
-    expect(trigger(el).textContent?.trim()).toContain('Bar')
+    expect(el.shadowRoot?.querySelector('.panel')).toBeTruthy()
+    expect(trigger(el).textContent?.trim()).toContain('Table')
   })
 
   it('should allow hiding trigger text from markup', async () => {

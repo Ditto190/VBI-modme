@@ -10,12 +10,14 @@ import {
   VBI_CHART_TYPE_METAS,
   getVBIChartTypeGroups,
   getVBIChartTypeMeta,
+  type ResolvedVBIChartTypeGroup,
   type ResolvedVBIChartTypeMeta,
-  type VBIChartTypeChangeDetail,
   type VBIChartTypeGroupMeta,
   type VBIChartTypeMeta,
 } from './chart-type-meta'
 import styles from './vbi-chart-type.style'
+
+type ResolvedGroupedChartTypes = (ResolvedVBIChartTypeGroup & { items: ResolvedVBIChartTypeMeta[] })[]
 
 /**
  * Chart type selector for the VBI chart editor.
@@ -23,7 +25,6 @@ import styles from './vbi-chart-type.style'
  * @tag vbi-chart-type
  *
  * @prop {VBIChartBuilder} builder - Optional VBI chart builder used as the source of truth.
- * @prop {string} chartType - Selected chart type when no builder is provided.
  * @prop {VBIChartTypeGroupMeta[]} chartTypeGroups - Chart type group catalog.
  * @prop {VBIChartTypeMeta[]} chartTypeMetas - Chart type metadata catalog.
  * @prop {boolean} compact - Render the compact toolbar trigger.
@@ -43,7 +44,7 @@ import styles from './vbi-chart-type.style'
  * @cssprop [--vbi-chart-type-radius-lg] - Large corner radius.
  * @cssprop [--vbi-chart-type-shadow] - Floating panel shadow.
  *
- * @fires vbi-chart-type-change - Fired after a chart type is selected.
+ * @fires vbi-chart-type-change - Dispatched when a chart type is selected. `detail: { type: string }`.
  */
 @customElement('vbi-chart-type')
 export class VBIChartType extends VdashElement {
@@ -51,8 +52,9 @@ export class VBIChartType extends VdashElement {
     return styles
   }
 
+  static readonly DEFAULT_CHART_TYPE = 'table'
+
   @property({ attribute: false }) accessor builder: VBIChartBuilder | undefined
-  @property({ type: String, attribute: 'chart-type' }) accessor chartType = 'table'
   @property({ type: Array, attribute: false }) accessor chartTypeGroups: VBIChartTypeGroupMeta[] = VBI_CHART_TYPE_GROUPS
   @property({ type: Array, attribute: false }) accessor chartTypeMetas: VBIChartTypeMeta[] = VBI_CHART_TYPE_METAS
   @property({ type: Boolean }) accessor compact = false
@@ -60,9 +62,9 @@ export class VBIChartType extends VdashElement {
   @property({ attribute: false }) accessor text: VBIComponentText = {}
 
   @state() private accessor _open = false
-  @state() private accessor _builderChartType = 'table'
-  @state() private accessor _builderAvailableChartTypes: string[] = VBI_CHART_TYPE_METAS.map((meta) => meta.type)
+  @state() private accessor _groupedTypes: ResolvedGroupedChartTypes = []
 
+  private _previouslyFocused: HTMLElement | null = null
   private _stopBuilderObserve: (() => void) | undefined
 
   override connectedCallback(): void {
@@ -83,14 +85,29 @@ export class VBIChartType extends VdashElement {
     if (changedProperties.has('builder')) {
       this._bindBuilder()
     }
+
+    if (
+      changedProperties.has('builder') ||
+      changedProperties.has('chartTypeMetas') ||
+      changedProperties.has('chartTypeGroups') ||
+      changedProperties.has('text')
+    ) {
+      this._groupedTypes = this._computeGroupedChartTypes()
+    }
+  }
+
+  protected override updated(): void {
+    if (this._open) {
+      this._positionPanel()
+    }
   }
 
   private get _currentChartType(): string {
-    return this.builder ? this._builderChartType : this.chartType
+    return this.builder?.chartType.getChartType() ?? this.chartTypeMetas[0]?.type ?? VBIChartType.DEFAULT_CHART_TYPE
   }
 
   private get _chartTypes(): string[] {
-    return this.builder ? this._builderAvailableChartTypes : this.chartTypeMetas.map((meta) => meta.type)
+    return this.builder?.chartType.getAvailableChartTypes() ?? this.chartTypeMetas.map((meta) => meta.type)
   }
 
   private get _panelTitle(): string {
@@ -105,19 +122,9 @@ export class VBIChartType extends VdashElement {
       return
     }
 
-    this._syncFromBuilder()
     this._stopBuilderObserve = this.builder.chartType.observe(() => {
-      this._syncFromBuilder()
+      this.requestUpdate()
     })
-  }
-
-  private _syncFromBuilder(): void {
-    if (!this.builder) {
-      return
-    }
-
-    this._builderChartType = this.builder.chartType.getChartType()
-    this._builderAvailableChartTypes = this.builder.chartType.getAvailableChartTypes()
   }
 
   private _handleDocumentClick = (event: MouseEvent): void => {
@@ -125,45 +132,82 @@ export class VBIChartType extends VdashElement {
       return
     }
 
-    this._open = false
+    this._closePanel()
   }
 
   private _handleDocumentKeydown = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape') {
-      this._open = false
+    if (event.key === 'Escape' && this._open) {
+      this._closePanel()
     }
   }
 
   private _togglePanel = (): void => {
-    this._open = !this._open
+    if (this._open) {
+      this._closePanel()
+    } else {
+      this._openPanel()
+    }
+  }
+
+  private _openPanel(): void {
+    this._previouslyFocused = (this.shadowRoot?.activeElement ?? document.activeElement) as HTMLElement | null
+    this._groupedTypes = this._computeGroupedChartTypes()
+    this._open = true
+
+    this.updateComplete.then(() => {
+      const selected = this.shadowRoot?.querySelector<HTMLElement>('.card[aria-selected="true"]')
+      const first = this.shadowRoot?.querySelector<HTMLElement>('.card')
+      ;(selected ?? first)?.focus()
+    })
+  }
+
+  private _closePanel(): void {
+    this._open = false
+    this._previouslyFocused?.focus()
+    this._previouslyFocused = null
   }
 
   private _selectChartType(type: string): void {
-    if (this.builder) {
-      this._builderChartType = type
-      this.builder.chartType.changeChartType(type)
-    } else {
-      this.chartType = type
-    }
-
-    this._open = false
+    this.builder?.chartType.changeChartType(type)
     this.dispatchEvent(
-      new CustomEvent<VBIChartTypeChangeDetail>('vbi-chart-type-change', {
-        detail: { chartType: type, type },
+      new CustomEvent('vbi-chart-type-change', {
+        detail: { type },
         bubbles: true,
         composed: true,
       }),
     )
+    this._closePanel()
   }
 
-  private _groupedChartTypes() {
-    const chartTypes = this._chartTypes
+  private _positionPanel(): void {
+    const panel = this.shadowRoot?.querySelector('.panel') as HTMLElement | null
+    if (!panel) return
+
+    panel.classList.remove('panel--above')
+    const rect = panel.getBoundingClientRect()
+    if (rect.bottom > window.innerHeight) {
+      panel.classList.add('panel--above')
+    }
+  }
+
+  private _computeGroupedChartTypes(): ResolvedGroupedChartTypes {
+    const itemsByGroup = new Map<string, ResolvedVBIChartTypeMeta[]>()
+
+    for (const type of this._chartTypes) {
+      const item = getVBIChartTypeMeta(type, this.text, this.chartTypeMetas)
+      const items = itemsByGroup.get(item.group)
+
+      if (items) {
+        items.push(item)
+      } else {
+        itemsByGroup.set(item.group, [item])
+      }
+    }
+
     return getVBIChartTypeGroups(this.text, this.chartTypeGroups)
       .map((group) => ({
         ...group,
-        items: chartTypes
-          .map((type) => getVBIChartTypeMeta(type, this.text, this.chartTypeMetas))
-          .filter((meta) => meta.group === group.key),
+        items: itemsByGroup.get(group.key) ?? [],
       }))
       .filter((group) => group.items.length > 0)
   }
@@ -172,17 +216,18 @@ export class VBIChartType extends VdashElement {
     return html`<span class="chart-icon">${icon}</span>`
   }
 
-  private _renderCard(meta: ResolvedVBIChartTypeMeta) {
-    const selected = this._currentChartType === meta.type
+  private _renderCard(meta: ResolvedVBIChartTypeMeta, currentChartType: string) {
+    const selected = currentChartType === meta.type
     const tooltip = `${meta.label}: ${meta.description}`
 
     return html`
       <button
         class="card"
         type="button"
+        role="option"
         title=${tooltip}
         aria-label=${tooltip}
-        ?data-selected=${selected}
+        aria-selected=${selected ? 'true' : 'false'}
         @click=${() => this._selectChartType(meta.type)}
       >
         ${this._renderIcon(meta.icon)}
@@ -196,10 +241,11 @@ export class VBIChartType extends VdashElement {
       return nothing
     }
 
-    const groups = this._groupedChartTypes()
+    const groups = this._groupedTypes
+    const currentChartType = this._currentChartType
 
     return html`
-      <div class="panel" role="dialog" aria-label=${this._panelTitle}>
+      <div class="panel" role="listbox" aria-label=${this._panelTitle}>
         <div class="panel__title">${this._panelTitle}</div>
         ${groups.length > 0
           ? html`
@@ -214,7 +260,7 @@ export class VBIChartType extends VdashElement {
                         ${repeat(
                           group.items,
                           (item) => item.type,
-                          (item) => this._renderCard(item),
+                          (item) => this._renderCard(item, currentChartType),
                         )}
                       </div>
                     </section>
@@ -243,7 +289,7 @@ export class VBIChartType extends VdashElement {
           type="button"
           title=${triggerTooltip}
           aria-label=${triggerTooltip}
-          aria-haspopup="dialog"
+          aria-haspopup="listbox"
           aria-expanded=${this._open ? 'true' : 'false'}
           @click=${this._togglePanel}
         >
