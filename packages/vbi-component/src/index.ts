@@ -6,8 +6,11 @@ export type {
   VBIButtonSize,
   VBIButtonType,
 } from './base/vbi-button'
+export { VBIModal } from './base/vbi-modal'
+export type { VBIModalConfirmType, VBIModalSize } from './base/vbi-modal'
 export { VBITooltip } from './base/vbi-tooltip'
 export type { VBITooltipPlacement, VBITooltipTrigger } from './base/vbi-tooltip'
+
 export {
   configureVBIComponentLocalization,
   getVBIComponentLocale,

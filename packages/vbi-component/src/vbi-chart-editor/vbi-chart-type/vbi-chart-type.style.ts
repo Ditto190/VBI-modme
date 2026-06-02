@@ -6,7 +6,6 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: inline-block;
-      font-family: var(--vbi-chart-type-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
       max-width: 100%;
     }
 

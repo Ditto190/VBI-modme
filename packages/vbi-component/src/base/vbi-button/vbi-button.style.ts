@@ -8,13 +8,7 @@ const styles: CSSResultGroup = [
 
     :host {
       display: var(--vbi-button-host-display, inline-block);
-      font-family: var(--vbi-button-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     }
-
-    :host([hidden]) {
-      display: var(--vbi-button-host-hidden-display, none);
-    }
-
     /* ── Base ────────────────────────────────────────── */
 
     .vbi-button {

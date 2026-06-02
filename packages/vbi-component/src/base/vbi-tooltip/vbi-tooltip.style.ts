@@ -11,10 +11,6 @@ const styles: CSSResultGroup = [
       position: var(--vbi-tooltip-host-position, relative);
     }
 
-    :host([hidden]) {
-      display: var(--vbi-tooltip-host-hidden-display, none);
-    }
-
     /* ── Trigger ─────────────────────────────────────── */
 
     .vbi-tooltip__trigger {
@@ -33,7 +29,6 @@ const styles: CSSResultGroup = [
         0 9px 28px 8px rgba(0, 0, 0, 0.05)
       );
       color: var(--vbi-tooltip-color, #ffffff);
-      font-family: var(--vbi-tooltip-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
       font-size: var(--vbi-tooltip-font-size, 14px);
       line-height: var(--vbi-tooltip-line-height, 1.5714285714);
       max-width: var(--vbi-tooltip-max-width, 250px);

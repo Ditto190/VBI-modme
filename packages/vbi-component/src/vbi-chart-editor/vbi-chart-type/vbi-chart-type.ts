@@ -567,7 +567,7 @@ const iconSvg = (icon: VBIChartTypeIcon) => {
  * @prop {boolean} showText - Show label text in the trigger.
  * @prop {VBIChartTypeText} text - Text override map keyed by the toolbar i18n keys.
  *
- * @cssprop [--vbi-chart-type-font-family] - Font family used by the selector.
+ * @cssprop [--vbi-font-family] - Font family used by VBI components.
  * @cssprop [--vbi-chart-type-bg] - Surface background color of trigger, cards, and panel.
  * @cssprop [--vbi-chart-type-text] - Primary text color.
  * @cssprop [--vbi-chart-type-text-secondary] - Secondary text color.
