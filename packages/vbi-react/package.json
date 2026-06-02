@@ -27,6 +27,10 @@
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components.js",
       "require": "./dist/components.cjs"
+    },
+    "./components.css": {
+      "source": "./src/components/entry.css",
+      "default": "./dist/components.css"
     }
   },
   "main": "./dist/index.cjs",
@@ -66,5 +70,7 @@
     "typescript": "6.0.2",
     "vitest": "3.2.4"
   },
-  "sideEffects": false
+  "sideEffects": [
+    "**/*.css"
+  ]
 }

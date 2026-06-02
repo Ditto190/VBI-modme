@@ -1,0 +1,29 @@
+.vbi-react-builder-layout,
+.vbi-react-chart-renderer,
+.vbi-react-chart-type-selector,
+.vbi-react-field-panel,
+.vbi-react-filter-panel,
+.vbi-react-theme-selector {
+  box-sizing: border-box;
+}
+
+.vbi-react-builder-layout *,
+.vbi-react-builder-layout *::before,
+.vbi-react-builder-layout *::after,
+.vbi-react-chart-renderer *,
+.vbi-react-chart-renderer *::before,
+.vbi-react-chart-renderer *::after,
+.vbi-react-chart-type-selector *,
+.vbi-react-chart-type-selector *::before,
+.vbi-react-chart-type-selector *::after,
+.vbi-react-field-panel *,
+.vbi-react-field-panel *::before,
+.vbi-react-field-panel *::after,
+.vbi-react-filter-panel *,
+.vbi-react-filter-panel *::before,
+.vbi-react-filter-panel *::after,
+.vbi-react-theme-selector *,
+.vbi-react-theme-selector *::before,
+.vbi-react-theme-selector *::after {
+  box-sizing: inherit;
+}
