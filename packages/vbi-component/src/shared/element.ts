@@ -37,32 +37,40 @@ type CustomElementClass = Omit<typeof HTMLElement, 'new'>
  * Own implementation of Lit's customElement decorator.
  */
 export const customElement = (tagName: string) => {
-  return (classOrTarget: CustomElementClass) => {
-    if (typeof customElements === 'undefined') return
-    const customElementClass = customElements.get(tagName)
+  return (classOrTarget: CustomElementClass, context?: any) => {
+    const defineElement = () => {
+      if (typeof customElements === 'undefined') return
+      const customElementClass = customElements.get(tagName)
 
-    if (!customElementClass) {
-      customElements.define(tagName, classOrTarget as CustomElementConstructor)
-      return
+      if (!customElementClass) {
+        customElements.define(tagName, classOrTarget as CustomElementConstructor)
+        return
+      }
+
+      if (CONFIG_KEY in window) {
+        return
+      }
+
+      const el = document.createElement(tagName)
+      const anotherVersion = (el as VdashElement)?.version
+      let message = ''
+
+      if (!anotherVersion) {
+        message += 'is already registered by an unknown custom element handler class.'
+      } else if (anotherVersion !== VERSION) {
+        message += 'is already registered by a different version of Vdash. '
+        message += `This version is "${VERSION}", while the other one is "${anotherVersion}".`
+      } else {
+        message += `is already registered by the same version of Vdash (${VERSION}).`
+      }
+
+      warn(`The custom element "${tagName}" ${message}\nTo suppress this warning, set window.${CONFIG_KEY} to true`)
     }
 
-    if (CONFIG_KEY in window) {
-      return
-    }
-
-    const el = document.createElement(tagName)
-    const anotherVersion = (el as VdashElement)?.version
-    let message = ''
-
-    if (!anotherVersion) {
-      message += 'is already registered by an unknown custom element handler class.'
-    } else if (anotherVersion !== VERSION) {
-      message += 'is already registered by a different version of Vdash. '
-      message += `This version is "${VERSION}", while the other one is "${anotherVersion}".`
+    if (context && typeof context.addInitializer === 'function') {
+      context.addInitializer(defineElement)
     } else {
-      message += `is already registered by the same version of Vdash (${VERSION}).`
+      defineElement()
     }
-
-    warn(`The custom element "${tagName}" ${message}\nTo suppress this warning, set window.${CONFIG_KEY} to true`)
   }
 }
