@@ -1,8 +1,8 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
 import { fixture, fixtureCleanup } from '@open-wc/testing'
-import { html } from 'lit'
+import { html, svg } from 'lit'
 import { setVBIComponentLocale } from 'src/localization'
-import { VBIChartType } from 'src/vbi-chart-editor/vbi-chart-type'
+import { VBI_CHART_TYPE_METAS, VBIChartType } from 'src/vbi-chart-editor/vbi-chart-type'
 
 type VBIChartTypeInstance = InstanceType<typeof VBIChartType>
 
@@ -19,6 +19,8 @@ const findCardByLabel = (el: VBIChartTypeInstance, label: string): HTMLButtonEle
   if (!card) throw new Error(`card "${label}" not found`)
   return card
 }
+
+const chartTypeMetas = (types: string[]) => VBI_CHART_TYPE_METAS.filter((meta) => types.includes(meta.type))
 
 const createBuilder = () => {
   let chartType = 'line'
@@ -61,9 +63,9 @@ describe('vbi-chart-type', () => {
     expect(el).toBeInstanceOf(VBIChartType)
   })
 
-  it('should render available chart types grouped by family', async () => {
+  it('should render chart type metadata grouped by family', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type .availableChartTypes=${['table', 'bar', 'line']}></vbi-chart-type>`,
+      html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar', 'line'])}></vbi-chart-type>`,
     )
 
     trigger(el).click()
@@ -76,9 +78,46 @@ describe('vbi-chart-type', () => {
     expect(el.shadowRoot?.querySelectorAll('.card').length).toBe(3)
   })
 
+  it('should render custom chart type groups and metadata', async () => {
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type
+        chart-type="customBar"
+        .chartTypeGroups=${[
+          {
+            key: 'custom',
+            labelKey: 'customGroupLabel',
+            descriptionKey: 'customGroupDescription',
+          },
+        ]}
+        .chartTypeMetas=${[
+          {
+            type: 'customBar',
+            group: 'custom',
+            labelKey: 'customBarLabel',
+            descriptionKey: 'customBarDescription',
+            icon: svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16"/></svg>`,
+          },
+        ]}
+        .text=${{
+          customGroupLabel: 'Custom',
+          customGroupDescription: 'Custom chart group',
+          customBarLabel: 'Custom bar',
+          customBarDescription: 'Custom bar chart',
+        }}
+      ></vbi-chart-type>`,
+    )
+
+    trigger(el).click()
+    await el.updateComplete
+
+    expect(trigger(el).textContent?.trim()).toContain('Custom bar')
+    expect(el.shadowRoot?.querySelector('.group__heading')?.textContent?.trim()).toBe('Custom')
+    expect(findCardByLabel(el, 'Custom bar')).toBeTruthy()
+  })
+
   it('should update standalone chart type and dispatch change event on selection', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type .availableChartTypes=${['table', 'bar']}></vbi-chart-type>`,
+      html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar'])}></vbi-chart-type>`,
     )
     let selectedChartType = ''
 
@@ -98,9 +137,9 @@ describe('vbi-chart-type', () => {
   })
 
   it('should allow hiding trigger text from markup', async () => {
-    const el = await fixture<VBIChartTypeInstance>(html`<vbi-chart-type show-text="false"></vbi-chart-type>`)
+    const el = await fixture<VBIChartTypeInstance>(html`<vbi-chart-type hide-text></vbi-chart-type>`)
 
-    expect(el.showText).toBe(false)
+    expect(el.hideText).toBe(true)
     expect(el.shadowRoot?.querySelector('.trigger__content')).toBeNull()
   })
 
@@ -129,7 +168,7 @@ describe('vbi-chart-type', () => {
   it('should apply text overrides with the same keys as the React selector config', async () => {
     const el = await fixture<VBIChartTypeInstance>(
       html`<vbi-chart-type
-        .availableChartTypes=${['bar']}
+        .chartTypeMetas=${chartTypeMetas(['bar'])}
         .text=${{
           toolbarChartTypePanelTitle: 'Chon loai bieu do',
           toolbarChartTypeItemsBarLabel: 'Bieu do thanh',
@@ -147,7 +186,7 @@ describe('vbi-chart-type', () => {
   it('should render built-in localized chart type text', async () => {
     await setVBIComponentLocale('vi-VN')
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type .availableChartTypes=${['table', 'bar', 'line']}></vbi-chart-type>`,
+      html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar', 'line'])}></vbi-chart-type>`,
     )
 
     trigger(el).click()

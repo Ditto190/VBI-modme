@@ -1,59 +1,21 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
-import { html, nothing, svg, type PropertyValues } from 'lit'
+import { html, nothing, type PropertyValues } from 'lit'
 import { property, state } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js'
 import { repeat } from 'lit/directives/repeat.js'
+import { translateVBIComponentText as translate, type VBIComponentText } from 'src/localization'
 import { customElement, VdashElement } from 'src/shared/element'
 import {
-  DEFAULT_AVAILABLE_CHART_TYPES,
+  VBI_CHART_TYPE_GROUPS,
+  VBI_CHART_TYPE_METAS,
   getVBIChartTypeGroups,
   getVBIChartTypeMeta,
-  translateVBIChartTypeText as translate,
   type ResolvedVBIChartTypeMeta,
   type VBIChartTypeChangeDetail,
-  type VBIChartTypeIcon,
-  type VBIChartTypeText,
+  type VBIChartTypeGroupMeta,
+  type VBIChartTypeMeta,
 } from './chart-type-meta'
 import styles from './vbi-chart-type.style'
-
-const showTextConverter = {
-  fromAttribute: (value: string | null): boolean => {
-    return value === null ? true : value !== 'false' && value !== '0'
-  },
-}
-
-const iconSvg = (icon: VBIChartTypeIcon) => {
-  switch (icon) {
-    case 'area':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16"/><path d="M5 16l4-6 4 3 5-7v10z"/></svg>`
-    case 'bar':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h14"/><path d="M4 12h16"/><path d="M4 18h10"/></svg>`
-    case 'circlePacking':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="10" r="2.5"/><circle cx="14" cy="9" r="2"/><circle cx="14" cy="15" r="3"/></svg>`
-    case 'column':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 17V9"/><path d="M12 17V5"/><path d="M17 17v-6"/></svg>`
-    case 'dualAxis':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V5"/><path d="M19 19V5"/><path d="M5 18h14"/><path d="M7 14l4-5 3 3 3-5"/><path d="M7 16h3"/><path d="M12 16h3"/></svg>`
-    case 'funnel':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16l-6 7v5l-4 2v-7z"/></svg>`
-    case 'heatmap':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h5v5H5z"/><path d="M14 5h5v5h-5z"/><path d="M5 14h5v5H5z"/><path d="M14 14h5v5h-5z"/></svg>`
-    case 'hierarchy':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v6H4z"/><path d="M13 5h7v4h-7z"/><path d="M13 11h7v8h-7z"/><path d="M4 13h7v6H4z"/></svg>`
-    case 'line':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16"/><path d="M5 15l4-5 4 3 5-7"/></svg>`
-    case 'pie':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 108 8h-8z"/><path d="M13 3v8h8a8 8 0 00-8-8z"/></svg>`
-    case 'radar':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 5v7l-7 4-7-4V9z"/><path d="M12 8l4 3v4l-4 2-4-2v-4z"/><path d="M12 4v16"/><path d="M5 9l14 7"/><path d="M19 9L5 16"/></svg>`
-    case 'sankey':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7c6 0 7 10 16 10"/><path d="M4 17c5 0 7-10 16-10"/><path d="M4 7v4"/><path d="M4 15v4"/><path d="M20 5v4"/><path d="M20 15v4"/></svg>`
-    case 'scatter':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="15" r="1.8"/><circle cx="11" cy="9" r="1.8"/><circle cx="16" cy="14" r="1.8"/><circle cx="18" cy="7" r="1.8"/><path d="M4 20h16"/></svg>`
-    case 'table':
-      return svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M4 10h16"/><path d="M4 15h16"/><path d="M10 5v14"/><path d="M16 5v14"/></svg>`
-  }
-}
 
 /**
  * Chart type selector for the VBI chart editor.
@@ -62,10 +24,11 @@ const iconSvg = (icon: VBIChartTypeIcon) => {
  *
  * @prop {VBIChartBuilder} builder - Optional VBI chart builder used as the source of truth.
  * @prop {string} chartType - Selected chart type when no builder is provided.
- * @prop {string[]} availableChartTypes - Available chart types when no builder is provided.
+ * @prop {VBIChartTypeGroupMeta[]} chartTypeGroups - Chart type group catalog.
+ * @prop {VBIChartTypeMeta[]} chartTypeMetas - Chart type metadata catalog.
  * @prop {boolean} compact - Render the compact toolbar trigger.
- * @prop {boolean} showText - Show label text in the trigger.
- * @prop {VBIChartTypeText} text - Text override map keyed by the toolbar i18n keys.
+ * @prop {boolean} hideText - Hide label text in the trigger.
+ * @prop {VBIComponentText} text - Text override map keyed by the toolbar i18n keys.
  *
  * @cssprop [--vbi-font-family] - Font family used by VBI components.
  * @cssprop [--vbi-chart-type-bg] - Surface background color of trigger, cards, and panel.
@@ -84,39 +47,26 @@ const iconSvg = (icon: VBIChartTypeIcon) => {
  */
 @customElement('vbi-chart-type')
 export class VBIChartType extends VdashElement {
-  static override get observedAttributes() {
-    const attributes = super.observedAttributes
-    return attributes.includes('show-text') ? attributes : [...attributes, 'show-text']
-  }
-
   static override get styles() {
     return styles
   }
 
   @property({ attribute: false }) accessor builder: VBIChartBuilder | undefined
   @property({ type: String, attribute: 'chart-type' }) accessor chartType = 'table'
-  @property({ type: Array, attribute: false }) accessor availableChartTypes: string[] = DEFAULT_AVAILABLE_CHART_TYPES
+  @property({ type: Array, attribute: false }) accessor chartTypeGroups: VBIChartTypeGroupMeta[] = VBI_CHART_TYPE_GROUPS
+  @property({ type: Array, attribute: false }) accessor chartTypeMetas: VBIChartTypeMeta[] = VBI_CHART_TYPE_METAS
   @property({ type: Boolean }) accessor compact = false
-  @property({ attribute: 'show-text', converter: showTextConverter }) accessor showText = true
-  @property({ attribute: false }) accessor text: VBIChartTypeText = {}
+  @property({ type: Boolean, attribute: 'hide-text' }) accessor hideText = false
+  @property({ attribute: false }) accessor text: VBIComponentText = {}
 
   @state() private accessor _open = false
   @state() private accessor _builderChartType = 'table'
-  @state() private accessor _builderAvailableChartTypes: string[] = DEFAULT_AVAILABLE_CHART_TYPES
+  @state() private accessor _builderAvailableChartTypes: string[] = VBI_CHART_TYPE_METAS.map((meta) => meta.type)
 
   private _stopBuilderObserve: (() => void) | undefined
 
-  override attributeChangedCallback(name: string, oldValue: string | null, value: string | null): void {
-    super.attributeChangedCallback(name, oldValue, value)
-
-    if (name === 'show-text' && oldValue !== value) {
-      this.showText = value === null ? true : value !== 'false' && value !== '0'
-    }
-  }
-
   override connectedCallback(): void {
     super.connectedCallback()
-    this._syncShowTextAttribute()
     document.addEventListener('click', this._handleDocumentClick)
     document.addEventListener('keydown', this._handleDocumentKeydown)
   }
@@ -139,21 +89,12 @@ export class VBIChartType extends VdashElement {
     return this.builder ? this._builderChartType : this.chartType
   }
 
-  private get _availableChartTypes(): string[] {
-    return this.builder ? this._builderAvailableChartTypes : this.availableChartTypes
+  private get _chartTypes(): string[] {
+    return this.builder ? this._builderAvailableChartTypes : this.chartTypeMetas.map((meta) => meta.type)
   }
 
   private get _panelTitle(): string {
     return translate('toolbarChartTypePanelTitle', this.text)
-  }
-
-  private _syncShowTextAttribute(): void {
-    if (!this.hasAttribute('show-text')) {
-      return
-    }
-
-    const value = this.getAttribute('show-text')
-    this.showText = value !== 'false' && value !== '0'
   }
 
   private _bindBuilder(): void {
@@ -216,19 +157,19 @@ export class VBIChartType extends VdashElement {
   }
 
   private _groupedChartTypes() {
-    const availableTypes = this._availableChartTypes
-    return getVBIChartTypeGroups(this.text)
+    const chartTypes = this._chartTypes
+    return getVBIChartTypeGroups(this.text, this.chartTypeGroups)
       .map((group) => ({
         ...group,
-        items: availableTypes
-          .map((type) => getVBIChartTypeMeta(type, this.text))
+        items: chartTypes
+          .map((type) => getVBIChartTypeMeta(type, this.text, this.chartTypeMetas))
           .filter((meta) => meta.group === group.key),
       }))
       .filter((group) => group.items.length > 0)
   }
 
-  private _renderIcon(icon: VBIChartTypeIcon) {
-    return html`<span class="chart-icon">${iconSvg(icon)}</span>`
+  private _renderIcon(icon: ResolvedVBIChartTypeMeta['icon']) {
+    return html`<span class="chart-icon">${icon}</span>`
   }
 
   private _renderCard(meta: ResolvedVBIChartTypeMeta) {
@@ -287,12 +228,12 @@ export class VBIChartType extends VdashElement {
   }
 
   override render() {
-    const currentChartMeta = getVBIChartTypeMeta(this._currentChartType, this.text)
+    const currentChartMeta = getVBIChartTypeMeta(this._currentChartType, this.text, this.chartTypeMetas)
     const triggerTooltip = `${currentChartMeta.label}: ${currentChartMeta.description}`
     const triggerClasses = classMap({
       trigger: true,
       'trigger--compact': this.compact,
-      'trigger--without-text': !this.showText,
+      'trigger--without-text': this.hideText,
     })
 
     return html`
@@ -307,16 +248,16 @@ export class VBIChartType extends VdashElement {
           @click=${this._togglePanel}
         >
           ${this._renderIcon(currentChartMeta.icon)}
-          ${this.showText
-            ? html`
+          ${this.hideText
+            ? nothing
+            : html`
                 <span class="trigger__content">
                   <span class="trigger__label">${currentChartMeta.label}</span>
                   ${this.compact
                     ? nothing
                     : html`<span class="trigger__description">${currentChartMeta.description}</span>`}
                 </span>
-              `
-            : nothing}
+              `}
         </button>
         ${this._renderPanel()}
       </div>
