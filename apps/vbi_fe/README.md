@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-`apps/vbi_fe` is the Next.js frontend for the VBI console. Runtime commands are
+`apps/vbi_fe` is the Rsbuild frontend for the VBI console. Runtime commands are
 owned by the repository Docker workflow.
 
 From the repository root:

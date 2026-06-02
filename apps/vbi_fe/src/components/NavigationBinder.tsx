@@ -1,18 +1,21 @@
 import { useEffect } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
-import { useNavigationStore } from '../stores/navigation.store'
+import { bindApplicationNavigation, setApplicationPathname } from '../application'
 
 export const NavigationBinder = () => {
-  const pathname = usePathname()
-  const router = useRouter()
-
   useEffect(() => {
-    useNavigationStore.getState().setNavigate((path) => router.push(path))
-  }, [router])
+    const syncPathname = () => setApplicationPathname(window.location.pathname)
 
-  useEffect(() => {
-    useNavigationStore.getState().setPathname(pathname ?? '')
-  }, [pathname])
+    bindApplicationNavigation((path) => {
+      if (window.location.pathname !== path) {
+        window.history.pushState(null, '', path)
+      }
+      syncPathname()
+    })
+
+    syncPathname()
+    window.addEventListener('popstate', syncPathname)
+    return () => window.removeEventListener('popstate', syncPathname)
+  }, [])
 
   return null
 }

@@ -1,20 +1,86 @@
 # VBI Frontend Development
 
 Use for `apps/vbi_fe`, `docker/vbi_fe/*`, and frontend service configuration in
-`docker/docker-compose.dev.yml`. `apps/vbi_fe` owns Next.js UI, stores,
-services, collaboration wiring, preferences, and chart/insight/report views.
+`docker/docker-compose.dev.yml`. `apps/vbi_fe` owns the Rsbuild React shell,
+the typed application API, stores, services, collaboration wiring, preferences,
+and chart/insight/report/agent views.
+
+The frontend is not only a human-operated UI. Every durable Web capability must
+be reachable through the composable `src/application` API, selected in React with
+`useApplication`, and exposed consistently to non-human callers through the same
+semantic interface. A button click, route loader, drawer flow, or page-specific
+handler is not a feature unless the corresponding application capability exists.
 
 ## Non-Negotiable Runtime Rules
 
 - Develop, run, debug, test, typecheck, lint, and build `vbi_fe` through Docker.
-- Do not start Next.js, frontend validation, or frontend builds on the host.
+- Do not start the frontend dev server, frontend validation, or frontend builds
+  on the host.
 - Host `pnpm --filter @visactor/headless-bi-fe ...` commands are off-limits
   unless the user explicitly overrides this rule.
 - If a root script is missing, call `docker compose` directly.
-- Keep the Docker dev runtime on Turbo/Turbopack. Do not add `--webpack`,
-  switches, scripts, commands, or docs that move development back to webpack.
-- `apps/vbi_fe/next.config.ts` owns Turbopack aliases. Keep the existing
-  `webpack` callback for Next.js compatibility paths.
+- Keep the Docker dev runtime on Rsbuild. Do not add Next.js, Turbopack,
+  webpack fallback switches, scripts, commands, or docs.
+- `apps/vbi_fe/rsbuild.config.ts` owns the frontend entry, dev server, and
+  proxy configuration.
+
+## Application API First
+
+- All Web functionality belongs behind `src/application` before it becomes UI.
+  Pages and components may render state, collect user input, and bind events,
+  but durable behavior must be callable through `application` and selectable
+  through `useApplication`.
+- Implement capabilities as composable domain modules such as `agent`,
+  `chart`, `insight`, `report`, `reportDetail`, `i18n`, and `theme`. Add a new
+  module or submodule when a workflow has a stable domain name; do not hide it
+  inside a page, modal, drawer, hook, or store as a one-off action.
+- The public shape is semantic and command-oriented: expose grouped state
+  projections plus verbs such as `activate`, `open`, `list`, `create`,
+  `rename`, `delete`, `select`, `search`, `prompt`, or `change`. Do not expose
+  router objects, raw zustand stores, implementation-only lifecycle names, or
+  DOM-only operations as the public API.
+- React code uses `useApplication(selector, options?)` for application state and
+  commands. Use narrow selectors and `applicationShallowEqual` for object
+  projections so unrelated application updates do not re-render tool surfaces.
+- Non-React callers use the same API through `application`,
+  `window.VBIApplication`, `window.VBIApplicationAPI.application`, or
+  `window.useApplication`. Keep this external surface functional for browser
+  automation, agents, scripted QA, and future non-human Web operators.
+- Navigation is a capability, not a component detail. Application commands route
+  through typed route targets and the bound router adapter; do not let callers
+  depend on React Router internals or page-local `navigate` closures.
+- Lifecycle work returns `ApplicationCleanup` when activation owns subscriptions,
+  collaboration sessions, runtimes, polling, or loaded state. Avoid leaking
+  `bootstrap` and `dispose` as public UI commands; wrap them in semantic
+  `activate` flows.
+- Lazy-load heavy runtime modules behind application command adapters when the
+  feature does not need to be in the first chunk. The public command shape must
+  stay stable whether implementation is eager or lazy.
+- A feature implemented only as a click handler, component-local effect,
+  private hook, or ad hoc service call is not acceptable. Promote it into the
+  application API or delete it.
+
+## Capability Design Checklist
+
+When adding or changing a frontend capability, update the application layer in
+the same change:
+
+- Add or revise the typed contract under `src/application/<domain>/contract.ts`.
+- Add state projections and commands under `src/application/<domain>/`.
+- Add a lazy adapter when the implementation imports heavy runtime, Builder,
+  collaboration, assistant, or editor code.
+- Add route targets or route helpers when the command changes location.
+- Bind presentation components through `useApplication`; keep page components
+  thin and declarative.
+- Keep service calls and Provider mapping in services or stores, then expose the
+  workflow as application commands.
+- Extend `tests/application-interface.test.tsx` for public state, commands,
+  external window exposure, route behavior, and removal of legacy one-off fields.
+- Add focused page tests only after the application interface behavior is
+  covered.
+
+Reject changes that add a UI-only workflow without this application contract,
+even if the human interaction appears to work in the browser.
 
 ## Docker Entrypoints
 
@@ -26,7 +92,7 @@ pnpm run vbi:dev:down
 pnpm run vbi:dev:rebuild
 ```
 
-Build or rebuild after Dockerfile, dependency, lockfile, package, Next.js config,
+Build or rebuild after Dockerfile, dependency, lockfile, package, Rsbuild config,
 or compose changes. Use `vbi:dev` for mounted source-only changes.
 
 ## Services
@@ -55,8 +121,8 @@ a partial subset as passed validation.
 ## Docker Runtime Ownership
 
 - `docker/docker-compose.dev.yml` owns local full-stack VBI development.
-- `docker/vbi_fe/Dockerfile.dev` owns the frontend image and `0.0.0.0` Next
-  server.
+- `docker/vbi_fe/Dockerfile.dev` owns the frontend image and `0.0.0.0` Rsbuild
+  dev server.
 - Mounted volumes cover frontend source/public/config, provider code, packages,
   and practices, but not every file.
 - After dependency, lockfile, package, or test file changes, rebuild or use a
@@ -65,8 +131,13 @@ a partial subset as passed validation.
 
 ## Frontend Contracts
 
-- Active UI uses `src/app/*` routes and `src/views/*`; do not revive legacy
-  `src/pages/*`.
+- Active UI uses the SPA route shell in `src/App.tsx`, shared providers in
+  `src/app/*`, and page implementations in `src/views/*`; do not revive Next
+  App Router routes or legacy `src/pages/*`.
+- `src/application/index.ts` is the public frontend capability entrypoint.
+  Keep exports intentional, typed, and organized by domain.
+- `src/app/providers.tsx` owns application exposure to the browser window,
+  preference reconciliation, navigation binding, and global UI roots.
 - API changes must stay synchronized with backend contracts and `src/services`.
 - Service mappers should tolerate partially populated Provider detail responses
   and normalize optional nested DSL payloads.
@@ -78,7 +149,7 @@ a partial subset as passed validation.
 
 - Use Tailwind utilities and shadcn/ui components.
 - `components.json` owns the stack: `radix-nova`, Tailwind v4 variables, lucide,
-  RSC App Router, and `src/components/ui`.
+  and `src/components/ui`.
 - Add reusable primitives through the shadcn CLI from `apps/vbi_fe`, then adapt
   generated files to local aliases and tokens.
 - Do not introduce CSS modules, page stylesheets, handwritten class systems,
@@ -92,16 +163,22 @@ a partial subset as passed validation.
 
 ## Resource and Report Architecture
 
-- Chart, insight, and report management pages are adapters over one
-  resource-management workflow.
+- Chart, insight, and report management pages are adapters over one typed
+  resource application workflow.
+- `application.chart`, `application.insight`, and `application.report` expose
+  the shared resource contract: list/detail activation, create, delete, rename,
+  open, record search/selection, and editor connect/release.
 - Shared search, selection, create, delete, rename, drawer, list reload, empty,
   and loading behavior belongs in common modules.
 - Keep Provider-first ownership: views consume Provider, sessions, and
   Builder-facing commands.
-- React presentation components receive projections and commands; they do not
-  rebuild DSL payloads or duplicate lifecycle logic.
+- React presentation components receive application projections and commands;
+  they do not rebuild DSL payloads, duplicate lifecycle logic, or call resource
+  stores as private escape hatches.
 - Report detail runtime owns session graph updates, child retain/release, active
   page resolution, page mutation, and editor state.
+- `application.reportDetail` exposes report page commands and state projections
+  for both the visible report workspace and external automation.
 - Child resource diff/retain/release stays near `resource-session.store.ts`.
 - Public exports from `src/i18n`, `src/theme`, `src/models`, and `src/types`
   should be intentional.
@@ -114,14 +191,18 @@ a partial subset as passed validation.
   or tool-call rendering when existing primitives fit.
 - shadcn/Tailwind owns product chrome; assistant-ui owns chat surface.
 - Runtime, storage, stream proxying, and Provider/Builder tool wiring stay
-  outside React presentation components.
+  outside React presentation components and are exposed through
+  `application.agent.chat`, `application.agent.conversations`, and
+  `application.agent.model`.
 - Tool calls, reasoning, attachments, usage, abort/retry, and streaming states
   are typed adapter states, not console-only diagnostics.
+- Prompting, cancellation, conversation open/rename/delete/refresh, and model
+  changes must be callable without clicking the visible chat UI.
 
 ## Report Detail and Embedded Standard App
 
 - Report detail mutates pages through Builder APIs exposed by
-  `src/stores/report-detail.store.ts`.
+  `application.reportDetail` and backed by `src/stores/report-detail.store.ts`.
 - Pages size to content; avoid viewport-height constraints that create overlap or
   large gaps.
 - Regression path: enter from `/manage/reports` and repeatedly enter/leave.

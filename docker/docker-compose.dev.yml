@@ -9,9 +9,6 @@ services:
       - '${VBI_FE_PORT:-3000}:3000'
     volumes:
       - ../apps/vbi_fe:/app/apps/vbi_fe
-      - vbi_fe_node_modules:/app/apps/vbi_fe/node_modules
-      - vbi_fe_next:/app/apps/vbi_fe/.next
-      - vbi_fe_turbo:/app/apps/vbi_fe/.turbo
       - ../apps/vbi_provider:/app/apps/vbi_provider
       - ../packages:/app/packages
       - ../practices:/app/practices
@@ -75,9 +72,6 @@ services:
 
 volumes:
   postgres_data:
-  vbi_fe_node_modules:
-  vbi_fe_next:
-  vbi_fe_turbo:
 
 networks:
   vbi_net:

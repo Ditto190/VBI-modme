@@ -1,15 +1,13 @@
 'use client'
 
 import type { VBIChartBuilder } from '@visactor/vbi'
-import dynamic from 'next/dynamic'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import { useStandardAppProps } from '../hooks/useStandardAppProps'
 import { ensureDemoConnector } from '../services/demoConnector'
+import { lazyComponent } from './LazyComponent'
 
-const StandardAPP = dynamic(() => import('standard').then((module) => module.APP), {
-  ssr: false,
-})
+const StandardAPP = lazyComponent(() => import('standard').then((module) => ({ default: module.APP })))
 
 type StandardChartAppProps = {
   builder: VBIChartBuilder | null

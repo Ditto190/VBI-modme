@@ -11,13 +11,11 @@ type ThemeAccent = {
   secondary: string
   rowBorder?: string
   shadow?: string
-  sider?: string
   tableHead?: string
 }
 
 const createLightPalette = (accent: ThemeAccent) => ({
   secondary: accent.secondary,
-  sider: accent.sider ?? '#f4f4f5',
   control: '#ffffff',
   controlMuted: accent.controlMuted ?? '#f3f4f6',
   text: '#18181b',
@@ -46,7 +44,6 @@ const createLightPalette = (accent: ThemeAccent) => ({
 
 const createDarkPalette = (accent: ThemeAccent) => ({
   secondary: accent.secondary,
-  sider: accent.sider ?? '#111113',
   control: '#18181b',
   controlMuted: accent.controlMuted ?? '#27272a',
   text: '#f8fafc',
@@ -86,7 +83,6 @@ export const vbiThemePalettes = {
     primaryHover: '#020617',
     secondary: '#ffffff',
     rowBorder: '#e5ebf2',
-    sider: '#f4f6f9',
     tableHead: '#f6f8fb',
   }),
   blue: createLightPalette({
@@ -101,7 +97,6 @@ export const vbiThemePalettes = {
     primaryHover: '#1d4ed8',
     secondary: '#f5f9ff',
     rowBorder: '#dbe8f8',
-    sider: '#edf5ff',
     tableHead: '#eef5ff',
   }),
   emerald: createLightPalette({
@@ -116,7 +111,6 @@ export const vbiThemePalettes = {
     primaryHover: '#58B83F',
     secondary: '#f6fcf3',
     rowBorder: '#dbead4',
-    sider: '#eff9eb',
     tableHead: '#f0f8ed',
   }),
   amber: createLightPalette({
@@ -131,7 +125,6 @@ export const vbiThemePalettes = {
     primaryHover: '#D9480F',
     secondary: '#ffe0d1',
     rowBorder: '#efcfbe',
-    sider: '#fff0e8',
     tableHead: '#fff1e9',
   }),
   rose: createLightPalette({
@@ -146,7 +139,6 @@ export const vbiThemePalettes = {
     primaryHover: '#9f1239',
     secondary: '#ffe4e6',
     rowBorder: '#efd0d8',
-    sider: '#fff1f4',
     tableHead: '#fff2f4',
   }),
   violet: createLightPalette({
@@ -161,7 +153,6 @@ export const vbiThemePalettes = {
     primaryHover: '#349AF7',
     secondary: '#E7F4FF',
     rowBorder: '#d9edf9',
-    sider: '#f0f9ff',
     tableHead: '#eff8ff',
   }),
   zinc: createDarkPalette({
@@ -176,7 +167,6 @@ export const vbiThemePalettes = {
     primaryHover: '#d4d4d8',
     secondary: '#09090b',
     rowBorder: 'rgba(255, 255, 255, 0.075)',
-    sider: '#101014',
     tableHead: '#17171c',
   }),
   midnight: createDarkPalette({
@@ -191,7 +181,6 @@ export const vbiThemePalettes = {
     primaryHover: '#93c5fd',
     secondary: '#08111f',
     rowBorder: 'rgba(147, 197, 253, 0.095)',
-    sider: '#0b1625',
     tableHead: '#111d2e',
   }),
   forest: createDarkPalette({
@@ -206,7 +195,6 @@ export const vbiThemePalettes = {
     primaryHover: '#6ee7b7',
     secondary: '#071713',
     rowBorder: 'rgba(110, 231, 183, 0.095)',
-    sider: '#0a1b17',
     tableHead: '#11251f',
   }),
   copper: createDarkPalette({
@@ -221,7 +209,6 @@ export const vbiThemePalettes = {
     primaryHover: '#fbbf24',
     secondary: '#1c1207',
     rowBorder: 'rgba(251, 191, 36, 0.1)',
-    sider: '#211509',
     tableHead: '#2b1d0d',
   }),
   plum: createDarkPalette({
@@ -236,7 +223,6 @@ export const vbiThemePalettes = {
     primaryHover: '#d8b4fe',
     secondary: '#140d22',
     rowBorder: 'rgba(216, 180, 254, 0.1)',
-    sider: '#191027',
     tableHead: '#231733',
   }),
   crimson: createDarkPalette({
@@ -251,7 +237,6 @@ export const vbiThemePalettes = {
     primaryHover: '#fda4af',
     secondary: '#1f0c12',
     rowBorder: 'rgba(253, 164, 175, 0.1)',
-    sider: '#260e16',
     tableHead: '#301520',
   }),
 } as const
