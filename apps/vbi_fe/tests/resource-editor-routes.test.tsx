@@ -5,10 +5,6 @@ const connectResourceSession = rs.fn()
 const releaseResourceSession = rs.fn()
 const navigate = rs.fn()
 
-rs.mock('next/dynamic', () => ({
-  default: () => () => null,
-}))
-
 rs.mock('../src/services/resourceApi', () => ({
   listResources: rs.fn(),
   renameResource: rs.fn(),

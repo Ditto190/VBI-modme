@@ -1,6 +1,6 @@
 import { withApiErrorToast } from './apiClient'
 import { requestProvider } from './providerHttp'
-import { tRuntime } from '../i18n'
+import { tRuntime } from '../i18n/runtime'
 import { listResources, removeResource } from './resourceApi'
 import type { InsightRecord } from '../types'
 

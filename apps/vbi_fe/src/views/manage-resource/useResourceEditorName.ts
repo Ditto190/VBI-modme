@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { updateInsight } from '../../services/insightApi'
-import { listResources, renameResource } from '../../services/resourceApi'
+import { applicationShallowEqual, useApplication } from '../../application'
 import type { ResourceKind } from '../../types'
 
 type UseResourceEditorNameOptions = {
@@ -11,12 +10,19 @@ type UseResourceEditorNameOptions = {
 
 export const useResourceEditorName = ({ fallback, id, kind }: UseResourceEditorNameOptions) => {
   const [name, setName] = useState('')
+  const { list, rename: renameResource } = useApplication(
+    (state) => ({
+      list: state[kind].list,
+      rename: state[kind].rename,
+    }),
+    { equality: applicationShallowEqual },
+  )
 
   useEffect(() => {
     let active = true
 
     setName('')
-    void listResources(kind)
+    void list()
       .then((items) => {
         if (!active) return
         setName(items.find((item) => item.id === id)?.name ?? '')
@@ -26,19 +32,14 @@ export const useResourceEditorName = ({ fallback, id, kind }: UseResourceEditorN
     return () => {
       active = false
     }
-  }, [id, kind])
+  }, [id, list])
 
   const rename = useCallback(async () => {
     const nextName = name.trim() || fallback
     setName(nextName)
 
-    if (kind === 'insight') {
-      await updateInsight(id, { name: nextName })
-      return
-    }
-
-    await renameResource(kind, id, nextName)
-  }, [fallback, id, kind, name])
+    await renameResource({ id, name: nextName })
+  }, [fallback, id, name, renameResource])
 
   return {
     name,

@@ -1,38 +1,42 @@
 'use client'
 
-import { useShallow } from 'zustand/shallow'
+import { useEffect } from 'react'
+import { applicationShallowEqual, useApplication } from '../application'
 import { useTranslation } from '../i18n'
-import { selectReportsPageState, useReportsStore } from '../stores/reports.store'
-import { useStoreLifecycle } from '../hooks/useStoreLifecycle'
-import { useNavigationStore } from '../stores/navigation.store'
-import { ReportResourceModals } from './reports/ReportResourceModals'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ReportsPage = () => {
   const { locale, t } = useTranslation()
-  const openReport = useNavigationStore((state) => state.openReport)
-  const state = useReportsStore(useShallow(selectReportsPageState))
-
   const {
-    bootstrap,
-    closeCreate,
+    activate,
     create,
-    createName,
     deleteSelected,
-    dispose,
     filteredItems,
-    isCreateOpen,
     loading,
-    openCreate,
+    open,
     remove,
     searchText,
     selectedRowKeys,
-    setCreateName,
     setSearchText,
     setSelectedRowKeys,
-  } = state
+  } = useApplication(
+    (applicationState) => ({
+      activate: applicationState.report.activate,
+      create: applicationState.report.create,
+      deleteSelected: applicationState.report.records.deleteSelected,
+      filteredItems: applicationState.report.records.visibleItems,
+      loading: applicationState.report.records.loading,
+      open: applicationState.report.open,
+      remove: applicationState.report.delete,
+      searchText: applicationState.report.records.searchText,
+      selectedRowKeys: applicationState.report.records.selectedIds,
+      setSearchText: applicationState.report.records.search,
+      setSelectedRowKeys: applicationState.report.records.select,
+    }),
+    { equality: applicationShallowEqual },
+  )
 
-  useStoreLifecycle(bootstrap, dispose)
+  useEffect(() => activate(), [activate])
 
   return (
     <ResourceManagementPage
@@ -41,11 +45,11 @@ export const ReportsPage = () => {
       fallbackName={t('reports.untitled')}
       locale={locale}
       state={{
+        create,
         deleteSelected,
         filteredItems,
         loading,
-        openCreate,
-        openDetail: openReport,
+        openDetail: open,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -54,14 +58,6 @@ export const ReportsPage = () => {
       title={t('reports.title')}
       t={t}
       onRemove={remove}
-    >
-      <ReportResourceModals
-        createName={createName}
-        isCreateOpen={isCreateOpen}
-        onCloseCreate={closeCreate}
-        onConfirmCreate={create}
-        onCreateNameChange={setCreateName}
-      />
-    </ResourceManagementPage>
+    />
   )
 }

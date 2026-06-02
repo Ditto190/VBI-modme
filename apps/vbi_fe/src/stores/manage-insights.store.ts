@@ -1,9 +1,9 @@
 import { create } from 'zustand'
-import { tRuntime } from '../i18n'
-import { createInsight, deleteInsight, fetchInsights, updateInsight } from '../services/insightApi'
+import { tRuntime } from '../i18n/runtime'
+import { createInsight, deleteInsight, updateInsight } from '../services/insightApi'
+import { listResources } from '../services/resourceApi'
 import {
   createResourceManagementState,
-  resolveNamedResourceCreateName,
   selectResourceManagementPageState,
   type ResourceManagementState,
 } from './resource-management.model'
@@ -18,11 +18,7 @@ const releaseInsightSession = async (resourceId: string) => {
   await releaseResourceSession('insight', resourceId)
 }
 
-type ManageInsightsState = ResourceManagementState & {
-  createContent: string
-  createOpen: boolean
-  setCreateContent(createContent: string): void
-}
+type ManageInsightsState = ResourceManagementState
 
 const getNextInsightName = () => tRuntime('insights.untitled')
 
@@ -30,28 +26,18 @@ export const useManageInsightsStore = create<ManageInsightsState>((set, get) => 
   ...createResourceManagementState(set, get, {
     kind: 'insight',
     connectSession: connectInsightSession,
-    create: async (state, name) => {
+    create: async (_, name, input) => {
       await createInsight({
-        content: state.createContent,
+        content: input.content ?? '',
         name,
       })
     },
-    getCreateOpenPatch: (createOpen) => ({ createOpen }),
-    getCreateResetPatch: () => ({ createContent: '' }),
     getFallbackName: getNextInsightName,
-    getInitialPatch: () => ({ createContent: '', createOpen: false }),
-    list: fetchInsights,
+    list: () => listResources('insight'),
     releaseSession: releaseInsightSession,
-    remove: deleteInsight,
+    remove: (id) => deleteInsight(id),
     rename: (id, name) => updateInsight(id, { name }),
-    resolveCreateName: resolveNamedResourceCreateName(getNextInsightName),
   }),
-  setCreateContent: (createContent) => set({ createContent }),
 }))
 
-export const selectManageInsightsPageState = (state: ManageInsightsState) => ({
-  ...selectResourceManagementPageState(state),
-  createContent: state.createContent,
-  createOpen: state.createOpen,
-  setCreateContent: state.setCreateContent,
-})
+export const selectManageInsightsPageState = selectResourceManagementPageState<ManageInsightsState>

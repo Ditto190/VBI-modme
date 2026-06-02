@@ -1,14 +1,11 @@
 import type { VBIChartBuilder } from '@visactor/vbi'
-import dynamic from 'next/dynamic'
 import { memo } from 'react'
+import { lazyComponent } from '../../components/LazyComponent'
 import { CenteredState } from '../../components/ui/centered-state'
 import { Spinner } from '../../components/ui/spinner'
 
-const StandardChartApp = dynamic(
-  () => import('../../components/StandardChartApp').then((module) => module.StandardChartApp),
-  {
-    ssr: false,
-  },
+const StandardChartApp = lazyComponent(() =>
+  import('../../components/StandardChartApp').then((module) => ({ default: module.StandardChartApp })),
 )
 
 type ReportChartPanelProps = {

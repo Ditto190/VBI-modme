@@ -1,13 +1,10 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { applicationShallowEqual, useApplication } from '../../application'
 import { CenteredState } from '../../components/ui/centered-state'
 import { Spinner } from '../../components/ui/spinner'
-import { useStoreLifecycle } from '../../hooks/useStoreLifecycle'
 import { useTranslation } from '../../i18n'
-import { useChartBuilderModel } from '../../models'
-import { useNavigationStore } from '../../stores/navigation.store'
-import { connectResourceSession, releaseResourceSession } from '../../stores/resource-session.store'
 import { getSessionUserName } from '../../utils/collaboration'
 import { useManageRouteChrome } from '../ManageRouteChrome'
 import { ChartResourceEditor } from './ChartResourceEditor'
@@ -22,8 +19,14 @@ export const ChartEditorPage = ({ id }: ChartEditorPageProps) => {
   const backLabel = t('common.back')
   const editorTitle = t('charts.editorTitle')
   const renameLabel = t('common.rename')
-  const go = useNavigationStore((state) => state.go)
-  const builder = useChartBuilderModel((state) => state.sessions[id]?.builder ?? null)
+  const { activateList, connectSession } = useApplication(
+    (state) => ({
+      activateList: state.chart.activate,
+      connectSession: state.chart.editor.connect,
+    }),
+    { equality: applicationShallowEqual },
+  )
+  const builder = useApplication((state) => state.chart.editor.builders[id]?.builder ?? null)
   const { name, rename, setName } = useResourceEditorName({
     fallback: editorTitle,
     id,
@@ -41,15 +44,15 @@ export const ChartEditorPage = ({ id }: ChartEditorPageProps) => {
         value: name,
       },
       title: name.trim() || editorTitle,
-      onBack: () => go('/manage/charts'),
+      onBack: () => {
+        void activateList()
+      },
     }),
-    [backLabel, editorTitle, go, name, rename, renameLabel, setName],
+    [activateList, backLabel, editorTitle, name, rename, renameLabel, setName],
   )
   useManageRouteChrome(routeChrome)
 
-  const bootChart = useCallback(() => connectResourceSession('chart', id, getSessionUserName()), [id])
-  const releaseChart = useCallback(() => releaseResourceSession('chart', id), [id])
-  useStoreLifecycle(bootChart, releaseChart)
+  useEffect(() => connectSession(id, getSessionUserName()), [connectSession, id])
 
   return (
     <div className='flex h-full min-h-0 overflow-hidden bg-[var(--vbi-editor-bg)] p-2.5 text-[var(--vbi-text)] transition-colors duration-300'>
