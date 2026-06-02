@@ -1,0 +1,1 @@
+export { VBIChartToolbar } from './vbi-chart-toolbar'
