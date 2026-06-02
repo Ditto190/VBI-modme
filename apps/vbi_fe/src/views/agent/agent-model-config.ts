@@ -28,6 +28,10 @@ export type AgentThinkingLevel = Extract<ThinkingLevel, 'high' | 'xhigh'>
 const defaultAgentProvider = 'deepseek'
 export const defaultAgentModel: AgentModelId = 'deepseek-v4-flash'
 export const defaultAgentThinkingLevel: AgentThinkingLevel = 'high'
+const legacyAgentModelAliases: Record<string, string> = {
+  'deepseek-v3.1': defaultAgentModel,
+  'deepseek-v3.1:volcengine': defaultAgentModel,
+}
 const knownAgentModelConfigById: Record<
   string,
   {
@@ -80,10 +84,11 @@ const readStringRecord = (value: unknown): Record<string, string> => {
 
 const normalizeAgentBackendConfig = (input: AgentBackendConfigPayload = {}): AgentBackendConfig => {
   const provider = input.provider?.trim() || defaultAgentProvider
-  const configuredModels = readStringArray(input.models)
-  const modelAliases = readStringRecord(input.modelAliases)
+  const modelAliases = { ...readStringRecord(input.modelAliases), ...legacyAgentModelAliases }
+  const resolveConfiguredModel = (model: string) => modelAliases[model] ?? model
+  const configuredModels = Array.from(new Set(readStringArray(input.models).map(resolveConfiguredModel)))
   const modelDescriptors = Array.isArray(input.modelDescriptors) ? input.modelDescriptors : []
-  const model = input.model?.trim() || configuredModels[0] || defaultAgentModel
+  const model = resolveConfiguredModel(input.model?.trim() || configuredModels[0] || defaultAgentModel)
   const models = configuredModels.length
     ? configuredModels
     : provider === defaultAgentProvider

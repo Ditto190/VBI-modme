@@ -1,4 +1,3 @@
-/* 'use client' keeps Pi Agent's browser runtime out of the Next server graph. */
 'use client'
 
 import { convertToLlm, type AgentMessage, type AgentOptions } from '@earendil-works/pi-agent-core'
@@ -23,6 +22,7 @@ import {
   type AgentThinkingLevel,
 } from './agent-model-config'
 import { streamProxy } from './agent-stream-proxy'
+import { browserEnv } from '../../env/browserEnv'
 
 export type AgentConversationRuntimeSnapshot = {
   errorMessage?: string
@@ -75,10 +75,17 @@ type CreateAgentConversationRuntimeOptions = {
 
 const defaultProviderApiBaseUrl = '/api/v1'
 
-const getRuntimeMessages = (agent: BrowserVBIAgent): AgentMessage[] => [
-  ...agent.state.messages,
-  ...(agent.state.streamingMessage ? [agent.state.streamingMessage] : []),
-]
+const areRuntimeSnapshotsEqual = (
+  left: AgentConversationRuntimeSnapshot | null,
+  right: AgentConversationRuntimeSnapshot,
+) =>
+  left !== null &&
+  left.errorMessage === right.errorMessage &&
+  left.isRunning === right.isRunning &&
+  left.messages === right.messages &&
+  left.modelId === right.modelId &&
+  left.thinkingLevel === right.thinkingLevel &&
+  left.usageText === right.usageText
 
 export const createAgentConversationRuntime = async ({
   conversationId = crypto.randomUUID(),
@@ -95,14 +102,14 @@ export const createAgentConversationRuntime = async ({
   const { VBIAgent } = await loadVBIAgentModule()
   const publicConfig = agentConfig ?? (await readAgentBackendConfig())
   const modelInput = {
-    provider: process.env.NEXT_PUBLIC_AGENT_PROVIDER?.trim() || publicConfig.provider,
-    model: resolveAgentModelId(modelId ?? process.env.NEXT_PUBLIC_AGENT_MODEL ?? publicConfig.model, publicConfig),
+    provider: browserEnv.agentProvider || publicConfig.provider,
+    model: resolveAgentModelId((modelId ?? browserEnv.agentModel) || publicConfig.model, publicConfig),
   }
   const model = resolveAgentModel(loadedSession?.model, modelInput, publicConfig)
   const initialThinkingLevel = resolveAgentThinkingLevel(loadedSession?.thinkingLevel ?? thinkingLevel)
 
   const providerKit = createVBIProviderAgentKit({
-    baseUrl: process.env.NEXT_PUBLIC_VBI_API_BASE_URL?.trim() || defaultProviderApiBaseUrl,
+    baseUrl: browserEnv.vbiApiBaseUrl || defaultProviderApiBaseUrl,
   })
   const agent = new VBIAgent(
     {
@@ -126,21 +133,36 @@ export const createAgentConversationRuntime = async ({
   let hasStoredConversation = loadedSession !== null
   let conversationTitle = loadedSession?.messages.length ? loadedSession.title : undefined
   const listeners = new Set<(snapshot: AgentConversationRuntimeSnapshot) => void>()
+  let cachedMessages: AgentMessage[] = []
+  let cachedMessagesDirty = true
+  let cachedSnapshot: AgentConversationRuntimeSnapshot | null = null
   let emitFrame: number | null = null
   let emitTimeout: ReturnType<typeof setTimeout> | null = null
-  const getSnapshot = (): AgentConversationRuntimeSnapshot => ({
-    errorMessage: agent.state.errorMessage,
-    isRunning: agent.state.isStreaming,
-    messages: getRuntimeMessages(agent),
-    modelId: resolveAgentModelId(agent.state.model.id, publicConfig),
-    thinkingLevel: resolveAgentThinkingLevel(agent.state.thinkingLevel),
-    usageText: formatAgentContextUsage(
-      resolveAgentContextUsage({
-        messages: agent.state.messages,
-        model: agent.state.model,
-      }),
-    ),
-  })
+  const getRuntimeMessages = () => {
+    if (!cachedMessagesDirty) return cachedMessages
+    cachedMessages = [...agent.state.messages, ...(agent.state.streamingMessage ? [agent.state.streamingMessage] : [])]
+    cachedMessagesDirty = false
+    return cachedMessages
+  }
+  const getSnapshot = (): AgentConversationRuntimeSnapshot => {
+    const snapshot = {
+      errorMessage: agent.state.errorMessage,
+      isRunning: agent.state.isStreaming,
+      messages: getRuntimeMessages(),
+      modelId: resolveAgentModelId(agent.state.model.id, publicConfig),
+      thinkingLevel: resolveAgentThinkingLevel(agent.state.thinkingLevel),
+      usageText: formatAgentContextUsage(
+        resolveAgentContextUsage({
+          messages: agent.state.messages,
+          model: agent.state.model,
+        }),
+      ),
+    }
+
+    if (areRuntimeSnapshotsEqual(cachedSnapshot, snapshot)) return cachedSnapshot as AgentConversationRuntimeSnapshot
+    cachedSnapshot = snapshot
+    return snapshot
+  }
   const clearScheduledEmit = () => {
     if (emitFrame !== null && typeof cancelAnimationFrame === 'function') {
       cancelAnimationFrame(emitFrame)
@@ -208,6 +230,7 @@ export const createAgentConversationRuntime = async ({
   }
   const unsubscribeAgent = agent.subscribe((event: { type: string }) => {
     if (isDestroying) return
+    cachedMessagesDirty = true
 
     if (event.type === 'agent_start') {
       notify('running')
