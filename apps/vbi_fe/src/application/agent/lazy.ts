@@ -1,15 +1,14 @@
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import { useNavigationStore } from '../../stores/navigation.store'
 import {
   createAgentModelOptions,
   defaultAgentModel,
   defaultAgentThinkingLevel,
 } from '../../views/agent/agent-model-config'
-import { createAgentConversationRoute } from '../../views/manage-sidebar-routes'
 import { runLazyCommand, runLazyLifecycleCommand, subscribeLazyStore } from '../core/lazy'
 import type { ApplicationCleanup } from '../core/store'
 import type * as AgentModuleExports from './application'
 import type { AgentApplication } from './contract'
+import { getAgentPanelApplication } from './panel'
 
 type AgentModule = typeof AgentModuleExports
 
@@ -58,8 +57,6 @@ const lazyAgentApplication: AgentApplication = {
     runtime: null,
     snapshot: emptyAgentSnapshot,
     activate: (options) => {
-      const conversationId = options?.conversationId ?? ''
-      useNavigationStore.getState().go(conversationId ? createAgentConversationRoute(conversationId) : '/agent')
       return runAgentLifecycleCommand((agent) => agent.chat.activate(options))
     },
     cancel: () => runAgentCommand((agent) => agent.chat.cancel()),
@@ -77,7 +74,7 @@ const lazyAgentApplication: AgentApplication = {
     delete: (id) => useAgentConversationsStore.getState().deleteConversation(id),
     open: async (id) => {
       useAgentConversationsStore.getState().selectConversation(id)
-      useNavigationStore.getState().go(createAgentConversationRoute(id))
+      if (agentModule) await runAgentCommand((agent) => agent.conversations.open(id))
     },
     refresh: () => useAgentConversationsStore.getState().refresh(),
     rename: (id, title) => useAgentConversationsStore.getState().renameConversation(id, title),
@@ -89,6 +86,7 @@ const lazyAgentApplication: AgentApplication = {
     change: (modelId) => runAgentCommand((agent) => agent.model.change(modelId)),
     changeThinkingLevel: (thinkingLevel) => runAgentCommand((agent) => agent.model.changeThinkingLevel(thinkingLevel)),
   },
+  panel: getAgentPanelApplication(),
 }
 
 export const bindAgentLazyApplicationEmitter = (nextEmit: () => void) => {
@@ -113,5 +111,6 @@ export const getLazyAgentApplication = (): AgentApplication => {
       isLoading: state.isLoading,
       items: state.conversations,
     },
+    panel: getAgentPanelApplication(),
   }
 }

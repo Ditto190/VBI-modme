@@ -1,13 +1,14 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { applicationShallowEqual, useApplication } from '../application'
 import { Spinner } from '../components/ui/spinner'
 import { useTranslation, type Translate } from '../i18n'
+import { cn } from '../lib/utils'
 import { useNavigationStore } from '../stores/navigation.store'
 import type { AgentModelId, AgentThinkingLevel } from './agent/agent-model-config'
 import { AgentChatPanel } from './agent/chat/AgentChatPanel'
-import { readAgentConversationRouteId } from './manage-sidebar-routes'
+import { isAgentRoute, readAgentConversationRouteId } from './manage-sidebar-routes'
 
 const AgentRouteActivation = ({ fallbackTitle }: { fallbackTitle: string }) => {
   const { activate, clear, openConversation } = useApplication(
@@ -20,30 +21,38 @@ const AgentRouteActivation = ({ fallbackTitle }: { fallbackTitle: string }) => {
   )
   const pathname = useNavigationStore((state) => state.pathname)
   const routeConversationId = useMemo(() => readAgentConversationRouteId(pathname), [pathname])
-  const initialRouteConversationId = useRef(routeConversationId)
-  const didRunRouteEffect = useRef(false)
 
-  useEffect(
-    () =>
-      activate({
-        conversationId: initialRouteConversationId.current || undefined,
-        fallbackTitle,
-      }),
-    [activate, fallbackTitle],
-  )
+  useEffect(() => activate({ fallbackTitle }), [activate, fallbackTitle])
 
   useEffect(() => {
-    if (!didRunRouteEffect.current) {
-      didRunRouteEffect.current = true
-      return
-    }
+    if (!isAgentRoute(pathname)) return
+
     if (!routeConversationId) {
       clear()
       return
     }
 
     void openConversation(routeConversationId, { fallbackTitle })
-  }, [clear, fallbackTitle, openConversation, routeConversationId])
+  }, [clear, fallbackTitle, openConversation, pathname, routeConversationId])
+
+  return null
+}
+
+const AgentSelectedConversationActivation = ({ fallbackTitle }: { fallbackTitle: string }) => {
+  const { activeConversationId, openConversation, runtimeConversationId } = useApplication(
+    (state) => ({
+      activeConversationId: state.agent.conversations.activeId,
+      openConversation: state.agent.chat.open,
+      runtimeConversationId: state.agent.chat.runtime?.conversationId ?? '',
+    }),
+    { equality: applicationShallowEqual },
+  )
+
+  useEffect(() => {
+    if (!activeConversationId || activeConversationId === runtimeConversationId) return
+
+    void openConversation(activeConversationId, { fallbackTitle })
+  }, [activeConversationId, fallbackTitle, openConversation, runtimeConversationId])
 
   return null
 }
@@ -97,8 +106,9 @@ const AgentChatWorkspace = ({ t }: { t: Translate }) => {
 }
 
 const AgentStatusOverlay = ({ t }: { t: Translate }) => {
-  const { errorMessage, isOpeningConversation, runtime, snapshot } = useApplication(
+  const { activeConversationId, errorMessage, isOpeningConversation, runtime, snapshot } = useApplication(
     (state) => ({
+      activeConversationId: state.agent.conversations.activeId,
       errorMessage: state.agent.chat.errorMessage,
       isOpeningConversation: state.agent.chat.isOpeningConversation,
       runtime: state.agent.chat.runtime,
@@ -109,7 +119,10 @@ const AgentStatusOverlay = ({ t }: { t: Translate }) => {
   const pathname = useNavigationStore((state) => state.pathname)
   const routeConversationId = useMemo(() => readAgentConversationRouteId(pathname), [pathname])
   const showOpeningOverlay =
-    Boolean(routeConversationId) && isOpeningConversation && !runtime && snapshot.messages.length === 0
+    (Boolean(activeConversationId) || (isAgentRoute(pathname) && Boolean(routeConversationId))) &&
+    isOpeningConversation &&
+    !runtime &&
+    snapshot.messages.length === 0
 
   if (errorMessage) {
     return (
@@ -133,18 +146,22 @@ const AgentStatusOverlay = ({ t }: { t: Translate }) => {
   return null
 }
 
-export const AgentPage = () => {
+type AgentChatSurfaceProps = {
+  className?: string
+}
+
+export const AgentChatSurface = ({ className }: AgentChatSurfaceProps) => {
   const { t } = useTranslation()
   const fallbackTitle = t('agent.newConversation')
 
   return (
-    <div
-      className='relative h-[calc(100vh-36px)] min-h-[520px] overflow-hidden bg-transparent'
-      aria-label={t('nav.agent')}
-    >
+    <div className={cn('relative min-h-0 overflow-hidden bg-transparent', className)} aria-label={t('nav.agent')}>
       <AgentRouteActivation fallbackTitle={fallbackTitle} />
+      <AgentSelectedConversationActivation fallbackTitle={fallbackTitle} />
       <AgentChatWorkspace t={t} />
       <AgentStatusOverlay t={t} />
     </div>
   )
 }
+
+export const AgentPage = () => <AgentChatSurface className='h-screen min-h-[520px]' />

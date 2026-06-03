@@ -19,8 +19,6 @@ import {
 } from '../../views/agent/agent-runtime'
 import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from '../../views/agent/agent-storage'
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import { useNavigationStore } from '../../stores/navigation.store'
-import { createAgentConversationRoute } from '../../views/manage-sidebar-routes'
 import { createLatestApplicationLifecycle } from '../core/lifecycle'
 import type {
   AgentApplication,
@@ -28,6 +26,7 @@ import type {
   AgentConversationActivationOptions,
   AgentPromptOptions,
 } from './contract'
+import { getAgentPanelApplication } from './panel'
 
 const emptySnapshot: AgentConversationRuntimeSnapshot = {
   isRunning: false,
@@ -258,7 +257,6 @@ export const bindAgentApplicationEmitter = (emit: () => void) => {
 const agentActions = {
   activate: (options: AgentChatActivateOptions = {}) => {
     const conversationId = options.conversationId ?? ''
-    useNavigationStore.getState().go(conversationId ? createAgentConversationRoute(conversationId) : '/agent')
     let disposed = false
     return agentLifecycle.start(
       async () => {
@@ -283,7 +281,6 @@ const agentActions = {
   },
   open: async (conversationId: string, options: AgentConversationActivationOptions = {}) => {
     if (!conversationId) return null
-    useNavigationStore.getState().go(createAgentConversationRoute(conversationId))
     return activateConversation(conversationId, options)
   },
   cancel: async () => {
@@ -369,6 +366,7 @@ const agentActions = {
     storage = null
   },
   openConversation: async (id: string) => {
+    useAgentConversationsStore.getState().selectConversation(id)
     await agentActions.open(id)
   },
   prompt: async (input: string, options?: AgentPromptOptions) => {
@@ -388,7 +386,6 @@ const agentActions = {
       })
       if (!runtime) return
       runtimeMap.set(conversationId, runtime)
-      useNavigationStore.getState().go(createAgentConversationRoute(conversationId))
       await runtime.send(prompt)
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error))
@@ -440,5 +437,6 @@ export const getAgentApplication = (): AgentApplication => {
       change: agentActions.changeModel,
       changeThinkingLevel: agentActions.changeThinkingLevel,
     },
+    panel: getAgentPanelApplication(),
   }
 }
