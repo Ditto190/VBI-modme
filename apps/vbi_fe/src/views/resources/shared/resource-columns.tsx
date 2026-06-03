@@ -45,12 +45,12 @@ const createResourceColumns = ({
     title: t('common.updatedAt'),
     dataIndex: 'updatedAt',
     key: 'updatedAt',
-    className: 'w-56',
+    className: 'w-40',
     render: (value) => (typeof value === 'string' ? new Date(value).toLocaleString(locale) : ''),
   },
   {
     title: t('common.actions'),
-    className: 'w-44 text-right',
+    className: 'w-32 text-right',
     key: 'actions',
     render: (_, record) => {
       const displayName = record.name || fallbackName

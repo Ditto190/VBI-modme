@@ -22,6 +22,7 @@ type ResourceManagementPageProps = {
   deleteTitle: string
   fallbackName: string
   locale: AppLocale
+  motionKey?: string
   state: ResourceManagementPageState
   title: string
   t: Translate
@@ -34,6 +35,7 @@ export const ResourceManagementPage = ({
   deleteTitle,
   fallbackName,
   locale,
+  motionKey,
   state,
   title,
   t,
@@ -55,6 +57,7 @@ export const ResourceManagementPage = ({
       dataSource={state.filteredItems}
       deleteTitle={deleteTitle}
       loading={state.loading}
+      motionKey={motionKey}
       onCreate={state.create}
       onDeleteSelected={state.deleteSelected}
       onSearchTextChange={state.setSearchText}

@@ -24,6 +24,7 @@ type Props = {
   dataSource: ResourceItem[]
   deleteTitle: string
   loading?: boolean
+  motionKey?: string
   onCreate: () => void
   onDeleteSelected: () => Promise<void>
   onSearchTextChange: (value: string) => void
@@ -40,6 +41,7 @@ export const ManageResourcePageShell = ({
   dataSource,
   deleteTitle,
   loading = false,
+  motionKey,
   onCreate,
   onDeleteSelected,
   onSearchTextChange,
@@ -50,6 +52,7 @@ export const ManageResourcePageShell = ({
 }: Props) => {
   const { t } = useTranslation()
   const [page, setPage] = useState(1)
+  const tableMotionKey = motionKey ?? title
   const showInitialLoading = loading && dataSource.length === 0
   const selectedIds = useMemo(() => new Set(selectedRowKeys.map(String)), [selectedRowKeys])
   const pageCount = Math.max(1, Math.ceil(dataSource.length / pageSize))
@@ -67,7 +70,7 @@ export const ManageResourcePageShell = ({
   }
 
   return (
-    <section className='mx-auto flex min-h-[calc(100vh-44px)] w-full max-w-[1088px] min-w-0 flex-col gap-2 px-4 sm:px-6 lg:px-8 max-[720px]:min-h-0'>
+    <section className='mx-auto flex min-h-[calc(100vh-44px)] w-full max-w-[880px] min-w-0 flex-col gap-2 px-4 sm:px-5 lg:px-6 max-[720px]:min-h-0'>
       <header className='flex min-h-8 w-full min-w-0 items-center justify-end gap-2.5 pb-2'>
         <h1 className='sr-only'>{title}</h1>
         <span className='text-xs text-[var(--vbi-text-muted)]'>
@@ -86,14 +89,17 @@ export const ManageResourcePageShell = ({
         searchText={searchText}
         selectedRowKeys={selectedRowKeys}
       />
-      <div className='vbi-motion-panel w-full min-w-0 overflow-auto rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] shadow-[var(--vbi-shadow)]'>
+      <div
+        className='vbi-motion-panel vbi-motion-resource-table w-full min-w-0 overflow-auto rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] shadow-[var(--vbi-shadow)]'
+        key={tableMotionKey}
+      >
         {showInitialLoading ? (
           <CenteredState>
             <Spinner />
           </CenteredState>
         ) : dataSource.length ? (
           <>
-            <table className='w-full min-w-[720px] table-fixed border-collapse bg-[var(--vbi-secondary)]'>
+            <table className='w-full min-w-[560px] table-fixed border-collapse bg-[var(--vbi-secondary)]'>
               <thead>
                 <tr>
                   <th className={cn('w-11', tableHeadClassName)} aria-label={t('common.selected')}>

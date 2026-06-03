@@ -1245,6 +1245,28 @@ body {
   }
 }
 
+@keyframes vbi-resource-table-route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes vbi-resource-row-route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 5px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes vbi-float-in {
   0% {
     opacity: 0;
@@ -1336,6 +1358,39 @@ body {
 
 .vbi-motion-soft-reveal {
   animation: vbi-soft-reveal var(--vbi-motion-presence) var(--vbi-ease-out) both;
+}
+
+.vbi-motion-resource-table {
+  animation: vbi-resource-table-route-enter 260ms var(--vbi-ease-out) both;
+  transform-origin: top center;
+}
+
+.vbi-motion-resource-table tbody > tr {
+  animation: vbi-resource-row-route-enter 320ms var(--vbi-ease-out) both;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(1) {
+  animation-delay: 24ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(2) {
+  animation-delay: 48ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(3) {
+  animation-delay: 72ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(4) {
+  animation-delay: 96ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(5) {
+  animation-delay: 120ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(n + 6) {
+  animation-delay: 144ms;
 }
 
 .vbi-motion-float {

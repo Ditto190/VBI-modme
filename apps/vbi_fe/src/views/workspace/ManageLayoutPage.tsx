@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { applicationShallowEqual, useApplication } from '../../application'
 import {
+  ArrowLeftRight,
   BarChart3,
   FileText,
   FolderKanban,
@@ -19,14 +20,17 @@ import { useTranslation } from '../../i18n'
 import { cn } from '../../lib/utils'
 import { useNavigationStore } from '../../stores/navigation.store'
 import { AgentConversationSidebarSection } from '../agent/AgentConversationSidebarSection'
-import { AgentSider } from '../agent/AgentSider'
+import { AgentChatSurface } from '../agent/AgentPage'
 import { isAgentRoute, matchRouteBranch } from '../../application'
 import { ManageRouteChromeProvider, useManageRouteChromeState } from './ManageRouteChrome'
-import { ManageRouteHeader } from './ManageRouteHeader'
 import { ManageSidebarButton, ManageSidebarGroup, manageSidebarChildListClassName } from './ManageSidebarNav'
 import { ManagePreferences } from './ManagePreferences'
+import { WorkspaceCenterPane } from './WorkspaceCenterPane'
+import { WorkspaceSidePanel } from './WorkspaceSidePanel'
 
 const hideSidebarButtonClassName =
+  'grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-md bg-transparent text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg hover:text-vbi-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-primary/35'
+const placementToggleButtonClassName =
   'grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-md bg-transparent text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg hover:text-vbi-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-primary/35'
 const sidebarRailButtonClassName =
   'grid h-8 w-8 shrink-0 cursor-pointer place-items-center rounded-md border-0 bg-transparent text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg hover:text-vbi-text-strong data-[active=true]:bg-vbi-active-bg data-[active=true]:text-vbi-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-primary/35'
@@ -59,23 +63,30 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
     }),
     { equality: applicationShallowEqual },
   )
+  const { toggleWorkspacePlacement, workspacePlacement } = useApplication(
+    (state) => ({
+      toggleWorkspacePlacement: state.layout.workspacePlacement.toggle,
+      workspacePlacement: state.layout.workspacePlacement.value,
+    }),
+    { equality: applicationShallowEqual },
+  )
   const navigate = useNavigationStore((state) => state.go)
   const pathname = useNavigationStore((state) => state.pathname)
   const routeChrome = useManageRouteChromeState()
   const { t } = useTranslation()
   const resourceNavItems = [
     {
-      href: '/manage/reports',
+      href: '/manage/report',
       icon: <FileText className='h-4 w-4' />,
       label: t('nav.reports'),
     },
     {
-      href: '/manage/charts',
+      href: '/manage/chart',
       icon: <BarChart3 className='h-4 w-4' />,
       label: t('nav.charts'),
     },
     {
-      href: '/manage/insights',
+      href: '/manage/insight',
       icon: <Lightbulb className='h-4 w-4' />,
       label: t('nav.insights'),
     },
@@ -83,14 +94,13 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
   const activeResourceHref = resourceNavItems.find((item) => matchRouteBranch(pathname, item.href))?.href ?? ''
   const isResourcePath = Boolean(activeResourceHref)
   const isAgentPath = isAgentRoute(pathname)
+  const showResourceWorkspace = !isAgentPath && children !== null && children !== undefined
   const isNewConversationActive = isAgentPath && !activeConversationId
-  const currentPageLabel = isAgentPath
-    ? t('nav.reports')
-    : (resourceNavItems.find((item) => item.href === activeResourceHref)?.label ?? '')
+  const currentPageLabel = resourceNavItems.find((item) => item.href === activeResourceHref)?.label ?? ''
   const resourceDetailBackHref = (() => {
     const [root, resource, id, ...rest] = pathname.split('/').filter(Boolean)
     if (root !== 'manage' || !id || rest.length) return ''
-    if (!['charts', 'insights', 'reports'].includes(resource ?? '')) return ''
+    if (!['chart', 'insight', 'report'].includes(resource ?? '')) return ''
     return `/manage/${resource}`
   })()
   const headerTitle = routeChrome.title ?? currentPageLabel
@@ -102,6 +112,20 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
     clearActiveConversation()
     navigate('/agent')
   }
+  const swapWorkspaceLabel = t('layout.swapWorkspace')
+  const placementToggle = showResourceWorkspace ? (
+    <Tooltip side='left' title={swapWorkspaceLabel}>
+      <button
+        aria-label={swapWorkspaceLabel}
+        className={placementToggleButtonClassName}
+        data-workspace-placement-toggle=''
+        type='button'
+        onClick={toggleWorkspacePlacement}
+      >
+        <ArrowLeftRight className='h-3.5 w-3.5' aria-hidden='true' />
+      </button>
+    </Tooltip>
+  ) : undefined
   const sidebarStyle = useMemo(
     () =>
       ({
@@ -130,9 +154,65 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
       onClick: () => navigate(item.href),
     })),
   ]
+  const agentCenterPane = (
+    <WorkspaceCenterPane
+      key='agent-center'
+      contentClassName='overflow-hidden p-0'
+      contentKind='agent'
+      slotControls={showResourceWorkspace ? placementToggle : undefined}
+      title='VBI Agent'
+    >
+      <AgentChatSurface className='h-full flex-1' />
+    </WorkspaceCenterPane>
+  )
+  const resourceCenterPane = showResourceWorkspace ? (
+    <WorkspaceCenterPane
+      key='resource-center'
+      actions={routeChrome.actions}
+      backLabel={headerBackLabel}
+      contentClassName={routeChrome.contentClassName}
+      contentKind='resource'
+      rename={routeChrome.rename}
+      slotControls={placementToggle}
+      title={headerTitle}
+      onBack={handleHeaderBack}
+    >
+      {children}
+    </WorkspaceCenterPane>
+  ) : null
+  const agentSidePanel = showResourceWorkspace ? (
+    <WorkspaceSidePanel
+      key='agent-side-panel'
+      ariaLabel='VBI Agent'
+      contentClassName='overflow-hidden'
+      contentKind='agent'
+      title='VBI Agent'
+    >
+      <AgentChatSurface className='h-full flex-1' />
+    </WorkspaceSidePanel>
+  ) : null
+  const resourceSidePanel = showResourceWorkspace ? (
+    <WorkspaceSidePanel
+      key='resource-side-panel'
+      actions={routeChrome.actions}
+      backLabel={headerBackLabel}
+      contentClassName={routeChrome.contentClassName}
+      contentKind='resource'
+      rename={routeChrome.rename}
+      title={headerTitle}
+      onBack={handleHeaderBack}
+    >
+      {children}
+    </WorkspaceSidePanel>
+  ) : null
+  const centerPane = isAgentPath || workspacePlacement === 'agent-center' ? agentCenterPane : resourceCenterPane
+  const sidePanel = isAgentPath ? null : workspacePlacement === 'agent-center' ? resourceSidePanel : agentSidePanel
 
   return (
-    <div className='flex min-h-screen bg-vbi-bg text-vbi-text transition-colors duration-300 max-[720px]:flex-col'>
+    <div
+      className='flex min-h-screen bg-vbi-bg text-vbi-text transition-colors duration-300 max-[720px]:flex-col'
+      data-workspace-placement={isAgentPath ? 'agent-only' : workspacePlacement}
+    >
       <aside
         aria-label={t('app.nav.primary')}
         className={cn(
@@ -162,7 +242,6 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
                 <PanelLeftOpen className='h-3.5 w-3.5' />
               </button>
             </Tooltip>
-            <span className='h-px w-6 shrink-0 bg-vbi-border max-[720px]:h-6 max-[720px]:w-px' aria-hidden='true' />
             {railItems.map((item) => (
               <Tooltip key={item.label} side='right' title={item.label}>
                 <button
@@ -234,21 +313,8 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
           </>
         )}
       </aside>
-      <section className='flex h-screen min-w-0 flex-1 flex-col bg-vbi-bg transition-colors duration-300 max-[720px]:h-auto max-[720px]:min-h-0'>
-        <ManageRouteHeader
-          actions={routeChrome.actions}
-          rename={routeChrome.rename}
-          title={headerTitle}
-          onBack={handleHeaderBack}
-          backLabel={headerBackLabel}
-        />
-        <main
-          className={cn('min-h-0 w-full min-w-0 flex-1 overflow-auto bg-transparent', routeChrome.contentClassName)}
-        >
-          {children}
-        </main>
-      </section>
-      <AgentSider />
+      {centerPane}
+      {sidePanel}
     </div>
   )
 }

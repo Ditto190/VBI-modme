@@ -135,7 +135,7 @@ const scenarios: ResourceScenario[] = [
     kind: 'chart',
     pageTitle: 'Charts',
     renderPage: ManageChartsPage,
-    route: '/manage/charts/chart-1',
+    route: '/manage/chart/chart-1',
   },
   {
     createButton: 'New Insight',
@@ -143,7 +143,7 @@ const scenarios: ResourceScenario[] = [
     kind: 'insight',
     pageTitle: 'Insights',
     renderPage: ManageInsightsPage,
-    route: '/manage/insights/insight-1',
+    route: '/manage/insight/insight-1',
   },
   {
     createButton: 'New Report',
@@ -151,7 +151,7 @@ const scenarios: ResourceScenario[] = [
     kind: 'report',
     pageTitle: 'Reports',
     renderPage: ReportsPage,
-    route: '/manage/reports/report-1',
+    route: '/manage/report/report-1',
   },
 ]
 
@@ -182,6 +182,7 @@ describe('resource management pages', () => {
       expect(screen.getByText('9 Visible')).toBeInTheDocument()
       expect(screen.getByText(`${scenario.kind} resource 1`)).toBeInTheDocument()
       expect(screen.queryByText(`${scenario.kind} resource 9`)).not.toBeInTheDocument()
+      expect(screen.getByRole('table').closest('.vbi-motion-resource-table')).toBeTruthy()
       expect(getRowForText(`${scenario.kind} resource 1`)).not.toHaveClass('vbi-motion-row')
 
       fireEvent.click(screen.getByRole('button', { name: 'Next' }))
@@ -248,6 +249,24 @@ describe('resource management pages', () => {
         )
       }
     })
+  })
+
+  test('restarts the resource table route animation when switching resource categories', async () => {
+    seedResourceItems('chart')
+    seedResourceItems('insight')
+
+    const { rerender } = render(<ManageChartsPage />)
+
+    expect(await screen.findByText('chart resource 1')).toBeInTheDocument()
+    const chartTablePanel = screen.getByRole('table').closest('.vbi-motion-resource-table')
+    expect(chartTablePanel).toBeTruthy()
+
+    rerender(<ManageInsightsPage />)
+
+    expect(await screen.findByText('insight resource 1')).toBeInTheDocument()
+    const insightTablePanel = screen.getByRole('table').closest('.vbi-motion-resource-table')
+    expect(insightTablePanel).toBeTruthy()
+    expect(insightTablePanel).not.toBe(chartTablePanel)
   })
 
   test('keeps cached resource rows visible while a reload is pending', async () => {

@@ -67,6 +67,7 @@ export const ResourceListPage = ({ kind, labels, userNameActivation = false }: R
       deleteTitle={t(labels.deleteTitle)}
       fallbackName={t(labels.untitled)}
       locale={locale}
+      motionKey={kind}
       state={{
         create,
         deleteSelected,
