@@ -15,7 +15,7 @@ const ReportStage = lazyComponent(
 )
 
 const reportShellClassName =
-  'vbi-motion-presence grid h-full min-h-0 flex-1 grid-cols-[216px_minmax(0,1fr)] gap-2.5 py-2 pl-2.5 pr-3.5 max-[1100px]:grid-cols-[190px_minmax(0,1fr)] max-[1100px]:gap-2 max-[1100px]:p-2.5 max-[900px]:grid-cols-[minmax(0,1fr)] max-[900px]:grid-rows-[auto_minmax(0,1fr)] max-[640px]:gap-2.5 max-[640px]:p-2.5'
+  'grid h-full min-h-0 flex-1 grid-cols-[216px_minmax(0,1fr)] gap-2.5 py-2 pl-2.5 pr-3.5 max-[1100px]:grid-cols-[190px_minmax(0,1fr)] max-[1100px]:gap-2 max-[1100px]:p-2.5 max-[900px]:grid-cols-[minmax(0,1fr)] max-[900px]:grid-rows-[auto_minmax(0,1fr)] max-[640px]:gap-2.5 max-[640px]:p-2.5'
 
 const emptyStageClassName =
   'flex min-h-0 flex-1 items-center justify-center overflow-auto overscroll-contain scroll-smooth [contain:layout] [overflow-anchor:none] [scrollbar-gutter:stable]'
@@ -44,7 +44,7 @@ export const ReportWorkspace = memo(() => {
 
   if (!pages.length) {
     return (
-      <div className={reportShellClassName}>
+      <div className={reportShellClassName} data-report-workspace=''>
         <PageSidebar pages={[]} />
         <div className={emptyStageClassName}>
           <Empty description={t('reportDetail.emptyReport')} />
@@ -54,7 +54,7 @@ export const ReportWorkspace = memo(() => {
   }
 
   return (
-    <div className={reportShellClassName}>
+    <div className={reportShellClassName} data-report-workspace=''>
       <PageSidebar pages={pages} />
       <ReportStage
         activePageId={activePageId}

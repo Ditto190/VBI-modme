@@ -23,11 +23,11 @@ type ResourceListPageProps = {
 export const ResourceListPage = ({ kind, labels, userNameActivation = false }: ResourceListPageProps) => {
   const { locale, t } = useTranslation()
   const {
-    activate,
     create,
     deleteOne,
     deleteSelected,
     filteredItems,
+    activateRecords,
     loading,
     open,
     searchText,
@@ -44,6 +44,7 @@ export const ResourceListPage = ({ kind, labels, userNameActivation = false }: R
         deleteOne: resource.delete,
         deleteSelected: resource.records.deleteSelected,
         filteredItems: resource.records.visibleItems,
+        activateRecords: resource.records.activate,
         loading: resource.records.loading,
         open: resource.open,
         searchText: resource.records.searchText,
@@ -56,8 +57,8 @@ export const ResourceListPage = ({ kind, labels, userNameActivation = false }: R
   )
 
   useEffect(
-    () => activate(userNameActivation ? { userName: getSessionUserName() } : undefined),
-    [activate, userNameActivation],
+    () => activateRecords(userNameActivation ? { userName: getSessionUserName() } : undefined),
+    [activateRecords, userNameActivation],
   )
 
   return (

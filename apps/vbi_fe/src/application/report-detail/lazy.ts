@@ -59,6 +59,8 @@ const lazyReportDetailApplication: ReportDetailApplication = {
     if (reportId) useNavigationStore.getState().go(resolveApplicationRoute({ name: 'reportDetail', id: reportId }))
     return runReportDetailLifecycleCommand((application) => application.activate(reportId, userName))
   },
+  connect: (reportId, userName) =>
+    runReportDetailLifecycleCommand((application) => application.connect(reportId, userName)),
   removeChart: (pageId) => runReportDetailCommand((application) => application.removeChart(pageId)),
   removeInsight: (pageId) => runReportDetailCommand((application) => application.removeInsight(pageId)),
   removePage: (pageId) => runReportDetailCommand((application) => application.removePage(pageId)),

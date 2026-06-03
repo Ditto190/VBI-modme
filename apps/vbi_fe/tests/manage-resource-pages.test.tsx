@@ -201,6 +201,7 @@ describe('resource management pages', () => {
 
       fireEvent.click(within(getRowForText(`${scenario.kind} resource 1`)).getByRole('button', { name: 'Edit' }))
       expect(navigate).toHaveBeenCalledWith(scenario.route)
+      expect(navigate).toHaveBeenCalledTimes(1)
 
       fireEvent.click(screen.getByRole('button', { name: scenario.createButton }))
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

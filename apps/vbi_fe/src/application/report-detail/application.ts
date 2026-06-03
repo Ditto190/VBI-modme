@@ -41,6 +41,11 @@ const getReportPageSections = (reportId: string): ReportDetailPageSection[] => {
 const activateReportDetail = (reportId: string, userName: string) => {
   if (!reportId) return noopApplicationCleanup
   useNavigationStore.getState().go(resolveApplicationRoute({ name: 'reportDetail', id: reportId }))
+  return connectReportDetail(reportId, userName)
+}
+
+const connectReportDetail = (reportId: string, userName: string) => {
+  if (!reportId) return noopApplicationCleanup
   return reportDetailLifecycle.start(
     () => useReportDetailStore.getState().bootstrap(reportId, userName),
     () => useReportDetailStore.getState().dispose(),
@@ -69,6 +74,7 @@ export const getReportDetailApplication = (): ReportDetailApplication => {
     addInsight: state.addInsight,
     addPage: state.addPage,
     activate: activateReportDetail,
+    connect: connectReportDetail,
     removeChart: state.removeChart,
     removeInsight: state.removeInsight,
     removePage: state.removePage,

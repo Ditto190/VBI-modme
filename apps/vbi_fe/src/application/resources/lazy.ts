@@ -77,6 +77,8 @@ const createLazyResourceApplication = <TItem extends ResourceItem>(
     searchText: '',
     selectedIds: [],
     visibleItems: [],
+    activate: (options) =>
+      runResourceLifecycleCommand(getApplication, (application) => application.records.activate(options)),
     deleteSelected: () => runResourceCommand(getApplication, (application) => application.records.deleteSelected()),
     search: (searchText) => {
       void runResourceCommand(getApplication, (application) => application.records.search(searchText))

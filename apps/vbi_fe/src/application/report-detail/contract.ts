@@ -27,6 +27,7 @@ export type ReportDetailApplication = {
   addInsight(pageId: string): Promise<void>
   addPage(): Promise<void>
   activate(reportId: string, userName: string): ApplicationCleanup
+  connect(reportId: string, userName: string): ApplicationCleanup
   removeChart(pageId?: string): Promise<void>
   removeInsight(pageId?: string): Promise<void>
   removePage(pageId: string): Promise<void>

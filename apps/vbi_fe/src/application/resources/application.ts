@@ -61,7 +61,7 @@ type ResourceActions<TItem extends ResourceItem> = Pick<
   'activate' | 'create' | 'delete' | 'list' | 'open' | 'rename'
 > & {
   editor: Pick<ResourceEditorApplication, 'connect' | 'release'>
-  records: Pick<ResourceRecordsApplication<TItem>, 'deleteSelected' | 'search' | 'select'>
+  records: Pick<ResourceRecordsApplication<TItem>, 'activate' | 'deleteSelected' | 'search' | 'select'>
 }
 
 let modelsModule: ModelsModule | null = null
@@ -124,10 +124,9 @@ const createResourceActions = <TItem extends ResourceItem>(
   return {
     activate: (options) => {
       useNavigationStore.getState().go(resolveResourceListRoute(kind))
-      const store = resolveStore()
       return activationLifecycle.start(
-        () => store.getState().bootstrap(options?.userName),
-        () => store.getState().dispose(),
+        () => resolveStore().getState().bootstrap(options?.userName),
+        () => resolveStore().getState().dispose(),
       )
     },
     create: async (input?: ResourceCreateInput) => {
@@ -178,6 +177,11 @@ const createResourceActions = <TItem extends ResourceItem>(
       release: releaseEditor,
     },
     records: {
+      activate: (options) =>
+        activationLifecycle.start(
+          () => resolveStore().getState().bootstrap(options?.userName),
+          () => resolveStore().getState().dispose(),
+        ),
       deleteSelected: () => resolveStore().getState().deleteSelected(),
       search: (searchText) => resolveStore().getState().setSearchText(searchText),
       select: (ids) => resolveStore().getState().setSelectedRowKeys(ids),

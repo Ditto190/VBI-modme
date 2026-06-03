@@ -26,6 +26,7 @@ export type ResourceRecordsApplication<TItem extends ResourceItem = ResourceItem
   searchText: string
   selectedIds: string[]
   visibleItems: TItem[]
+  activate(options?: ResourceActivateOptions): ApplicationCleanup
   deleteSelected(): Promise<void>
   search(searchText: string): void
   select(ids: string[]): void

@@ -3,7 +3,12 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 
 rs.mock('../src/views/workspace/ManageLayoutPage', () => ({
-  ManageLayoutPage: ({ children }: { children: ReactNode }) => <div data-testid='workspace-layout'>{children}</div>,
+  ManageLayoutPage: ({ children }: { children: ReactNode }) => (
+    <div data-testid='workspace-layout'>
+      <aside data-testid='agent-sider' />
+      {children}
+    </div>
+  ),
 }))
 
 rs.mock('../src/views/agent/AgentPage', () => ({
@@ -70,5 +75,21 @@ describe('rsbuild app routes', () => {
     window.dispatchEvent(new PopStateEvent('popstate'))
     rerender(<App />)
     await waitFor(() => expect(screen.getByTestId('report-detail')).toHaveTextContent('report-1'))
+  })
+
+  test('keeps workspace chrome mounted when opening a report detail route', async () => {
+    window.history.replaceState(null, '', '/manage/reports')
+    render(<App />)
+
+    expect(await screen.findByTestId('reports-page')).toBeInTheDocument()
+    const workspaceLayout = screen.getByTestId('workspace-layout')
+    const agentSider = screen.getByTestId('agent-sider')
+
+    window.history.pushState(null, '', '/manage/reports/report-1')
+    window.dispatchEvent(new PopStateEvent('popstate'))
+
+    await waitFor(() => expect(screen.getByTestId('report-detail')).toHaveTextContent('report-1'))
+    expect(screen.getByTestId('workspace-layout')).toBe(workspaceLayout)
+    expect(screen.getByTestId('agent-sider')).toBe(agentSider)
   })
 })
