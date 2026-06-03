@@ -21,5 +21,6 @@ export default defineConfig({
   },
   output: {
     sourceMap: true,
+    copy: [{ from: './src/styles', to: './styles' }],
   },
 })
