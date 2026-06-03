@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
 import type { ReactNode } from 'react'
-import type { AppLocale, Translate } from '../../i18n'
-import { Button } from '../../components/ui/button'
-import { ConfirmAction } from '../../components/ui/confirm-action'
-import { Trash2 } from '../../components/ui/icons'
-import type { ResourceItem } from '../../types'
+import type { AppLocale, Translate } from '../../../i18n'
+import { Button } from '../../../components/ui/button'
+import { ConfirmAction } from '../../../components/ui/confirm-action'
+import { Trash2 } from '../../../components/ui/icons'
+import type { ResourceItem } from '../../../types'
 
 export type ResourceColumn = {
   className?: string

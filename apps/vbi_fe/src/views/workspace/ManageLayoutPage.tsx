@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo } from 'react'
 import type { CSSProperties, MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react'
-import { applicationShallowEqual, useApplication } from '../application'
+import { applicationShallowEqual, useApplication } from '../../application'
 import {
   BarChart3,
   FileText,
@@ -11,19 +11,19 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Plus,
-} from '../components/ui/icons'
-import { Separator } from '../components/ui/separator'
-import { Tooltip } from '../components/ui/tooltip'
-import { useTranslation } from '../i18n'
-import { cn } from '../lib/utils'
-import { useNavigationStore } from '../stores/navigation.store'
-import { AgentConversationSidebarSection } from './agent/AgentConversationSidebarSection'
-import { AgentSider } from './agent/AgentSider'
-import { isAgentRoute, matchRouteBranch } from './manage-sidebar-routes'
+} from '../../components/ui/icons'
+import { Separator } from '../../components/ui/separator'
+import { Tooltip } from '../../components/ui/tooltip'
+import { useTranslation } from '../../i18n'
+import { cn } from '../../lib/utils'
+import { useNavigationStore } from '../../stores/navigation.store'
+import { AgentConversationSidebarSection } from '../agent/AgentConversationSidebarSection'
+import { AgentSider } from '../agent/AgentSider'
+import { isAgentRoute, matchRouteBranch } from '../../application'
 import { ManageRouteChromeProvider, useManageRouteChromeState } from './ManageRouteChrome'
 import { ManageRouteHeader } from './ManageRouteHeader'
 import { ManageSidebarButton, ManageSidebarGroup, manageSidebarChildListClassName } from './ManageSidebarNav'
-import { ManagePreferences } from './manage-resource/ManagePreferences'
+import { ManagePreferences } from './ManagePreferences'
 
 const hideSidebarButtonClassName =
   'grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-md bg-transparent text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg hover:text-vbi-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-primary/35'

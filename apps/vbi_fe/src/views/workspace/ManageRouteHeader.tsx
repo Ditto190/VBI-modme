@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Button } from '../components/ui/button'
-import { ChevronLeft, Pencil } from '../components/ui/icons'
-import { Input } from '../components/ui/input'
+import { Button } from '../../components/ui/button'
+import { ChevronLeft, Pencil } from '../../components/ui/icons'
+import { Input } from '../../components/ui/input'
 import type { ManageRouteRenameChrome } from './ManageRouteChrome'
 
 const routeTitleGroupClassName = 'flex min-w-0 flex-1 items-center gap-2.5'

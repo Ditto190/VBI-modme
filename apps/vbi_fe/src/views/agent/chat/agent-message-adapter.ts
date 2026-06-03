@@ -2,7 +2,7 @@
 
 import type { ThreadMessageLike } from '@assistant-ui/react'
 import type { AgentMessage } from '@earendil-works/pi-agent-core'
-import { readAgentContentText } from '../agent-storage'
+import { readAgentContentText } from '../../../application/agent/agent-storage'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)

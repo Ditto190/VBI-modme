@@ -3,7 +3,16 @@ export { useApplication } from './core/use-application'
 export { bindApplicationNavigation, setApplicationPathname } from './routing/navigation-bridge'
 export { applicationShallowEqual } from './core/equality'
 export { exposeApplicationToWindow } from './core/window'
-export { resolveApplicationRoute } from './routing/route'
+export {
+  createAgentConversationRoute,
+  isAgentConversationRoute,
+  isAgentRoute,
+  isNewConversationRoute,
+  matchApplicationRoute,
+  matchRouteBranch,
+  readAgentConversationRouteId,
+  resolveApplicationRoute,
+} from './routing/route'
 export type {
   Application,
   ApplicationCleanup,
@@ -31,7 +40,7 @@ export type {
   ApplicationAgentMessage,
 } from './agent/contract'
 export type { LayoutApplication, ManageSidebarApplication } from './layout/contract'
-export type { ApplicationRouteName, ApplicationRouteTarget } from './routing/contract'
+export type { ApplicationRouteMatch, ApplicationRouteName, ApplicationRouteTarget } from './routing/contract'
 export type { AppThemeMode, I18nApplication, ThemeApplication } from './preferences/contract'
 export type {
   ChartApplication,

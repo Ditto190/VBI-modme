@@ -1,9 +1,5 @@
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import {
-  createAgentModelOptions,
-  defaultAgentModel,
-  defaultAgentThinkingLevel,
-} from '../../views/agent/agent-model-config'
+import { createAgentModelOptions, defaultAgentModel, defaultAgentThinkingLevel } from './agent-model-config'
 import { runLazyCommand, runLazyLifecycleCommand, subscribeLazyStore } from '../core/lazy'
 import type { ApplicationCleanup } from '../core/store'
 import type * as AgentModuleExports from './application'

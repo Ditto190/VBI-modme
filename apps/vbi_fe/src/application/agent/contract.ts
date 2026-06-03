@@ -1,7 +1,7 @@
 import type { AgentMessage } from '@earendil-works/pi-agent-core'
-import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from '../../views/agent/agent-runtime'
-import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../../views/agent/agent-model-config'
-import type { AgentConversationMetadata, AgentConversationStatus } from '../../views/agent/agent-storage'
+import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from './agent-model-config'
+import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from './agent-runtime'
+import type { AgentConversationMetadata, AgentConversationStatus } from './agent-storage'
 import type { AgentPanelFloatingPosition, AgentPanelMode } from '../../stores/agent-panel.store'
 import type { ApplicationCleanup } from '../core/store'
 

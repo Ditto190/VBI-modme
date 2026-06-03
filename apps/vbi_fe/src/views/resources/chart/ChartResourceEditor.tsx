@@ -1,9 +1,9 @@
-import { useApplication } from '../../application'
-import { lazyComponent } from '../../components/LazyComponent'
-import type { Translate } from '../../i18n'
+import { useApplication } from '../../../application'
+import { lazyComponent } from '../../../components/LazyComponent'
+import type { Translate } from '../../../i18n'
 
 const StandardChartApp = lazyComponent(() =>
-  import('../../components/StandardChartApp').then((module) => ({ default: module.StandardChartApp })),
+  import('../../../components/StandardChartApp').then((module) => ({ default: module.StandardChartApp })),
 )
 
 type ChartResourceEditorProps = {

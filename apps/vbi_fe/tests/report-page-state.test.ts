@@ -1,5 +1,5 @@
 import { expect, test } from '@rstest/core'
-import { resolveActivePageId } from '../src/views/report-detail/page-state'
+import { resolveActivePageId } from '../src/application/report-detail/page-state'
 
 test('resolveActivePageId falls back to first page when selection disappears', () => {
   const pages = [

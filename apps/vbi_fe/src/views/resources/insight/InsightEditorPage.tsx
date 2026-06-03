@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect, useMemo } from 'react'
-import { applicationShallowEqual, useApplication } from '../../application'
-import { CenteredState } from '../../components/ui/centered-state'
-import { Spinner } from '../../components/ui/spinner'
-import { useTranslation } from '../../i18n'
-import { getSessionUserName } from '../../utils/collaboration'
-import { useManageRouteChrome } from '../ManageRouteChrome'
+import { applicationShallowEqual, useApplication } from '../../../application'
+import { CenteredState } from '../../../components/ui/centered-state'
+import { Spinner } from '../../../components/ui/spinner'
+import { useTranslation } from '../../../i18n'
+import { getSessionUserName } from '../../../utils/collaboration'
+import { useManageRouteChrome } from '../../workspace/ManageRouteChrome'
 import { InsightResourceEditor } from './InsightResourceEditor'
-import { useResourceEditorName } from './useResourceEditorName'
+import { useResourceEditorName } from '../shared/useResourceEditorName'
 
 type InsightEditorPageProps = {
   id: string

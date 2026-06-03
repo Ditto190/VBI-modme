@@ -2,35 +2,35 @@ import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 
-rs.mock('../src/views/ManageLayoutPage', () => ({
+rs.mock('../src/views/workspace/ManageLayoutPage', () => ({
   ManageLayoutPage: ({ children }: { children: ReactNode }) => <div data-testid='workspace-layout'>{children}</div>,
 }))
 
-rs.mock('../src/views/AgentPage', () => ({
+rs.mock('../src/views/agent/AgentPage', () => ({
   AgentPage: () => <div data-testid='agent-page' />,
 }))
 
-rs.mock('../src/views/ReportsPage', () => ({
+rs.mock('../src/views/resources/report/ReportsPage', () => ({
   ReportsPage: () => <div data-testid='reports-page' />,
 }))
 
-rs.mock('../src/views/ManageChartsPage', () => ({
+rs.mock('../src/views/resources/chart/ManageChartsPage', () => ({
   ManageChartsPage: () => <div data-testid='charts-page' />,
 }))
 
-rs.mock('../src/views/ManageInsightsPage', () => ({
+rs.mock('../src/views/resources/insight/ManageInsightsPage', () => ({
   ManageInsightsPage: () => <div data-testid='insights-page' />,
 }))
 
-rs.mock('../src/views/manage-resource/ChartEditorPage', () => ({
+rs.mock('../src/views/resources/chart/ChartEditorPage', () => ({
   ChartEditorPage: ({ id }: { id: string }) => <div data-testid='chart-editor'>{id}</div>,
 }))
 
-rs.mock('../src/views/manage-resource/InsightEditorPage', () => ({
+rs.mock('../src/views/resources/insight/InsightEditorPage', () => ({
   InsightEditorPage: ({ id }: { id: string }) => <div data-testid='insight-editor'>{id}</div>,
 }))
 
-rs.mock('../src/views/ReportDetailPage', () => ({
+rs.mock('../src/views/report-detail/ReportDetailPage', () => ({
   ReportDetailPage: ({ id }: { id: string }) => <div data-testid='report-detail'>{id}</div>,
 }))
 

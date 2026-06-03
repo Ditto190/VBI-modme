@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from '@rstest/core'
 import { useAgentConversationsStore } from '../src/stores/agent-conversations.store'
-import { setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
+import { setVbiAgentIndexedDBFactoryForTests } from '../src/application/agent/agent-storage'
 
 const metadata = {
   id: 'conversation-1',

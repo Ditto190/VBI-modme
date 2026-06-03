@@ -50,9 +50,9 @@ const { useManageChartsStore } = await import('../src/stores/manage-charts.store
 const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
 const { useReportsStore } = await import('../src/stores/reports.store')
-const { ManageChartsPage } = await import('../src/views/ManageChartsPage')
-const { ManageInsightsPage } = await import('../src/views/ManageInsightsPage')
-const { ReportsPage } = await import('../src/views/ReportsPage')
+const { ManageChartsPage } = await import('../src/views/resources/chart/ManageChartsPage')
+const { ManageInsightsPage } = await import('../src/views/resources/insight/ManageInsightsPage')
+const { ReportsPage } = await import('../src/views/resources/report/ReportsPage')
 
 const initialChartsState = useManageChartsStore.getState()
 const initialInsightsState = useManageInsightsStore.getState()

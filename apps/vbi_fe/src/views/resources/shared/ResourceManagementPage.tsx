@@ -1,8 +1,8 @@
 import type { Key, ReactNode } from 'react'
-import type { AppLocale, Translate } from '../../i18n'
+import type { AppLocale, Translate } from '../../../i18n'
 import { ManageResourcePageShell } from './ManageResourcePageShell'
 import { useResourceColumns } from './resource-columns'
-import type { ResourceItem } from '../../types'
+import type { ResourceItem } from '../../../types'
 
 export type ResourceManagementPageState = {
   filteredItems: ResourceItem[]

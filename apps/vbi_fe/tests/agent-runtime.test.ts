@@ -7,9 +7,9 @@ import {
   readAgentBackendConfig,
   resolveAgentModelId,
   resolveAgentThinkingLevel,
-} from '../src/views/agent/agent-model-config'
-import { loadVBIAgentModule } from '../src/views/agent/agent-runtime'
-import { formatAgentContextUsage, resolveAgentContextUsage } from '../src/views/agent/agent-usage-display'
+} from '../src/application/agent/agent-model-config'
+import { loadVBIAgentModule } from '../src/application/agent/agent-runtime'
+import { formatAgentContextUsage, resolveAgentContextUsage } from '../src/application/agent/agent-usage-display'
 
 describe('agent runtime helpers', () => {
   test('resolves model aliases from the backend agent config before creating the browser agent', () => {

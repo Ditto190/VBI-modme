@@ -5,13 +5,13 @@ rs.mock('../src/views/agent/AgentSider', () => ({
   AgentSider: () => <aside data-testid='agent-sider' data-agent-panel-mode='fixed' />,
 }))
 
-const { ManageLayoutPage } = await import('../src/views/ManageLayoutPage')
+const { ManageLayoutPage } = await import('../src/views/workspace/ManageLayoutPage')
 const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { defaultManageSidebarWidth, manageSidebarWidthStorageKey, useManageSidebarStore } =
   await import('../src/stores/manage-sidebar.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { setVbiAgentIndexedDBFactoryForTests } = await import('../src/views/agent/agent-storage')
+const { setVbiAgentIndexedDBFactoryForTests } = await import('../src/application/agent/agent-storage')
 
 const emptyUsage = {
   cacheRead: 0,

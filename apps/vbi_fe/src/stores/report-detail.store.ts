@@ -3,7 +3,7 @@ import type { ReportPageBuilder } from '@visactor/vbi'
 import { createInsight } from '../services/insightApi'
 import { createResource } from '../services/resourceApi'
 import { useReportBuilderModel } from '../models'
-import { resolveActivePageId } from '../views/report-detail/page-state'
+import { resolveActivePageId } from '../application/report-detail/page-state'
 import { connectResourceSession, releaseResourceSession } from './resource-session.store'
 import type { ReportPage, ResourceKind } from '../types'
 

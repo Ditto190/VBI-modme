@@ -1,18 +1,18 @@
 'use client'
 
 import { memo, useEffect, useMemo } from 'react'
-import { applicationShallowEqual, useApplication } from '../application'
-import { Collaborators } from '../components/Collaborators'
-import { FullscreenSpinner } from '../components/ui/spinner'
-import { lazyComponent } from '../components/LazyComponent'
-import { useTranslation } from '../i18n'
-import { getSessionUserName } from '../utils/collaboration'
-import { useManageRouteChrome } from './ManageRouteChrome'
-import { useResourceEditorName } from './manage-resource/useResourceEditorName'
+import { applicationShallowEqual, useApplication } from '../../application'
+import { Collaborators } from '../../components/Collaborators'
+import { lazyComponent } from '../../components/LazyComponent'
+import { FullscreenSpinner } from '../../components/ui/spinner'
+import { useTranslation } from '../../i18n'
+import { getSessionUserName } from '../../utils/collaboration'
+import { useResourceEditorName } from '../resources/shared/useResourceEditorName'
+import { useManageRouteChrome } from '../workspace/ManageRouteChrome'
 
 const userName = getSessionUserName()
 const ReportWorkspace = lazyComponent(
-  () => import('./report-detail/ReportWorkspace').then((module) => ({ default: module.ReportWorkspace })),
+  () => import('./ReportWorkspace').then((module) => ({ default: module.ReportWorkspace })),
   <FullscreenSpinner />,
 )
 

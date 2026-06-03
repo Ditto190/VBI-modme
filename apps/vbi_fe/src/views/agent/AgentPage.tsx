@@ -1,14 +1,13 @@
 'use client'
 
 import { useCallback, useEffect, useMemo } from 'react'
-import { applicationShallowEqual, useApplication } from '../application'
-import { Spinner } from '../components/ui/spinner'
-import { useTranslation, type Translate } from '../i18n'
-import { cn } from '../lib/utils'
-import { useNavigationStore } from '../stores/navigation.store'
-import type { AgentModelId, AgentThinkingLevel } from './agent/agent-model-config'
-import { AgentChatPanel } from './agent/chat/AgentChatPanel'
-import { isAgentRoute, readAgentConversationRouteId } from './manage-sidebar-routes'
+import { applicationShallowEqual, isAgentRoute, readAgentConversationRouteId, useApplication } from '../../application'
+import type { AgentModelId, AgentThinkingLevel } from '../../application/agent/agent-model-config'
+import { Spinner } from '../../components/ui/spinner'
+import { useTranslation, type Translate } from '../../i18n'
+import { cn } from '../../lib/utils'
+import { useNavigationStore } from '../../stores/navigation.store'
+import { AgentChatPanel } from './chat/AgentChatPanel'
 
 const AgentRouteActivation = ({ fallbackTitle }: { fallbackTitle: string }) => {
   const { activate, clear, openConversation } = useApplication(

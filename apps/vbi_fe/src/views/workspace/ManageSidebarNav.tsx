@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../components/ui/collapsible'
-import { ChevronDown, ChevronRight } from '../components/ui/icons'
-import { cn } from '../lib/utils'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../../components/ui/collapsible'
+import { ChevronDown, ChevronRight } from '../../components/ui/icons'
+import { cn } from '../../lib/utils'
 
 export const manageSidebarItemClassName =
   'group flex h-8 w-full cursor-pointer items-center gap-2 rounded-md bg-transparent px-2.5 text-left text-[13px] font-medium text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg hover:text-vbi-text-strong data-[active=true]:bg-vbi-active-bg data-[active=true]:text-vbi-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-focus'

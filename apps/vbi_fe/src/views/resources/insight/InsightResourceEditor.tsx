@@ -1,5 +1,5 @@
-import { applicationShallowEqual, useApplication } from '../../application'
-import { Textarea } from '../../components/ui/input'
+import { applicationShallowEqual, useApplication } from '../../../application'
+import { Textarea } from '../../../components/ui/input'
 
 type InsightResourceEditorProps = {
   placeholder: string

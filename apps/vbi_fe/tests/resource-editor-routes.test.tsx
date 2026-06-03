@@ -27,7 +27,7 @@ rs.mock('../src/views/agent/AgentSider', () => ({
   AgentSider: () => <aside data-testid='agent-sider' data-agent-panel-mode='fixed' />,
 }))
 
-rs.mock('../src/views/manage-resource/ManagePreferences', () => ({
+rs.mock('../src/views/workspace/ManagePreferences', () => ({
   ManagePreferences: () => <div data-testid='manage-preferences' />,
 }))
 
@@ -38,11 +38,11 @@ rs.mock('../src/models', () => ({
     selector({ sessions: {} }),
 }))
 
-rs.mock('../src/views/manage-resource/ChartResourceEditor', () => ({
+rs.mock('../src/views/resources/chart/ChartResourceEditor', () => ({
   ChartResourceEditor: () => <div data-testid='chart-resource-editor' />,
 }))
 
-rs.mock('../src/views/manage-resource/InsightResourceEditor', () => ({
+rs.mock('../src/views/resources/insight/InsightResourceEditor', () => ({
   InsightResourceEditor: () => <div data-testid='insight-resource-editor' />,
 }))
 
@@ -50,9 +50,9 @@ const resourceApi = await import('../src/services/resourceApi')
 const insightApi = await import('../src/services/insightApi')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { ManageLayoutPage } = await import('../src/views/ManageLayoutPage')
-const { ChartEditorPage } = await import('../src/views/manage-resource/ChartEditorPage')
-const { InsightEditorPage } = await import('../src/views/manage-resource/InsightEditorPage')
+const { ManageLayoutPage } = await import('../src/views/workspace/ManageLayoutPage')
+const { ChartEditorPage } = await import('../src/views/resources/chart/ChartEditorPage')
+const { InsightEditorPage } = await import('../src/views/resources/insight/InsightEditorPage')
 
 describe('resource editor routes', () => {
   beforeEach(() => {

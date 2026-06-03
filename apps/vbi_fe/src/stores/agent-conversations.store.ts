@@ -4,7 +4,7 @@ import {
   type AgentConversationMetadata,
   type AgentConversationStatus,
   type VbiAgentStorage,
-} from '../views/agent/agent-storage'
+} from '../application/agent/agent-storage'
 
 export type AgentConversationSummary = AgentConversationMetadata & {
   status: AgentConversationStatus

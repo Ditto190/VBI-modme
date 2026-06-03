@@ -157,19 +157,19 @@ const createAgentConversationRuntime = rs.fn(({ conversationId }: { conversation
   return deferred.promise
 })
 
-rs.mock('../src/views/agent/agent-storage', () => ({
+rs.mock('../src/application/agent/agent-storage', () => ({
   readAgentContentText,
   setupVbiAgentIndexedDBStorage,
 }))
 
-rs.mock('../src/views/agent/agent-runtime', () => ({
+rs.mock('../src/application/agent/agent-runtime', () => ({
   createAgentConversationRuntime,
 }))
 
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { AgentPage } = await import('../src/views/AgentPage')
+const { AgentPage } = await import('../src/views/agent/AgentPage')
 
 describe('AgentPage', () => {
   beforeEach(() => {

@@ -11,7 +11,7 @@ import { memo, useMemo } from 'react'
 import { DropdownMenu } from '../../../components/ui/dropdown-menu'
 import { ArrowUp, Bot, CheckCircle2, ChevronDown, Plus, Square, X } from '../../../components/ui/icons'
 import type { Translate } from '../../../i18n'
-import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../agent-model-config'
+import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../../../application/agent/agent-model-config'
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)

@@ -10,14 +10,14 @@ import {
   type AgentModelId,
   type AgentModelOption,
   type AgentThinkingLevel,
-} from '../../views/agent/agent-model-config'
+} from './agent-model-config'
 import {
   createAgentConversationRuntime,
   type AgentConversationRuntime,
   type AgentConversationRuntimeSnapshot,
   type AgentConversationRuntimeUpdate,
-} from '../../views/agent/agent-runtime'
-import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from '../../views/agent/agent-storage'
+} from './agent-runtime'
+import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from './agent-storage'
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
 import { createLatestApplicationLifecycle } from '../core/lifecycle'
 import type {

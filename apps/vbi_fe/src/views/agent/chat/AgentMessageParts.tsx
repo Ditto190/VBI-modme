@@ -14,8 +14,8 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { MessageActionBar } from '../../../components/assistant-ui/message-actions'
 import { CheckCircle2, ChevronDown, CircleAlert, FileSearch, LoaderCircle } from '../../../components/ui/icons'
-import { formatAbbreviatedTokenCount } from '../agent-usage-display'
-import { readAgentContentText } from '../agent-storage'
+import { formatAbbreviatedTokenCount } from '../../../application/agent/agent-usage-display'
+import { readAgentContentText } from '../../../application/agent/agent-storage'
 
 type RenderedMessagePart = ThreadAssistantMessagePart | ThreadUserMessagePart
 type AgentToolPart = Extract<EnrichedPartState, { type: 'tool-call' }>

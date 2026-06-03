@@ -15,13 +15,16 @@ import {
 import { LoaderCircle, MessageSquare, Pencil, Trash2 } from '../../components/ui/icons'
 import { Input } from '../../components/ui/input'
 import { Tooltip } from '../../components/ui/tooltip'
-import { application, applicationShallowEqual, useApplication } from '../../application'
+import { application, applicationShallowEqual, isAgentConversationRoute, useApplication } from '../../application'
 import type { AgentConversationSummary } from '../../application'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
 import { useNavigationStore } from '../../stores/navigation.store'
-import { isAgentConversationRoute } from '../manage-sidebar-routes'
-import { ManageSidebarGroup, manageSidebarChildListClassName, manageSidebarItemClassName } from '../ManageSidebarNav'
+import {
+  ManageSidebarGroup,
+  manageSidebarChildListClassName,
+  manageSidebarItemClassName,
+} from '../workspace/ManageSidebarNav'
 
 const conversationRowClassName = cn(
   manageSidebarItemClassName,

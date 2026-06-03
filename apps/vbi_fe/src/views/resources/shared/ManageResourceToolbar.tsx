@@ -1,11 +1,11 @@
 import type { Key } from 'react'
 import { useRef } from 'react'
-import { Button } from '../../components/ui/button'
-import { ConfirmAction } from '../../components/ui/confirm-action'
-import { Plus, Search, Trash2, X } from '../../components/ui/icons'
-import { Input } from '../../components/ui/input'
-import { useTranslation } from '../../i18n'
-import { cn } from '../../lib/utils'
+import { Button } from '../../../components/ui/button'
+import { ConfirmAction } from '../../../components/ui/confirm-action'
+import { Plus, Search, Trash2, X } from '../../../components/ui/icons'
+import { Input } from '../../../components/ui/input'
+import { useTranslation } from '../../../i18n'
+import { cn } from '../../../lib/utils'
 
 type Props = {
   createLabel: string

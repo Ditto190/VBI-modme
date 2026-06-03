@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { applicationShallowEqual, useApplication } from '../../application'
-import type { ResourceKind } from '../../types'
+import { applicationShallowEqual, useApplication } from '../../../application'
+import type { ResourceKind } from '../../../types'
 
 type UseResourceEditorNameOptions = {
   fallback: string

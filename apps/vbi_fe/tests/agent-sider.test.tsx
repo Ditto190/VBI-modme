@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
-rs.mock('../src/views/AgentPage', () => ({
+rs.mock('../src/views/agent/AgentPage', () => ({
   AgentChatSurface: ({ className }: { className?: string }) => (
     <div className={className} data-testid='agent-chat-surface' />
   ),

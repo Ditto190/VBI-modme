@@ -15,7 +15,7 @@ import { Tooltip } from '../../components/ui/tooltip'
 import { useTranslation } from '../../i18n'
 import { cn } from '../../lib/utils'
 import { defaultAgentPanelWidth, maxAgentPanelWidth, minAgentPanelWidth } from '../../stores/agent-panel.store'
-import { AgentChatSurface } from '../AgentPage'
+import { AgentChatSurface } from './AgentPage'
 
 const collapsedAgentSiderWidth = 44
 const agentSiderLabel = 'VBI Agent'
