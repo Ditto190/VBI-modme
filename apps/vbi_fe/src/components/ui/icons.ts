@@ -1,4 +1,5 @@
 export {
+  ArrowLeftRight,
   ArrowLeft,
   ArrowUp,
   BarChart3,

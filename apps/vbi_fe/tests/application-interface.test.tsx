@@ -29,15 +29,20 @@ const { VbiAppProviders } = await import('../src/app/providers')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
 const {
-  defaultAgentPanelWidth,
-  agentPanelFloatingPositionStorageKey,
-  agentPanelModeStorageKey,
-  agentPanelWidthStorageKey,
-  minAgentPanelWidth,
-  useAgentPanelStore,
-} = await import('../src/stores/agent-panel.store')
-const { defaultManageSidebarWidth, manageSidebarWidthStorageKey, useManageSidebarStore } =
-  await import('../src/stores/manage-sidebar.store')
+  defaultWorkspaceSidePanelWidth,
+  minWorkspaceSidePanelWidth,
+  useWorkspaceSidePanelStore,
+  workspaceSidePanelFloatingPositionStorageKey,
+  workspaceSidePanelModeStorageKey,
+  workspaceSidePanelWidthStorageKey,
+} = await import('../src/stores/workspace-side-panel.store')
+const {
+  defaultManageSidebarWidth,
+  defaultWorkspacePlacement,
+  manageSidebarWidthStorageKey,
+  useManageSidebarStore,
+  workspacePlacementStorageKey,
+} = await import('../src/stores/manage-sidebar.store')
 const { useManageChartsStore } = await import('../src/stores/manage-charts.store')
 const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
 const { useNavigationStore } = await import('../src/stores/navigation.store')
@@ -46,8 +51,8 @@ const { useReportDetailStore } = await import('../src/stores/report-detail.store
 
 const initialPreferencesState = useAppPreferencesStore.getState()
 const initialAgentConversationsState = useAgentConversationsStore.getState()
-const initialAgentPanelState = useAgentPanelStore.getState()
 const initialManageSidebarState = useManageSidebarStore.getState()
+const initialWorkspaceSidePanelState = useWorkspaceSidePanelStore.getState()
 const initialChartsState = useManageChartsStore.getState()
 const initialInsightsState = useManageInsightsStore.getState()
 const initialNavigationState = useNavigationStore.getState()
@@ -69,23 +74,25 @@ describe('application interface', () => {
     Reflect.deleteProperty(window, 'VBIApplication')
     Reflect.deleteProperty(window, 'VBIApplicationAPI')
     Reflect.deleteProperty(window, 'useApplication')
-    window.localStorage.removeItem(agentPanelFloatingPositionStorageKey)
-    window.localStorage.removeItem(agentPanelModeStorageKey)
-    window.localStorage.removeItem(agentPanelWidthStorageKey)
     window.localStorage.removeItem(manageSidebarWidthStorageKey)
-    window.history.replaceState(null, '', '/manage/reports')
+    window.localStorage.removeItem(workspacePlacementStorageKey)
+    window.localStorage.removeItem(workspaceSidePanelFloatingPositionStorageKey)
+    window.localStorage.removeItem(workspaceSidePanelModeStorageKey)
+    window.localStorage.removeItem(workspaceSidePanelWidthStorageKey)
+    window.history.replaceState(null, '', '/manage/report')
     useAppPreferencesStore.setState(initialPreferencesState, true)
     useAgentConversationsStore.setState(initialAgentConversationsState, true)
-    useAgentPanelStore.setState(initialAgentPanelState, true)
-    useAgentPanelStore.setState({
+    useWorkspaceSidePanelStore.setState(initialWorkspaceSidePanelState, true)
+    useWorkspaceSidePanelStore.setState({
       collapsed: false,
       floatingPosition: null,
       mode: 'fixed',
-      width: defaultAgentPanelWidth,
+      width: defaultWorkspaceSidePanelWidth,
     })
     useManageSidebarStore.setState(initialManageSidebarState, true)
     useManageSidebarStore.setState({
       collapsed: false,
+      workspacePlacement: defaultWorkspacePlacement,
       width: defaultManageSidebarWidth,
     })
     useManageChartsStore.setState(initialChartsState, true)
@@ -94,7 +101,7 @@ describe('application interface', () => {
     useReportDetailStore.setState(initialReportDetailState, true)
     useReportsStore.setState(initialReportsState, true)
     bindApplicationNavigation(navigate)
-    setApplicationPathname('/manage/reports')
+    setApplicationPathname('/manage/report')
   })
 
   test('reads fresh imperative state before any React subscription is mounted', () => {
@@ -173,7 +180,7 @@ describe('application interface', () => {
       application.i18n.setLocale(application.i18n.locale === 'en-US' ? 'ja-JP' : 'en-US')
     })
     act(() => {
-      setApplicationPathname('/manage/charts')
+      setApplicationPathname('/manage/chart')
     })
     act(() => {
       useManageChartsStore.setState({ loading: !useManageChartsStore.getState().loading })
@@ -204,7 +211,7 @@ describe('application interface', () => {
     expect(window.VBIApplication?.theme.mode).toBe('blue')
     expect(window.VBIApplication?.i18n.locale).toBe('en-US')
     await waitFor(() => expect(document.documentElement.lang).toBe('en-US'))
-    expect(window.location.pathname).toBe('/manage/charts')
+    expect(window.location.pathname).toBe('/manage/chart')
 
     const windowTheme = window.useApplication?.((state) => state.theme)
 
@@ -226,10 +233,10 @@ describe('application interface', () => {
     const cleanup = application.report.activate()
     cleanup()
 
-    expect(navigate).toHaveBeenNthCalledWith(1, '/manage/charts/chart%201')
-    expect(navigate).toHaveBeenNthCalledWith(2, '/manage/insights/insight-1')
-    expect(navigate).toHaveBeenNthCalledWith(3, '/manage/reports/report-1')
-    expect(navigate).toHaveBeenNthCalledWith(4, '/manage/reports')
+    expect(navigate).toHaveBeenNthCalledWith(1, '/manage/chart/chart%201')
+    expect(navigate).toHaveBeenNthCalledWith(2, '/manage/insight/insight-1')
+    expect(navigate).toHaveBeenNthCalledWith(3, '/manage/report/report-1')
+    expect(navigate).toHaveBeenNthCalledWith(4, '/manage/report')
     expect('navigation' in (application as unknown as Record<string, unknown>)).toBe(false)
   })
 
@@ -256,7 +263,12 @@ describe('application interface', () => {
     expect(application.agent.model.selectedId).toBe('deepseek-v4-flash')
     expect(application.agent.panel.collapsed).toBe(false)
     expect(application.agent.panel.mode).toBe('fixed')
-    expect(application.agent.panel.width).toBe(defaultAgentPanelWidth)
+    expect(application.agent.panel.width).toBe(defaultWorkspaceSidePanelWidth)
+    expect(application.agent.panel).toMatchObject({
+      collapsed: application.layout.sidePanel.collapsed,
+      mode: application.layout.sidePanel.mode,
+      width: application.layout.sidePanel.width,
+    })
 
     application.agent.chat.clear()
     expect(application.agent.conversations.activeId).toBe('')
@@ -267,7 +279,8 @@ describe('application interface', () => {
 
     application.agent.panel.setMode('floating')
     expect(application.agent.panel.mode).toBe('floating')
-    expect(window.localStorage.getItem(agentPanelModeStorageKey)).toBe('floating')
+    expect(application.layout.sidePanel.mode).toBe('floating')
+    expect(window.localStorage.getItem(workspaceSidePanelModeStorageKey)).toBe('floating')
     application.agent.panel.toggleMode()
     expect(application.agent.panel.mode).toBe('fixed')
     application.agent.panel.setCollapsed(true)
@@ -276,16 +289,18 @@ describe('application interface', () => {
     expect(application.agent.panel.collapsed).toBe(false)
     application.agent.panel.setWidth(520)
     expect(application.agent.panel.width).toBe(520)
-    expect(window.localStorage.getItem(agentPanelWidthStorageKey)).toBe('520')
+    expect(application.layout.sidePanel.width).toBe(520)
+    expect(window.localStorage.getItem(workspaceSidePanelWidthStorageKey)).toBe('520')
     application.agent.panel.setWidth(240)
-    expect(application.agent.panel.width).toBe(minAgentPanelWidth)
-    expect(window.localStorage.getItem(agentPanelWidthStorageKey)).toBe(String(minAgentPanelWidth))
+    expect(application.agent.panel.width).toBe(minWorkspaceSidePanelWidth)
+    expect(window.localStorage.getItem(workspaceSidePanelWidthStorageKey)).toBe(String(minWorkspaceSidePanelWidth))
     application.agent.panel.setFloatingPosition({ x: 240, y: 96 })
     expect(application.agent.panel.floatingPosition).toEqual({ x: 240, y: 96 })
-    expect(window.localStorage.getItem(agentPanelFloatingPositionStorageKey)).toBe('{"x":240,"y":96}')
+    expect(application.layout.sidePanel.floatingPosition).toEqual({ x: 240, y: 96 })
+    expect(window.localStorage.getItem(workspaceSidePanelFloatingPositionStorageKey)).toBe('{"x":240,"y":96}')
     application.agent.panel.setFloatingPosition(null)
     expect(application.agent.panel.floatingPosition).toBeNull()
-    expect(window.localStorage.getItem(agentPanelFloatingPositionStorageKey)).toBeNull()
+    expect(window.localStorage.getItem(workspaceSidePanelFloatingPositionStorageKey)).toBeNull()
 
     await application.agent.model.change('deepseek-v4-pro')
     expect(application.agent.model.selectedId).toBe('deepseek-v4-pro')
@@ -304,9 +319,13 @@ describe('application interface', () => {
     cleanup()
   })
 
-  test('exposes persistent layout sidebar width through application.layout', () => {
+  test('exposes persistent layout controls through application.layout', () => {
     expect(application.layout.sidebar.collapsed).toBe(false)
     expect(application.layout.sidebar.width).toBe(defaultManageSidebarWidth)
+    expect(application.layout.sidePanel.collapsed).toBe(false)
+    expect(application.layout.sidePanel.mode).toBe('fixed')
+    expect(application.layout.sidePanel.width).toBe(defaultWorkspaceSidePanelWidth)
+    expect(application.layout.workspacePlacement.value).toBe('resource-center')
 
     application.layout.sidebar.setWidth(360)
     expect(application.layout.sidebar.width).toBe(360)
@@ -320,6 +339,25 @@ describe('application interface', () => {
     application.layout.sidebar.resetWidth()
     expect(application.layout.sidebar.width).toBe(defaultManageSidebarWidth)
     expect(window.localStorage.getItem(manageSidebarWidthStorageKey)).toBe(String(defaultManageSidebarWidth))
+
+    application.layout.sidePanel.setMode('floating')
+    expect(application.layout.sidePanel.mode).toBe('floating')
+    expect(application.agent.panel.mode).toBe('floating')
+    application.layout.sidePanel.toggleMode()
+    expect(application.layout.sidePanel.mode).toBe('fixed')
+    application.layout.sidePanel.setWidth(540)
+    expect(application.layout.sidePanel.width).toBe(540)
+    expect(window.localStorage.getItem(workspaceSidePanelWidthStorageKey)).toBe('540')
+    application.layout.sidePanel.resetWidth()
+    expect(application.layout.sidePanel.width).toBe(defaultWorkspaceSidePanelWidth)
+
+    application.layout.workspacePlacement.toggle()
+    expect(application.layout.workspacePlacement.value).toBe('agent-center')
+    expect(window.localStorage.getItem(workspacePlacementStorageKey)).toBe('agent-center')
+
+    application.layout.workspacePlacement.set('resource-center')
+    expect(application.layout.workspacePlacement.value).toBe('resource-center')
+    expect(window.localStorage.getItem(workspacePlacementStorageKey)).toBe('resource-center')
   })
 
   test('exposes chart resource list commands through application.chart', async () => {
@@ -388,7 +426,7 @@ describe('application interface', () => {
     const cleanup = application.chart.activate()
     cleanup()
 
-    expect(navigate).toHaveBeenCalledWith('/manage/charts/chart-1')
+    expect(navigate).toHaveBeenCalledWith('/manage/chart/chart-1')
     expect(resourceApi.removeResource).toHaveBeenCalledWith('chart', 'chart-1')
     expect(resourceApi.removeResource).toHaveBeenCalledWith('chart', 'chart-2')
   })

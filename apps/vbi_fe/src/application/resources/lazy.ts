@@ -91,15 +91,15 @@ const createLazyResourceApplication = <TItem extends ResourceItem>(
 
 const lazyChartApplication = createLazyResourceApplication(
   (module) => module.getChartApplication(),
-  resolveApplicationRoute({ name: 'charts' }),
+  resolveApplicationRoute({ name: 'chart' }),
 )
 const lazyInsightApplication = createLazyResourceApplication(
   (module) => module.getInsightApplication(),
-  resolveApplicationRoute({ name: 'insights' }),
+  resolveApplicationRoute({ name: 'insight' }),
 )
 const lazyReportApplication = createLazyResourceApplication(
   (module) => module.getReportApplication(),
-  resolveApplicationRoute({ name: 'reports' }),
+  resolveApplicationRoute({ name: 'report' }),
 )
 
 export const bindResourcesLazyApplicationEmitter = (nextEmit: () => void) => {

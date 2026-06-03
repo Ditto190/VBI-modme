@@ -1,8 +1,8 @@
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import { useAgentPanelStore } from '../../stores/agent-panel.store'
 import { useAppPreferencesStore } from '../../stores/app-preferences.store'
 import { useManageSidebarStore } from '../../stores/manage-sidebar.store'
 import { useNavigationStore } from '../../stores/navigation.store'
+import { useWorkspaceSidePanelStore } from '../../stores/workspace-side-panel.store'
 import { getLazyAgentApplication, bindAgentLazyApplicationEmitter } from '../agent/lazy'
 import { getLayoutApplication } from '../layout/application'
 import { getI18nApplication, getThemeApplication } from '../preferences/application'
@@ -52,10 +52,10 @@ const subscribeAllInternalStores = () => {
   bindResourcesLazyApplicationEmitter(emitApplicationChange)
   bindReportDetailLazyApplicationEmitter(emitApplicationChange)
   subscribeInternalStore(useAgentConversationsStore)
-  subscribeInternalStore(useAgentPanelStore)
   subscribeInternalStore(useAppPreferencesStore)
   subscribeInternalStore(useManageSidebarStore)
   subscribeInternalStore(useNavigationStore)
+  subscribeInternalStore(useWorkspaceSidePanelStore)
 }
 
 export const getApplicationSnapshot = () => {

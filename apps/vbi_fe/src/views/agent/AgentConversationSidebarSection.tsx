@@ -15,7 +15,13 @@ import {
 import { LoaderCircle, MessageSquare, Pencil, Trash2 } from '../../components/ui/icons'
 import { Input } from '../../components/ui/input'
 import { Tooltip } from '../../components/ui/tooltip'
-import { application, applicationShallowEqual, isAgentConversationRoute, useApplication } from '../../application'
+import {
+  application,
+  applicationShallowEqual,
+  createAgentConversationRoute,
+  isAgentConversationRoute,
+  useApplication,
+} from '../../application'
 import type { AgentConversationSummary } from '../../application'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
@@ -90,9 +96,7 @@ const AgentConversationRow = memo(
     }, [isRenameOpen, title])
 
     const openConversation = () => {
-      if (activeConversationId !== conversation.id) {
-        selectConversation(conversation.id)
-      }
+      selectConversation(conversation.id)
     }
 
     const beginRename = () => {
@@ -257,6 +261,7 @@ export const AgentConversationSidebarSection = () => {
     { equality: applicationShallowEqual },
   )
   const pathname = useNavigationStore((state) => state.pathname)
+  const navigate = useNavigationStore((state) => state.go)
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
 
@@ -291,6 +296,7 @@ export const AgentConversationSidebarSection = () => {
                   renameConversation={renameConversation}
                   selectConversation={(id) => {
                     void selectConversation(id)
+                    navigate(createAgentConversationRoute(id))
                   }}
                   t={t}
                 />

@@ -5,8 +5,9 @@ import type { ReactNode } from 'react'
 rs.mock('../src/views/workspace/ManageLayoutPage', () => ({
   ManageLayoutPage: ({ children }: { children: ReactNode }) => (
     <div data-testid='workspace-layout'>
+      <aside data-testid='manage-sidebar' />
+      <main data-testid='workspace-main'>{children}</main>
       <aside data-testid='agent-sider' />
-      {children}
     </div>
   ),
 }))
@@ -50,42 +51,53 @@ describe('rsbuild app routes', () => {
     useNavigationStore.setState({ navigate: null, pathname: '' })
   })
 
-  test('renders the standalone agent page for agent routes', async () => {
+  test('keeps workspace chrome mounted and hides resource pages for agent routes', async () => {
     window.history.replaceState(null, '', '/agent/conversation-1')
 
     render(<App />)
 
-    expect(await screen.findByTestId('agent-page')).toBeInTheDocument()
-    expect(screen.queryByTestId('workspace-layout')).not.toBeInTheDocument()
+    expect(await screen.findByTestId('workspace-layout')).toBeInTheDocument()
+    expect(screen.getByTestId('manage-sidebar')).toBeInTheDocument()
+    expect(screen.getByTestId('agent-sider')).toBeInTheDocument()
+    expect(screen.getByTestId('workspace-main')).toBeEmptyDOMElement()
+    expect(screen.queryByTestId('agent-page')).not.toBeInTheDocument()
     expect(screen.queryByTestId('reports-page')).not.toBeInTheDocument()
   })
 
   test('maps browser paths to resource pages', async () => {
-    window.history.replaceState(null, '', '/manage/charts/chart%201')
+    window.history.replaceState(null, '', '/manage/chart/chart%201')
     const { rerender } = render(<App />)
 
     expect(await screen.findByTestId('chart-editor')).toHaveTextContent('chart 1')
 
-    window.history.pushState(null, '', '/manage/insights')
+    window.history.pushState(null, '', '/manage/insight')
     window.dispatchEvent(new PopStateEvent('popstate'))
     rerender(<App />)
     expect(await screen.findByTestId('insights-page')).toBeInTheDocument()
 
-    window.history.pushState(null, '', '/manage/reports/report-1')
+    window.history.pushState(null, '', '/manage/report/report-1')
     window.dispatchEvent(new PopStateEvent('popstate'))
     rerender(<App />)
     await waitFor(() => expect(screen.getByTestId('report-detail')).toHaveTextContent('report-1'))
   })
 
+  test('canonicalizes legacy plural manage resource routes to singular paths', async () => {
+    window.history.replaceState(null, '', '/manage/insights/insight-1')
+    render(<App />)
+
+    expect(await screen.findByTestId('insight-editor')).toHaveTextContent('insight-1')
+    await waitFor(() => expect(window.location.pathname).toBe('/manage/insight/insight-1'))
+  })
+
   test('keeps workspace chrome mounted when opening a report detail route', async () => {
-    window.history.replaceState(null, '', '/manage/reports')
+    window.history.replaceState(null, '', '/manage/report')
     render(<App />)
 
     expect(await screen.findByTestId('reports-page')).toBeInTheDocument()
     const workspaceLayout = screen.getByTestId('workspace-layout')
     const agentSider = screen.getByTestId('agent-sider')
 
-    window.history.pushState(null, '', '/manage/reports/report-1')
+    window.history.pushState(null, '', '/manage/report/report-1')
     window.dispatchEvent(new PopStateEvent('popstate'))
 
     await waitFor(() => expect(screen.getByTestId('report-detail')).toHaveTextContent('report-1'))

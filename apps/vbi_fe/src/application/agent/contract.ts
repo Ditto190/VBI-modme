@@ -2,7 +2,7 @@ import type { AgentMessage } from '@earendil-works/pi-agent-core'
 import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from './agent-model-config'
 import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from './agent-runtime'
 import type { AgentConversationMetadata, AgentConversationStatus } from './agent-storage'
-import type { AgentPanelFloatingPosition, AgentPanelMode } from '../../stores/agent-panel.store'
+import type { WorkspaceSidePanelApplication } from '../layout/contract'
 import type { ApplicationCleanup } from '../core/store'
 
 export type AgentConversationSummary = AgentConversationMetadata & {
@@ -56,18 +56,7 @@ export type AgentModelApplication = {
   changeThinkingLevel(thinkingLevel: AgentThinkingLevel): Promise<void>
 }
 
-export type AgentPanelApplication = {
-  collapsed: boolean
-  floatingPosition: AgentPanelFloatingPosition | null
-  mode: AgentPanelMode
-  width: number
-  setCollapsed(collapsed: boolean): void
-  setFloatingPosition(position: AgentPanelFloatingPosition | null): void
-  setMode(mode: AgentPanelMode): void
-  setWidth(width: number): void
-  toggleCollapsed(): void
-  toggleMode(): void
-}
+export type AgentPanelApplication = WorkspaceSidePanelApplication
 
 export type AgentApplication = {
   chat: AgentChatApplication

@@ -209,43 +209,43 @@ body {
   line-height: 1.2;
 }
 
-.vbi-agent-sider .vbi-agent-thread-viewport {
+.vbi-workspace-side-panel .vbi-agent-thread-viewport {
   padding: 18px 0 12px;
   scroll-padding: 18px 0 20px;
 }
 
-.vbi-agent-sider .vbi-agent-thread-empty,
-.vbi-agent-sider .vbi-agent-message {
+.vbi-workspace-side-panel .vbi-agent-thread-empty,
+.vbi-workspace-side-panel .vbi-agent-message {
   width: min(100%, calc(100% - 24px));
 }
 
-.vbi-agent-sider .vbi-agent-thread-empty {
+.vbi-workspace-side-panel .vbi-agent-thread-empty {
   margin-bottom: 18px;
 }
 
-.vbi-agent-sider .vbi-agent-thread-empty h1 {
+.vbi-workspace-side-panel .vbi-agent-thread-empty h1 {
   font-size: 20px;
 }
 
-.vbi-agent-sider .vbi-agent-composer-dock {
+.vbi-workspace-side-panel .vbi-agent-composer-dock {
   padding: 8px 0 12px;
 }
 
-.vbi-agent-sider .vbi-agent-composer-dock > * {
+.vbi-workspace-side-panel .vbi-agent-composer-dock > * {
   width: min(100%, calc(100% - 24px));
 }
 
-.vbi-agent-sider .vbi-agent-composer {
+.vbi-workspace-side-panel .vbi-agent-composer {
   min-height: 104px;
   border-radius: 16px;
 }
 
-.vbi-agent-sider .vbi-agent-composer-toolbar {
+.vbi-workspace-side-panel .vbi-agent-composer-toolbar {
   gap: 8px;
 }
 
-.vbi-agent-sider .vbi-agent-composer-controls,
-.vbi-agent-sider .vbi-agent-composer-send-group {
+.vbi-workspace-side-panel .vbi-agent-composer-controls,
+.vbi-workspace-side-panel .vbi-agent-composer-send-group {
   gap: 6px;
 }
 

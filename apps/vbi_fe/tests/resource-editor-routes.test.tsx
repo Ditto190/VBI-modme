@@ -23,8 +23,10 @@ rs.mock('../src/views/agent/AgentConversationSidebarSection', () => ({
   AgentConversationSidebarSection: () => <div data-testid='agent-conversation-sidebar' />,
 }))
 
-rs.mock('../src/views/agent/AgentSider', () => ({
-  AgentSider: () => <aside data-testid='agent-sider' data-agent-panel-mode='fixed' />,
+rs.mock('../src/views/agent/AgentPage', () => ({
+  AgentChatSurface: ({ className }: { className?: string }) => (
+    <div className={className} data-testid='agent-chat-surface' />
+  ),
 }))
 
 rs.mock('../src/views/workspace/ManagePreferences', () => ({
@@ -84,7 +86,7 @@ describe('resource editor routes', () => {
   })
 
   test('chart editor route owns chart session lifecycle and rename', async () => {
-    useNavigationStore.setState({ pathname: '/manage/charts/chart-1' })
+    useNavigationStore.setState({ pathname: '/manage/chart/chart-1' })
 
     const view = render(
       <ManageLayoutPage>
@@ -100,7 +102,7 @@ describe('resource editor routes', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Hide Sidebar' }))
     const showSidebarButton = screen.getByRole('button', { name: 'Show Sidebar' })
-    const routeTitleGroup = screen.getByRole('button', { name: 'Back' }).closest('[data-manage-route-title-group]')
+    const routeTitleGroup = screen.getByRole('button', { name: 'Back' }).closest('[data-workspace-slot-title-group]')
     expect(showSidebarButton.closest('[data-manage-sidebar-rail]')).not.toBeNull()
     expect(showSidebarButton.closest('header')).toBeNull()
     expect(routeTitleGroup).not.toBeNull()
@@ -118,14 +120,14 @@ describe('resource editor routes', () => {
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Back' }))
-    expect(navigate).toHaveBeenCalledWith('/manage/charts')
+    expect(navigate).toHaveBeenCalledWith('/manage/chart')
 
     view.unmount()
     await waitFor(() => expect(releaseResourceSession).toHaveBeenCalledWith('chart', 'chart-1'))
   })
 
   test('insight editor route owns insight session lifecycle and rename', async () => {
-    useNavigationStore.setState({ pathname: '/manage/insights/insight-1' })
+    useNavigationStore.setState({ pathname: '/manage/insight/insight-1' })
 
     const view = render(
       <ManageLayoutPage>
@@ -146,7 +148,7 @@ describe('resource editor routes', () => {
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Back' }))
-    expect(navigate).toHaveBeenCalledWith('/manage/insights')
+    expect(navigate).toHaveBeenCalledWith('/manage/insight')
 
     view.unmount()
     await waitFor(() => expect(releaseResourceSession).toHaveBeenCalledWith('insight', 'insight-1'))
