@@ -1,7 +1,8 @@
 import { describe, expect, test } from '@rstest/core'
 import { Agent } from '@earendil-works/pi-agent-core'
+import { Type } from 'typebox'
 import { VBIAgent } from '../src/index'
-import type { AgentEvent, AgentOptions, StreamFn } from '../src/index'
+import type { AgentEvent, AgentOptions, AgentTool, StreamFn } from '../src/index'
 
 const usage = {
   cacheRead: 0,
@@ -133,5 +134,32 @@ describe('VBIAgent', () => {
       [[{ text: 'first', type: 'text' }], [{ text: 'second', type: 'text' }]],
     )
     expect(agent.state.messages.at(-1)).toMatchObject({ role: 'assistant' })
+  })
+
+  test('replaces default VBI resource tools when custom tools are provided', () => {
+    const replacementTools: AgentTool[] = [
+      {
+        description: 'Run trusted VBI application scripts.',
+        execute: async () => ({
+          content: [{ text: '{"ok":true}', type: 'text' }],
+          details: { display: '{"ok":true}', summary: 'vbi_application completed' },
+        }),
+        label: 'VBI Application',
+        name: 'vbi_application',
+        parameters: Type.Object({
+          code: Type.String(),
+        }),
+      },
+    ]
+    const agent = new VBIAgent({
+      initialState: {
+        model,
+        tools: [{ name: 'stale_tool' }],
+      } as unknown as AgentOptions['initialState'],
+      tools: replacementTools,
+    })
+
+    expect(agent.state.tools).toEqual(replacementTools)
+    expect(agent.state.tools.map((tool) => tool.name)).toEqual(['vbi_application'])
   })
 })

@@ -1,8 +1,7 @@
 'use client'
 
-import { convertToLlm, type AgentMessage, type AgentOptions } from '@earendil-works/pi-agent-core'
-import { createVBIProviderAgentKit } from '@visactor/headless-bi-provider'
-import type { VBIAgent as BrowserVBIAgent } from '@visactor/vbi-agent'
+import { convertToLlm, type AgentMessage } from '@earendil-works/pi-agent-core'
+import type { VBIAgent as BrowserVBIAgent, VBIAgentOptions } from '@visactor/vbi-agent'
 import {
   saveAgentConversation,
   setupVbiAgentIndexedDBStorage,
@@ -22,6 +21,7 @@ import {
   type AgentThinkingLevel,
 } from './agent-model-config'
 import { streamProxy } from './agent-stream-proxy'
+import { createVBIApplicationTools } from './tools/application-tools'
 import { browserEnv } from '../../env/browserEnv'
 
 export type AgentConversationRuntimeSnapshot = {
@@ -33,10 +33,7 @@ export type AgentConversationRuntimeSnapshot = {
   usageText: string
 }
 
-type BrowserVBIAgentConstructor = new (
-  options: AgentOptions,
-  workspace: ReturnType<typeof createVBIProviderAgentKit>['workspace'],
-) => BrowserVBIAgent
+type BrowserVBIAgentConstructor = new (options: VBIAgentOptions) => BrowserVBIAgent
 
 type VBIAgentModule = {
   VBIAgent: BrowserVBIAgentConstructor
@@ -73,8 +70,6 @@ type CreateAgentConversationRuntimeOptions = {
   thinkingLevel?: AgentThinkingLevel
 }
 
-const defaultProviderApiBaseUrl = '/api/v1'
-
 const areRuntimeSnapshotsEqual = (
   left: AgentConversationRuntimeSnapshot | null,
   right: AgentConversationRuntimeSnapshot,
@@ -108,26 +103,21 @@ export const createAgentConversationRuntime = async ({
   const model = resolveAgentModel(loadedSession?.model, modelInput, publicConfig)
   const initialThinkingLevel = resolveAgentThinkingLevel(loadedSession?.thinkingLevel ?? thinkingLevel)
 
-  const providerKit = createVBIProviderAgentKit({
-    baseUrl: browserEnv.vbiApiBaseUrl || defaultProviderApiBaseUrl,
-  })
-  const agent = new VBIAgent(
-    {
-      initialState: {
-        model,
-        ...(loadedSession
-          ? {
-              messages: loadedSession.messages,
-              thinkingLevel: initialThinkingLevel,
-            }
-          : { thinkingLevel: initialThinkingLevel }),
-      },
-      convertToLlm,
-      sessionId: conversationId,
-      streamFn: streamProxy,
+  const agent = new VBIAgent({
+    initialState: {
+      model,
+      ...(loadedSession
+        ? {
+            messages: loadedSession.messages,
+            thinkingLevel: initialThinkingLevel,
+          }
+        : { thinkingLevel: initialThinkingLevel }),
     },
-    providerKit.workspace,
-  )
+    convertToLlm,
+    sessionId: conversationId,
+    streamFn: streamProxy,
+    tools: createVBIApplicationTools(),
+  })
   const createdAt = loadedSession?.createdAt ?? new Date().toISOString()
   let lastModified = loadedSession?.lastModified ?? createdAt
   let hasStoredConversation = loadedSession !== null
