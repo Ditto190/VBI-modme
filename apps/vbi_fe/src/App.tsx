@@ -24,9 +24,6 @@ const ManageChartsPage = lazyComponent<object>(() =>
 const ManageInsightsPage = lazyComponent<object>(() =>
   import('./views/resources/insight/ManageInsightsPage').then((module) => ({ default: module.ManageInsightsPage })),
 )
-const AgentPage = lazyComponent<object>(() =>
-  import('./views/agent/AgentPage').then((module) => ({ default: module.AgentPage })),
-)
 const ReportDetailPage = lazyComponent<{ id: string }>(() =>
   import('./views/report-detail/ReportDetailPage').then((module) => ({ default: module.ReportDetailPage })),
 )
@@ -51,23 +48,21 @@ const RoutedWorkspace = () => {
   const page = (() => {
     switch (route.name) {
       case 'agent':
-        return <AgentPage />
+        return null
       case 'chartDetail':
         return <ChartEditorPage id={route.id} />
-      case 'charts':
+      case 'chart':
         return <ManageChartsPage />
       case 'insightDetail':
         return <InsightEditorPage id={route.id} />
-      case 'insights':
+      case 'insight':
         return <ManageInsightsPage />
       case 'reportDetail':
         return <ReportDetailPage id={route.id} />
-      case 'reports':
+      case 'report':
         return <ReportsPage />
     }
   })()
-
-  if (route.name === 'agent') return page
 
   return <ManageLayoutPage>{page}</ManageLayoutPage>
 }

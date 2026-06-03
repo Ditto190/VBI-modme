@@ -19,13 +19,13 @@ export const useNavigationStore = create<NavigationState>((set, get) => ({
     get().navigate?.(path)
   },
   openChart: (id) => {
-    get().go(`/manage/charts/${id}`)
+    get().go(`/manage/chart/${id}`)
   },
   openInsight: (id) => {
-    get().go(`/manage/insights/${id}`)
+    get().go(`/manage/insight/${id}`)
   },
   openReport: (id) => {
-    get().go(`/manage/reports/${id}`)
+    get().go(`/manage/report/${id}`)
   },
   setNavigate: (navigate) => {
     if (get().navigate === navigate) return
