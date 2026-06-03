@@ -26,9 +26,11 @@ export type {
   AgentConversationsApplication,
   AgentChatApplication,
   AgentModelApplication,
+  AgentPanelApplication,
   AgentPromptOptions,
   ApplicationAgentMessage,
 } from './agent/contract'
+export type { LayoutApplication, ManageSidebarApplication } from './layout/contract'
 export type { ApplicationRouteName, ApplicationRouteTarget } from './routing/contract'
 export type { AppThemeMode, I18nApplication, ThemeApplication } from './preferences/contract'
 export type {

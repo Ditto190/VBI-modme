@@ -1,14 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Button } from '../components/ui/button'
-import { ChevronLeft, PanelLeftOpen, Pencil } from '../components/ui/icons'
+import { ChevronLeft, Pencil } from '../components/ui/icons'
 import { Input } from '../components/ui/input'
-import { Tooltip } from '../components/ui/tooltip'
-import { cn } from '../lib/utils'
 import type { ManageRouteRenameChrome } from './ManageRouteChrome'
-
-const showSidebarButtonClassName =
-  'absolute left-0 top-1/2 z-20 grid h-9 w-9 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-[var(--vbi-border)] bg-[var(--vbi-bg)] text-[var(--vbi-text-muted)] shadow-[0_6px_18px_rgba(15,23,42,0.08)] transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out hover:-translate-x-[44%] hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--vbi-primary)]/35'
 
 const routeTitleGroupClassName = 'flex min-w-0 flex-1 items-center gap-2.5'
 
@@ -16,21 +11,11 @@ type ManageRouteHeaderProps = {
   actions?: ReactNode
   backLabel?: string
   rename?: ManageRouteRenameChrome
-  sidebarHidden: boolean
   title: string
   onBack?: () => void
-  onShowSidebar: () => void
 }
 
-export const ManageRouteHeader = ({
-  actions,
-  backLabel,
-  onBack,
-  onShowSidebar,
-  rename,
-  sidebarHidden,
-  title,
-}: ManageRouteHeaderProps) => {
+export const ManageRouteHeader = ({ actions, backLabel, onBack, rename, title }: ManageRouteHeaderProps) => {
   const [editing, setEditing] = useState(false)
   const [draftBeforeEdit, setDraftBeforeEdit] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -60,8 +45,7 @@ export const ManageRouteHeader = ({
 
   return (
     <header className='relative flex h-11 shrink-0 items-center justify-between gap-3 [border-bottom:1px_solid_var(--vbi-border)] bg-[var(--vbi-secondary)] px-3 transition-colors duration-300 max-[720px]:h-[52px]'>
-      <SidebarHandleLayer sidebarHidden={sidebarHidden} onShowSidebar={onShowSidebar} />
-      <div className={cn(routeTitleGroupClassName, sidebarHidden)} data-manage-route-title-group=''>
+      <div className={routeTitleGroupClassName} data-manage-route-title-group=''>
         {onBack ? (
           <Button
             aria-label={resolvedBackLabel}
@@ -120,29 +104,5 @@ export const ManageRouteHeader = ({
       </div>
       {actions ? <div className='flex shrink-0 items-center gap-1.5 max-[720px]:ml-auto'>{actions}</div> : null}
     </header>
-  )
-}
-
-const SidebarHandleLayer = ({
-  sidebarHidden,
-  onShowSidebar,
-}: {
-  sidebarHidden: boolean
-  onShowSidebar: () => void
-}) => {
-  if (!sidebarHidden) return null
-
-  return (
-    <Tooltip side='right' title='Show Sidebar'>
-      <button
-        aria-label='Show Sidebar'
-        className={showSidebarButtonClassName}
-        data-manage-header-sidebar-handle=''
-        type='button'
-        onClick={onShowSidebar}
-      >
-        <PanelLeftOpen className='h-4 w-4' />
-      </button>
-    </Tooltip>
   )
 }

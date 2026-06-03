@@ -11,9 +11,6 @@ import {
   type AppThemeMode,
 } from './stores/app-preferences.store'
 
-const AgentPage = lazyComponent<object>(() =>
-  import('./views/AgentPage').then((module) => ({ default: module.AgentPage })),
-)
 const ChartEditorPage = lazyComponent<{ id: string }>(() =>
   import('./views/manage-resource/ChartEditorPage').then((module) => ({ default: module.ChartEditorPage })),
 )
@@ -25,6 +22,9 @@ const ManageChartsPage = lazyComponent<object>(() =>
 )
 const ManageInsightsPage = lazyComponent<object>(() =>
   import('./views/ManageInsightsPage').then((module) => ({ default: module.ManageInsightsPage })),
+)
+const AgentPage = lazyComponent<object>(() =>
+  import('./views/AgentPage').then((module) => ({ default: module.AgentPage })),
 )
 const ReportDetailPage = lazyComponent<{ id: string }>(() =>
   import('./views/ReportDetailPage').then((module) => ({ default: module.ReportDetailPage })),
@@ -44,7 +44,7 @@ const resolveInitialLocale = (): AppLocale => {
 const resolveInitialThemeMode = (): AppThemeMode => resolvePersistedThemePreference() ?? defaultAppPreferences.themeMode
 
 type RouteMatch =
-  | { name: 'agent'; conversationId?: string }
+  | { name: 'agent' }
   | { name: 'chartDetail'; id: string }
   | { name: 'charts' }
   | { name: 'insightDetail'; id: string }
@@ -63,8 +63,9 @@ const readRouteId = (pathname: string, prefix: string) => {
 
 const matchRoute = (pathname: string): RouteMatch => {
   if (pathname === '/' || pathname === '/manage') return { name: 'reports' }
-  if (pathname === '/agent' || pathname === '/manage/agent') return { name: 'agent' }
-  if (pathname.startsWith('/agent/')) return { name: 'agent', conversationId: readRouteId(pathname, '/agent/') }
+  if (pathname === '/agent' || pathname === '/manage/agent' || pathname.startsWith('/agent/')) {
+    return { name: 'agent' }
+  }
   if (pathname === '/manage/charts') return { name: 'charts' }
   if (pathname.startsWith('/manage/charts/')) {
     return { name: 'chartDetail', id: readRouteId(pathname, '/manage/charts/') }
@@ -86,7 +87,6 @@ const RoutedWorkspace = () => {
   const page = (() => {
     switch (route.name) {
       case 'agent':
-        void route.conversationId
         return <AgentPage />
       case 'chartDetail':
         return <ChartEditorPage id={route.id} />
@@ -102,6 +102,8 @@ const RoutedWorkspace = () => {
         return <ReportsPage />
     }
   })()
+
+  if (route.name === 'agent') return page
 
   return <ManageLayoutPage>{page}</ManageLayoutPage>
 }

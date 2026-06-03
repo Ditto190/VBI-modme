@@ -1,4 +1,5 @@
 import type { AgentApplication } from '../agent/contract'
+import type { LayoutApplication } from '../layout/contract'
 import type { I18nApplication, ThemeApplication } from '../preferences/contract'
 import type { ReportDetailApplication } from '../report-detail/contract'
 import type { ChartApplication, InsightApplication, ReportApplication } from '../resources/contract'
@@ -49,6 +50,7 @@ export type ApplicationState = {
   chart: ChartApplication
   i18n: I18nApplication
   insight: InsightApplication
+  layout: LayoutApplication
   report: ReportApplication
   reportDetail: ReportDetailApplication
   theme: ThemeApplication
@@ -75,6 +77,7 @@ export const application = Object.defineProperties(storeApi, {
   chart: { get: () => getApplicationSnapshot().chart },
   i18n: { get: () => getApplicationSnapshot().i18n },
   insight: { get: () => getApplicationSnapshot().insight },
+  layout: { get: () => getApplicationSnapshot().layout },
   report: { get: () => getApplicationSnapshot().report },
   reportDetail: { get: () => getApplicationSnapshot().reportDetail },
   theme: { get: () => getApplicationSnapshot().theme },

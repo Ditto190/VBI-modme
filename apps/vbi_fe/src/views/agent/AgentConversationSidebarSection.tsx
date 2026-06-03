@@ -20,7 +20,7 @@ import type { AgentConversationSummary } from '../../application'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
 import { useNavigationStore } from '../../stores/navigation.store'
-import { createAgentConversationRoute, isAgentConversationRoute } from '../manage-sidebar-routes'
+import { isAgentConversationRoute } from '../manage-sidebar-routes'
 import { ManageSidebarGroup, manageSidebarChildListClassName, manageSidebarItemClassName } from '../ManageSidebarNav'
 
 const conversationRowClassName = cn(
@@ -57,9 +57,7 @@ type AgentConversationRowProps = {
   conversation: AgentConversationSummary
   deleteConversation(id: string): Promise<void>
   expanded: boolean
-  navigate(path: string): void
   locale: string
-  pathname: string
   renameConversation(id: string, title: string): Promise<void>
   selectConversation(id: string): void
   t: Translate
@@ -71,9 +69,7 @@ const AgentConversationRow = memo(
     conversation,
     deleteConversation,
     expanded,
-    navigate,
     locale,
-    pathname,
     renameConversation,
     selectConversation,
     t,
@@ -83,8 +79,7 @@ const AgentConversationRow = memo(
     const [isRenaming, setIsRenaming] = useState(false)
     const title = conversation.title || t('agent.newConversation')
     const displayTime = formatConversationTime(conversation.lastModified, locale)
-    const targetPath = createAgentConversationRoute(conversation.id)
-    const isActive = isAgentConversationRoute(pathname, conversation.id)
+    const isActive = activeConversationId === conversation.id
     const tabIndex = expanded ? undefined : -1
 
     useEffect(() => {
@@ -92,7 +87,7 @@ const AgentConversationRow = memo(
     }, [isRenameOpen, title])
 
     const openConversation = () => {
-      if (activeConversationId !== conversation.id || pathname !== targetPath) {
+      if (activeConversationId !== conversation.id) {
         selectConversation(conversation.id)
       }
     }
@@ -177,8 +172,6 @@ const AgentConversationRow = memo(
 
                   if (nextConversationId) {
                     selectConversation(nextConversationId)
-                  } else {
-                    navigate('/agent')
                   }
                 }}
               >
@@ -260,7 +253,6 @@ export const AgentConversationSidebarSection = () => {
     }),
     { equality: applicationShallowEqual },
   )
-  const navigate = useNavigationStore((state) => state.go)
   const pathname = useNavigationStore((state) => state.pathname)
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
@@ -292,9 +284,7 @@ export const AgentConversationSidebarSection = () => {
                   conversation={conversation}
                   deleteConversation={deleteConversation}
                   expanded={expanded}
-                  navigate={navigate}
                   locale={locale}
-                  pathname={pathname}
                   renameConversation={renameConversation}
                   selectConversation={(id) => {
                     void selectConversation(id)

@@ -1,7 +1,10 @@
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
+import { useAgentPanelStore } from '../../stores/agent-panel.store'
 import { useAppPreferencesStore } from '../../stores/app-preferences.store'
+import { useManageSidebarStore } from '../../stores/manage-sidebar.store'
 import { useNavigationStore } from '../../stores/navigation.store'
 import { getLazyAgentApplication, bindAgentLazyApplicationEmitter } from '../agent/lazy'
+import { getLayoutApplication } from '../layout/application'
 import { getI18nApplication, getThemeApplication } from '../preferences/application'
 import { getLazyReportDetailApplication, bindReportDetailLazyApplicationEmitter } from '../report-detail/lazy'
 import {
@@ -36,6 +39,7 @@ const createSnapshot = (): ApplicationState => ({
   chart: getLazyChartApplication(),
   i18n: getI18nApplication(),
   insight: getLazyInsightApplication(),
+  layout: getLayoutApplication(),
   report: getLazyReportApplication(),
   reportDetail: getLazyReportDetailApplication(),
   theme: getThemeApplication(),
@@ -48,7 +52,9 @@ const subscribeAllInternalStores = () => {
   bindResourcesLazyApplicationEmitter(emitApplicationChange)
   bindReportDetailLazyApplicationEmitter(emitApplicationChange)
   subscribeInternalStore(useAgentConversationsStore)
+  subscribeInternalStore(useAgentPanelStore)
   subscribeInternalStore(useAppPreferencesStore)
+  subscribeInternalStore(useManageSidebarStore)
   subscribeInternalStore(useNavigationStore)
 }
 

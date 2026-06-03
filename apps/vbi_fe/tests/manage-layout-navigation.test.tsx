@@ -1,10 +1,17 @@
-import { afterEach, beforeEach, describe, expect, test } from '@rstest/core'
+import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { ManageLayoutPage } from '../src/views/ManageLayoutPage'
-import { useAgentConversationsStore } from '../src/stores/agent-conversations.store'
-import { useAppPreferencesStore } from '../src/stores/app-preferences.store'
-import { useNavigationStore } from '../src/stores/navigation.store'
-import { setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
+
+rs.mock('../src/views/agent/AgentSider', () => ({
+  AgentSider: () => <aside data-testid='agent-sider' data-agent-panel-mode='fixed' />,
+}))
+
+const { ManageLayoutPage } = await import('../src/views/ManageLayoutPage')
+const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
+const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
+const { defaultManageSidebarWidth, manageSidebarWidthStorageKey, useManageSidebarStore } =
+  await import('../src/stores/manage-sidebar.store')
+const { useNavigationStore } = await import('../src/stores/navigation.store')
+const { setVbiAgentIndexedDBFactoryForTests } = await import('../src/views/agent/agent-storage')
 
 const emptyUsage = {
   cacheRead: 0,
@@ -25,9 +32,6 @@ const conversationMetadata = {
   thinkingLevel: 'high' as const,
   usage: emptyUsage,
 }
-
-const hasVisibleConversationTitle = () =>
-  screen.getAllByText('Revenue follow-up').some((element) => !element.closest('[aria-hidden="true"]'))
 
 const seedConversationStorage = () => {
   const records = new Map([
@@ -63,6 +67,7 @@ const seedConversationStorage = () => {
 describe('manage layout navigation', () => {
   beforeEach(() => {
     seedConversationStorage()
+    window.localStorage.removeItem(manageSidebarWidthStorageKey)
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     useAgentConversationsStore.setState({
       activeConversationId: '',
@@ -72,6 +77,7 @@ describe('manage layout navigation', () => {
       isLoading: false,
       newConversationRequestSeq: 0,
     })
+    useManageSidebarStore.setState({ collapsed: false, width: defaultManageSidebarWidth })
     useNavigationStore.setState({
       navigate: null,
       pathname: '/agent/conversation-1',
@@ -92,6 +98,7 @@ describe('manage layout navigation', () => {
       },
       'completed',
     )
+    useAgentConversationsStore.getState().selectConversation('conversation-1')
 
     render(
       <ManageLayoutPage>
@@ -127,6 +134,7 @@ describe('manage layout navigation', () => {
     expect(screen.queryByRole('button', { name: 'Insights' })).not.toBeInTheDocument()
     expect(conversation.querySelector('svg')).toBeNull()
     expect(screen.getByText('16m')).toBeInTheDocument()
+    expect(screen.getByTestId('agent-sider')).toHaveAttribute('data-agent-panel-mode', 'fixed')
 
     fireEvent.click(resources)
     expect(resources).toHaveAttribute('aria-expanded', 'true')
@@ -202,7 +210,7 @@ describe('manage layout navigation', () => {
     expect(screen.queryByRole('button', { name: 'Charts' })).not.toBeInTheDocument()
   })
 
-  test('keeps active styling tied to the current route instead of conversation state', () => {
+  test('keeps the resource route active while the selected conversation remains active in the agent list', () => {
     useNavigationStore.setState({ pathname: '/manage/reports' })
     useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
     useAgentConversationsStore.getState().selectConversation('conversation-1')
@@ -219,7 +227,7 @@ describe('manage layout navigation', () => {
     expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
     expect(screen.getByRole('button', { name: /^Revenue follow-up$/i }).closest('[data-active]')).toHaveAttribute(
       'data-active',
-      'false',
+      'true',
     )
   })
 
@@ -297,7 +305,7 @@ describe('manage layout navigation', () => {
     expect(screen.getByText('Workspace').closest('main')).not.toHaveClass('vbi-motion-presence')
   })
 
-  test('toggles sidebar visibility and keeps the active conversation title visible', () => {
+  test('toggles sidebar visibility and keeps the agent sider visible', () => {
     useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
     useAgentConversationsStore.getState().selectConversation('conversation-1')
 
@@ -311,21 +319,50 @@ describe('manage layout navigation', () => {
     expect(hideSidebarButton).toBeInTheDocument()
     expect(hideSidebarButton.closest('aside')).not.toBeNull()
     expect(hideSidebarButton.closest('header')).toBeNull()
-    expect(screen.getAllByText('Revenue follow-up')).toHaveLength(2)
+    expect(screen.getByTestId('agent-sider')).toBeInTheDocument()
 
     fireEvent.click(hideSidebarButton)
 
-    expect(screen.queryByRole('button', { name: /new conversation/i })).not.toBeInTheDocument()
     const showSidebarButton = screen.getByRole('button', { name: /show sidebar/i })
     expect(showSidebarButton).toBeInTheDocument()
-    expect(showSidebarButton.closest('header')).not.toBeNull()
-    expect(showSidebarButton.closest('[data-manage-header-sidebar-handle]')).not.toBeNull()
-    expect(hasVisibleConversationTitle()).toBe(true)
+    expect(showSidebarButton.closest('aside')).toHaveAttribute('data-sidebar-collapsed', 'true')
+    expect(showSidebarButton.closest('header')).toBeNull()
+    expect(showSidebarButton.closest('[data-manage-sidebar-rail]')).not.toBeNull()
+    expect(screen.getByRole('button', { name: /new conversation/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Reports' })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByTestId('agent-sider')).toBeInTheDocument()
 
     fireEvent.click(showSidebarButton)
 
-    expect(screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')).not.toBeNull()
+    expect(screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')).toHaveAttribute(
+      'data-sidebar-collapsed',
+      'false',
+    )
     expect(screen.getByRole('button', { name: /new conversation/i })).toBeInTheDocument()
+  })
+
+  test('resizes the sidebar, persists width, and resets width on separator double click', () => {
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    const separator = screen.getByRole('separator', { name: 'Resize Sidebar' })
+    const sidebar = screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')
+    expect(sidebar).toHaveStyle('--manage-sidebar-width: 300px')
+
+    fireEvent.pointerDown(separator, { clientX: 300 })
+    fireEvent.pointerMove(document, { clientX: 360 })
+    fireEvent.pointerUp(document)
+
+    expect(sidebar).toHaveStyle('--manage-sidebar-width: 360px')
+    expect(window.localStorage.getItem(manageSidebarWidthStorageKey)).toBe('360')
+
+    fireEvent.doubleClick(separator)
+
+    expect(sidebar).toHaveStyle('--manage-sidebar-width: 300px')
+    expect(window.localStorage.getItem(manageSidebarWidthStorageKey)).toBe('300')
   })
 
   test('keeps the running conversation indicator on the row action side', () => {
@@ -345,7 +382,7 @@ describe('manage layout navigation', () => {
     expect(screen.queryByText(/\d+m|\d+h|\d+d/)).not.toBeInTheDocument()
   })
 
-  test('navigates to the agent page when a conversation is opened from another route', () => {
+  test('opens a conversation from another route without changing the main route', () => {
     const navigatedTo: string[] = []
     useNavigationStore.setState({ pathname: '/manage/reports' })
     useNavigationStore.getState().setNavigate((path) => navigatedTo.push(path))
@@ -358,7 +395,8 @@ describe('manage layout navigation', () => {
     )
 
     fireEvent.click(screen.getByRole('button', { name: /^Revenue follow-up$/i }))
-    expect(navigatedTo).toEqual(['/agent/conversation-1'])
+    expect(navigatedTo).toEqual([])
+    expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-1')
   })
 
   test('renames conversations in a modal and deletes them from a confirmation popover', async () => {

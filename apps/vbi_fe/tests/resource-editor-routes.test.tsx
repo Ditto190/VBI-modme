@@ -23,6 +23,10 @@ rs.mock('../src/views/agent/AgentConversationSidebarSection', () => ({
   AgentConversationSidebarSection: () => <div data-testid='agent-conversation-sidebar' />,
 }))
 
+rs.mock('../src/views/agent/AgentSider', () => ({
+  AgentSider: () => <aside data-testid='agent-sider' data-agent-panel-mode='fixed' />,
+}))
+
 rs.mock('../src/views/manage-resource/ManagePreferences', () => ({
   ManagePreferences: () => <div data-testid='manage-preferences' />,
 }))
@@ -97,7 +101,8 @@ describe('resource editor routes', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Hide Sidebar' }))
     const showSidebarButton = screen.getByRole('button', { name: 'Show Sidebar' })
     const routeTitleGroup = screen.getByRole('button', { name: 'Back' }).closest('[data-manage-route-title-group]')
-    expect(showSidebarButton.closest('[data-manage-header-sidebar-handle]')).not.toBeNull()
+    expect(showSidebarButton.closest('[data-manage-sidebar-rail]')).not.toBeNull()
+    expect(showSidebarButton.closest('header')).toBeNull()
     expect(routeTitleGroup).not.toBeNull()
     expect(routeTitleGroup).not.toHaveClass('pl-12')
     expect(screen.getByRole('button', { name: 'Back' })).toHaveTextContent('Back')

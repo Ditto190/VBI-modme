@@ -67,7 +67,7 @@ export const ManageResourcePageShell = ({
   }
 
   return (
-    <section className='mx-auto flex min-h-[calc(100vh-44px)] w-full max-w-[1200px] min-w-0 flex-col gap-2 max-[720px]:min-h-0'>
+    <section className='mx-auto flex min-h-[calc(100vh-44px)] w-full max-w-[1088px] min-w-0 flex-col gap-2 px-4 sm:px-6 lg:px-8 max-[720px]:min-h-0'>
       <header className='flex min-h-8 w-full min-w-0 items-center justify-end gap-2.5 pb-2'>
         <h1 className='sr-only'>{title}</h1>
         <span className='text-xs text-[var(--vbi-text-muted)]'>

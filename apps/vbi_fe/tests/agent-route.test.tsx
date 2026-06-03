@@ -45,13 +45,14 @@ describe('rsbuild app routes', () => {
     useNavigationStore.setState({ navigate: null, pathname: '' })
   })
 
-  test('renders the persistent workspace shell and agent route', async () => {
+  test('renders the standalone agent page for agent routes', async () => {
     window.history.replaceState(null, '', '/agent/conversation-1')
 
     render(<App />)
 
-    expect(screen.getByTestId('workspace-layout')).toBeInTheDocument()
     expect(await screen.findByTestId('agent-page')).toBeInTheDocument()
+    expect(screen.queryByTestId('workspace-layout')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('reports-page')).not.toBeInTheDocument()
   })
 
   test('maps browser paths to resource pages', async () => {
