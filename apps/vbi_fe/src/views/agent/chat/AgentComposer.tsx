@@ -7,7 +7,7 @@ import {
   unstable_useSlashCommandAdapter,
   type Unstable_SlashCommand,
 } from '@assistant-ui/react'
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { DropdownMenu } from '../../../components/ui/dropdown-menu'
 import { ArrowUp, Bot, CheckCircle2, ChevronDown, Plus, Square, X } from '../../../components/ui/icons'
 import type { Translate } from '../../../i18n'
@@ -100,6 +100,10 @@ const AgentConfigControls = ({
     agentThinkingLevelOptions.find((option) => option.id === thinkingLevel) ?? agentThinkingLevelOptions[0]
   const selectedModelLabel = selectedModel ? resolveAgentModelOptionLabel(selectedModel, t) : modelId
   const selectedThinkingLabel = t(selectedThinkingLevel.labelKey)
+  const selectedConfigLabel = t('agent.configTriggerLabel', {
+    model: selectedModelLabel,
+    thinking: selectedThinkingLabel,
+  })
 
   return (
     <DropdownMenu
@@ -132,13 +136,12 @@ const AgentConfigControls = ({
       placement='top-end'
       trigger={
         <button
-          aria-label={t('agent.configTriggerLabel', { model: selectedModelLabel, thinking: selectedThinkingLabel })}
+          aria-label={selectedConfigLabel}
           className='vbi-agent-composer-option'
           disabled={disabled}
           type='button'
         >
-          <span>{selectedModelLabel}</span>
-          <span className='vbi-agent-composer-option-accent'>{selectedThinkingLabel}</span>
+          <span>{selectedConfigLabel}</span>
           <ChevronDown className='h-3.5 w-3.5' aria-hidden='true' />
         </button>
       }
@@ -146,16 +149,7 @@ const AgentConfigControls = ({
   )
 }
 
-export const AgentComposer = ({
-  disabled,
-  modelId,
-  modelOptions,
-  onModelChange,
-  onThinkingLevelChange,
-  t,
-  thinkingLevel,
-  usageText,
-}: {
+type AgentComposerProps = {
   disabled: boolean
   modelId: AgentModelId
   modelOptions: AgentModelOption[]
@@ -164,7 +158,18 @@ export const AgentComposer = ({
   t: Translate
   thinkingLevel: AgentThinkingLevel
   usageText: string
-}) => {
+}
+
+const AgentComposerContent = ({
+  disabled,
+  modelId,
+  modelOptions,
+  onModelChange,
+  onThinkingLevelChange,
+  t,
+  thinkingLevel,
+  usageText,
+}: AgentComposerProps) => {
   const slashCommands = useMemo<readonly Unstable_SlashCommand[]>(
     () =>
       modelOptions.map((option) => ({
@@ -254,3 +259,5 @@ export const AgentComposer = ({
     </ComposerPrimitive.AttachmentDropzone>
   )
 }
+
+export const AgentComposer = memo(AgentComposerContent)

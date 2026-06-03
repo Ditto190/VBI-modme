@@ -1,7 +1,35 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
+
+@source '..';
 
 :root {
   color-scheme: light;
+  --vbi-bg: #ffffff;
+  --vbi-secondary: #ffffff;
+  --vbi-control: #ffffff;
+  --vbi-control-muted: #f2f5f8;
+  --vbi-text: #18181b;
+  --vbi-text-strong: #09090b;
+  --vbi-text-muted: #71717a;
+  --vbi-text-soft: #a1a1aa;
+  --vbi-border: #d8dee7;
+  --vbi-border-strong: #b6c0cd;
+  --vbi-active-bg: rgba(15, 23, 42, 0.075);
+  --vbi-active-text: #0f172a;
+  --vbi-hover-bg: #f0f3f7;
+  --vbi-table-head: #f6f8fb;
+  --vbi-row-border: #e5ebf2;
+  --vbi-primary: #0f172a;
+  --vbi-primary-hover: #020617;
+  --vbi-primary-text: #ffffff;
+  --vbi-focus: rgba(15, 23, 42, 0.2);
+  --vbi-placeholder: #9ca3af;
+  --vbi-danger: #be123c;
+  --vbi-quote: #f8fafc;
+  --vbi-code-bg: #f1f5f9;
+  --vbi-code-ink: #1f2937;
+  --vbi-editor-bg: #f8fafc;
+  --vbi-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
   --vbi-motion-fast: 120ms;
   --vbi-motion: 180ms;
   --vbi-motion-slow: 260ms;
@@ -13,6 +41,40 @@
   --vbi-scrollbar-track: transparent;
   --vbi-scrollbar-thumb: color-mix(in srgb, var(--vbi-text-muted, #6b7280) 22%, transparent);
   --vbi-scrollbar-thumb-hover: color-mix(in srgb, var(--vbi-text-muted, #6b7280) 34%, transparent);
+}
+
+@theme inline {
+  --color-vbi-bg: var(--vbi-bg);
+  --color-vbi-secondary: var(--vbi-secondary);
+  --color-vbi-control: var(--vbi-control);
+  --color-vbi-control-muted: var(--vbi-control-muted);
+  --color-vbi-text: var(--vbi-text);
+  --color-vbi-text-strong: var(--vbi-text-strong);
+  --color-vbi-text-muted: var(--vbi-text-muted);
+  --color-vbi-text-soft: var(--vbi-text-soft);
+  --color-vbi-border: var(--vbi-border);
+  --color-vbi-border-strong: var(--vbi-border-strong);
+  --color-vbi-active-bg: var(--vbi-active-bg);
+  --color-vbi-hover-bg: var(--vbi-hover-bg);
+  --color-vbi-primary: var(--vbi-primary);
+  --color-vbi-focus: var(--vbi-focus);
+  --color-vbi-placeholder: var(--vbi-placeholder);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--vbi-border, #d8dee7);
+  }
+}
+
+html[data-vbi-first-paint='pending'] *,
+html[data-vbi-first-paint='pending'] *::before,
+html[data-vbi-first-paint='pending'] *::after {
+  transition: none !important;
 }
 
 html,

@@ -1,16 +1,16 @@
 import { Fragment, memo } from 'react'
-import dynamic from 'next/dynamic'
+import { lazyComponent } from '../../components/LazyComponent'
 import { Empty } from '../../components/ui/empty'
 import { cn } from '../../lib/utils'
 import { ReportPageDivider } from './ReportPageDivider'
 import type { ReportPageRendererProps, ReportRendererProps } from './ReportStage.types'
 
-const ReportChartPanel = dynamic(() => import('./ReportChartPanel').then((module) => module.ReportChartPanel), {
-  ssr: false,
-})
-const ReportInsightPanel = dynamic(() => import('./ReportInsightPanel').then((module) => module.ReportInsightPanel), {
-  ssr: false,
-})
+const ReportChartPanel = lazyComponent(() =>
+  import('./ReportChartPanel').then((module) => ({ default: module.ReportChartPanel })),
+)
+const ReportInsightPanel = lazyComponent(() =>
+  import('./ReportInsightPanel').then((module) => ({ default: module.ReportInsightPanel })),
+)
 
 const VerticalReportPage = memo(
   ({

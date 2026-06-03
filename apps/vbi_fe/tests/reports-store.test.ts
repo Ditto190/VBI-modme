@@ -9,7 +9,9 @@ rs.mock('../src/services/resourceApi', () => ({
 }))
 
 const resourceApi = await import('../src/services/resourceApi')
+const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const initialReportsState = useReportsStore.getState()
+const initialPreferencesState = useAppPreferencesStore.getState()
 const getReportsSnapshot = () => useReportsStore.getState()
 const mockedListResources = resourceApi.listResources as unknown as {
   mockResolvedValue(value: unknown): void
@@ -27,6 +29,7 @@ const createReportItem = (id: string, name: string) => ({
 describe('reports store', () => {
   beforeEach(() => {
     rs.clearAllMocks()
+    useAppPreferencesStore.setState(initialPreferencesState, true)
     useReportsStore.setState(initialReportsState, true)
   })
 
@@ -48,13 +51,20 @@ describe('reports store', () => {
       updatedAt: '2024-01-01T00:00:00.000Z',
     })
     mockedListResources.mockResolvedValue([])
-    useReportsStore.getState().setCreateName(' Revenue ')
 
-    await useReportsStore.getState().create()
+    await useReportsStore.getState().create({ name: ' Revenue ' })
 
     expect(resourceApi.createResource).toHaveBeenCalledWith('report', 'Revenue')
     expect(getReportsSnapshot().selectedId).toBe('')
-    expect(getReportsSnapshot().createName).toBe('')
-    expect(getReportsSnapshot().isCreateOpen).toBe(false)
+  })
+
+  test('create uses the localized untitled report name by default', async () => {
+    mockedCreateResource.mockResolvedValue(createReportItem('report-2', 'Untitled Report'))
+    mockedListResources.mockResolvedValue([])
+    useAppPreferencesStore.setState({ locale: 'en-US' })
+
+    await useReportsStore.getState().create()
+
+    expect(resourceApi.createResource).toHaveBeenCalledWith('report', 'Untitled Report')
   })
 })

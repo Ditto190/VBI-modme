@@ -1,12 +1,9 @@
-import dynamic from 'next/dynamic'
-import { useChartBuilderModel } from '../../models'
+import { useApplication } from '../../application'
+import { lazyComponent } from '../../components/LazyComponent'
 import type { Translate } from '../../i18n'
 
-const StandardChartApp = dynamic(
-  () => import('../../components/StandardChartApp').then((module) => module.StandardChartApp),
-  {
-    ssr: false,
-  },
+const StandardChartApp = lazyComponent(() =>
+  import('../../components/StandardChartApp').then((module) => ({ default: module.StandardChartApp })),
 )
 
 type ChartResourceEditorProps = {
@@ -15,7 +12,7 @@ type ChartResourceEditorProps = {
 }
 
 export const ChartResourceEditor = ({ selectedId, t }: ChartResourceEditorProps) => {
-  const builder = useChartBuilderModel((store) => store.sessions[selectedId]?.builder ?? null)
+  const builder = useApplication((state) => state.chart.editor.builders[selectedId]?.builder ?? null)
 
   return (
     <div className='flex min-h-0 flex-[1_1_auto] overflow-hidden'>

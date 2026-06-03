@@ -1,13 +1,10 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { applicationShallowEqual, useApplication } from '../../application'
 import { CenteredState } from '../../components/ui/centered-state'
 import { Spinner } from '../../components/ui/spinner'
-import { useStoreLifecycle } from '../../hooks/useStoreLifecycle'
 import { useTranslation } from '../../i18n'
-import { useInsightBuilderModel } from '../../models'
-import { useNavigationStore } from '../../stores/navigation.store'
-import { connectResourceSession, releaseResourceSession } from '../../stores/resource-session.store'
 import { getSessionUserName } from '../../utils/collaboration'
 import { useManageRouteChrome } from '../ManageRouteChrome'
 import { InsightResourceEditor } from './InsightResourceEditor'
@@ -22,8 +19,14 @@ export const InsightEditorPage = ({ id }: InsightEditorPageProps) => {
   const backLabel = t('common.back')
   const editorTitle = t('insights.editorTitle')
   const renameLabel = t('common.rename')
-  const go = useNavigationStore((state) => state.go)
-  const builder = useInsightBuilderModel((state) => state.sessions[id]?.builder ?? null)
+  const { activateList, connectSession } = useApplication(
+    (state) => ({
+      activateList: state.insight.activate,
+      connectSession: state.insight.editor.connect,
+    }),
+    { equality: applicationShallowEqual },
+  )
+  const builder = useApplication((state) => state.insight.editor.builders[id]?.builder ?? null)
   const { name, rename, setName } = useResourceEditorName({
     fallback: editorTitle,
     id,
@@ -41,15 +44,15 @@ export const InsightEditorPage = ({ id }: InsightEditorPageProps) => {
         value: name,
       },
       title: name.trim() || editorTitle,
-      onBack: () => go('/manage/insights'),
+      onBack: () => {
+        void activateList()
+      },
     }),
-    [backLabel, editorTitle, go, name, rename, renameLabel, setName],
+    [activateList, backLabel, editorTitle, name, rename, renameLabel, setName],
   )
   useManageRouteChrome(routeChrome)
 
-  const bootInsight = useCallback(() => connectResourceSession('insight', id, getSessionUserName()), [id])
-  const releaseInsight = useCallback(() => releaseResourceSession('insight', id), [id])
-  useStoreLifecycle(bootInsight, releaseInsight)
+  useEffect(() => connectSession(id, getSessionUserName()), [connectSession, id])
 
   return (
     <div className='flex h-full min-h-0 overflow-auto bg-[var(--vbi-bg)] p-5 text-[var(--vbi-text)] transition-colors duration-300'>

@@ -15,21 +15,22 @@ import {
 import { LoaderCircle, MessageSquare, Pencil, Trash2 } from '../../components/ui/icons'
 import { Input } from '../../components/ui/input'
 import { Tooltip } from '../../components/ui/tooltip'
+import { application, applicationShallowEqual, useApplication } from '../../application'
+import type { AgentConversationSummary } from '../../application'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { useAgentConversationsStore, type AgentConversationSummary } from '../../stores/agent-conversations.store'
 import { useNavigationStore } from '../../stores/navigation.store'
 import { createAgentConversationRoute, isAgentConversationRoute } from '../manage-sidebar-routes'
 import { ManageSidebarGroup, manageSidebarChildListClassName, manageSidebarItemClassName } from '../ManageSidebarNav'
 
 const conversationRowClassName = cn(
   manageSidebarItemClassName,
-  'relative mb-1 overflow-hidden px-0 focus-within:bg-[var(--vbi-hover-bg)]',
+  'relative overflow-hidden px-0 focus-within:bg-vbi-hover-bg',
 )
 const conversationOpenButtonClassName =
-  'flex h-full min-w-0 flex-1 cursor-pointer items-center border-0 bg-transparent px-2.5 text-left text-[13px] font-medium text-inherit outline-none transition-[color,box-shadow] duration-150 ease-out focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_1px_var(--vbi-border-strong)] group-hover:text-[var(--vbi-text-strong)] group-data-[active=true]:text-[var(--vbi-text-strong)]'
+  'flex h-full min-w-0 flex-1 cursor-pointer items-center border-0 bg-transparent px-2.5 text-left text-[13px] font-medium text-inherit outline-none transition-[color,box-shadow] duration-150 ease-out focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_var(--vbi-focus)] group-hover:text-vbi-text-strong group-data-[active=true]:text-vbi-text-strong'
 const conversationActionClassName =
-  'grid h-6 w-6 shrink-0 cursor-pointer place-items-center rounded-md border-0 bg-transparent text-[var(--vbi-text-muted)] outline-none transition-[background-color,color,box-shadow,transform] duration-150 ease-out hover:bg-[var(--vbi-active-bg)] hover:text-[var(--vbi-text-strong)] hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--vbi-border-strong)_50%,transparent)] active:scale-95 focus-visible:bg-[var(--vbi-active-bg)] focus-visible:ring-2 focus-visible:ring-[var(--vbi-focus)]'
+  'grid h-6 w-6 shrink-0 cursor-pointer place-items-center rounded-md border-0 bg-transparent text-vbi-text-muted outline-none transition-[background-color,color,transform] duration-150 ease-out hover:bg-vbi-active-bg hover:text-vbi-text-strong active:scale-95 focus-visible:bg-vbi-active-bg focus-visible:ring-2 focus-visible:ring-vbi-focus'
 
 const formatConversationTime = (value: string, locale: string) => {
   const timestamp = new Date(value).getTime()
@@ -56,7 +57,7 @@ type AgentConversationRowProps = {
   conversation: AgentConversationSummary
   deleteConversation(id: string): Promise<void>
   expanded: boolean
-  go(path: string): void
+  navigate(path: string): void
   locale: string
   pathname: string
   renameConversation(id: string, title: string): Promise<void>
@@ -70,7 +71,7 @@ const AgentConversationRow = memo(
     conversation,
     deleteConversation,
     expanded,
-    go,
+    navigate,
     locale,
     pathname,
     renameConversation,
@@ -91,11 +92,8 @@ const AgentConversationRow = memo(
     }, [isRenameOpen, title])
 
     const openConversation = () => {
-      if (activeConversationId !== conversation.id) {
+      if (activeConversationId !== conversation.id || pathname !== targetPath) {
         selectConversation(conversation.id)
-      }
-      if (pathname !== targetPath) {
-        go(targetPath)
       }
     }
 
@@ -131,13 +129,15 @@ const AgentConversationRow = memo(
             type='button'
             onClick={openConversation}
           >
-            <span className='min-w-0 flex-1 truncate text-[var(--vbi-text-strong)]'>{title}</span>
+            <span className='min-w-0 flex-1 truncate text-vbi-text group-data-[active=true]:text-vbi-text-strong'>
+              {title}
+            </span>
           </button>
           <div className='relative flex h-full w-[68px] shrink-0 items-center justify-end pr-1'>
             <div className='flex h-full items-center justify-end transition-opacity duration-150 ease-out group-hover:opacity-0'>
               {conversation.status === 'running' ? (
                 <span
-                  className='grid h-6 w-6 shrink-0 place-items-center text-[var(--vbi-primary)]'
+                  className='grid h-6 w-6 shrink-0 place-items-center text-vbi-primary'
                   aria-label={t('agent.running')}
                   role='status'
                 >
@@ -145,7 +145,7 @@ const AgentConversationRow = memo(
                 </span>
               ) : (
                 <span
-                  className='max-w-[62px] truncate text-right text-[12px] font-medium tabular-nums text-[var(--vbi-text-soft)]'
+                  className='max-w-[62px] truncate text-right text-[12px] font-medium tabular-nums text-vbi-text-soft'
                   aria-label={t('agent.completedAt', { time: displayTime })}
                   title={displayTime}
                 >
@@ -172,10 +172,14 @@ const AgentConversationRow = memo(
                 message={t('agent.deleteConversationTitle')}
                 onConfirm={async () => {
                   await deleteConversation(conversation.id)
+                  const nextConversationId = application.select((state) => state.agent.conversations.activeId)
                   if (!isActive) return
 
-                  const nextConversationId = useAgentConversationsStore.getState().activeConversationId
-                  go(nextConversationId ? createAgentConversationRoute(nextConversationId) : '/agent')
+                  if (nextConversationId) {
+                    selectConversation(nextConversationId)
+                  } else {
+                    navigate('/agent')
+                  }
                 }}
               >
                 <Tooltip side='right' title={t('common.delete')}>
@@ -205,7 +209,7 @@ const AgentConversationRow = memo(
                 <DialogDescription>{t('agent.renameConversationDescription')}</DialogDescription>
               </DialogHeader>
               <DialogBody>
-                <label className='flex flex-col gap-1.5 text-xs font-medium text-[var(--vbi-text-muted)]'>
+                <label className='flex flex-col gap-1.5 text-xs font-medium text-vbi-text-muted'>
                   <span>{t('agent.conversationTitle')}</span>
                   <Input
                     autoFocus
@@ -234,63 +238,73 @@ const AgentConversationRow = memo(
 AgentConversationRow.displayName = 'AgentConversationRow'
 
 export const AgentConversationSidebarSection = () => {
-  const activeConversationId = useAgentConversationsStore((state) => state.activeConversationId)
-  const conversations = useAgentConversationsStore((state) => state.conversations)
-  const deleteConversation = useAgentConversationsStore((state) => state.deleteConversation)
-  const initialize = useAgentConversationsStore((state) => state.initialize)
-  const isInitialized = useAgentConversationsStore((state) => state.isInitialized)
-  const isLoading = useAgentConversationsStore((state) => state.isLoading)
-  const renameConversation = useAgentConversationsStore((state) => state.renameConversation)
-  const selectConversation = useAgentConversationsStore((state) => state.selectConversation)
-  const go = useNavigationStore((state) => state.go)
+  const {
+    activeConversationId,
+    conversations,
+    deleteConversation,
+    isInitialized,
+    isLoading,
+    refreshConversations,
+    renameConversation,
+    selectConversation,
+  } = useApplication(
+    (state) => ({
+      activeConversationId: state.agent.conversations.activeId,
+      conversations: state.agent.conversations.items,
+      deleteConversation: state.agent.conversations.delete,
+      isInitialized: state.agent.conversations.isInitialized,
+      isLoading: state.agent.conversations.isLoading,
+      refreshConversations: state.agent.conversations.refresh,
+      renameConversation: state.agent.conversations.rename,
+      selectConversation: state.agent.conversations.open,
+    }),
+    { equality: applicationShallowEqual },
+  )
+  const navigate = useNavigationStore((state) => state.go)
   const pathname = useNavigationStore((state) => state.pathname)
-  const [expanded, setExpanded] = useState(true)
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
 
   useEffect(() => {
-    if (!isInitialized && !isLoading) void initialize()
-  }, [initialize, isInitialized, isLoading])
-
-  useEffect(() => {
-    if (isConversationPath) setExpanded(true)
-  }, [isConversationPath])
+    if (!isInitialized && !isLoading) void refreshConversations()
+  }, [isInitialized, isLoading, refreshConversations])
 
   return (
-    <section className='mt-3 flex min-h-0 flex-1 flex-col border-t border-[var(--vbi-border)] px-2 pt-3 max-[720px]:mt-0 max-[720px]:max-h-56 max-[720px]:border-t-0 max-[720px]:px-3 max-[720px]:pb-3'>
+    <section className='mt-4 flex min-h-0 flex-1 flex-col px-3 pt-1 max-[720px]:mt-0 max-[720px]:max-h-56 max-[720px]:px-3 max-[720px]:pb-3'>
       <ManageSidebarGroup
-        active={isConversationPath && !expanded}
+        autoExpandWhen={isConversationPath}
         childrenClassName='overflow-y-auto'
         className='min-h-0 flex flex-1 flex-col'
         contentClassName='min-h-0 flex-1'
-        expanded={expanded}
+        defaultExpanded
         icon={<MessageSquare className='h-4 w-4' />}
         label={t('agent.conversations')}
-        onToggle={() => setExpanded((value) => !value)}
       >
-        <div className={cn(manageSidebarChildListClassName, 'py-1')}>
-          {conversations.length === 0 ? (
-            <div className='px-2.5 py-2 text-[12px] leading-5 text-[var(--vbi-text-soft)]'>
-              {t('agent.noConversations')}
-            </div>
-          ) : (
-            conversations.map((conversation) => (
-              <AgentConversationRow
-                activeConversationId={activeConversationId}
-                key={conversation.id}
-                conversation={conversation}
-                deleteConversation={deleteConversation}
-                expanded={expanded}
-                go={go}
-                locale={locale}
-                pathname={pathname}
-                renameConversation={renameConversation}
-                selectConversation={selectConversation}
-                t={t}
-              />
-            ))
-          )}
-        </div>
+        {({ expanded }) => (
+          <div className={cn(manageSidebarChildListClassName, 'py-1')}>
+            {conversations.length === 0 ? (
+              <div className='px-2.5 py-2 text-[12px] leading-5 text-vbi-text-soft'>{t('agent.noConversations')}</div>
+            ) : (
+              conversations.map((conversation) => (
+                <AgentConversationRow
+                  activeConversationId={activeConversationId}
+                  key={conversation.id}
+                  conversation={conversation}
+                  deleteConversation={deleteConversation}
+                  expanded={expanded}
+                  navigate={navigate}
+                  locale={locale}
+                  pathname={pathname}
+                  renameConversation={renameConversation}
+                  selectConversation={(id) => {
+                    void selectConversation(id)
+                  }}
+                  t={t}
+                />
+              ))
+            )}
+          </div>
+        )}
       </ManageSidebarGroup>
     </section>
   )

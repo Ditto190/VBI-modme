@@ -1,38 +1,42 @@
 'use client'
 
-import { useShallow } from 'zustand/shallow'
+import { useEffect } from 'react'
+import { applicationShallowEqual, useApplication } from '../application'
 import { useTranslation } from '../i18n'
-import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
-import { selectManageInsightsPageState, useManageInsightsStore } from '../stores/manage-insights.store'
-import { useNavigationStore } from '../stores/navigation.store'
-import { InsightResourceModals } from './manage-resource/InsightResourceModals'
+import { getSessionUserName } from '../utils/collaboration'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageInsightsPage = () => {
   const { locale, t } = useTranslation()
-  const openInsight = useNavigationStore((state) => state.openInsight)
-  const state = useManageInsightsStore(useShallow(selectManageInsightsPageState))
   const {
-    bootstrap: bootstrapStore,
-    closeCreate,
+    activateStore,
     create,
-    createContent,
-    createName,
-    createOpen,
     deleteOne,
     deleteSelected,
-    dispose,
     filteredItems,
     loading,
-    openCreate,
+    open,
     searchText,
     selectedRowKeys,
-    setCreateContent,
-    setCreateName,
     setSearchText,
     setSelectedRowKeys,
-  } = state
-  useUserStoreLifecycle(bootstrapStore, dispose)
+  } = useApplication(
+    (applicationState) => ({
+      activateStore: applicationState.insight.activate,
+      create: applicationState.insight.create,
+      deleteOne: applicationState.insight.delete,
+      deleteSelected: applicationState.insight.records.deleteSelected,
+      filteredItems: applicationState.insight.records.visibleItems,
+      loading: applicationState.insight.records.loading,
+      open: applicationState.insight.open,
+      searchText: applicationState.insight.records.searchText,
+      selectedRowKeys: applicationState.insight.records.selectedIds,
+      setSearchText: applicationState.insight.records.search,
+      setSelectedRowKeys: applicationState.insight.records.select,
+    }),
+    { equality: applicationShallowEqual },
+  )
+  useEffect(() => activateStore({ userName: getSessionUserName() }), [activateStore])
   return (
     <ResourceManagementPage
       createLabel={t('insights.create')}
@@ -40,11 +44,11 @@ export const ManageInsightsPage = () => {
       fallbackName={t('insights.untitled')}
       locale={locale}
       state={{
+        create,
         deleteSelected,
         filteredItems,
         loading,
-        openCreate,
-        openDetail: openInsight,
+        openDetail: open,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -53,17 +57,6 @@ export const ManageInsightsPage = () => {
       title={t('insights.title')}
       t={t}
       onRemove={deleteOne}
-    >
-      <InsightResourceModals
-        closeCreate={closeCreate}
-        create={create}
-        createContent={createContent}
-        createName={createName}
-        createOpen={createOpen}
-        setCreateContent={setCreateContent}
-        setCreateName={setCreateName}
-        t={t}
-      />
-    </ResourceManagementPage>
+    />
   )
 }

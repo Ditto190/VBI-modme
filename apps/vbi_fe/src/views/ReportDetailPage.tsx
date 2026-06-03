@@ -1,26 +1,19 @@
 'use client'
 
-import { memo, useCallback, useMemo } from 'react'
-import { useShallow } from 'zustand/shallow'
+import { memo, useEffect, useMemo } from 'react'
+import { applicationShallowEqual, useApplication } from '../application'
 import { Collaborators } from '../components/Collaborators'
 import { FullscreenSpinner } from '../components/ui/spinner'
-import { useStoreLifecycle } from '../hooks/useStoreLifecycle'
+import { lazyComponent } from '../components/LazyComponent'
 import { useTranslation } from '../i18n'
-import { useReportBuilderModel } from '../models'
-import { useNavigationStore } from '../stores/navigation.store'
-import { useReportDetailStore } from '../stores/report-detail.store'
 import { getSessionUserName } from '../utils/collaboration'
-import dynamic from 'next/dynamic'
 import { useManageRouteChrome } from './ManageRouteChrome'
 import { useResourceEditorName } from './manage-resource/useResourceEditorName'
 
 const userName = getSessionUserName()
-const ReportWorkspace = dynamic(
-  () => import('./report-detail/ReportWorkspace').then((module) => module.ReportWorkspace),
-  {
-    loading: () => <FullscreenSpinner />,
-    ssr: false,
-  },
+const ReportWorkspace = lazyComponent(
+  () => import('./report-detail/ReportWorkspace').then((module) => ({ default: module.ReportWorkspace })),
+  <FullscreenSpinner />,
 )
 
 export const ReportDetailPage = memo(({ id = '' }: { id?: string }) => {
@@ -28,30 +21,23 @@ export const ReportDetailPage = memo(({ id = '' }: { id?: string }) => {
   const backLabel = t('common.back')
   const reportTitle = t('reportDetail.title')
   const renameLabel = t('common.rename')
-  const go = useNavigationStore((state) => state.go)
+  const { activateList, activateReport, provider, reportBuilder } = useApplication(
+    (state) => ({
+      activateList: state.report.activate,
+      activateReport: state.reportDetail.activate,
+      provider: state.reportDetail.provider,
+      reportBuilder: state.reportDetail.reportBuilder,
+    }),
+    { equality: applicationShallowEqual },
+  )
   const { name, rename, setName } = useResourceEditorName({
     fallback: reportTitle,
     id,
     kind: 'report',
   })
-  const { bootstrap, dispose } = useReportDetailStore(
-    useShallow((state) => ({
-      bootstrap: state.bootstrap,
-      dispose: state.dispose,
-    })),
-  )
-  const reportSession = useReportBuilderModel(
-    useShallow((state) => {
-      const session = state.sessions[id]
-      return {
-        builder: session?.builder ?? null,
-        provider: session?.provider ?? null,
-      }
-    }),
-  )
   const routeChrome = useMemo(
     () => ({
-      actions: reportSession.provider ? <Collaborators provider={reportSession.provider} /> : undefined,
+      actions: provider ? <Collaborators provider={provider} /> : undefined,
       backLabel,
       contentClassName: 'overflow-hidden p-0 max-[720px]:p-0',
       rename: {
@@ -62,17 +48,18 @@ export const ReportDetailPage = memo(({ id = '' }: { id?: string }) => {
         value: name,
       },
       title: name.trim() || reportTitle,
-      onBack: () => go('/manage/reports'),
+      onBack: () => {
+        void activateList()
+      },
     }),
-    [backLabel, go, name, rename, renameLabel, reportSession.provider, reportTitle, setName],
+    [activateList, backLabel, name, provider, rename, renameLabel, reportTitle, setName],
   )
   useManageRouteChrome(routeChrome)
 
-  const bootReport = useCallback(() => bootstrap(id, userName), [bootstrap, id])
-  useStoreLifecycle(bootReport, dispose)
+  useEffect(() => activateReport(id, userName), [activateReport, id])
 
   if (!id) return <div>{t('reportDetail.invalidId')}</div>
-  if (!reportSession.builder) return <FullscreenSpinner />
+  if (!reportBuilder) return <FullscreenSpinner />
 
   return (
     <div className='flex h-full min-h-0 overflow-hidden bg-transparent transition-colors duration-300'>

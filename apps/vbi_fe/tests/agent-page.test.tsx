@@ -53,6 +53,7 @@ const emptyUsage = {
 let metadataList: ConversationMetadata[] = []
 let persistCounter = 5
 let resizeObserverObservedTargets: Element[] = []
+let storageGate: Promise<void> | null = null
 
 const createMetadata = (id: string, lastModified: string): ConversationMetadata => ({
   id,
@@ -73,11 +74,15 @@ const createDeferred = <T,>() => {
   return { promise, resolve }
 }
 
-const setupVbiAgentIndexedDBStorage = rs.fn(async () => ({
-  conversations: {
-    getAllMetadata: rs.fn(async () => metadataList),
-  },
-}))
+const setupVbiAgentIndexedDBStorage = rs.fn(async () => {
+  if (storageGate) await storageGate
+
+  return {
+    conversations: {
+      getAllMetadata: rs.fn(async () => metadataList),
+    },
+  }
+})
 
 const randomUUID = rs.fn(() => 'conversation-new')
 const readAgentContentText = (content: unknown) => {
@@ -188,6 +193,7 @@ describe('AgentPage', () => {
     window.localStorage.clear()
     pendingRuntimes.clear()
     persistCounter = 5
+    storageGate = null
     metadataList = [
       createMetadata('conversation-a', '2026-05-26T01:00:00.000Z'),
       createMetadata('conversation-b', '2026-05-26T01:01:00.000Z'),
@@ -251,8 +257,10 @@ describe('AgentPage', () => {
     render(<AgentPage />)
 
     expect(await screen.findByRole('heading', { name: /what should we do/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /flash.*high/i })).toBeInTheDocument()
+    expect(screen.queryByText(/deepseek-v3\.1|volcengine/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/chart and insight resources/i)).not.toBeInTheDocument()
-    const composerInput = screen.getByRole('textbox', { name: /agent/i })
+    const composerInput = screen.getByRole('textbox')
     expect(composerInput).toHaveAttribute('rows', '2')
     const composerDock = composerInput.closest('.vbi-agent-composer-dock')
     const viewport = document.querySelector('.vbi-agent-thread-viewport')
@@ -266,6 +274,31 @@ describe('AgentPage', () => {
     expect(document.querySelector('.vbi-agent-thread-scroll-spacer')).not.toBeInTheDocument()
     expect(screen.getByPlaceholderText(/attach an image/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /attach image/i })).toBeInTheDocument()
+  })
+
+  test('keeps the root composer mounted while agent bootstrap is pending', async () => {
+    metadataList = []
+    const gate = createDeferred<void>()
+    storageGate = gate.promise
+    useNavigationStore.setState({ pathname: '/agent' })
+
+    render(<AgentPage />)
+
+    const composerInput = await screen.findByRole('textbox', { name: /agent/i })
+    const composerDock = composerInput.closest('.vbi-agent-composer-dock')
+    expect(composerDock).toBeTruthy()
+    expect(screen.queryByText('Connecting agent...')).not.toBeInTheDocument()
+
+    await act(async () => {
+      gate.resolve(undefined)
+      await gate.promise
+    })
+
+    await waitFor(() => expect(setupVbiAgentIndexedDBStorage).toHaveBeenCalled())
+    const nextComposerInput = screen.getByRole('textbox', { name: /agent/i })
+    expect(nextComposerInput).toBe(composerInput)
+    expect(nextComposerInput.closest('.vbi-agent-composer-dock')).toBe(composerDock)
+    expect(screen.queryByText('Connecting agent...')).not.toBeInTheDocument()
   })
 
   test('keeps the new conversation route as a draft until the first message is sent', async () => {
@@ -287,6 +320,9 @@ describe('AgentPage', () => {
       target: { value: '当前洞察资源列表' },
     })
     fireEvent.click(screen.getByRole('button', { name: /^send$/i }))
+    composerInput.focus()
+    const composerDock = composerInput.closest('.vbi-agent-composer-dock')
+    expect(composerInput).toHaveFocus()
 
     await waitFor(() =>
       expect(createAgentConversationRuntime).toHaveBeenCalledWith(
@@ -305,7 +341,9 @@ describe('AgentPage', () => {
 
     await waitFor(() => expect(runtime.send).toHaveBeenCalledWith('当前洞察资源列表'))
     expect(runtime.destroy).not.toHaveBeenCalled()
-    expect(screen.getByRole('textbox', { name: /agent/i })).toBe(composerInput)
+    expect(screen.getByRole('textbox')).toBe(composerInput)
+    expect(screen.getByRole('textbox').closest('.vbi-agent-composer-dock')).toBe(composerDock)
+    expect(composerInput).toHaveFocus()
     expect(navigatedTo).toEqual(['/agent/conversation-new'])
     expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-new')
   })
@@ -373,6 +411,7 @@ describe('AgentPage', () => {
     expect(await screen.findByRole('option', { name: /\/pro/i })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('option', { name: /\/pro/i }))
     expect(runtime.setModel).toHaveBeenCalledWith('deepseek-v4-pro')
+    await waitFor(() => expect(composerInput).toHaveValue(''))
 
     fireEvent.change(composerInput, { target: { value: '/' } })
     expect(await screen.findByRole('option', { name: /\/flash/i })).toBeInTheDocument()
@@ -736,6 +775,9 @@ describe('AgentPage', () => {
 
     expect(await screen.findByText('answer 10')).toBeInTheDocument()
     expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
+    const composerInput = screen.getByRole('textbox')
+    composerInput.focus()
+    const composerDock = composerInput.closest('.vbi-agent-composer-dock')
 
     await act(async () => {
       runtime.emitSnapshot({
@@ -758,6 +800,30 @@ describe('AgentPage', () => {
 
     expect(await screen.findByText('streaming answer 11')).toBeInTheDocument()
     expect(screen.getAllByRole('button', { name: /复制回复/ })).toHaveLength(1)
+    expect(screen.getByRole('textbox')).toBe(composerInput)
+    expect(screen.getByRole('textbox').closest('.vbi-agent-composer-dock')).toBe(composerDock)
+    expect(composerInput).toHaveFocus()
+  })
+
+  test('keeps the composer mounted when only the conversation sidebar state changes', async () => {
+    metadataList = []
+    useNavigationStore.setState({ pathname: '/agent' })
+
+    render(<AgentPage />)
+
+    const composerInput = await screen.findByRole('textbox', { name: /agent/i })
+    composerInput.focus()
+    const composerDock = composerInput.closest('.vbi-agent-composer-dock')
+
+    await act(async () => {
+      useAgentConversationsStore
+        .getState()
+        .upsertConversation(createMetadata('conversation-sidebar', '2026-05-26T01:03:00.000Z'), 'running')
+    })
+
+    expect(screen.getByRole('textbox', { name: /agent/i })).toBe(composerInput)
+    expect(screen.getByRole('textbox', { name: /agent/i }).closest('.vbi-agent-composer-dock')).toBe(composerDock)
+    expect(composerInput).toHaveFocus()
   })
 
   test('keeps streaming transcript and composer in separate layout regions', async () => {

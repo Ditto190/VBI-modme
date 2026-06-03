@@ -13,9 +13,8 @@ type ResourceItem = {
 
 type ResourceScenario = {
   createButton: string
-  createTitle: string
+  defaultName: string
   kind: ResourceKind
-  namePlaceholder: string
   pageTitle: string
   renderPage: ComponentType
   route: string
@@ -24,10 +23,6 @@ type ResourceScenario = {
 const connectResourceSession = rs.fn()
 const releaseResourceSession = rs.fn()
 const navigate = rs.fn()
-
-rs.mock('next/dynamic', () => ({
-  default: () => () => null,
-}))
 
 rs.mock('../src/services/resourceApi', () => ({
   createResource: rs.fn(),
@@ -136,27 +131,24 @@ const renderScenarioPage = (scenario: ResourceScenario) => {
 const scenarios: ResourceScenario[] = [
   {
     createButton: 'New Chart',
-    createTitle: 'New Chart',
+    defaultName: 'Untitled Chart',
     kind: 'chart',
-    namePlaceholder: 'Chart Name',
     pageTitle: 'Charts',
     renderPage: ManageChartsPage,
     route: '/manage/charts/chart-1',
   },
   {
     createButton: 'New Insight',
-    createTitle: 'New Insight',
+    defaultName: 'Untitled Insight',
     kind: 'insight',
-    namePlaceholder: 'Title',
     pageTitle: 'Insights',
     renderPage: ManageInsightsPage,
     route: '/manage/insights/insight-1',
   },
   {
     createButton: 'New Report',
-    createTitle: 'New Report',
+    defaultName: 'Untitled Report',
     kind: 'report',
-    namePlaceholder: 'Report Name',
     pageTitle: 'Reports',
     renderPage: ReportsPage,
     route: '/manage/reports/report-1',
@@ -211,27 +203,18 @@ describe('resource management pages', () => {
       expect(navigate).toHaveBeenCalledWith(scenario.route)
 
       fireEvent.click(screen.getByRole('button', { name: scenario.createButton }))
-      const createDialog = await screen.findByRole('dialog')
-      fireEvent.change(within(createDialog).getByPlaceholderText(scenario.namePlaceholder), {
-        target: { value: `${scenario.kind} created` },
-      })
-      if (scenario.kind === 'insight') {
-        fireEvent.change(within(createDialog).getByPlaceholderText('Content'), {
-          target: { value: 'Insight body' },
-        })
-      }
-      fireEvent.click(within(createDialog).getByRole('button', { name: scenario.createButton }))
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 
       if (scenario.kind === 'insight') {
         await waitFor(() =>
           expect(insightApi.createInsight).toHaveBeenCalledWith({
-            content: 'Insight body',
-            name: 'insight created',
+            content: '',
+            name: scenario.defaultName,
           }),
         )
       } else {
         await waitFor(() =>
-          expect(resourceApi.createResource).toHaveBeenCalledWith(scenario.kind, `${scenario.kind} created`),
+          expect(resourceApi.createResource).toHaveBeenCalledWith(scenario.kind, scenario.defaultName),
         )
       }
 

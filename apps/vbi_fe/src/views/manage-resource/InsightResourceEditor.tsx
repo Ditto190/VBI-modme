@@ -1,5 +1,5 @@
+import { applicationShallowEqual, useApplication } from '../../application'
 import { Textarea } from '../../components/ui/input'
-import { useInsightBuilderModel } from '../../models'
 
 type InsightResourceEditorProps = {
   placeholder: string
@@ -7,8 +7,11 @@ type InsightResourceEditorProps = {
 }
 
 export const InsightResourceEditor = ({ placeholder, selectedId }: InsightResourceEditorProps) => {
-  const insightSession = useInsightBuilderModel((store) => store.sessions[selectedId])
+  const insightSession = useApplication((state) => state.insight.editor.builders[selectedId], {
+    equality: applicationShallowEqual,
+  })
   const insightBuilder = insightSession?.builder ?? null
+  void insightSession?.version
   const content = insightBuilder?.build().content ?? ''
 
   return (

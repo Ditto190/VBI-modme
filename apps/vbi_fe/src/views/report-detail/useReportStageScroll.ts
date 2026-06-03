@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
-import { useReportDetailStore } from '../../stores/report-detail.store'
+import { application } from '../../application'
 
 type Params = {
   activePageId: string
@@ -93,7 +93,7 @@ export const useReportStageScroll = ({ activePageId, pageIds, resetKey, setScrol
     const updateScrolledPage = () => {
       scrollFrameRef.current = null
       const nextPageId = resolveVisiblePageId(container, pageNodes.current)
-      if (!nextPageId || nextPageId === useReportDetailStore.getState().activePageId) return
+      if (!nextPageId || nextPageId === application.select((state) => state.reportDetail.activePageId)) return
       scrolledPageRef.current = nextPageId
       setScrolledPage(nextPageId)
     }

@@ -1,7 +1,10 @@
-import { describe, expect, test } from '@rstest/core'
+import { describe, expect, rs, test } from '@rstest/core'
 import {
+  createAgentModelOptions,
   createAgentModel,
+  defaultAgentModel,
   fallbackAgentBackendConfig,
+  readAgentBackendConfig,
   resolveAgentModelId,
   resolveAgentThinkingLevel,
 } from '../src/views/agent/agent-model-config'
@@ -23,6 +26,72 @@ describe('agent runtime helpers', () => {
 
     expect(resolveAgentModelId('deepseek-chat', backendConfig)).toBe('deepseek-v4-flash')
     expect(resolveAgentModelId('deepseek-reasoner', backendConfig)).toBe('deepseek-v4-pro')
+  })
+
+  test('normalizes legacy DeepSeek backend model ids before exposing model options', async () => {
+    const originalFetch = globalThis.fetch
+    globalThis.fetch = rs.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          data: {
+            provider: 'deepseek',
+            model: 'deepseek-v3.1:volcengine',
+            models: ['deepseek-v3.1:volcengine'],
+            modelAliases: {},
+            modelDescriptors: [],
+          },
+        }),
+      )
+    }) as typeof fetch
+
+    try {
+      const config = await readAgentBackendConfig()
+
+      expect(config.model).toBe(defaultAgentModel)
+      expect(config.models).toEqual([defaultAgentModel])
+      expect(resolveAgentModelId('deepseek-v3.1:volcengine', config)).toBe(defaultAgentModel)
+      expect(createAgentModelOptions(config)).toEqual([
+        expect.objectContaining({
+          id: defaultAgentModel,
+          labelKey: 'agent.modelFlash',
+        }),
+      ])
+    } finally {
+      globalThis.fetch = originalFetch
+    }
+  })
+
+  test('normalizes legacy Volcengine backend model ids before exposing model options', async () => {
+    const originalFetch = globalThis.fetch
+    globalThis.fetch = rs.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          data: {
+            provider: 'volcengine',
+            model: 'deepseek-v3.1:volcengine',
+            models: ['deepseek-v3.1:volcengine'],
+            modelAliases: {},
+            modelDescriptors: [],
+          },
+        }),
+      )
+    }) as typeof fetch
+
+    try {
+      const config = await readAgentBackendConfig()
+
+      expect(config.model).toBe(defaultAgentModel)
+      expect(config.models).toEqual([defaultAgentModel])
+      expect(resolveAgentModelId('deepseek-v3.1:volcengine', config)).toBe(defaultAgentModel)
+      expect(createAgentModelOptions(config)).toEqual([
+        expect.objectContaining({
+          id: defaultAgentModel,
+          labelKey: 'agent.modelFlash',
+        }),
+      ])
+    } finally {
+      globalThis.fetch = originalFetch
+    }
   })
 
   test('keeps DeepSeek reasoning enabled with high and max thinking levels', () => {

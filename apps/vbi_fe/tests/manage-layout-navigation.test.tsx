@@ -103,16 +103,22 @@ describe('manage layout navigation', () => {
     const resources = screen.getByRole('button', { name: /resources/i })
     const conversations = screen.getByRole('button', { name: /conversations/i })
     const conversation = screen.getByRole('button', { name: /^Revenue follow-up$/i })
+    const sectionSeparator = document.querySelector('[data-slot="separator"]')
 
     expect(screen.queryByText('VBI Console')).not.toBeInTheDocument()
     expect(screen.queryByText('Resource Management')).not.toBeInTheDocument()
     expect(newConversation).toHaveAttribute('data-active', 'false')
     expect(resources).toHaveAttribute('aria-expanded', 'false')
     expect(resources).toHaveAttribute('data-active', 'false')
+    expect(conversations).toHaveAttribute('aria-expanded', 'true')
     expect(conversations).toHaveAttribute('data-active', 'false')
     expect(conversation.closest('[data-active]')).toHaveAttribute('data-active', 'true')
     expect(newConversation.compareDocumentPosition(resources) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(resources.compareDocumentPosition(conversations) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(sectionSeparator).not.toBeNull()
+    const separator = sectionSeparator as Element
+    expect(resources.compareDocumentPosition(separator) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(separator.compareDocumentPosition(conversations) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(conversations.compareDocumentPosition(conversation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(screen.queryByRole('button', { name: 'Agent' })).not.toBeInTheDocument()
     expect(screen.queryByText('Continue the revenue analysis')).not.toBeInTheDocument()
@@ -138,6 +144,42 @@ describe('manage layout navigation', () => {
     expect(useAgentConversationsStore.getState().newConversationRequestSeq).toBe(0)
   })
 
+  test('toggles resource and conversation disclosure groups consistently', () => {
+    useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    const resources = screen.getByRole('button', { name: /resources/i })
+    const conversations = screen.getByRole('button', { name: /conversations/i })
+
+    expect(resources).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByRole('button', { name: 'Reports' })).not.toBeInTheDocument()
+    expect(conversations).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: /^Revenue follow-up$/i })).toBeInTheDocument()
+
+    fireEvent.click(conversations)
+    expect(conversations).toHaveAttribute('aria-expanded', 'false')
+    expect(conversations).toHaveAttribute('data-active', 'false')
+    expect(screen.queryByRole('button', { name: /^Revenue follow-up$/i })).not.toBeInTheDocument()
+
+    fireEvent.click(conversations)
+    expect(conversations).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: /^Revenue follow-up$/i })).toBeInTheDocument()
+
+    fireEvent.click(resources)
+    expect(resources).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: 'Reports' })).toBeInTheDocument()
+
+    fireEvent.click(resources)
+    expect(resources).toHaveAttribute('aria-expanded', 'false')
+    expect(resources).toHaveAttribute('data-active', 'false')
+    expect(screen.queryByRole('button', { name: 'Reports' })).not.toBeInTheDocument()
+  })
+
   test('auto-expands resource navigation when landing on a resource list route', () => {
     useNavigationStore.setState({ pathname: '/manage/charts' })
 
@@ -153,6 +195,11 @@ describe('manage layout navigation', () => {
     expect(screen.getByRole('button', { name: 'Charts' })).toHaveAttribute('data-active', 'true')
     expect(screen.getByRole('button', { name: 'Insights' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
+
+    fireEvent.click(screen.getByRole('button', { name: /resources/i }))
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.queryByRole('button', { name: 'Charts' })).not.toBeInTheDocument()
   })
 
   test('keeps active styling tied to the current route instead of conversation state', () => {
@@ -236,6 +283,18 @@ describe('manage layout navigation', () => {
     expect(screen.getByRole('button', { name: /new conversation/i })).toHaveAttribute('data-active', 'true')
     expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'false')
     expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
+  })
+
+  test('does not apply the default motion presence class to the persistent agent main', () => {
+    useNavigationStore.setState({ pathname: '/agent' })
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    expect(screen.getByText('Workspace').closest('main')).not.toHaveClass('vbi-motion-presence')
   })
 
   test('toggles sidebar visibility and keeps the active conversation title visible', () => {

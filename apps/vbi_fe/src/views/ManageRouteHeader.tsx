@@ -59,13 +59,13 @@ export const ManageRouteHeader = ({
   }
 
   return (
-    <header className='relative flex h-11 shrink-0 items-center justify-between gap-3 border-b border-[var(--vbi-border)] bg-[var(--vbi-secondary)] px-3 transition-colors duration-300 max-[720px]:h-[52px]'>
+    <header className='relative flex h-11 shrink-0 items-center justify-between gap-3 [border-bottom:1px_solid_var(--vbi-border)] bg-[var(--vbi-secondary)] px-3 transition-colors duration-300 max-[720px]:h-[52px]'>
       <SidebarHandleLayer sidebarHidden={sidebarHidden} onShowSidebar={onShowSidebar} />
       <div className={cn(routeTitleGroupClassName, sidebarHidden)} data-manage-route-title-group=''>
         {onBack ? (
           <Button
             aria-label={resolvedBackLabel}
-            className='h-7 min-w-fit cursor-pointer border border-[var(--vbi-border)] bg-[var(--vbi-control)] px-2 text-xs text-[var(--vbi-text)] shadow-none'
+            className='h-7 min-w-fit cursor-pointer [border:1px_solid_var(--vbi-border)] bg-[var(--vbi-control)] px-2 text-xs text-[var(--vbi-text)] shadow-none'
             icon={<ChevronLeft className='h-3.5 w-3.5' />}
             size='sm'
             title={resolvedBackLabel}
@@ -105,7 +105,7 @@ export const ManageRouteHeader = ({
                 {rename ? (
                   <button
                     aria-label={rename.label}
-                    className='inline-flex size-6 shrink-0 scale-95 cursor-pointer items-center justify-center rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] text-[var(--vbi-text-muted)] opacity-0 transition duration-150 hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-control)] hover:text-[var(--vbi-text-strong)] hover:shadow-sm focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100'
+                    className='inline-flex size-6 shrink-0 scale-95 cursor-pointer items-center justify-center rounded-md [border:1px_solid_var(--vbi-border)] bg-[var(--vbi-secondary)] text-[var(--vbi-text-muted)] opacity-0 transition duration-150 hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-control)] hover:text-[var(--vbi-text-strong)] hover:shadow-sm focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100'
                     title={rename.label}
                     type='button'
                     onClick={startEditing}

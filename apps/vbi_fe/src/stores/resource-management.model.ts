@@ -10,51 +10,44 @@ import {
 type SetState<TState> = (partial: Partial<TState> | TState | ((state: TState) => Partial<TState> | TState)) => void
 type GetState<TState> = () => TState
 
+export type ResourceCreateInput = {
+  content?: string
+  name?: string
+}
+
 export type ResourceManagementState = ResourceListState &
   ResourceListActions & {
-    createName: string
     editorName: string
     loading: boolean
     selectedId: string
     userName: string
     bootstrap(userName?: string): Promise<void>
-    closeCreate(): void
     closeDetail(): Promise<void>
-    create(): Promise<void>
+    create(input?: ResourceCreateInput): Promise<void>
     deleteOne(id: string): Promise<void>
     deleteSelected(): Promise<void>
     dispose(): Promise<void>
     load(): Promise<void>
-    openCreate(): void
     openDetail(id: string): Promise<void>
+    renameOne(id: string, name: string): Promise<void>
     renameSelected(): Promise<void>
-    setCreateName(createName: string): void
     setEditorName(editorName: string): void
   }
 
 type ResourceManagementAdapter<TState extends ResourceManagementState> = {
   kind: ResourceKind
-  getCreateOpenPatch(open: boolean): Partial<TState>
   getFallbackName(): string
-  create(state: TState, name: string): Promise<unknown>
+  create(state: TState, name: string, input: ResourceCreateInput): Promise<unknown>
   list(): Promise<ResourceItem[]>
   remove(id: string): Promise<unknown>
   rename(id: string, name: string): Promise<unknown>
   connectSession?(resourceId: string, userName: string): Promise<void>
-  getCreateResetPatch?(): Partial<TState>
   getDisposeResetPatch?(): Partial<TState>
   getInitialPatch?(): Partial<TState>
   releaseSession?(resourceId: string): Promise<void>
-  resolveCreateName?(name: string): string | null
 }
 
-export const resolveNamedResourceCreateName =
-  (fallbackName: () => string, allowEmptyFallback = true) =>
-  (name: string) => {
-    const trimmedName = name.trim()
-    if (trimmedName) return trimmedName
-    return allowEmptyFallback ? fallbackName() : null
-  }
+const resolveCreateName = (fallbackName: () => string, name: string | undefined) => name?.trim() || fallbackName()
 
 const releaseSelectedResource = async <TState extends ResourceManagementState>(
   state: TState,
@@ -69,11 +62,8 @@ export const createResourceManagementState = <TState extends ResourceManagementS
   get: GetState<TState>,
   adapter: ResourceManagementAdapter<TState>,
 ): TState => {
-  const resolveCreateName = adapter.resolveCreateName ?? resolveNamedResourceCreateName(adapter.getFallbackName, true)
-
   return {
     ...createResourceListState(),
-    createName: '',
     editorName: '',
     loading: false,
     selectedId: '',
@@ -84,16 +74,13 @@ export const createResourceManagementState = <TState extends ResourceManagementS
       set({ userName } as Partial<TState>)
       await get().load()
     },
-    closeCreate: () => set(adapter.getCreateOpenPatch(false)),
     closeDetail: async () => {
       await releaseSelectedResource(get(), adapter.releaseSession)
       set({ editorName: '', selectedId: '' } as Partial<TState>)
     },
-    create: async () => {
-      const nextName = resolveCreateName(get().createName)
-      if (!nextName) return
-      await adapter.create(get(), nextName)
-      set({ createName: '', ...adapter.getCreateOpenPatch(false), ...adapter.getCreateResetPatch?.() })
+    create: async (input = {}) => {
+      const nextName = resolveCreateName(adapter.getFallbackName, input.name)
+      await adapter.create(get(), nextName, input)
       await get().load()
     },
     deleteOne: async (id) => {
@@ -121,21 +108,17 @@ export const createResourceManagementState = <TState extends ResourceManagementS
     dispose: async () => {
       await releaseSelectedResource(get(), adapter.releaseSession)
       set({
-        createName: '',
         editorName: '',
         searchText: '',
         selectedId: '',
         selectedRowKeys: [],
         userName: '',
-        ...adapter.getCreateOpenPatch(false),
-        ...adapter.getCreateResetPatch?.(),
         ...adapter.getDisposeResetPatch?.(),
-      })
+      } as Partial<TState>)
     },
     load: async () => {
       await loadResourceItems(set, adapter.list)
     },
-    openCreate: () => set(adapter.getCreateOpenPatch(true)),
     openDetail: async (id) => {
       const { items, selectedId, userName } = get()
       if (selectedId === id) return
@@ -148,6 +131,12 @@ export const createResourceManagementState = <TState extends ResourceManagementS
       } as Partial<TState>)
       await adapter.connectSession?.(id, userName)
     },
+    renameOne: async (id, name) => {
+      const current = get().items.find((item) => item.id === id)
+      const nextName = name.trim() || current?.name || adapter.getFallbackName()
+      await adapter.rename(id, nextName)
+      await get().load()
+    },
     renameSelected: async () => {
       const { editorName, items, selectedId } = get()
       if (!selectedId) return
@@ -156,7 +145,6 @@ export const createResourceManagementState = <TState extends ResourceManagementS
       await adapter.rename(selectedId, nextName)
       await get().load()
     },
-    setCreateName: (createName) => set({ createName } as Partial<TState>),
     setEditorName: (editorName) => set({ editorName } as Partial<TState>),
   } as TState
 }
@@ -164,24 +152,21 @@ export const createResourceManagementState = <TState extends ResourceManagementS
 export const selectResourceManagementPageState = <TState extends ResourceManagementState>(state: TState) => ({
   bootstrap: state.bootstrap,
   clearSelection: state.clearSelection,
-  closeCreate: state.closeCreate,
   closeDetail: state.closeDetail,
   create: state.create,
-  createName: state.createName,
   deleteOne: state.deleteOne,
   deleteSelected: state.deleteSelected,
   dispose: state.dispose,
   editorName: state.editorName,
   filteredItems: state.filteredItems,
   loading: state.loading,
-  openCreate: state.openCreate,
   openDetail: state.openDetail,
   renameSelected: state.renameSelected,
+  renameOne: state.renameOne,
   searchText: state.searchText,
   selectAllFiltered: state.selectAllFiltered,
   selectedId: state.selectedId,
   selectedRowKeys: state.selectedRowKeys,
-  setCreateName: state.setCreateName,
   setEditorName: state.setEditorName,
   setSearchText: state.setSearchText,
   setSelectedRowKeys: state.setSelectedRowKeys,
