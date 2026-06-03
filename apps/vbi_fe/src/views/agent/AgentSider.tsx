@@ -5,16 +5,17 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
   type CSSProperties,
-  type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 import { applicationShallowEqual, useApplication } from '../../application'
 import { PanelRightClose, PanelRightOpen, PictureInPicture2, Pin } from '../../components/ui/icons'
 import { Tooltip } from '../../components/ui/tooltip'
+import { useResizableWidth } from '../../hooks/useResizableWidth'
 import { useTranslation } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { defaultAgentPanelWidth, maxAgentPanelWidth, minAgentPanelWidth } from '../../stores/agent-panel.store'
+import { defaultAgentPanelWidth } from '../../stores/agent-panel.store'
 import { AgentChatSurface } from './AgentPage'
 
 const collapsedAgentSiderWidth = 44
@@ -36,6 +37,7 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 
 export const AgentSider = () => {
   const panelRef = useRef<HTMLElement | null>(null)
+  const [floatingDragActive, setFloatingDragActive] = useState(false)
   const { collapsed, floatingPosition, mode, setFloatingPosition, setWidth, toggleCollapsed, toggleMode, width } =
     useApplication(
       (state) => ({
@@ -138,6 +140,7 @@ export const AgentSider = () => {
       if ((event.target as HTMLElement).closest('button')) return
 
       event.preventDefault()
+      setFloatingDragActive(true)
       const startX = event.clientX
       const startY = event.clientY
       const startPosition = resolvedFloatingPosition ?? defaultFloatingPosition()
@@ -153,6 +156,7 @@ export const AgentSider = () => {
         )
       }
       const handlePointerUp = () => {
+        setFloatingDragActive(false)
         document.body.style.cursor = ''
         document.body.style.userSelect = ''
         document.removeEventListener('pointermove', handlePointerMove)
@@ -165,95 +169,60 @@ export const AgentSider = () => {
     [clampFloatingPosition, defaultFloatingPosition, isFloating, resolvedFloatingPosition, setFloatingPosition],
   )
 
-  const handleResizePointerDown = useCallback(
-    (event: ReactPointerEvent<HTMLElement>) => {
-      if (collapsed) return
-
-      event.preventDefault()
-      event.stopPropagation()
-      const startX = event.clientX
-      const startWidth = width
+  const handleResize = useCallback(
+    (nextWidth: number) => {
+      setWidth(nextWidth)
+    },
+    [setWidth],
+  )
+  const handleResizeReset = useCallback(() => {
+    setWidth(defaultAgentPanelWidth)
+  }, [setWidth])
+  const { resizeHandleProps } = useResizableWidth({
+    direction: 'left',
+    disabled: collapsed || isFloating,
+    onResize: handleResize,
+    onReset: handleResizeReset,
+    width,
+  })
+  const handleToggleCollapsed = useCallback(() => {
+    if (isFloating) {
       const startPosition = resolvedFloatingPosition ?? defaultFloatingPosition()
-      document.body.style.cursor = 'ew-resize'
-      document.body.style.userSelect = 'none'
+      const nextWidth = collapsed ? width : collapsedAgentSiderWidth
 
-      const handlePointerMove = (pointerEvent: PointerEvent) => {
-        const nextWidth = startWidth + startX - pointerEvent.clientX
-        setWidth(nextWidth)
+      setFloatingPosition(
+        clampFloatingPosition(
+          {
+            x: startPosition.x + (panelWidth - nextWidth),
+            y: startPosition.y,
+          },
+          nextWidth,
+        ),
+      )
+    }
 
-        if (isFloating) {
-          const boundedWidth = clamp(nextWidth, minAgentPanelWidth, maxAgentPanelWidth)
-          setFloatingPosition(
-            clampFloatingPosition(
-              {
-                x: startPosition.x - (boundedWidth - startWidth),
-                y: startPosition.y,
-              },
-              boundedWidth,
-            ),
-          )
-        }
-      }
-      const handlePointerUp = () => {
-        document.body.style.cursor = ''
-        document.body.style.userSelect = ''
-        document.removeEventListener('pointermove', handlePointerMove)
-        document.removeEventListener('pointerup', handlePointerUp)
-      }
-
-      document.addEventListener('pointermove', handlePointerMove)
-      document.addEventListener('pointerup', handlePointerUp)
-    },
-    [
-      clampFloatingPosition,
-      collapsed,
-      defaultFloatingPosition,
-      isFloating,
-      resolvedFloatingPosition,
-      setFloatingPosition,
-      setWidth,
-      width,
-    ],
-  )
-  const handleResizeDoubleClick = useCallback(
-    (event: ReactMouseEvent<HTMLElement>) => {
-      if (collapsed) return
-
-      event.preventDefault()
-      event.stopPropagation()
-      setWidth(defaultAgentPanelWidth)
-
-      if (isFloating) {
-        const startPosition = resolvedFloatingPosition ?? defaultFloatingPosition(defaultAgentPanelWidth)
-        setFloatingPosition(
-          clampFloatingPosition(
-            {
-              x: startPosition.x - (defaultAgentPanelWidth - width),
-              y: startPosition.y,
-            },
-            defaultAgentPanelWidth,
-          ),
-        )
-      }
-    },
-    [
-      clampFloatingPosition,
-      collapsed,
-      defaultFloatingPosition,
-      isFloating,
-      resolvedFloatingPosition,
-      setFloatingPosition,
-      setWidth,
-      width,
-    ],
-  )
+    toggleCollapsed()
+  }, [
+    clampFloatingPosition,
+    collapsed,
+    defaultFloatingPosition,
+    isFloating,
+    panelWidth,
+    resolvedFloatingPosition,
+    setFloatingPosition,
+    toggleCollapsed,
+    width,
+  ])
 
   return (
     <aside
       aria-label={agentSiderLabel}
       ref={panelRef}
       className={cn(
-        'vbi-agent-sider relative flex min-h-0 shrink-0 flex-col overflow-hidden bg-[var(--vbi-bg)] text-vbi-text transition-[width,opacity,transform,border-color,background-color,box-shadow] duration-300 ease-out',
+        'vbi-agent-sider relative flex min-h-0 shrink-0 flex-col overflow-hidden bg-[var(--vbi-bg)] text-vbi-text duration-300 ease-out',
+        floatingDragActive
+          ? 'transition-none'
+          : 'transition-[left,top,width,opacity,transform,border-color,background-color,box-shadow]',
         collapsed
           ? isFloating
             ? 'fixed z-[60] rounded-lg border border-vbi-border shadow-[0_18px_48px_rgba(15,23,42,0.18)]'
@@ -266,16 +235,8 @@ export const AgentSider = () => {
       data-agent-panel-mode={mode}
       style={panelStyle}
     >
-      {!collapsed ? (
-        <div
-          aria-label={resizeLabel}
-          aria-orientation='vertical'
-          className={agentSiderResizeHandleClassName}
-          role='separator'
-          tabIndex={0}
-          onDoubleClick={handleResizeDoubleClick}
-          onPointerDown={handleResizePointerDown}
-        />
+      {!collapsed && !isFloating ? (
+        <div aria-label={resizeLabel} className={agentSiderResizeHandleClassName} {...resizeHandleProps} />
       ) : null}
       {collapsed ? (
         <div className='flex h-full min-h-0 flex-col items-center gap-2 border-b-0 bg-[var(--vbi-secondary)] px-2 py-3 transition-colors duration-300'>
@@ -284,7 +245,7 @@ export const AgentSider = () => {
               aria-label={collapsedLabel}
               className={agentSiderActionClassName}
               type='button'
-              onClick={toggleCollapsed}
+              onClick={handleToggleCollapsed}
             >
               <PanelRightOpen className='h-3.5 w-3.5' aria-hidden='true' />
             </button>
@@ -318,7 +279,7 @@ export const AgentSider = () => {
                   aria-label={collapsedLabel}
                   className={agentSiderActionClassName}
                   type='button'
-                  onClick={toggleCollapsed}
+                  onClick={handleToggleCollapsed}
                 >
                   <PanelRightClose className='h-3.5 w-3.5' aria-hidden='true' />
                 </button>

@@ -1,7 +1,7 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
-import type { CSSProperties, MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react'
+import { useMemo } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { applicationShallowEqual, useApplication } from '../../application'
 import {
   BarChart3,
@@ -14,6 +14,7 @@ import {
 } from '../../components/ui/icons'
 import { Separator } from '../../components/ui/separator'
 import { Tooltip } from '../../components/ui/tooltip'
+import { useResizableWidth } from '../../hooks/useResizableWidth'
 import { useTranslation } from '../../i18n'
 import { cn } from '../../lib/utils'
 import { useNavigationStore } from '../../stores/navigation.store'
@@ -108,40 +109,13 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
       }) as CSSProperties,
     [sidebarWidth],
   )
-  const handleSidebarResizePointerDown = useCallback(
-    (event: ReactPointerEvent<HTMLElement>) => {
-      if (sidebarCollapsed) return
-
-      event.preventDefault()
-      event.stopPropagation()
-      const startX = event.clientX
-      const startWidth = sidebarWidth
-      document.body.style.cursor = 'ew-resize'
-      document.body.style.userSelect = 'none'
-
-      const handlePointerMove = (pointerEvent: PointerEvent) => {
-        setSidebarWidth(startWidth + pointerEvent.clientX - startX)
-      }
-      const handlePointerUp = () => {
-        document.body.style.cursor = ''
-        document.body.style.userSelect = ''
-        document.removeEventListener('pointermove', handlePointerMove)
-        document.removeEventListener('pointerup', handlePointerUp)
-      }
-
-      document.addEventListener('pointermove', handlePointerMove)
-      document.addEventListener('pointerup', handlePointerUp)
-    },
-    [setSidebarWidth, sidebarCollapsed, sidebarWidth],
-  )
-  const handleSidebarResizeDoubleClick = useCallback(
-    (event: ReactMouseEvent<HTMLElement>) => {
-      event.preventDefault()
-      event.stopPropagation()
-      resetSidebarWidth()
-    },
-    [resetSidebarWidth],
-  )
+  const { resizeHandleProps: sidebarResizeHandleProps } = useResizableWidth({
+    direction: 'right',
+    disabled: sidebarCollapsed,
+    onResize: setSidebarWidth,
+    onReset: resetSidebarWidth,
+    width: sidebarWidth,
+  })
   const railItems = [
     {
       active: isNewConversationActive,
@@ -171,15 +145,7 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
         style={sidebarStyle}
       >
         {!sidebarCollapsed ? (
-          <div
-            aria-label='Resize Sidebar'
-            aria-orientation='vertical'
-            className={sidebarResizeHandleClassName}
-            role='separator'
-            tabIndex={0}
-            onDoubleClick={handleSidebarResizeDoubleClick}
-            onPointerDown={handleSidebarResizePointerDown}
-          />
+          <div aria-label='Resize Sidebar' className={sidebarResizeHandleClassName} {...sidebarResizeHandleProps} />
         ) : null}
         {sidebarCollapsed ? (
           <div

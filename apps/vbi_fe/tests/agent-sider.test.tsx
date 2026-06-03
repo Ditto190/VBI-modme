@@ -44,6 +44,7 @@ describe('AgentSider', () => {
     expect(sider).toHaveAttribute('data-agent-panel-mode', 'floating')
     expect(window.localStorage.getItem(agentPanelModeStorageKey)).toBe('floating')
     expect(screen.getByRole('button', { name: 'Dock Agent' })).toBeInTheDocument()
+    expect(screen.queryByRole('separator', { name: 'Resize Agent' })).not.toBeInTheDocument()
   })
 
   test('collapses to a compact rail and expands again', () => {
@@ -68,6 +69,8 @@ describe('AgentSider', () => {
 
   test('resizes the docked panel and persists width', () => {
     render(<AgentSider />)
+
+    expect(screen.getByRole('separator', { name: 'Resize Agent' })).toBeInTheDocument()
 
     fireEvent.pointerDown(screen.getByRole('separator', { name: 'Resize Agent' }), { clientX: 0 })
     fireEvent.pointerMove(document, { clientX: -80 })
@@ -111,5 +114,27 @@ describe('AgentSider', () => {
     expect(position.x).toBeLessThan(594)
     expect(position.y).toBeGreaterThan(12)
     expect(screen.getByLabelText('VBI Agent')).toHaveStyle({ left: `${position.x}px`, top: `${position.y}px` })
+  })
+
+  test('collapses a floating panel toward the right-side collapse button', () => {
+    useAgentPanelStore.setState({
+      collapsed: false,
+      floatingPosition: { x: 400, y: 24 },
+      mode: 'floating',
+      width: defaultAgentPanelWidth,
+    })
+
+    render(<AgentSider />)
+
+    const sider = screen.getByLabelText('VBI Agent')
+    expect(sider).toHaveStyle({ left: '400px', width: `${defaultAgentPanelWidth}px` })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse Agent' }))
+
+    expect(sider).toHaveAttribute('data-agent-panel-collapsed', 'true')
+    expect(sider).toHaveStyle({
+      left: `${400 + defaultAgentPanelWidth - 44}px`,
+      width: '44px',
+    })
   })
 })
