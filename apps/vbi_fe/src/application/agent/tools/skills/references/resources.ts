@@ -1,31 +1,31 @@
 export const resourcesSkill = `
 # Resource Application API
 
-Use application.chart, application.insight, and application.report for resource workflows.
+Use application.getState().chart, application.getState().insight, and application.getState().report for resource workflows.
 
 Shared resource commands:
-- await application.chart.list()
-- await application.chart.create({ name })
-- await application.chart.open(id)
-- await application.chart.rename({ id, name })
-- await application.chart.delete(id)
-- application.chart.activate({ userName })
-- application.chart.records.search(text)
-- application.chart.records.select(ids)
-- await application.chart.records.deleteSelected()
-- application.chart.editor.connect(id, userName)
-- await application.chart.editor.release(id)
+- await application.getState().chart.list()
+- await application.getState().chart.create({ name })
+- await application.getState().chart.open(id)
+- await application.getState().chart.rename({ id, name })
+- await application.getState().chart.delete(id)
+- application.getState().chart.activate({ userName })
+- application.getState().chart.records.search(text)
+- application.getState().chart.records.select(ids)
+- await application.getState().chart.records.deleteSelected()
+- application.getState().chart.editor.connect(id, userName)
+- await application.getState().chart.editor.release(id)
 
 Use the same shape for insight and report:
-- application.insight.*
-- application.report.*
+- application.getState().insight.*
+- application.getState().report.*
 
 Resource state:
-- application.chart.records.loading
-- application.chart.records.searchText
-- application.chart.records.selectedIds
-- application.chart.records.visibleItems
-- application.chart.editor.builders
+- application.getState().chart.records.loading
+- application.getState().chart.records.searchText
+- application.getState().chart.records.selectedIds
+- application.getState().chart.records.visibleItems
+- application.getState().chart.editor.builders
 
 Call list() before open(id), rename({ id, name }), delete(id), editor.connect(id, userName), or records.select(ids).
 Use ids returned from list(), not display names, once a resource has been found. Human names may be
@@ -34,11 +34,11 @@ every selected id is visible or returned by list(). Do not invent ids.
 
 Example:
 
-const items = await application.chart.list();
+const items = await application.getState().chart.list();
 const target = items.find((item) => item.name?.includes("Revenue"));
 assert(target, "No Revenue chart found");
-assert(items.some((item) => item.id === target.id), "Chart id must be returned by application.chart.list()");
-await application.chart.open(target.id);
-application.chart.records.select([target.id]);
+assert(items.some((item) => item.id === target.id), "Chart id must be returned by application.getState().chart.list()");
+await application.getState().chart.open(target.id);
+application.getState().chart.records.select([target.id]);
 return json({ openedChartId: target.id, selectedIds: snapshot().chart.records.selectedIds, routeState: snapshot().chart.records });
 `.trim()

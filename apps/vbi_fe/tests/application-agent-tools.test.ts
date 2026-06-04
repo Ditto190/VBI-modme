@@ -85,16 +85,20 @@ describe('VBI application agent tools', () => {
     expect(skillIndex).toContain('# VBI Application Skill')
     expect(skillIndex).toContain('References:')
     expect(skillIndex).toContain('application_overview: Tool usage rules')
-    expect(skillIndex).toContain('resources: application.chart, application.insight, and application.report')
-    expect(skillIndex).toContain('report_detail: application.reportDetail')
-    expect(skillIndex).toContain('layout_preferences: application.layout, application.theme, and application.i18n')
-    expect(skillIndex).toContain('agent: application.agent conversation')
+    expect(skillIndex).toContain(
+      'resources: application.getState().chart, application.getState().insight, and application.getState().report',
+    )
+    expect(skillIndex).toContain('report_detail: application.getState().reportDetail')
+    expect(skillIndex).toContain(
+      'layout_preferences: application.getState().layout, application.getState().theme, and application.getState().i18n',
+    )
+    expect(skillIndex).toContain('agent: application.getState().agent conversation')
     expect(skillIndex).toContain('builder_api: VBI namespace and Builder API')
     expect(skillIndex).toContain('Call read_skill with { "action": "read", "skill": "<reference_name>" }')
 
     const skillResult = await readSkill?.execute('call-read', { action: 'read', skill: 'builder_api' })
     const skill = readText(skillResult as never)
-    expect(skill).toContain('application.chart.editor.builders')
+    expect(skill).toContain('application.getState().chart.editor.builders')
     expect(skill).not.toContain('vbi_chart')
 
     const applicationOverviewResult = await readSkill?.execute('call-read-overview', {
@@ -102,8 +106,8 @@ describe('VBI application agent tools', () => {
       skill: 'application_overview',
     })
     const applicationOverview = readText(applicationOverviewResult as never)
-    expect(applicationOverview).toContain('application.theme.list()')
-    expect(applicationOverview).toContain('application.i18n.list()')
+    expect(applicationOverview).toContain('application.getState().theme.list()')
+    expect(applicationOverview).toContain('application.getState().i18n.list()')
     expect(applicationOverview).toContain('derive and verify ids')
 
     const layoutResult = await readSkill?.execute('call-read-layout', {
@@ -111,16 +115,16 @@ describe('VBI application agent tools', () => {
       skill: 'layout_preferences',
     })
     const layout = readText(layoutResult as never)
-    expect(layout).toContain('application.layout.sidePanel.listMode()')
-    expect(layout).toContain('application.layout.workspacePlacement.list()')
-    expect(layout).toContain('application.theme.change(mode)')
-    expect(layout).toContain('application.i18n.change(locale)')
+    expect(layout).toContain('application.getState().layout.sidePanel.listMode()')
+    expect(layout).toContain('application.getState().layout.workspacePlacement.list()')
+    expect(layout).toContain('application.getState().theme.change(mode)')
+    expect(layout).toContain('application.getState().i18n.change(locale)')
 
     const agentResult = await readSkill?.execute('call-read-agent', { action: 'read', skill: 'agent' })
     const agent = readText(agentResult as never)
-    expect(agent).toContain('application.agent.model.list()')
-    expect(agent).toContain('application.agent.model.listThinking()')
-    expect(agent).toContain('application.agent.model.changeThinking(thinkingLevel)')
+    expect(agent).toContain('application.getState().agent.model.list()')
+    expect(agent).toContain('application.getState().agent.model.listThinking()')
+    expect(agent).toContain('application.getState().agent.model.changeThinking(thinkingLevel)')
 
     const resourcesResult = await readSkill?.execute('call-read-resources', { action: 'read', skill: 'resources' })
     const resources = readText(resourcesResult as never)
@@ -132,7 +136,7 @@ describe('VBI application agent tools', () => {
       skill: 'report_detail',
     })
     const reportDetail = readText(reportDetailResult as never)
-    expect(reportDetail).toContain('application.reportDetail.pages')
+    expect(reportDetail).toContain('application.getState().reportDetail.pages')
     expect(reportDetail).toContain('Do not invent page ids')
 
     const allApplicationSkillContent = [skillIndex, applicationOverview, layout, agent, resources, reportDetail].join(
@@ -148,18 +152,19 @@ describe('VBI application agent tools', () => {
   test('runs trusted scripts against theme and layout application APIs with full JSON content', async () => {
     const applicationTool = getTool('vbi_application')
     const allThemeModes = [...lightVbiThemeModes, ...darkVbiThemeModes]
-    const expectedThemeMode = allThemeModes.find((mode) => mode !== application.theme.mode) ?? application.theme.mode
+    const expectedThemeMode =
+      allThemeModes.find((mode) => mode !== application.getState().theme.mode) ?? application.getState().theme.mode
 
     const result = await applicationTool?.execute('call-application', {
       code: `
-const themes = application.theme.list();
-const locales = application.i18n.list();
+const themes = application.getState().theme.list();
+const locales = application.getState().i18n.list();
 const allThemes = [...themes.light, ...themes.dark];
 const nextTheme = allThemes.find((mode) => mode !== snapshot().theme.mode) ?? snapshot().theme.mode;
-application.theme.change(nextTheme);
-application.i18n.change("en-US");
-application.layout.sidePanel.changeMode("floating");
-application.layout.sidePanel.setWidth(520);
+application.getState().theme.change(nextTheme);
+application.getState().i18n.change("en-US");
+application.getState().layout.sidePanel.changeMode("floating");
+application.getState().layout.sidePanel.setWidth(520);
 console.log("theme", snapshot().theme.mode);
 return json({
   i18n: { ...snapshot().i18n, available: locales },
@@ -183,9 +188,9 @@ return json({
       layout: expect.objectContaining({ mode: 'floating', width: 520 }),
       theme: { available: { dark: darkVbiThemeModes, light: lightVbiThemeModes }, mode: expectedThemeMode },
     })
-    expect(application.theme.mode).toBe(expectedThemeMode)
-    expect(application.i18n.locale).toBe('en-US')
-    expect(application.layout.sidePanel.mode).toBe('floating')
+    expect(application.getState().theme.mode).toBe(expectedThemeMode)
+    expect(application.getState().i18n.locale).toBe('en-US')
+    expect(application.getState().layout.sidePanel.mode).toBe('floating')
     expect(readText(result as never)).toContain('"width": 520')
   })
 
@@ -202,9 +207,9 @@ return json({
 
     const result = await applicationTool?.execute('call-application', {
       code: `
-await application.chart.open("chart 1");
-await application.report.open("report-1");
-application.reportDetail.setScrolledPage("page-2");
+await application.getState().chart.open("chart 1");
+await application.getState().report.open("report-1");
+application.getState().reportDetail.setScrolledPage("page-2");
 await waitFor(() => snapshot().reportDetail.activePageId === "page-2");
 return json({ reportDetail: snapshot().reportDetail });
 `,

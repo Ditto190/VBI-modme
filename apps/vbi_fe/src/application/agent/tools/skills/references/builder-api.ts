@@ -14,10 +14,10 @@ Useful VBI exports include:
 - VBI.VBIReportBuilder
 
 Builder access in the application:
-- application.chart.editor.builders[id]?.builder is a VBIChartBuilder when the chart editor session is connected.
-- application.insight.editor.builders[id]?.builder is a VBIInsightBuilder when connected.
-- application.report.editor.builders[id]?.builder is a VBIReportBuilder when connected.
-- application.reportDetail.reportBuilder is the active report detail builder when connected.
+- application.getState().chart.editor.builders[id]?.builder is a VBIChartBuilder when the chart editor session is connected.
+- application.getState().insight.editor.builders[id]?.builder is a VBIInsightBuilder when connected.
+- application.getState().report.editor.builders[id]?.builder is a VBIReportBuilder when connected.
+- application.getState().reportDetail.reportBuilder is the active report detail builder when connected.
 
 Prefer public Builder methods:
 - chartBuilder.build()
@@ -37,7 +37,7 @@ Do not mutate raw DSL maps when a public Builder method exists.
 
 Example:
 
-const projection = application.chart.editor.builders["chart-1"];
+const projection = application.getState().chart.editor.builders["chart-1"];
 assert(projection?.builder, "Chart builder is not connected");
 projection.builder.chartType.set("bar");
 return json({ chart: projection.builder.build(), version: projection.version });
