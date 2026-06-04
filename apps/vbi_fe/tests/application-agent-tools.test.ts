@@ -81,21 +81,68 @@ describe('VBI application agent tools', () => {
     const readSkill = getTool('read_skill')
 
     const listResult = await readSkill?.execute('call-list', { action: 'list' })
-    const list = readJson<Array<{ name: string; summary: string; title: string }>>(listResult as never)
-    expect(list.map((skill) => skill.name)).toEqual([
-      'application_overview',
-      'resources',
-      'report_detail',
-      'layout_preferences',
-      'agent',
-      'builder_api',
-    ])
+    const skillIndex = readText(listResult as never)
+    expect(skillIndex).toContain('# VBI Application Skill')
+    expect(skillIndex).toContain('References:')
+    expect(skillIndex).toContain('application_overview: Tool usage rules')
+    expect(skillIndex).toContain('resources: application.chart, application.insight, and application.report')
+    expect(skillIndex).toContain('report_detail: application.reportDetail')
+    expect(skillIndex).toContain('layout_preferences: application.layout, application.theme, and application.i18n')
+    expect(skillIndex).toContain('agent: application.agent conversation')
+    expect(skillIndex).toContain('builder_api: VBI namespace and Builder API')
+    expect(skillIndex).toContain('Call read_skill with { "action": "read", "skill": "<reference_name>" }')
 
     const skillResult = await readSkill?.execute('call-read', { action: 'read', skill: 'builder_api' })
-    const skill = readJson<{ content: string; skill: string }>(skillResult as never)
-    expect(skill.skill).toBe('builder_api')
-    expect(skill.content).toContain('application.chart.editor.builders')
-    expect(skill.content).not.toContain('vbi_chart')
+    const skill = readText(skillResult as never)
+    expect(skill).toContain('application.chart.editor.builders')
+    expect(skill).not.toContain('vbi_chart')
+
+    const applicationOverviewResult = await readSkill?.execute('call-read-overview', {
+      action: 'read',
+      skill: 'application_overview',
+    })
+    const applicationOverview = readText(applicationOverviewResult as never)
+    expect(applicationOverview).toContain('application.theme.list()')
+    expect(applicationOverview).toContain('application.i18n.list()')
+    expect(applicationOverview).toContain('derive and verify ids')
+
+    const layoutResult = await readSkill?.execute('call-read-layout', {
+      action: 'read',
+      skill: 'layout_preferences',
+    })
+    const layout = readText(layoutResult as never)
+    expect(layout).toContain('application.layout.sidePanel.listMode()')
+    expect(layout).toContain('application.layout.workspacePlacement.list()')
+    expect(layout).toContain('application.theme.change(mode)')
+    expect(layout).toContain('application.i18n.change(locale)')
+
+    const agentResult = await readSkill?.execute('call-read-agent', { action: 'read', skill: 'agent' })
+    const agent = readText(agentResult as never)
+    expect(agent).toContain('application.agent.model.list()')
+    expect(agent).toContain('application.agent.model.listThinking()')
+    expect(agent).toContain('application.agent.model.changeThinking(thinkingLevel)')
+
+    const resourcesResult = await readSkill?.execute('call-read-resources', { action: 'read', skill: 'resources' })
+    const resources = readText(resourcesResult as never)
+    expect(resources).toContain('Call list() before open(id)')
+    expect(resources).toContain('Do not invent ids')
+
+    const reportDetailResult = await readSkill?.execute('call-read-report-detail', {
+      action: 'read',
+      skill: 'report_detail',
+    })
+    const reportDetail = readText(reportDetailResult as never)
+    expect(reportDetail).toContain('application.reportDetail.pages')
+    expect(reportDetail).toContain('Do not invent page ids')
+
+    const allApplicationSkillContent = [skillIndex, applicationOverview, layout, agent, resources, reportDetail].join(
+      '\n',
+    )
+    expect(allApplicationSkillContent).not.toContain('changeTheme')
+    expect(allApplicationSkillContent).not.toContain('listTheme')
+    expect(allApplicationSkillContent).not.toContain('setLocale')
+    expect(allApplicationSkillContent).not.toContain('changeThinkingLevel')
+    expect(allApplicationSkillContent).not.toContain('workspacePlacement.set')
   })
 
   test('runs trusted scripts against theme and layout application APIs with full JSON content', async () => {

@@ -27,13 +27,18 @@ Resource state:
 - application.chart.records.visibleItems
 - application.chart.editor.builders
 
-Use ids, not display names, once a resource has been found. Human names may be empty or duplicated.
+Call list() before open(id), rename({ id, name }), delete(id), editor.connect(id, userName), or records.select(ids).
+Use ids returned from list(), not display names, once a resource has been found. Human names may be
+empty or duplicated. If selecting from records.visibleItems, activate the resource list first and verify
+every selected id is visible or returned by list(). Do not invent ids.
 
 Example:
 
 const items = await application.chart.list();
 const target = items.find((item) => item.name?.includes("Revenue"));
 assert(target, "No Revenue chart found");
+assert(items.some((item) => item.id === target.id), "Chart id must be returned by application.chart.list()");
 await application.chart.open(target.id);
-return json({ openedChartId: target.id, routeState: snapshot().chart.records });
+application.chart.records.select([target.id]);
+return json({ openedChartId: target.id, selectedIds: snapshot().chart.records.selectedIds, routeState: snapshot().chart.records });
 `.trim()

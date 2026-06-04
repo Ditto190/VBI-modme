@@ -1,7 +1,7 @@
 import type { AgentTool, AgentToolResult } from '@visactor/vbi-agent'
 import { executeTrustedApplicationScript } from './application-script-runtime'
 import {
-  listVBIApplicationSkills,
+  readVBIApplicationSkillIndex,
   readVBIApplicationSkill,
   vbiApplicationSkillNames,
   type VBIApplicationSkillName,
@@ -30,27 +30,16 @@ const applicationParameters = {
 
 const asToolParameters = (schema: unknown) => schema as AgentTool['parameters']
 
-const stringifyJson = (value: unknown) => {
-  try {
-    return JSON.stringify(value, null, 2)
-  } catch {
-    return String(value)
-  }
-}
-
 const clipText = (value: string, limit = 12000) => {
   if (value.length <= limit) return value
   const half = Math.floor(limit / 2)
   return `${value.slice(0, half)}\n...\n${value.slice(-half)}`
 }
 
-const createJsonResult = (summary: string, value: unknown): AgentToolResult<unknown> => {
-  const text = stringifyJson(value)
-  return {
-    content: [{ text, type: 'text' }],
-    details: { display: clipText(text), summary },
-  }
-}
+const createTextResult = (summary: string, text: string): AgentToolResult<unknown> => ({
+  content: [{ text, type: 'text' }],
+  details: { display: clipText(text), summary },
+})
 
 const asObject = (toolName: string, input: unknown): ToolInput => {
   if (typeof input === 'object' && input !== null && !Array.isArray(input)) return input as ToolInput
@@ -70,13 +59,10 @@ export const createVBIApplicationTools = (): AgentTool[] => [
       const params = asObject('read_skill', input)
       const action = requireString('read_skill', params, 'action')
 
-      if (action === 'list') return createJsonResult('read_skill list completed', listVBIApplicationSkills())
+      if (action === 'list') return createTextResult('read_skill list completed', readVBIApplicationSkillIndex())
       if (action === 'read') {
         const skill = requireString('read_skill', params, 'skill') as VBIApplicationSkillName
-        return createJsonResult(`read_skill ${skill} completed`, {
-          content: await readVBIApplicationSkill(skill),
-          skill,
-        })
+        return createTextResult(`read_skill ${skill} completed`, await readVBIApplicationSkill(skill))
       }
 
       throw new Error('read_skill.action must be list or read')
