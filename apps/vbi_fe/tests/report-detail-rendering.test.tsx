@@ -32,7 +32,7 @@ describe('report detail rendering', () => {
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     useReportBuilderModel.setState(initialReportBuilderState, true)
     useReportDetailStore.setState(initialReportDetailState, true)
-    await application.reportDetail.syncActivePage()
+    await application.getState().reportDetail.syncActivePage()
   })
 
   afterEach(() => {

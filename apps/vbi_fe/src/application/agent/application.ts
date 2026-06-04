@@ -155,6 +155,23 @@ const getAgentModelOptions = () => {
   return cachedModelOptions
 }
 
+const assertListedAgentModel = (modelId: AgentModelId) => {
+  const models = getAgentModelOptions()
+  if (models.some((model) => model.id === modelId)) return
+
+  throw new Error(
+    `Unknown application agent model "${String(modelId)}". Use application.getState().agent.model.list() before application.getState().agent.model.change().`,
+  )
+}
+
+const assertListedAgentThinkingLevel = (thinkingLevel: AgentThinkingLevel) => {
+  if (agentThinkingLevels.includes(thinkingLevel)) return
+
+  throw new Error(
+    `Unknown application agent thinking level "${String(thinkingLevel)}". Use application.getState().agent.model.listThinking() before application.getState().agent.model.changeThinking().`,
+  )
+}
+
 const handleConversationChange = (update: AgentConversationRuntimeUpdate) => {
   if (update.metadata) {
     useAgentConversationsStore.getState().upsertConversation(update.metadata, update.status)
@@ -288,6 +305,7 @@ const agentActions = {
     await activeRuntime?.cancel()
   },
   changeModel: async (modelId: AgentModelId) => {
+    assertListedAgentModel(modelId)
     preferredModelId = modelId
     writeStoredString(preferredAgentModelStorageKey, modelId)
     if (
@@ -313,6 +331,7 @@ const agentActions = {
     }
   },
   changeThinking: async (thinkingLevel: AgentThinkingLevel) => {
+    assertListedAgentThinkingLevel(thinkingLevel)
     preferredThinkingLevel = thinkingLevel
     writeStoredString(preferredAgentThinkingLevelStorageKey, thinkingLevel)
     if (

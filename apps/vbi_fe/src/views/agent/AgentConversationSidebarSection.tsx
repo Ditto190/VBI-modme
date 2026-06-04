@@ -174,7 +174,7 @@ const AgentConversationRow = memo(
                 message={t('agent.deleteConversationTitle')}
                 onConfirm={async () => {
                   await deleteConversation(conversation.id)
-                  const nextConversationId = application.select((state) => state.agent.conversations.activeId)
+                  const nextConversationId = application.getState().agent.conversations.activeId
                   if (!isActive) return
 
                   if (nextConversationId) {

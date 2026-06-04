@@ -16,7 +16,7 @@ const assertListedTheme = (mode: AppThemeMode) => {
   if (availableThemes.includes(mode)) return
 
   throw new Error(
-    `Unknown application theme "${String(mode)}". Use application.theme.list() before application.theme.change().`,
+    `Unknown application theme "${String(mode)}". Use application.getState().theme.list() before application.getState().theme.change().`,
   )
 }
 
@@ -25,7 +25,7 @@ const assertListedLocale = (locale: I18nApplication['locale']) => {
   if (locales.includes(locale)) return
 
   throw new Error(
-    `Unknown application locale "${String(locale)}". Use application.i18n.list() before application.i18n.change().`,
+    `Unknown application locale "${String(locale)}". Use application.getState().i18n.list() before application.getState().i18n.change().`,
   )
 }
 

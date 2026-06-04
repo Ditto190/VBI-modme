@@ -18,8 +18,6 @@ export type {
   ApplicationCleanup,
   ApplicationEquality,
   ApplicationHookOptions,
-  ApplicationModuleContext,
-  ApplicationModuleFactory,
   ApplicationSelector,
   ApplicationState,
   ApplicationStore,

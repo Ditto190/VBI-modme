@@ -1,16 +1,32 @@
+import { subscribeWithSelector } from 'zustand/middleware'
+import { createStore, type Mutate, type StoreApi } from 'zustand/vanilla'
+import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
+import { useAppPreferencesStore } from '../../stores/app-preferences.store'
+import { useManageSidebarStore } from '../../stores/manage-sidebar.store'
+import { useNavigationStore } from '../../stores/navigation.store'
+import { useWorkspaceSidePanelStore } from '../../stores/workspace-side-panel.store'
 import type { AgentApplication } from '../agent/contract'
+import { bindAgentLazyApplicationEmitter, getLazyAgentApplication } from '../agent/lazy'
 import type { LayoutApplication } from '../layout/contract'
+import { getLayoutApplication } from '../layout/application'
 import type { I18nApplication, ThemeApplication } from '../preferences/contract'
+import { getI18nApplication, getThemeApplication } from '../preferences/application'
 import type { ReportDetailApplication } from '../report-detail/contract'
+import { bindReportDetailLazyApplicationEmitter, getLazyReportDetailApplication } from '../report-detail/lazy'
 import type { ChartApplication, InsightApplication, ReportApplication } from '../resources/contract'
-import { getApplicationSnapshot, subscribeApplicationSelector, subscribeApplicationSnapshot } from './subscribe'
+import {
+  bindResourcesLazyApplicationEmitter,
+  getLazyChartApplication,
+  getLazyInsightApplication,
+  getLazyReportApplication,
+} from '../resources/lazy'
 
 export type ApplicationSelector<TSelected> = (state: ApplicationState) => TSelected
 
 export type ApplicationEquality<TSelected> = (left: TSelected, right: TSelected) => boolean
 
 export type ApplicationSubscribeOptions<TSelected> = {
-  equality?: ApplicationEquality<TSelected>
+  equalityFn?: ApplicationEquality<TSelected>
   fireImmediately?: boolean
 }
 
@@ -22,28 +38,12 @@ export type ApplicationUnsubscribe = () => void
 
 export type ApplicationCleanup = () => void
 
-export type ApplicationStore = {
-  getState(): ApplicationState
-  select<TSelected>(selector: ApplicationSelector<TSelected>): TSelected
-  subscribe(listener: () => void): ApplicationUnsubscribe
-  subscribe<TSelected>(
-    selector: ApplicationSelector<TSelected>,
-    listener: (selected: TSelected, previous: TSelected) => void,
-    options?: ApplicationSubscribeOptions<TSelected>,
-  ): ApplicationUnsubscribe
-}
+export type ApplicationStore = Mutate<StoreApi<ApplicationState>, [['zustand/subscribeWithSelector', never]]>
 
 export type UseApplication = <TSelected>(
   selector: ApplicationSelector<TSelected>,
   options?: ApplicationHookOptions<TSelected>,
 ) => TSelected
-
-export type ApplicationModuleContext = {
-  emit(): void
-  getState(): ApplicationState
-}
-
-export type ApplicationModuleFactory<TModule> = (context: ApplicationModuleContext) => TModule
 
 export type ApplicationState = {
   agent: AgentApplication
@@ -56,29 +56,48 @@ export type ApplicationState = {
   theme: ThemeApplication
 }
 
-export type Application = ApplicationState & ApplicationStore
+export type Application = ApplicationStore
 
-const storeApi = {
-  getState: getApplicationSnapshot,
-  select: <TSelected>(selector: ApplicationSelector<TSelected>) => selector(getApplicationSnapshot()),
-  subscribe: <TSelected>(
-    selectorOrListener: ApplicationSelector<TSelected> | (() => void),
-    listener?: (selected: TSelected, previous: TSelected) => void,
-    options?: ApplicationSubscribeOptions<TSelected>,
-  ) => {
-    if (listener)
-      return subscribeApplicationSelector(selectorOrListener as ApplicationSelector<TSelected>, listener, options)
-    return subscribeApplicationSnapshot(selectorOrListener as () => void)
-  },
+type InternalStore = {
+  subscribe?: (listener: () => void) => unknown
 }
 
-export const application = Object.defineProperties(storeApi, {
-  agent: { get: () => getApplicationSnapshot().agent },
-  chart: { get: () => getApplicationSnapshot().chart },
-  i18n: { get: () => getApplicationSnapshot().i18n },
-  insight: { get: () => getApplicationSnapshot().insight },
-  layout: { get: () => getApplicationSnapshot().layout },
-  report: { get: () => getApplicationSnapshot().report },
-  reportDetail: { get: () => getApplicationSnapshot().reportDetail },
-  theme: { get: () => getApplicationSnapshot().theme },
-}) as Application
+const subscribedInternalStores = new WeakSet<object>()
+
+const createApplicationState = (): ApplicationState => ({
+  agent: getLazyAgentApplication(),
+  chart: getLazyChartApplication(),
+  i18n: getI18nApplication(),
+  insight: getLazyInsightApplication(),
+  layout: getLayoutApplication(),
+  report: getLazyReportApplication(),
+  reportDetail: getLazyReportDetailApplication(),
+  theme: getThemeApplication(),
+})
+
+const applicationStore = createStore<ApplicationState>()(subscribeWithSelector(() => createApplicationState()))
+
+export const refreshApplicationState = () => {
+  applicationStore.setState(createApplicationState(), true)
+}
+
+const subscribeInternalStore = (store: InternalStore | undefined) => {
+  if (!store || subscribedInternalStores.has(store)) return
+  store.subscribe?.(refreshApplicationState)
+  subscribedInternalStores.add(store)
+}
+
+const bindApplicationSources = () => {
+  bindAgentLazyApplicationEmitter(refreshApplicationState)
+  bindResourcesLazyApplicationEmitter(refreshApplicationState)
+  bindReportDetailLazyApplicationEmitter(refreshApplicationState)
+  subscribeInternalStore(useAgentConversationsStore)
+  subscribeInternalStore(useAppPreferencesStore)
+  subscribeInternalStore(useManageSidebarStore)
+  subscribeInternalStore(useNavigationStore)
+  subscribeInternalStore(useWorkspaceSidePanelStore)
+}
+
+bindApplicationSources()
+
+export const application = applicationStore as Application
