@@ -1,16 +1,15 @@
 import { useMemo } from 'react'
 import { VbiAppProviders } from './app/providers'
-import { matchApplicationRoute } from './application'
+import { matchApplicationRoute, useApplicationPathname } from './application'
 import { lazyComponent } from './components/LazyComponent'
 import { ManageLayoutPage } from './views/workspace/ManageLayoutPage'
 import { isAppLocale, resolveLocaleFromAcceptLanguage, type AppLocale } from './i18n/utils'
-import { useNavigationStore } from './stores/navigation.store'
 import {
   defaultAppPreferences,
   resolvePersistedLocalePreference,
   resolvePersistedThemePreference,
-  type AppThemeMode,
-} from './stores/app-preferences.store'
+} from './application/preferences/storage'
+import type { AppThemeMode } from './application/preferences/contract'
 
 const ChartEditorPage = lazyComponent<{ id: string }>(() =>
   import('./views/resources/chart/ChartEditorPage').then((module) => ({ default: module.ChartEditorPage })),
@@ -42,7 +41,7 @@ const resolveInitialLocale = (): AppLocale => {
 const resolveInitialThemeMode = (): AppThemeMode => resolvePersistedThemePreference() ?? defaultAppPreferences.themeMode
 
 const RoutedWorkspace = () => {
-  const pathname = useNavigationStore((state) => state.pathname)
+  const pathname = useApplicationPathname()
   const route = useMemo(() => matchApplicationRoute(pathname), [pathname])
 
   const page = (() => {

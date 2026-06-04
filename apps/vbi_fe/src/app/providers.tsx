@@ -4,11 +4,9 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 import { exposeApplicationToWindow, setApplicationPathname, useApplication } from '../application'
 import { NavigationBinder } from '../components/NavigationBinder'
 import { ToastViewport } from '../components/ui/toast'
-import {
-  initializeAppPreferences,
-  reconcilePersistedAppPreferences,
-  type AppThemeMode,
-} from '../stores/app-preferences.store'
+import { initializeI18nApplication, reconcilePersistedI18nApplication } from '../application/i18n/store'
+import { initializeThemeApplication, reconcilePersistedThemeApplication } from '../application/theme/store'
+import type { AppThemeMode } from '../application/preferences/contract'
 import type { AppLocale } from '../i18n'
 import { applyVbiThemeToDocument } from '../theme'
 
@@ -20,7 +18,8 @@ type VbiAppProvidersProps = {
 
 export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: VbiAppProvidersProps) => {
   useState(() => {
-    initializeAppPreferences({ locale: initialLocale, themeMode: initialThemeMode })
+    initializeI18nApplication(initialLocale)
+    initializeThemeApplication(initialThemeMode)
     if (typeof window !== 'undefined') setApplicationPathname(window.location.pathname)
     return null
   })
@@ -30,7 +29,8 @@ export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: V
 
   useEffect(() => {
     exposeApplicationToWindow()
-    reconcilePersistedAppPreferences()
+    reconcilePersistedI18nApplication()
+    reconcilePersistedThemeApplication()
   }, [])
 
   useEffect(() => {

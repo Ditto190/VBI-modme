@@ -19,7 +19,7 @@ import {
   type AgentConversationRuntimeUpdate,
 } from './agent-runtime'
 import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from './agent-storage'
-import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
+import { getAgentConversationsState } from './conversations'
 import { createLatestApplicationLifecycle } from '../core/lifecycle'
 import type {
   AgentApplication,
@@ -174,9 +174,9 @@ const assertListedAgentThinkingLevel = (thinkingLevel: AgentThinkingLevel) => {
 
 const handleConversationChange = (update: AgentConversationRuntimeUpdate) => {
   if (update.metadata) {
-    useAgentConversationsStore.getState().upsertConversation(update.metadata, update.status)
+    getAgentConversationsState().upsertConversation(update.metadata, update.status)
   } else {
-    useAgentConversationsStore.getState().setConversationStatus(update.id, update.status)
+    getAgentConversationsState().setConversationStatus(update.id, update.status)
   }
 }
 
@@ -192,7 +192,7 @@ const bootstrapAgent = async () => {
       agentConfig,
     )
     preferredThinkingLevel = resolveAgentThinkingLevel(readStoredString(preferredAgentThinkingLevelStorageKey))
-    await useAgentConversationsStore.getState().initialize()
+    await getAgentConversationsState().initialize()
     isBootstrapped = true
   } catch (error) {
     setErrorMessage(error instanceof Error ? error.message : String(error))
@@ -218,8 +218,7 @@ const activateConversation = async (
   try {
     const currentRuntime = activeConversationId ? runtimeMap.get(activeConversationId) : null
     if (currentRuntime && !currentRuntime.getSnapshot().isRunning) {
-      const currentConversationStillExists = useAgentConversationsStore
-        .getState()
+      const currentConversationStillExists = getAgentConversationsState()
         .conversations.some((conversation) => conversation.id === activeConversationId)
 
       if (!currentConversationStillExists) {
@@ -228,7 +227,7 @@ const activateConversation = async (
       } else {
         const metadata = await currentRuntime.persist({ touch: false })
         if (!isCurrentActivation()) return null
-        useAgentConversationsStore.getState().upsertConversation(metadata, 'completed')
+        getAgentConversationsState().upsertConversation(metadata, 'completed')
       }
     }
 
@@ -253,7 +252,7 @@ const activateConversation = async (
     }
 
     runtimeMap.set(conversationId, runtime)
-    useAgentConversationsStore.getState().selectConversation(conversationId)
+    getAgentConversationsState().selectConversation(conversationId)
     setRuntime(runtime)
     return runtime
   } catch (error) {
@@ -358,14 +357,14 @@ const agentActions = {
   },
   clear: () => {
     activationSeq += 1
-    useAgentConversationsStore.getState().clearActiveConversation()
+    getAgentConversationsState().clearActiveConversation()
     setRuntime(null)
   },
   deleteConversation: async (id: string) => {
     const runtime = runtimeMap.get(id)
     runtime?.destroy()
     runtimeMap.delete(id)
-    await useAgentConversationsStore.getState().deleteConversation(id)
+    await getAgentConversationsState().deleteConversation(id)
     if (activeConversationId === id) {
       setRuntime(null)
     }
@@ -386,7 +385,7 @@ const agentActions = {
     storage = null
   },
   openConversation: async (id: string) => {
-    useAgentConversationsStore.getState().selectConversation(id)
+    getAgentConversationsState().selectConversation(id)
     await agentActions.open(id)
   },
   prompt: async (input: string, options?: AgentPromptOptions) => {
@@ -411,15 +410,15 @@ const agentActions = {
       setErrorMessage(error instanceof Error ? error.message : String(error))
     }
   },
-  refreshConversations: () => useAgentConversationsStore.getState().refresh(),
+  refreshConversations: () => getAgentConversationsState().refresh(),
   renameConversation: async (id: string, title: string) => {
-    await useAgentConversationsStore.getState().renameConversation(id, title)
+    await getAgentConversationsState().renameConversation(id, title)
     runtimeMap.get(id)?.setTitle(title)
   },
 }
 
 export const getAgentApplication = (): AgentApplication => {
-  const conversationState = useAgentConversationsStore.getState()
+  const conversationState = getAgentConversationsState()
   const selectedModelId = activeRuntime ? selectedSnapshot.modelId : preferredModelId
   const selectedThinkingLevel = activeRuntime ? selectedSnapshot.thinkingLevel : preferredThinkingLevel
   const combinedLoading = isBootstrapping || isOpeningConversation || conversationState.isLoading

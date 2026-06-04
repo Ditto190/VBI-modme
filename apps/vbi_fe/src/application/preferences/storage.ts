@@ -1,31 +1,15 @@
-import { create } from 'zustand'
-import { isAppLocale, type AppLocale } from '../i18n/utils'
-import { defaultVbiThemeMode, isVbiThemeMode } from '../theme'
-import type { VbiThemeMode } from '../theme/palette'
-
-export type AppThemeMode = VbiThemeMode
-
-type AppPreferencesState = {
-  locale: AppLocale
-  themeMode: AppThemeMode
-  setLocale(locale: AppLocale): void
-  setThemeMode(themeMode: AppThemeMode): void
-}
+import { isAppLocale, type AppLocale } from '../../i18n/utils'
+import { defaultVbiThemeMode, isVbiThemeMode } from '../../theme'
+import type { AppThemeMode } from './contract'
 
 export const localeStorageKey = 'vbi.locale'
 export const themeStorageKey = 'vbi.theme'
 const preferenceCookieMaxAge = 60 * 60 * 24 * 365
+
 export const defaultAppPreferences = {
   locale: 'zh-CN' as AppLocale,
   themeMode: defaultVbiThemeMode as AppThemeMode,
 }
-
-type InitialAppPreferences = Partial<{
-  locale: AppLocale
-  themeMode: AppThemeMode
-}>
-
-let clientPreferencesInitialized = false
 
 const getLocalStorageValue = (key: string) => {
   if (typeof window === 'undefined') return null
@@ -79,44 +63,20 @@ export const resolvePersistedThemePreference = () => {
   return isVbiThemeMode(storedThemeMode) ? storedThemeMode : null
 }
 
-const normalizeInitialPreferences = (preferences: InitialAppPreferences) => ({
-  locale: preferences.locale ?? defaultAppPreferences.locale,
-  themeMode: preferences.themeMode ?? defaultAppPreferences.themeMode,
-})
-
-export const initializeAppPreferences = (preferences: InitialAppPreferences) => {
-  if (typeof window !== 'undefined') {
-    if (clientPreferencesInitialized) return
-    clientPreferencesInitialized = true
-  }
-
-  useAppPreferencesStore.setState(normalizeInitialPreferences(preferences))
+export const persistLocalePreference = (locale: AppLocale) => {
+  setPersistedValue(localeStorageKey, locale)
 }
 
-export const reconcilePersistedAppPreferences = () => {
+export const persistThemePreference = (themeMode: AppThemeMode) => {
+  setPersistedValue(themeStorageKey, themeMode)
+}
+
+export const refreshPreferenceCookies = () => {
   const persistedLocale = resolvePersistedLocalePreference()
   const persistedThemeMode = resolvePersistedThemePreference()
 
   if (persistedLocale) setPreferenceCookie(localeStorageKey, persistedLocale)
   if (persistedThemeMode) setPreferenceCookie(themeStorageKey, persistedThemeMode)
 
-  useAppPreferencesStore.setState((state) => ({
-    locale: persistedLocale ?? state.locale,
-    themeMode: persistedThemeMode ?? state.themeMode,
-  }))
+  return { persistedLocale, persistedThemeMode }
 }
-
-export const useAppPreferencesStore = create<AppPreferencesState>((set) => ({
-  locale: defaultAppPreferences.locale,
-  themeMode: defaultAppPreferences.themeMode,
-  setLocale: (locale) =>
-    set((state) => {
-      setPersistedValue(localeStorageKey, locale)
-      return state.locale === locale ? state : { locale }
-    }),
-  setThemeMode: (themeMode) =>
-    set((state) => {
-      setPersistedValue(themeStorageKey, themeMode)
-      return state.themeMode === themeMode ? state : { themeMode }
-    }),
-}))

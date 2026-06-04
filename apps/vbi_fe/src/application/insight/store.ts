@@ -1,9 +1,25 @@
+import type { VBIInsightBuilder } from '@visactor/vbi'
 import { createStore } from 'zustand/vanilla'
-import { bindResourcesLazyApplicationEmitter, getLazyInsightApplication } from '../resources/lazy'
-import type { InsightApplication } from './contract'
+import { tRuntime } from '../../i18n/runtime'
+import { createInsight, deleteInsight, updateInsight } from '../../services/insightApi'
+import { listResources } from '../../services/resourceApi'
+import type { InsightRecord } from '../../types'
+import { createResourceApplicationStoreState, type ResourceApplicationStoreState } from '../resources/store-factory'
 
-export const insightApplicationStore = createStore<InsightApplication>()(() => getLazyInsightApplication())
+export type InsightApplicationStoreState = ResourceApplicationStoreState<InsightRecord, VBIInsightBuilder>
 
-bindResourcesLazyApplicationEmitter(() => {
-  insightApplicationStore.setState(getLazyInsightApplication(), true)
-})
+export const insightApplicationStore = createStore<InsightApplicationStoreState>()((set, get) =>
+  createResourceApplicationStoreState(set, get, {
+    kind: 'insight',
+    create: async (_, name, input) => {
+      await createInsight({
+        content: input.content ?? '',
+        name,
+      })
+    },
+    getFallbackName: () => tRuntime('insights.untitled'),
+    list: () => listResources('insight') as Promise<InsightRecord[]>,
+    remove: (id) => deleteInsight(id),
+    rename: (id, name) => updateInsight(id, { name }),
+  }),
+)

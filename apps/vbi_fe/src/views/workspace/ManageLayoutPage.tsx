@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
-import { applicationShallowEqual, useApplication } from '../../application'
+import { applicationShallowEqual, goApplicationPath, useApplication, useApplicationPathname } from '../../application'
 import {
   ArrowLeftRight,
   BarChart3,
@@ -18,7 +18,6 @@ import { Tooltip } from '../../components/ui/tooltip'
 import { useResizableWidth } from '../../hooks/useResizableWidth'
 import { useTranslation } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { useNavigationStore } from '../../stores/navigation.store'
 import { AgentConversationSidebarSection } from '../agent/AgentConversationSidebarSection'
 import { AgentChatSurface } from '../agent/AgentPage'
 import { isAgentRoute, matchRouteBranch } from '../../application'
@@ -70,8 +69,8 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
     }),
     { equality: applicationShallowEqual },
   )
-  const navigate = useNavigationStore((state) => state.go)
-  const pathname = useNavigationStore((state) => state.pathname)
+  const navigate = goApplicationPath
+  const pathname = useApplicationPathname()
   const routeChrome = useManageRouteChromeState()
   const { t } = useTranslation()
   const resourceNavItems = [

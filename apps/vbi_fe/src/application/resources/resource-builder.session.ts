@@ -1,6 +1,6 @@
 import type { HocuspocusProvider } from '@hocuspocus/provider'
-import { getResourceHandle } from '../services/resourceHandles'
-import type { ResourceKind } from '../types'
+import { getResourceHandle } from '../../services/resourceHandles'
+import type { ResourceKind } from '../../types'
 import type { BuilderByKind, BuilderSession } from './resource-builder.types'
 
 export const createBuilderSession = <TKind extends ResourceKind>(

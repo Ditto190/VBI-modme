@@ -1,21 +1,20 @@
-import { subscribeWithSelector } from 'zustand/middleware'
-import { createStore } from 'zustand/vanilla'
 import { agentApplicationStore } from '../agent/store'
 import type { AgentApplication } from '../agent/contract'
 import { chartApplicationStore } from '../chart/store'
 import type { ChartApplication } from '../chart/contract'
 import { i18nApplicationStore } from '../i18n/store'
 import type { I18nApplication } from '../i18n/contract'
-import type { LayoutApplication } from '../layout/contract'
-import { layoutApplicationStore } from '../layout/store'
 import { insightApplicationStore } from '../insight/store'
 import type { InsightApplication } from '../insight/contract'
+import type { LayoutApplication } from '../layout/contract'
+import { layoutApplicationStore } from '../layout/store'
 import { reportApplicationStore } from '../report/store'
 import type { ReportApplication } from '../report/contract'
 import type { ReportDetailApplication } from '../report-detail/contract'
 import { reportDetailApplicationStore } from '../report-detail/store'
 import { themeApplicationStore } from '../theme/store'
 import type { ThemeApplication } from '../theme/contract'
+import { applicationObjectIs } from './equality'
 
 export type ApplicationSelector<TSelected> = (state: ApplicationState) => TSelected
 
@@ -38,48 +37,127 @@ export type ApplicationState = {
   theme: ThemeApplication
 }
 
-type InternalStore = {
-  subscribe?: (listener: () => void) => unknown
+type ApplicationListener = () => void
+type ApplicationSelectorListener<TSelected> = (selected: TSelected, previous: TSelected) => void
+type ApplicationSubscribeOptions<TSelected> = {
+  equalityFn?: ApplicationEquality<TSelected>
+  fireImmediately?: boolean
 }
 
-const subscribedInternalStores = new WeakSet<object>()
+const listeners = new Set<ApplicationListener>()
 
 const createApplicationState = (): ApplicationState => ({
   agent: agentApplicationStore.getState(),
-  chart: chartApplicationStore.getState(),
+  chart: {
+    activate: chartApplicationStore.getState().activate,
+    create: chartApplicationStore.getState().create,
+    delete: chartApplicationStore.getState().delete,
+    editor: chartApplicationStore.getState().editor,
+    list: chartApplicationStore.getState().list,
+    open: chartApplicationStore.getState().open,
+    records: chartApplicationStore.getState().records,
+    rename: chartApplicationStore.getState().rename,
+  },
   i18n: i18nApplicationStore.getState(),
-  insight: insightApplicationStore.getState(),
+  insight: {
+    activate: insightApplicationStore.getState().activate,
+    create: insightApplicationStore.getState().create,
+    delete: insightApplicationStore.getState().delete,
+    editor: insightApplicationStore.getState().editor,
+    list: insightApplicationStore.getState().list,
+    open: insightApplicationStore.getState().open,
+    records: insightApplicationStore.getState().records,
+    rename: insightApplicationStore.getState().rename,
+  },
   layout: layoutApplicationStore.getState(),
-  report: reportApplicationStore.getState(),
-  reportDetail: reportDetailApplicationStore.getState(),
+  report: {
+    activate: reportApplicationStore.getState().activate,
+    create: reportApplicationStore.getState().create,
+    delete: reportApplicationStore.getState().delete,
+    editor: reportApplicationStore.getState().editor,
+    list: reportApplicationStore.getState().list,
+    open: reportApplicationStore.getState().open,
+    records: reportApplicationStore.getState().records,
+    rename: reportApplicationStore.getState().rename,
+  },
+  reportDetail: {
+    activePageId: reportDetailApplicationStore.getState().activePageId,
+    activate: reportDetailApplicationStore.getState().activate,
+    addChart: reportDetailApplicationStore.getState().addChart,
+    addInsight: reportDetailApplicationStore.getState().addInsight,
+    addPage: reportDetailApplicationStore.getState().addPage,
+    connectedChartId: reportDetailApplicationStore.getState().connectedChartId,
+    connectedChartIds: reportDetailApplicationStore.getState().connectedChartIds,
+    connectedInsightId: reportDetailApplicationStore.getState().connectedInsightId,
+    connectedInsightIds: reportDetailApplicationStore.getState().connectedInsightIds,
+    connect: reportDetailApplicationStore.getState().connect,
+    pageActionBusy: reportDetailApplicationStore.getState().pageActionBusy,
+    pageSections: reportDetailApplicationStore.getState().pageSections,
+    pages: reportDetailApplicationStore.getState().pages,
+    provider: reportDetailApplicationStore.getState().provider,
+    removeChart: reportDetailApplicationStore.getState().removeChart,
+    removeInsight: reportDetailApplicationStore.getState().removeInsight,
+    removePage: reportDetailApplicationStore.getState().removePage,
+    reportBuilder: reportDetailApplicationStore.getState().reportBuilder,
+    reportId: reportDetailApplicationStore.getState().reportId,
+    selectPage: reportDetailApplicationStore.getState().selectPage,
+    setScrolledPage: reportDetailApplicationStore.getState().setScrolledPage,
+    syncActivePage: reportDetailApplicationStore.getState().syncActivePage,
+  },
   theme: themeApplicationStore.getState(),
 })
 
-const applicationStore = createStore<ApplicationState>()(subscribeWithSelector(() => createApplicationState()))
-
-export const refreshApplicationState = () => {
-  applicationStore.setState(createApplicationState(), true)
-}
-
-const subscribeInternalStore = (store: InternalStore | undefined) => {
-  if (!store || subscribedInternalStores.has(store)) return
-  store.subscribe?.(refreshApplicationState)
-  subscribedInternalStores.add(store)
+const emitApplicationChange = () => {
+  listeners.forEach((listener) => listener())
 }
 
 const bindApplicationSources = () => {
-  subscribeInternalStore(agentApplicationStore)
-  subscribeInternalStore(chartApplicationStore)
-  subscribeInternalStore(i18nApplicationStore)
-  subscribeInternalStore(insightApplicationStore)
-  subscribeInternalStore(layoutApplicationStore)
-  subscribeInternalStore(reportApplicationStore)
-  subscribeInternalStore(reportDetailApplicationStore)
-  subscribeInternalStore(themeApplicationStore)
+  agentApplicationStore.subscribe(emitApplicationChange)
+  chartApplicationStore.subscribe(emitApplicationChange)
+  i18nApplicationStore.subscribe(emitApplicationChange)
+  insightApplicationStore.subscribe(emitApplicationChange)
+  layoutApplicationStore.subscribe(emitApplicationChange)
+  reportApplicationStore.subscribe(emitApplicationChange)
+  reportDetailApplicationStore.subscribe(emitApplicationChange)
+  themeApplicationStore.subscribe(emitApplicationChange)
 }
 
 bindApplicationSources()
 
-export const application = applicationStore
+const subscribe = <TSelected>(
+  selectorOrListener: ApplicationSelector<TSelected> | ApplicationListener,
+  selectedListener?: ApplicationSelectorListener<TSelected>,
+  options: ApplicationSubscribeOptions<TSelected> = {},
+) => {
+  if (!selectedListener) {
+    const listener = selectorOrListener as ApplicationListener
+    listeners.add(listener)
+    return () => listeners.delete(listener)
+  }
+
+  const selector = selectorOrListener as ApplicationSelector<TSelected>
+  const equality = options.equalityFn ?? applicationObjectIs
+  let current = selector(createApplicationState())
+  const listener = () => {
+    const next = selector(createApplicationState())
+    if (equality(current, next)) return
+    const previous = current
+    current = next
+    selectedListener(next, previous)
+  }
+
+  listeners.add(listener)
+  if (options.fireImmediately) selectedListener(current, current)
+  return () => listeners.delete(listener)
+}
+
+export const application = {
+  getInitialState: createApplicationState,
+  getState: createApplicationState,
+  setState: () => {
+    throw new Error('application is a non-owning aggregate. Mutate a domain application store instead.')
+  },
+  subscribe,
+}
 
 export type Application = typeof application

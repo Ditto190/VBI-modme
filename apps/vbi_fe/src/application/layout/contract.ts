@@ -1,8 +1,4 @@
-import type { WorkspacePlacement } from '../../stores/manage-sidebar.store'
-import type {
-  WorkspaceSidePanelFloatingPosition,
-  WorkspaceSidePanelMode,
-} from '../../stores/workspace-side-panel.store'
+import type { WorkspacePlacement, WorkspaceSidePanelFloatingPosition, WorkspaceSidePanelMode } from './constants'
 
 export type ManageSidebarApplication = {
   collapsed: boolean

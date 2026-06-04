@@ -1,6 +1,6 @@
 import type { AgentPanelApplication } from './contract'
-import { getWorkspaceSidePanelApplication } from '../layout/side-panel'
+import { layoutApplicationStore } from '../layout/store'
 
 export const getAgentPanelApplication = (): AgentPanelApplication => {
-  return getWorkspaceSidePanelApplication()
+  return layoutApplicationStore.getState().sidePanel
 }

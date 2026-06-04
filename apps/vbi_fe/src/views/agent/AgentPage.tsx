@@ -1,12 +1,17 @@
 'use client'
 
 import { useCallback, useEffect, useMemo } from 'react'
-import { applicationShallowEqual, isAgentRoute, readAgentConversationRouteId, useApplication } from '../../application'
+import {
+  applicationShallowEqual,
+  isAgentRoute,
+  readAgentConversationRouteId,
+  useApplication,
+  useApplicationPathname,
+} from '../../application'
 import type { AgentModelId, AgentThinkingLevel } from '../../application/agent/agent-model-config'
 import { Spinner } from '../../components/ui/spinner'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { useNavigationStore } from '../../stores/navigation.store'
 import { AgentChatPanel } from './chat/AgentChatPanel'
 
 const AgentRouteActivation = ({ fallbackTitle }: { fallbackTitle: string }) => {
@@ -18,7 +23,7 @@ const AgentRouteActivation = ({ fallbackTitle }: { fallbackTitle: string }) => {
     }),
     { equality: applicationShallowEqual },
   )
-  const pathname = useNavigationStore((state) => state.pathname)
+  const pathname = useApplicationPathname()
   const routeConversationId = useMemo(() => readAgentConversationRouteId(pathname), [pathname])
 
   useEffect(() => activate({ fallbackTitle }), [activate, fallbackTitle])
@@ -115,7 +120,7 @@ const AgentStatusOverlay = ({ t }: { t: Translate }) => {
     }),
     { equality: applicationShallowEqual },
   )
-  const pathname = useNavigationStore((state) => state.pathname)
+  const pathname = useApplicationPathname()
   const routeConversationId = useMemo(() => readAgentConversationRouteId(pathname), [pathname])
   const showOpeningOverlay =
     (Boolean(activeConversationId) || (isAgentRoute(pathname) && Boolean(routeConversationId))) &&

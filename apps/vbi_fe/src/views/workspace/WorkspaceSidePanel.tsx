@@ -20,7 +20,7 @@ import {
   defaultWorkspaceSidePanelWidth,
   maxWorkspaceSidePanelWidth,
   minWorkspaceSidePanelWidth,
-} from '../../stores/workspace-side-panel.store'
+} from '../../application/layout/constants'
 import type { ManageRouteRenameChrome } from './ManageRouteChrome'
 import { WorkspaceSlotHeader } from './WorkspaceSlotHeader'
 

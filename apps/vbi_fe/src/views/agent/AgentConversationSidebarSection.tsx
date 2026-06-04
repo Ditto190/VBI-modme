@@ -19,13 +19,14 @@ import {
   application,
   applicationShallowEqual,
   createAgentConversationRoute,
+  goApplicationPath,
   isAgentConversationRoute,
   useApplication,
+  useApplicationPathname,
 } from '../../application'
 import type { AgentConversationSummary } from '../../application'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { useNavigationStore } from '../../stores/navigation.store'
 import {
   ManageSidebarGroup,
   manageSidebarChildListClassName,
@@ -260,8 +261,8 @@ export const AgentConversationSidebarSection = () => {
     }),
     { equality: applicationShallowEqual },
   )
-  const pathname = useNavigationStore((state) => state.pathname)
-  const navigate = useNavigationStore((state) => state.go)
+  const pathname = useApplicationPathname()
+  const navigate = goApplicationPath
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
 

@@ -1,16 +1,15 @@
-import { create } from 'zustand'
 import {
   setupVbiAgentIndexedDBStorage,
   type AgentConversationMetadata,
   type AgentConversationStatus,
   type VbiAgentStorage,
-} from '../application/agent/agent-storage'
+} from './agent-storage'
 
 export type AgentConversationSummary = AgentConversationMetadata & {
   status: AgentConversationStatus
 }
 
-type AgentConversationsState = {
+export type AgentConversationsState = {
   activeConversationId: string
   conversations: AgentConversationSummary[]
   handledNewConversationRequestSeq: number
@@ -28,6 +27,8 @@ type AgentConversationsState = {
   setConversationStatus(id: string, status: AgentConversationStatus): void
   upsertConversation(metadata: AgentConversationMetadata, status: AgentConversationStatus): void
 }
+
+const listeners = new Set<(state: AgentConversationsState, previous: AgentConversationsState) => void>()
 
 const sortAgentConversations = <T extends Pick<AgentConversationMetadata, 'lastModified'>>(items: T[]) =>
   [...items].sort((left, right) => right.lastModified.localeCompare(left.lastModified))
@@ -55,7 +56,27 @@ const withPreservedStatuses = (conversations: AgentConversationSummary[], curren
   }))
 }
 
-export const useAgentConversationsStore = create<AgentConversationsState>((set, get) => ({
+const emit = (previous: AgentConversationsState) => {
+  listeners.forEach((listener) => listener(state, previous))
+}
+
+const setState = (
+  partial:
+    | Partial<AgentConversationsState>
+    | AgentConversationsState
+    | ((state: AgentConversationsState) => Partial<AgentConversationsState> | AgentConversationsState),
+) => {
+  const patch = typeof partial === 'function' ? partial(state) : partial
+  if (Object.keys(patch).length === 0) return
+  const previous = state
+  state = {
+    ...state,
+    ...patch,
+  }
+  emit(previous)
+}
+
+let state: AgentConversationsState = {
   activeConversationId: '',
   conversations: [],
   handledNewConversationRequestSeq: 0,
@@ -63,46 +84,44 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
   isLoading: false,
   newConversationRequestSeq: 0,
   clearActiveConversation: () => {
-    set((state) => (state.activeConversationId ? { activeConversationId: '' } : state))
+    setState((current) => (current.activeConversationId ? { activeConversationId: '' } : {}))
   },
   deleteConversation: async (id) => {
     const storage = await setupVbiAgentIndexedDBStorage()
     await storage.conversations.delete(id)
-    set((state) => {
-      const conversations = state.conversations.filter((conversation) => conversation.id !== id)
+    setState((current) => {
+      const conversations = current.conversations.filter((conversation) => conversation.id !== id)
 
       return {
         activeConversationId:
-          state.activeConversationId === id ? (conversations[0]?.id ?? '') : state.activeConversationId,
+          current.activeConversationId === id ? (conversations[0]?.id ?? '') : current.activeConversationId,
         conversations,
       }
     })
   },
   initialize: async () => {
-    const state = get()
-    if (state.isInitialized) return state.conversations
-    if (state.isLoading) return state.conversations
+    if (state.isInitialized || state.isLoading) return state.conversations
 
-    set({ isLoading: true })
+    setState({ isLoading: true })
     try {
       const storage = await setupVbiAgentIndexedDBStorage()
-      const conversations = withPreservedStatuses(await listAgentConversations(storage), get().conversations)
-      set({ conversations, isInitialized: true, isLoading: false })
+      const conversations = withPreservedStatuses(await listAgentConversations(storage), state.conversations)
+      setState({ conversations, isInitialized: true, isLoading: false })
       return conversations
     } catch (error) {
-      set({ isLoading: false })
+      setState({ isLoading: false })
       throw error
     }
   },
   markNewConversationRequestHandled: (seq) => {
-    set((state) => ({
-      handledNewConversationRequestSeq: Math.max(state.handledNewConversationRequestSeq, seq),
+    setState((current) => ({
+      handledNewConversationRequestSeq: Math.max(current.handledNewConversationRequestSeq, seq),
     }))
   },
   refresh: async () => {
     const storage = await setupVbiAgentIndexedDBStorage()
-    const conversations = withPreservedStatuses(await listAgentConversations(storage), get().conversations)
-    set({ conversations, isInitialized: true })
+    const conversations = withPreservedStatuses(await listAgentConversations(storage), state.conversations)
+    setState({ conversations, isInitialized: true })
     return conversations
   },
   renameConversation: async (id, title) => {
@@ -113,9 +132,9 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
     const metadata = await storage.conversations.rename(id, nextTitle)
     if (!metadata) return
 
-    set((state) => ({
+    setState((current) => ({
       conversations: sortAgentConversations(
-        state.conversations.map((conversation) =>
+        current.conversations.map((conversation) =>
           conversation.id === id
             ? {
                 ...conversation,
@@ -128,23 +147,34 @@ export const useAgentConversationsStore = create<AgentConversationsState>((set, 
     }))
   },
   requestNewConversation: () => {
-    set((state) => ({
-      newConversationRequestSeq: state.newConversationRequestSeq + 1,
+    setState((current) => ({
+      newConversationRequestSeq: current.newConversationRequestSeq + 1,
     }))
   },
   selectConversation: (id) => {
-    set((state) => (state.activeConversationId === id ? state : { activeConversationId: id }))
+    setState((current) => (current.activeConversationId === id ? {} : { activeConversationId: id }))
   },
   setConversationStatus: (id, status) => {
-    set((state) => ({
-      conversations: state.conversations.map((conversation) =>
+    setState((current) => ({
+      conversations: current.conversations.map((conversation) =>
         conversation.id === id ? { ...conversation, status } : conversation,
       ),
     }))
   },
   upsertConversation: (metadata, status) => {
-    set((state) => ({
-      conversations: mergeConversation(state.conversations, metadata, status),
+    setState((current) => ({
+      conversations: mergeConversation(current.conversations, metadata, status),
     }))
   },
-}))
+}
+
+export const getAgentConversationsState = () => state
+
+export const setAgentConversationsState = setState
+
+export const subscribeAgentConversations = (
+  listener: (state: AgentConversationsState, previous: AgentConversationsState) => void,
+) => {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
+}

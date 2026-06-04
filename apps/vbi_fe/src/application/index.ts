@@ -1,6 +1,13 @@
 export { application } from './core/store'
 export { useApplication } from './core/use-application'
-export { bindApplicationNavigation, setApplicationPathname } from './routing/navigation-bridge'
+export {
+  bindApplicationNavigation,
+  getApplicationPathname,
+  goApplicationPath,
+  setApplicationPathname,
+  subscribeApplicationNavigation,
+  useApplicationPathname,
+} from './routing/navigation-bridge'
 export { applicationShallowEqual } from './core/equality'
 export { exposeApplicationToWindow } from './core/window'
 export {

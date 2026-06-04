@@ -1,6 +1,6 @@
 import { createStore } from 'zustand/vanilla'
-import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import { useWorkspaceSidePanelStore } from '../../stores/workspace-side-panel.store'
+import { layoutApplicationStore } from '../layout/store'
+import { subscribeAgentConversations } from './conversations'
 import { bindAgentLazyApplicationEmitter, getLazyAgentApplication } from './lazy'
 import type { AgentApplication } from './contract'
 
@@ -11,5 +11,5 @@ export const refreshAgentApplicationStore = () => {
 }
 
 bindAgentLazyApplicationEmitter(refreshAgentApplicationStore)
-useAgentConversationsStore.subscribe(refreshAgentApplicationStore)
-useWorkspaceSidePanelStore.subscribe(refreshAgentApplicationStore)
+subscribeAgentConversations(refreshAgentApplicationStore)
+layoutApplicationStore.subscribe(refreshAgentApplicationStore)
