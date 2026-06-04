@@ -2,6 +2,8 @@ import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 
 const { application, bindApplicationNavigation, setApplicationPathname } = await import('../src/application')
 const { createVBIApplicationTools } = await import('../src/application/agent/tools/application-tools')
+const { appLocales } = await import('../src/i18n')
+const { darkVbiThemeModes, lightVbiThemeModes } = await import('../src/theme/palette')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { defaultManageSidebarWidth, defaultWorkspacePlacement, useManageSidebarStore } =
   await import('../src/stores/manage-sidebar.store')
@@ -98,27 +100,44 @@ describe('VBI application agent tools', () => {
 
   test('runs trusted scripts against theme and layout application APIs with full JSON content', async () => {
     const applicationTool = getTool('vbi_application')
+    const allThemeModes = [...lightVbiThemeModes, ...darkVbiThemeModes]
+    const expectedThemeMode = allThemeModes.find((mode) => mode !== application.theme.mode) ?? application.theme.mode
 
     const result = await applicationTool?.execute('call-application', {
       code: `
-application.theme.changeTheme("blue");
-application.layout.sidePanel.setMode("floating");
+const themes = application.theme.list();
+const locales = application.i18n.list();
+const allThemes = [...themes.light, ...themes.dark];
+const nextTheme = allThemes.find((mode) => mode !== snapshot().theme.mode) ?? snapshot().theme.mode;
+application.theme.change(nextTheme);
+application.i18n.change("en-US");
+application.layout.sidePanel.changeMode("floating");
 application.layout.sidePanel.setWidth(520);
 console.log("theme", snapshot().theme.mode);
-return json({ layout: snapshot().layout.sidePanel, theme: snapshot().theme });
+return json({
+  i18n: { ...snapshot().i18n, available: locales },
+  layout: snapshot().layout.sidePanel,
+  theme: { ...snapshot().theme, available: themes },
+});
 `,
     })
     const payload = readJson<{
       logs: string[]
-      result: { layout: { mode: string; width: number }; theme: { mode: string } }
+      result: {
+        i18n: { available: string[]; locale: string }
+        layout: { mode: string; width: number }
+        theme: { available: { dark: string[]; light: string[] }; mode: string }
+      }
     }>(result as never)
 
-    expect(payload.logs).toEqual(['theme blue'])
+    expect(payload.logs).toEqual([`theme ${expectedThemeMode}`])
     expect(payload.result).toEqual({
+      i18n: { available: appLocales, locale: 'en-US' },
       layout: expect.objectContaining({ mode: 'floating', width: 520 }),
-      theme: { mode: 'blue' },
+      theme: { available: { dark: darkVbiThemeModes, light: lightVbiThemeModes }, mode: expectedThemeMode },
     })
-    expect(application.theme.mode).toBe('blue')
+    expect(application.theme.mode).toBe(expectedThemeMode)
+    expect(application.i18n.locale).toBe('en-US')
     expect(application.layout.sidePanel.mode).toBe('floating')
     expect(readText(result as never)).toContain('"width": 520')
   })

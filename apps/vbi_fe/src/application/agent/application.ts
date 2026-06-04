@@ -1,4 +1,5 @@
 import {
+  agentThinkingLevels,
   createAgentModelOptions,
   defaultAgentModel,
   defaultAgentThinkingLevel,
@@ -311,7 +312,7 @@ const agentActions = {
       emitApplicationChange?.()
     }
   },
-  changeThinkingLevel: async (thinkingLevel: AgentThinkingLevel) => {
+  changeThinking: async (thinkingLevel: AgentThinkingLevel) => {
     preferredThinkingLevel = thinkingLevel
     writeStoredString(preferredAgentThinkingLevelStorageKey, thinkingLevel)
     if (
@@ -435,7 +436,9 @@ export const getAgentApplication = (): AgentApplication => {
       selectedId: selectedModelId,
       thinkingLevel: selectedThinkingLevel,
       change: agentActions.changeModel,
-      changeThinkingLevel: agentActions.changeThinkingLevel,
+      changeThinking: agentActions.changeThinking,
+      list: () => [...getAgentModelOptions()],
+      listThinking: () => [...agentThinkingLevels],
     },
     panel: getAgentPanelApplication(),
   }

@@ -1,4 +1,4 @@
-import { useManageSidebarStore } from '../../stores/manage-sidebar.store'
+import { useManageSidebarStore, workspacePlacementValues } from '../../stores/manage-sidebar.store'
 import type { LayoutApplication } from './contract'
 import { getWorkspaceSidePanelApplication } from './side-panel'
 
@@ -16,7 +16,8 @@ export const getLayoutApplication = (): LayoutApplication => {
     },
     sidePanel: getWorkspaceSidePanelApplication(),
     workspacePlacement: {
-      set: layout.setWorkspacePlacement,
+      change: layout.setWorkspacePlacement,
+      list: () => [...workspacePlacementValues],
       toggle: layout.toggleWorkspacePlacement,
       value: layout.workspacePlacement,
     },

@@ -259,5 +259,8 @@ export const darkVbiThemeModes = [
   'plum',
   'crimson',
 ] as const satisfies VbiThemeMode[]
+
+export const vbiThemeModes = Object.freeze([...lightVbiThemeModes, ...darkVbiThemeModes] as VbiThemeMode[])
+
 export const isDarkVbiTheme = (mode: VbiThemeMode) =>
   darkVbiThemeModes.includes(mode as (typeof darkVbiThemeModes)[number])

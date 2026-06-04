@@ -15,7 +15,8 @@ export type ManageSidebarApplication = {
 
 export type WorkspacePlacementApplication = {
   value: WorkspacePlacement
-  set(placement: WorkspacePlacement): void
+  change(placement: WorkspacePlacement): void
+  list(): WorkspacePlacement[]
   toggle(): void
 }
 
@@ -24,10 +25,11 @@ export type WorkspaceSidePanelApplication = {
   floatingPosition: WorkspaceSidePanelFloatingPosition | null
   mode: WorkspaceSidePanelMode
   width: number
+  changeMode(mode: WorkspaceSidePanelMode): void
+  listMode(): WorkspaceSidePanelMode[]
   resetWidth(): void
   setCollapsed(collapsed: boolean): void
   setFloatingPosition(position: WorkspaceSidePanelFloatingPosition | null): void
-  setMode(mode: WorkspaceSidePanelMode): void
   setWidth(width: number): void
   toggleCollapsed(): void
   toggleMode(): void

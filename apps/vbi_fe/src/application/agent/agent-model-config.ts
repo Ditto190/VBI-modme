@@ -27,6 +27,7 @@ export type AgentThinkingLevel = Extract<ThinkingLevel, 'high' | 'xhigh'>
 
 const defaultAgentProvider = 'deepseek'
 export const defaultAgentModel: AgentModelId = 'deepseek-v4-flash'
+export const agentThinkingLevels = ['high', 'xhigh'] as const satisfies AgentThinkingLevel[]
 export const defaultAgentThinkingLevel: AgentThinkingLevel = 'high'
 const legacyAgentModelAliases: Record<string, string> = {
   'deepseek-v3.1': defaultAgentModel,

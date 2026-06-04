@@ -57,11 +57,11 @@ const AgentSelectedConversationActivation = ({ fallbackTitle }: { fallbackTitle:
 }
 
 const AgentChatWorkspace = ({ t }: { t: Translate }) => {
-  const { changeModel, changeThinkingLevel, modelOptions, prompt, runtime, selectedModelId, snapshot, thinkingLevel } =
+  const { changeModel, changeThinking, modelOptions, prompt, runtime, selectedModelId, snapshot, thinkingLevel } =
     useApplication(
       (state) => ({
         changeModel: state.agent.model.change,
-        changeThinkingLevel: state.agent.model.changeThinkingLevel,
+        changeThinking: state.agent.model.changeThinking,
         modelOptions: state.agent.model.options,
         prompt: state.agent.chat.prompt,
         runtime: state.agent.chat.runtime,
@@ -84,9 +84,9 @@ const AgentChatWorkspace = ({ t }: { t: Translate }) => {
   )
   const handleThinkingLevelChange = useCallback(
     (nextThinkingLevel: AgentThinkingLevel) => {
-      void changeThinkingLevel(nextThinkingLevel)
+      void changeThinking(nextThinkingLevel)
     },
-    [changeThinkingLevel],
+    [changeThinking],
   )
 
   return (

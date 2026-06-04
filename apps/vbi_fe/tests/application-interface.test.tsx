@@ -26,6 +26,8 @@ const resourceSession = await import('../src/stores/resource-session.store')
 const { application, applicationShallowEqual, bindApplicationNavigation, setApplicationPathname, useApplication } =
   await import('../src/application')
 const { VbiAppProviders } = await import('../src/app/providers')
+const { appLocales } = await import('../src/i18n')
+const { darkVbiThemeModes, lightVbiThemeModes } = await import('../src/theme/palette')
 const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
 const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
 const {
@@ -105,11 +107,34 @@ describe('application interface', () => {
   })
 
   test('reads fresh imperative state before any React subscription is mounted', () => {
-    application.theme.changeTheme('blue')
+    const listedThemes = application.theme.list()
+
+    expect(listedThemes).toEqual({ dark: darkVbiThemeModes, light: lightVbiThemeModes })
+    expect(listedThemes.light).toHaveLength(6)
+    expect(listedThemes.dark).toHaveLength(6)
+    listedThemes.light.pop()
+    listedThemes.dark.pop()
+    expect(application.theme.list()).toEqual({ dark: darkVbiThemeModes, light: lightVbiThemeModes })
+
+    application.theme.change('blue')
 
     expect(application.theme.mode).toBe('blue')
     expect(application.select((state) => state.theme.mode)).toBe('blue')
     expect(useApplication((state) => state.theme.mode)).toBe('blue')
+
+    const listedLocales = application.i18n.list()
+
+    expect(listedLocales).toEqual(appLocales)
+    listedLocales.pop()
+    expect(application.i18n.list()).toEqual(appLocales)
+  })
+
+  test('rejects preference changes that are not returned from list commands', () => {
+    expect(() => application.theme.change('missing-theme' as never)).toThrow(/application\.theme\.list/)
+    expect(application.theme.mode).toBe(initialPreferencesState.themeMode)
+
+    expect(() => application.i18n.change('missing-locale' as never)).toThrow(/application\.i18n\.list/)
+    expect(application.i18n.locale).toBe(initialPreferencesState.locale)
   })
 
   test('selects and subscribes to semantic application state', () => {
@@ -119,9 +144,9 @@ describe('application interface', () => {
       (mode) => changes.push(mode),
     )
 
-    application.i18n.setLocale('en-US')
-    application.theme.changeTheme('blue')
-    application.theme.changeTheme('blue')
+    application.i18n.change('en-US')
+    application.theme.change('blue')
+    application.theme.change('blue')
 
     unsubscribe()
     expect(changes).toEqual(['blue'])
@@ -141,12 +166,12 @@ describe('application interface', () => {
     expect(renderCount).toBe(1)
 
     act(() => {
-      application.i18n.setLocale('ja-JP')
+      application.i18n.change('ja-JP')
     })
     expect(renderCount).toBe(1)
 
     act(() => {
-      application.theme.changeTheme('midnight')
+      application.theme.change('midnight')
     })
     expect(renderCount).toBe(2)
   })
@@ -174,10 +199,10 @@ describe('application interface', () => {
     expect(renderCount).toBe(1)
 
     act(() => {
-      application.theme.changeTheme(application.theme.mode === 'blue' ? 'slate' : 'blue')
+      application.theme.change(application.theme.mode === 'blue' ? 'slate' : 'blue')
     })
     act(() => {
-      application.i18n.setLocale(application.i18n.locale === 'en-US' ? 'ja-JP' : 'en-US')
+      application.i18n.change(application.i18n.locale === 'en-US' ? 'ja-JP' : 'en-US')
     })
     act(() => {
       setApplicationPathname('/manage/chart')
@@ -201,10 +226,12 @@ describe('application interface', () => {
     await waitFor(() => expect(window.VBIApplication).toBe(application))
     expect(window.VBIApplicationAPI).toEqual({ application, useApplication })
     expect(window.useApplication).toBe(useApplication)
+    expect(window.VBIApplication?.theme.list()).toEqual({ dark: darkVbiThemeModes, light: lightVbiThemeModes })
+    expect(window.VBIApplication?.i18n.list()).toEqual(appLocales)
 
     act(() => {
-      window.VBIApplication?.theme.changeTheme('blue')
-      window.VBIApplication?.i18n.setLocale('en-US')
+      window.VBIApplication?.theme.change('blue')
+      window.VBIApplication?.i18n.change('en-US')
     })
     const cleanup = window.VBIApplication?.chart.activate()
 
@@ -216,7 +243,7 @@ describe('application interface', () => {
     const windowTheme = window.useApplication?.((state) => state.theme)
 
     act(() => {
-      windowTheme?.changeTheme('midnight')
+      windowTheme?.change('midnight')
     })
 
     expect(window.VBIApplicationAPI?.useApplication((state) => state.theme.mode)).toBe('midnight')
@@ -277,7 +304,7 @@ describe('application interface', () => {
     expect(application.agent.conversations.activeId).toBe('conversation-1')
     expect(navigate).not.toHaveBeenCalledWith('/agent/conversation-1')
 
-    application.agent.panel.setMode('floating')
+    application.agent.panel.changeMode('floating')
     expect(application.agent.panel.mode).toBe('floating')
     expect(application.layout.sidePanel.mode).toBe('floating')
     expect(window.localStorage.getItem(workspaceSidePanelModeStorageKey)).toBe('floating')
@@ -304,8 +331,12 @@ describe('application interface', () => {
 
     await application.agent.model.change('deepseek-v4-pro')
     expect(application.agent.model.selectedId).toBe('deepseek-v4-pro')
-    await application.agent.model.changeThinkingLevel('xhigh')
+    expect(application.agent.model.list()).toEqual(application.agent.model.options)
+    expect(application.agent.model.list()).not.toBe(application.agent.model.options)
+    expect(application.agent.model.listThinking()).toEqual(['high', 'xhigh'])
+    await application.agent.model.changeThinking('xhigh')
     expect(application.agent.model.thinkingLevel).toBe('xhigh')
+    expect('changeThinkingLevel' in (application.agent.model as unknown as Record<string, unknown>)).toBe(false)
 
     const legacyAgent = application.agent as unknown as Record<string, unknown>
     expect('activeRuntime' in legacyAgent).toBe(false)
@@ -340,9 +371,11 @@ describe('application interface', () => {
     expect(application.layout.sidebar.width).toBe(defaultManageSidebarWidth)
     expect(window.localStorage.getItem(manageSidebarWidthStorageKey)).toBe(String(defaultManageSidebarWidth))
 
-    application.layout.sidePanel.setMode('floating')
+    expect(application.layout.sidePanel.listMode()).toEqual(['fixed', 'floating'])
+    application.layout.sidePanel.changeMode('floating')
     expect(application.layout.sidePanel.mode).toBe('floating')
     expect(application.agent.panel.mode).toBe('floating')
+    expect('setMode' in (application.layout.sidePanel as unknown as Record<string, unknown>)).toBe(false)
     application.layout.sidePanel.toggleMode()
     expect(application.layout.sidePanel.mode).toBe('fixed')
     application.layout.sidePanel.setWidth(540)
@@ -355,9 +388,11 @@ describe('application interface', () => {
     expect(application.layout.workspacePlacement.value).toBe('agent-center')
     expect(window.localStorage.getItem(workspacePlacementStorageKey)).toBe('agent-center')
 
-    application.layout.workspacePlacement.set('resource-center')
+    expect(application.layout.workspacePlacement.list()).toEqual(['resource-center', 'agent-center'])
+    application.layout.workspacePlacement.change('resource-center')
     expect(application.layout.workspacePlacement.value).toBe('resource-center')
     expect(window.localStorage.getItem(workspacePlacementStorageKey)).toBe('resource-center')
+    expect('set' in (application.layout.workspacePlacement as unknown as Record<string, unknown>)).toBe(false)
   })
 
   test('exposes chart resource list commands through application.chart', async () => {

@@ -1,5 +1,10 @@
 import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import { createAgentModelOptions, defaultAgentModel, defaultAgentThinkingLevel } from './agent-model-config'
+import {
+  agentThinkingLevels,
+  createAgentModelOptions,
+  defaultAgentModel,
+  defaultAgentThinkingLevel,
+} from './agent-model-config'
 import { runLazyCommand, runLazyLifecycleCommand, subscribeLazyStore } from '../core/lazy'
 import type { ApplicationCleanup } from '../core/store'
 import type * as AgentModuleExports from './application'
@@ -80,7 +85,9 @@ const lazyAgentApplication: AgentApplication = {
     selectedId: emptyAgentSnapshot.modelId,
     thinkingLevel: emptyAgentSnapshot.thinkingLevel,
     change: (modelId) => runAgentCommand((agent) => agent.model.change(modelId)),
-    changeThinkingLevel: (thinkingLevel) => runAgentCommand((agent) => agent.model.changeThinkingLevel(thinkingLevel)),
+    changeThinking: (thinkingLevel) => runAgentCommand((agent) => agent.model.changeThinking(thinkingLevel)),
+    list: () => [...emptyAgentModelOptions],
+    listThinking: () => [...agentThinkingLevels],
   },
   panel: getAgentPanelApplication(),
 }

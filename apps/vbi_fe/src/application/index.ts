@@ -46,7 +46,13 @@ export type {
   WorkspaceSidePanelApplication,
 } from './layout/contract'
 export type { ApplicationRouteMatch, ApplicationRouteName, ApplicationRouteTarget } from './routing/contract'
-export type { AppThemeMode, I18nApplication, ThemeApplication } from './preferences/contract'
+export type {
+  AppLocaleList,
+  AppThemeList,
+  AppThemeMode,
+  I18nApplication,
+  ThemeApplication,
+} from './preferences/contract'
 export type {
   ChartApplication,
   InsightApplication,

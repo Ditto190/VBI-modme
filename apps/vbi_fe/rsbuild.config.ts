@@ -1,7 +1,7 @@
 import { defineConfig } from '@rsbuild/core'
 import { pluginReact } from '@rsbuild/plugin-react'
 import { defaultVbiThemeMode, getVbiThemeCssVariables } from './src/theme/first-paint'
-import { darkVbiThemeModes, vbiThemePalettes, type VbiThemeMode } from './src/theme/palette'
+import { darkVbiThemeModes, vbiThemeModes, type VbiThemeMode } from './src/theme/palette'
 
 type HtmlTag = {
   tag: string
@@ -34,7 +34,7 @@ const clientEnv = {
   'process.env': JSON.stringify(browserProcessEnv),
 }
 const firstPaintThemeVariables = Object.fromEntries(
-  Object.keys(vbiThemePalettes).map((mode) => [mode, getVbiThemeCssVariables(mode as VbiThemeMode)]),
+  vbiThemeModes.map((mode) => [mode, getVbiThemeCssVariables(mode)]),
 ) as Record<VbiThemeMode, ReturnType<typeof getVbiThemeCssVariables>>
 const firstPaintDarkThemeModes = Object.fromEntries(darkVbiThemeModes.map((mode) => [mode, true]))
 const firstPaintDefaultVariables = firstPaintThemeVariables[defaultVbiThemeMode]

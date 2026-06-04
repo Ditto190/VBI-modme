@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
-export type WorkspaceSidePanelMode = 'fixed' | 'floating'
+export const workspaceSidePanelModes = ['fixed', 'floating'] as const
+export type WorkspaceSidePanelMode = (typeof workspaceSidePanelModes)[number]
 export type WorkspaceSidePanelFloatingPosition = {
   x: number
   y: number
@@ -32,7 +33,7 @@ export const minWorkspaceSidePanelWidth = 300
 export const maxWorkspaceSidePanelWidth = 1000
 
 export const isWorkspaceSidePanelMode = (value: unknown): value is WorkspaceSidePanelMode =>
-  value === 'fixed' || value === 'floating'
+  workspaceSidePanelModes.includes(value as WorkspaceSidePanelMode)
 
 const clampWorkspaceSidePanelWidth = (width: number) =>
   Math.min(maxWorkspaceSidePanelWidth, Math.max(minWorkspaceSidePanelWidth, Math.round(width)))

@@ -53,7 +53,9 @@ export type AgentModelApplication = {
   selectedId: AgentModelId
   thinkingLevel: AgentThinkingLevel
   change(modelId: AgentModelId): Promise<void>
-  changeThinkingLevel(thinkingLevel: AgentThinkingLevel): Promise<void>
+  changeThinking(thinkingLevel: AgentThinkingLevel): Promise<void>
+  list(): AgentModelOption[]
+  listThinking(): AgentThinkingLevel[]
 }
 
 export type AgentPanelApplication = WorkspaceSidePanelApplication

@@ -86,7 +86,7 @@ const ThemeColorInfo = ({ mode, t }: { mode: AppThemeMode; t: Translate }) => {
 
 export const ManagePreferences = () => {
   const themeMode = useApplication((state) => state.theme.mode)
-  const setThemeMode = useApplication((state) => state.theme.changeTheme)
+  const setThemeMode = useApplication((state) => state.theme.change)
   const { locale, setLocale, t } = useTranslation()
   const [previewThemeMode, setPreviewThemeMode] = useState<AppThemeMode | null>(null)
   const colorInfoMode = previewThemeMode ?? themeMode

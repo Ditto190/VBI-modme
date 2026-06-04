@@ -1,4 +1,4 @@
-import { useWorkspaceSidePanelStore } from '../../stores/workspace-side-panel.store'
+import { useWorkspaceSidePanelStore, workspaceSidePanelModes } from '../../stores/workspace-side-panel.store'
 import type { WorkspaceSidePanelApplication } from './contract'
 
 export const getWorkspaceSidePanelApplication = (): WorkspaceSidePanelApplication => {
@@ -8,10 +8,11 @@ export const getWorkspaceSidePanelApplication = (): WorkspaceSidePanelApplicatio
     collapsed: state.collapsed,
     floatingPosition: state.floatingPosition,
     mode: state.mode,
+    changeMode: state.setMode,
+    listMode: () => [...workspaceSidePanelModes],
     resetWidth: state.resetWidth,
     setCollapsed: state.setCollapsed,
     setFloatingPosition: state.setFloatingPosition,
-    setMode: state.setMode,
     setWidth: state.setWidth,
     toggleCollapsed: state.toggleCollapsed,
     toggleMode: state.toggleMode,
