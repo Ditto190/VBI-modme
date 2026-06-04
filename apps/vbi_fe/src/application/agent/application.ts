@@ -218,8 +218,9 @@ const activateConversation = async (
   try {
     const currentRuntime = activeConversationId ? runtimeMap.get(activeConversationId) : null
     if (currentRuntime && !currentRuntime.getSnapshot().isRunning) {
-      const currentConversationStillExists = getAgentConversationsState()
-        .conversations.some((conversation) => conversation.id === activeConversationId)
+      const currentConversationStillExists = getAgentConversationsState().conversations.some(
+        (conversation) => conversation.id === activeConversationId,
+      )
 
       if (!currentConversationStillExists) {
         currentRuntime.destroy()

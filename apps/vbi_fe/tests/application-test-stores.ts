@@ -1,7 +1,17 @@
-import { getAgentConversationsState, setAgentConversationsState, subscribeAgentConversations } from '../src/application/agent/conversations'
+import {
+  getAgentConversationsState,
+  setAgentConversationsState,
+  subscribeAgentConversations,
+} from '../src/application/agent/conversations'
 import { i18nApplicationStore, setI18nApplicationLocale } from '../src/application/i18n/store'
 import { layoutApplicationStore, setLayoutApplicationState } from '../src/application/layout/store'
-import { bindApplicationNavigation, getApplicationPathname, goApplicationPath, setApplicationPathname, subscribeApplicationNavigation } from '../src/application/routing/navigation-bridge'
+import {
+  bindApplicationNavigation,
+  getApplicationPathname,
+  goApplicationPath,
+  setApplicationPathname,
+  subscribeApplicationNavigation,
+} from '../src/application/routing/navigation-bridge'
 import { themeApplicationStore, setThemeApplicationMode } from '../src/application/theme/store'
 import { chartApplicationStore } from '../src/application/chart/store'
 import { insightApplicationStore } from '../src/application/insight/store'

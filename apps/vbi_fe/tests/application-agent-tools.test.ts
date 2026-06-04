@@ -9,8 +9,7 @@ const { defaultManageSidebarWidth, defaultWorkspacePlacement, useManageSidebarSt
   await import('./application-test-stores')
 const { useNavigationStore } = await import('./application-test-stores')
 const { useReportDetailStore } = await import('./application-test-stores')
-const { defaultWorkspaceSidePanelWidth, useWorkspaceSidePanelStore } =
-  await import('./application-test-stores')
+const { defaultWorkspaceSidePanelWidth, useWorkspaceSidePanelStore } = await import('./application-test-stores')
 const { useReportBuilderModel } = await import('./application-test-stores')
 
 const initialPreferencesState = useAppPreferencesStore.getState()

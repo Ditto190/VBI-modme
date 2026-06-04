@@ -320,11 +320,7 @@ export const createResourceApplicationStoreState = <TItem extends ResourceItem, 
       disposed = true
       void connection
         .then(() =>
-          connected
-            ? import('./session').then((module) =>
-                module.releaseResourceSession(adapter.kind, id),
-              )
-            : undefined,
+          connected ? import('./session').then((module) => module.releaseResourceSession(adapter.kind, id)) : undefined,
         )
         .catch(() => undefined)
     }
