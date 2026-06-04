@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, test } from '@rstest/core'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
 const {
   defaultWorkspaceSidePanelWidth,
   useWorkspaceSidePanelStore,
   workspaceSidePanelFloatingPositionStorageKey,
   workspaceSidePanelModeStorageKey,
   workspaceSidePanelWidthStorageKey,
-} = await import('../src/stores/workspace-side-panel.store')
+} = await import('./application-test-stores')
 const { WorkspaceSidePanel } = await import('../src/views/workspace/WorkspaceSidePanel')
 
 const renderSidePanel = (contentKind: 'agent' | 'resource' = 'agent') =>

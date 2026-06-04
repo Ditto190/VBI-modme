@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
-import { useReportsStore } from '../src/stores/reports.store'
+import { useReportsStore } from './application-test-stores'
 
 rs.mock('../src/services/resourceApi', () => ({
   createResource: rs.fn(),
@@ -9,7 +9,7 @@ rs.mock('../src/services/resourceApi', () => ({
 }))
 
 const resourceApi = await import('../src/services/resourceApi')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
 const initialReportsState = useReportsStore.getState()
 const initialPreferencesState = useAppPreferencesStore.getState()
 const getReportsSnapshot = () => useReportsStore.getState()

@@ -14,7 +14,7 @@ rs.mock('../src/services/insightApi', () => ({
   updateInsight: rs.fn(),
 }))
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
@@ -33,13 +33,6 @@ rs.mock('../src/views/workspace/ManagePreferences', () => ({
   ManagePreferences: () => <div data-testid='manage-preferences' />,
 }))
 
-rs.mock('../src/models', () => ({
-  useChartBuilderModel: (selector: (state: { sessions: Record<string, { builder: unknown }> }) => unknown) =>
-    selector({ sessions: {} }),
-  useInsightBuilderModel: (selector: (state: { sessions: Record<string, { builder: unknown }> }) => unknown) =>
-    selector({ sessions: {} }),
-}))
-
 rs.mock('../src/views/resources/chart/ChartResourceEditor', () => ({
   ChartResourceEditor: () => <div data-testid='chart-resource-editor' />,
 }))
@@ -50,8 +43,8 @@ rs.mock('../src/views/resources/insight/InsightResourceEditor', () => ({
 
 const resourceApi = await import('../src/services/resourceApi')
 const insightApi = await import('../src/services/insightApi')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
 const { ManageLayoutPage } = await import('../src/views/workspace/ManageLayoutPage')
 const { ChartEditorPage } = await import('../src/views/resources/chart/ChartEditorPage')
 const { InsightEditorPage } = await import('../src/views/resources/insight/InsightEditorPage')

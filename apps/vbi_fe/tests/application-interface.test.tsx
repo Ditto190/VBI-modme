@@ -15,14 +15,14 @@ rs.mock('../src/services/insightApi', () => ({
   updateInsight: rs.fn(),
 }))
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession: rs.fn(),
   releaseResourceSession: rs.fn(),
 }))
 
 const resourceApi = await import('../src/services/resourceApi')
 const insightApi = await import('../src/services/insightApi')
-const resourceSession = await import('../src/stores/resource-session.store')
+const resourceSession = await import('../src/application/resources/session')
 const { application, applicationShallowEqual, bindApplicationNavigation, setApplicationPathname, useApplication } =
   await import('../src/application')
 const { runLazyLifecycleCommand } = await import('../src/application/core/lazy')
@@ -37,8 +37,8 @@ const { themeApplicationStore } = await import('../src/application/theme/store')
 const { VbiAppProviders } = await import('../src/app/providers')
 const { appLocales } = await import('../src/i18n')
 const { darkVbiThemeModes, lightVbiThemeModes } = await import('../src/theme/palette')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useAgentConversationsStore } = await import('./application-test-stores')
 const {
   defaultWorkspaceSidePanelWidth,
   minWorkspaceSidePanelWidth,
@@ -46,19 +46,19 @@ const {
   workspaceSidePanelFloatingPositionStorageKey,
   workspaceSidePanelModeStorageKey,
   workspaceSidePanelWidthStorageKey,
-} = await import('../src/stores/workspace-side-panel.store')
+} = await import('./application-test-stores')
 const {
   defaultManageSidebarWidth,
   defaultWorkspacePlacement,
   manageSidebarWidthStorageKey,
   useManageSidebarStore,
   workspacePlacementStorageKey,
-} = await import('../src/stores/manage-sidebar.store')
-const { useManageChartsStore } = await import('../src/stores/manage-charts.store')
-const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { useReportsStore } = await import('../src/stores/reports.store')
-const { useReportDetailStore } = await import('../src/stores/report-detail.store')
+} = await import('./application-test-stores')
+const { useManageChartsStore } = await import('./application-test-stores')
+const { useManageInsightsStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const { useReportsStore } = await import('./application-test-stores')
+const { useReportDetailStore } = await import('./application-test-stores')
 
 const initialPreferencesState = useAppPreferencesStore.getState()
 const initialAgentConversationsState = useAgentConversationsStore.getState()
@@ -143,12 +143,16 @@ describe('application interface', () => {
   test('composes public application state from dedicated domain stores', () => {
     const state = application.getState()
     expect(state.agent).toBe(agentApplicationStore.getState())
-    expect(state.chart).toBe(chartApplicationStore.getState())
+    expect(state.chart.records).toBe(chartApplicationStore.getState().records)
+    expect('sessions' in (state.chart as unknown as Record<string, unknown>)).toBe(false)
     expect(state.i18n).toBe(i18nApplicationStore.getState())
-    expect(state.insight).toBe(insightApplicationStore.getState())
+    expect(state.insight.records).toBe(insightApplicationStore.getState().records)
+    expect('sessions' in (state.insight as unknown as Record<string, unknown>)).toBe(false)
     expect(state.layout).toBe(layoutApplicationStore.getState())
-    expect(state.report).toBe(reportApplicationStore.getState())
-    expect(state.reportDetail).toBe(reportDetailApplicationStore.getState())
+    expect(state.report.records).toBe(reportApplicationStore.getState().records)
+    expect('sessions' in (state.report as unknown as Record<string, unknown>)).toBe(false)
+    expect(state.reportDetail.pages).toBe(reportDetailApplicationStore.getState().pages)
+    expect('dispose' in (state.reportDetail as unknown as Record<string, unknown>)).toBe(false)
     expect(state.theme).toBe(themeApplicationStore.getState())
   })
 

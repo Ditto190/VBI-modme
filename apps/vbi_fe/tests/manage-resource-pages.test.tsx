@@ -38,18 +38,18 @@ rs.mock('../src/services/insightApi', () => ({
   updateInsight: rs.fn(),
 }))
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
 
 const resourceApi = await import('../src/services/resourceApi')
 const insightApi = await import('../src/services/insightApi')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useManageChartsStore } = await import('../src/stores/manage-charts.store')
-const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { useReportsStore } = await import('../src/stores/reports.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useManageChartsStore } = await import('./application-test-stores')
+const { useManageInsightsStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const { useReportsStore } = await import('./application-test-stores')
 const { ManageChartsPage } = await import('../src/views/resources/chart/ManageChartsPage')
 const { ManageInsightsPage } = await import('../src/views/resources/insight/ManageInsightsPage')
 const { ReportsPage } = await import('../src/views/resources/report/ReportsPage')

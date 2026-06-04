@@ -4,14 +4,14 @@ const { application, bindApplicationNavigation, setApplicationPathname } = await
 const { createVBIApplicationTools } = await import('../src/application/agent/tools/application-tools')
 const { appLocales } = await import('../src/i18n')
 const { darkVbiThemeModes, lightVbiThemeModes } = await import('../src/theme/palette')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
 const { defaultManageSidebarWidth, defaultWorkspacePlacement, useManageSidebarStore } =
-  await import('../src/stores/manage-sidebar.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { useReportDetailStore } = await import('../src/stores/report-detail.store')
+  await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const { useReportDetailStore } = await import('./application-test-stores')
 const { defaultWorkspaceSidePanelWidth, useWorkspaceSidePanelStore } =
-  await import('../src/stores/workspace-side-panel.store')
-const { useReportBuilderModel } = await import('../src/models')
+  await import('./application-test-stores')
+const { useReportBuilderModel } = await import('./application-test-stores')
 
 const initialPreferencesState = useAppPreferencesStore.getState()
 const initialManageSidebarState = useManageSidebarStore.getState()

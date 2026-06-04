@@ -4,15 +4,15 @@ import { cleanup, render } from '@testing-library/react'
 const connectResourceSession = rs.fn()
 const releaseResourceSession = rs.fn()
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
 
 const { application } = await import('../src/application')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useReportBuilderModel } = await import('../src/models')
-const { useReportDetailStore } = await import('../src/stores/report-detail.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useReportBuilderModel } = await import('./application-test-stores')
+const { useReportDetailStore } = await import('./application-test-stores')
 const { ReportDetailPage } = await import('../src/views/report-detail/ReportDetailPage')
 const { ReportWorkspace } = await import('../src/views/report-detail/ReportWorkspace')
 const initialReportBuilderState = useReportBuilderModel.getState()

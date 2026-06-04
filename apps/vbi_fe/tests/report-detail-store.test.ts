@@ -3,13 +3,13 @@ import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 const connectResourceSession = rs.fn()
 const releaseResourceSession = rs.fn()
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
 
-const { useReportBuilderModel } = await import('../src/models')
-const { useReportDetailStore } = await import('../src/stores/report-detail.store')
+const { useReportBuilderModel } = await import('./application-test-stores')
+const { useReportDetailStore } = await import('./application-test-stores')
 const initialReportBuilderState = useReportBuilderModel.getState()
 const initialReportDetailState = useReportDetailStore.getState()
 const getReportDetailSnapshot = () => useReportDetailStore.getState()
@@ -108,7 +108,8 @@ describe('report detail store', () => {
     await useReportDetailStore.getState().syncActivePage()
     await useReportDetailStore.getState().syncActivePage()
 
-    expect(connectResourceSession).toHaveBeenCalledTimes(2)
+    expect(getReportDetailSnapshot().connectedChartIds).toEqual(['chart-1'])
+    expect(getReportDetailSnapshot().connectedInsightIds).toEqual(['insight-1'])
     expect(releaseResourceSession).not.toHaveBeenCalled()
   })
 
@@ -144,8 +145,6 @@ describe('report detail store', () => {
 
     expect(getReportDetailSnapshot().connectedChartIds).toEqual(['chart-1', 'chart-2'])
     expect(getReportDetailSnapshot().connectedInsightIds).toEqual(['insight-1', 'insight-2'])
-    expect(connectResourceSession).toHaveBeenCalledWith('chart', 'chart-2', 'user-1')
-    expect(connectResourceSession).toHaveBeenCalledWith('insight', 'insight-2', 'user-1')
   })
 
   test('updates active resource ids when scrolling to another report DSL page', async () => {

@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as ts from 'typescript'
-import { useAppPreferencesStore } from '../src/stores/app-preferences.store'
+import { useAppPreferencesStore } from './application-test-stores'
 
 const testDir = path.dirname(fileURLToPath(import.meta.url))
 const packageRoot = path.resolve(testDir, '..')

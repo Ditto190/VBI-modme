@@ -8,23 +8,23 @@ rs.mock('../src/views/agent/AgentPage', () => ({
 }))
 
 const { ManageLayoutPage } = await import('../src/views/workspace/ManageLayoutPage')
-const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
+const { useAgentConversationsStore } = await import('./application-test-stores')
+const { useAppPreferencesStore } = await import('./application-test-stores')
 const {
   defaultManageSidebarWidth,
   defaultWorkspacePlacement,
   manageSidebarWidthStorageKey,
   useManageSidebarStore,
   workspacePlacementStorageKey,
-} = await import('../src/stores/manage-sidebar.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
+} = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
 const {
   defaultWorkspaceSidePanelWidth,
   useWorkspaceSidePanelStore,
   workspaceSidePanelFloatingPositionStorageKey,
   workspaceSidePanelModeStorageKey,
   workspaceSidePanelWidthStorageKey,
-} = await import('../src/stores/workspace-side-panel.store')
+} = await import('./application-test-stores')
 const { setVbiAgentIndexedDBFactoryForTests } = await import('../src/application/agent/agent-storage')
 
 const emptyUsage = {

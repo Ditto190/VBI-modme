@@ -41,8 +41,8 @@ rs.mock('../src/views/report-detail/ReportDetailPage', () => ({
 }))
 
 const { App } = await import('../src/App')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
 
 describe('rsbuild app routes', () => {
   beforeEach(() => {

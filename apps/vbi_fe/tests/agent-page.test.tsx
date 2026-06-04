@@ -166,9 +166,9 @@ rs.mock('../src/application/agent/agent-runtime', () => ({
   createAgentConversationRuntime,
 }))
 
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useAgentConversationsStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
 const { AgentPage } = await import('../src/views/agent/AgentPage')
 
 describe('AgentPage', () => {
