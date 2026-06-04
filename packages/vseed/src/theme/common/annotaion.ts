@@ -52,6 +52,7 @@ export const getLightAnnotationVerticalLine = () => getLightAnnotationHorizontal
 
 export const getDefaultAnnotationDifferenceLine = (): AnnotationDifferenceLineConfig => ({
   textFontSize: 12,
+  textFontWeight: 400,
 })
 
 export const getLightAnnotationDifferenceLine = (): AnnotationDifferenceLineConfig => ({

@@ -13,6 +13,7 @@ export const zAnnotationDifferenceLine = z.object({
   end: zDifferenceAnchor,
   differenceType: z.enum(['absolute', 'percent']).nullish(),
   textFontSize: z.number().nullish(),
+  textFontWeight: z.number().or(z.string()).nullish(),
   textColor: z.string().nullish(),
   textBackgroundColor: z.string().nullish(),
   lineColor: z.string().nullish(),

@@ -80,6 +80,7 @@ export const zAnnotationDifferenceLineConfig = zAnnotationDifferenceLine
     lineStyle: true,
     textColor: true,
     textFontSize: true,
+    textFontWeight: true,
     textBackgroundColor: true,
   })
   .extend({

@@ -22,6 +22,7 @@ export const zPivotChartGridConfig = z.object({
   chartGridColor: z.string().nullish(),
   axisLabelColor: z.string().nullish(),
   axisLabelFontSize: z.number().nullish(),
+  axisLabelFontWeight: z.number().nullish(),
 })
 
 export type PivotChartGridConfig = z.infer<typeof zPivotChartGridConfig>

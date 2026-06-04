@@ -21,7 +21,7 @@ export const getTooltipStyle = (tooltipConfig: TooltipConfig) => {
       lineHeight: tooltipConfig.lineHeight,
       fontSize: tooltipConfig.fontSize,
       fontColor: tooltipConfig.valueColor,
-      fontWeight: 'medium',
+      fontWeight: tooltipConfig.valueFontWeight ?? 'medium',
     },
     titleLabel: {
       fontSize: tooltipConfig.fontSize,

@@ -17,6 +17,17 @@ export type TokenThemeDefinition = {
   axisFontSize?: number
   legendFontSize?: number
   playerFontSize?: number
+  axisLabelFontSize?: number
+  axisLabelFontWeight?: number
+  axisTitleFontSize?: number
+  axisTitleFontWeight?: number
+  legendLabelFontSize?: number
+  legendLabelFontWeight?: number
+  tooltipValueFontWeight?: number
+  dataLabelFontSize?: number
+  dataLabelFontWeight?: number
+  annotationLabelFontSize?: number
+  annotationLabelFontWeight?: number
   colorScheme: [string, string, ...string[]]
   linearColorScheme: [string, string]
   textPrimary: string
@@ -126,11 +137,13 @@ const getAccentColor = (tokens: TokenThemeDefinition) => tokens.accentColor || t
 const getAxisPatch = (tokens: TokenThemeDefinition) => ({
   label: {
     labelColor: tokens.axisLabelColor || tokens.textSecondary,
-    labelFontSize: tokens.axisFontSize,
+    labelFontSize: tokens.axisLabelFontSize ?? tokens.axisFontSize,
+    labelFontWeight: tokens.axisLabelFontWeight,
   },
   title: {
     titleColor: tokens.axisTitleColor || tokens.textSecondary,
-    titleFontSize: tokens.axisFontSize,
+    titleFontSize: tokens.axisTitleFontSize ?? tokens.axisFontSize,
+    titleFontWeight: tokens.axisTitleFontWeight,
   },
   grid: {
     gridColor: tokens.axisGridColor || tokens.borderColor,
@@ -157,7 +170,8 @@ const getPivotGridPatch = (tokens: TokenThemeDefinition) => ({
   titleFontSize: tokens.tableHeaderFontSize,
   chartGridColor: tokens.axisGridColor || tokens.borderColor,
   axisLabelColor: tokens.axisLabelColor || tokens.textSecondary,
-  axisLabelFontSize: tokens.axisFontSize,
+  axisLabelFontSize: tokens.axisLabelFontSize ?? tokens.axisFontSize,
+  axisLabelFontWeight: tokens.axisLabelFontWeight,
 })
 
 const getPlayerPatch = (tokens: TokenThemeDefinition) => {
@@ -214,13 +228,15 @@ const getChartPatch = (tokens: TokenThemeDefinition) => ({
     negativeColor: tokens.negativeColor,
   },
   label: {
-    labelFontSize: tokens.labelFontSize,
+    labelFontSize: tokens.dataLabelFontSize ?? tokens.labelFontSize,
+    labelFontWeight: tokens.dataLabelFontWeight,
     labelColor: tokens.labelColor || tokens.textPrimary,
     labelStroke: tokens.labelStroke,
   },
   legend: {
     labelColor: tokens.legendLabelColor || tokens.textSecondary,
-    labelFontSize: tokens.legendFontSize,
+    labelFontSize: tokens.legendLabelFontSize ?? tokens.legendFontSize,
+    labelFontWeight: tokens.legendLabelFontWeight,
     pagerIconColor: tokens.legendPagerIconColor || tokens.textSecondary,
     pagerIconDisableColor: tokens.legendPagerIconDisableColor || tokens.borderColor,
   },
@@ -230,6 +246,7 @@ const getChartPatch = (tokens: TokenThemeDefinition) => ({
     fontSize: tokens.tooltipFontSize,
     keyColor: tokens.textSecondary,
     valueColor: tokens.textPrimary,
+    valueFontWeight: tokens.tooltipValueFontWeight,
     titleColor: tokens.textPrimary,
   },
 })
@@ -263,26 +280,31 @@ const getAnnotationPatch = (tokens: TokenThemeDefinition) => {
 
   return {
     annotationPoint: {
-      textFontSize: tokens.labelFontSize,
+      textFontSize: tokens.annotationLabelFontSize ?? tokens.labelFontSize,
+      textFontWeight: tokens.annotationLabelFontWeight,
       ...annotationTextPatch,
     },
     annotationHorizontalLine: {
-      textFontSize: tokens.labelFontSize,
+      textFontSize: tokens.annotationLabelFontSize ?? tokens.labelFontSize,
+      textFontWeight: tokens.annotationLabelFontWeight,
       ...annotationLinePatch,
     },
     annotationVerticalLine: {
-      textFontSize: tokens.labelFontSize,
+      textFontSize: tokens.annotationLabelFontSize ?? tokens.labelFontSize,
+      textFontWeight: tokens.annotationLabelFontWeight,
       ...annotationLinePatch,
     },
     annotationDifferenceLine: {
-      textFontSize: tokens.labelFontSize,
+      textFontSize: tokens.annotationLabelFontSize ?? tokens.labelFontSize,
+      textFontWeight: tokens.annotationLabelFontWeight,
       lineColor: tokens.annotationLineColor,
       lineStyle: tokens.annotationLineStyle,
       lineDash: tokens.annotationLineDash,
       ...annotationTextPatch,
     },
     annotationArea: {
-      textFontSize: tokens.labelFontSize,
+      textFontSize: tokens.annotationLabelFontSize ?? tokens.labelFontSize,
+      textFontWeight: tokens.annotationLabelFontWeight,
       areaColor: tokens.annotationAreaColor,
       areaColorOpacity: tokens.annotationAreaColorOpacity,
       ...annotationTextPatch,
