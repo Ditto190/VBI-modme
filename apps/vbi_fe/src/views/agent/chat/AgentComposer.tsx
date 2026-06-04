@@ -24,14 +24,14 @@ const agentThinkingLevelOptions = [
 const resolveAgentModelOptionLabel = (option: AgentModelOption, t: (key: string) => string) =>
   option.labelKey ? t(option.labelKey) : option.label
 
-const ComposerAttachment = () => (
+const ComposerAttachment = ({ t }: { t: Translate }) => (
   <AttachmentPrimitive.Root className='vbi-agent-composer-attachment'>
     <AttachmentPrimitive.unstable_Thumb className='vbi-agent-composer-attachment-thumb' aria-hidden='true' />
     <span className='vbi-agent-composer-attachment-name'>
       <AttachmentPrimitive.Name />
     </span>
     <AttachmentPrimitive.Remove
-      aria-label='Remove attachment'
+      aria-label={t('agent.removeAttachment')}
       className='vbi-agent-composer-attachment-remove'
       type='button'
     >
@@ -209,13 +209,13 @@ const AgentComposerContent = ({
               submitMode='enter'
             />
             <div className='vbi-agent-composer-attachments'>
-              <ComposerPrimitive.Attachments>{() => <ComposerAttachment />}</ComposerPrimitive.Attachments>
+              <ComposerPrimitive.Attachments>{() => <ComposerAttachment t={t} />}</ComposerPrimitive.Attachments>
             </div>
           </div>
           <div className='vbi-agent-composer-toolbar'>
             <div className='vbi-agent-composer-controls'>
               <ComposerPrimitive.AddAttachment
-                aria-label='Attach image'
+                aria-label={t('agent.attachImage')}
                 className='vbi-agent-composer-action vbi-agent-composer-attach'
                 multiple
                 type='button'
@@ -236,7 +236,7 @@ const AgentComposerContent = ({
               />
               <AuiIf condition={(state) => state.thread.isRunning}>
                 <ComposerPrimitive.Cancel
-                  aria-label='Stop'
+                  aria-label={t('agent.stop')}
                   className='vbi-agent-composer-action vbi-agent-composer-submit'
                   type='button'
                 >
@@ -245,7 +245,7 @@ const AgentComposerContent = ({
               </AuiIf>
               <AuiIf condition={(state) => !state.thread.isRunning}>
                 <ComposerPrimitive.Send
-                  aria-label='Send'
+                  aria-label={t('agent.send')}
                   className='vbi-agent-composer-action vbi-agent-composer-submit'
                   type='button'
                 >

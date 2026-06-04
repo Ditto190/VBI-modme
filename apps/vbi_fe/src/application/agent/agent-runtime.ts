@@ -23,6 +23,7 @@ import {
 import { streamProxy } from './agent-stream-proxy'
 import { createVBIApplicationTools } from './tools/application-tools'
 import { browserEnv } from '../../env/browserEnv'
+import { i18nApplicationStore } from '../i18n/store'
 
 export type AgentConversationRuntimeSnapshot = {
   errorMessage?: string
@@ -146,6 +147,7 @@ export const createAgentConversationRuntime = async ({
           messages: agent.state.messages,
           model: agent.state.model,
         }),
+        i18nApplicationStore.getState().locale,
       ),
     }
 

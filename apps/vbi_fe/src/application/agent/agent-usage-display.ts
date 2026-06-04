@@ -27,10 +27,11 @@ type AgentContextUsage = {
   usedTokens: number
 }
 
-const abbreviatedNumberFormatter = new Intl.NumberFormat('en-US', {
-  maximumFractionDigits: 1,
-  minimumFractionDigits: 0,
-})
+const createAbbreviatedNumberFormatter = (locale = 'en-US') =>
+  new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 0,
+  })
 
 const readNumber = (value: unknown) => (typeof value === 'number' && Number.isFinite(value) ? value : 0)
 
@@ -43,7 +44,9 @@ const readUsageTokens = (usage: UsageLike | undefined) => {
   )
 }
 
-export const formatAbbreviatedTokenCount = (value: number) => {
+export const formatAbbreviatedTokenCount = (value: number, locale = 'en-US') => {
+  const abbreviatedNumberFormatter = createAbbreviatedNumberFormatter(locale)
+
   if (!Number.isFinite(value) || value <= 0) return '0'
   if (value >= 1_000_000) return `${abbreviatedNumberFormatter.format(value / 1_000_000)}M`
   if (value >= 1_000) return `${abbreviatedNumberFormatter.format(value / 1_000)}K`
@@ -62,9 +65,9 @@ export const resolveAgentContextUsage = (state: AgentStateLike): AgentContextUsa
   }
 }
 
-export const formatAgentContextUsage = (usage: AgentContextUsage) => {
-  const used = formatAbbreviatedTokenCount(usage.usedTokens)
-  const context = usage.contextWindow > 0 ? formatAbbreviatedTokenCount(usage.contextWindow) : '-'
+export const formatAgentContextUsage = (usage: AgentContextUsage, locale = 'en-US') => {
+  const used = formatAbbreviatedTokenCount(usage.usedTokens, locale)
+  const context = usage.contextWindow > 0 ? formatAbbreviatedTokenCount(usage.contextWindow, locale) : '-'
   const percent =
     usage.contextWindow > 0
       ? `${usage.percent > 0 && usage.percent < 1 ? usage.percent.toFixed(1) : Math.round(usage.percent).toString()}%`

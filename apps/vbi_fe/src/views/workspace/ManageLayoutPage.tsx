@@ -106,6 +106,10 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
   const headerBackLabel = routeChrome.backLabel ?? (resourceDetailBackHref ? t('common.back') : undefined)
   const handleHeaderBack =
     routeChrome.onBack ?? (resourceDetailBackHref ? () => navigate(resourceDetailBackHref) : undefined)
+  const agentLabel = t('nav.agent')
+  const resizeSidebarLabel = t('layout.resizeSidebar')
+  const showSidebarLabel = t('layout.showSidebar')
+  const hideSidebarLabel = t('layout.hideSidebar')
 
   const handleNewConversation = () => {
     clearActiveConversation()
@@ -159,7 +163,7 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
       contentClassName='overflow-hidden p-0'
       contentKind='agent'
       slotControls={showResourceWorkspace ? placementToggle : undefined}
-      title='VBI Agent'
+      title={agentLabel}
     >
       <AgentChatSurface className='h-full flex-1' />
     </WorkspaceCenterPane>
@@ -182,10 +186,10 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
   const agentSidePanel = showResourceWorkspace ? (
     <WorkspaceSidePanel
       key='agent-side-panel'
-      ariaLabel='VBI Agent'
+      ariaLabel={agentLabel}
       contentClassName='overflow-hidden'
       contentKind='agent'
-      title='VBI Agent'
+      title={agentLabel}
     >
       <AgentChatSurface className='h-full flex-1' />
     </WorkspaceSidePanel>
@@ -224,16 +228,16 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
         style={sidebarStyle}
       >
         {!sidebarCollapsed ? (
-          <div aria-label='Resize Sidebar' className={sidebarResizeHandleClassName} {...sidebarResizeHandleProps} />
+          <div aria-label={resizeSidebarLabel} className={sidebarResizeHandleClassName} {...sidebarResizeHandleProps} />
         ) : null}
         {sidebarCollapsed ? (
           <div
             className='flex h-full min-h-0 flex-col items-center gap-2 bg-[color-mix(in_srgb,var(--vbi-control-muted)_58%,var(--vbi-secondary))] px-1.5 py-3 transition-colors duration-300 max-[720px]:h-11 max-[720px]:flex-row max-[720px]:px-2 max-[720px]:py-1.5'
             data-manage-sidebar-rail=''
           >
-            <Tooltip side='right' title='Show Sidebar'>
+            <Tooltip side='right' title={showSidebarLabel}>
               <button
-                aria-label='Show Sidebar'
+                aria-label={showSidebarLabel}
                 className={sidebarRailButtonClassName}
                 type='button'
                 onClick={() => setSidebarCollapsed(false)}
@@ -259,9 +263,9 @@ const ManageLayoutContent = ({ children }: { children: ReactNode }) => {
           <>
             <div className='flex h-12 w-full shrink-0 items-center justify-between px-4 pt-3'>
               <div className='min-w-0 pl-1 text-[15px] font-semibold leading-8 text-vbi-text-strong'>VBI</div>
-              <Tooltip side='right' title='Hide Sidebar'>
+              <Tooltip side='right' title={hideSidebarLabel}>
                 <button
-                  aria-label='Hide Sidebar'
+                  aria-label={hideSidebarLabel}
                   className={hideSidebarButtonClassName}
                   type='button'
                   onClick={() => setSidebarCollapsed(true)}
