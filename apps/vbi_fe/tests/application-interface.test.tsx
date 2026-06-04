@@ -26,6 +26,14 @@ const resourceSession = await import('../src/stores/resource-session.store')
 const { application, applicationShallowEqual, bindApplicationNavigation, setApplicationPathname, useApplication } =
   await import('../src/application')
 const { runLazyLifecycleCommand } = await import('../src/application/core/lazy')
+const { agentApplicationStore } = await import('../src/application/agent/store')
+const { chartApplicationStore } = await import('../src/application/chart/store')
+const { i18nApplicationStore } = await import('../src/application/i18n/store')
+const { insightApplicationStore } = await import('../src/application/insight/store')
+const { layoutApplicationStore } = await import('../src/application/layout/store')
+const { reportApplicationStore } = await import('../src/application/report/store')
+const { reportDetailApplicationStore } = await import('../src/application/report-detail/store')
+const { themeApplicationStore } = await import('../src/application/theme/store')
 const { VbiAppProviders } = await import('../src/app/providers')
 const { appLocales } = await import('../src/i18n')
 const { darkVbiThemeModes, lightVbiThemeModes } = await import('../src/theme/palette')
@@ -130,6 +138,18 @@ describe('application interface', () => {
     expect(listedLocales).toEqual(appLocales)
     listedLocales.pop()
     expect(application.getState().i18n.list()).toEqual(appLocales)
+  })
+
+  test('composes public application state from dedicated domain stores', () => {
+    const state = application.getState()
+    expect(state.agent).toBe(agentApplicationStore.getState())
+    expect(state.chart).toBe(chartApplicationStore.getState())
+    expect(state.i18n).toBe(i18nApplicationStore.getState())
+    expect(state.insight).toBe(insightApplicationStore.getState())
+    expect(state.layout).toBe(layoutApplicationStore.getState())
+    expect(state.report).toBe(reportApplicationStore.getState())
+    expect(state.reportDetail).toBe(reportDetailApplicationStore.getState())
+    expect(state.theme).toBe(themeApplicationStore.getState())
   })
 
   test('rejects selectable changes that are not returned from list commands', async () => {

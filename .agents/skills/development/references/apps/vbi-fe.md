@@ -46,6 +46,11 @@ handler is not a feature unless the corresponding application capability exists.
   `window.VBIApplication`, reading current capabilities with `getState()`. Keep
   this external surface functional for browser automation, agents, scripted QA,
   and future non-human Web operators.
+- The root `application` store only aggregates public domain stores. The eight
+  public capabilities `agent`, `chart`, `i18n`, `insight`, `layout`, `report`,
+  `reportDetail`, and `theme` each have a dedicated application zustand store
+  under `src/application/<domain>/store.ts`. Shared implementation is allowed,
+  but public capability ownership should stay split by domain.
 - Navigation is a capability, not a component detail. Application commands route
   through typed route targets and the bound router adapter; do not let callers
   depend on React Router internals or page-local `navigate` closures.
@@ -66,7 +71,8 @@ When adding or changing a frontend capability, update the application layer in
 the same change:
 
 - Add or revise the typed contract under `src/application/<domain>/contract.ts`.
-- Add state projections and commands under `src/application/<domain>/`.
+- Add state projections and commands to the domain application store under
+  `src/application/<domain>/store.ts`.
 - Add a lazy adapter when the implementation imports heavy runtime, Builder,
   collaboration, assistant, or editor code.
 - Add route targets or route helpers when the command changes location.
