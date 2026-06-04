@@ -1,18 +1,10 @@
 import type { ApplicationCleanup } from './store'
 
-type LazyLifecycleOptions = {
-  onError?: (error: unknown) => void
-}
-
 export type LazyStore = {
   subscribe?: (listener: () => void) => unknown
 }
 
-const reportLazyLifecycleError = (error: unknown, options: LazyLifecycleOptions) => {
-  if (options.onError) {
-    options.onError(error)
-    return
-  }
+const reportLazyLifecycleError = (error: unknown) => {
   console.error('VBI application lazy lifecycle failed', error)
 }
 
@@ -39,7 +31,6 @@ export const runLazyLifecycleCommand = <TModule, TApplication>(
   loadModule: () => Promise<TModule>,
   getApplication: (module: TModule) => TApplication,
   command: (application: TApplication) => ApplicationCleanup,
-  options: LazyLifecycleOptions = {},
 ): ApplicationCleanup => {
   let cleanup: ApplicationCleanup | null = null
   let disposed = false
@@ -50,7 +41,7 @@ export const runLazyLifecycleCommand = <TModule, TApplication>(
       if (disposed) cleanup()
     })
     .catch((error) => {
-      reportLazyLifecycleError(error, options)
+      reportLazyLifecycleError(error)
     })
 
   return () => {

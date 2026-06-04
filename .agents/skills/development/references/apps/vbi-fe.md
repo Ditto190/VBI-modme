@@ -42,10 +42,10 @@ handler is not a feature unless the corresponding application capability exists.
 - React code uses `useApplication(selector, options?)` for application state and
   commands. Use narrow selectors and `applicationShallowEqual` for object
   projections so unrelated application updates do not re-render tool surfaces.
-- Non-React callers use the same API through `application`,
-  `window.VBIApplication`, `window.VBIApplicationAPI.application`, or
-  `window.useApplication`. Keep this external surface functional for browser
-  automation, agents, scripted QA, and future non-human Web operators.
+- Non-React callers use the same Zustand StoreApi through `application` or
+  `window.VBIApplication`, reading current capabilities with `getState()`. Keep
+  this external surface functional for browser automation, agents, scripted QA,
+  and future non-human Web operators.
 - Navigation is a capability, not a component detail. Application commands route
   through typed route targets and the bound router adapter; do not let callers
   depend on React Router internals or page-local `navigate` closures.

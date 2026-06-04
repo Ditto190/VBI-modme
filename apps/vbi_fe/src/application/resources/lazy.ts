@@ -1,19 +1,19 @@
 import type { ResourceItem } from '../../types'
-import { useNavigationStore } from '../../stores/navigation.store'
 import { runLazyCommand, runLazyLifecycleCommand, subscribeLazyStore } from '../core/lazy'
 import type { ApplicationCleanup } from '../core/store'
-import { resolveApplicationRoute } from '../routing/route'
 import type * as ResourcesModuleExports from './application'
 import type { ChartApplication, InsightApplication, ReportApplication, ResourceApplication } from './contract'
 
 type ResourcesModule = typeof ResourcesModuleExports
 
-let emitApplicationChange: (() => void) | null = null
+const emitApplicationChangeListeners = new Set<() => void>()
 let resourcesModule: ResourcesModule | null = null
 let resourcesModulePromise: Promise<ResourcesModule> | null = null
 
 const subscribedStores = new WeakSet<object>()
-const emit = () => emitApplicationChange?.()
+const emit = () => {
+  emitApplicationChangeListeners.forEach((listener) => listener())
+}
 
 const loadResourcesModule = async () => {
   if (resourcesModule) return resourcesModule
@@ -55,10 +55,8 @@ const runResourceLifecycleCommand = <TItem extends ResourceItem, TApplication ex
 
 const createLazyResourceApplication = <TItem extends ResourceItem>(
   getApplication: (module: ResourcesModule) => ResourceApplication<TItem>,
-  listRoute: string,
 ): ResourceApplication<TItem> => ({
   activate: (options) => {
-    useNavigationStore.getState().go(listRoute)
     return runResourceLifecycleCommand(getApplication, (application) => application.activate(options))
   },
   create: (input) => runResourceCommand(getApplication, (application) => application.create(input)),
@@ -89,22 +87,13 @@ const createLazyResourceApplication = <TItem extends ResourceItem>(
   },
 })
 
-const lazyChartApplication = createLazyResourceApplication(
-  (module) => module.getChartApplication(),
-  resolveApplicationRoute({ name: 'chart' }),
-)
-const lazyInsightApplication = createLazyResourceApplication(
-  (module) => module.getInsightApplication(),
-  resolveApplicationRoute({ name: 'insight' }),
-)
-const lazyReportApplication = createLazyResourceApplication(
-  (module) => module.getReportApplication(),
-  resolveApplicationRoute({ name: 'report' }),
-)
+const lazyChartApplication = createLazyResourceApplication((module) => module.getChartApplication())
+const lazyInsightApplication = createLazyResourceApplication((module) => module.getInsightApplication())
+const lazyReportApplication = createLazyResourceApplication((module) => module.getReportApplication())
 
 export const bindResourcesLazyApplicationEmitter = (nextEmit: () => void) => {
-  emitApplicationChange = nextEmit
-  resourcesModule?.bindResourceApplicationEmitter(nextEmit)
+  emitApplicationChangeListeners.add(nextEmit)
+  resourcesModule?.bindResourceApplicationEmitter(emit)
 }
 
 export const getLazyChartApplication = (): ChartApplication =>

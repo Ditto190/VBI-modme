@@ -1,7 +1,5 @@
-import { useNavigationStore } from '../../stores/navigation.store'
 import { runLazyCommand, runLazyLifecycleCommand, subscribeLazyStore } from '../core/lazy'
 import type { ApplicationCleanup } from '../core/store'
-import { resolveApplicationRoute } from '../routing/route'
 import type * as ReportDetailModuleExports from './application'
 import type { ReportDetailApplication } from './contract'
 
@@ -55,10 +53,8 @@ const lazyReportDetailApplication: ReportDetailApplication = {
   addChart: (pageId) => runReportDetailCommand((application) => application.addChart(pageId)),
   addInsight: (pageId) => runReportDetailCommand((application) => application.addInsight(pageId)),
   addPage: () => runReportDetailCommand((application) => application.addPage()),
-  activate: (reportId, userName) => {
-    if (reportId) useNavigationStore.getState().go(resolveApplicationRoute({ name: 'reportDetail', id: reportId }))
-    return runReportDetailLifecycleCommand((application) => application.activate(reportId, userName))
-  },
+  activate: (reportId, userName) =>
+    runReportDetailLifecycleCommand((application) => application.activate(reportId, userName)),
   connect: (reportId, userName) =>
     runReportDetailLifecycleCommand((application) => application.connect(reportId, userName)),
   removeChart: (pageId) => runReportDetailCommand((application) => application.removeChart(pageId)),

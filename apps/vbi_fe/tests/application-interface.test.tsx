@@ -251,7 +251,7 @@ describe('application interface', () => {
     )
 
     await waitFor(() => expect(window.VBIApplication).toBe(application))
-    expect(window.VBIApplicationAPI).toEqual({ application })
+    expect('VBIApplicationAPI' in window).toBe(false)
     expect('useApplication' in window).toBe(false)
     expect('theme' in (window.VBIApplication as unknown as Record<string, unknown>)).toBe(false)
     expect(window.VBIApplication?.getState().theme.list()).toEqual({
@@ -269,15 +269,15 @@ describe('application interface', () => {
     expect(window.VBIApplication?.getState().theme.mode).toBe('blue')
     expect(window.VBIApplication?.getState().i18n.locale).toBe('en-US')
     await waitFor(() => expect(document.documentElement.lang).toBe('en-US'))
-    expect(window.location.pathname).toBe('/manage/chart')
+    await waitFor(() => expect(window.location.pathname).toBe('/manage/chart'))
 
-    const windowTheme = window.VBIApplicationAPI?.application.getState().theme
+    const windowTheme = window.VBIApplication?.getState().theme
 
     act(() => {
       windowTheme?.change('midnight')
     })
 
-    expect(window.VBIApplicationAPI?.application.getState().theme.mode).toBe('midnight')
+    expect(window.VBIApplication?.getState().theme.mode).toBe('midnight')
     expect('navigation' in (window.VBIApplication as unknown as Record<string, unknown>)).toBe(false)
     cleanup?.()
   })
@@ -303,6 +303,7 @@ describe('application interface', () => {
     await application.getState().report.open('report-1')
     setApplicationPathname('/agent')
     const cleanup = application.getState().report.activate()
+    await waitFor(() => expect(navigate).toHaveBeenCalledWith('/manage/report'))
     cleanup()
 
     expect(navigate).toHaveBeenNthCalledWith(1, '/manage/chart/chart%201')
