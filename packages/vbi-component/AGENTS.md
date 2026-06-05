@@ -22,10 +22,3 @@ Then read only the specific reference files you need under:
 If a broad text reference is more useful than the skill format, use:
 
 - `node_modules/.pnpm/@awesome.me+webawesome@*/node_modules/@awesome.me/webawesome/dist/llms.txt`
-
-## Local Constraints
-
-- Prefer the packaged Web Awesome references above as the source of truth for
-  component APIs and imports.
-- Keep `vbi-*` elements as the package's default public API unless the task
-  explicitly asks for a migration to `wa-*`.

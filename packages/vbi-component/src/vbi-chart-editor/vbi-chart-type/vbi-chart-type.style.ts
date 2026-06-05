@@ -9,255 +9,75 @@ const styles: CSSResultGroup = [
       max-width: 100%;
     }
 
-    .chart-type {
-      display: block;
+    .truncate-label {
       max-width: 100%;
-      position: relative;
     }
 
-    .trigger,
-    .card {
-      appearance: none;
-      box-sizing: border-box;
-      font: inherit;
-      outline: none;
-    }
-
-    .trigger {
-      align-items: center;
-      background: var(--vbi-chart-type-bg, #ffffff);
-      border: 1px solid var(--vbi-chart-type-border, #d9d9d9);
-      border-radius: var(--vbi-chart-type-radius-lg, 8px);
-      color: var(--vbi-chart-type-text, rgba(0, 0, 0, 0.88));
-      cursor: pointer;
-      display: flex;
-      gap: 12px;
-      justify-content: space-between;
-      max-width: 100%;
-      min-height: 64px;
-      padding: 12px 14px;
-      transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-      width: 100%;
-    }
-
-    .trigger:hover,
-    .trigger:focus-visible {
-      border-color: var(--vbi-chart-type-primary, #1677ff);
-    }
-
-    .trigger:focus-visible {
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--vbi-chart-type-primary, #1677ff) 16%, transparent);
-    }
-
-    .trigger--compact {
-      gap: 6px;
-      height: 28px;
-      min-height: 28px;
-      padding: 0 8px;
-      width: 128px;
-    }
-
-    .trigger--without-text {
-      justify-content: center;
-      padding: 0 7px;
-      width: 32px;
-    }
-
-    .trigger > .chart-icon {
-      background: var(--vbi-chart-type-primary-bg, #e6f4ff);
-      border-radius: var(--vbi-chart-type-radius, 6px);
-      color: var(--vbi-chart-type-primary, #1677ff);
-      flex: 0 0 auto;
-      height: 38px;
-      width: 38px;
-    }
-
-    .trigger--compact > .chart-icon {
-      height: 18px;
-      width: 18px;
-    }
-
-    .trigger__content {
-      align-items: flex-start;
-      display: flex;
-      flex: 1 1 auto;
-      flex-direction: column;
-      min-width: 0;
-      text-align: left;
-    }
-
-    .trigger__label {
-      color: var(--vbi-chart-type-text, rgba(0, 0, 0, 0.88));
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 1.2;
-      max-width: 100%;
+    .truncate-label::part(label) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    .trigger--compact .trigger__label {
-      font-size: 12px;
+    .chart-type-popover {
+      --max-width: var(--vbi-chart-type-panel-width, 45rem);
     }
 
-    .trigger__description {
-      color: var(--vbi-chart-type-text-secondary, rgba(0, 0, 0, 0.45));
-      font-size: 12px;
-      line-height: 1.4;
-      white-space: normal;
-    }
-
-    .chart-icon {
-      align-items: center;
-      display: inline-flex;
-      justify-content: center;
-    }
-
-    .chart-icon svg {
-      display: block;
-      fill: none;
-      height: 1em;
-      stroke: currentColor;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 1.8;
-      width: 1em;
-    }
-
-    .chart-icon path,
-    .chart-icon circle {
-      vector-effect: non-scaling-stroke;
-    }
-
-    .panel {
-      background: var(--vbi-chart-type-bg, #ffffff);
-      border-radius: var(--vbi-chart-type-radius-lg, 8px);
-      box-shadow: var(
-        --vbi-chart-type-shadow,
-        0 6px 16px rgba(0, 0, 0, 0.08),
-        0 3px 6px -4px rgba(0, 0, 0, 0.12),
-        0 9px 28px 8px rgba(0, 0, 0, 0.05)
-      );
+    .chart-type-popover::part(body) {
       box-sizing: border-box;
-      left: 0;
-      margin-top: 6px;
-      max-height: min(58vh, 420px);
-      max-width: calc(100vw - 24px);
-      overflow-y: auto;
-      padding: 14px;
-      position: absolute;
-      top: 100%;
-      width: min(540px, calc(100vw - 24px));
-      z-index: 1000;
+      width: min(var(--vbi-chart-type-panel-width, 45rem), calc(100vw - (var(--wa-space-m, 1rem) * 2)));
+      padding: 0;
     }
 
-    .panel__title {
-      color: var(--vbi-chart-type-text, rgba(0, 0, 0, 0.88));
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 1.4;
-      margin-bottom: 10px;
+    .chart-type-header {
+      border-bottom: var(--wa-border-width-s) solid var(--wa-color-neutral-border-normal);
+      margin: 0;
+      padding: var(--wa-space-s) var(--wa-space-m);
+      font-size: var(--wa-font-size-s);
     }
 
-    .panel__groups {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .group__heading {
-      color: var(--vbi-chart-type-text, rgba(0, 0, 0, 0.88));
-      font-size: 11px;
-      font-weight: 600;
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-
-    .group__grid {
+    .chart-type-scroll {
       display: grid;
-      gap: 6px;
-      grid-auto-rows: 64px;
-      grid-template-columns: repeat(auto-fill, 96px);
-      justify-content: start;
+      gap: var(--wa-space-l);
+      max-block-size: min(32rem, calc(100vh - 14rem));
+      overflow-y: auto;
+      padding: var(--wa-space-s) var(--wa-space-m);
+      scrollbar-color: var(--wa-color-neutral-border-normal) transparent;
+      scrollbar-width: thin;
+    }
+    .chart-type-scroll::-webkit-scrollbar {
+      width: var(--wa-space-2xs);
+    }
+    .chart-type-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chart-type-scroll::-webkit-scrollbar-thumb {
+      background: var(--wa-color-neutral-border-normal);
+      border-radius: var(--wa-border-radius-pill);
     }
 
-    .card {
-      align-items: center;
-      background: var(--vbi-chart-type-bg, #ffffff);
-      border: 1px solid var(--vbi-chart-type-border-secondary, #f0f0f0);
-      border-radius: var(--vbi-chart-type-radius, 6px);
-      box-shadow: none;
-      color: var(--vbi-chart-type-text, rgba(0, 0, 0, 0.88));
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      height: 64px;
-      justify-content: center;
-      padding: 8px 6px;
-      text-align: center;
-      transition:
-        border-color 0.2s ease,
-        background-color 0.2s ease,
-        color 0.2s ease;
-      width: 96px;
+    .chart-type-group {
+      display: grid;
+      gap: var(--wa-space-s);
     }
 
-    .card:hover,
-    .card:focus-visible {
-      border-color: var(--vbi-chart-type-primary-border, #91caff);
-      color: var(--vbi-chart-type-primary, #1677ff);
+    .chart-type-heading {
+      margin: 0;
+      font-size: var(--wa-font-size-xs);
     }
 
-    .card:focus-visible {
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--vbi-chart-type-primary, #1677ff) 16%, transparent);
+    .chart-type-grid {
+      display: grid;
+      gap: var(--wa-space-xs);
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(max(6rem, calc((100% - (var(--wa-space-xs) * 4)) / 5)), 100%), 1fr)
+      );
     }
 
-    .card[aria-selected='true'] {
-      background: var(--vbi-chart-type-primary-bg, #e6f4ff);
-      border-color: var(--vbi-chart-type-primary-border, #91caff);
-      color: var(--vbi-chart-type-primary, #1677ff);
-    }
-
-    .card > .chart-icon {
-      flex-shrink: 0;
-      font-size: 13px;
-      height: 20px;
-      width: 20px;
-    }
-
-    .card__label {
-      font-size: 11px;
-      font-weight: 600;
-      line-height: 1.2;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 100%;
-    }
-
-    .panel--above {
-      bottom: 100%;
-      margin-bottom: 6px;
-      margin-top: 0;
-      top: auto;
-    }
-
-    .panel__empty {
-      color: var(--vbi-chart-type-text-secondary, rgba(0, 0, 0, 0.45));
-      font-size: 12px;
-      line-height: 1.4;
-      padding: 6px 0;
-    }
-
-    @supports not (color: color-mix(in srgb, #000 50%, transparent)) {
-      .trigger:focus-visible,
-      .card:focus-visible {
-        box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.16);
-      }
+    .chart-type-empty {
+      margin: 0;
+      font-size: var(--wa-font-size-xs);
     }
   `,
 ]

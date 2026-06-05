@@ -1,58 +1,60 @@
-import type { VBIChartBuilder } from '@visactor/vbi'
 import { fixture, fixtureCleanup } from '@open-wc/testing'
-import { html, svg } from 'lit'
-import { setVBIComponentLocale } from 'src/localization'
-import { VBI_CHART_TYPE_METAS, VBIChartType } from 'src/vbi-chart-editor/vbi-chart-type'
+import { html } from 'lit'
+import { VBIChartType } from 'src/vbi-chart-editor/vbi-chart-type'
+import type { VBIChartTypeGroup, VBIChartTypeItem } from 'src/vbi-chart-editor/vbi-chart-type/config'
 
 type VBIChartTypeInstance = InstanceType<typeof VBIChartType>
 
-const trigger = (el: VBIChartTypeInstance): HTMLButtonElement => {
-  const button = el.shadowRoot?.querySelector<HTMLButtonElement>('.trigger')
-  if (!button) throw new Error('.trigger not found')
-  return button
+const query = <T extends Element>(el: VBIChartTypeInstance, selector: string): T | null =>
+  el.shadowRoot?.querySelector<T>(selector) ?? null
+
+const queryAll = <T extends Element>(el: VBIChartTypeInstance, selector: string): T[] =>
+  Array.from(el.shadowRoot?.querySelectorAll<T>(selector) ?? [])
+
+/** Dispatch a real click event — wa-button.click() delegates to an internal
+ *  shadow button that jsdom never renders, so we fire the event directly. */
+const clickElement = (el: Element): void => {
+  el.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true }))
 }
 
-const findCardByLabel = (el: VBIChartTypeInstance, label: string): HTMLButtonElement => {
-  const card = Array.from(el.shadowRoot?.querySelectorAll<HTMLButtonElement>('.card') ?? []).find(
-    (item) => item.querySelector('.card__label')?.textContent === label,
-  )
-  if (!card) throw new Error(`card "${label}" not found`)
-  return card
+const MOCK_ITEM_BAR: VBIChartTypeItem = {
+  type: 'bar',
+  label: 'Bar',
+  description: 'Bar chart',
+  icon: 'chart-bar',
 }
 
-const chartTypeMetas = (types: string[]) => VBI_CHART_TYPE_METAS.filter((meta) => types.includes(meta.type))
-
-const createBuilder = () => {
-  let chartType = 'line'
-  const observers = new Set<() => void>()
-
-  return {
-    builder: {
-      chartType: {
-        getChartType: () => chartType,
-        getAvailableChartTypes: () => ['table', 'bar', 'line'],
-        changeChartType: (nextChartType: string) => {
-          chartType = nextChartType
-          observers.forEach((observer) => observer())
-        },
-        observe: (callback: () => void) => {
-          observers.add(callback)
-          return () => observers.delete(callback)
-        },
-      },
-    } as unknown as VBIChartBuilder,
-    getChartType: () => chartType,
-    getObserverCount: () => observers.size,
-    setChartType: (nextChartType: string) => {
-      chartType = nextChartType
-      observers.forEach((observer) => observer())
-    },
-  }
+const MOCK_ITEM_LINE: VBIChartTypeItem = {
+  type: 'line',
+  label: 'Line',
+  description: 'Line chart',
+  icon: 'chart-line',
 }
+
+const MOCK_ITEM_PIE: VBIChartTypeItem = {
+  type: 'pie',
+  label: 'Pie',
+  description: 'Pie chart',
+  icon: 'chart-pie',
+}
+
+const MOCK_GROUPS: VBIChartTypeGroup[] = [
+  {
+    key: 'comparison',
+    label: 'Comparison',
+    description: 'Comparison charts',
+    items: [MOCK_ITEM_BAR, MOCK_ITEM_LINE],
+  },
+  {
+    key: 'proportion',
+    label: 'Proportion',
+    description: 'Proportion charts',
+    items: [MOCK_ITEM_PIE],
+  },
+]
 
 describe('vbi-chart-type', () => {
-  afterEach(async () => {
-    await setVBIComponentLocale('en-US')
+  afterEach(() => {
     fixtureCleanup()
   })
 
@@ -63,131 +65,170 @@ describe('vbi-chart-type', () => {
     expect(el).toBeInstanceOf(VBIChartType)
   })
 
-  it('should render chart type metadata grouped by family', async () => {
+  it('should render the trigger button with default title when no value is set', async () => {
+    const el = await fixture<VBIChartTypeInstance>(html`<vbi-chart-type></vbi-chart-type>`)
+
+    const trigger = query(el, '#chart-type-trigger')
+    expect(trigger).toBeTruthy()
+    expect(trigger!.textContent?.trim()).toBe(el.title)
+  })
+
+  it('should render trigger button with value label and icon when value is set', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar', 'line'])}></vbi-chart-type>`,
+      html`<vbi-chart-type .data=${MOCK_GROUPS} .value=${MOCK_ITEM_BAR}></vbi-chart-type>`,
     )
 
-    trigger(el).click()
-    await el.updateComplete
+    const trigger = query(el, '#chart-type-trigger')
+    expect(trigger!.textContent?.trim()).toBe(MOCK_ITEM_BAR.label)
 
-    const headings = Array.from(el.shadowRoot?.querySelectorAll('.group__heading') ?? []).map((item) =>
-      item.textContent?.trim(),
-    )
-    expect(headings).toEqual(['Tables', 'Comparison', 'Trends'])
-    expect(el.shadowRoot?.querySelectorAll('.card').length).toBe(3)
+    const icon = query(el, '#chart-type-trigger wa-icon[slot="start"]')
+    expect(icon).toBeTruthy()
+    expect(icon!.getAttribute('name')).toBe(MOCK_ITEM_BAR.icon)
   })
 
-  it('should render custom chart type groups and metadata', async () => {
+  it('should render the popover panel with header and group sections', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type
-        .chartTypeGroups=${[
-          {
-            key: 'custom',
-            labelKey: 'customGroupLabel',
-            descriptionKey: 'customGroupDescription',
-          },
-        ]}
-        .chartTypeMetas=${[
-          {
-            type: 'customBar',
-            group: 'custom',
-            labelKey: 'customBarLabel',
-            descriptionKey: 'customBarDescription',
-            icon: svg`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16"/></svg>`,
-          },
-        ]}
-        .text=${{
-          customGroupLabel: 'Custom',
-          customGroupDescription: 'Custom chart group',
-          customBarLabel: 'Custom bar',
-          customBarDescription: 'Custom bar chart',
-        }}
-      ></vbi-chart-type>`,
+      html`<vbi-chart-type .data=${MOCK_GROUPS}></vbi-chart-type>`,
     )
 
-    trigger(el).click()
-    await el.updateComplete
+    const header = query(el, '.chart-type-header')
+    expect(header).toBeTruthy()
+    expect(header!.textContent?.trim()).toBe(el.title)
 
-    expect(trigger(el).textContent?.trim()).toContain('Custom bar')
-    expect(el.shadowRoot?.querySelector('.group__heading')?.textContent?.trim()).toBe('Custom')
-    expect(findCardByLabel(el, 'Custom bar')).toBeTruthy()
+    const groups = queryAll(el, '.chart-type-group')
+    expect(groups).toHaveLength(2)
+
+    const headings = queryAll(el, '.chart-type-heading')
+    expect(headings[0].textContent?.trim()).toBe('Comparison')
+    expect(headings[1].textContent?.trim()).toBe('Proportion')
   })
 
-  it('should ignore chart type selection without a builder', async () => {
+  it('should render a button for each chart type item in the grid', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar'])}></vbi-chart-type>`,
+      html`<vbi-chart-type .data=${MOCK_GROUPS}></vbi-chart-type>`,
     )
 
-    trigger(el).click()
-    await el.updateComplete
-    findCardByLabel(el, 'Bar').click()
-    await el.updateComplete
+    const buttons = queryAll(el, '.chart-type-grid wa-button')
+    expect(buttons).toHaveLength(3)
 
-    expect(el.shadowRoot?.querySelector('.panel')).toBeTruthy()
-    expect(trigger(el).textContent?.trim()).toContain('Table')
+    const labels = buttons.map((btn) => btn.textContent?.trim())
+    expect(labels).toContain('Bar')
+    expect(labels).toContain('Line')
+    expect(labels).toContain('Pie')
   })
 
-  it('should allow hiding trigger text from markup', async () => {
-    const el = await fixture<VBIChartTypeInstance>(html`<vbi-chart-type hide-text></vbi-chart-type>`)
-
-    expect(el.hideText).toBe(true)
-    expect(el.shadowRoot?.querySelector('.trigger__content')).toBeNull()
-  })
-
-  it('should read and mutate chart type through builder when provided', async () => {
-    const fake = createBuilder()
-    const el = await fixture<VBIChartTypeInstance>(html`<vbi-chart-type .builder=${fake.builder}></vbi-chart-type>`)
-    await el.updateComplete
-    await el.updateComplete
-
-    expect(trigger(el).textContent?.trim()).toContain('Line')
-
-    trigger(el).click()
-    await el.updateComplete
-    findCardByLabel(el, 'Bar').click()
-    await el.updateComplete
-
-    expect(fake.getChartType()).toBe('bar')
-    expect(trigger(el).textContent?.trim()).toContain('Bar')
-
-    fake.setChartType('table')
-    await el.updateComplete
-    expect(trigger(el).textContent?.trim()).toContain('Table')
-    expect(fake.getObserverCount()).toBe(1)
-  })
-
-  it('should apply text overrides with the same keys as the React selector config', async () => {
+  it('should dispatch vbi-chart-type-change when an item is clicked', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type
-        .chartTypeMetas=${chartTypeMetas(['bar'])}
-        .text=${{
-          toolbarChartTypePanelTitle: 'Chon loai bieu do',
-          toolbarChartTypeItemsBarLabel: 'Bieu do thanh',
-        }}
-      ></vbi-chart-type>`,
+      html`<vbi-chart-type .data=${MOCK_GROUPS}></vbi-chart-type>`,
     )
 
-    trigger(el).click()
+    const received: VBIChartTypeItem[] = []
+    el.addEventListener('vbi-chart-type-change', ((e: CustomEvent) => {
+      received.push(e.detail.value)
+    }) as EventListener)
+
+    const buttons = queryAll(el, '.chart-type-grid wa-button')
+    clickElement(buttons[0])
     await el.updateComplete
 
-    expect(el.shadowRoot?.querySelector('.panel__title')?.textContent).toBe('Chon loai bieu do')
-    expect(findCardByLabel(el, 'Bieu do thanh')).toBeTruthy()
+    expect(received).toHaveLength(1)
+    expect(received[0]).toBe(MOCK_ITEM_BAR)
+    expect(el.value).toBe(MOCK_ITEM_BAR)
   })
 
-  it('should render built-in localized chart type text', async () => {
-    await setVBIComponentLocale('vi-VN')
+  it('should mark the selected item with filled-outlined appearance and brand variant', async () => {
     const el = await fixture<VBIChartTypeInstance>(
-      html`<vbi-chart-type .chartTypeMetas=${chartTypeMetas(['table', 'bar', 'line'])}></vbi-chart-type>`,
+      html`<vbi-chart-type .data=${MOCK_GROUPS} .value=${MOCK_ITEM_LINE}></vbi-chart-type>`,
     )
 
-    trigger(el).click()
+    const buttons = queryAll(el, '.chart-type-grid wa-button')
+    const lineButton = buttons.find((btn) => btn.textContent?.trim() === 'Line')!
+    const barButton = buttons.find((btn) => btn.textContent?.trim() === 'Bar')!
+
+    expect(lineButton.getAttribute('appearance')).toBe('filled-outlined')
+    expect(lineButton.getAttribute('variant')).toBe('brand')
+    expect(lineButton.getAttribute('aria-pressed')).toBe('true')
+
+    expect(barButton.getAttribute('appearance')).toBe('outlined')
+    expect(barButton.getAttribute('variant')).toBe('neutral')
+    expect(barButton.getAttribute('aria-pressed')).toBe('false')
+  })
+
+  it('should update selected state when a different item is clicked', async () => {
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type .data=${MOCK_GROUPS} .value=${MOCK_ITEM_BAR}></vbi-chart-type>`,
+    )
+
+    const buttons = queryAll(el, '.chart-type-grid wa-button')
+    const lineButton = buttons.find((btn) => btn.textContent?.trim() === 'Line')!
+    clickElement(lineButton)
     await el.updateComplete
 
-    const headings = Array.from(el.shadowRoot?.querySelectorAll('.group__heading') ?? []).map((item) =>
-      item.textContent?.trim(),
+    expect(el.value).toBe(MOCK_ITEM_LINE)
+
+    const updatedButtons = queryAll(el, '.chart-type-grid wa-button')
+    const updatedLine = updatedButtons.find((btn) => btn.textContent?.trim() === 'Line')!
+    const updatedBar = updatedButtons.find((btn) => btn.textContent?.trim() === 'Bar')!
+
+    expect(updatedLine.getAttribute('aria-pressed')).toBe('true')
+    expect(updatedBar.getAttribute('aria-pressed')).toBe('false')
+  })
+
+  it('should show empty message when data has no groups', async () => {
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type .data=${[]}></vbi-chart-type>`,
     )
-    expect(headings).toEqual(['Bảng', 'So sánh', 'Xu hướng'])
-    expect(findCardByLabel(el, 'Biểu đồ thanh')).toBeTruthy()
+
+    const empty = query(el, '.chart-type-empty')
+    expect(empty).toBeTruthy()
+
+    const groups = queryAll(el, '.chart-type-group')
+    expect(groups).toHaveLength(0)
+  })
+
+  it('should accept a custom title', async () => {
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type title="Pick chart"></vbi-chart-type>`,
+    )
+
+    const trigger = query(el, '#chart-type-trigger')
+    expect(trigger!.textContent?.trim()).toBe('Pick chart')
+
+    const header = query(el, '.chart-type-header')
+    expect(header!.textContent?.trim()).toBe('Pick chart')
+  })
+
+  it('should apply truncate-label class to trigger and item buttons', async () => {
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type .data=${MOCK_GROUPS}></vbi-chart-type>`,
+    )
+
+    const trigger = query(el, '#chart-type-trigger')
+    expect(trigger!.classList.contains('truncate-label')).toBe(true)
+
+    const itemButtons = queryAll(el, '.chart-type-grid wa-button')
+    for (const btn of itemButtons) {
+      expect(btn.classList.contains('truncate-label')).toBe(true)
+    }
+  })
+
+  it('should bubble the event through composed shadow DOM boundary', async () => {
+    const el = await fixture<VBIChartTypeInstance>(
+      html`<vbi-chart-type .data=${MOCK_GROUPS}></vbi-chart-type>`,
+    )
+
+    let bubbled = false
+    document.addEventListener(
+      'vbi-chart-type-change',
+      () => {
+        bubbled = true
+      },
+      { once: true },
+    )
+
+    const buttons = queryAll(el, '.chart-type-grid wa-button')
+    clickElement(buttons[0])
+
+    expect(bubbled).toBe(true)
   })
 })
