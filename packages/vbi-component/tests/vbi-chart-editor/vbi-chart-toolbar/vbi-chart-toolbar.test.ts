@@ -1,107 +1,19 @@
-import type { VBIChartBuilder } from '@visactor/vbi'
 import { fixture, fixtureCleanup } from '@open-wc/testing'
 import { html } from 'lit'
-
 import { VBIChartToolbar } from 'src/vbi-chart-editor/vbi-chart-toolbar'
 
 type VBIChartToolbarInstance = InstanceType<typeof VBIChartToolbar>
 
-const query = <T extends Element>(el: VBIChartToolbarInstance, selector: string): T => {
-  const item = el.shadowRoot?.querySelector<T>(selector)
-  if (!item) throw new Error(`${selector} not found`)
-  return item
-}
+const query = <T extends Element>(el: VBIChartToolbarInstance, selector: string): T | null =>
+  el.shadowRoot?.querySelector<T>(selector) ?? null
 
-const click = (el: VBIChartToolbarInstance, selector: string): void => {
-  query<HTMLButtonElement>(el, selector).click()
-}
+const queryAll = <T extends Element>(el: VBIChartToolbarInstance, selector: string): T[] =>
+  Array.from(el.shadowRoot?.querySelectorAll<T>(selector) ?? [])
 
-const createBuilder = () => {
-  let chartType = 'line'
-  let limit = 25
-  let theme = 'light'
-  let canUndo = true
-  let canRedo = false
-  let undoCalls = 0
-  let redoCalls = 0
-  const docListeners = new Set<() => void>()
-  const chartTypeObservers = new Set<() => void>()
-
-  const emitDocUpdate = () => {
-    docListeners.forEach((listener) => listener())
-  }
-
-  return {
-    builder: {
-      doc: {
-        on: (name: string, listener: () => void) => {
-          if (name === 'update') {
-            docListeners.add(listener)
-          }
-        },
-        off: (name: string, listener: () => void) => {
-          if (name === 'update') {
-            docListeners.delete(listener)
-          }
-        },
-      },
-      chartType: {
-        getChartType: () => chartType,
-        getAvailableChartTypes: () => ['table', 'bar', 'line'],
-        changeChartType: (nextChartType: string) => {
-          chartType = nextChartType
-          chartTypeObservers.forEach((observer) => observer())
-          emitDocUpdate()
-        },
-        observe: (callback: () => void) => {
-          chartTypeObservers.add(callback)
-          return () => chartTypeObservers.delete(callback)
-        },
-      },
-      limit: {
-        getLimit: () => limit,
-        setLimit: (nextLimit: number) => {
-          limit = nextLimit
-          emitDocUpdate()
-        },
-      },
-      theme: {
-        getTheme: () => theme,
-        setTheme: (nextTheme: string) => {
-          theme = nextTheme
-          emitDocUpdate()
-        },
-      },
-      undoManager: {
-        canUndo: () => canUndo,
-        canRedo: () => canRedo,
-        undo: () => {
-          undoCalls += 1
-          canUndo = false
-          canRedo = true
-          emitDocUpdate()
-          return true
-        },
-        redo: () => {
-          redoCalls += 1
-          canUndo = true
-          canRedo = false
-          emitDocUpdate()
-          return true
-        },
-      },
-    } as unknown as VBIChartBuilder,
-    getLimit: () => limit,
-    getTheme: () => theme,
-    getUndoCalls: () => undoCalls,
-    getRedoCalls: () => redoCalls,
-    getDocListenerCount: () => docListeners.size,
-    setHistory: (nextCanUndo: boolean, nextCanRedo: boolean) => {
-      canUndo = nextCanUndo
-      canRedo = nextCanRedo
-      emitDocUpdate()
-    },
-  }
+/** Dispatch a real click event — wa-button.click() delegates to an internal
+ *  shadow button that jsdom never renders, so we fire the event directly. */
+const clickElement = (el: Element): void => {
+  el.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true }))
 }
 
 describe('vbi-chart-toolbar', () => {
@@ -109,74 +21,367 @@ describe('vbi-chart-toolbar', () => {
     fixtureCleanup()
   })
 
-  it('should register as a custom element and render core controls', async () => {
+  // ── Registration & basic rendering ──────────────────────────────────
+
+  it('should register as a custom element and render shadow DOM', async () => {
     expect(customElements.get('vbi-chart-toolbar')).toBeDefined()
 
-    const el = await fixture<VBIChartToolbarInstance>(html`<vbi-chart-toolbar></vbi-chart-toolbar>`)
-
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
     expect(el).toBeInstanceOf(VBIChartToolbar)
-    expect(query(el, 'vbi-chart-type')).toBeTruthy()
-    expect(query<HTMLInputElement>(el, '.limit-input').value).toBe('1000')
-    expect(query<HTMLInputElement>(el, '.limit-input').disabled).toBe(true)
-    expect(query<HTMLButtonElement>(el, '[data-theme-option="dark"]').disabled).toBe(true)
-    expect(query<HTMLButtonElement>(el, '[data-action="undo"]').disabled).toBe(true)
-    expect(query<HTMLButtonElement>(el, '[data-action="redo"]').disabled).toBe(true)
+
+    const toolbar = query(el, '.toolbar')
+    expect(toolbar).toBeTruthy()
   })
 
-  it('should read and mutate builder limit, theme, and history', async () => {
-    const fake = createBuilder()
+  it('should render left and right sections', async () => {
     const el = await fixture<VBIChartToolbarInstance>(
-      html`<vbi-chart-toolbar .builder=${fake.builder}></vbi-chart-toolbar>`,
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
     )
-    await el.updateComplete
 
-    expect(query<HTMLInputElement>(el, '.limit-input').value).toBe('25')
-    expect(query<HTMLButtonElement>(el, '[data-action="undo"]').disabled).toBe(false)
-    expect(query<HTMLButtonElement>(el, '[data-action="redo"]').disabled).toBe(true)
+    const left = query(el, '.toolbar__left')
+    const right = query(el, '.toolbar__right')
 
-    const input = query<HTMLInputElement>(el, '.limit-input')
-    input.value = '48'
-    input.dispatchEvent(new Event('change', { bubbles: true, composed: true }))
-    click(el, '[data-theme-option="dark"]')
-    click(el, '[data-action="undo"]')
-    await el.updateComplete
-
-    expect(fake.getLimit()).toBe(48)
-    expect(fake.getTheme()).toBe('dark')
-    expect(fake.getUndoCalls()).toBe(1)
-    expect(query<HTMLButtonElement>(el, '[data-action="undo"]').disabled).toBe(true)
-    expect(query<HTMLButtonElement>(el, '[data-action="redo"]').disabled).toBe(false)
-
-    el.remove()
-    expect(fake.getDocListenerCount()).toBe(0)
+    expect(left).toBeTruthy()
+    expect(right).toBeTruthy()
   })
 
-  it('should sync history availability after builder updates', async () => {
-    const fake = createBuilder()
+  // ── Default property values ─────────────────────────────────────────
+
+  it('should default limit to 1000', async () => {
     const el = await fixture<VBIChartToolbarInstance>(
-      html`<vbi-chart-toolbar .builder=${fake.builder}></vbi-chart-toolbar>`,
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
     )
 
-    fake.setHistory(false, true)
-    await el.updateComplete
-
-    expect(query<HTMLButtonElement>(el, '[data-action="undo"]').disabled).toBe(true)
-    expect(query<HTMLButtonElement>(el, '[data-action="redo"]').disabled).toBe(false)
+    expect(el.limit).toBe(1000)
   })
 
-  it('should support keyboard shortcuts when enabled', async () => {
-    const fake = createBuilder()
+  it('should default canUndo and canRedo to false', async () => {
     const el = await fixture<VBIChartToolbarInstance>(
-      html`<vbi-chart-toolbar .builder=${fake.builder}></vbi-chart-toolbar>`,
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
     )
+
+    expect(el.canUndo).toBe(false)
+    expect(el.canRedo).toBe(false)
+  })
+
+  // ── History buttons rendering ───────────────────────────────────────
+
+  it('should render undo and redo buttons', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const undoButton = query(el, '#history-undo-button')
+    const redoButton = query(el, '#history-redo-button')
+
+    expect(undoButton).toBeTruthy()
+    expect(redoButton).toBeTruthy()
+  })
+
+  it('should disable undo button when canUndo is false', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const undoButton = query(el, '#history-undo-button')
+    expect(undoButton!.hasAttribute('disabled')).toBe(true)
+  })
+
+  it('should disable redo button when canRedo is false', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const redoButton = query(el, '#history-redo-button')
+    expect(redoButton!.hasAttribute('disabled')).toBe(true)
+  })
+
+  it('should enable undo button when canUndo is true', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar can-undo></vbi-chart-toolbar>`,
+    )
+
+    const undoButton = query(el, '#history-undo-button')
+    expect(undoButton!.hasAttribute('disabled')).toBe(false)
+  })
+
+  it('should enable redo button when canRedo is true', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar can-redo></vbi-chart-toolbar>`,
+    )
+
+    const redoButton = query(el, '#history-redo-button')
+    expect(redoButton!.hasAttribute('disabled')).toBe(false)
+  })
+
+  // ── Undo/Redo events ───────────────────────────────────────────────
+
+  it('should dispatch vbi-chart-undo when undo button is clicked', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar can-undo></vbi-chart-toolbar>`,
+    )
+
+    let undoFired = false
+    el.addEventListener('vbi-chart-undo', () => {
+      undoFired = true
+    })
+
+    const undoButton = query(el, '#history-undo-button')!
+    clickElement(undoButton)
+
+    expect(undoFired).toBe(true)
+  })
+
+  it('should dispatch vbi-chart-redo when redo button is clicked', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar can-redo></vbi-chart-toolbar>`,
+    )
+
+    let redoFired = false
+    el.addEventListener('vbi-chart-redo', () => {
+      redoFired = true
+    })
+
+    const redoButton = query(el, '#history-redo-button')!
+    clickElement(redoButton)
+
+    expect(redoFired).toBe(true)
+  })
+
+  // ── Limit input ─────────────────────────────────────────────────────
+
+  it('should render the limit number input', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const input = query(el, 'wa-number-input')
+    expect(input).toBeTruthy()
+  })
+
+  it('should accept a custom limit via attribute', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar limit="500"></vbi-chart-toolbar>`,
+    )
+
+    expect(el.limit).toBe(500)
+  })
+
+  it('should dispatch vbi-chart-limit-change on limit change', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const received: number[] = []
+    el.addEventListener('vbi-chart-limit-change', ((e: CustomEvent) => {
+      received.push(e.detail.value)
+    }) as EventListener)
+
+    const input = query(el, 'wa-number-input')!
+    ;(input as HTMLElement & { value: string }).value = '2000'
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+
+    expect(received).toHaveLength(1)
+    expect(received[0]).toBe(2000)
+    expect(el.limit).toBe(2000)
+  })
+
+  it('should not dispatch vbi-chart-limit-change when value is unchanged', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar limit="1000"></vbi-chart-toolbar>`,
+    )
+
+    let fired = false
+    el.addEventListener('vbi-chart-limit-change', () => {
+      fired = true
+    })
+
+    const input = query(el, 'wa-number-input')!
+    ;(input as HTMLElement & { value: string }).value = '1000'
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+
+    expect(fired).toBe(false)
+  })
+
+  // ── Tooltips ────────────────────────────────────────────────────────
+
+  it('should render tooltips for history buttons and limit icon', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const tooltips = queryAll(el, 'wa-tooltip')
+    // 2 for history buttons (undo + redo) + 1 for limit info icon
+    expect(tooltips.length).toBeGreaterThanOrEqual(3)
+  })
+
+  it('should render limit info icon', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const infoIcon = query(el, '#limit-info-icon')
+    expect(infoIcon).toBeTruthy()
+  })
+
+  // ── History button group ────────────────────────────────────────────
+
+  it('should render undo and redo inside a button group', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const group = query(el, 'wa-button-group.history-group')
+    expect(group).toBeTruthy()
+
+    // wa-button elements are in the toolbar's shadow DOM as light children
+    // of wa-button-group, so query from the toolbar shadow root directly.
+    const buttons = queryAll(el, 'wa-button.history-button')
+    expect(buttons).toHaveLength(2)
+  })
+
+  // ── Chart-type slot ─────────────────────────────────────────────────
+
+  it('should provide a slot for chart-type', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const slot = query<HTMLSlotElement>(el, 'slot[name="chart-type"]')
+    expect(slot).toBeTruthy()
+  })
+
+  // ── Event bubbling & composition ────────────────────────────────────
+
+  it('should bubble vbi-chart-undo through composed shadow DOM boundary', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar can-undo></vbi-chart-toolbar>`,
+    )
+
+    let bubbled = false
+    document.addEventListener(
+      'vbi-chart-undo',
+      () => {
+        bubbled = true
+      },
+      { once: true },
+    )
+
+    const undoButton = query(el, '#history-undo-button')!
+    clickElement(undoButton)
+
+    expect(bubbled).toBe(true)
+  })
+
+  it('should bubble vbi-chart-redo through composed shadow DOM boundary', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar can-redo></vbi-chart-toolbar>`,
+    )
+
+    let bubbled = false
+    document.addEventListener(
+      'vbi-chart-redo',
+      () => {
+        bubbled = true
+      },
+      { once: true },
+    )
+
+    const redoButton = query(el, '#history-redo-button')!
+    clickElement(redoButton)
+
+    expect(bubbled).toBe(true)
+  })
+
+  it('should bubble vbi-chart-limit-change through composed shadow DOM boundary', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    let bubbled = false
+    document.addEventListener(
+      'vbi-chart-limit-change',
+      () => {
+        bubbled = true
+      },
+      { once: true },
+    )
+
+    const input = query(el, 'wa-number-input')!
+    ;(input as HTMLElement & { value: string }).value = '5000'
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+
+    expect(bubbled).toBe(true)
+  })
+
+  // ── Reactive updates ───────────────────────────────────────────────
+
+  it('should reactively toggle undo button disabled state', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const undoButton = query(el, '#history-undo-button')!
+    expect(undoButton.hasAttribute('disabled')).toBe(true)
+
+    el.canUndo = true
     await el.updateComplete
 
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true }))
-    await el.updateComplete
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'y', ctrlKey: true }))
+    expect(undoButton.hasAttribute('disabled')).toBe(false)
+
+    el.canUndo = false
     await el.updateComplete
 
-    expect(fake.getUndoCalls()).toBe(1)
-    expect(fake.getRedoCalls()).toBe(1)
+    expect(undoButton.hasAttribute('disabled')).toBe(true)
+  })
+
+  it('should reactively toggle redo button disabled state', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const redoButton = query(el, '#history-redo-button')!
+    expect(redoButton.hasAttribute('disabled')).toBe(true)
+
+    el.canRedo = true
+    await el.updateComplete
+
+    expect(redoButton.hasAttribute('disabled')).toBe(false)
+
+    el.canRedo = false
+    await el.updateComplete
+
+    expect(redoButton.hasAttribute('disabled')).toBe(true)
+  })
+
+  // ── Aria labels ─────────────────────────────────────────────────────
+
+  it('should set aria-label on history buttons', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const undoButton = query(el, '#history-undo-button')!
+    const redoButton = query(el, '#history-redo-button')!
+
+    expect(undoButton.getAttribute('aria-label')).toBeTruthy()
+    expect(redoButton.getAttribute('aria-label')).toBeTruthy()
+  })
+
+  it('should set title with keyboard shortcut on history buttons', async () => {
+    const el = await fixture<VBIChartToolbarInstance>(
+      html`<vbi-chart-toolbar></vbi-chart-toolbar>`,
+    )
+
+    const undoButton = query(el, '#history-undo-button')!
+    const redoButton = query(el, '#history-redo-button')!
+
+    const undoTitle = undoButton.getAttribute('title') ?? ''
+    const redoTitle = redoButton.getAttribute('title') ?? ''
+
+    expect(undoTitle).toContain('Ctrl')
+    expect(redoTitle).toContain('Ctrl')
   })
 })
