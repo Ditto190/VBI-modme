@@ -6,17 +6,27 @@ const styles: CSSResultGroup = [
   css`
     :host {
       display: inline-block;
-      max-width: 100%;
     }
 
     .truncate-label {
-      max-width: 100%;
+      width: 100%;
     }
 
     .truncate-label::part(label) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .chart-type-trigger::part(base) {
+      background: var(--wa-color-surface-raised);
+    }
+
+    .chart-type-trigger:hover::part(base),
+    .chart-type-trigger:focus-visible::part(base) {
+      background: var(--wa-color-brand-fill-quiet);
+      border-color: var(--wa-color-brand-border-normal);
+      color: var(--wa-color-brand-on-quiet);
     }
 
     .chart-type-popover {
@@ -42,18 +52,6 @@ const styles: CSSResultGroup = [
       max-block-size: min(32rem, calc(100vh - 14rem));
       overflow-y: auto;
       padding: var(--wa-space-s) var(--wa-space-m);
-      scrollbar-color: var(--wa-color-neutral-border-normal) transparent;
-      scrollbar-width: thin;
-    }
-    .chart-type-scroll::-webkit-scrollbar {
-      width: var(--wa-space-2xs);
-    }
-    .chart-type-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .chart-type-scroll::-webkit-scrollbar-thumb {
-      background: var(--wa-color-neutral-border-normal);
-      border-radius: var(--wa-border-radius-pill);
     }
 
     .chart-type-group {

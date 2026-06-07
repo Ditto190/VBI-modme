@@ -99,7 +99,7 @@ export class VBIChartType extends VdashElement {
 
   override render() {
     return html`
-      <wa-button id="chart-type-trigger" class="truncate-label" appearance="outlined" size="xs" pill>
+      <wa-button id="chart-type-trigger" class="chart-type-trigger truncate-label" appearance="outlined" size="xs" pill>
         ${this.value ? html`<wa-icon slot="start" name=${this.value.icon} aria-hidden="true"></wa-icon>` : null}
         ${this.value?.label ?? this.title}
       </wa-button>

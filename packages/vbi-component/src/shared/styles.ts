@@ -21,4 +21,27 @@ export const defaultStyles = css`
     cursor: not-allowed;
     pointer-events: none;
   }
+
+  :host,
+  * {
+    scrollbar-color: var(--wa-color-neutral-border-normal) transparent;
+    scrollbar-width: thin;
+  }
+
+  :host::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    height: var(--wa-space-2xs);
+    width: var(--wa-space-2xs);
+  }
+
+  :host::-webkit-scrollbar-track,
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :host::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb {
+    background: var(--wa-color-neutral-border-normal);
+    border-radius: var(--wa-border-radius-pill);
+  }
 `
