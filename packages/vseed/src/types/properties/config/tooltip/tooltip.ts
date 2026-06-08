@@ -12,6 +12,7 @@ export const zTooltip = z.object({
   lineSpace: z.number().nullish(),
   keyColor: z.string().nullish(),
   valueColor: z.string().nullish(),
+  valueFontWeight: z.number().nullish(),
   titleColor: z.string().nullish(),
 })
 

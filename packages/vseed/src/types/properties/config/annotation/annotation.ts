@@ -149,7 +149,7 @@ export type AnnotationAreaConfig = Pick<
 
 export type AnnotationDifferenceLineConfig = Pick<
   AnnotationDifferenceLine,
-  'lineColor' | 'lineStyle' | 'textBackgroundColor' | 'textColor' | 'textFontSize'
+  'lineColor' | 'lineStyle' | 'textBackgroundColor' | 'textColor' | 'textFontSize' | 'textFontWeight'
 > & {
   /**
    * 文本背景边框颜色

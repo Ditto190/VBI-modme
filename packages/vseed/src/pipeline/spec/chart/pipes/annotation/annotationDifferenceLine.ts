@@ -25,6 +25,7 @@ const DEFAULT_LINE_COLOR = '#BCC1CB'
 const DEFAULT_TEXT_COLOR = '#ffffff'
 const DEFAULT_TEXT_BACKGROUND_COLOR = '#BCC1CB'
 const DEFAULT_TEXT_FONT_SIZE = 12
+const DEFAULT_TEXT_FONT_WEIGHT = 400
 const DEFAULT_LINE_WIDTH = 1
 const DEFAULT_CORNER_RADIUS = 3
 const DEFAULT_LABEL_PADDING = 4
@@ -381,6 +382,8 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
       const textBackgroundPadding = theme?.textBackgroundPadding ?? DEFAULT_LABEL_PADDING
       const textBackgroundOpacity = theme?.textBackgroundOpacity
       const textFontSize = annotationDifferenceLine.textFontSize ?? theme?.textFontSize ?? DEFAULT_TEXT_FONT_SIZE
+      const textFontWeight =
+        annotationDifferenceLine.textFontWeight ?? theme?.textFontWeight ?? DEFAULT_TEXT_FONT_WEIGHT
       const differenceType = annotationDifferenceLine.differenceType ?? 'absolute'
       const startMeasureId = resolveDifferenceMeasureId(start, annotationDifferenceLine.start.selector, measureIds)
       const endMeasureId = resolveDifferenceMeasureId(end, annotationDifferenceLine.end.selector, measureIds)
@@ -423,6 +426,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
             style: {
               fill: textColor,
               fontSize: textFontSize,
+              fontWeight: textFontWeight,
             },
             labelBackground: {
               visible: true,
@@ -445,6 +449,7 @@ export const annotationDifferenceLine: VChartSpecPipe = (spec, context) => {
             style: {
               fill: textColor,
               fontSize: textFontSize,
+              fontWeight: textFontWeight,
             },
             labelBackground: {
               visible: true,
