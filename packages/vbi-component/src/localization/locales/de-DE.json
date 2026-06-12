@@ -86,5 +86,9 @@
   "toolbarThemeLabel": "Design",
   "toolbarThemeDescription": "Editor-Design umschalten",
   "toolbarThemeLight": "Hell",
-  "toolbarThemeDark": "Dunkel"
+  "toolbarThemeDark": "Dunkel",
+  "fieldsTitle": "Feldliste",
+  "fieldsSearchPlaceholder": "Suchen",
+  "fieldsDimensionsLabel": "Dimensionen",
+  "fieldsMeasuresLabel": "Kennzahlen"
 }

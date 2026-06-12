@@ -86,5 +86,9 @@
   "toolbarThemeLabel": "主题",
   "toolbarThemeDescription": "切换编辑器主题",
   "toolbarThemeLight": "浅色",
-  "toolbarThemeDark": "深色"
+  "toolbarThemeDark": "深色",
+  "fieldsTitle": "字段列表",
+  "fieldsSearchPlaceholder": "搜索",
+  "fieldsDimensionsLabel": "维度",
+  "fieldsMeasuresLabel": "度量"
 }

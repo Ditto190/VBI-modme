@@ -86,5 +86,9 @@
   "toolbarThemeLabel": "Tema",
   "toolbarThemeDescription": "Ganti tema editor",
   "toolbarThemeLight": "Terang",
-  "toolbarThemeDark": "Gelap"
+  "toolbarThemeDark": "Gelap",
+  "fieldsTitle": "Daftar Bidang",
+  "fieldsSearchPlaceholder": "Cari",
+  "fieldsDimensionsLabel": "Dimensi",
+  "fieldsMeasuresLabel": "Ukuran"
 }

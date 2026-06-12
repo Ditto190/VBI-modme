@@ -1,5 +1,5 @@
 import { DragDropManager } from '@dnd-kit/dom'
-import type { VBIChartField } from '../chart-field'
+import type { VBIChartField } from '../vbi-chart-fields'
 
 export const VBI_CHART_EDITOR_FIELD_DRAG_TYPE = 'vbi-chart-field'
 

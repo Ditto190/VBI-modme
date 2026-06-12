@@ -86,5 +86,9 @@
   "toolbarThemeLabel": "테마",
   "toolbarThemeDescription": "편집기 테마 전환",
   "toolbarThemeLight": "라이트",
-  "toolbarThemeDark": "다크"
+  "toolbarThemeDark": "다크",
+  "fieldsTitle": "필드 목록",
+  "fieldsSearchPlaceholder": "검색",
+  "fieldsDimensionsLabel": "차원",
+  "fieldsMeasuresLabel": "측정값"
 }

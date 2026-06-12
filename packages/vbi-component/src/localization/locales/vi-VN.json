@@ -86,5 +86,9 @@
   "toolbarThemeLabel": "Chủ đề",
   "toolbarThemeDescription": "Chuyển chủ đề trình chỉnh sửa",
   "toolbarThemeLight": "Sáng",
-  "toolbarThemeDark": "Tối"
+  "toolbarThemeDark": "Tối",
+  "fieldsTitle": "Danh sách trường",
+  "fieldsSearchPlaceholder": "Tìm kiếm",
+  "fieldsDimensionsLabel": "Chiều dữ liệu",
+  "fieldsMeasuresLabel": "Chỉ số"
 }
