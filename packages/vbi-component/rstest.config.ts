@@ -5,6 +5,7 @@ export default defineConfig({
   globals: true,
   testEnvironment: 'jsdom',
   pool: 'forks',
+  setupFiles: ['./tests/setup.ts'],
   include: ['tests/**/*.test.ts'],
   exclude: ['node_modules/**', 'dist/**', '**/*.d.ts'],
   includeSource: ['src/**/*.{js,ts}'],
