@@ -1,7 +1,15 @@
 import { type Config } from '@stencil/core'
+import { postcss } from '@stencil-community/postcss'
+import tailwindcss from '@tailwindcss/postcss'
 
 export const config: Config = {
   namespace: 'vbi-component',
+  globalStyle: 'src/global/global.css',
+  plugins: [
+    postcss({
+      plugins: [tailwindcss()],
+    }),
+  ],
   outputTargets: [
     {
       type: 'dist',
