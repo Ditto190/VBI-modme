@@ -1,7 +1,20 @@
 {
-  "name": "vbi-component",
+  "name": "@visactor/vbi-component",
+  "private": true,
   "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "license": "MIT",
+  "homepage": "https://visactor.github.io/VBI",
+  "bugs": "https://github.com/VisActor/VBI/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VisActor/VBI",
+    "directory": "packages/vbi-component"
+  },
+  "author": {
+    "name": "VisActor",
+    "url": "https://www.visactor.io/"
+  },
+  "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -23,17 +36,16 @@
       "require": "./loader/index.cjs"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/stenciljs/component-starter.git"
-  },
   "files": [
     "dist/",
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
+    "build": "stencil build",
+    "format": "oxfmt .",
+    "lint": "oxlint --fix .",
+    "typecheck": "tsc --noEmit",
     "test": "stencil-test --prod",
     "test:watch": "stencil-test --prod --watch",
     "generate": "stencil generate",
@@ -42,18 +54,17 @@
   },
   "devDependencies": {
     "@stencil-community/postcss": "2.2.0",
-    "@stencil/core": "^4.27.1 || ^5.0.0-0",
+    "@stencil/core": "4.43.5",
     "@stencil/storybook-plugin": "0.7.0",
-    "@stencil/vitest": "^1.8.3",
-    "@storybook/addon-links": "^10.4.6",
-    "@tailwindcss/postcss": "4.3.0",
-    "@types/node": "^22.13.5",
-    "@vitest/browser-playwright": "^4.0.0",
-    "playwright": "^1.52.0",
-    "storybook": "^10.4.6",
-    "tailwindcss": "4.3.0",
-    "vitest": "^4.0.0",
-    "@storybook/addon-docs": "^10.4.6"
-  },
-  "license": "MIT"
+    "@stencil/vitest": "1.13.2",
+    "@storybook/addon-docs": "10.4.6",
+    "@storybook/addon-links": "10.4.6",
+    "@tailwindcss/postcss": "4.3.1",
+    "@types/node": "25.9.3",
+    "@vitest/browser-playwright": "4.1.9",
+    "playwright": "1.61.0",
+    "storybook": "10.4.6",
+    "tailwindcss": "4.3.1",
+    "vitest": "4.1.9"
+  }
 }
