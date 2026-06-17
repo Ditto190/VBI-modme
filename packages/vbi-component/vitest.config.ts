@@ -5,19 +5,28 @@ export default defineVitestConfig({
   stencilConfig: './stencil.config.ts',
   test: {
     projects: [
-      // Unit tests - stencil environment for component logic
+      // Unit tests - node environment for functions / logic
       {
         test: {
           name: 'unit',
-          include: ['src/**/*.unit.test.{ts,tsx}'],
-          environment: 'stencil',
+          include: ['src/**/*.unit.{ts,tsx}'],
+          environment: 'node',
         },
       },
-      // Component browser tests - real browser via Playwright
+      // Spec tests - via a node DOM of your choice
+      {
+        test: {
+          name: 'spec',
+          include: ['src/**/*.spec.{ts,tsx}'],
+          environment: 'stencil',
+          setupFiles: ['./vitest-setup.ts'],
+        },
+      },
+      // Browser tests
       {
         test: {
           name: 'browser',
-          include: ['src/**/*.cmp.test.{ts,tsx}'],
+          include: ['src/**/*.test.{ts,tsx}'],
           setupFiles: ['./vitest-setup.ts'],
           browser: {
             enabled: true,
