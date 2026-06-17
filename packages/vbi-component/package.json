@@ -55,6 +55,7 @@
   "devDependencies": {
     "@stencil-community/postcss": "2.2.0",
     "@stencil/core": "4.43.5",
+    "@stencil/store": "2.2.2",
     "@stencil/storybook-plugin": "0.7.0",
     "@stencil/vitest": "1.13.2",
     "@storybook/addon-docs": "10.4.6",

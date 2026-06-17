@@ -478,6 +478,9 @@ importers:
       '@stencil/core':
         specifier: 4.43.5
         version: 4.43.5
+      '@stencil/store':
+        specifier: 2.2.2
+        version: 2.2.2(@stencil/core@4.43.5)
       '@stencil/storybook-plugin':
         specifier: 0.7.0
         version: 0.7.0(@stencil/core@4.43.5)(esbuild@0.27.2)(preact@10.29.2)(storybook@10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.7.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(typescript@6.0.2)(vite@7.3.1(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.91.0)(sass@1.91.0)(terser@5.43.1)(yaml@2.8.1))(webpack@5.104.1(esbuild@0.27.2))
@@ -4558,6 +4561,12 @@ packages:
     resolution: {integrity: sha512-cgWD+GeuvJpTe1WQn40p02+BJ2j0j1YJ17GdkF2qKIQ23s2e3Zivq5yISXS3dcuV6oUJFN93jprdk+nk/sq99Q==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
+
+  '@stencil/store@2.2.2':
+    resolution: {integrity: sha512-6BxJblhIkSxflEft8eayYwEApTmsIaGeXsRDLI1AAM2BPPFPfrcsG1fBOcA61oMBaXmCGKt0AGTLbxSHnYazxQ==}
+    engines: {node: '>=18.0.0', npm: '>=6.0.0'}
+    peerDependencies:
+      '@stencil/core': '>=2.0.0 || >=3.0.0 || >= 4.0.0-beta.0 || >= 4.0.0'
 
   '@stencil/storybook-plugin@0.7.0':
     resolution: {integrity: sha512-JSymJSjE4EdJWSTKCXAAzG8ZTFunPsBrb1JAUDsqsoyfnKQkxfqhUhsxU3BgTWJx1ISYCwmfnfWnc+2igegHsw==}
@@ -14387,6 +14396,10 @@ snapshots:
       '@rollup/rollup-linux-x64-musl': 4.44.0
       '@rollup/rollup-win32-arm64-msvc': 4.44.0
       '@rollup/rollup-win32-x64-msvc': 4.44.0
+
+  '@stencil/store@2.2.2(@stencil/core@4.43.5)':
+    dependencies:
+      '@stencil/core': 4.43.5
 
   '@stencil/storybook-plugin@0.7.0(@stencil/core@4.43.5)(esbuild@0.27.2)(preact@10.29.2)(storybook@10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.14)(prettier@3.7.3)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(typescript@6.0.2)(vite@7.3.1(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.91.0)(sass@1.91.0)(terser@5.43.1)(yaml@2.8.1))(webpack@5.104.1(esbuild@0.27.2))':
     dependencies:
