@@ -26,14 +26,14 @@
       "import": "./dist/vbi-component/vbi-component.esm.js",
       "require": "./dist/vbi-component/vbi-component.cjs.js"
     },
-    "./my-component": {
-      "types": "./dist/components/my-component.d.ts",
-      "import": "./dist/components/my-component.js"
-    },
     "./loader": {
       "types": "./loader/index.d.ts",
       "import": "./loader/index.js",
       "require": "./loader/index.cjs"
+    },
+    "./*": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js"
     }
   },
   "files": [
