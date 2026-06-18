@@ -22,6 +22,10 @@
     "apps/website/rspress.config.ts",
     "apps/website/doc_build/**",
     "apps/website/docs/**",
-    "packages/vseed/tests/**/*.ts"
+    "packages/vseed/tests/**/*.ts",
+    // Stencil auto-generated files
+    "packages/vbi-component/.storybook/**",
+    "packages/vbi-component/src/**/*.md",
+    "packages/vbi-component/src/components.d.ts"
   ]
 }
