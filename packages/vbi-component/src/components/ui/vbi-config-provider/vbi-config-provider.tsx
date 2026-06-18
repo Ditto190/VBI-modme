@@ -1,6 +1,6 @@
-import { Component, h, Host, Prop } from '@stencil/core'
+import { Component, h, Host, Prop, Watch } from '@stencil/core'
 import { type ThemeConfig } from './theme/theme.types'
-import { getThemeCssVariables } from './theme/theme.utils'
+import { getThemeCssVariables, setTheme } from './theme/theme.utils'
 
 @Component({
   tag: 'vbi-config-provider',
@@ -10,6 +10,17 @@ import { getThemeCssVariables } from './theme/theme.utils'
 export class VbiConfigProvider {
   /** Theme configuration containing mode ('light' | 'dark') and design tokens */
   @Prop() theme?: ThemeConfig
+
+  componentWillLoad() {
+    this.handleThemePersistence()
+  }
+
+  @Watch('theme')
+  handleThemePersistence() {
+    if (this.theme?.mode) {
+      setTheme(this.theme.mode)
+    }
+  }
 
   render() {
     const themeVariables = getThemeCssVariables(this.theme)
