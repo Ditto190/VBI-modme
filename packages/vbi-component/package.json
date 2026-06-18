@@ -53,19 +53,16 @@
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@stencil-community/postcss": "2.2.0",
     "@stencil/core": "4.43.5",
     "@stencil/store": "2.2.2",
     "@stencil/storybook-plugin": "0.7.0",
     "@stencil/vitest": "1.13.2",
     "@storybook/addon-docs": "10.4.6",
     "@storybook/addon-links": "10.4.6",
-    "@tailwindcss/postcss": "4.3.1",
     "@types/node": "25.9.3",
     "@vitest/browser-playwright": "4.1.9",
     "playwright": "1.61.0",
     "storybook": "10.4.6",
-    "tailwindcss": "4.3.1",
     "vitest": "4.1.9"
   }
 }
