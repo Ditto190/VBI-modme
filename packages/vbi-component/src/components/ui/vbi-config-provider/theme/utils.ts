@@ -1,5 +1,5 @@
-import { darkTheme, lightTheme } from './theme.default'
-import { type ThemeConfig, type ThemeMode } from './theme.types'
+import { darkTheme, lightTheme } from './default'
+import { type ThemeConfig, type ThemeMode } from './types'
 
 export const getThemeCssVariables = (userTheme?: ThemeConfig): Record<string, string | undefined> => {
   const mode = userTheme?.mode || getTheme()

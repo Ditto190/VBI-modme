@@ -1,6 +1,5 @@
 import { Component, h, Host, Prop, Watch } from '@stencil/core'
-import { type ThemeConfig } from './theme/theme.types'
-import { getThemeCssVariables, setTheme } from './theme/theme.utils'
+import { type ThemeConfig, getThemeCssVariables, setTheme } from './theme'
 
 @Component({
   tag: 'vbi-config-provider',

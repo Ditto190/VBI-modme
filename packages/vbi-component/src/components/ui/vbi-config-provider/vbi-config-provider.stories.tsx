@@ -1,6 +1,6 @@
 import { h } from '@stencil/core'
 import type { Meta, StoryObj } from '@stencil/storybook-plugin'
-import { darkTheme, lightTheme } from './theme/theme.default'
+import { darkTheme, lightTheme } from './theme'
 import { VbiConfigProvider } from './vbi-config-provider'
 
 const meta: Meta<VbiConfigProvider> = {
