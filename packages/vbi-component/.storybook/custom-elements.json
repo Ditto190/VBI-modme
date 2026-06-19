@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-16T16:18:33",
+  "timestamp": "2026-06-19T09:13:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.5",
@@ -95,7 +95,151 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/components/ui/vbi-button/vbi-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "vbi-button",
+      "readme": "# vbi-button\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "states": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/components/ui/vbi-config-provider/vbi-config-provider.tsx",
+      "encapsulation": "none",
+      "tag": "vbi-config-provider",
+      "readme": "# vbi-config-provider\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "builder",
+          "type": "VBIChartBuilder<DefaultVBIQueryDSL, VSeed>",
+          "complexType": {
+            "original": "VBIChartBuilder",
+            "resolved": "VBIChartBuilder<DefaultVBIQueryDSL, VSeed>",
+            "references": {
+              "VBIChartBuilder": {
+                "location": "import",
+                "path": "@visactor/vbi",
+                "id": "../vbi/dist/index.d.ts::VBIChartBuilder",
+                "referenceLocation": "VBIChartBuilder"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "VBI chart builder instance to initialize the store with",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "VBIChartBuilder<DefaultVBIQueryDSL, VSeed>"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeConfig",
+          "complexType": {
+            "original": "ThemeConfig",
+            "resolved": "ThemeConfig",
+            "references": {
+              "ThemeConfig": {
+                "location": "import",
+                "path": "./theme",
+                "id": "src/components/ui/vbi-config-provider/theme/index.ts::ThemeConfig",
+                "referenceLocation": "ThemeConfig"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Theme configuration containing mode ('light' | 'dark') and design tokens",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ThemeConfig"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getStore",
+          "returns": {
+            "type": "Promise<VBIStoreApi>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<VBIStoreApi>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "VBIStoreApi": {
+                "location": "import",
+                "path": "src/store/vbi-store",
+                "id": "src/store/vbi-store.ts::VBIStoreApi",
+                "referenceLocation": "VBIStoreApi"
+              }
+            },
+            "return": "Promise<VBIStoreApi>"
+          },
+          "signature": "getStore() => Promise<VBIStoreApi>",
+          "parameters": [],
+          "docs": "Returns the VBI store instance for child components",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "states": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     }
   ],
-  "typeLibrary": {}
+  "typeLibrary": {
+    "src/components/ui/vbi-config-provider/theme/index.ts::ThemeConfig": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "src/components/ui/vbi-config-provider/theme/index.ts"
+    },
+    "../vbi/dist/index.d.ts::VBIChartBuilder": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "../vbi/dist/index.d.ts"
+    },
+    "src/store/vbi-store.ts::VBIStoreApi": {
+      "declaration": "export interface VBIStoreApi {\n  state: VBIStoreState\n  initialize: (builder?: VBIChartBuilder) => DestroyCallback\n  bindEvent: () => DestroyCallback\n  logState: () => Promise<void>\n  setDsl: (dsl: VBIChartDSL) => void\n  setLoading: (loading: boolean) => void\n  setVSeed: (vseed: VSeed | null) => void\n  switchSource: (connectorId: string, data?: any[], schema?: DatasetColumn[]) => Promise<void>\n  \n  // Stencil store utilities\n  onChange: (propName: keyof VBIStoreState, cb: (newValue: any) => void) => void\n  reset: () => void\n  dispose: () => void\n}",
+      "docstring": "",
+      "path": "src/store/vbi-store.ts"
+    }
+  }
 }
