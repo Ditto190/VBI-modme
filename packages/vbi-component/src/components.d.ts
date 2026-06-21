@@ -73,6 +73,13 @@ export namespace Components {
          */
         "theme"?: ThemeConfig;
     }
+    interface VbiJoin {
+        /**
+          * Vertical orientation
+          * @default false
+         */
+        "vertical": boolean;
+    }
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -93,10 +100,17 @@ declare global {
         prototype: HTMLVbiConfigProviderElement;
         new (): HTMLVbiConfigProviderElement;
     };
+    interface HTMLVbiJoinElement extends Components.VbiJoin, HTMLStencilElement {
+    }
+    var HTMLVbiJoinElement: {
+        prototype: HTMLVbiJoinElement;
+        new (): HTMLVbiJoinElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
         "vbi-button": HTMLVbiButtonElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
+        "vbi-join": HTMLVbiJoinElement;
     }
 }
 declare namespace LocalJSX {
@@ -157,6 +171,13 @@ declare namespace LocalJSX {
          */
         "theme"?: ThemeConfig;
     }
+    interface VbiJoin {
+        /**
+          * Vertical orientation
+          * @default false
+         */
+        "vertical"?: boolean;
+    }
 
     interface MyComponentAttributes {
         "first": string;
@@ -172,11 +193,15 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiJoinAttributes {
+        "vertical": boolean;
+    }
 
     interface IntrinsicElements {
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-config-provider": VbiConfigProvider;
+        "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -186,6 +211,7 @@ declare module "@stencil/core" {
             "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
+            "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
         }
     }
 }

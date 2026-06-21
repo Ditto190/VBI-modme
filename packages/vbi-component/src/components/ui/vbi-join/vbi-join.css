@@ -1,0 +1,76 @@
+.vbi-join {
+  display: inline-flex;
+  align-items: stretch;
+  flex-direction: row;
+  gap: 0;
+}
+
+.vbi-join > * {
+  margin-inline-start: calc(var(--border, 1px) * -1);
+  margin-block-start: 0;
+
+  --join-ss: 0;
+  --join-se: 0;
+  --join-es: 0;
+  --join-ee: 0;
+}
+
+.vbi-join > *:first-child {
+  margin-inline-start: 0;
+}
+
+.vbi-join:not(.vbi-join-vertical) > *:first-child:not(:last-child) {
+  --join-ss: var(--radius-field, 0.5rem);
+  --join-se: 0;
+  --join-es: var(--radius-field, 0.5rem);
+  --join-ee: 0;
+}
+
+.vbi-join:not(.vbi-join-vertical) > *:last-child:not(:first-child) {
+  --join-ss: 0;
+  --join-se: var(--radius-field, 0.5rem);
+  --join-es: 0;
+  --join-ee: var(--radius-field, 0.5rem);
+}
+
+.vbi-join.vbi-join-vertical {
+  flex-direction: column;
+}
+
+.vbi-join.vbi-join-vertical > * {
+  margin-inline-start: 0;
+  margin-block-start: calc(var(--border, 1px) * -1);
+}
+
+.vbi-join.vbi-join-vertical > *:first-child {
+  margin-block-start: 0;
+}
+
+.vbi-join.vbi-join-vertical > *:first-child:not(:last-child) {
+  --join-ss: var(--radius-field, 0.5rem);
+  --join-se: var(--radius-field, 0.5rem);
+  --join-es: 0;
+  --join-ee: 0;
+}
+
+.vbi-join.vbi-join-vertical > *:last-child:not(:first-child) {
+  --join-ss: 0;
+  --join-se: 0;
+  --join-es: var(--radius-field, 0.5rem);
+  --join-ee: var(--radius-field, 0.5rem);
+}
+
+.vbi-join > *:only-child {
+  --join-ss: var(--radius-field, 0.5rem);
+  --join-se: var(--radius-field, 0.5rem);
+  --join-es: var(--radius-field, 0.5rem);
+  --join-ee: var(--radius-field, 0.5rem);
+}
+
+.vbi-join > *:hover,
+.vbi-join > *:focus,
+.vbi-join > *:focus-within,
+.vbi-join > *:has(:focus-visible) {
+  z-index: 1;
+  isolation: isolate;
+}

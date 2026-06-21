@@ -6,39 +6,25 @@ import { Component, Prop, h } from '@stencil/core'
   shadow: true,
 })
 export class VbiButton {
-  /**
-   * Type of the button
-   */
+  /** Type of the button   */
   @Prop() type: 'button' | 'submit' | 'reset' = 'button'
 
-  /**
-   * Main color (primary, secondary, accent, etc.)
-   */
+  /** Main color (primary, secondary, accent, etc.) */
   @Prop() color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error'
 
-  /**
-   * Button variant (ghost, outline, dash, soft, link)
-   */
+  /** Button variant (ghost, outline, dash, soft, link) */
   @Prop() variant?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link'
 
-  /**
-   * Size (xs, sm, md, lg, xl)
-   */
+  /** Size (xs, sm, md, lg, xl) */
   @Prop() size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-  /**
-   * Shape (square, circle, wide, block)
-   */
+  /** Shape (square, circle, wide, block) */
   @Prop() shape?: 'square' | 'circle' | 'wide' | 'block'
 
-  /**
-   * Disabled state
-   */
+  /** Disabled state */
   @Prop() disabled: boolean = false
 
-  /**
-   * Active state (pressed/selected)
-   */
+  /** Active state (pressed/selected) */
   @Prop() active: boolean = false
 
   render() {

@@ -6,6 +6,7 @@ import { VbiConfigProvider } from './vbi-config-provider'
 const meta: Meta<VbiConfigProvider> = {
   title: 'ui/VbiConfigProvider',
   component: VbiConfigProvider,
+  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
   },

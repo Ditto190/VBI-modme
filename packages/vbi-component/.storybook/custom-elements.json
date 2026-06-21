@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-21T14:06:06",
+  "timestamp": "2026-06-21T15:23:58",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.5",
@@ -479,6 +479,56 @@
           "docsTags": []
         }
       ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "states": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/components/ui/vbi-join/vbi-join.tsx",
+      "encapsulation": "none",
+      "tag": "vbi-join",
+      "readme": "# vbi-join\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "vertical",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "vertical",
+          "reflectToAttr": false,
+          "docs": "Vertical orientation",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
       "events": [],
       "listeners": [],
       "styles": [],

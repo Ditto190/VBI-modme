@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { h } from '@stencil/core'
-import { VbiButton } from './vbi-button'
+import { VbiJoin } from './vbi-join'
 
-const meta: Meta<VbiButton> = {
-  title: 'ui/VbiButton',
-  component: VbiButton,
+const meta: Meta<VbiJoin> = {
+  title: 'ui/VbiJoin',
+  component: VbiJoin,
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
@@ -13,7 +13,7 @@ const meta: Meta<VbiButton> = {
 
 export default meta
 
-type Story = StoryObj<VbiButton>
+type Story = StoryObj<VbiJoin>
 
 export const Default: Story = {
   render: (props, context) => {
@@ -21,7 +21,11 @@ export const Default: Story = {
 
     return (
       <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-button {...props}>Test</vbi-button>
+        <vbi-join {...props}>
+          <vbi-button>Button</vbi-button>
+          <vbi-button>Button</vbi-button>
+          <vbi-button>Button</vbi-button>
+        </vbi-join>
       </vbi-config-provider>
     )
   },
