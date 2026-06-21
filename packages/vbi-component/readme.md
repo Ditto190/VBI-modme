@@ -18,17 +18,12 @@ pnpm add @visactor/vbi-component
 
 ## Usage
 
-To register and use the Web Components in your project (e.g., React, Vue, or Vanilla JS), use the `loader` module provided by Stencil:
+To register and use the Web Components in your project (e.g., React, Vue, or Vanilla JS), import the package directly at your project's entry point file (such as `main.ts`, `index.tsx`, or `app.tsx`):
 
 ### 1. In React / Vue / Angular / Svelte Applications
 
-Import the `defineCustomElements` function from the `loader` and invoke it at your project's entry point file (such as `main.ts`, `index.tsx`, or `app.tsx`):
-
 ```typescript
-import { defineCustomElements } from '@visactor/vbi-component/loader'
-
-// Register custom elements to window.customElements
-defineCustomElements()
+import '@visactor/vbi-component'
 ```
 
 ### 2. Direct Usage in HTML (Script Tag)

@@ -3,7 +3,11 @@ import { type Config } from '@stencil/core'
 export const config: Config = {
   namespace: 'vbi-component',
   globalStyle: 'src/global/app.css',
-  plugins: [],
+  rollupConfig: {
+    inputOptions: {
+      external: ['@visactor/vbi', '@visactor/vchart', '@visactor/vquery', '@visactor/vseed', '@visactor/vtable'],
+    },
+  },
   outputTargets: [
     {
       type: 'dist',
@@ -13,6 +17,7 @@ export const config: Config = {
       type: 'dist-custom-elements',
       customElementsExportBehavior: 'auto-define-custom-elements',
       externalRuntime: false,
+      minify: true,
     },
     {
       type: 'docs-readme',
