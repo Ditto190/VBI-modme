@@ -27,6 +27,37 @@ export namespace Components {
         "middle"?: string;
     }
     interface VbiButton {
+        /**
+          * Active state (pressed/selected)
+          * @default false
+         */
+        "active": boolean;
+        /**
+          * Main color (primary, secondary, accent, etc.)
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Disabled state
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Shape (square, circle, wide, block)
+         */
+        "shape"?: 'square' | 'circle' | 'wide' | 'block';
+        /**
+          * Size (xs, sm, md, lg, xl)
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Type of the button
+          * @default 'button'
+         */
+        "type": 'button' | 'submit' | 'reset';
+        /**
+          * Button variant (ghost, outline, dash, soft, link)
+         */
+        "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
     }
     interface VbiConfigProvider {
         /**
@@ -84,6 +115,37 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface VbiButton {
+        /**
+          * Active state (pressed/selected)
+          * @default false
+         */
+        "active"?: boolean;
+        /**
+          * Main color (primary, secondary, accent, etc.)
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Disabled state
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Shape (square, circle, wide, block)
+         */
+        "shape"?: 'square' | 'circle' | 'wide' | 'block';
+        /**
+          * Size (xs, sm, md, lg, xl)
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Type of the button
+          * @default 'button'
+         */
+        "type"?: 'button' | 'submit' | 'reset';
+        /**
+          * Button variant (ghost, outline, dash, soft, link)
+         */
+        "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
     }
     interface VbiConfigProvider {
         /**
@@ -101,10 +163,19 @@ declare namespace LocalJSX {
         "middle": string;
         "last": string;
     }
+    interface VbiButtonAttributes {
+        "type": 'button' | 'submit' | 'reset';
+        "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        "variant": 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        "shape": 'square' | 'circle' | 'wide' | 'block';
+        "disabled": boolean;
+        "active": boolean;
+    }
 
     interface IntrinsicElements {
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
-        "vbi-button": VbiButton;
+        "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-config-provider": VbiConfigProvider;
     }
 }

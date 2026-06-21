@@ -1,5 +1,5 @@
 import { describe, it } from '@stencil/vitest'
 
-describe('vbi-config-provider', () => {
+describe('vbi-button', () => {
   it.todo('should render successfully')
 })
