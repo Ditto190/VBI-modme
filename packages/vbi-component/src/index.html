@@ -3,12 +3,51 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Stencil Component Starter</title>
+    <title>Vbi Component</title>
+    <!-- 
+      Note on importmap configuration:
+      - Loading `@visactor/vseed` via esm.sh fails due to module resolution issues (https://esm.sh/@visactor/vseed@0.5.6/es2022/vseed.mjs), 
+        so we switched to jsDelivr CDN.
+      - However, jsDelivr fails to load `topojson-server` and `topojson-client` (imported internally by vseed/vbi).
+        Therefore, we redirect these two dependencies back to esm.sh to make it work properly.
+    -->
+    <script type="importmap">
+      {
+        "imports": {
+          "https://cdn.jsdelivr.net/npm/topojson-server@3.0.0/+esm": "https://esm.sh/topojson-server@3.0.0",
+          "https://cdn.jsdelivr.net/npm/topojson-client@3.0.0/+esm": "https://esm.sh/topojson-client@3.0.0",
+          "@visactor/vbi": "https://cdn.jsdelivr.net/npm/@visactor/vbi/+esm",
+          "@visactor/vseed": "https://cdn.jsdelivr.net/npm/@visactor/vseed/+esm",
+          "@visactor/vquery": "https://cdn.jsdelivr.net/npm/@visactor/vquery/+esm"
+        }
+      }
+    </script>
 
     <script type="module" src="/build/vbi-component.esm.js"></script>
     <script nomodule src="/build/vbi-component.js"></script>
+    <style>
+      body {
+        margin: 30px;
+        display: grid;
+        grid-auto-flow: row;
+        gap: 30px;
+      }
+    </style>
   </head>
+
   <body>
-    <my-component first="Stencil" middle="'Don't call me a framework'" last="JS"></my-component>
+    <vbi-config-provider>
+      <div
+        style="
+          padding: 2rem;
+          background: var(--color-base-100);
+          color: var(--color-base-content);
+          border-radius: var(--radius-box);
+        "
+      >
+        <h3>Config Provider (Dark Mode)</h3>
+        <p>This area is themed using the Config Provider.</p>
+      </div>
+    </vbi-config-provider>
   </body>
 </html>
