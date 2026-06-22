@@ -73,6 +73,71 @@ export namespace Components {
          */
         "theme"?: ThemeConfig;
     }
+    interface VbiInput {
+        /**
+          * Autocomplete hint for the browser
+         */
+        "autocomplete"?: string;
+        /**
+          * Auto-focus the input on mount
+          * @default false
+         */
+        "autofocus": boolean;
+        /**
+          * Primary color (primary, secondary, info, error...)
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Disabled state
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Maximum character length
+         */
+        "maxlength"?: number;
+        /**
+          * Minimum character length
+         */
+        "minlength"?: number;
+        /**
+          * Name attribute for form submission
+         */
+        "name"?: string;
+        /**
+          * Placeholder text
+          * @default ''
+         */
+        "placeholder"?: string;
+        /**
+          * Read-only state (focusable but not editable)
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Required field for form validation
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Size of the input
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Type of the input element (text, password, email, number, date...)
+          * @default 'text'
+         */
+        "type": string;
+        /**
+          * Value of the input element
+          * @default ''
+         */
+        "value"?: string;
+        /**
+          * Display variant (e.g., ghost - transparent)
+         */
+        "variant"?: 'ghost';
+    }
     interface VbiJoin {
         /**
           * Vertical orientation
@@ -80,6 +145,10 @@ export namespace Components {
          */
         "vertical": boolean;
     }
+}
+export interface VbiInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiInputElement;
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -100,6 +169,26 @@ declare global {
         prototype: HTMLVbiConfigProviderElement;
         new (): HTMLVbiConfigProviderElement;
     };
+    interface HTMLVbiInputElementEventMap {
+        "vbiInput": string;
+        "vbiChange": string;
+        "vbiFocus": void;
+        "vbiBlur": void;
+    }
+    interface HTMLVbiInputElement extends Components.VbiInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiInputElementEventMap>(type: K, listener: (this: HTMLVbiInputElement, ev: VbiInputCustomEvent<HTMLVbiInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiInputElementEventMap>(type: K, listener: (this: HTMLVbiInputElement, ev: VbiInputCustomEvent<HTMLVbiInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiInputElement: {
+        prototype: HTMLVbiInputElement;
+        new (): HTMLVbiInputElement;
+    };
     interface HTMLVbiJoinElement extends Components.VbiJoin, HTMLStencilElement {
     }
     var HTMLVbiJoinElement: {
@@ -110,6 +199,7 @@ declare global {
         "my-component": HTMLMyComponentElement;
         "vbi-button": HTMLVbiButtonElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
+        "vbi-input": HTMLVbiInputElement;
         "vbi-join": HTMLVbiJoinElement;
     }
 }
@@ -171,6 +261,87 @@ declare namespace LocalJSX {
          */
         "theme"?: ThemeConfig;
     }
+    interface VbiInput {
+        /**
+          * Autocomplete hint for the browser
+         */
+        "autocomplete"?: string;
+        /**
+          * Auto-focus the input on mount
+          * @default false
+         */
+        "autofocus"?: boolean;
+        /**
+          * Primary color (primary, secondary, info, error...)
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Disabled state
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Maximum character length
+         */
+        "maxlength"?: number;
+        /**
+          * Minimum character length
+         */
+        "minlength"?: number;
+        /**
+          * Name attribute for form submission
+         */
+        "name"?: string;
+        /**
+          * Event emitted when the input loses focus (blur)
+         */
+        "onVbiBlur"?: (event: VbiInputCustomEvent<void>) => void;
+        /**
+          * Event emitted when the user finishes typing and blurs (or presses Enter)
+         */
+        "onVbiChange"?: (event: VbiInputCustomEvent<string>) => void;
+        /**
+          * Event emitted when the input gains focus
+         */
+        "onVbiFocus"?: (event: VbiInputCustomEvent<void>) => void;
+        /**
+          * Event emitted when the user types
+         */
+        "onVbiInput"?: (event: VbiInputCustomEvent<string>) => void;
+        /**
+          * Placeholder text
+          * @default ''
+         */
+        "placeholder"?: string;
+        /**
+          * Read-only state (focusable but not editable)
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Required field for form validation
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Size of the input
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Type of the input element (text, password, email, number, date...)
+          * @default 'text'
+         */
+        "type"?: string;
+        /**
+          * Value of the input element
+          * @default ''
+         */
+        "value"?: string;
+        /**
+          * Display variant (e.g., ghost - transparent)
+         */
+        "variant"?: 'ghost';
+    }
     interface VbiJoin {
         /**
           * Vertical orientation
@@ -193,6 +364,22 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiInputAttributes {
+        "type": string;
+        "value": string;
+        "placeholder": string;
+        "disabled": boolean;
+        "name": string;
+        "readOnly": boolean;
+        "required": boolean;
+        "maxlength": number;
+        "minlength": number;
+        "autocomplete": string;
+        "autofocus": boolean;
+        "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        "variant": 'ghost';
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    }
     interface VbiJoinAttributes {
         "vertical": boolean;
     }
@@ -201,6 +388,7 @@ declare namespace LocalJSX {
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-config-provider": VbiConfigProvider;
+        "vbi-input": Omit<VbiInput, keyof VbiInputAttributes> & { [K in keyof VbiInput & keyof VbiInputAttributes]?: VbiInput[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `attr:${K}`]?: VbiInputAttributes[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `prop:${K}`]?: VbiInput[K] };
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
     }
 }
@@ -211,6 +399,7 @@ declare module "@stencil/core" {
             "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
+            "vbi-input": LocalJSX.IntrinsicElements["vbi-input"] & JSXBase.HTMLAttributes<HTMLVbiInputElement>;
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
         }
     }
