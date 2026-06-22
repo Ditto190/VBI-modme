@@ -8,9 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { VBIStoreApi } from "./store/vbi-store";
+import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { VBIStoreApi } from "./store/vbi-store";
+export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export namespace Components {
     interface MyComponent {
         /**
@@ -72,6 +74,22 @@ export namespace Components {
           * Theme configuration containing mode ('light' | 'dark') and design tokens
          */
         "theme"?: ThemeConfig;
+    }
+    interface VbiIcon {
+        /**
+          * The color of the icon. Defaults to 'currentColor'.
+          * @default 'currentColor'
+         */
+        "color": string;
+        /**
+          * The icon definition object from `@ant-design/icons-svg`.
+         */
+        "icon": IconDefinition;
+        /**
+          * The size of the icon (e.g., '16px', '1em', '2rem').
+          * @default '1em'
+         */
+        "size": string;
     }
     interface VbiInput {
         /**
@@ -169,6 +187,12 @@ declare global {
         prototype: HTMLVbiConfigProviderElement;
         new (): HTMLVbiConfigProviderElement;
     };
+    interface HTMLVbiIconElement extends Components.VbiIcon, HTMLStencilElement {
+    }
+    var HTMLVbiIconElement: {
+        prototype: HTMLVbiIconElement;
+        new (): HTMLVbiIconElement;
+    };
     interface HTMLVbiInputElementEventMap {
         "vbiInput": string;
         "vbiChange": string;
@@ -199,6 +223,7 @@ declare global {
         "my-component": HTMLMyComponentElement;
         "vbi-button": HTMLVbiButtonElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
+        "vbi-icon": HTMLVbiIconElement;
         "vbi-input": HTMLVbiInputElement;
         "vbi-join": HTMLVbiJoinElement;
     }
@@ -260,6 +285,22 @@ declare namespace LocalJSX {
           * Theme configuration containing mode ('light' | 'dark') and design tokens
          */
         "theme"?: ThemeConfig;
+    }
+    interface VbiIcon {
+        /**
+          * The color of the icon. Defaults to 'currentColor'.
+          * @default 'currentColor'
+         */
+        "color"?: string;
+        /**
+          * The icon definition object from `@ant-design/icons-svg`.
+         */
+        "icon"?: IconDefinition;
+        /**
+          * The size of the icon (e.g., '16px', '1em', '2rem').
+          * @default '1em'
+         */
+        "size"?: string;
     }
     interface VbiInput {
         /**
@@ -364,6 +405,10 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiIconAttributes {
+        "size": string;
+        "color": string;
+    }
     interface VbiInputAttributes {
         "type": string;
         "value": string;
@@ -388,6 +433,7 @@ declare namespace LocalJSX {
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-config-provider": VbiConfigProvider;
+        "vbi-icon": Omit<VbiIcon, keyof VbiIconAttributes> & { [K in keyof VbiIcon & keyof VbiIconAttributes]?: VbiIcon[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `attr:${K}`]?: VbiIconAttributes[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `prop:${K}`]?: VbiIcon[K] };
         "vbi-input": Omit<VbiInput, keyof VbiInputAttributes> & { [K in keyof VbiInput & keyof VbiInputAttributes]?: VbiInput[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `attr:${K}`]?: VbiInputAttributes[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `prop:${K}`]?: VbiInput[K] };
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
     }
@@ -399,6 +445,7 @@ declare module "@stencil/core" {
             "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
+            "vbi-icon": LocalJSX.IntrinsicElements["vbi-icon"] & JSXBase.HTMLAttributes<HTMLVbiIconElement>;
             "vbi-input": LocalJSX.IntrinsicElements["vbi-input"] & JSXBase.HTMLAttributes<HTMLVbiInputElement>;
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
         }

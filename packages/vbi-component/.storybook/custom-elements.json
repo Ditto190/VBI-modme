@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-22T11:06:42",
+  "timestamp": "2026-06-22T17:29:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.5",
@@ -479,6 +479,114 @@
           "docsTags": []
         }
       ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "states": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/components/ui/vbi-icon/vbi-icon.tsx",
+      "encapsulation": "shadow",
+      "tag": "vbi-icon",
+      "readme": "# vbi-icon\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "color",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "color",
+          "reflectToAttr": false,
+          "docs": "The color of the icon. Defaults to 'currentColor'.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'currentColor'"
+            }
+          ],
+          "default": "'currentColor'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "icon",
+          "type": "IconDefinition",
+          "complexType": {
+            "original": "IconDefinition",
+            "resolved": "IconDefinition",
+            "references": {
+              "IconDefinition": {
+                "location": "import",
+                "path": "@ant-design/icons-svg/lib/types",
+                "id": "../../node_modules/.pnpm/@ant-design+icons-svg@4.4.2/node_modules/@ant-design/icons-svg/lib/types.d.ts::IconDefinition",
+                "referenceLocation": "IconDefinition"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The icon definition object from `@ant-design/icons-svg`.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "IconDefinition"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "The size of the icon (e.g., '16px', '1em', '2rem').",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'1em'"
+            }
+          ],
+          "default": "'1em'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
       "events": [],
       "listeners": [],
       "styles": [],
@@ -1044,6 +1152,11 @@
       "declaration": "export interface VBIStoreApi {\n  state: VBIStoreState\n  initialize: (builder?: VBIChartBuilder) => DestroyCallback\n  bindEvent: () => DestroyCallback\n  logState: () => Promise<void>\n  setDsl: (dsl: VBIChartDSL) => void\n  setLoading: (loading: boolean) => void\n  setVSeed: (vseed: VSeed | null) => void\n  switchSource: (connectorId: string, data?: any[], schema?: DatasetColumn[]) => Promise<void>\n\n  // Stencil store utilities\n  onChange: (propName: keyof VBIStoreState, cb: (newValue: any) => void) => void\n  reset: () => void\n  dispose: () => void\n}",
       "docstring": "",
       "path": "src/store/vbi-store.ts"
+    },
+    "../../node_modules/.pnpm/@ant-design+icons-svg@4.4.2/node_modules/@ant-design/icons-svg/lib/types.d.ts::IconDefinition": {
+      "declaration": "export interface IconDefinition {\n    name: string;\n    theme: ThemeType;\n    icon: ((primaryColor: string, secondaryColor: string) => AbstractNode) | AbstractNode;\n}",
+      "docstring": "",
+      "path": "../../node_modules/.pnpm/@ant-design+icons-svg@4.4.2/node_modules/@ant-design/icons-svg/lib/types.d.ts"
     }
   }
 }
