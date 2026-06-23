@@ -163,6 +163,21 @@ export namespace Components {
          */
         "vertical": boolean;
     }
+    interface VbiLoading {
+        /**
+          * Primary color. If not provided, it inherits the parent element's text color (currentColor)
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Size (xs, sm, md, lg, xl)
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Loading style (spinner, dots, ring, ball, bars, infinity)
+          * @default 'spinner'
+         */
+        "type": 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
+    }
 }
 export interface VbiInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -219,6 +234,12 @@ declare global {
         prototype: HTMLVbiJoinElement;
         new (): HTMLVbiJoinElement;
     };
+    interface HTMLVbiLoadingElement extends Components.VbiLoading, HTMLStencilElement {
+    }
+    var HTMLVbiLoadingElement: {
+        prototype: HTMLVbiLoadingElement;
+        new (): HTMLVbiLoadingElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
         "vbi-button": HTMLVbiButtonElement;
@@ -226,6 +247,7 @@ declare global {
         "vbi-icon": HTMLVbiIconElement;
         "vbi-input": HTMLVbiInputElement;
         "vbi-join": HTMLVbiJoinElement;
+        "vbi-loading": HTMLVbiLoadingElement;
     }
 }
 declare namespace LocalJSX {
@@ -390,6 +412,21 @@ declare namespace LocalJSX {
          */
         "vertical"?: boolean;
     }
+    interface VbiLoading {
+        /**
+          * Primary color. If not provided, it inherits the parent element's text color (currentColor)
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Size (xs, sm, md, lg, xl)
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Loading style (spinner, dots, ring, ball, bars, infinity)
+          * @default 'spinner'
+         */
+        "type"?: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
+    }
 
     interface MyComponentAttributes {
         "first": string;
@@ -428,6 +465,11 @@ declare namespace LocalJSX {
     interface VbiJoinAttributes {
         "vertical": boolean;
     }
+    interface VbiLoadingAttributes {
+        "type": 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+    }
 
     interface IntrinsicElements {
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
@@ -436,6 +478,7 @@ declare namespace LocalJSX {
         "vbi-icon": Omit<VbiIcon, keyof VbiIconAttributes> & { [K in keyof VbiIcon & keyof VbiIconAttributes]?: VbiIcon[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `attr:${K}`]?: VbiIconAttributes[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `prop:${K}`]?: VbiIcon[K] };
         "vbi-input": Omit<VbiInput, keyof VbiInputAttributes> & { [K in keyof VbiInput & keyof VbiInputAttributes]?: VbiInput[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `attr:${K}`]?: VbiInputAttributes[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `prop:${K}`]?: VbiInput[K] };
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
+        "vbi-loading": Omit<VbiLoading, keyof VbiLoadingAttributes> & { [K in keyof VbiLoading & keyof VbiLoadingAttributes]?: VbiLoading[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `attr:${K}`]?: VbiLoadingAttributes[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `prop:${K}`]?: VbiLoading[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -448,6 +491,7 @@ declare module "@stencil/core" {
             "vbi-icon": LocalJSX.IntrinsicElements["vbi-icon"] & JSXBase.HTMLAttributes<HTMLVbiIconElement>;
             "vbi-input": LocalJSX.IntrinsicElements["vbi-input"] & JSXBase.HTMLAttributes<HTMLVbiInputElement>;
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
+            "vbi-loading": LocalJSX.IntrinsicElements["vbi-loading"] & JSXBase.HTMLAttributes<HTMLVbiLoadingElement>;
         }
     }
 }
