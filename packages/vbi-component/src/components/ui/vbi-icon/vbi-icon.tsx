@@ -8,7 +8,7 @@ import type { AbstractNode, IconDefinition } from '@ant-design/icons-svg/lib/typ
 })
 export class VbiIcon {
   /** The icon definition object from `@ant-design/icons-svg`. */
-  @Prop() icon: IconDefinition
+  @Prop() icon?: IconDefinition
   /** The size of the icon (e.g., '16px', '1em', '2rem'). */
   @Prop() size: string = '1em'
   /** The color of the icon. Defaults to 'currentColor'. */
