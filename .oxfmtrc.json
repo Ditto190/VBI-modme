@@ -24,7 +24,6 @@
     "apps/website/docs/**",
     "packages/vseed/tests/**/*.ts",
     // Stencil auto-generated files
-    "packages/vbi-component/.storybook/**",
     "packages/vbi-component/src/**/*.md",
     "packages/vbi-component/src/components.d.ts"
   ]
