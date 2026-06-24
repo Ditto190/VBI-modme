@@ -34,7 +34,7 @@ export const Default: Story = {
     placeholder: 'Type something...',
   },
   render: (props, context) => {
-    const currentTheme = context.globals.backgrounds.value || 'light'
+    const currentTheme = context.globals.backgrounds?.value || 'light'
 
     return (
       <vbi-config-provider theme={{ mode: currentTheme }}>
@@ -50,7 +50,7 @@ export const WithSlots: Story = {
     placeholder: 'Enter amount',
   },
   render: (props, context) => {
-    const currentTheme = context.globals.backgrounds.value || 'light'
+    const currentTheme = context.globals.backgrounds?.value || 'light'
 
     return (
       <vbi-config-provider theme={{ mode: currentTheme }}>

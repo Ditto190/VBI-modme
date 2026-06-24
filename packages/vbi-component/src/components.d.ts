@@ -75,6 +75,38 @@ export namespace Components {
          */
         "theme"?: ThemeConfig;
     }
+    interface VbiDropdown {
+        /**
+          * When true, the dropdown cannot be opened.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The distance between the dropdown and its trigger (in pixels).
+          * @default 8
+         */
+        "offset": number;
+        /**
+          * Controls the open state of the dropdown.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The position of the dropdown relative to its trigger.
+          * @default 'bottom'
+         */
+        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        /**
+          * The interaction mode of the popover ('auto' closes on outside click, 'manual' does not).
+          * @default 'auto'
+         */
+        "popoverMode": 'auto' | 'manual';
+        /**
+          * How the dropdown is triggered.
+          * @default 'click'
+         */
+        "trigger": 'click' | 'hover';
+    }
     interface VbiIcon {
         /**
           * The color of the icon. Defaults to 'currentColor'.
@@ -84,7 +116,7 @@ export namespace Components {
         /**
           * The icon definition object from `@ant-design/icons-svg`.
          */
-        "icon": IconDefinition;
+        "icon"?: IconDefinition;
         /**
           * The size of the icon (e.g., '16px', '1em', '2rem').
           * @default '1em'
@@ -179,6 +211,10 @@ export namespace Components {
         "type": 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
     }
 }
+export interface VbiDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiDropdownElement;
+}
 export interface VbiInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiInputElement;
@@ -201,6 +237,23 @@ declare global {
     var HTMLVbiConfigProviderElement: {
         prototype: HTMLVbiConfigProviderElement;
         new (): HTMLVbiConfigProviderElement;
+    };
+    interface HTMLVbiDropdownElementEventMap {
+        "vbiDropdownToggle": boolean;
+    }
+    interface HTMLVbiDropdownElement extends Components.VbiDropdown, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiDropdownElementEventMap>(type: K, listener: (this: HTMLVbiDropdownElement, ev: VbiDropdownCustomEvent<HTMLVbiDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiDropdownElementEventMap>(type: K, listener: (this: HTMLVbiDropdownElement, ev: VbiDropdownCustomEvent<HTMLVbiDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiDropdownElement: {
+        prototype: HTMLVbiDropdownElement;
+        new (): HTMLVbiDropdownElement;
     };
     interface HTMLVbiIconElement extends Components.VbiIcon, HTMLStencilElement {
     }
@@ -244,6 +297,7 @@ declare global {
         "my-component": HTMLMyComponentElement;
         "vbi-button": HTMLVbiButtonElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
+        "vbi-dropdown": HTMLVbiDropdownElement;
         "vbi-icon": HTMLVbiIconElement;
         "vbi-input": HTMLVbiInputElement;
         "vbi-join": HTMLVbiJoinElement;
@@ -307,6 +361,42 @@ declare namespace LocalJSX {
           * Theme configuration containing mode ('light' | 'dark') and design tokens
          */
         "theme"?: ThemeConfig;
+    }
+    interface VbiDropdown {
+        /**
+          * When true, the dropdown cannot be opened.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The distance between the dropdown and its trigger (in pixels).
+          * @default 8
+         */
+        "offset"?: number;
+        /**
+          * Emitted when the dropdown opens or closes.
+         */
+        "onVbiDropdownToggle"?: (event: VbiDropdownCustomEvent<boolean>) => void;
+        /**
+          * Controls the open state of the dropdown.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The position of the dropdown relative to its trigger.
+          * @default 'bottom'
+         */
+        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        /**
+          * The interaction mode of the popover ('auto' closes on outside click, 'manual' does not).
+          * @default 'auto'
+         */
+        "popoverMode"?: 'auto' | 'manual';
+        /**
+          * How the dropdown is triggered.
+          * @default 'click'
+         */
+        "trigger"?: 'click' | 'hover';
     }
     interface VbiIcon {
         /**
@@ -442,6 +532,14 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiDropdownAttributes {
+        "placement": 'top' | 'bottom' | 'left' | 'right';
+        "popoverMode": 'auto' | 'manual';
+        "trigger": 'click' | 'hover';
+        "offset": number;
+        "disabled": boolean;
+        "open": boolean;
+    }
     interface VbiIconAttributes {
         "size": string;
         "color": string;
@@ -475,6 +573,7 @@ declare namespace LocalJSX {
         "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-config-provider": VbiConfigProvider;
+        "vbi-dropdown": Omit<VbiDropdown, keyof VbiDropdownAttributes> & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes]?: VbiDropdown[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `attr:${K}`]?: VbiDropdownAttributes[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `prop:${K}`]?: VbiDropdown[K] };
         "vbi-icon": Omit<VbiIcon, keyof VbiIconAttributes> & { [K in keyof VbiIcon & keyof VbiIconAttributes]?: VbiIcon[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `attr:${K}`]?: VbiIconAttributes[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `prop:${K}`]?: VbiIcon[K] };
         "vbi-input": Omit<VbiInput, keyof VbiInputAttributes> & { [K in keyof VbiInput & keyof VbiInputAttributes]?: VbiInput[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `attr:${K}`]?: VbiInputAttributes[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `prop:${K}`]?: VbiInput[K] };
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
@@ -488,6 +587,7 @@ declare module "@stencil/core" {
             "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
+            "vbi-dropdown": LocalJSX.IntrinsicElements["vbi-dropdown"] & JSXBase.HTMLAttributes<HTMLVbiDropdownElement>;
             "vbi-icon": LocalJSX.IntrinsicElements["vbi-icon"] & JSXBase.HTMLAttributes<HTMLVbiIconElement>;
             "vbi-input": LocalJSX.IntrinsicElements["vbi-input"] & JSXBase.HTMLAttributes<HTMLVbiInputElement>;
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
