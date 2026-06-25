@@ -14,20 +14,6 @@ export { VBIChartBuilder } from "@visactor/vbi";
 export { VBIStoreApi } from "./store/vbi-store/index";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
-    }
     interface VbiButton {
         /**
           * Active state (pressed/selected)
@@ -222,12 +208,6 @@ export interface VbiInputCustomEvent<T> extends CustomEvent<T> {
     target: HTMLVbiInputElement;
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
-    }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
-    };
     interface HTMLVbiButtonElement extends Components.VbiButton, HTMLStencilElement {
     }
     var HTMLVbiButtonElement: {
@@ -302,7 +282,6 @@ declare global {
         new (): HTMLVbiLoadingElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
         "vbi-button": HTMLVbiButtonElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
@@ -314,20 +293,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
-    }
     interface VbiButton {
         /**
           * Active state (pressed/selected)
@@ -529,11 +494,6 @@ declare namespace LocalJSX {
         "type"?: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
     }
 
-    interface MyComponentAttributes {
-        "first": string;
-        "middle": string;
-        "last": string;
-    }
     interface VbiButtonAttributes {
         "type": 'button' | 'submit' | 'reset';
         "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
@@ -581,7 +541,6 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
-        "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-chart-editor": VbiChartEditor;
         "vbi-config-provider": VbiConfigProvider;
@@ -596,7 +555,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
