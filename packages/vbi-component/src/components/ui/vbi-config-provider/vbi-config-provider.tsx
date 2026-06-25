@@ -1,6 +1,6 @@
-import { Component, h, Host, Method, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, Host, Method, Prop, Watch } from '@stencil/core'
 import type { VBIChartBuilder } from '@visactor/vbi'
-import { createVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
+import { createVBIStore, provideVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
 import { getThemeCssVariables, setTheme, type ThemeConfig } from './theme'
 
 @Component({
@@ -9,6 +9,8 @@ import { getThemeCssVariables, setTheme, type ThemeConfig } from './theme'
   shadow: false,
 })
 export class VbiConfigProvider {
+  @Element() el!: HTMLElement
+
   /** Theme configuration containing mode ('light' | 'dark') and design tokens */
   @Prop() theme?: ThemeConfig
 
@@ -17,6 +19,11 @@ export class VbiConfigProvider {
 
   private store: VBIStoreApi = createVBIStore()
   private destroyCallback?: () => void
+  private disposeProvider?: () => void
+
+  connectedCallback() {
+    this.disposeProvider = provideVBIStore(this.el, this.store)
+  }
 
   componentWillLoad() {
     this.handleThemePersistence()
@@ -24,6 +31,7 @@ export class VbiConfigProvider {
   }
 
   disconnectedCallback() {
+    this.disposeProvider?.()
     if (this.destroyCallback) {
       this.destroyCallback()
     }

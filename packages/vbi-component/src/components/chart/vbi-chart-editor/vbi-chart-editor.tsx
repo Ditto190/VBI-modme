@@ -1,4 +1,5 @@
-import { Component, Host, h } from '@stencil/core'
+import { Component, Host, h, Element, State } from '@stencil/core'
+import { connectVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
 
 @Component({
   tag: 'vbi-chart-editor',
@@ -6,6 +7,15 @@ import { Component, Host, h } from '@stencil/core'
   shadow: true,
 })
 export class VbiChartEditor {
+  @Element() el!: HTMLElement
+
+  @State() store?: VBIStoreApi
+
+  componentWillLoad() {
+    this.store = connectVBIStore(this.el)
+    console.log(this.store)
+  }
+
   render() {
     return (
       <Host>

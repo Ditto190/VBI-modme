@@ -3,7 +3,7 @@ import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { VBI } from '@visactor/vbi'
 import { type DatasetColumn } from '@visactor/vquery'
 import { Builder as VSeedBuilder, type VSeed } from '@visactor/vseed'
-import { createDefaultBuilder, setLocalDataWithSchema } from '../utils/data/localConnector'
+import { createDefaultBuilder, setLocalDataWithSchema } from 'src/utils/data/localConnector'
 
 type DestroyCallback = () => void
 
@@ -247,20 +247,4 @@ export const createVBIStore = (initialBuilderInstance?: VBIChartBuilder): VBISto
     reset: store.reset,
     dispose: store.dispose,
   }
-}
-
-export const connectVBIStore = async (el: HTMLElement): Promise<VBIStoreApi | undefined> => {
-  const provider = el.closest('vbi-config-provider') as any
-
-  if (!provider) {
-    console.warn(
-      `[VBI Warning] Could not find a <vbi-config-provider> wrapping the <${el.tagName.toLowerCase()}> element.`,
-    )
-    return undefined
-  }
-
-  // Wait for the vbi-config-provider element to be defined
-  await customElements.whenDefined('vbi-config-provider')
-
-  return provider.getStore()
 }

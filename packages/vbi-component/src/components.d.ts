@@ -7,11 +7,11 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
-import { VBIStoreApi } from "./store/vbi-store";
+import { VBIStoreApi } from "./store/vbi-store/index";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
-export { VBIStoreApi } from "./store/vbi-store";
+export { VBIStoreApi } from "./store/vbi-store/index";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export namespace Components {
     interface MyComponent {
