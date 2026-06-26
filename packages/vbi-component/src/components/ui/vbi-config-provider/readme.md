@@ -11,19 +11,6 @@
 | `theme`   | --        | Theme configuration containing mode ('light' \| 'dark') and design tokens | `ThemeConfig`                                | `undefined` |
 
 
-## Methods
-
-### `getStore() => Promise<VBIStoreApi>`
-
-Returns the VBI store instance for child components
-
-#### Returns
-
-Type: `Promise<VBIStoreApi>`
-
-
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

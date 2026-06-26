@@ -1,8 +1,9 @@
 import { Component, Element, h, Host, Prop, Watch, State } from '@stencil/core'
-import type { VBIChartBuilder } from '@visactor/vbi'
+import { type VBIChartBuilder } from '@visactor/vbi'
 import { createVBIStore, provideVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
 import { getThemeCssVariables, type ThemeConfig } from './theme'
 import { createVBIBuilder } from 'src/utils/chart/builder'
+import { type VbiTheme } from 'src/constants/builder'
 
 @Component({
   tag: 'vbi-config-provider',
@@ -18,8 +19,7 @@ export class VbiConfigProvider {
   /** VBI chart builder instance to initialize the store with */
   @Prop() builder?: VBIChartBuilder
 
-  // Sử dụng @State để Stencil biết cần re-render khi biến này thay đổi
-  @State() vbiTheme?: any
+  @State() vbiTheme?: VbiTheme
 
   private store: VBIStoreApi = createVBIStore()
   private destroyCallback?: () => void
@@ -57,10 +57,6 @@ export class VbiConfigProvider {
   }
 
   render() {
-    if (!this.vbiTheme) {
-      return null
-    }
-
     const themeVariables = getThemeCssVariables(this.theme, this.vbiTheme)
     return (
       <Host style={themeVariables}>
