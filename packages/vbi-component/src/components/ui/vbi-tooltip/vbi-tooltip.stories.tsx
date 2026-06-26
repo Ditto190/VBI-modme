@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { h } from '@stencil/core'
+import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { VbiTooltip } from './vbi-tooltip'
 
 const meta: Meta<VbiTooltip> = {
@@ -21,15 +21,11 @@ export const Default: Story = {
     position: 'top',
     open: false,
   },
-  render: (props, context) => {
-    const currentTheme = context.globals.backgrounds?.value || 'light'
-
+  render: (props) => {
     return (
-      <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-tooltip {...props}>
-          <vbi-button>Hover me</vbi-button>
-        </vbi-tooltip>
-      </vbi-config-provider>
+      <vbi-tooltip {...props}>
+        <vbi-button>Hover me</vbi-button>
+      </vbi-tooltip>
     )
   },
 }

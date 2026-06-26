@@ -16,13 +16,7 @@ export default meta
 type Story = StoryObj<VbiButton>
 
 export const Default: Story = {
-  render: (props, context) => {
-    const currentTheme = context.globals.backgrounds?.value || 'light'
-
-    return (
-      <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-button {...props}>Test</vbi-button>
-      </vbi-config-provider>
-    )
+  render: (props) => {
+    return <vbi-button {...props}>Test</vbi-button>
   },
 }

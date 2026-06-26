@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { h } from '@stencil/core'
+import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { VbiInput } from './vbi-input'
 
 const meta: Meta<VbiInput> = {
@@ -33,14 +33,8 @@ export const Default: Story = {
     value: '',
     placeholder: 'Type something...',
   },
-  render: (props, context) => {
-    const currentTheme = context.globals.backgrounds?.value || 'light'
-
-    return (
-      <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-input {...props}></vbi-input>
-      </vbi-config-provider>
-    )
+  render: (props) => {
+    return <vbi-input {...props}></vbi-input>
   },
 }
 
@@ -49,20 +43,16 @@ export const WithSlots: Story = {
     value: '',
     placeholder: 'Enter amount',
   },
-  render: (props, context) => {
-    const currentTheme = context.globals.backgrounds?.value || 'light'
-
+  render: (props) => {
     return (
-      <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-input {...props}>
-          <span slot='prefix' style={{ color: 'var(--color-base-content)' }}>
-            $
-          </span>
-          <span slot='suffix' style={{ color: 'var(--color-base-content)' }}>
-            USD
-          </span>
-        </vbi-input>
-      </vbi-config-provider>
+      <vbi-input {...props}>
+        <span slot='prefix' style={{ color: 'var(--color-base-content)' }}>
+          $
+        </span>
+        <span slot='suffix' style={{ color: 'var(--color-base-content)' }}>
+          USD
+        </span>
+      </vbi-input>
     )
   },
 }

@@ -1,3 +1,4 @@
+import { type VbiLocale } from 'src/constants/builder'
 import deDE from './locales/de-DE.json'
 import enUS from './locales/en-US.json'
 import frFR from './locales/fr-FR.json'
@@ -7,11 +8,11 @@ import koKR from './locales/ko-KR.json'
 import viVN from './locales/vi-VN.json'
 import zhCN from './locales/zh-CN.json'
 
-import type { Locale, TranslationParams } from './types'
+import type { TranslationParams } from './types'
 
 type TranslationMessages = typeof zhCN
 
-const messages: Record<Locale, TranslationMessages> = {
+const messages: Record<VbiLocale, TranslationMessages> = {
   'zh-CN': zhCN,
   'en-US': enUS,
   'ja-JP': jaJP,
@@ -41,7 +42,7 @@ const formatMessage = (message: string, params?: TranslationParams) => {
   })
 }
 
-export const translate = (locale: Locale, key: string, params?: TranslationParams) => {
+export const translate = (locale: VbiLocale, key: string, params?: TranslationParams) => {
   const message = getMessage(messages[locale], key)
 
   if (typeof message !== 'string') {
@@ -51,6 +52,6 @@ export const translate = (locale: Locale, key: string, params?: TranslationParam
   return formatMessage(message, params)
 }
 
-export const createTranslator = (locale: Locale) => {
+export const createTranslator = (locale: VbiLocale) => {
   return (key: string, params?: TranslationParams) => translate(locale, key, params)
 }

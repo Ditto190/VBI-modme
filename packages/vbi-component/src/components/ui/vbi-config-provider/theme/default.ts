@@ -1,7 +1,6 @@
 import { type ThemeConfig } from './types'
 
 export const darkTheme: ThemeConfig = {
-  mode: 'dark',
   tokens: {
     colorBase100: 'oklch(25.33% 0.016 252.42)',
     colorBase200: 'oklch(23.26% 0.014 253.1)',
@@ -39,7 +38,6 @@ export const darkTheme: ThemeConfig = {
 }
 
 export const lightTheme: ThemeConfig = {
-  mode: 'light',
   tokens: {
     colorBase100: 'oklch(100% 0 0)',
     colorBase200: 'oklch(98% 0 0)',

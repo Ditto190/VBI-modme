@@ -67,7 +67,6 @@ export const DarkMode: Story = {
 export const CustomTheme: Story = {
   args: {
     theme: {
-      mode: 'dark',
       tokens: {
         colorBase100: 'oklch(20% 0.1 140)', // Dark forest green background
         colorBaseContent: 'oklch(95% 0.05 140)',

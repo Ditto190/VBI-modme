@@ -25,13 +25,7 @@ export const Default: Story = {
     size: '24',
     color: 'var(--color-primary)',
   },
-  render: (args, context) => {
-    const currentTheme = context.globals.backgrounds?.value || 'light'
-
-    return (
-      <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-icon {...args}></vbi-icon>
-      </vbi-config-provider>
-    )
+  render: (args) => {
+    return <vbi-icon {...args}></vbi-icon>
   },
 }

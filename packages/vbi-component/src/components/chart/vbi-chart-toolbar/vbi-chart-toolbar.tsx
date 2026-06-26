@@ -1,4 +1,7 @@
-import { Component, Host, h } from '@stencil/core'
+import { Component, Element, Host, State, h } from '@stencil/core'
+import { connectVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
+import { createVBIBuilder } from 'src/utils/chart/builder'
+import { createVBIUndoManager } from 'src/utils/chart/undo-manager'
 
 @Component({
   tag: 'vbi-chart-toolbar',
@@ -6,6 +9,21 @@ import { Component, Host, h } from '@stencil/core'
   shadow: true,
 })
 export class VbiChartToolbar {
+  @Element() el!: HTMLElement
+
+  @State() store?: VBIStoreApi
+
+  componentWillLoad() {
+    this.store = connectVBIStore(this.el)
+    const builder = this.store?.state.builder
+
+    const { canUndo, canRedo, undo, redo } = createVBIUndoManager(builder)
+    const { theme } = createVBIBuilder(builder)
+
+    console.log(canRedo, canUndo, undo, redo)
+    console.log('theme', theme)
+  }
+
   render() {
     return (
       <Host>

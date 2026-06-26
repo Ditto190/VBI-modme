@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { h } from '@stencil/core'
+import type { Meta, StoryObj } from '@stencil/storybook-plugin'
 import { VbiLoading } from './vbi-loading'
 
 const meta: Meta<VbiLoading> = {
@@ -16,13 +16,7 @@ export default meta
 type Story = StoryObj<VbiLoading>
 
 export const Default: Story = {
-  render: (props, context) => {
-    const currentTheme = context.globals.backgrounds?.value || 'light'
-
-    return (
-      <vbi-config-provider theme={{ mode: currentTheme }}>
-        <vbi-loading {...props}></vbi-loading>
-      </vbi-config-provider>
-    )
+  render: (props) => {
+    return <vbi-loading {...props}></vbi-loading>
   },
 }

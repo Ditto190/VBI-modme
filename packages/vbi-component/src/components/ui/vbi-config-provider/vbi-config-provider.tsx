@@ -1,7 +1,8 @@
-import { Component, Element, h, Host, Method, Prop, Watch } from '@stencil/core'
+import { Component, Element, h, Host, Prop, Watch, State } from '@stencil/core'
 import type { VBIChartBuilder } from '@visactor/vbi'
 import { createVBIStore, provideVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
-import { getThemeCssVariables, setTheme, type ThemeConfig } from './theme'
+import { getThemeCssVariables, type ThemeConfig } from './theme'
+import { createVBIBuilder } from 'src/utils/chart/builder'
 
 @Component({
   tag: 'vbi-config-provider',
@@ -17,6 +18,9 @@ export class VbiConfigProvider {
   /** VBI chart builder instance to initialize the store with */
   @Prop() builder?: VBIChartBuilder
 
+  // Sử dụng @State để Stencil biết cần re-render khi biến này thay đổi
+  @State() vbiTheme?: any
+
   private store: VBIStoreApi = createVBIStore()
   private destroyCallback?: () => void
   private disposeProvider?: () => void
@@ -26,7 +30,6 @@ export class VbiConfigProvider {
   }
 
   componentWillLoad() {
-    this.handleThemePersistence()
     this.handleBuilderChange(this.builder)
   }
 
@@ -34,13 +37,6 @@ export class VbiConfigProvider {
     this.disposeProvider?.()
     if (this.destroyCallback) {
       this.destroyCallback()
-    }
-  }
-
-  @Watch('theme')
-  handleThemePersistence() {
-    if (this.theme?.mode) {
-      setTheme(this.theme.mode)
     }
   }
 
@@ -52,18 +48,20 @@ export class VbiConfigProvider {
 
     if (newBuilder) {
       this.destroyCallback = this.store.initialize(newBuilder)
+
+      const { theme } = createVBIBuilder(newBuilder)
+      this.vbiTheme = theme
+    } else {
+      this.vbiTheme = undefined
     }
   }
 
-  /** Returns the VBI store instance for child components */
-  @Method()
-  async getStore(): Promise<VBIStoreApi> {
-    return this.store
-  }
-
   render() {
-    const themeVariables = getThemeCssVariables(this.theme)
+    if (!this.vbiTheme) {
+      return null
+    }
 
+    const themeVariables = getThemeCssVariables(this.theme, this.vbiTheme)
     return (
       <Host style={themeVariables}>
         <slot></slot>
