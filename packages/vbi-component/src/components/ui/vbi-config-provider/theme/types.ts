@@ -1,4 +1,3 @@
-export type ThemeMode = 'light' | 'dark'
 export interface ThemeTokens {
   // Base Colors
   colorBase100?: string
@@ -40,6 +39,5 @@ export interface ThemeTokens {
 }
 
 export interface ThemeConfig {
-  mode?: ThemeMode
   tokens?: ThemeTokens
 }

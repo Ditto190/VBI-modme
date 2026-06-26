@@ -1,8 +1,12 @@
+import { type VbiTheme } from 'src/constants/builder'
 import { darkTheme, lightTheme } from './default'
-import { type ThemeConfig, type ThemeMode } from './types'
+import { type ThemeConfig } from './types'
 
-export const getThemeCssVariables = (userTheme?: ThemeConfig): Record<string, string | undefined> => {
-  const mode = userTheme?.mode || getTheme()
+export const getThemeCssVariables = (
+  userTheme?: ThemeConfig,
+  vbiTheme?: VbiTheme,
+): Record<string, string | undefined> => {
+  const mode = vbiTheme ?? 'light'
   const baseTheme = mode === 'light' ? lightTheme : darkTheme
   const tokens = { ...baseTheme.tokens, ...userTheme?.tokens }
 
@@ -41,27 +45,5 @@ export const getThemeCssVariables = (userTheme?: ThemeConfig): Record<string, st
     '--border': tokens.border,
     '--depth': tokens.depth?.toString(),
     '--noise': tokens.noise?.toString(),
-  }
-}
-
-const THEME_KEY = 'vbi-theme'
-
-export const getTheme = (): ThemeMode => {
-  try {
-    const stored = localStorage.getItem(THEME_KEY)
-    if (stored === 'dark') {
-      return 'dark'
-    }
-    return 'light'
-  } catch {
-    return 'light'
-  }
-}
-
-export const setTheme = (mode: ThemeMode): void => {
-  try {
-    localStorage.setItem(THEME_KEY, mode)
-  } catch (error) {
-    console.error('Error while saving theme:', error)
   }
 }
