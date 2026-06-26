@@ -198,6 +198,27 @@ export namespace Components {
          */
         "type": 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
     }
+    interface VbiTooltip {
+        /**
+          * The semantic color theme of the tooltip
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Whether the tooltip is currently open/visible
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The position of the tooltip relative to its target
+          * @default 'top'
+         */
+        "position": 'top' | 'bottom' | 'left' | 'right';
+        /**
+          * The text to display inside the tooltip
+          * @default ''
+         */
+        "text": string;
+    }
 }
 export interface VbiDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -281,6 +302,12 @@ declare global {
         prototype: HTMLVbiLoadingElement;
         new (): HTMLVbiLoadingElement;
     };
+    interface HTMLVbiTooltipElement extends Components.VbiTooltip, HTMLStencilElement {
+    }
+    var HTMLVbiTooltipElement: {
+        prototype: HTMLVbiTooltipElement;
+        new (): HTMLVbiTooltipElement;
+    };
     interface HTMLElementTagNameMap {
         "vbi-button": HTMLVbiButtonElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
@@ -290,6 +317,7 @@ declare global {
         "vbi-input": HTMLVbiInputElement;
         "vbi-join": HTMLVbiJoinElement;
         "vbi-loading": HTMLVbiLoadingElement;
+        "vbi-tooltip": HTMLVbiTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -493,6 +521,27 @@ declare namespace LocalJSX {
          */
         "type"?: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
     }
+    interface VbiTooltip {
+        /**
+          * The semantic color theme of the tooltip
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Whether the tooltip is currently open/visible
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The position of the tooltip relative to its target
+          * @default 'top'
+         */
+        "position"?: 'top' | 'bottom' | 'left' | 'right';
+        /**
+          * The text to display inside the tooltip
+          * @default ''
+         */
+        "text"?: string;
+    }
 
     interface VbiButtonAttributes {
         "type": 'button' | 'submit' | 'reset';
@@ -539,6 +588,12 @@ declare namespace LocalJSX {
         "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
         "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
     }
+    interface VbiTooltipAttributes {
+        "text": string;
+        "position": 'top' | 'bottom' | 'left' | 'right';
+        "color": 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+        "open": boolean;
+    }
 
     interface IntrinsicElements {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
@@ -549,6 +604,7 @@ declare namespace LocalJSX {
         "vbi-input": Omit<VbiInput, keyof VbiInputAttributes> & { [K in keyof VbiInput & keyof VbiInputAttributes]?: VbiInput[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `attr:${K}`]?: VbiInputAttributes[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `prop:${K}`]?: VbiInput[K] };
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
         "vbi-loading": Omit<VbiLoading, keyof VbiLoadingAttributes> & { [K in keyof VbiLoading & keyof VbiLoadingAttributes]?: VbiLoading[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `attr:${K}`]?: VbiLoadingAttributes[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `prop:${K}`]?: VbiLoading[K] };
+        "vbi-tooltip": Omit<VbiTooltip, keyof VbiTooltipAttributes> & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes]?: VbiTooltip[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `attr:${K}`]?: VbiTooltipAttributes[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `prop:${K}`]?: VbiTooltip[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -563,6 +619,7 @@ declare module "@stencil/core" {
             "vbi-input": LocalJSX.IntrinsicElements["vbi-input"] & JSXBase.HTMLAttributes<HTMLVbiInputElement>;
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
             "vbi-loading": LocalJSX.IntrinsicElements["vbi-loading"] & JSXBase.HTMLAttributes<HTMLVbiLoadingElement>;
+            "vbi-tooltip": LocalJSX.IntrinsicElements["vbi-tooltip"] & JSXBase.HTMLAttributes<HTMLVbiTooltipElement>;
         }
     }
 }
