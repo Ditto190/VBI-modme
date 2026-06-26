@@ -49,6 +49,10 @@ export namespace Components {
     }
     interface VbiChartEditor {
     }
+    interface VbiChartToolbar {
+    }
+    interface VbiCharttoolbar {
+    }
     interface VbiConfigProvider {
         /**
           * VBI chart builder instance to initialize the store with
@@ -241,6 +245,18 @@ declare global {
         prototype: HTMLVbiChartEditorElement;
         new (): HTMLVbiChartEditorElement;
     };
+    interface HTMLVbiChartToolbarElement extends Components.VbiChartToolbar, HTMLStencilElement {
+    }
+    var HTMLVbiChartToolbarElement: {
+        prototype: HTMLVbiChartToolbarElement;
+        new (): HTMLVbiChartToolbarElement;
+    };
+    interface HTMLVbiCharttoolbarElement extends Components.VbiCharttoolbar, HTMLStencilElement {
+    }
+    var HTMLVbiCharttoolbarElement: {
+        prototype: HTMLVbiCharttoolbarElement;
+        new (): HTMLVbiCharttoolbarElement;
+    };
     interface HTMLVbiConfigProviderElement extends Components.VbiConfigProvider, HTMLStencilElement {
     }
     var HTMLVbiConfigProviderElement: {
@@ -311,6 +327,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "vbi-button": HTMLVbiButtonElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
+        "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
+        "vbi-charttoolbar": HTMLVbiCharttoolbarElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
         "vbi-dropdown": HTMLVbiDropdownElement;
         "vbi-icon": HTMLVbiIconElement;
@@ -355,6 +373,10 @@ declare namespace LocalJSX {
         "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
     }
     interface VbiChartEditor {
+    }
+    interface VbiChartToolbar {
+    }
+    interface VbiCharttoolbar {
     }
     interface VbiConfigProvider {
         /**
@@ -598,6 +620,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-chart-editor": VbiChartEditor;
+        "vbi-chart-toolbar": VbiChartToolbar;
+        "vbi-charttoolbar": VbiCharttoolbar;
         "vbi-config-provider": VbiConfigProvider;
         "vbi-dropdown": Omit<VbiDropdown, keyof VbiDropdownAttributes> & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes]?: VbiDropdown[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `attr:${K}`]?: VbiDropdownAttributes[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `prop:${K}`]?: VbiDropdown[K] };
         "vbi-icon": Omit<VbiIcon, keyof VbiIconAttributes> & { [K in keyof VbiIcon & keyof VbiIconAttributes]?: VbiIcon[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `attr:${K}`]?: VbiIconAttributes[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `prop:${K}`]?: VbiIcon[K] };
@@ -613,6 +637,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
+            "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
+            "vbi-charttoolbar": LocalJSX.IntrinsicElements["vbi-charttoolbar"] & JSXBase.HTMLAttributes<HTMLVbiCharttoolbarElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
             "vbi-dropdown": LocalJSX.IntrinsicElements["vbi-dropdown"] & JSXBase.HTMLAttributes<HTMLVbiDropdownElement>;
             "vbi-icon": LocalJSX.IntrinsicElements["vbi-icon"] & JSXBase.HTMLAttributes<HTMLVbiIconElement>;
