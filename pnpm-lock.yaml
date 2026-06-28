@@ -471,11 +471,10 @@ importers:
         version: 6.0.2
 
   packages/vbi-component:
-    dependencies:
+    devDependencies:
       '@ant-design/icons-svg':
         specifier: 4.4.2
         version: 4.4.2
-    devDependencies:
       '@stencil/core':
         specifier: 4.43.5
         version: 4.43.5
