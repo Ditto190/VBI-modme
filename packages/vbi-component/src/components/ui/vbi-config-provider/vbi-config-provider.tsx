@@ -1,9 +1,10 @@
-import { Component, Element, h, Host, Prop, Watch, State } from '@stencil/core'
+import { Component, Element, h, Host, Prop, Watch } from '@stencil/core'
 import { type VBIChartBuilder } from '@visactor/vbi'
-import { createVBIStore, provideVBIStore, type VBIStoreApi } from 'src/store/vbi-store'
+
 import { getThemeCssVariables, type ThemeConfig } from './theme'
-import { createVBIBuilder } from 'src/utils/chart/builder'
-import { type VbiTheme } from 'src/constants/builder'
+import { createChartStore, type ChartStore } from 'src/store/chart'
+import { provideChartStore } from 'src/store/context/chart-context'
+import { createDefaultBuilder } from 'src/utils/data/localConnector'
 
 @Component({
   tag: 'vbi-config-provider',
@@ -19,45 +20,33 @@ export class VbiConfigProvider {
   /** VBI chart builder instance to initialize the store with */
   @Prop() builder?: VBIChartBuilder
 
-  @State() vbiTheme?: VbiTheme
-
-  private store: VBIStoreApi = createVBIStore()
   private destroyCallback?: () => void
-  private disposeProvider?: () => void
-
-  connectedCallback() {
-    this.disposeProvider = provideVBIStore(this.el, this.store)
-  }
+  private chartStore?: ChartStore
+  private disposeChartProvider?: () => void
 
   componentWillLoad() {
     this.handleBuilderChange(this.builder)
   }
 
   disconnectedCallback() {
-    this.disposeProvider?.()
-    if (this.destroyCallback) {
-      this.destroyCallback()
-    }
+    this.disposeChartProvider?.()
+    this.destroyCallback?.()
   }
 
   @Watch('builder')
   handleBuilderChange(newBuilder?: VBIChartBuilder) {
-    if (this.destroyCallback) {
-      this.destroyCallback()
-    }
+    this.destroyCallback?.()
+    this.disposeChartProvider?.()
 
-    if (newBuilder) {
-      this.destroyCallback = this.store.initialize(newBuilder)
-
-      const { theme } = createVBIBuilder(newBuilder)
-      this.vbiTheme = theme
-    } else {
-      this.vbiTheme = undefined
-    }
+    const builder = newBuilder ?? createDefaultBuilder()
+    this.chartStore = createChartStore(builder)
+    this.destroyCallback = this.chartStore.chartBuilder.initialize(builder)
+    this.disposeChartProvider = provideChartStore(this.el, this.chartStore)
   }
 
   render() {
-    const themeVariables = getThemeCssVariables(this.theme, this.vbiTheme)
+    const vbiTheme = this.chartStore?.chartConfig.state.theme
+    const themeVariables = getThemeCssVariables(this.theme, vbiTheme)
     return (
       <Host style={themeVariables}>
         <slot></slot>

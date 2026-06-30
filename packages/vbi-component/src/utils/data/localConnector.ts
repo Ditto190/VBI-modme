@@ -170,3 +170,14 @@ export class LocalConnector {
     return VBI.chart.create(VBI.chart.createEmpty(this.id))
   }
 }
+
+export function createDefaultBuilder(): VBIChartBuilder {
+  const connector = new LocalConnector()
+  connector.register()
+  import('./supermarketSchema')
+    .then(({ supermarketSchema }) =>
+      connector.loadCsvData('https://visactor.github.io/VBI/dataset/supermarket.csv', supermarketSchema),
+    )
+    .catch(console.error)
+  return connector.createBuilder()
+}
