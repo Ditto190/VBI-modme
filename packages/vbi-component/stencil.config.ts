@@ -1,11 +1,15 @@
 import { type Config } from '@stencil/core'
 
+const isDev = process.argv.includes('--dev')
+
 export const config: Config = {
   namespace: 'vbi-component',
   globalStyle: 'src/global/app.css',
   rollupConfig: {
     inputOptions: {
-      external: ['@visactor/vbi', '@visactor/vchart', '@visactor/vquery', '@visactor/vseed', '@visactor/vtable'],
+      external: isDev
+        ? []
+        : ['@visactor/vbi', '@visactor/vchart', '@visactor/vquery', '@visactor/vseed', '@visactor/vtable'],
     },
   },
   outputTargets: [
