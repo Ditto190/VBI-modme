@@ -1,25 +1,10 @@
 import { VBI, type VBIChartBuilder } from '@visactor/vbi'
 import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
-import { supermarketSchema } from './supermarketSchema'
 
 export type LocalValue = string | number | boolean | null | undefined
 export type LocalRow = Record<string, LocalValue>
 type QueryValue = string | number
 type FieldSelection = { alias: string; field: string }
-
-export const CONNECTOR_ID = 'localDataConnector'
-
-let localData: LocalRow[] = []
-let localSchema: DatasetColumn[] | null = null
-let datasetNeedsRefresh = true
-let demoDataPromise: Promise<void> | null = null
-
-export function setLocalDataWithSchema(data: LocalRow[], schema: DatasetColumn[] | null): void {
-  localData = data
-  localSchema = schema
-  datasetNeedsRefresh = true
-  demoDataPromise = null
-}
 
 function inferSchema(data: LocalRow[]): DatasetColumn[] {
   const firstRow = data[0]
@@ -114,66 +99,74 @@ function normalizeDataset(queryDSL: VQueryDSL<Record<string, QueryValue>>, datas
   })
 }
 
-async function fetchDemoData(): Promise<void> {
-  if (localData.length > 0 || localSchema) return
+export class LocalConnector {
+  public readonly id: string
+  private localData: LocalRow[] = []
+  private localSchema: DatasetColumn[] | null = null
+  private datasetNeedsRefresh = true
+  private vquery = new VQuery()
 
-  const response = await fetch('https://visactor.github.io/VBI/dataset/supermarket.csv')
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
-  const csv = await response.text()
-  const { parseCsv } = await import('./parseCsv')
-  const { rowsToDataset } = await import('./dataset')
-  const [headerRow = [], ...dataRows] = parseCsv(csv)
-  const data = rowsToDataset(
-    headerRow.map((h) => h.trim()),
-    dataRows,
-    supermarketSchema,
-  )
-  setLocalDataWithSchema(data, supermarketSchema)
-}
-
-async function ensureDemoDataLoaded(): Promise<void> {
-  if (localData.length > 0) return
-  if (!demoDataPromise) {
-    demoDataPromise = fetchDemoData().finally(() => {
-      demoDataPromise = null
-    })
+  constructor(id?: string) {
+    this.id = id || `local_${Math.random().toString(36).substr(2, 9)}`
   }
-  await demoDataPromise
-}
 
-export function createLocalConnector(connectorId: string): string {
-  const vquery = new VQuery()
-  VBI.connectors.register(connectorId, async () => ({
-    discoverSchema: async () => {
-      if (localSchema) return localSchema
-      return localData.length === 0 ? [] : inferSchema(localData)
-    },
-    query: async ({ queryDSL, schema }) => {
-      if ((await vquery.hasDataset(connectorId)) && datasetNeedsRefresh) {
-        await vquery.dropDataset(connectorId)
-      }
-      if (!(await vquery.hasDataset(connectorId))) {
-        if (localData.length === 0) return { dataset: [] }
-        await vquery.createDataset(
-          connectorId,
-          schema as DatasetColumn[],
-          { rawDataset: localData, type: 'json' } as RawDatasetSource,
-        )
-        datasetNeedsRefresh = false
-      }
-      const dataset = await vquery.connectDataset(connectorId)
-      const dsl = queryDSL as VQueryDSL<Record<string, QueryValue>>
-      const result = await dataset.query(dsl)
-      return { dataset: normalizeDataset(dsl, result.dataset as LocalRow[]) }
-    },
-  }))
-  return connectorId
-}
+  public setDataWithSchema(data: LocalRow[], schema: DatasetColumn[] | null): void {
+    this.localData = data
+    this.localSchema = schema
+    this.datasetNeedsRefresh = true
+  }
 
-export const createDefaultBuilder = (): VBIChartBuilder => VBI.chart.create(VBI.chart.createEmpty(CONNECTOR_ID))
+  public async loadCsvData(source: string | File, schema?: DatasetColumn[] | null): Promise<void> {
+    let csv: string
 
-export async function initVBIConnector() {
-  console.log('initVBIConnector')
-  await ensureDemoDataLoaded()
-  createLocalConnector(CONNECTOR_ID)
+    if (typeof source === 'string') {
+      const response = await fetch(source)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      csv = await response.text()
+    } else {
+      csv = await source.text()
+    }
+
+    const { parseCsv } = await import('./parseCsv')
+    const { rowsToDataset, inferSchema: inferCsvSchema } = await import('./dataset')
+    const [headerRow = [], ...dataRows] = parseCsv(csv)
+
+    const headers = headerRow.map((h) => h.trim())
+    const finalSchema = schema || inferCsvSchema(headers, dataRows)
+
+    const data = rowsToDataset(headers, dataRows, finalSchema)
+    this.setDataWithSchema(data, finalSchema)
+  }
+
+  public register(): string {
+    VBI.connectors.register(this.id, async () => ({
+      discoverSchema: async () => {
+        if (this.localSchema) return this.localSchema
+        return this.localData.length === 0 ? [] : inferSchema(this.localData)
+      },
+      query: async ({ queryDSL, schema }) => {
+        if ((await this.vquery.hasDataset(this.id)) && this.datasetNeedsRefresh) {
+          await this.vquery.dropDataset(this.id)
+        }
+        if (!(await this.vquery.hasDataset(this.id))) {
+          if (this.localData.length === 0) return { dataset: [] }
+          await this.vquery.createDataset(
+            this.id,
+            schema as DatasetColumn[],
+            { rawDataset: this.localData, type: 'json' } as RawDatasetSource,
+          )
+          this.datasetNeedsRefresh = false
+        }
+        const dataset = await this.vquery.connectDataset(this.id)
+        const dsl = queryDSL as VQueryDSL<Record<string, QueryValue>>
+        const result = await dataset.query(dsl)
+        return { dataset: normalizeDataset(dsl, result.dataset as LocalRow[]) }
+      },
+    }))
+    return this.id
+  }
+
+  public createBuilder(): VBIChartBuilder {
+    return VBI.chart.create(VBI.chart.createEmpty(this.id))
+  }
 }
