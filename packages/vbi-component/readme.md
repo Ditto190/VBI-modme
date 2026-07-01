@@ -46,11 +46,25 @@ Once registered, custom elements like `<vbi-config-provider>` and `<vbi-button>`
 
 Below is the list of available web components in this library and their detailed documentation:
 
+### UI Components
+
 | Component               | Documentation                                                  | Description                                                                      |
 | :---------------------- | :------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | `<vbi-config-provider>` | [readme.md](./src/components/ui/vbi-config-provider/readme.md) | Root configuration provider managing theme and coordinating the VBI store state. |
 | `<vbi-button>`          | [readme.md](./src/components/ui/vbi-button/readme.md)          | Basic button component.                                                          |
-| `<my-component>`        | [readme.md](./src/components/my-component/readme.md)           | Boilerplate component for reference.                                             |
+| `<vbi-dropdown>`        | [readme.md](./src/components/ui/vbi-dropdown/readme.md)        | Dropdown menu component.                                                         |
+| `<vbi-icon>`            | [readme.md](./src/components/ui/vbi-icon/readme.md)            | Icon component.                                                                  |
+| `<vbi-input>`           | [readme.md](./src/components/ui/vbi-input/readme.md)           | Input field component.                                                           |
+| `<vbi-join>`            | [readme.md](./src/components/ui/vbi-join/readme.md)            | Join layout component.                                                           |
+| `<vbi-loading>`         | [readme.md](./src/components/ui/vbi-loading/readme.md)         | Loading indicator component.                                                     |
+| `<vbi-tooltip>`         | [readme.md](./src/components/ui/vbi-tooltip/readme.md)         | Tooltip component.                                                               |
+
+### Chart Components
+
+| Component             | Documentation                                                   | Description                   |
+| :-------------------- | :-------------------------------------------------------------- | :---------------------------- |
+| `<vbi-chart-editor>`  | [readme.md](./src/components/chart/vbi-chart-editor/readme.md)  | Chart editor component.       |
+| `<vbi-chart-toolbar>` | [readme.md](./src/components/chart/vbi-chart-toolbar/readme.md) | Toolbar for chart operations. |
 
 ---
 
