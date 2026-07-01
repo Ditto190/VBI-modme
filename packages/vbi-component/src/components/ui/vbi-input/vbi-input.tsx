@@ -10,7 +10,7 @@ export class VbiInput {
   @Prop() type: string = 'text'
 
   /** Value of the input element */
-  @Prop({ mutable: true }) value?: string = ''
+  @Prop({ mutable: true }) value?: string | number = ''
 
   /** Placeholder text */
   @Prop() placeholder?: string = ''
@@ -32,6 +32,15 @@ export class VbiInput {
 
   /** Minimum character length */
   @Prop() minlength?: number
+
+  /** Minimum value for number or date input */
+  @Prop() min?: number | string
+
+  /** Maximum value for number or date input */
+  @Prop() max?: number | string
+
+  /** Step for number input */
+  @Prop() step?: number | string
 
   /** Autocomplete hint for the browser */
   @Prop() autocomplete?: string
@@ -88,6 +97,9 @@ export class VbiInput {
         <input
           type={this.type}
           name={this.name}
+          min={this.min}
+          max={this.max}
+          step={this.step}
           value={this.value}
           placeholder={this.placeholder}
           disabled={this.disabled}

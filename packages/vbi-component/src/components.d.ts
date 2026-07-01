@@ -127,9 +127,17 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Maximum value for number or date input
+         */
+        "max"?: number | string;
+        /**
           * Maximum character length
          */
         "maxlength"?: number;
+        /**
+          * Minimum value for number or date input
+         */
+        "min"?: number | string;
         /**
           * Minimum character length
          */
@@ -158,6 +166,10 @@ export namespace Components {
          */
         "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
         /**
+          * Step for number input
+         */
+        "step"?: number | string;
+        /**
           * Type of the input element (text, password, email, number, date...)
           * @default 'text'
          */
@@ -166,7 +178,7 @@ export namespace Components {
           * Value of the input element
           * @default ''
          */
-        "value"?: string;
+        "value"?: string | number;
         /**
           * Display variant (e.g., ghost - transparent)
          */
@@ -443,9 +455,17 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Maximum value for number or date input
+         */
+        "max"?: number | string;
+        /**
           * Maximum character length
          */
         "maxlength"?: number;
+        /**
+          * Minimum value for number or date input
+         */
+        "min"?: number | string;
         /**
           * Minimum character length
          */
@@ -490,6 +510,10 @@ declare namespace LocalJSX {
          */
         "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
         /**
+          * Step for number input
+         */
+        "step"?: number | string;
+        /**
           * Type of the input element (text, password, email, number, date...)
           * @default 'text'
          */
@@ -498,7 +522,7 @@ declare namespace LocalJSX {
           * Value of the input element
           * @default ''
          */
-        "value"?: string;
+        "value"?: string | number;
         /**
           * Display variant (e.g., ghost - transparent)
          */
@@ -579,6 +603,9 @@ declare namespace LocalJSX {
         "required": boolean;
         "maxlength": number;
         "minlength": number;
+        "min": string;
+        "max": string;
+        "step": string;
         "autocomplete": string;
         "autofocus": boolean;
         "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
