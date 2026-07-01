@@ -1,7 +1,6 @@
 import { Component, Element, Host, State, h } from '@stencil/core'
 import { connectChartStore } from 'src/store/context'
 import { type ChartStore } from 'src/store/chart'
-import { createVBIUndoManager } from 'src/utils/chart/undo-manager'
 
 @Component({
   tag: 'vbi-chart-toolbar',
@@ -15,14 +14,14 @@ export class VbiChartToolbar {
 
   componentWillLoad() {
     this.store = connectChartStore(this.el)
-    const builder = this.store?.chartBuilder.builder
+  }
 
-    const { canUndo, canRedo, undo, redo } = createVBIUndoManager(builder)
-    console.log(canRedo, canUndo, undo, redo)
-    if (this.store) {
-      console.log(this.store.chartConfig.state.theme)
-    }
-    console.log('theme', builder?.theme.getTheme())
+  private get chartConfig() {
+    return this.store?.chartConfig
+  }
+
+  private handleLimitChange = (e: CustomEvent<string>) => {
+    this.chartConfig?.setLimit(+e.detail)
   }
 
   render() {
@@ -35,7 +34,14 @@ export class VbiChartToolbar {
             <div>Undo|redo</div>
           </div>
           <div class='toolbar-group'>
-            <input type='text' />
+            <vbi-input
+              size='sm'
+              type='number'
+              min={1}
+              step={50}
+              value={this.chartConfig?.state.limit}
+              onVbiChange={this.handleLimitChange}
+            ></vbi-input>
           </div>
         </div>
       </Host>

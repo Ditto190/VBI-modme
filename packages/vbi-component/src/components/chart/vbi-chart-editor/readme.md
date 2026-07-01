@@ -15,6 +15,7 @@
 ```mermaid
 graph TD;
   vbi-chart-editor --> vbi-chart-toolbar
+  vbi-chart-toolbar --> vbi-input
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
