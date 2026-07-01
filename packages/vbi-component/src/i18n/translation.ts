@@ -10,11 +10,11 @@ export interface TranslationResult {
 }
 
 export const createTranslation = (store: ChartStore): TranslationResult => {
-  const locale = (store.chartBuilder.builder?.locale?.getLocale() || 'zh-CN') as VbiLocale
+  const locale = (store.chartBuilder.builder.locale?.getLocale() || 'zh-CN') as VbiLocale
   const t = createTranslator(locale)
 
   const setLocale = (newLocale: VbiLocale) => {
-    store.chartBuilder.builder?.locale?.setLocale(newLocale)
+    store.chartBuilder.builder.locale?.setLocale(newLocale)
   }
 
   return {

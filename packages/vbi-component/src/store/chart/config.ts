@@ -20,6 +20,9 @@ export interface ChartConfigStore {
   state: ChartConfigState
   onChange: <Key extends keyof ChartConfigState>(propName: Key, cb: (newValue: ChartConfigState[Key]) => void) => void
   dispose: () => void
+  setTheme: (theme: VbiTheme) => void
+  setLocale: (locale: VbiLocale) => void
+  setLimit: (limit: number) => void
 }
 
 const normalizeLimit = (limit: number) => {
@@ -36,6 +39,10 @@ export function createChartConfigStore(chartBuilder: ChartBuilderStore): ChartCo
     connectorId: initialDSL.connectorId ?? '',
   })
 
+  chartBuilder.onChange('dsl', (dsl: VBIChartDSL) => {
+    syncFromDSL(dsl)
+  })
+
   const syncFromDSL = (dsl: VBIChartDSL) => {
     state.locale = dsl.locale ?? VBI_DEFAULT_LOCALE
     state.theme = dsl.theme ?? VBI_DEFAULT_THEME
@@ -43,9 +50,17 @@ export function createChartConfigStore(chartBuilder: ChartBuilderStore): ChartCo
     state.connectorId = dsl.connectorId ?? ''
   }
 
-  chartBuilder.onChange('dsl', (dsl: VBIChartDSL) => {
-    syncFromDSL(dsl)
-  })
+  const setTheme = (theme: VbiTheme) => {
+    chartBuilder.builder.theme.setTheme(theme)
+  }
 
-  return { state, onChange, dispose }
+  const setLocale = (locale: VbiLocale) => {
+    chartBuilder.builder.locale.setLocale(locale)
+  }
+
+  const setLimit = (limit: number) => {
+    chartBuilder.builder.limit.setLimit(normalizeLimit(limit))
+  }
+
+  return { state, onChange, dispose, setTheme, setLocale, setLimit }
 }
