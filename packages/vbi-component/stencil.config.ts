@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { type Config } from '@stencil/core'
 
 const isDev = process.argv.includes('--dev')

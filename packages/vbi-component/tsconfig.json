@@ -20,6 +20,6 @@
       "src/*": ["./src/*"]
     }
   },
-  "include": ["src", "stencil.config.ts", "vitest.config.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
