@@ -1,4 +1,5 @@
 import { Component, Event, type EventEmitter, h, Host, Prop, Watch } from '@stencil/core'
+import { randomShortId } from 'src/utils/random'
 
 type PopoverElement = HTMLElement & {
   togglePopover(): void
@@ -14,7 +15,7 @@ type PopoverToggleEvent = Event & { newState: 'open' | 'closed' }
   shadow: true,
 })
 export class VbiDropdown {
-  private dropdownId = `dropdown-anchor-${Math.random().toString(36).slice(2, 9)}`
+  private dropdownId = `dropdown-anchor-${randomShortId()}`
   private contentEl?: PopoverElement
   private hoverCloseTimer?: ReturnType<typeof setTimeout>
 

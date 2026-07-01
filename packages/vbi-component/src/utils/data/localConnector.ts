@@ -1,5 +1,6 @@
 import { VBI, type VBIChartBuilder } from '@visactor/vbi'
 import { VQuery, type DatasetColumn, type RawDatasetSource, type VQueryDSL } from '@visactor/vquery'
+import { randomShortId } from '../random'
 
 export type LocalValue = string | number | boolean | null | undefined
 export type LocalRow = Record<string, LocalValue>
@@ -107,7 +108,7 @@ export class LocalConnector {
   private vquery = new VQuery()
 
   constructor(id?: string) {
-    this.id = id || `local_${Math.random().toString(36).substr(2, 9)}`
+    this.id = id || `local_${randomShortId()}`
   }
 
   public setDataWithSchema(data: LocalRow[], schema: DatasetColumn[] | null): void {
