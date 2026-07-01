@@ -1,4 +1,4 @@
-# vbi-chart-editor
+# vbi-chart-toolbar
 
 
 
@@ -7,15 +7,15 @@
 
 ## Dependencies
 
-### Depends on
+### Used by
 
-- [vbi-chart-toolbar](../vbi-chart-toolbar)
+ - [vbi-chart-editor](../vbi-chart-editor)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-editor --> vbi-chart-toolbar
-  style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
+  style vbi-chart-toolbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
