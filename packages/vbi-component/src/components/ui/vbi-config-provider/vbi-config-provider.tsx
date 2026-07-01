@@ -1,10 +1,9 @@
 import { Component, Element, h, Host, Prop, Watch } from '@stencil/core'
 import { type VBIChartBuilder } from '@visactor/vbi'
-
-import { getThemeCssVariables, type ThemeConfig } from './theme'
 import { createChartStore, type ChartStore } from 'src/store/chart'
 import { provideChartStore } from 'src/store/context/chart-context'
 import { createDefaultBuilder } from 'src/utils/data/localConnector'
+import { getThemeCssVariables, type ThemeConfig } from './theme'
 
 @Component({
   tag: 'vbi-config-provider',
@@ -40,7 +39,7 @@ export class VbiConfigProvider {
 
     const builder = newBuilder ?? createDefaultBuilder()
     this.chartStore = createChartStore(builder)
-    this.destroyCallback = this.chartStore.chartBuilder.initialize(builder)
+    this.destroyCallback = this.chartStore.initialize(builder)
     this.disposeChartProvider = provideChartStore(this.el, this.chartStore)
   }
 

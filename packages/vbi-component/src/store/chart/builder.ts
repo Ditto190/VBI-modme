@@ -10,15 +10,14 @@ export interface ChartBuilderState {
   dsl: VBIChartDSL
 }
 
-type DestroyCallback = () => void
-
 export interface ChartBuilderStore {
   state: ChartBuilderState
   builder: VBIChartBuilder
   onChange: <Key extends keyof ChartBuilderState>(propName: Key, cb: (newValue: ChartBuilderState[Key]) => void) => void
   logState: () => void
-  initialize: (nextBuilder?: VBIChartBuilder) => DestroyCallback
+  initialize: (nextBuilder?: VBIChartBuilder) => void
   switchSource: (connectorId: string, data?: any[], schema?: DatasetColumn[]) => void
+  dispose: () => void
 }
 
 type VSeedCacheEntry = {
@@ -88,12 +87,16 @@ const loadVSeed = async (
 
 export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderStore {
   let _builder = builder
-  let _dispose: DestroyCallback | null = null
+  let _disposeEvent: (() => void) | null = null
 
   const vseedCache = new WeakMap<VBIChartBuilder, VSeedCacheEntry>()
   const connectors = new Map<string, LocalConnector>()
 
-  const { state, onChange } = createStore<ChartBuilderState>({
+  const {
+    state,
+    onChange,
+    dispose: storeDispose,
+  } = createStore<ChartBuilderState>({
     loading: false,
     vseed: null,
     dsl: _builder.dsl.toJSON() as VBIChartDSL,
@@ -113,7 +116,7 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     console.groupEnd()
   }
 
-  const bindEvent = (): DestroyCallback => {
+  const bindEvent = (): (() => void) => {
     const builder = _builder
 
     const updateAll = async () => {
@@ -168,9 +171,9 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     }
   }
 
-  const initialize = (nextBuilder?: VBIChartBuilder): DestroyCallback => {
+  const initialize = (nextBuilder?: VBIChartBuilder): void => {
     // Dispose previous event binding before setting up new one
-    _dispose?.()
+    _disposeEvent?.()
 
     const builder = nextBuilder ?? _builder
 
@@ -179,15 +182,7 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     state.loading = false
     state.vseed = null
 
-    const dispose = bindEvent()
-    _dispose = dispose
-
-    return () => {
-      dispose()
-      _dispose = null
-      state.loading = false
-      state.vseed = null
-    }
+    _disposeEvent = bindEvent()
   }
 
   const switchSource = (connectorId: string, data?: any[], schema?: DatasetColumn[]) => {
@@ -215,6 +210,12 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     initialize(nextBuilder)
   }
 
+  const dispose = () => {
+    _disposeEvent?.()
+    _disposeEvent = null
+    storeDispose()
+  }
+
   return {
     state,
     get builder() {
@@ -224,5 +225,6 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     logState,
     initialize,
     switchSource,
+    dispose,
   }
 }

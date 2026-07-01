@@ -1,6 +1,5 @@
-// .storybook/preview.tsx
-import { defineCustomElements } from '../loader/index.js'
 import { setCustomElementsManifest, type Preview } from '@stencil/storybook-plugin'
+import { defineCustomElements } from '../loader/index.js'
 import customElements from './custom-elements.json'
 
 /**
