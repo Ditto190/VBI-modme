@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "图表类型",
-  "toolbarHistoryRedo": "重做",
+  "toolbarChartTypePanelTitle": "选择图表类型",
+  "toolbarImportCSV": "导入 CSV",
   "toolbarHistoryUndo": "撤销",
-  "toolbarLimitLabel": "取数上限",
-  "toolbarUploadLabel": "上传"
+  "toolbarHistoryRedo": "重做",
+  "toolbarLimitPlaceholder": "默认 {{defaultLimit}}",
+  "toolbarLimitTooltip": "单次查询返回的记录条数，默认 {{defaultLimit}}"
 }

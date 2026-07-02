@@ -36,21 +36,21 @@ export class VbiChartToolbar {
       <Host>
         <div class='toolbar'>
           <div class='toolbar-group'>
-            <vbi-button size='sm'>{t('toolbarChartTypeLabel')}</vbi-button>
+            <vbi-button size='sm'>{t('toolbarChartTypePanelTitle')}</vbi-button>
 
-            <vbi-tooltip text={t('toolbarUploadLabel')}>
+            <vbi-tooltip text={t('toolbarImportCSV')}>
               <vbi-button size='sm'>
                 <vbi-icon icon={CloudUploadOutlined} size='16px' />
               </vbi-button>
             </vbi-tooltip>
 
             <vbi-join>
-              <vbi-tooltip text={t('toolbarHistoryUndo')}>
+              <vbi-tooltip text={`${t('toolbarHistoryUndo')} (Ctrl/Cmd+Z)`}>
                 <vbi-button size='sm'>
                   <vbi-icon icon={UndoOutlined} size='16px' />
                 </vbi-button>
               </vbi-tooltip>
-              <vbi-tooltip text={t('toolbarHistoryRedo')}>
+              <vbi-tooltip text={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
                 <vbi-button size='sm'>
                   <vbi-icon icon={RedoOutlined} size='16px' />
                 </vbi-button>
@@ -63,10 +63,17 @@ export class VbiChartToolbar {
               type='number'
               min={1}
               step={50}
+              placeholder={t('toolbarLimitPlaceholder', {
+                defaultLimit: 1000,
+              })}
               value={this.chartConfig?.state.limit}
               onVbiChange={this.handleLimitChange}
             />
-            <vbi-tooltip text={t('toolbarLimitLabel')}>
+            <vbi-tooltip
+              text={t('toolbarLimitTooltip', {
+                defaultLimit: 1000,
+              })}
+            >
               <vbi-icon icon={InfoCircleOutlined} size='16px' />
             </vbi-tooltip>
           </div>

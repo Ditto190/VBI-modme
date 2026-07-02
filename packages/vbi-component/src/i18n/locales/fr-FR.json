@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "Type de graphique",
-  "toolbarHistoryRedo": "Rétablir",
+  "toolbarChartTypePanelTitle": "Choisir un type de graphique",
+  "toolbarImportCSV": "Importer CSV",
   "toolbarHistoryUndo": "Annuler",
-  "toolbarLimitLabel": "Lignes",
-  "toolbarUploadLabel": "Télécharger"
+  "toolbarHistoryRedo": "Rétablir",
+  "toolbarLimitPlaceholder": "Par défaut {{defaultLimit}}",
+  "toolbarLimitTooltip": "Lignes renvoyées par requête. Par défaut {{defaultLimit}}"
 }

@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "Loại biểu đồ",
-  "toolbarHistoryRedo": "Làm lại",
+  "toolbarChartTypePanelTitle": "Chọn loại biểu đồ",
+  "toolbarImportCSV": "Nhập CSV",
   "toolbarHistoryUndo": "Hoàn tác",
-  "toolbarLimitLabel": "Số dòng",
-  "toolbarUploadLabel": "Tải lên"
+  "toolbarHistoryRedo": "Làm lại",
+  "toolbarLimitPlaceholder": "Mặc định {{defaultLimit}}",
+  "toolbarLimitTooltip": "Số dòng trả về mỗi truy vấn. Mặc định {{defaultLimit}}"
 }

@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "チャートタイプ",
-  "toolbarHistoryRedo": "やり直す",
+  "toolbarChartTypePanelTitle": "チャートタイプを選択",
+  "toolbarImportCSV": "CSV をインポート",
   "toolbarHistoryUndo": "元に戻す",
-  "toolbarLimitLabel": "取得行数",
-  "toolbarUploadLabel": "アップロード"
+  "toolbarHistoryRedo": "やり直す",
+  "toolbarLimitPlaceholder": "既定値 {{defaultLimit}}",
+  "toolbarLimitTooltip": "1回のクエリで返すレコード数。既定値 {{defaultLimit}}"
 }

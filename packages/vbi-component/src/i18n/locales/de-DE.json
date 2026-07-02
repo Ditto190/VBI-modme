@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "Diagrammtyp",
-  "toolbarHistoryRedo": "Wiederholen",
+  "toolbarChartTypePanelTitle": "Diagrammtyp auswählen",
+  "toolbarImportCSV": "CSV importieren",
   "toolbarHistoryUndo": "Rückgängig",
-  "toolbarLimitLabel": "Zeilen",
-  "toolbarUploadLabel": "Hochladen"
+  "toolbarHistoryRedo": "Wiederholen",
+  "toolbarLimitPlaceholder": "Standard {{defaultLimit}}",
+  "toolbarLimitTooltip": "Pro Abfrage zurückgegebene Zeilen. Standard {{defaultLimit}}"
 }

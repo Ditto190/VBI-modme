@@ -33,11 +33,7 @@ export const Default: Story = {
   },
   render: ({ dsl, ...props }) => {
     const currentBuilder = VBI.chart.create(dsl)
-
-    setTimeout(() => {
-      console.log('fdd')
-      currentBuilder.locale.setLocale('en-US')
-    }, 3000)
+    currentBuilder.locale.setLocale('en-US')
 
     return (
       <vbi-config-provider builder={currentBuilder}>

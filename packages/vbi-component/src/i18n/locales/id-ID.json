@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "Jenis Bagan",
-  "toolbarHistoryRedo": "Ulangi",
+  "toolbarChartTypePanelTitle": "Pilih jenis bagan",
+  "toolbarImportCSV": "Impor CSV",
   "toolbarHistoryUndo": "Urungkan",
-  "toolbarLimitLabel": "Baris",
-  "toolbarUploadLabel": "Unggah"
+  "toolbarHistoryRedo": "Ulangi",
+  "toolbarLimitPlaceholder": "Bawaan {{defaultLimit}}",
+  "toolbarLimitTooltip": "Baris yang dikembalikan per kueri. Default {{defaultLimit}}"
 }

@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "Chart Type",
-  "toolbarHistoryRedo": "Redo",
+  "toolbarChartTypePanelTitle": "Choose a chart type",
+  "toolbarImportCSV": "Import CSV",
   "toolbarHistoryUndo": "Undo",
-  "toolbarLimitLabel": "Rows",
-  "toolbarUploadLabel": "Upload"
+  "toolbarHistoryRedo": "Redo",
+  "toolbarLimitPlaceholder": "Default {{defaultLimit}}",
+  "toolbarLimitTooltip": "Rows returned per query. Default {{defaultLimit}}"
 }

@@ -1,7 +1,8 @@
 {
-  "toolbarChartTypeLabel": "차트 유형",
-  "toolbarHistoryRedo": "다시 실행",
+  "toolbarChartTypePanelTitle": "차트 유형 선택",
+  "toolbarImportCSV": "CSV 가져오기",
   "toolbarHistoryUndo": "실행 취소",
-  "toolbarLimitLabel": "행 수",
-  "toolbarUploadLabel": "업로드"
+  "toolbarHistoryRedo": "다시 실행",
+  "toolbarLimitPlaceholder": "기본값 {{defaultLimit}}",
+  "toolbarLimitTooltip": "쿼리당 반환 행 수. 기본값 {{defaultLimit}}"
 }
