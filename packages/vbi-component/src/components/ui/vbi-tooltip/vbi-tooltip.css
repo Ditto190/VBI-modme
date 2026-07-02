@@ -15,7 +15,7 @@
   text-align: center;
   white-space: normal;
   opacity: 0;
-  border-radius: var(--rounded-field, 0.25rem);
+  border-radius: var(--radius-field);
   font-size: 0.875rem;
   line-height: 1.25;
   background-color: var(--tt-bg);

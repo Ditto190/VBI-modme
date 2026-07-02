@@ -8,9 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
+import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
+export { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export namespace Components {
     interface VbiButton {
         /**
@@ -208,6 +210,23 @@ export namespace Components {
          */
         "type": 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
     }
+    interface VbiMenu {
+        /**
+          * Array of menu items to be rendered
+          * @default []
+         */
+        "items": MenuItem[];
+        /**
+          * The size of the menu. Defaults to 'md'
+          * @default 'md'
+         */
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * The orientation variant of the menu. Defaults to 'vertical'
+          * @default 'vertical'
+         */
+        "variant": 'horizontal' | 'vertical';
+    }
     interface VbiTooltip {
         /**
           * The semantic color theme of the tooltip
@@ -237,6 +256,10 @@ export interface VbiDropdownCustomEvent<T> extends CustomEvent<T> {
 export interface VbiInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiInputElement;
+}
+export interface VbiMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiMenuElement;
 }
 declare global {
     interface HTMLVbiButtonElement extends Components.VbiButton, HTMLStencilElement {
@@ -324,6 +347,23 @@ declare global {
         prototype: HTMLVbiLoadingElement;
         new (): HTMLVbiLoadingElement;
     };
+    interface HTMLVbiMenuElementEventMap {
+        "vbiMenuSelect": MenuItem;
+    }
+    interface HTMLVbiMenuElement extends Components.VbiMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiMenuElementEventMap>(type: K, listener: (this: HTMLVbiMenuElement, ev: VbiMenuCustomEvent<HTMLVbiMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiMenuElementEventMap>(type: K, listener: (this: HTMLVbiMenuElement, ev: VbiMenuCustomEvent<HTMLVbiMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiMenuElement: {
+        prototype: HTMLVbiMenuElement;
+        new (): HTMLVbiMenuElement;
+    };
     interface HTMLVbiTooltipElement extends Components.VbiTooltip, HTMLStencilElement {
     }
     var HTMLVbiTooltipElement: {
@@ -341,6 +381,7 @@ declare global {
         "vbi-input": HTMLVbiInputElement;
         "vbi-join": HTMLVbiJoinElement;
         "vbi-loading": HTMLVbiLoadingElement;
+        "vbi-menu": HTMLVbiMenuElement;
         "vbi-tooltip": HTMLVbiTooltipElement;
     }
 }
@@ -561,6 +602,27 @@ declare namespace LocalJSX {
          */
         "type"?: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
     }
+    interface VbiMenu {
+        /**
+          * Array of menu items to be rendered
+          * @default []
+         */
+        "items"?: MenuItem[];
+        /**
+          * Fired when a menu item is clicked
+         */
+        "onVbiMenuSelect"?: (event: VbiMenuCustomEvent<MenuItem>) => void;
+        /**
+          * The size of the menu. Defaults to 'md'
+          * @default 'md'
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * The orientation variant of the menu. Defaults to 'vertical'
+          * @default 'vertical'
+         */
+        "variant"?: 'horizontal' | 'vertical';
+    }
     interface VbiTooltip {
         /**
           * The semantic color theme of the tooltip
@@ -631,6 +693,10 @@ declare namespace LocalJSX {
         "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
         "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
     }
+    interface VbiMenuAttributes {
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        "variant": 'horizontal' | 'vertical';
+    }
     interface VbiTooltipAttributes {
         "text": string;
         "position": 'top' | 'bottom' | 'left' | 'right';
@@ -649,6 +715,7 @@ declare namespace LocalJSX {
         "vbi-input": Omit<VbiInput, keyof VbiInputAttributes> & { [K in keyof VbiInput & keyof VbiInputAttributes]?: VbiInput[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `attr:${K}`]?: VbiInputAttributes[K] } & { [K in keyof VbiInput & keyof VbiInputAttributes as `prop:${K}`]?: VbiInput[K] };
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
         "vbi-loading": Omit<VbiLoading, keyof VbiLoadingAttributes> & { [K in keyof VbiLoading & keyof VbiLoadingAttributes]?: VbiLoading[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `attr:${K}`]?: VbiLoadingAttributes[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `prop:${K}`]?: VbiLoading[K] };
+        "vbi-menu": Omit<VbiMenu, keyof VbiMenuAttributes> & { [K in keyof VbiMenu & keyof VbiMenuAttributes]?: VbiMenu[K] } & { [K in keyof VbiMenu & keyof VbiMenuAttributes as `attr:${K}`]?: VbiMenuAttributes[K] } & { [K in keyof VbiMenu & keyof VbiMenuAttributes as `prop:${K}`]?: VbiMenu[K] };
         "vbi-tooltip": Omit<VbiTooltip, keyof VbiTooltipAttributes> & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes]?: VbiTooltip[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `attr:${K}`]?: VbiTooltipAttributes[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `prop:${K}`]?: VbiTooltip[K] };
     }
 }
@@ -666,6 +733,7 @@ declare module "@stencil/core" {
             "vbi-input": LocalJSX.IntrinsicElements["vbi-input"] & JSXBase.HTMLAttributes<HTMLVbiInputElement>;
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
             "vbi-loading": LocalJSX.IntrinsicElements["vbi-loading"] & JSXBase.HTMLAttributes<HTMLVbiLoadingElement>;
+            "vbi-menu": LocalJSX.IntrinsicElements["vbi-menu"] & JSXBase.HTMLAttributes<HTMLVbiMenuElement>;
             "vbi-tooltip": LocalJSX.IntrinsicElements["vbi-tooltip"] & JSXBase.HTMLAttributes<HTMLVbiTooltipElement>;
         }
     }
