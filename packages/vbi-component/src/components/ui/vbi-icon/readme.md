@@ -14,6 +14,19 @@
 | `size`   | `size`    | The size of the icon (e.g., '16px', '1em', '2rem').      | `string`         | `'1em'`          |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-toolbar --> vbi-icon
+  style vbi-icon fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

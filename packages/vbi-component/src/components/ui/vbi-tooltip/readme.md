@@ -15,6 +15,19 @@
 | `text`     | `text`     | The text to display inside the tooltip             | `string`                                                                              | `''`        |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-toolbar --> vbi-tooltip
+  style vbi-tooltip fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

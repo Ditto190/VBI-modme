@@ -5,6 +5,7 @@
   --tt-off: calc(100% + 0.5rem);
   --tt-tail: calc(100% + 1px + 0.25rem);
   overflow: visible;
+  line-height: 0;
 }
 
 :host::before {

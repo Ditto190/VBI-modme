@@ -1,6 +1,7 @@
+import { CloudUploadOutlined, InfoCircleOutlined, RedoOutlined, UndoOutlined } from '@ant-design/icons-svg'
 import { Component, Element, Host, State, h } from '@stencil/core'
-import { connectChartStore } from 'src/store/context'
 import { type ChartStore } from 'src/store/chart'
+import { connectChartStore } from 'src/store/context'
 
 @Component({
   tag: 'vbi-chart-toolbar',
@@ -29,9 +30,26 @@ export class VbiChartToolbar {
       <Host>
         <div class='toolbar'>
           <div class='toolbar-group'>
-            <div>ChartTypeSelector</div>
-            <div>Upload</div>
-            <div>Undo|redo</div>
+            <vbi-button size='sm'>ChartTypeSelector</vbi-button>
+
+            <vbi-tooltip text='Upload'>
+              <vbi-button size='sm'>
+                <vbi-icon icon={CloudUploadOutlined} size='16px' />
+              </vbi-button>
+            </vbi-tooltip>
+
+            <vbi-join>
+              <vbi-tooltip text='Undo'>
+                <vbi-button size='sm'>
+                  <vbi-icon icon={UndoOutlined} size='16px' />
+                </vbi-button>
+              </vbi-tooltip>
+              <vbi-tooltip text='Upload'>
+                <vbi-button size='sm'>
+                  <vbi-icon icon={RedoOutlined} size='16px' />
+                </vbi-button>
+              </vbi-tooltip>
+            </vbi-join>
           </div>
           <div class='toolbar-group'>
             <vbi-input
@@ -41,7 +59,10 @@ export class VbiChartToolbar {
               step={50}
               value={this.chartConfig?.state.limit}
               onVbiChange={this.handleLimitChange}
-            ></vbi-input>
+            />
+            <vbi-tooltip text='Limit'>
+              <vbi-icon icon={InfoCircleOutlined} size='16px' />
+            </vbi-tooltip>
           </div>
         </div>
       </Host>

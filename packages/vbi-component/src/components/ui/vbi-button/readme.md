@@ -16,6 +16,19 @@
 | `variant`  | `variant`  | Button variant (ghost, outline, dash, soft, link) | `"dash" \| "ghost" \| "link" \| "outline" \| "soft"`                                               | `undefined` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-toolbar --> vbi-button
+  style vbi-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
