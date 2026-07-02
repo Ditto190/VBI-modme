@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "Type de graphique",
+  "toolbarHistoryRedo": "Rétablir",
+  "toolbarHistoryUndo": "Annuler",
+  "toolbarLimitLabel": "Lignes",
+  "toolbarUploadLabel": "Télécharger"
+}

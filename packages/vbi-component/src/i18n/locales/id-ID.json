@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "Jenis Bagan",
+  "toolbarHistoryRedo": "Ulangi",
+  "toolbarHistoryUndo": "Urungkan",
+  "toolbarLimitLabel": "Baris",
+  "toolbarUploadLabel": "Unggah"
+}

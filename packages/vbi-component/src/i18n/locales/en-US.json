@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "Chart Type",
+  "toolbarHistoryRedo": "Redo",
+  "toolbarHistoryUndo": "Undo",
+  "toolbarLimitLabel": "Rows",
+  "toolbarUploadLabel": "Upload"
+}

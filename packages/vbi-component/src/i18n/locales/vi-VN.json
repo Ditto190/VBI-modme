@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "Loại biểu đồ",
+  "toolbarHistoryRedo": "Làm lại",
+  "toolbarHistoryUndo": "Hoàn tác",
+  "toolbarLimitLabel": "Số dòng",
+  "toolbarUploadLabel": "Tải lên"
+}

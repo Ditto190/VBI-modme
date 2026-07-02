@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "图表类型",
+  "toolbarHistoryRedo": "重做",
+  "toolbarHistoryUndo": "撤销",
+  "toolbarLimitLabel": "取数上限",
+  "toolbarUploadLabel": "上传"
+}

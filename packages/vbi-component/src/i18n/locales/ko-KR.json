@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "차트 유형",
+  "toolbarHistoryRedo": "다시 실행",
+  "toolbarHistoryUndo": "실행 취소",
+  "toolbarLimitLabel": "행 수",
+  "toolbarUploadLabel": "업로드"
+}

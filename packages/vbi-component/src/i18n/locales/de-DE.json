@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "Diagrammtyp",
+  "toolbarHistoryRedo": "Wiederholen",
+  "toolbarHistoryUndo": "Rückgängig",
+  "toolbarLimitLabel": "Zeilen",
+  "toolbarUploadLabel": "Hochladen"
+}

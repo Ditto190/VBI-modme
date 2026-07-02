@@ -1,1 +1,7 @@
-{}
+{
+  "toolbarChartTypeLabel": "チャートタイプ",
+  "toolbarHistoryRedo": "やり直す",
+  "toolbarHistoryUndo": "元に戻す",
+  "toolbarLimitLabel": "取得行数",
+  "toolbarUploadLabel": "アップロード"
+}
