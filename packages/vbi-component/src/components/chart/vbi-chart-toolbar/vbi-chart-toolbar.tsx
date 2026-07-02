@@ -1,6 +1,5 @@
 import { CloudUploadOutlined, InfoCircleOutlined, RedoOutlined, UndoOutlined } from '@ant-design/icons-svg'
 import { Component, Element, Host, State, h } from '@stencil/core'
-import { createTranslation } from 'src/i18n/translation'
 import { type ChartStore } from 'src/store/chart'
 import { connectChartStore } from 'src/store/context'
 
@@ -22,12 +21,16 @@ export class VbiChartToolbar {
     return this.store?.chartConfig
   }
 
+  private get t() {
+    return this.store?.translation.state.t || ((k: string) => k)
+  }
+
   private handleLimitChange = (e: CustomEvent<string>) => {
     this.chartConfig?.setLimit(+e.detail)
   }
 
   render() {
-    const { t } = this.store ? createTranslation(this.store) : { t: (k: string) => k }
+    const t = this.t
 
     return (
       <Host>
