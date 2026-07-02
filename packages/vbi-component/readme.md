@@ -85,6 +85,10 @@ pnpm run start
 Build and preview components inside Storybook:
 
 ```bash
+pnpm run build
+```
+
+```bash
 pnpm run storybook
 ```
 
