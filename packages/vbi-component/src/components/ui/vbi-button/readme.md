@@ -21,11 +21,13 @@
 ### Used by
 
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
+ - [vbi-chart-type](../../chart/vbi-chart-type)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-toolbar --> vbi-button
+  vbi-chart-type --> vbi-button
   style vbi-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

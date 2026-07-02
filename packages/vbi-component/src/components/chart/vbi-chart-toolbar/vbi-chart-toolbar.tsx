@@ -1,5 +1,6 @@
 import { CloudUploadOutlined, InfoCircleOutlined, RedoOutlined, UndoOutlined } from '@ant-design/icons-svg'
 import { Component, Element, Host, State, h } from '@stencil/core'
+import { VBI_DEFAULT_LIMIT } from 'src/constants/builder'
 import { type ChartStore } from 'src/store/chart'
 import { connectChartStore } from 'src/store/context'
 
@@ -30,27 +31,26 @@ export class VbiChartToolbar {
   }
 
   render() {
-    const t = this.t
-
     return (
       <Host>
         <div class='toolbar'>
           <div class='toolbar-group'>
-            <vbi-button size='sm'>{t('toolbarChartTypePanelTitle')}</vbi-button>
+            <vbi-chart-type></vbi-chart-type>
+            {/* <vbi-button size='sm'></vbi-button> */}
 
-            <vbi-tooltip text={t('toolbarImportCSV')}>
+            <vbi-tooltip text={this.t('toolbarImportCSV')}>
               <vbi-button size='sm'>
                 <vbi-icon icon={CloudUploadOutlined} size='16px' />
               </vbi-button>
             </vbi-tooltip>
 
             <vbi-join>
-              <vbi-tooltip text={`${t('toolbarHistoryUndo')} (Ctrl/Cmd+Z)`}>
+              <vbi-tooltip text={`${this.t('toolbarHistoryUndo')} (Ctrl/Cmd+Z)`}>
                 <vbi-button size='sm'>
                   <vbi-icon icon={UndoOutlined} size='16px' />
                 </vbi-button>
               </vbi-tooltip>
-              <vbi-tooltip text={`${t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
+              <vbi-tooltip text={`${this.t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
                 <vbi-button size='sm'>
                   <vbi-icon icon={RedoOutlined} size='16px' />
                 </vbi-button>
@@ -63,16 +63,17 @@ export class VbiChartToolbar {
               type='number'
               min={1}
               step={50}
-              placeholder={t('toolbarLimitPlaceholder', {
-                defaultLimit: 1000,
+              placeholder={this.t('toolbarLimitPlaceholder', {
+                defaultLimit: VBI_DEFAULT_LIMIT,
               })}
               value={this.chartConfig?.state.limit}
               onVbiChange={this.handleLimitChange}
             />
             <vbi-tooltip
-              text={t('toolbarLimitTooltip', {
-                defaultLimit: 1000,
+              text={this.t('toolbarLimitTooltip', {
+                defaultLimit: VBI_DEFAULT_LIMIT,
               })}
+              position='left'
             >
               <vbi-icon icon={InfoCircleOutlined} size='16px' />
             </vbi-tooltip>

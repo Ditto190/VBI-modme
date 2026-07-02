@@ -24,6 +24,19 @@
 | `vbiDropdownToggle` | Emitted when the dropdown opens or closes. | `CustomEvent<boolean>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-type](../../chart/vbi-chart-type)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-type --> vbi-dropdown
+  style vbi-dropdown fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
