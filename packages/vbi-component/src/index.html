@@ -20,27 +20,6 @@
   <body>
     <vbi-config-provider>
       <vbi-chart-editor></vbi-chart-editor>
-      <vbi-menu id="my-menu" variant="horizontal"></vbi-menu>
     </vbi-config-provider>
   </body>
-
-  <script>
-    const menuElement = document.getElementById('my-menu')
-
-    // Dữ liệu mock đúng theo Interface MenuItem
-    menuElement.items = [
-      { label: 'DANH MỤC', isTitle: true, url: '.' },
-      { label: 'Trang chủ', isActive: true, url: '.' },
-      {
-        label: 'Sản phẩm',
-        badge: 'Mới',
-        children: [
-          { label: 'Điện thoại', badge: 'sss' },
-          { label: 'Laptop', url: '.', disabled: true },
-          { label: 'Phụ kiện' },
-        ],
-      },
-      { label: 'Cài đặt hệ thống' },
-    ]
-  </script>
 </html>

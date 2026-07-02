@@ -22,6 +22,10 @@ export class VbiChartToolbar {
     return this.store?.chartConfig
   }
 
+  private get chartUndo() {
+    return this.store?.chartUndo
+  }
+
   private get t() {
     return this.store?.translation.state.t || ((k: string) => k)
   }
@@ -36,7 +40,6 @@ export class VbiChartToolbar {
         <div class='toolbar'>
           <div class='toolbar-group'>
             <vbi-chart-type></vbi-chart-type>
-            {/* <vbi-button size='sm'></vbi-button> */}
 
             <vbi-tooltip text={this.t('toolbarImportCSV')}>
               <vbi-button size='sm'>
@@ -45,13 +48,13 @@ export class VbiChartToolbar {
             </vbi-tooltip>
 
             <vbi-join>
-              <vbi-tooltip text={`${this.t('toolbarHistoryUndo')} (Ctrl/Cmd+Z)`}>
-                <vbi-button size='sm'>
+              <vbi-tooltip text={this.t('toolbarHistoryUndo')}>
+                <vbi-button size='sm' disabled={!this.chartUndo?.state.canUndo} onClick={() => this.chartUndo?.undo()}>
                   <vbi-icon icon={UndoOutlined} size='16px' />
                 </vbi-button>
               </vbi-tooltip>
-              <vbi-tooltip text={`${this.t('toolbarHistoryRedo')} (Ctrl+Y / Cmd+Shift+Z)`}>
-                <vbi-button size='sm'>
+              <vbi-tooltip text={this.t('toolbarHistoryRedo')}>
+                <vbi-button size='sm' disabled={!this.chartUndo?.state.canRedo} onClick={() => this.chartUndo?.redo()}>
                   <vbi-icon icon={RedoOutlined} size='16px' />
                 </vbi-button>
               </vbi-tooltip>
