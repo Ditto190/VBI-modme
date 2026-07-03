@@ -1,6 +1,8 @@
 import { Component, Host, State, h, Element } from '@stencil/core'
+import { type MenuItem } from 'src/components'
 import { type ChartStore } from 'src/store/chart'
 import { connectChartStore } from 'src/store/context'
+import { CHART_TYPE, findChartTypeByValue } from './config/chart-type'
 
 @Component({
   tag: 'vbi-chart-type',
@@ -11,6 +13,8 @@ export class VbiChartType {
   @Element() el!: HTMLElement
 
   @State() store?: ChartStore
+  @State() selectedItemValue?: string
+  @State() isDropdownOpen: boolean = false
 
   componentWillLoad() {
     this.store = connectChartStore(this.el)
@@ -20,24 +24,41 @@ export class VbiChartType {
     return this.store?.translation.state.t || ((k: string) => k)
   }
 
+  private translateItems = (items: MenuItem[]): MenuItem[] => {
+    return items.map((item) => ({
+      ...item,
+      label: item.label ? this.t(item.label) : undefined,
+      description: item.description ? this.t(item.description) : undefined,
+      isActive: !!item.value && item.value === this.selectedItemValue,
+      children: item.children ? this.translateItems(item.children) : undefined,
+    }))
+  }
+
+  private handleMenuSelect = (e: CustomEvent<MenuItem>) => {
+    if (e.detail.value) {
+      this.selectedItemValue = e.detail.value
+      this.isDropdownOpen = false
+    }
+  }
+
+  private handleDropdownToggle = (e: CustomEvent<boolean>) => {
+    this.isDropdownOpen = e.detail
+  }
+
+  private get activeChartTypeLabel() {
+    const foundItem = findChartTypeByValue(this.selectedItemValue)
+    return this.t(foundItem?.label || 'toolbarChartTypePanelTitle')
+  }
+
   render() {
     return (
       <Host>
-        <vbi-dropdown>
-          <vbi-button slot='trigger' size='sm'>
-            {this.t('toolbarChartTypePanelTitle')}
+        <vbi-dropdown open={this.isDropdownOpen} onVbiDropdownToggle={this.handleDropdownToggle}>
+          <vbi-button slot='trigger' size='sm' shape='wide' style={{ minWidth: '140px' }}>
+            {this.activeChartTypeLabel}
           </vbi-button>
-          <div
-            slot='content'
-            style={{
-              padding: '8px',
-              border: '1px solid var(--color-base-300, #ccc)',
-              borderRadius: 'var(--radius-box, 4px)',
-              background: 'var(--color-base-100, #fff)',
-              color: 'var(--color-base-content, #000)',
-            }}
-          >
-            Dropdown Content
+          <div slot='content' class='dropdown-content'>
+            <vbi-menu items={this.translateItems(CHART_TYPE)} onVbiMenuSelect={this.handleMenuSelect}></vbi-menu>
           </div>
         </vbi-dropdown>
       </Host>

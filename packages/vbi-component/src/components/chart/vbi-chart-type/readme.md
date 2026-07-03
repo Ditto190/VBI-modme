@@ -15,12 +15,15 @@
 
 - [vbi-dropdown](../../ui/vbi-dropdown)
 - [vbi-button](../../ui/vbi-button)
+- [vbi-menu](../../ui/vbi-menu)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-type --> vbi-dropdown
   vbi-chart-type --> vbi-button
+  vbi-chart-type --> vbi-menu
+  vbi-menu --> vbi-icon
   vbi-chart-toolbar --> vbi-chart-type
   style vbi-chart-type fill:#f9f,stroke:#333,stroke-width:4px
 ```

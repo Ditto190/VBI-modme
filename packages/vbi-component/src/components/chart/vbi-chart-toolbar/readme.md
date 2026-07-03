@@ -31,6 +31,8 @@ graph TD;
   vbi-chart-toolbar --> vbi-input
   vbi-chart-type --> vbi-dropdown
   vbi-chart-type --> vbi-button
+  vbi-chart-type --> vbi-menu
+  vbi-menu --> vbi-icon
   vbi-chart-editor --> vbi-chart-toolbar
   style vbi-chart-toolbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
