@@ -70,7 +70,7 @@ export class VbiChartToolbar {
                 defaultLimit: VBI_DEFAULT_LIMIT,
               })}
               value={this.chartConfig?.state.limit}
-              onVbiChange={this.handleLimitChange}
+              onVbiInputChange={this.handleLimitChange}
             />
             <vbi-tooltip
               text={this.t('toolbarLimitTooltip', {

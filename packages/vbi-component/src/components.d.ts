@@ -316,10 +316,10 @@ declare global {
         new (): HTMLVbiIconElement;
     };
     interface HTMLVbiInputElementEventMap {
-        "vbiInput": string;
-        "vbiChange": string;
-        "vbiFocus": void;
-        "vbiBlur": void;
+        "vbiInputValue": string;
+        "vbiInputChange": string;
+        "vbiInputFocus": void;
+        "vbiInputBlur": void;
     }
     interface HTMLVbiInputElement extends Components.VbiInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLVbiInputElementEventMap>(type: K, listener: (this: HTMLVbiInputElement, ev: VbiInputCustomEvent<HTMLVbiInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -529,19 +529,19 @@ declare namespace LocalJSX {
         /**
           * Event emitted when the input loses focus (blur)
          */
-        "onVbiBlur"?: (event: VbiInputCustomEvent<void>) => void;
+        "onVbiInputBlur"?: (event: VbiInputCustomEvent<void>) => void;
         /**
           * Event emitted when the user finishes typing and blurs (or presses Enter)
          */
-        "onVbiChange"?: (event: VbiInputCustomEvent<string>) => void;
+        "onVbiInputChange"?: (event: VbiInputCustomEvent<string>) => void;
         /**
           * Event emitted when the input gains focus
          */
-        "onVbiFocus"?: (event: VbiInputCustomEvent<void>) => void;
+        "onVbiInputFocus"?: (event: VbiInputCustomEvent<void>) => void;
         /**
           * Event emitted when the user types
          */
-        "onVbiInput"?: (event: VbiInputCustomEvent<string>) => void;
+        "onVbiInputValue"?: (event: VbiInputCustomEvent<string>) => void;
         /**
           * Placeholder text
           * @default ''

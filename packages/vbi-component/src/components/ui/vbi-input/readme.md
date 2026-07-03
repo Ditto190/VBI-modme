@@ -30,12 +30,12 @@
 
 ## Events
 
-| Event       | Description                                                              | Type                  |
-| ----------- | ------------------------------------------------------------------------ | --------------------- |
-| `vbiBlur`   | Event emitted when the input loses focus (blur)                          | `CustomEvent<void>`   |
-| `vbiChange` | Event emitted when the user finishes typing and blurs (or presses Enter) | `CustomEvent<string>` |
-| `vbiFocus`  | Event emitted when the input gains focus                                 | `CustomEvent<void>`   |
-| `vbiInput`  | Event emitted when the user types                                        | `CustomEvent<string>` |
+| Event            | Description                                                              | Type                  |
+| ---------------- | ------------------------------------------------------------------------ | --------------------- |
+| `vbiInputBlur`   | Event emitted when the input loses focus (blur)                          | `CustomEvent<void>`   |
+| `vbiInputChange` | Event emitted when the user finishes typing and blurs (or presses Enter) | `CustomEvent<string>` |
+| `vbiInputFocus`  | Event emitted when the input gains focus                                 | `CustomEvent<void>`   |
+| `vbiInputValue`  | Event emitted when the user types                                        | `CustomEvent<string>` |
 
 
 ## Dependencies

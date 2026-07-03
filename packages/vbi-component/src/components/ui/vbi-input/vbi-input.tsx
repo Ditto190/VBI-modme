@@ -58,28 +58,28 @@ export class VbiInput {
   @Prop() size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
   /** Event emitted when the user types */
-  @Event() vbiInput!: EventEmitter<string>
+  @Event() vbiInputValue!: EventEmitter<string>
 
   /** Event emitted when the user finishes typing and blurs (or presses Enter) */
-  @Event() vbiChange!: EventEmitter<string>
+  @Event() vbiInputChange!: EventEmitter<string>
 
   /** Event emitted when the input gains focus */
-  @Event() vbiFocus!: EventEmitter<void>
+  @Event() vbiInputFocus!: EventEmitter<void>
 
   /** Event emitted when the input loses focus (blur) */
-  @Event() vbiBlur!: EventEmitter<void>
+  @Event() vbiInputBlur!: EventEmitter<void>
 
   // Event handlers
   private handleInput = (ev: Event) => {
     const target = ev.target as HTMLInputElement
     this.value = target.value
-    this.vbiInput.emit(this.value)
+    this.vbiInputValue.emit(this.value)
   }
 
   private handleChange = (ev: Event) => {
     const target = ev.target as HTMLInputElement
     this.value = target.value
-    this.vbiChange.emit(this.value)
+    this.vbiInputChange.emit(this.value)
   }
 
   render() {
@@ -111,8 +111,8 @@ export class VbiInput {
           autofocus={this.autofocus}
           onInput={this.handleInput}
           onChange={this.handleChange}
-          onFocus={() => this.vbiFocus.emit()}
-          onBlur={() => this.vbiBlur.emit()}
+          onFocus={() => this.vbiInputFocus.emit()}
+          onBlur={() => this.vbiInputBlur.emit()}
         />
 
         <slot name='suffix'></slot>
