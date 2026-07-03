@@ -1,8 +1,12 @@
 import type { IconDefinition } from '@ant-design/icons-svg/lib/types'
-import { Component, Event, h, Host, Prop, type EventEmitter } from '@stencil/core'
+import { Component, Event, h, Host, Prop, Watch, type EventEmitter } from '@stencil/core'
+import { randomShortId } from 'src/utils/random'
 
 export interface MenuItem {
+  id?: string | number
   label?: string
+  value?: string
+  description?: string
   url?: string
   isTitle?: boolean
   disabled?: boolean
@@ -30,10 +34,31 @@ export class VbiMenu {
   /** Fired when a menu item is clicked */
   @Event() vbiMenuSelect!: EventEmitter<MenuItem>
 
+  @Watch('items')
+  watchItemsHandler(newValue: MenuItem[]) {
+    this.ensureIds(newValue)
+  }
+
+  componentWillLoad() {
+    this.ensureIds(this.items)
+  }
+
+  private ensureIds(items: MenuItem[]) {
+    if (!items) return
+    for (const item of items) {
+      if (item.id === undefined) {
+        item.id = `vbi-menu-item-${randomShortId()}`
+      }
+      if (item.children) {
+        this.ensureIds(item.children)
+      }
+    }
+  }
+
   private setActiveState(menuItems: MenuItem[], clickedItem: MenuItem) {
     if (!menuItems) return
     for (const item of menuItems) {
-      item.isActive = item.label === clickedItem.label
+      item.isActive = item.id === clickedItem.id
       if (item.children) {
         this.setActiveState(item.children, clickedItem)
       }
@@ -47,7 +72,9 @@ export class VbiMenu {
       e.preventDefault()
     }
 
-    this.setActiveState(this.items, item)
+    if (item.value !== undefined) {
+      this.setActiveState(this.items, item)
+    }
     this.items = [...this.items]
 
     this.vbiMenuSelect.emit(item)
