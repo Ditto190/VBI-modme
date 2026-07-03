@@ -13,7 +13,6 @@ export class VbiChartType {
   @Element() el!: HTMLElement
 
   @State() store?: ChartStore
-  @State() selectedItemValue?: string
   @State() isDropdownOpen: boolean = false
 
   componentWillLoad() {
@@ -24,19 +23,23 @@ export class VbiChartType {
     return this.store?.translation.state.t || ((k: string) => k)
   }
 
+  private get currentChartType() {
+    return this.store?.chartType.state.chartType
+  }
+
   private translateItems = (items: MenuItem[]): MenuItem[] => {
     return items.map((item) => ({
       ...item,
       label: item.label ? this.t(item.label) : undefined,
       description: item.description ? this.t(item.description) : undefined,
-      isActive: !!item.value && item.value === this.selectedItemValue,
+      isActive: !!item.value && item.value === this.currentChartType,
       children: item.children ? this.translateItems(item.children) : undefined,
     }))
   }
 
   private handleMenuSelect = (e: CustomEvent<MenuItem>) => {
     if (e.detail.value) {
-      this.selectedItemValue = e.detail.value
+      this.store?.chartType.changeChartType(e.detail.value)
       this.isDropdownOpen = false
     }
   }
@@ -46,7 +49,7 @@ export class VbiChartType {
   }
 
   private get activeChartTypeLabel() {
-    const foundItem = findChartTypeByValue(this.selectedItemValue)
+    const foundItem = findChartTypeByValue(this.currentChartType)
     return this.t(foundItem?.label || 'toolbarChartTypePanelTitle')
   }
 
