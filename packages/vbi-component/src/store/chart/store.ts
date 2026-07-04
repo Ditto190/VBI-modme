@@ -2,14 +2,20 @@ import { type VBIChartBuilder } from '@visactor/vbi'
 import { createTranslationStore, type TranslationStore } from 'src/i18n'
 import { createChartBuilderStore, type ChartBuilderStore } from './builder'
 import { createChartConfigStore, type ChartConfigStore } from './config'
-import { createChartUndoStore, type ChartUndoStore } from './undo'
+import { createChartDimensionsStore, type ChartDimensionsStore } from './dimensions'
+import { createChartSchemaFieldsStore, type ChartSchemaFieldsStore } from './schema-fields'
 import { createChartTypeStore, type ChartTypeStore } from './type'
+import { createChartUndoStore, type ChartUndoStore } from './undo'
+import { createChartMeasuresStore, type ChartMeasuresStore } from './measures'
 
 export interface ChartStore {
   chartBuilder: ChartBuilderStore
   chartConfig: ChartConfigStore
   chartUndo: ChartUndoStore
   chartType: ChartTypeStore
+  chartDimensions: ChartDimensionsStore
+  chartMeasures: ChartMeasuresStore
+  chartSchemaFields: ChartSchemaFieldsStore
   translation: TranslationStore
   initialize: (nextBuilder?: VBIChartBuilder) => () => void
 }
@@ -19,6 +25,9 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
   const chartConfig = createChartConfigStore(chartBuilder)
   const chartUndo = createChartUndoStore(chartBuilder)
   const chartType = createChartTypeStore(chartBuilder)
+  const chartDimensions = createChartDimensionsStore(chartBuilder)
+  const chartMeasures = createChartMeasuresStore(chartBuilder)
+  const chartSchemaFields = createChartSchemaFieldsStore(chartBuilder)
   const translation = createTranslationStore(chartBuilder)
 
   const initialize = (nextBuilder: VBIChartBuilder = builder) => {
@@ -28,6 +37,9 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
       chartConfig.dispose()
       chartUndo.dispose()
       chartType.dispose()
+      chartDimensions.dispose()
+      chartMeasures.dispose()
+      chartSchemaFields.dispose()
       translation.dispose()
     }
   }
@@ -37,6 +49,9 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
     chartConfig,
     chartUndo,
     chartType,
+    chartDimensions,
+    chartMeasures,
+    chartSchemaFields,
     translation,
     initialize,
   }
