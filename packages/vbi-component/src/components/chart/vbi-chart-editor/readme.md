@@ -10,11 +10,13 @@
 ### Depends on
 
 - [vbi-chart-toolbar](../vbi-chart-toolbar)
+- [vbi-chart-fields](../fields/vbi-chart-fields)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-editor --> vbi-chart-toolbar
+  vbi-chart-editor --> vbi-chart-fields
   vbi-chart-toolbar --> vbi-chart-type
   vbi-chart-toolbar --> vbi-tooltip
   vbi-chart-toolbar --> vbi-button
@@ -25,6 +27,7 @@ graph TD;
   vbi-chart-type --> vbi-button
   vbi-chart-type --> vbi-menu
   vbi-menu --> vbi-icon
+  vbi-chart-fields --> vbi-input
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

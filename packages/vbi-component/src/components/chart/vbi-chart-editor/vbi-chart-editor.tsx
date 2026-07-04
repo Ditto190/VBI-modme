@@ -25,7 +25,9 @@ export class VbiChartEditor {
           </header>
 
           <main class='chart-editor__main'>
-            <aside class='chart-editor__fields'>Fields</aside>
+            <aside class='chart-editor__fields'>
+              <vbi-chart-fields></vbi-chart-fields>
+            </aside>
 
             <section class='chart-editor__workspace'>
               <nav class='chart-editor__tabs'>Tabs</nav>

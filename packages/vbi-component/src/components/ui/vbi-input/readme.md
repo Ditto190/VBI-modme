@@ -42,11 +42,13 @@
 
 ### Used by
 
+ - [vbi-chart-fields](../../chart/fields/vbi-chart-fields)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
 
 ### Graph
 ```mermaid
 graph TD;
+  vbi-chart-fields --> vbi-input
   vbi-chart-toolbar --> vbi-input
   style vbi-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
