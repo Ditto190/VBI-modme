@@ -172,13 +172,16 @@ export class LocalConnector {
   }
 }
 
-export function createDefaultBuilder(): VBIChartBuilder {
+export async function createDefaultBuilder(): Promise<VBIChartBuilder> {
   const connector = new LocalConnector()
+
+  try {
+    const { supermarketSchema } = await import('./supermarketSchema')
+    await connector.loadCsvData('https://visactor.github.io/VBI/dataset/supermarket.csv', supermarketSchema)
+  } catch (error) {
+    console.error(error)
+  }
+
   connector.register()
-  import('./supermarketSchema')
-    .then(({ supermarketSchema }) =>
-      connector.loadCsvData('https://visactor.github.io/VBI/dataset/supermarket.csv', supermarketSchema),
-    )
-    .catch(console.error)
   return connector.createBuilder()
 }

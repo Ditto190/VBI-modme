@@ -23,8 +23,8 @@ export class VbiConfigProvider {
   private chartStore?: ChartStore
   private disposeChartProvider?: () => void
 
-  componentWillLoad() {
-    this.handleBuilderChange(this.builder)
+  async componentWillLoad() {
+    await this.handleBuilderChange(this.builder)
   }
 
   disconnectedCallback() {
@@ -33,11 +33,11 @@ export class VbiConfigProvider {
   }
 
   @Watch('builder')
-  handleBuilderChange(newBuilder?: VBIChartBuilder) {
+  async handleBuilderChange(newBuilder?: VBIChartBuilder) {
     this.destroyCallback?.()
     this.disposeChartProvider?.()
 
-    const builder = newBuilder ?? createDefaultBuilder()
+    const builder = newBuilder ?? (await createDefaultBuilder())
     this.chartStore = createChartStore(builder)
     this.destroyCallback = this.chartStore.initialize(builder)
     this.disposeChartProvider = provideChartStore(this.el, this.chartStore)
