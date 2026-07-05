@@ -55,6 +55,36 @@ export namespace Components {
     }
     interface VbiChartType {
     }
+    interface VbiCheckbox {
+        /**
+          * Whether the component is checked.
+          * @default false
+         */
+        "checked": boolean;
+        /**
+          * The theme color of the component.
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Whether the component is disabled.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Whether the checkbox is in an indeterminate state.
+          * @default false
+         */
+        "indeterminate": boolean;
+        /**
+          * The name of the component, used for form submission.
+          * @default ''
+         */
+        "name": string;
+        /**
+          * The size of the component.
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    }
     interface VbiConfigProvider {
         /**
           * VBI chart builder instance to initialize the store with
@@ -251,6 +281,10 @@ export namespace Components {
         "text": string;
     }
 }
+export interface VbiCheckboxCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiCheckboxElement;
+}
 export interface VbiDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiDropdownElement;
@@ -293,6 +327,23 @@ declare global {
     var HTMLVbiChartTypeElement: {
         prototype: HTMLVbiChartTypeElement;
         new (): HTMLVbiChartTypeElement;
+    };
+    interface HTMLVbiCheckboxElementEventMap {
+        "vbiCheckboxChange": boolean;
+    }
+    interface HTMLVbiCheckboxElement extends Components.VbiCheckbox, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiCheckboxElementEventMap>(type: K, listener: (this: HTMLVbiCheckboxElement, ev: VbiCheckboxCustomEvent<HTMLVbiCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiCheckboxElementEventMap>(type: K, listener: (this: HTMLVbiCheckboxElement, ev: VbiCheckboxCustomEvent<HTMLVbiCheckboxElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiCheckboxElement: {
+        prototype: HTMLVbiCheckboxElement;
+        new (): HTMLVbiCheckboxElement;
     };
     interface HTMLVbiConfigProviderElement extends Components.VbiConfigProvider, HTMLStencilElement {
     }
@@ -384,6 +435,7 @@ declare global {
         "vbi-chart-fields": HTMLVbiChartFieldsElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
+        "vbi-checkbox": HTMLVbiCheckboxElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
         "vbi-dropdown": HTMLVbiDropdownElement;
         "vbi-icon": HTMLVbiIconElement;
@@ -435,6 +487,37 @@ declare namespace LocalJSX {
     interface VbiChartToolbar {
     }
     interface VbiChartType {
+    }
+    interface VbiCheckbox {
+        /**
+          * Whether the component is checked.
+          * @default false
+         */
+        "checked"?: boolean;
+        /**
+          * The theme color of the component.
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        /**
+          * Whether the component is disabled.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Whether the checkbox is in an indeterminate state.
+          * @default false
+         */
+        "indeterminate"?: boolean;
+        /**
+          * The name of the component, used for form submission.
+          * @default ''
+         */
+        "name"?: string;
+        "onVbiCheckboxChange"?: (event: VbiCheckboxCustomEvent<boolean>) => void;
+        /**
+          * The size of the component.
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     }
     interface VbiConfigProvider {
         /**
@@ -665,6 +748,14 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiCheckboxAttributes {
+        "checked": boolean;
+        "indeterminate": boolean;
+        "disabled": boolean;
+        "name": string;
+        "color": 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    }
     interface VbiDropdownAttributes {
         "placement": 'top' | 'bottom' | 'left' | 'right';
         "popoverMode": 'auto' | 'manual';
@@ -721,6 +812,7 @@ declare namespace LocalJSX {
         "vbi-chart-fields": VbiChartFields;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
+        "vbi-checkbox": Omit<VbiCheckbox, keyof VbiCheckboxAttributes> & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes]?: VbiCheckbox[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `attr:${K}`]?: VbiCheckboxAttributes[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `prop:${K}`]?: VbiCheckbox[K] };
         "vbi-config-provider": VbiConfigProvider;
         "vbi-dropdown": Omit<VbiDropdown, keyof VbiDropdownAttributes> & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes]?: VbiDropdown[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `attr:${K}`]?: VbiDropdownAttributes[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `prop:${K}`]?: VbiDropdown[K] };
         "vbi-icon": Omit<VbiIcon, keyof VbiIconAttributes> & { [K in keyof VbiIcon & keyof VbiIconAttributes]?: VbiIcon[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `attr:${K}`]?: VbiIconAttributes[K] } & { [K in keyof VbiIcon & keyof VbiIconAttributes as `prop:${K}`]?: VbiIcon[K] };
@@ -740,6 +832,7 @@ declare module "@stencil/core" {
             "vbi-chart-fields": LocalJSX.IntrinsicElements["vbi-chart-fields"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldsElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;
+            "vbi-checkbox": LocalJSX.IntrinsicElements["vbi-checkbox"] & JSXBase.HTMLAttributes<HTMLVbiCheckboxElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
             "vbi-dropdown": LocalJSX.IntrinsicElements["vbi-dropdown"] & JSXBase.HTMLAttributes<HTMLVbiDropdownElement>;
             "vbi-icon": LocalJSX.IntrinsicElements["vbi-icon"] & JSXBase.HTMLAttributes<HTMLVbiIconElement>;
