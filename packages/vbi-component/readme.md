@@ -52,19 +52,23 @@ Below is the list of available web components in this library and their detailed
 | :---------------------- | :------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | `<vbi-config-provider>` | [readme.md](./src/components/ui/vbi-config-provider/readme.md) | Root configuration provider managing theme and coordinating the VBI store state. |
 | `<vbi-button>`          | [readme.md](./src/components/ui/vbi-button/readme.md)          | Basic button component.                                                          |
-| `<vbi-dropdown>`        | [readme.md](./src/components/ui/vbi-dropdown/readme.md)        | Dropdown menu component.                                                         |
+| `<vbi-checkbox>`        | [readme.md](./src/components/ui/vbi-checkbox/readme.md)        | Checkbox component.                                                              |
+| `<vbi-dropdown>`        | [readme.md](./src/components/ui/vbi-dropdown/readme.md)        | Dropdown component.                                                              |
 | `<vbi-icon>`            | [readme.md](./src/components/ui/vbi-icon/readme.md)            | Icon component.                                                                  |
 | `<vbi-input>`           | [readme.md](./src/components/ui/vbi-input/readme.md)           | Input field component.                                                           |
 | `<vbi-join>`            | [readme.md](./src/components/ui/vbi-join/readme.md)            | Join layout component.                                                           |
 | `<vbi-loading>`         | [readme.md](./src/components/ui/vbi-loading/readme.md)         | Loading indicator component.                                                     |
+| `<vbi-menu>`            | [readme.md](./src/components/ui/vbi-menu/readme.md)            | Menu component.                                                                  |
 | `<vbi-tooltip>`         | [readme.md](./src/components/ui/vbi-tooltip/readme.md)         | Tooltip component.                                                               |
 
 ### Chart Components
 
-| Component             | Documentation                                                   | Description                   |
-| :-------------------- | :-------------------------------------------------------------- | :---------------------------- |
-| `<vbi-chart-editor>`  | [readme.md](./src/components/chart/vbi-chart-editor/readme.md)  | Chart editor component.       |
-| `<vbi-chart-toolbar>` | [readme.md](./src/components/chart/vbi-chart-toolbar/readme.md) | Toolbar for chart operations. |
+| Component             | Documentation                                                         | Description                   |
+| :-------------------- | :-------------------------------------------------------------------- | :---------------------------- |
+| `<vbi-chart-editor>`  | [readme.md](./src/components/chart/vbi-chart-editor/readme.md)        | Chart editor component.       |
+| `<vbi-chart-fields>`  | [readme.md](./src/components/chart/fields/vbi-chart-fields/readme.md) | Chart fields component.       |
+| `<vbi-chart-toolbar>` | [readme.md](./src/components/chart/vbi-chart-toolbar/readme.md)       | Toolbar for chart operations. |
+| `<vbi-chart-type>`    | [readme.md](./src/components/chart/vbi-chart-type/readme.md)          | Chart type component.         |
 
 ---
 
