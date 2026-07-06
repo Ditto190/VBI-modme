@@ -1,8 +1,10 @@
 :host {
   display: inline-block;
+  line-height: 0;
 }
 
 .checkbox {
+  margin: 0;
   border: var(--border) solid var(--input-color, color-mix(in oklab, var(--color-base-content) 20%, transparent));
   color: var(--color-base-content);
   border-radius: var(--radius-selector);

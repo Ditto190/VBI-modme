@@ -3,7 +3,7 @@ import { Component, Event, type EventEmitter, Host, Prop, h } from '@stencil/cor
 @Component({
   tag: 'vbi-checkbox',
   styleUrl: 'vbi-checkbox.css',
-  shadow: true,
+  scoped: true,
 })
 export class VbiCheckbox {
   /** Whether the component is checked. */
@@ -24,7 +24,8 @@ export class VbiCheckbox {
   /** The size of the component. */
   @Prop() size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-  @Event() vbiCheckboxChange: EventEmitter<boolean>
+  /** Emitted when the checkbox value changes. */
+  @Event() vbiCheckboxChange!: EventEmitter<boolean>
 
   private handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement
