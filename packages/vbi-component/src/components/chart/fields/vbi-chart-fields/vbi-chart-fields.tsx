@@ -16,12 +16,8 @@ export class VbiChartFields {
   @State() selectedRoles: FieldRole[] = []
   @State() selectedTypes: string[] = []
 
-  async componentWillLoad() {
+  componentWillLoad() {
     this.store = connectChartStore(this.el)
-    const builder = this.store?.chartBuilder.builder
-    if (builder) {
-      console.log('dimensions', await builder.getSchema())
-    }
   }
 
   private get t() {
