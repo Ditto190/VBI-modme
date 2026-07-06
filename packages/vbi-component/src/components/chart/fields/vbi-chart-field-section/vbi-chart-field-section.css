@@ -25,5 +25,9 @@
 
 .fieldsection-item {
   display: block;
-  width: 100%;
+}
+
+.fieldsection-item.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
 }
