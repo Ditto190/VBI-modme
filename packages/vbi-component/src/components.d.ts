@@ -51,6 +51,8 @@ export namespace Components {
          */
         "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
     }
+    interface VbiChartDimensionShelf {
+    }
     interface VbiChartEditor {
     }
     interface VbiChartFieldFilter {
@@ -83,6 +85,8 @@ export namespace Components {
         "measures": VBISchemaField[];
     }
     interface VbiChartFields {
+    }
+    interface VbiChartShelfPanel {
     }
     interface VbiChartToolbar {
     }
@@ -341,6 +345,12 @@ declare global {
         prototype: HTMLVbiButtonElement;
         new (): HTMLVbiButtonElement;
     };
+    interface HTMLVbiChartDimensionShelfElement extends Components.VbiChartDimensionShelf, HTMLStencilElement {
+    }
+    var HTMLVbiChartDimensionShelfElement: {
+        prototype: HTMLVbiChartDimensionShelfElement;
+        new (): HTMLVbiChartDimensionShelfElement;
+    };
     interface HTMLVbiChartEditorElement extends Components.VbiChartEditor, HTMLStencilElement {
     }
     var HTMLVbiChartEditorElement: {
@@ -377,6 +387,12 @@ declare global {
     var HTMLVbiChartFieldsElement: {
         prototype: HTMLVbiChartFieldsElement;
         new (): HTMLVbiChartFieldsElement;
+    };
+    interface HTMLVbiChartShelfPanelElement extends Components.VbiChartShelfPanel, HTMLStencilElement {
+    }
+    var HTMLVbiChartShelfPanelElement: {
+        prototype: HTMLVbiChartShelfPanelElement;
+        new (): HTMLVbiChartShelfPanelElement;
     };
     interface HTMLVbiChartToolbarElement extends Components.VbiChartToolbar, HTMLStencilElement {
     }
@@ -493,10 +509,12 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "vbi-button": HTMLVbiButtonElement;
+        "vbi-chart-dimension-shelf": HTMLVbiChartDimensionShelfElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
         "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
         "vbi-chart-field-section": HTMLVbiChartFieldSectionElement;
         "vbi-chart-fields": HTMLVbiChartFieldsElement;
+        "vbi-chart-shelf-panel": HTMLVbiChartShelfPanelElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
         "vbi-checkbox": HTMLVbiCheckboxElement;
@@ -544,6 +562,8 @@ declare namespace LocalJSX {
          */
         "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
     }
+    interface VbiChartDimensionShelf {
+    }
     interface VbiChartEditor {
     }
     interface VbiChartFieldFilter {
@@ -588,6 +608,8 @@ declare namespace LocalJSX {
         "measures"?: VBISchemaField[];
     }
     interface VbiChartFields {
+    }
+    interface VbiChartShelfPanel {
     }
     interface VbiChartToolbar {
     }
@@ -919,10 +941,12 @@ declare namespace LocalJSX {
 
     interface IntrinsicElements {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
+        "vbi-chart-dimension-shelf": VbiChartDimensionShelf;
         "vbi-chart-editor": VbiChartEditor;
         "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
         "vbi-chart-field-section": VbiChartFieldSection;
         "vbi-chart-fields": VbiChartFields;
+        "vbi-chart-shelf-panel": VbiChartShelfPanel;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
         "vbi-checkbox": Omit<VbiCheckbox, keyof VbiCheckboxAttributes> & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes]?: VbiCheckbox[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `attr:${K}`]?: VbiCheckboxAttributes[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `prop:${K}`]?: VbiCheckbox[K] };
@@ -941,10 +965,12 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
+            "vbi-chart-dimension-shelf": LocalJSX.IntrinsicElements["vbi-chart-dimension-shelf"] & JSXBase.HTMLAttributes<HTMLVbiChartDimensionShelfElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
             "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
             "vbi-chart-field-section": LocalJSX.IntrinsicElements["vbi-chart-field-section"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldSectionElement>;
             "vbi-chart-fields": LocalJSX.IntrinsicElements["vbi-chart-fields"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldsElement>;
+            "vbi-chart-shelf-panel": LocalJSX.IntrinsicElements["vbi-chart-shelf-panel"] & JSXBase.HTMLAttributes<HTMLVbiChartShelfPanelElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;
             "vbi-checkbox": LocalJSX.IntrinsicElements["vbi-checkbox"] & JSXBase.HTMLAttributes<HTMLVbiCheckboxElement>;

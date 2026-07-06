@@ -30,8 +30,10 @@ export class VbiChartEditor {
             </aside>
 
             <section class='chart-editor__workspace'>
-              <nav class='chart-editor__tabs'>Tabs</nav>
-              <article class='chart-editor__chart-area'>Chart</article>
+              <div class='chart-editor__shelf-panel'>
+                <vbi-chart-shelf-panel />
+              </div>
+              <div class='chart-editor__chart'>Chart</div>
             </section>
           </main>
         </div>

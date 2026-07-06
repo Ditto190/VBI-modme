@@ -11,12 +11,14 @@
 
 - [vbi-chart-toolbar](../vbi-chart-toolbar)
 - [vbi-chart-fields](../fields/vbi-chart-fields)
+- [vbi-chart-shelf-panel](../shelves/vbi-chart-shelf-panel)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-editor --> vbi-chart-toolbar
   vbi-chart-editor --> vbi-chart-fields
+  vbi-chart-editor --> vbi-chart-shelf-panel
   vbi-chart-toolbar --> vbi-chart-type
   vbi-chart-toolbar --> vbi-tooltip
   vbi-chart-toolbar --> vbi-button
@@ -36,6 +38,7 @@ graph TD;
   vbi-chart-field-filter --> vbi-checkbox
   vbi-chart-field-section --> vbi-icon
   vbi-chart-field-section --> vbi-button
+  vbi-chart-shelf-panel --> vbi-chart-dimension-shelf
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
