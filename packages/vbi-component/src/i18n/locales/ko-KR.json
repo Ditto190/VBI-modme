@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "실행 취소",
   "toolbarImportCSV": "CSV 가져오기",
   "toolbarLimitPlaceholder": "기본값 {{defaultLimit}}",
-  "toolbarLimitTooltip": "쿼리당 반환 행 수. 기본값 {{defaultLimit}}"
+  "toolbarLimitTooltip": "쿼리당 반환 행 수. 기본값 {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "숫자",
+  "panelsFieldsTypeString": "텍스트",
+  "panelsFieldsTypeDate": "날짜",
+  "panelsFieldsTypeDatetime": "날짜 시간",
+  "panelsFieldsTypeTimestamp": "타임스탬프",
+  "panelsFieldsTypeBoolean": "불리언",
+  "panelsFieldsFilterDimension": "차원",
+  "panelsFieldsFilterMeasure": "지표",
+  "panelsFieldsFiltersTitle": "필터",
+  "panelsFieldsFiltersReset": "초기화",
+  "panelsFieldsFiltersRole": "역할",
+  "panelsFieldsFiltersType": "유형",
+  "panelsFieldsSearchPlaceholder": "검색"
 }

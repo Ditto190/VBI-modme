@@ -18,12 +18,14 @@
 
 ### Used by
 
+ - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
  - [vbi-menu](../vbi-menu)
 
 ### Graph
 ```mermaid
 graph TD;
+  vbi-chart-field-filter --> vbi-icon
   vbi-chart-toolbar --> vbi-icon
   vbi-menu --> vbi-icon
   style vbi-icon fill:#f9f,stroke:#333,stroke-width:4px

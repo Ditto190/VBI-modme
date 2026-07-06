@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "撤销",
   "toolbarImportCSV": "导入 CSV",
   "toolbarLimitPlaceholder": "默认 {{defaultLimit}}",
-  "toolbarLimitTooltip": "单次查询返回的记录条数，默认 {{defaultLimit}}"
+  "toolbarLimitTooltip": "单次查询返回的记录条数，默认 {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "数值",
+  "panelsFieldsTypeString": "文本",
+  "panelsFieldsTypeDate": "日期",
+  "panelsFieldsTypeDatetime": "日期时间",
+  "panelsFieldsTypeTimestamp": "时间戳",
+  "panelsFieldsTypeBoolean": "布尔",
+  "panelsFieldsFilterDimension": "维度",
+  "panelsFieldsFilterMeasure": "指标",
+  "panelsFieldsFiltersTitle": "字段筛选",
+  "panelsFieldsFiltersReset": "重置",
+  "panelsFieldsFiltersRole": "角色",
+  "panelsFieldsFiltersType": "类型",
+  "panelsFieldsSearchPlaceholder": "搜索"
 }

@@ -19,10 +19,23 @@
 
 ## Events
 
-| Event               | Description | Type                   |
-| ------------------- | ----------- | ---------------------- |
-| `vbiCheckboxChange` |             | `CustomEvent<boolean>` |
+| Event               | Description                              | Type                   |
+| ------------------- | ---------------------------------------- | ---------------------- |
+| `vbiCheckboxChange` | Emitted when the checkbox value changes. | `CustomEvent<boolean>` |
 
+
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-field-filter --> vbi-checkbox
+  style vbi-checkbox fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

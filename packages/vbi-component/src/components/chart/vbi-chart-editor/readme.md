@@ -27,7 +27,12 @@ graph TD;
   vbi-chart-type --> vbi-button
   vbi-chart-type --> vbi-menu
   vbi-menu --> vbi-icon
-  vbi-chart-fields --> vbi-input
+  vbi-chart-fields --> vbi-chart-field-filter
+  vbi-chart-field-filter --> vbi-input
+  vbi-chart-field-filter --> vbi-dropdown
+  vbi-chart-field-filter --> vbi-button
+  vbi-chart-field-filter --> vbi-icon
+  vbi-chart-field-filter --> vbi-checkbox
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

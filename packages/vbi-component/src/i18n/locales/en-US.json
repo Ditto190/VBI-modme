@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "Undo",
   "toolbarImportCSV": "Import CSV",
   "toolbarLimitPlaceholder": "Default {{defaultLimit}}",
-  "toolbarLimitTooltip": "Rows returned per query. Default {{defaultLimit}}"
+  "toolbarLimitTooltip": "Rows returned per query. Default {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "Number",
+  "panelsFieldsTypeString": "Text",
+  "panelsFieldsTypeDate": "Date",
+  "panelsFieldsTypeDatetime": "Datetime",
+  "panelsFieldsTypeTimestamp": "Timestamp",
+  "panelsFieldsTypeBoolean": "Boolean",
+  "panelsFieldsFilterDimension": "Dimension",
+  "panelsFieldsFilterMeasure": "Measure",
+  "panelsFieldsFiltersTitle": "Filters",
+  "panelsFieldsFiltersReset": "Reset",
+  "panelsFieldsFiltersRole": "Role",
+  "panelsFieldsFiltersType": "Type",
+  "panelsFieldsSearchPlaceholder": "Search"
 }

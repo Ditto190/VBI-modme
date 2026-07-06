@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "Annuler",
   "toolbarImportCSV": "Importer CSV",
   "toolbarLimitPlaceholder": "Par défaut {{defaultLimit}}",
-  "toolbarLimitTooltip": "Lignes renvoyées par requête. Par défaut {{defaultLimit}}"
+  "toolbarLimitTooltip": "Lignes renvoyées par requête. Par défaut {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "Nombre",
+  "panelsFieldsTypeString": "Texte",
+  "panelsFieldsTypeDate": "Date calendaire",
+  "panelsFieldsTypeDatetime": "Date et heure",
+  "panelsFieldsTypeTimestamp": "Horodatage",
+  "panelsFieldsTypeBoolean": "Booléen",
+  "panelsFieldsFilterDimension": "Dimension de données",
+  "panelsFieldsFilterMeasure": "Mesure",
+  "panelsFieldsFiltersTitle": "Filtres",
+  "panelsFieldsFiltersReset": "Réinitialiser",
+  "panelsFieldsFiltersRole": "Rôle",
+  "panelsFieldsFiltersType": "Nature",
+  "panelsFieldsSearchPlaceholder": "Rechercher"
 }

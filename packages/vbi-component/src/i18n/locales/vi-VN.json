@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "Hoàn tác",
   "toolbarImportCSV": "Nhập CSV",
   "toolbarLimitPlaceholder": "Mặc định {{defaultLimit}}",
-  "toolbarLimitTooltip": "Số dòng trả về mỗi truy vấn. Mặc định {{defaultLimit}}"
+  "toolbarLimitTooltip": "Số dòng trả về mỗi truy vấn. Mặc định {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "Số",
+  "panelsFieldsTypeString": "Văn bản",
+  "panelsFieldsTypeDate": "Ngày",
+  "panelsFieldsTypeDatetime": "Ngày giờ",
+  "panelsFieldsTypeTimestamp": "Dấu thời gian",
+  "panelsFieldsTypeBoolean": "Đúng/Sai",
+  "panelsFieldsFilterDimension": "Chiều",
+  "panelsFieldsFilterMeasure": "Chỉ số",
+  "panelsFieldsFiltersTitle": "Bộ lọc",
+  "panelsFieldsFiltersReset": "Đặt lại",
+  "panelsFieldsFiltersRole": "Vai trò",
+  "panelsFieldsFiltersType": "Kiểu",
+  "panelsFieldsSearchPlaceholder": "Tìm kiếm"
 }

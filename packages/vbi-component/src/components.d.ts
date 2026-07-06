@@ -5,10 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { FieldRole } from "./utils/data/fieldRole";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
+export { FieldRole } from "./utils/data/fieldRole";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
@@ -48,6 +50,23 @@ export namespace Components {
         "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
     }
     interface VbiChartEditor {
+    }
+    interface VbiChartFieldFilter {
+        /**
+          * The current search keyword.
+          * @default ''
+         */
+        "keyword": string;
+        /**
+          * The currently selected field roles.
+          * @default []
+         */
+        "selectedRoles": FieldRole[];
+        /**
+          * The currently selected field types.
+          * @default []
+         */
+        "selectedTypes": string[];
     }
     interface VbiChartFields {
     }
@@ -281,6 +300,10 @@ export namespace Components {
         "text": string;
     }
 }
+export interface VbiChartFieldFilterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiChartFieldFilterElement;
+}
 export interface VbiCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiCheckboxElement;
@@ -309,6 +332,25 @@ declare global {
     var HTMLVbiChartEditorElement: {
         prototype: HTMLVbiChartEditorElement;
         new (): HTMLVbiChartEditorElement;
+    };
+    interface HTMLVbiChartFieldFilterElementEventMap {
+        "vbiChartFieldFilterRole": FieldRole[];
+        "vbiChartFieldFilterType": string[];
+        "vbiChartFieldFilterKeyword": string;
+    }
+    interface HTMLVbiChartFieldFilterElement extends Components.VbiChartFieldFilter, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiChartFieldFilterElementEventMap>(type: K, listener: (this: HTMLVbiChartFieldFilterElement, ev: VbiChartFieldFilterCustomEvent<HTMLVbiChartFieldFilterElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiChartFieldFilterElementEventMap>(type: K, listener: (this: HTMLVbiChartFieldFilterElement, ev: VbiChartFieldFilterCustomEvent<HTMLVbiChartFieldFilterElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiChartFieldFilterElement: {
+        prototype: HTMLVbiChartFieldFilterElement;
+        new (): HTMLVbiChartFieldFilterElement;
     };
     interface HTMLVbiChartFieldsElement extends Components.VbiChartFields, HTMLStencilElement {
     }
@@ -432,6 +474,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "vbi-button": HTMLVbiButtonElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
+        "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
         "vbi-chart-fields": HTMLVbiChartFieldsElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
@@ -482,6 +525,35 @@ declare namespace LocalJSX {
     }
     interface VbiChartEditor {
     }
+    interface VbiChartFieldFilter {
+        /**
+          * The current search keyword.
+          * @default ''
+         */
+        "keyword"?: string;
+        /**
+          * Emitted when the user changes the search keyword.
+         */
+        "onVbiChartFieldFilterKeyword"?: (event: VbiChartFieldFilterCustomEvent<string>) => void;
+        /**
+          * Emitted when the user changes the selected roles in the filter dropdown.
+         */
+        "onVbiChartFieldFilterRole"?: (event: VbiChartFieldFilterCustomEvent<FieldRole[]>) => void;
+        /**
+          * Emitted when the user changes the selected types in the filter dropdown.
+         */
+        "onVbiChartFieldFilterType"?: (event: VbiChartFieldFilterCustomEvent<string[]>) => void;
+        /**
+          * The currently selected field roles.
+          * @default []
+         */
+        "selectedRoles"?: FieldRole[];
+        /**
+          * The currently selected field types.
+          * @default []
+         */
+        "selectedTypes"?: string[];
+    }
     interface VbiChartFields {
     }
     interface VbiChartToolbar {
@@ -513,6 +585,9 @@ declare namespace LocalJSX {
           * @default ''
          */
         "name"?: string;
+        /**
+          * Emitted when the checkbox value changes.
+         */
         "onVbiCheckboxChange"?: (event: VbiCheckboxCustomEvent<boolean>) => void;
         /**
           * The size of the component.
@@ -748,6 +823,9 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiChartFieldFilterAttributes {
+        "keyword": string;
+    }
     interface VbiCheckboxAttributes {
         "checked": boolean;
         "indeterminate": boolean;
@@ -809,6 +887,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-chart-editor": VbiChartEditor;
+        "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
         "vbi-chart-fields": VbiChartFields;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
@@ -829,6 +908,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
+            "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
             "vbi-chart-fields": LocalJSX.IntrinsicElements["vbi-chart-fields"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldsElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;

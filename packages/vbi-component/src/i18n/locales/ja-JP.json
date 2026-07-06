@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "元に戻す",
   "toolbarImportCSV": "CSV をインポート",
   "toolbarLimitPlaceholder": "既定値 {{defaultLimit}}",
-  "toolbarLimitTooltip": "1回のクエリで返すレコード数。既定値 {{defaultLimit}}"
+  "toolbarLimitTooltip": "1回のクエリで返すレコード数。既定値 {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "数値",
+  "panelsFieldsTypeString": "テキスト",
+  "panelsFieldsTypeDate": "日付",
+  "panelsFieldsTypeDatetime": "日時",
+  "panelsFieldsTypeTimestamp": "タイムスタンプ",
+  "panelsFieldsTypeBoolean": "ブール値",
+  "panelsFieldsFilterDimension": "ディメンション",
+  "panelsFieldsFilterMeasure": "メジャー",
+  "panelsFieldsFiltersTitle": "フィルター",
+  "panelsFieldsFiltersReset": "リセット",
+  "panelsFieldsFiltersRole": "ロール",
+  "panelsFieldsFiltersType": "タイプ",
+  "panelsFieldsSearchPlaceholder": "検索"
 }

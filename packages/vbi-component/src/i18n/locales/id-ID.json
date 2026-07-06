@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "Urungkan",
   "toolbarImportCSV": "Impor CSV",
   "toolbarLimitPlaceholder": "Bawaan {{defaultLimit}}",
-  "toolbarLimitTooltip": "Baris yang dikembalikan per kueri. Default {{defaultLimit}}"
+  "toolbarLimitTooltip": "Baris yang dikembalikan per kueri. Default {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "Angka",
+  "panelsFieldsTypeString": "Teks",
+  "panelsFieldsTypeDate": "Tanggal",
+  "panelsFieldsTypeDatetime": "Tanggal Waktu",
+  "panelsFieldsTypeTimestamp": "Stempel Waktu",
+  "panelsFieldsTypeBoolean": "Benar/Salah",
+  "panelsFieldsFilterDimension": "Dimensi",
+  "panelsFieldsFilterMeasure": "Metrik",
+  "panelsFieldsFiltersTitle": "Filter",
+  "panelsFieldsFiltersReset": "Atur Ulang",
+  "panelsFieldsFiltersRole": "Peran",
+  "panelsFieldsFiltersType": "Tipe",
+  "panelsFieldsSearchPlaceholder": "Cari"
 }

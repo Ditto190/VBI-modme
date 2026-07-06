@@ -80,5 +80,18 @@
   "toolbarHistoryUndo": "Rückgängig",
   "toolbarImportCSV": "CSV importieren",
   "toolbarLimitPlaceholder": "Standard {{defaultLimit}}",
-  "toolbarLimitTooltip": "Pro Abfrage zurückgegebene Zeilen. Standard {{defaultLimit}}"
+  "toolbarLimitTooltip": "Pro Abfrage zurückgegebene Zeilen. Standard {{defaultLimit}}",
+  "panelsFieldsTypeNumber": "Zahl",
+  "panelsFieldsTypeString": "Textwert",
+  "panelsFieldsTypeDate": "Datum",
+  "panelsFieldsTypeDatetime": "Datum/Uhrzeit",
+  "panelsFieldsTypeTimestamp": "Zeitstempel",
+  "panelsFieldsTypeBoolean": "Boolesch",
+  "panelsFieldsFilterDimension": "Daten-Dimension",
+  "panelsFieldsFilterMeasure": "Kennzahl",
+  "panelsFieldsFiltersTitle": "Filter",
+  "panelsFieldsFiltersReset": "Zurücksetzen",
+  "panelsFieldsFiltersRole": "Rolle",
+  "panelsFieldsFiltersType": "Typ",
+  "panelsFieldsSearchPlaceholder": "Suchen"
 }
