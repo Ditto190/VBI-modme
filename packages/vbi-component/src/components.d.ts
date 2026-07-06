@@ -6,11 +6,13 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { FieldRole } from "./utils/data/fieldRole";
+import { VBISchemaField } from "./store/chart/schema-fields";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export { FieldRole } from "./utils/data/fieldRole";
+export { VBISchemaField } from "./store/chart/schema-fields";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
@@ -67,6 +69,18 @@ export namespace Components {
           * @default []
          */
         "selectedTypes": string[];
+    }
+    interface VbiChartFieldSection {
+        /**
+          * The list of dimensions to display.
+          * @default []
+         */
+        "dimensions": VBISchemaField[];
+        /**
+          * The list of measures to display.
+          * @default []
+         */
+        "measures": VBISchemaField[];
     }
     interface VbiChartFields {
     }
@@ -352,6 +366,12 @@ declare global {
         prototype: HTMLVbiChartFieldFilterElement;
         new (): HTMLVbiChartFieldFilterElement;
     };
+    interface HTMLVbiChartFieldSectionElement extends Components.VbiChartFieldSection, HTMLStencilElement {
+    }
+    var HTMLVbiChartFieldSectionElement: {
+        prototype: HTMLVbiChartFieldSectionElement;
+        new (): HTMLVbiChartFieldSectionElement;
+    };
     interface HTMLVbiChartFieldsElement extends Components.VbiChartFields, HTMLStencilElement {
     }
     var HTMLVbiChartFieldsElement: {
@@ -475,6 +495,7 @@ declare global {
         "vbi-button": HTMLVbiButtonElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
         "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
+        "vbi-chart-field-section": HTMLVbiChartFieldSectionElement;
         "vbi-chart-fields": HTMLVbiChartFieldsElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
@@ -553,6 +574,18 @@ declare namespace LocalJSX {
           * @default []
          */
         "selectedTypes"?: string[];
+    }
+    interface VbiChartFieldSection {
+        /**
+          * The list of dimensions to display.
+          * @default []
+         */
+        "dimensions"?: VBISchemaField[];
+        /**
+          * The list of measures to display.
+          * @default []
+         */
+        "measures"?: VBISchemaField[];
     }
     interface VbiChartFields {
     }
@@ -888,6 +921,7 @@ declare namespace LocalJSX {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-chart-editor": VbiChartEditor;
         "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
+        "vbi-chart-field-section": VbiChartFieldSection;
         "vbi-chart-fields": VbiChartFields;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
@@ -909,6 +943,7 @@ declare module "@stencil/core" {
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
             "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
+            "vbi-chart-field-section": LocalJSX.IntrinsicElements["vbi-chart-field-section"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldSectionElement>;
             "vbi-chart-fields": LocalJSX.IntrinsicElements["vbi-chart-fields"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldsElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;

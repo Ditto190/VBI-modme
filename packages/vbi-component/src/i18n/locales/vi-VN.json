@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "Đặt lại",
   "panelsFieldsFiltersRole": "Vai trò",
   "panelsFieldsFiltersType": "Kiểu",
-  "panelsFieldsSearchPlaceholder": "Tìm kiếm"
+  "panelsFieldsSearchPlaceholder": "Tìm kiếm",
+  "panelsFieldsEmpty": "Không có trường phù hợp",
+  "panelsFieldsTitle": "Danh sách trường"
 }

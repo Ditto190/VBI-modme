@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "Zurücksetzen",
   "panelsFieldsFiltersRole": "Rolle",
   "panelsFieldsFiltersType": "Typ",
-  "panelsFieldsSearchPlaceholder": "Suchen"
+  "panelsFieldsSearchPlaceholder": "Suchen",
+  "panelsFieldsEmpty": "Keine passenden Felder",
+  "panelsFieldsTitle": "Feldliste"
 }

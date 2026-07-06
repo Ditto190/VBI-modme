@@ -24,6 +24,10 @@ export class VbiChartFields {
     }
   }
 
+  private get t() {
+    return this.store?.translation.state.t || ((k: string) => k)
+  }
+
   private get chartSchemaFields() {
     return this.store?.chartSchemaFields
   }
@@ -50,7 +54,8 @@ export class VbiChartFields {
     return (
       <Host>
         <div class='chartfields'>
-          <h4 class='chartfields-title'>Field List</h4>
+          <h4 class='chartfields-title'>{this.t('panelsFieldsTitle')}</h4>
+
           <vbi-chart-field-filter
             class='chartfields-filter'
             keyword={this.keyword}
@@ -62,16 +67,7 @@ export class VbiChartFields {
           />
 
           <div class='chartfields-list'>
-            {this.dimensions.length === 0 ? (
-              <div class='empty-state'>Chưa có trường dữ liệu</div>
-            ) : (
-              this.dimensions.map((dim) => <div class='field-item'>{dim.name}</div>)
-            )}
-            {this.measures.length === 0 ? (
-              <div class='empty-state'>Chưa có trường dữ liệu</div>
-            ) : (
-              this.measures.map((dim) => <div class='field-item'>{dim.name}</div>)
-            )}
+            <vbi-chart-field-section dimensions={this.dimensions} measures={this.measures} />
           </div>
         </div>
       </Host>

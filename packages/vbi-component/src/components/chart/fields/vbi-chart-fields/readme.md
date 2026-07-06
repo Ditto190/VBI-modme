@@ -14,16 +14,20 @@
 ### Depends on
 
 - [vbi-chart-field-filter](../vbi-chart-field-filter)
+- [vbi-chart-field-section](../vbi-chart-field-section)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-fields --> vbi-chart-field-filter
+  vbi-chart-fields --> vbi-chart-field-section
   vbi-chart-field-filter --> vbi-input
   vbi-chart-field-filter --> vbi-dropdown
   vbi-chart-field-filter --> vbi-button
   vbi-chart-field-filter --> vbi-icon
   vbi-chart-field-filter --> vbi-checkbox
+  vbi-chart-field-section --> vbi-icon
+  vbi-chart-field-section --> vbi-button
   vbi-chart-editor --> vbi-chart-fields
   style vbi-chart-fields fill:#f9f,stroke:#333,stroke-width:4px
 ```

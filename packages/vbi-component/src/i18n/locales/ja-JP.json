@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "リセット",
   "panelsFieldsFiltersRole": "ロール",
   "panelsFieldsFiltersType": "タイプ",
-  "panelsFieldsSearchPlaceholder": "検索"
+  "panelsFieldsSearchPlaceholder": "検索",
+  "panelsFieldsEmpty": "一致するフィールドはありません",
+  "panelsFieldsTitle": "フィールド一覧"
 }

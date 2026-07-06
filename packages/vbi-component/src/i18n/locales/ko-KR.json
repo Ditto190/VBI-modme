@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "초기화",
   "panelsFieldsFiltersRole": "역할",
   "panelsFieldsFiltersType": "유형",
-  "panelsFieldsSearchPlaceholder": "검색"
+  "panelsFieldsSearchPlaceholder": "검색",
+  "panelsFieldsEmpty": "일치하는 필드가 없습니다",
+  "panelsFieldsTitle": "필드 목록"
 }

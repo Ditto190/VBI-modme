@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.fieldsection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fieldsection-divider {
+  height: 1px;
+  background-color: var(--color-base-300);
+}
+
+.fieldsection-group {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.fieldsection-group-title {
+  padding-bottom: 4px;
+}
+
+.fieldsection-item {
+  display: block;
+  width: 100%;
+}

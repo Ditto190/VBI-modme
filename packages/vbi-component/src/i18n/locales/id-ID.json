@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "Atur Ulang",
   "panelsFieldsFiltersRole": "Peran",
   "panelsFieldsFiltersType": "Tipe",
-  "panelsFieldsSearchPlaceholder": "Cari"
+  "panelsFieldsSearchPlaceholder": "Cari",
+  "panelsFieldsEmpty": "Tidak ada bidang yang cocok",
+  "panelsFieldsTitle": "Daftar Bidang"
 }

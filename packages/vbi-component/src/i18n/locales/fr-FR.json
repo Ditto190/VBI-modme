@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "Réinitialiser",
   "panelsFieldsFiltersRole": "Rôle",
   "panelsFieldsFiltersType": "Nature",
-  "panelsFieldsSearchPlaceholder": "Rechercher"
+  "panelsFieldsSearchPlaceholder": "Rechercher",
+  "panelsFieldsEmpty": "Aucun champ correspondant",
+  "panelsFieldsTitle": "Liste des champs"
 }

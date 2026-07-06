@@ -28,11 +28,14 @@ graph TD;
   vbi-chart-type --> vbi-menu
   vbi-menu --> vbi-icon
   vbi-chart-fields --> vbi-chart-field-filter
+  vbi-chart-fields --> vbi-chart-field-section
   vbi-chart-field-filter --> vbi-input
   vbi-chart-field-filter --> vbi-dropdown
   vbi-chart-field-filter --> vbi-button
   vbi-chart-field-filter --> vbi-icon
   vbi-chart-field-filter --> vbi-checkbox
+  vbi-chart-field-section --> vbi-icon
+  vbi-chart-field-section --> vbi-button
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

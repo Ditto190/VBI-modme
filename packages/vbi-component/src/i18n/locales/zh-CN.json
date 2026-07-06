@@ -93,5 +93,7 @@
   "panelsFieldsFiltersReset": "重置",
   "panelsFieldsFiltersRole": "角色",
   "panelsFieldsFiltersType": "类型",
-  "panelsFieldsSearchPlaceholder": "搜索"
+  "panelsFieldsSearchPlaceholder": "搜索",
+  "panelsFieldsEmpty": "暂无匹配字段",
+  "panelsFieldsTitle": "字段列表"
 }
