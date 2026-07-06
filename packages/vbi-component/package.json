@@ -63,6 +63,7 @@
     "@storybook/addon-docs": "10.4.6",
     "@storybook/addon-links": "10.4.6",
     "@types/node": "25.9.3",
+    "@types/sortablejs": "1.15.9",
     "@visactor/vbi": "workspace:*",
     "@visactor/vchart": "2.0.23-alpha.6",
     "@visactor/vquery": "workspace:*",
@@ -79,5 +80,8 @@
     "@visactor/vquery": "workspace:*",
     "@visactor/vseed": "workspace:*",
     "@visactor/vtable": "1.23.1"
+  },
+  "dependencies": {
+    "sortablejs": "1.15.7"
   }
 }
