@@ -1,4 +1,7 @@
 :host {
+  --vbi-chart-editor-min-width: 750px;
+  --vbi-chart-editor-min-height: 700px;
+  --vbi-chart-editor-fields-width: 300px;
   display: block;
   font-family:
     system-ui,
@@ -23,8 +26,8 @@
   flex-direction: column;
   height: 100%;
   gap: 15px;
-  min-width: 750px;
-  min-height: 700px;
+  min-width: var(--vbi-chart-editor-min-width);
+  min-height: var(--vbi-chart-editor-min-height);
 }
 
 .chart-editor__toolbar,
@@ -40,7 +43,7 @@
 }
 
 .chart-editor__fields {
-  width: 250px;
+  width: var(--vbi-chart-editor-fields-width);
 }
 
 .chart-editor__main {
@@ -52,5 +55,5 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: calc(100% - 250px - 8px);
+  width: calc(100% - var(--vbi-chart-editor-fields-width) - 8px);
 }
