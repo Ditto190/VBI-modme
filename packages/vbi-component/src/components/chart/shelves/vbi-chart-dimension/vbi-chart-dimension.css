@@ -42,19 +42,35 @@
   line-height: 2rem;
 }
 
+.dimension__item-close,
+.dimension__item-down {
+  border-radius: var(--radius-field);
+}
+
 .dimension__item-close {
   width: 0;
+  padding: 0;
   opacity: 0;
   overflow: hidden;
   margin-left: -0.375rem;
-  transition:
-    width 0.15s ease-in-out,
-    opacity 0.15s ease-in-out,
-    margin-left 0.15s ease-in-out;
+  box-sizing: content-box;
+
+  transition: 0.15s ease-in-out;
+  transition-property: width, padding, opacity, margin-left, background-color;
 }
 
 .dimension__item:hover .dimension__item-close {
-  width: 10px;
+  width: 0.625rem;
+  padding: 4px;
   opacity: 1;
   margin-left: 0;
+}
+
+.dimension__item-down {
+  padding: 4px;
+}
+
+.dimension__item-close:hover,
+.dimension__item-down:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 15%, transparent);
 }
