@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "Typ",
   "panelsFieldsSearchPlaceholder": "Suchen",
   "panelsFieldsEmpty": "Keine passenden Felder",
-  "panelsFieldsTitle": "Feldliste"
+  "panelsFieldsTitle": "Feldliste",
+  "aggregatesDateToYearLabel": "Jahr (toYear)",
+  "aggregatesDateToYearShort": "Jahr",
+  "aggregatesDateToQuarterLabel": "Quartal (toQuarter)",
+  "aggregatesDateToQuarterShort": "Quartal",
+  "aggregatesDateToMonthLabel": "Monat (toMonth)",
+  "aggregatesDateToMonthShort": "Monat",
+  "aggregatesDateToWeekLabel": "Woche (toWeek)",
+  "aggregatesDateToWeekShort": "Woche",
+  "aggregatesDateToDayLabel": "Tag (toDay)",
+  "aggregatesDateToDayShort": "Tag",
+  "aggregatesDateToHourLabel": "Stunde (toHour)",
+  "aggregatesDateToHourShort": "Stunde",
+  "aggregatesDateToMinuteLabel": "Min. (toMinute)",
+  "aggregatesDateToMinuteShort": "Min.",
+  "aggregatesDateToSecondLabel": "Sekunde (toSecond)",
+  "aggregatesDateToSecondShort": "Sekunde",
+  "shelvesPlaceholdersDimensions": "Dimensionen oder Kennzahlen hierher ziehen"
 }

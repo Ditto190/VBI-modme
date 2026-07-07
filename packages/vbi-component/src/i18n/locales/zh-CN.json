@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "类型",
   "panelsFieldsSearchPlaceholder": "搜索",
   "panelsFieldsEmpty": "暂无匹配字段",
-  "panelsFieldsTitle": "字段列表"
+  "panelsFieldsTitle": "字段列表",
+  "aggregatesDateToYearLabel": "年 (toYear)",
+  "aggregatesDateToYearShort": "年",
+  "aggregatesDateToQuarterLabel": "季度 (toQuarter)",
+  "aggregatesDateToQuarterShort": "季度",
+  "aggregatesDateToMonthLabel": "月 (toMonth)",
+  "aggregatesDateToMonthShort": "月",
+  "aggregatesDateToWeekLabel": "周 (toWeek)",
+  "aggregatesDateToWeekShort": "周",
+  "aggregatesDateToDayLabel": "日 (toDay)",
+  "aggregatesDateToDayShort": "日",
+  "aggregatesDateToHourLabel": "小时 (toHour)",
+  "aggregatesDateToHourShort": "小时",
+  "aggregatesDateToMinuteLabel": "分钟 (toMinute)",
+  "aggregatesDateToMinuteShort": "分钟",
+  "aggregatesDateToSecondLabel": "秒 (toSecond)",
+  "aggregatesDateToSecondShort": "秒",
+  "shelvesPlaceholdersDimensions": "拖拽维度/指标到此处"
 }

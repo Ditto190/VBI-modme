@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "유형",
   "panelsFieldsSearchPlaceholder": "검색",
   "panelsFieldsEmpty": "일치하는 필드가 없습니다",
-  "panelsFieldsTitle": "필드 목록"
+  "panelsFieldsTitle": "필드 목록",
+  "aggregatesDateToYearLabel": "연도 (toYear)",
+  "aggregatesDateToYearShort": "연도",
+  "aggregatesDateToQuarterLabel": "분기 (toQuarter)",
+  "aggregatesDateToQuarterShort": "분기",
+  "aggregatesDateToMonthLabel": "월 (toMonth)",
+  "aggregatesDateToMonthShort": "월",
+  "aggregatesDateToWeekLabel": "주 (toWeek)",
+  "aggregatesDateToWeekShort": "주",
+  "aggregatesDateToDayLabel": "일 (toDay)",
+  "aggregatesDateToDayShort": "일",
+  "aggregatesDateToHourLabel": "시간 (toHour)",
+  "aggregatesDateToHourShort": "시간",
+  "aggregatesDateToMinuteLabel": "분 (toMinute)",
+  "aggregatesDateToMinuteShort": "분",
+  "aggregatesDateToSecondLabel": "초 (toSecond)",
+  "aggregatesDateToSecondShort": "초",
+  "shelvesPlaceholdersDimensions": "차원/지표를 여기로 끌어오세요"
 }

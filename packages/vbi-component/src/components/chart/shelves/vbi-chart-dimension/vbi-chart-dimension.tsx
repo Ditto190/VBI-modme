@@ -4,8 +4,13 @@ import Sortable from 'sortablejs'
 import { type ChartStore } from 'src/store/chart'
 import { type VBISchemaField } from 'src/store/chart/schema-fields'
 import { connectChartStore } from 'src/store/context'
-import { getDefaultDimensionDateAggregate } from '../utils/dimensionDateAggregateUtils'
+import {
+  formatDimensionDateAggregate,
+  getDefaultDimensionDateAggregate,
+  normalizeDimensionDateAggregate,
+} from '../utils/dimensionDateAggregateUtils'
 import { reorderYArrayByInsertIndex } from '../utils/reorderUtils'
+import { formatSortDisplaySuffix } from '../utils/sortUtils'
 
 @Component({
   tag: 'vbi-chart-dimension',
@@ -27,6 +32,18 @@ export class VbiChartDimension {
 
   private get chartDimensions() {
     return this.store?.chartDimensions
+  }
+
+  private get chartSchemaFields() {
+    return this.store?.chartSchemaFields
+  }
+
+  private get dimensions() {
+    return this.chartDimensions?.state.dimensions || []
+  }
+
+  private get fieldTypeMap() {
+    return this.chartSchemaFields?.state.fieldTypeMap || {}
   }
 
   private containerRef?: HTMLDivElement
@@ -93,18 +110,31 @@ export class VbiChartDimension {
     }
   }
 
+  private getDimensionDisplayLabel = (dimension: (typeof this.dimensions)[number]) => {
+    const baseLabel = dimension.alias || dimension.field
+    const aggregate = formatDimensionDateAggregate(
+      normalizeDimensionDateAggregate(dimension.aggregate, this.fieldTypeMap[dimension.field]),
+      this.t,
+    )
+
+    if (!aggregate) {
+      return `${baseLabel}${formatSortDisplaySuffix(dimension.sort)}`
+    }
+
+    return `${aggregate}(${baseLabel})${formatSortDisplaySuffix(dimension.sort)}`
+  }
+
   render() {
-    const dimensions = this.chartDimensions?.state.dimensions || []
     return (
       <Host>
         <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='dimension'>
-          {dimensions.length === 0 ? (
+          {this.dimensions.length === 0 ? (
             <div class='dimension__placeholder'>{this.t('shelvesPlaceholdersDimensions')}</div>
           ) : (
-            dimensions.map((dim) => (
+            this.dimensions.map((dim) => (
               <vbi-button size='sm' class='dimension__item'>
                 <vbi-icon icon={DownOutlined} size='10' class='dimension__item-down' />
-                {dim.alias || dim.field}
+                {this.getDimensionDisplayLabel(dim)}
                 <vbi-icon
                   icon={CloseOutlined}
                   size='10'

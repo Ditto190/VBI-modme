@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "Kiểu",
   "panelsFieldsSearchPlaceholder": "Tìm kiếm",
   "panelsFieldsEmpty": "Không có trường phù hợp",
-  "panelsFieldsTitle": "Danh sách trường"
+  "panelsFieldsTitle": "Danh sách trường",
+  "aggregatesDateToYearLabel": "Năm (toYear)",
+  "aggregatesDateToYearShort": "Năm",
+  "aggregatesDateToQuarterLabel": "Quý (toQuarter)",
+  "aggregatesDateToQuarterShort": "Quý",
+  "aggregatesDateToMonthLabel": "Tháng (toMonth)",
+  "aggregatesDateToMonthShort": "Tháng",
+  "aggregatesDateToWeekLabel": "Tuần (toWeek)",
+  "aggregatesDateToWeekShort": "Tuần",
+  "aggregatesDateToDayLabel": "Ngày (toDay)",
+  "aggregatesDateToDayShort": "Ngày",
+  "aggregatesDateToHourLabel": "Giờ (toHour)",
+  "aggregatesDateToHourShort": "Giờ",
+  "aggregatesDateToMinuteLabel": "Phút (toMinute)",
+  "aggregatesDateToMinuteShort": "Phút",
+  "aggregatesDateToSecondLabel": "Giây (toSecond)",
+  "aggregatesDateToSecondShort": "Giây",
+  "shelvesPlaceholdersDimensions": "Kéo chiều hoặc chỉ số vào đây"
 }

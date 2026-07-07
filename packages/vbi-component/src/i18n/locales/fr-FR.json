@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "Nature",
   "panelsFieldsSearchPlaceholder": "Rechercher",
   "panelsFieldsEmpty": "Aucun champ correspondant",
-  "panelsFieldsTitle": "Liste des champs"
+  "panelsFieldsTitle": "Liste des champs",
+  "aggregatesDateToYearLabel": "Année (toYear)",
+  "aggregatesDateToYearShort": "Année",
+  "aggregatesDateToQuarterLabel": "Trimestre (toQuarter)",
+  "aggregatesDateToQuarterShort": "Trimestre",
+  "aggregatesDateToMonthLabel": "Mois (toMonth)",
+  "aggregatesDateToMonthShort": "Mois",
+  "aggregatesDateToWeekLabel": "Semaine (toWeek)",
+  "aggregatesDateToWeekShort": "Semaine",
+  "aggregatesDateToDayLabel": "Jour (toDay)",
+  "aggregatesDateToDayShort": "Jour",
+  "aggregatesDateToHourLabel": "Heure (toHour)",
+  "aggregatesDateToHourShort": "Heure",
+  "aggregatesDateToMinuteLabel": "Min. (toMinute)",
+  "aggregatesDateToMinuteShort": "Min.",
+  "aggregatesDateToSecondLabel": "Seconde (toSecond)",
+  "aggregatesDateToSecondShort": "Seconde",
+  "shelvesPlaceholdersDimensions": "Faire glisser des dimensions ou mesures ici"
 }

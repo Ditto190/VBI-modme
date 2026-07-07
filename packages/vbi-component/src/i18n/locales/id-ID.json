@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "Tipe",
   "panelsFieldsSearchPlaceholder": "Cari",
   "panelsFieldsEmpty": "Tidak ada bidang yang cocok",
-  "panelsFieldsTitle": "Daftar Bidang"
+  "panelsFieldsTitle": "Daftar Bidang",
+  "aggregatesDateToYearLabel": "Tahun (toYear)",
+  "aggregatesDateToYearShort": "Tahun",
+  "aggregatesDateToQuarterLabel": "Kuartal (toQuarter)",
+  "aggregatesDateToQuarterShort": "Kuartal",
+  "aggregatesDateToMonthLabel": "Bulan (toMonth)",
+  "aggregatesDateToMonthShort": "Bulan",
+  "aggregatesDateToWeekLabel": "Minggu (toWeek)",
+  "aggregatesDateToWeekShort": "Minggu",
+  "aggregatesDateToDayLabel": "Hari (toDay)",
+  "aggregatesDateToDayShort": "Hari",
+  "aggregatesDateToHourLabel": "Jam (toHour)",
+  "aggregatesDateToHourShort": "Jam",
+  "aggregatesDateToMinuteLabel": "Menit (toMinute)",
+  "aggregatesDateToMinuteShort": "Menit",
+  "aggregatesDateToSecondLabel": "Detik (toSecond)",
+  "aggregatesDateToSecondShort": "Detik",
+  "shelvesPlaceholdersDimensions": "Seret dimensi atau metrik ke sini"
 }

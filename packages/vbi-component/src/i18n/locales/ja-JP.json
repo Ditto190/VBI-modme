@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "タイプ",
   "panelsFieldsSearchPlaceholder": "検索",
   "panelsFieldsEmpty": "一致するフィールドはありません",
-  "panelsFieldsTitle": "フィールド一覧"
+  "panelsFieldsTitle": "フィールド一覧",
+  "aggregatesDateToYearLabel": "年 (toYear)",
+  "aggregatesDateToYearShort": "年",
+  "aggregatesDateToQuarterLabel": "四半期 (toQuarter)",
+  "aggregatesDateToQuarterShort": "四半期",
+  "aggregatesDateToMonthLabel": "月 (toMonth)",
+  "aggregatesDateToMonthShort": "月",
+  "aggregatesDateToWeekLabel": "週 (toWeek)",
+  "aggregatesDateToWeekShort": "週",
+  "aggregatesDateToDayLabel": "日 (toDay)",
+  "aggregatesDateToDayShort": "日",
+  "aggregatesDateToHourLabel": "時 (toHour)",
+  "aggregatesDateToHourShort": "時",
+  "aggregatesDateToMinuteLabel": "分 (toMinute)",
+  "aggregatesDateToMinuteShort": "分",
+  "aggregatesDateToSecondLabel": "秒 (toSecond)",
+  "aggregatesDateToSecondShort": "秒",
+  "shelvesPlaceholdersDimensions": "ディメンションまたはメジャーをここにドラッグ"
 }

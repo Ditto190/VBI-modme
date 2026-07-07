@@ -95,5 +95,22 @@
   "panelsFieldsFiltersType": "Type",
   "panelsFieldsSearchPlaceholder": "Search",
   "panelsFieldsEmpty": "No matching fields",
-  "panelsFieldsTitle": "Field List"
+  "panelsFieldsTitle": "Field List",
+  "aggregatesDateToYearLabel": "Year (toYear)",
+  "aggregatesDateToYearShort": "Year",
+  "aggregatesDateToQuarterLabel": "Quarter (toQuarter)",
+  "aggregatesDateToQuarterShort": "Quarter",
+  "aggregatesDateToMonthLabel": "Month (toMonth)",
+  "aggregatesDateToMonthShort": "Month",
+  "aggregatesDateToWeekLabel": "Week (toWeek)",
+  "aggregatesDateToWeekShort": "Week",
+  "aggregatesDateToDayLabel": "Day (toDay)",
+  "aggregatesDateToDayShort": "Day",
+  "aggregatesDateToHourLabel": "Hour (toHour)",
+  "aggregatesDateToHourShort": "Hour",
+  "aggregatesDateToMinuteLabel": "Minute (toMinute)",
+  "aggregatesDateToMinuteShort": "Minute",
+  "aggregatesDateToSecondLabel": "Second (toSecond)",
+  "aggregatesDateToSecondShort": "Second",
+  "shelvesPlaceholdersDimensions": "Drag dimensions or measures here"
 }
