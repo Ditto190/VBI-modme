@@ -3,10 +3,11 @@ import { createTranslationStore, type TranslationStore } from 'src/i18n'
 import { createChartBuilderStore, type ChartBuilderStore } from './builder'
 import { createChartConfigStore, type ChartConfigStore } from './config'
 import { createChartDimensionsStore, type ChartDimensionsStore } from './dimensions'
+import { createChartMeasuresStore, type ChartMeasuresStore } from './measures'
 import { createChartSchemaFieldsStore, type ChartSchemaFieldsStore } from './schema-fields'
 import { createChartTypeStore, type ChartTypeStore } from './type'
 import { createChartUndoStore, type ChartUndoStore } from './undo'
-import { createChartMeasuresStore, type ChartMeasuresStore } from './measures'
+import { createChartVSeedStore, type ChartVSeedStore } from './vseed'
 
 export interface ChartStore {
   chartBuilder: ChartBuilderStore
@@ -16,6 +17,7 @@ export interface ChartStore {
   chartDimensions: ChartDimensionsStore
   chartMeasures: ChartMeasuresStore
   chartSchemaFields: ChartSchemaFieldsStore
+  chartVSeed: ChartVSeedStore
   translation: TranslationStore
   initialize: (nextBuilder?: VBIChartBuilder) => () => void
 }
@@ -28,6 +30,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
   const chartDimensions = createChartDimensionsStore(chartBuilder)
   const chartMeasures = createChartMeasuresStore(chartBuilder)
   const chartSchemaFields = createChartSchemaFieldsStore(chartBuilder)
+  const chartVSeed = createChartVSeedStore(chartBuilder, chartConfig)
   const translation = createTranslationStore(chartBuilder)
 
   const initialize = (nextBuilder: VBIChartBuilder = builder) => {
@@ -40,6 +43,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
       chartDimensions.dispose()
       chartMeasures.dispose()
       chartSchemaFields.dispose()
+      chartVSeed.dispose()
       translation.dispose()
     }
   }
@@ -52,6 +56,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
     chartDimensions,
     chartMeasures,
     chartSchemaFields,
+    chartVSeed,
     translation,
     initialize,
   }
