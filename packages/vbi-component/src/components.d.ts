@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 import { FieldRole } from "./utils/data/fieldRole";
 import { VBISchemaField } from "./store/chart/schema-fields";
+import { VSeed } from "@visactor/vseed";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
@@ -15,6 +16,7 @@ import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
+export { VSeed } from "@visactor/vseed";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
@@ -104,6 +106,12 @@ export namespace Components {
         "measures": VBISchemaField[];
     }
     interface VbiChartFields {
+    }
+    interface VbiChartRender {
+        /**
+          * The VSeed configuration object used to render the chart or table.
+         */
+        "vseed"?: VSeed;
     }
     interface VbiChartShelfPanel {
     }
@@ -428,6 +436,12 @@ declare global {
         prototype: HTMLVbiChartFieldsElement;
         new (): HTMLVbiChartFieldsElement;
     };
+    interface HTMLVbiChartRenderElement extends Components.VbiChartRender, HTMLStencilElement {
+    }
+    var HTMLVbiChartRenderElement: {
+        prototype: HTMLVbiChartRenderElement;
+        new (): HTMLVbiChartRenderElement;
+    };
     interface HTMLVbiChartShelfPanelElement extends Components.VbiChartShelfPanel, HTMLStencilElement {
     }
     var HTMLVbiChartShelfPanelElement: {
@@ -555,6 +569,7 @@ declare global {
         "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
         "vbi-chart-field-section": HTMLVbiChartFieldSectionElement;
         "vbi-chart-fields": HTMLVbiChartFieldsElement;
+        "vbi-chart-render": HTMLVbiChartRenderElement;
         "vbi-chart-shelf-panel": HTMLVbiChartShelfPanelElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
@@ -670,6 +685,12 @@ declare namespace LocalJSX {
         "measures"?: VBISchemaField[];
     }
     interface VbiChartFields {
+    }
+    interface VbiChartRender {
+        /**
+          * The VSeed configuration object used to render the chart or table.
+         */
+        "vseed"?: VSeed;
     }
     interface VbiChartShelfPanel {
     }
@@ -1013,6 +1034,7 @@ declare namespace LocalJSX {
         "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
         "vbi-chart-field-section": VbiChartFieldSection;
         "vbi-chart-fields": VbiChartFields;
+        "vbi-chart-render": VbiChartRender;
         "vbi-chart-shelf-panel": VbiChartShelfPanel;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
@@ -1038,6 +1060,7 @@ declare module "@stencil/core" {
             "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
             "vbi-chart-field-section": LocalJSX.IntrinsicElements["vbi-chart-field-section"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldSectionElement>;
             "vbi-chart-fields": LocalJSX.IntrinsicElements["vbi-chart-fields"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldsElement>;
+            "vbi-chart-render": LocalJSX.IntrinsicElements["vbi-chart-render"] & JSXBase.HTMLAttributes<HTMLVbiChartRenderElement>;
             "vbi-chart-shelf-panel": LocalJSX.IntrinsicElements["vbi-chart-shelf-panel"] & JSXBase.HTMLAttributes<HTMLVbiChartShelfPanelElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;
