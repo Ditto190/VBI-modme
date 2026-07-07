@@ -472,6 +472,9 @@ importers:
 
   packages/vbi-component:
     dependencies:
+      '@floating-ui/dom':
+        specifier: 1.7.6
+        version: 1.7.6
       sortablejs:
         specifier: 1.15.7
         version: 1.15.7

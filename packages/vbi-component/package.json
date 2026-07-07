@@ -82,6 +82,7 @@
     "@visactor/vtable": "1.23.1"
   },
   "dependencies": {
+    "@floating-ui/dom": "1.7.6",
     "sortablejs": "1.15.7"
   }
 }
