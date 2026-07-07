@@ -12,6 +12,7 @@
 - [vbi-chart-toolbar](../vbi-chart-toolbar)
 - [vbi-chart-fields](../fields/vbi-chart-fields)
 - [vbi-chart-shelf-panel](../shelves/vbi-chart-shelf-panel)
+- [vbi-chart-render](../vbi-chart-render)
 
 ### Graph
 ```mermaid
@@ -19,6 +20,7 @@ graph TD;
   vbi-chart-editor --> vbi-chart-toolbar
   vbi-chart-editor --> vbi-chart-fields
   vbi-chart-editor --> vbi-chart-shelf-panel
+  vbi-chart-editor --> vbi-chart-render
   vbi-chart-toolbar --> vbi-chart-type
   vbi-chart-toolbar --> vbi-tooltip
   vbi-chart-toolbar --> vbi-button

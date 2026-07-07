@@ -1,4 +1,5 @@
 import { Component, Element, Host, State, h } from '@stencil/core'
+import type { VSeed } from '@visactor/vseed'
 import { type ChartStore } from 'src/store/chart'
 import { connectChartStore } from 'src/store/context'
 
@@ -11,6 +12,10 @@ export class VbiChartEditor {
   @Element() el!: HTMLElement
 
   @State() store?: ChartStore
+
+  private get vseed(): VSeed | undefined {
+    return this.store?.chartVSeed.state.vseed ?? undefined
+  }
 
   componentWillLoad() {
     this.store = connectChartStore(this.el)
@@ -33,7 +38,9 @@ export class VbiChartEditor {
               <div class='chart-editor__shelf-panel'>
                 <vbi-chart-shelf-panel />
               </div>
-              <div class='chart-editor__chart'>Chart</div>
+              <div class='chart-editor__chart'>
+                <vbi-chart-render vseed={this.vseed} style={{ height: '100%' }}></vbi-chart-render>
+              </div>
             </section>
           </main>
         </div>

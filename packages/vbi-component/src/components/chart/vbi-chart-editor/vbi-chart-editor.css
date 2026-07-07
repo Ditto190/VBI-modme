@@ -58,3 +58,7 @@
   gap: 10px;
   width: calc(100% - var(--vbi-chart-editor-fields-width) - 8px);
 }
+
+.chart-editor__chart {
+  height: 600px;
+}
