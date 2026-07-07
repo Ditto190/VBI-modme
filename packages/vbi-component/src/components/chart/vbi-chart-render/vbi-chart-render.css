@@ -1,3 +1,8 @@
 :host {
   display: block;
 }
+
+.vtable .input-container {
+  position: absolute;
+  top: 0px;
+}
