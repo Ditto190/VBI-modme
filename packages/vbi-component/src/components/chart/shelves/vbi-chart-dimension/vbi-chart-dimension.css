@@ -74,3 +74,16 @@
 .dimension__item-down:hover {
   background-color: color-mix(in oklab, var(--color-base-content) 15%, transparent);
 }
+
+.dimension__delete-divider {
+  position: absolute;
+  left: -0.5rem;
+  right: -0.5rem;
+  top: 50%;
+  height: 1px;
+  background: var(--color-base-300);
+}
+
+.dimension__delete-label {
+  color: var(--color-error);
+}

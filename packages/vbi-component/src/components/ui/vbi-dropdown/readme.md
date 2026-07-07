@@ -28,12 +28,14 @@
 
 ### Used by
 
+ - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-type](../../chart/vbi-chart-type)
 
 ### Graph
 ```mermaid
 graph TD;
+  vbi-chart-dimension --> vbi-dropdown
   vbi-chart-field-filter --> vbi-dropdown
   vbi-chart-type --> vbi-dropdown
   style vbi-dropdown fill:#f9f,stroke:#333,stroke-width:4px

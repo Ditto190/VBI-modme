@@ -41,8 +41,10 @@ graph TD;
   vbi-chart-field-section --> vbi-icon
   vbi-chart-field-section --> vbi-button
   vbi-chart-shelf-panel --> vbi-chart-dimension
+  vbi-chart-dimension --> vbi-dropdown
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
+  vbi-chart-dimension --> vbi-cascading-menu
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -21,6 +21,19 @@
 | `vbiCascadingMenuSelect` | Fired when a menu item is clicked | `CustomEvent<CascadingMenuItem>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-dimension --> vbi-cascading-menu
+  style vbi-cascading-menu fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

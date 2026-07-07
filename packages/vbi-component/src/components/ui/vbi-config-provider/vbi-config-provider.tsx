@@ -38,6 +38,7 @@ export class VbiConfigProvider {
     this.disposeChartProvider?.()
 
     const builder = newBuilder ?? (await createDefaultBuilder())
+    builder.locale.setLocale('en-US')
     this.chartStore = createChartStore(builder)
     this.destroyCallback = this.chartStore.initialize(builder)
     this.disposeChartProvider = provideChartStore(this.el, this.chartStore)
