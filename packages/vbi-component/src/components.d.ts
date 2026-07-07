@@ -5,12 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 import { FieldRole } from "./utils/data/fieldRole";
 import { VBISchemaField } from "./store/chart/schema-fields";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
+export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
@@ -50,6 +52,23 @@ export namespace Components {
           * Button variant (ghost, outline, dash, soft, link)
          */
         "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
+    }
+    interface VbiCascadingMenu {
+        /**
+          * Array of menu items to be rendered
+          * @default []
+         */
+        "items": CascadingMenuItem[];
+        /**
+          * The size of the menu. Defaults to 'md'
+          * @default 'md'
+         */
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * The orientation variant of the menu. Defaults to 'vertical'
+          * @default 'vertical'
+         */
+        "variant": 'horizontal' | 'vertical';
     }
     interface VbiChartDimensionShelf {
     }
@@ -318,6 +337,10 @@ export namespace Components {
         "text": string;
     }
 }
+export interface VbiCascadingMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiCascadingMenuElement;
+}
 export interface VbiChartFieldFilterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiChartFieldFilterElement;
@@ -344,6 +367,23 @@ declare global {
     var HTMLVbiButtonElement: {
         prototype: HTMLVbiButtonElement;
         new (): HTMLVbiButtonElement;
+    };
+    interface HTMLVbiCascadingMenuElementEventMap {
+        "vbiCascadingMenuSelect": CascadingMenuItem;
+    }
+    interface HTMLVbiCascadingMenuElement extends Components.VbiCascadingMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiCascadingMenuElementEventMap>(type: K, listener: (this: HTMLVbiCascadingMenuElement, ev: VbiCascadingMenuCustomEvent<HTMLVbiCascadingMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiCascadingMenuElementEventMap>(type: K, listener: (this: HTMLVbiCascadingMenuElement, ev: VbiCascadingMenuCustomEvent<HTMLVbiCascadingMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiCascadingMenuElement: {
+        prototype: HTMLVbiCascadingMenuElement;
+        new (): HTMLVbiCascadingMenuElement;
     };
     interface HTMLVbiChartDimensionShelfElement extends Components.VbiChartDimensionShelf, HTMLStencilElement {
     }
@@ -509,6 +549,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "vbi-button": HTMLVbiButtonElement;
+        "vbi-cascading-menu": HTMLVbiCascadingMenuElement;
         "vbi-chart-dimension-shelf": HTMLVbiChartDimensionShelfElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
         "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
@@ -561,6 +602,27 @@ declare namespace LocalJSX {
           * Button variant (ghost, outline, dash, soft, link)
          */
         "variant"?: 'ghost' | 'outline' | 'dash' | 'soft' | 'link';
+    }
+    interface VbiCascadingMenu {
+        /**
+          * Array of menu items to be rendered
+          * @default []
+         */
+        "items"?: CascadingMenuItem[];
+        /**
+          * Fired when a menu item is clicked
+         */
+        "onVbiCascadingMenuSelect"?: (event: VbiCascadingMenuCustomEvent<CascadingMenuItem>) => void;
+        /**
+          * The size of the menu. Defaults to 'md'
+          * @default 'md'
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * The orientation variant of the menu. Defaults to 'vertical'
+          * @default 'vertical'
+         */
+        "variant"?: 'horizontal' | 'vertical';
     }
     interface VbiChartDimensionShelf {
     }
@@ -878,6 +940,10 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "active": boolean;
     }
+    interface VbiCascadingMenuAttributes {
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        "variant": 'horizontal' | 'vertical';
+    }
     interface VbiChartFieldFilterAttributes {
         "keyword": string;
     }
@@ -941,6 +1007,7 @@ declare namespace LocalJSX {
 
     interface IntrinsicElements {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
+        "vbi-cascading-menu": Omit<VbiCascadingMenu, keyof VbiCascadingMenuAttributes> & { [K in keyof VbiCascadingMenu & keyof VbiCascadingMenuAttributes]?: VbiCascadingMenu[K] } & { [K in keyof VbiCascadingMenu & keyof VbiCascadingMenuAttributes as `attr:${K}`]?: VbiCascadingMenuAttributes[K] } & { [K in keyof VbiCascadingMenu & keyof VbiCascadingMenuAttributes as `prop:${K}`]?: VbiCascadingMenu[K] };
         "vbi-chart-dimension-shelf": VbiChartDimensionShelf;
         "vbi-chart-editor": VbiChartEditor;
         "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
@@ -965,6 +1032,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
+            "vbi-cascading-menu": LocalJSX.IntrinsicElements["vbi-cascading-menu"] & JSXBase.HTMLAttributes<HTMLVbiCascadingMenuElement>;
             "vbi-chart-dimension-shelf": LocalJSX.IntrinsicElements["vbi-chart-dimension-shelf"] & JSXBase.HTMLAttributes<HTMLVbiChartDimensionShelfElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
             "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
