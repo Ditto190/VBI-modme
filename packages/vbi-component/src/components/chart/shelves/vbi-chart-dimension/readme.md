@@ -1,4 +1,4 @@
-# vbi-chart-shelf-panel
+# vbi-chart-dimension
 
 
 
@@ -9,20 +9,20 @@
 
 ### Used by
 
- - [vbi-chart-editor](../../vbi-chart-editor)
+ - [vbi-chart-shelf-panel](../vbi-chart-shelf-panel)
 
 ### Depends on
 
-- [vbi-chart-dimension](../vbi-chart-dimension)
+- [vbi-button](../../../ui/vbi-button)
+- [vbi-icon](../../../ui/vbi-icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  vbi-chart-shelf-panel --> vbi-chart-dimension
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
-  vbi-chart-editor --> vbi-chart-shelf-panel
-  style vbi-chart-shelf-panel fill:#f9f,stroke:#333,stroke-width:4px
+  vbi-chart-shelf-panel --> vbi-chart-dimension
+  style vbi-chart-dimension fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.dimension {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: var(--radius-box);
+  padding: 4px 6px;
+  transition:
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.dimension:has(.sortable-ghost) {
+  border: var(--border) solid var(--color-info);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-info) 30%, transparent);
+}
+
+.dimension:has(.sortable-ghost) .dimension__placeholder {
+  display: none;
+}
+
+.dimension::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dimension::-webkit-scrollbar-thumb {
+  background-color: color-mix(in oklab, var(--color-base-content) 25%, transparent);
+  border-radius: 12px;
+}
+
+.dimension::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 50%, transparent);
+}
+
+.dimension__placeholder {
+  color: color-mix(in oklab, var(--color-base-content) 50%, transparent);
+  line-height: 2rem;
+}
+
+.dimension__item-close {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-left: -0.375rem;
+  transition:
+    width 0.15s ease-in-out,
+    opacity 0.15s ease-in-out,
+    margin-left 0.15s ease-in-out;
+}
+
+.dimension__item:hover .dimension__item-close {
+  width: 10px;
+  opacity: 1;
+  margin-left: 0;
+}

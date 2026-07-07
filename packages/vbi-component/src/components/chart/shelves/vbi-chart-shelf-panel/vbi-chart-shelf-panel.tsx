@@ -10,7 +10,7 @@ export class VbiChartShelfPanel {
     return (
       <Host>
         <div>
-          Dimensions: <vbi-chart-dimension-shelf />
+          Dimensions: <vbi-chart-dimension />
         </div>
       </Host>
     )

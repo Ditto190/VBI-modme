@@ -70,7 +70,7 @@ export namespace Components {
          */
         "variant": 'horizontal' | 'vertical';
     }
-    interface VbiChartDimensionShelf {
+    interface VbiChartDimension {
     }
     interface VbiChartEditor {
     }
@@ -385,11 +385,11 @@ declare global {
         prototype: HTMLVbiCascadingMenuElement;
         new (): HTMLVbiCascadingMenuElement;
     };
-    interface HTMLVbiChartDimensionShelfElement extends Components.VbiChartDimensionShelf, HTMLStencilElement {
+    interface HTMLVbiChartDimensionElement extends Components.VbiChartDimension, HTMLStencilElement {
     }
-    var HTMLVbiChartDimensionShelfElement: {
-        prototype: HTMLVbiChartDimensionShelfElement;
-        new (): HTMLVbiChartDimensionShelfElement;
+    var HTMLVbiChartDimensionElement: {
+        prototype: HTMLVbiChartDimensionElement;
+        new (): HTMLVbiChartDimensionElement;
     };
     interface HTMLVbiChartEditorElement extends Components.VbiChartEditor, HTMLStencilElement {
     }
@@ -550,7 +550,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "vbi-button": HTMLVbiButtonElement;
         "vbi-cascading-menu": HTMLVbiCascadingMenuElement;
-        "vbi-chart-dimension-shelf": HTMLVbiChartDimensionShelfElement;
+        "vbi-chart-dimension": HTMLVbiChartDimensionElement;
         "vbi-chart-editor": HTMLVbiChartEditorElement;
         "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
         "vbi-chart-field-section": HTMLVbiChartFieldSectionElement;
@@ -624,7 +624,7 @@ declare namespace LocalJSX {
          */
         "variant"?: 'horizontal' | 'vertical';
     }
-    interface VbiChartDimensionShelf {
+    interface VbiChartDimension {
     }
     interface VbiChartEditor {
     }
@@ -1008,7 +1008,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "vbi-button": Omit<VbiButton, keyof VbiButtonAttributes> & { [K in keyof VbiButton & keyof VbiButtonAttributes]?: VbiButton[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `attr:${K}`]?: VbiButtonAttributes[K] } & { [K in keyof VbiButton & keyof VbiButtonAttributes as `prop:${K}`]?: VbiButton[K] };
         "vbi-cascading-menu": Omit<VbiCascadingMenu, keyof VbiCascadingMenuAttributes> & { [K in keyof VbiCascadingMenu & keyof VbiCascadingMenuAttributes]?: VbiCascadingMenu[K] } & { [K in keyof VbiCascadingMenu & keyof VbiCascadingMenuAttributes as `attr:${K}`]?: VbiCascadingMenuAttributes[K] } & { [K in keyof VbiCascadingMenu & keyof VbiCascadingMenuAttributes as `prop:${K}`]?: VbiCascadingMenu[K] };
-        "vbi-chart-dimension-shelf": VbiChartDimensionShelf;
+        "vbi-chart-dimension": VbiChartDimension;
         "vbi-chart-editor": VbiChartEditor;
         "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
         "vbi-chart-field-section": VbiChartFieldSection;
@@ -1033,7 +1033,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "vbi-button": LocalJSX.IntrinsicElements["vbi-button"] & JSXBase.HTMLAttributes<HTMLVbiButtonElement>;
             "vbi-cascading-menu": LocalJSX.IntrinsicElements["vbi-cascading-menu"] & JSXBase.HTMLAttributes<HTMLVbiCascadingMenuElement>;
-            "vbi-chart-dimension-shelf": LocalJSX.IntrinsicElements["vbi-chart-dimension-shelf"] & JSXBase.HTMLAttributes<HTMLVbiChartDimensionShelfElement>;
+            "vbi-chart-dimension": LocalJSX.IntrinsicElements["vbi-chart-dimension"] & JSXBase.HTMLAttributes<HTMLVbiChartDimensionElement>;
             "vbi-chart-editor": LocalJSX.IntrinsicElements["vbi-chart-editor"] & JSXBase.HTMLAttributes<HTMLVbiChartEditorElement>;
             "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
             "vbi-chart-field-section": LocalJSX.IntrinsicElements["vbi-chart-field-section"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldSectionElement>;

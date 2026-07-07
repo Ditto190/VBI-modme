@@ -20,6 +20,7 @@
 
 ### Used by
 
+ - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-field-section](../../chart/fields/vbi-chart-field-section)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
@@ -28,6 +29,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  vbi-chart-dimension --> vbi-button
   vbi-chart-field-filter --> vbi-button
   vbi-chart-field-section --> vbi-button
   vbi-chart-toolbar --> vbi-button

@@ -1,13 +1,14 @@
+import { CloseOutlined, DownOutlined } from '@ant-design/icons-svg'
 import { Component, Element, Host, State, h } from '@stencil/core'
 import Sortable from 'sortablejs'
 import { type VBISchemaField } from 'src/store/chart/schema-fields'
 
 @Component({
-  tag: 'vbi-chart-dimension-shelf',
-  styleUrl: 'vbi-chart-dimension-shelf.css',
+  tag: 'vbi-chart-dimension',
+  styleUrl: 'vbi-chart-dimension.css',
   shadow: true,
 })
-export class VbiChartDimensionShelf {
+export class VbiChartDimension {
   @Element() el!: HTMLElement
 
   private containerRef?: HTMLDivElement
@@ -29,6 +30,7 @@ export class VbiChartDimensionShelf {
       this.sortable = new Sortable(this.containerRef, {
         group: { name: 'fields', put: true, pull: false },
         animation: 150,
+        draggable: '.dimension__item',
         onAdd: (evt) => {
           const itemEl = evt.item
           const fieldData = itemEl.getAttribute('data-field')
@@ -56,20 +58,16 @@ export class VbiChartDimensionShelf {
   render() {
     return (
       <Host>
-        <div
-          ref={(el) => (this.containerRef = el as HTMLDivElement)}
-          style={{ minHeight: '40px', padding: '8px', border: '1px dashed #ccc' }}
-        >
+        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='dimension'>
           {this.fields.length === 0 ? (
-            <div style={{ color: '#999' }}>Drag and drop Dimension here...</div>
+            <div class='dimension__placeholder'>Drag dimensions or measures here</div>
           ) : (
             this.fields.map((field) => (
-              <div
-                data-field={JSON.stringify(field)}
-                style={{ padding: '4px 8px', margin: '4px 0', backgroundColor: '#f0f0f0', borderRadius: '4px' }}
-              >
+              <vbi-button size='sm' class='dimension__item'>
+                <vbi-icon icon={DownOutlined} size='10' />
                 {field.name}
-              </div>
+                <vbi-icon icon={CloseOutlined} size='10' class='dimension__item-close' />
+              </vbi-button>
             ))
           )}
         </div>
