@@ -115,6 +115,7 @@ export class VbiChartFieldFilter {
           value={this.keyword}
           placeholder={this.t('panelsFieldsSearchPlaceholder')}
           onVbiInputValue={(e) => this.handleKeywordChange(e.detail)}
+          style={{ width: '100%' }}
         />
 
         <vbi-dropdown>
