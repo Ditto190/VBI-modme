@@ -63,6 +63,10 @@ export class VbiChartDimension {
     return this.store?.translation.state.t || ((k: string) => k)
   }
 
+  private get chartBuilder() {
+    return this.store?.chartBuilder
+  }
+
   private get chartDimensions() {
     return this.store?.chartDimensions
   }
@@ -99,7 +103,7 @@ export class VbiChartDimension {
 
               if (!this.store) return
 
-              const builder = this.store.chartBuilder.builder
+              const builder = this.chartBuilder?.builder
               if (!builder) return
 
               const dimensions = this.chartDimensions?.state.dimensions || []
@@ -140,8 +144,7 @@ export class VbiChartDimension {
           const sibling = oldIndex < newIndex ? children[oldIndex] : children[oldIndex + 1]
           to.insertBefore(item, sibling || null)
 
-          if (!this.store) return
-          const builder = this.store.chartBuilder.builder
+          const builder = this.chartBuilder?.builder
           if (!builder) return
 
           const yDimensions = builder.dsl.get('dimensions') as any
@@ -287,8 +290,8 @@ export class VbiChartDimension {
   private buildMenuItems = (dimension: (typeof this.dimensions)[number]): CascadingMenuItem[] => {
     const items: CascadingMenuItem[] = []
 
-    if (!this.store || !this.store.chartBuilder.builder) return []
-    const builder = this.store.chartBuilder.builder
+    if (!this.chartBuilder?.builder) return []
+    const builder = this.chartBuilder.builder
 
     const supportedEncodings = builder.chartType.getSupportedDimensionEncodings()
     const dimensionIndex = this.dimensions.findIndex((item) => item.id === dimension.id)
