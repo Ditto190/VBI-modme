@@ -138,6 +138,7 @@
   "shelvesDimensionEncodingHierarchy": "階層",
   "shelvesRenameModalSave": "保存",
   "shelvesRenameModalCancel": "キャンセル",
+  "shelvesRenameModalEmptyName": "名前は空にできません",
   "shelvesRenameModalDimensionTitle": "ディメンション名を変更",
   "shelvesRenameModalDimensionPlaceholder": "ディメンション名を入力"
 }

@@ -35,6 +35,7 @@ export function renderShelfRenameModal(props: DimensionRenameModalProps) {
     >
       <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>{title}</div>
       <vbi-input
+        size='sm'
         value={target.alias}
         onVbiInputValue={(e: CustomEvent<string>) => onValueChange(e.detail)}
         onKeyDown={(e: KeyboardEvent) => {
@@ -42,11 +43,10 @@ export function renderShelfRenameModal(props: DimensionRenameModalProps) {
         }}
         placeholder={placeholder}
         autofocus
+        style={{ width: '100%' }}
       />
       {!target.alias.trim() && (
-        <div style={{ color: 'var(--vbi-color-error, #ff4d4f)', fontSize: '12px', marginTop: '4px' }}>
-          {emptyNameMessage}
-        </div>
+        <div style={{ color: 'var(--color-error)', fontSize: '0.75rem', marginTop: '4px' }}>{emptyNameMessage}</div>
       )}
       <div slot='action' style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
         <vbi-button onClick={() => onClose()} size='sm'>

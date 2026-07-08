@@ -138,6 +138,7 @@
   "shelvesDimensionEncodingHierarchy": "层级",
   "shelvesRenameModalSave": "保存",
   "shelvesRenameModalCancel": "取消",
+  "shelvesRenameModalEmptyName": "名称不能为空",
   "shelvesRenameModalDimensionTitle": "重命名维度",
   "shelvesRenameModalDimensionPlaceholder": "请输入维度名称"
 }

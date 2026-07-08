@@ -138,6 +138,7 @@
   "shelvesDimensionEncodingHierarchy": "Hierarchie",
   "shelvesRenameModalSave": "Speichern",
   "shelvesRenameModalCancel": "Abbrechen",
+  "shelvesRenameModalEmptyName": "Name darf nicht leer sein",
   "shelvesRenameModalDimensionTitle": "Dimension umbenennen",
   "shelvesRenameModalDimensionPlaceholder": "Dimensionsnamen eingeben"
 }

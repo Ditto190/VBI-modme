@@ -138,6 +138,7 @@
   "shelvesDimensionEncodingHierarchy": "Hierarki",
   "shelvesRenameModalSave": "Simpan",
   "shelvesRenameModalCancel": "Batal",
+  "shelvesRenameModalEmptyName": "Nama tidak boleh kosong",
   "shelvesRenameModalDimensionTitle": "Ganti Nama Dimensi",
   "shelvesRenameModalDimensionPlaceholder": "Masukkan nama dimensi"
 }

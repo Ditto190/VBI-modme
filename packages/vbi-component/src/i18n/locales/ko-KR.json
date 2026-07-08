@@ -138,6 +138,7 @@
   "shelvesDimensionEncodingHierarchy": "계층",
   "shelvesRenameModalSave": "저장",
   "shelvesRenameModalCancel": "취소",
+  "shelvesRenameModalEmptyName": "이름은 비워둘 수 없습니다",
   "shelvesRenameModalDimensionTitle": "차원 이름 변경",
   "shelvesRenameModalDimensionPlaceholder": "차원 이름을 입력하세요"
 }

@@ -138,6 +138,7 @@
   "shelvesDimensionEncodingHierarchy": "Phân cấp",
   "shelvesRenameModalSave": "Lưu",
   "shelvesRenameModalCancel": "Hủy",
+  "shelvesRenameModalEmptyName": "Tên không được để trống",
   "shelvesRenameModalDimensionTitle": "Đổi tên chiều",
   "shelvesRenameModalDimensionPlaceholder": "Nhập tên chiều"
 }
