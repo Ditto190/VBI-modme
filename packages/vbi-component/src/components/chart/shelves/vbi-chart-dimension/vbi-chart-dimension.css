@@ -9,6 +9,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   border-radius: var(--radius-box);
+  color: var(--color-base-content);
   padding: 4px 6px;
   transition:
     border-color 0.2s ease-in-out,

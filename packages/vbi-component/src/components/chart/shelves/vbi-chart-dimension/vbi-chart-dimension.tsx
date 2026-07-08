@@ -83,7 +83,7 @@ export class VbiChartDimension {
       this.sortable = new Sortable(this.containerRef, {
         group: { name: 'fields', put: true, pull: false },
         animation: 150,
-        draggable: '.dimension__item',
+        draggable: '.dimension__drag',
         onAdd: (evt) => {
           const itemEl = evt.item
           const fieldData = itemEl.getAttribute('data-field')
@@ -126,6 +126,32 @@ export class VbiChartDimension {
               console.error('Error parsing field data:', e)
             }
           }
+        },
+        onEnd: (evt) => {
+          const { oldIndex, newIndex, item, to } = evt
+          if (oldIndex === undefined || newIndex === undefined || oldIndex === newIndex) return
+
+          // Revert SortableJS DOM mutation so Stencil's Virtual DOM can handle the re-render correctly
+          const children = Array.from(to.children)
+          const sibling = oldIndex < newIndex ? children[oldIndex] : children[oldIndex + 1]
+          to.insertBefore(item, sibling || null)
+
+          if (!this.store) return
+          const builder = this.store.chartBuilder.builder
+          if (!builder) return
+
+          const yDimensions = builder.dsl.get('dimensions') as any
+          if (!yDimensions) {
+            return
+          }
+
+          builder.doc.transact(() => {
+            reorderYArrayByInsertIndex({
+              yArray: yDimensions,
+              dragIndex: oldIndex,
+              insertIndex: newIndex,
+            })
+          })
         },
       })
     }
@@ -335,7 +361,7 @@ export class VbiChartDimension {
             <div class='dimension__placeholder'>{this.t('shelvesPlaceholdersDimensions')}</div>
           ) : (
             this.dimensions.map((dim) => (
-              <vbi-dropdown trigger='click' placement='bottom'>
+              <vbi-dropdown key={dim.id} trigger='click' placement='bottom' class='dimension__drag'>
                 <vbi-button slot='trigger' size='sm' class='dimension__item'>
                   <vbi-icon icon={DownOutlined} size='10' class='dimension__item-down' />
                   {this.getDimensionDisplayLabel(dim)}

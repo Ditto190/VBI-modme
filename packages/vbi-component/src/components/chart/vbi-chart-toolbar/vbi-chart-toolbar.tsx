@@ -78,7 +78,7 @@ export class VbiChartToolbar {
               })}
               position='left'
             >
-              <vbi-icon icon={InfoCircleOutlined} size='16px' />
+              <vbi-icon icon={InfoCircleOutlined} size='16px' style={{ color: 'var(--color-base-content)' }} />
             </vbi-tooltip>
           </div>
         </div>
