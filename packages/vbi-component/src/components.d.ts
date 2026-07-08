@@ -323,6 +323,16 @@ export namespace Components {
          */
         "variant": 'horizontal' | 'vertical';
     }
+    interface VbiModal {
+        /**
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * @default 'middle'
+         */
+        "position": 'top' | 'bottom' | 'middle' | 'start' | 'end';
+    }
     interface VbiTooltip {
         /**
           * The semantic color theme of the tooltip
@@ -368,6 +378,10 @@ export interface VbiInputCustomEvent<T> extends CustomEvent<T> {
 export interface VbiMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiMenuElement;
+}
+export interface VbiModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiModalElement;
 }
 declare global {
     interface HTMLVbiButtonElement extends Components.VbiButton, HTMLStencilElement {
@@ -555,6 +569,23 @@ declare global {
         prototype: HTMLVbiMenuElement;
         new (): HTMLVbiMenuElement;
     };
+    interface HTMLVbiModalElementEventMap {
+        "vbiModalToggle": boolean;
+    }
+    interface HTMLVbiModalElement extends Components.VbiModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiModalElementEventMap>(type: K, listener: (this: HTMLVbiModalElement, ev: VbiModalCustomEvent<HTMLVbiModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiModalElementEventMap>(type: K, listener: (this: HTMLVbiModalElement, ev: VbiModalCustomEvent<HTMLVbiModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiModalElement: {
+        prototype: HTMLVbiModalElement;
+        new (): HTMLVbiModalElement;
+    };
     interface HTMLVbiTooltipElement extends Components.VbiTooltip, HTMLStencilElement {
     }
     var HTMLVbiTooltipElement: {
@@ -581,6 +612,7 @@ declare global {
         "vbi-join": HTMLVbiJoinElement;
         "vbi-loading": HTMLVbiLoadingElement;
         "vbi-menu": HTMLVbiMenuElement;
+        "vbi-modal": HTMLVbiModalElement;
         "vbi-tooltip": HTMLVbiTooltipElement;
     }
 }
@@ -930,6 +962,17 @@ declare namespace LocalJSX {
          */
         "variant"?: 'horizontal' | 'vertical';
     }
+    interface VbiModal {
+        "onVbiModalToggle"?: (event: VbiModalCustomEvent<boolean>) => void;
+        /**
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * @default 'middle'
+         */
+        "position"?: 'top' | 'bottom' | 'middle' | 'start' | 'end';
+    }
     interface VbiTooltip {
         /**
           * The semantic color theme of the tooltip
@@ -1019,6 +1062,10 @@ declare namespace LocalJSX {
         "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
         "variant": 'horizontal' | 'vertical';
     }
+    interface VbiModalAttributes {
+        "open": boolean;
+        "position": 'top' | 'bottom' | 'middle' | 'start' | 'end';
+    }
     interface VbiTooltipAttributes {
         "text": string;
         "position": 'top' | 'bottom' | 'left' | 'right';
@@ -1046,6 +1093,7 @@ declare namespace LocalJSX {
         "vbi-join": Omit<VbiJoin, keyof VbiJoinAttributes> & { [K in keyof VbiJoin & keyof VbiJoinAttributes]?: VbiJoin[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `attr:${K}`]?: VbiJoinAttributes[K] } & { [K in keyof VbiJoin & keyof VbiJoinAttributes as `prop:${K}`]?: VbiJoin[K] };
         "vbi-loading": Omit<VbiLoading, keyof VbiLoadingAttributes> & { [K in keyof VbiLoading & keyof VbiLoadingAttributes]?: VbiLoading[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `attr:${K}`]?: VbiLoadingAttributes[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `prop:${K}`]?: VbiLoading[K] };
         "vbi-menu": Omit<VbiMenu, keyof VbiMenuAttributes> & { [K in keyof VbiMenu & keyof VbiMenuAttributes]?: VbiMenu[K] } & { [K in keyof VbiMenu & keyof VbiMenuAttributes as `attr:${K}`]?: VbiMenuAttributes[K] } & { [K in keyof VbiMenu & keyof VbiMenuAttributes as `prop:${K}`]?: VbiMenu[K] };
+        "vbi-modal": Omit<VbiModal, keyof VbiModalAttributes> & { [K in keyof VbiModal & keyof VbiModalAttributes]?: VbiModal[K] } & { [K in keyof VbiModal & keyof VbiModalAttributes as `attr:${K}`]?: VbiModalAttributes[K] } & { [K in keyof VbiModal & keyof VbiModalAttributes as `prop:${K}`]?: VbiModal[K] };
         "vbi-tooltip": Omit<VbiTooltip, keyof VbiTooltipAttributes> & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes]?: VbiTooltip[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `attr:${K}`]?: VbiTooltipAttributes[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `prop:${K}`]?: VbiTooltip[K] };
     }
 }
@@ -1072,6 +1120,7 @@ declare module "@stencil/core" {
             "vbi-join": LocalJSX.IntrinsicElements["vbi-join"] & JSXBase.HTMLAttributes<HTMLVbiJoinElement>;
             "vbi-loading": LocalJSX.IntrinsicElements["vbi-loading"] & JSXBase.HTMLAttributes<HTMLVbiLoadingElement>;
             "vbi-menu": LocalJSX.IntrinsicElements["vbi-menu"] & JSXBase.HTMLAttributes<HTMLVbiMenuElement>;
+            "vbi-modal": LocalJSX.IntrinsicElements["vbi-modal"] & JSXBase.HTMLAttributes<HTMLVbiModalElement>;
             "vbi-tooltip": LocalJSX.IntrinsicElements["vbi-tooltip"] & JSXBase.HTMLAttributes<HTMLVbiTooltipElement>;
         }
     }
