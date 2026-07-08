@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "行",
   "shelvesDimensionEncodingColumn": "縦棒グラフ",
   "shelvesDimensionEncodingPlayer": "再生",
-  "shelvesDimensionEncodingHierarchy": "階層"
+  "shelvesDimensionEncodingHierarchy": "階層",
+  "shelvesRenameModalSave": "保存",
+  "shelvesRenameModalCancel": "キャンセル",
+  "shelvesRenameModalDimensionTitle": "ディメンション名を変更",
+  "shelvesRenameModalDimensionPlaceholder": "ディメンション名を入力"
 }

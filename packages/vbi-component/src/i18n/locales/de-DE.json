@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "Zeile",
   "shelvesDimensionEncodingColumn": "Säulendiagramm",
   "shelvesDimensionEncodingPlayer": "Wiedergabe",
-  "shelvesDimensionEncodingHierarchy": "Hierarchie"
+  "shelvesDimensionEncodingHierarchy": "Hierarchie",
+  "shelvesRenameModalSave": "Speichern",
+  "shelvesRenameModalCancel": "Abbrechen",
+  "shelvesRenameModalDimensionTitle": "Dimension umbenennen",
+  "shelvesRenameModalDimensionPlaceholder": "Dimensionsnamen eingeben"
 }

@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "Ligne",
   "shelvesDimensionEncodingColumn": "Histogramme vertical",
   "shelvesDimensionEncodingPlayer": "Lecture",
-  "shelvesDimensionEncodingHierarchy": "Hiérarchie"
+  "shelvesDimensionEncodingHierarchy": "Hiérarchie",
+  "shelvesRenameModalSave": "Enregistrer",
+  "shelvesRenameModalCancel": "Annuler",
+  "shelvesRenameModalDimensionTitle": "Renommer la dimension",
+  "shelvesRenameModalDimensionPlaceholder": "Saisir un nom de dimension"
 }

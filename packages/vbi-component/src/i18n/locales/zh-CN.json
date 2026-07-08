@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "行",
   "shelvesDimensionEncodingColumn": "列",
   "shelvesDimensionEncodingPlayer": "播放",
-  "shelvesDimensionEncodingHierarchy": "层级"
+  "shelvesDimensionEncodingHierarchy": "层级",
+  "shelvesRenameModalSave": "保存",
+  "shelvesRenameModalCancel": "取消",
+  "shelvesRenameModalDimensionTitle": "重命名维度",
+  "shelvesRenameModalDimensionPlaceholder": "请输入维度名称"
 }

@@ -45,6 +45,8 @@ graph TD;
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
   vbi-chart-dimension --> vbi-cascading-menu
+  vbi-chart-dimension --> vbi-modal
+  vbi-chart-dimension --> vbi-input
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

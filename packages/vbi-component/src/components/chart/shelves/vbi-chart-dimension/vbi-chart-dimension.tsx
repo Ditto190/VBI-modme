@@ -43,6 +43,10 @@ export class VbiChartDimension {
 
   @State() store?: ChartStore
 
+  @State() isRenameModalOpen = false
+  @State() renameDimensionId?: string
+  @State() renameValue = ''
+
   componentWillLoad() {
     this.store = connectChartStore(this.el)
   }
@@ -171,6 +175,12 @@ export class VbiChartDimension {
     return `${aggregate}(${baseLabel})${formatSortDisplaySuffix(dimension.sort)}`
   }
 
+  private renameDimension(id: string, alias: string) {
+    this.chartDimensions?.updateDimension(id, (node) => {
+      node.setAlias(alias)
+    })
+  }
+
   private changeAggregate(id: string, aggregate: NonNullable<VBIDimension['aggregate']> | undefined) {
     if (!aggregate) {
       const dimensionNode = this.chartDimensions?.findDimension(id) as { clearAggregate?: () => unknown } | undefined
@@ -254,13 +264,24 @@ export class VbiChartDimension {
     }
 
     if (key === 'rename') {
-      console.warn('Rename not implemented yet in Stencil component')
+      this.renameDimensionId = dimension.id
+      this.renameValue = dimension.alias || dimension.field
+      this.isRenameModalOpen = true
       return
     }
 
     if (key === 'delete') {
       this.chartDimensions?.removeDimension(dimension.id)
     }
+  }
+
+  private handleRenameSave = () => {
+    if (this.renameDimensionId) {
+      const trimmed = this.renameValue.trim()
+      this.renameDimension(this.renameDimensionId, trimmed)
+    }
+    this.isRenameModalOpen = false
+    this.renameDimensionId = undefined
   }
 
   private buildMenuItems = (dimension: (typeof this.dimensions)[number]): CascadingMenuItem[] => {
@@ -391,6 +412,43 @@ export class VbiChartDimension {
             ))
           )}
         </div>
+
+        <vbi-modal
+          open={this.isRenameModalOpen}
+          onVbiModalToggle={(e: CustomEvent<boolean>) => {
+            this.isRenameModalOpen = e.detail
+            if (!e.detail) {
+              this.renameDimensionId = undefined
+            }
+          }}
+        >
+          <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>{this.t('shelvesRenameModalDimensionTitle')}</div>
+          <vbi-input
+            value={this.renameValue}
+            onVbiInputValue={(e: CustomEvent<string>) => (this.renameValue = e.detail)}
+            onKeyDown={(e: KeyboardEvent) => {
+              if (e.key === 'Enter') {
+                this.handleRenameSave()
+              }
+            }}
+            placeholder={this.t('shelvesRenameModalDimensionPlaceholder')}
+            autofocus
+          />
+          <div slot='action' style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+            <vbi-button
+              onClick={() => {
+                this.isRenameModalOpen = false
+                this.renameDimensionId = undefined
+              }}
+              size='sm'
+            >
+              {this.t('shelvesRenameModalCancel')}
+            </vbi-button>
+            <vbi-button onClick={this.handleRenameSave} size='sm' color='primary'>
+              {this.t('shelvesRenameModalSave')}
+            </vbi-button>
+          </div>
+        </vbi-modal>
       </Host>
     )
   }

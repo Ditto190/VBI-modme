@@ -23,6 +23,8 @@ graph TD;
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
   vbi-chart-dimension --> vbi-cascading-menu
+  vbi-chart-dimension --> vbi-modal
+  vbi-chart-dimension --> vbi-input
   vbi-chart-editor --> vbi-chart-shelf-panel
   style vbi-chart-shelf-panel fill:#f9f,stroke:#333,stroke-width:4px
 ```

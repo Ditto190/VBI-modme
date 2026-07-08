@@ -42,12 +42,14 @@
 
 ### Used by
 
+ - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
 
 ### Graph
 ```mermaid
 graph TD;
+  vbi-chart-dimension --> vbi-input
   vbi-chart-field-filter --> vbi-input
   vbi-chart-toolbar --> vbi-input
   style vbi-input fill:#f9f,stroke:#333,stroke-width:4px

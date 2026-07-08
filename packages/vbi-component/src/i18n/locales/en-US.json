@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "Row",
   "shelvesDimensionEncodingColumn": "Column",
   "shelvesDimensionEncodingPlayer": "Player",
-  "shelvesDimensionEncodingHierarchy": "Hierarchy"
+  "shelvesDimensionEncodingHierarchy": "Hierarchy",
+  "shelvesRenameModalSave": "Save",
+  "shelvesRenameModalCancel": "Cancel",
+  "shelvesRenameModalDimensionTitle": "Rename Dimension",
+  "shelvesRenameModalDimensionPlaceholder": "Enter a dimension name"
 }

@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "행",
   "shelvesDimensionEncodingColumn": "세로 막대형",
   "shelvesDimensionEncodingPlayer": "재생",
-  "shelvesDimensionEncodingHierarchy": "계층"
+  "shelvesDimensionEncodingHierarchy": "계층",
+  "shelvesRenameModalSave": "저장",
+  "shelvesRenameModalCancel": "취소",
+  "shelvesRenameModalDimensionTitle": "차원 이름 변경",
+  "shelvesRenameModalDimensionPlaceholder": "차원 이름을 입력하세요"
 }

@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "Hàng",
   "shelvesDimensionEncodingColumn": "Biểu đồ cột",
   "shelvesDimensionEncodingPlayer": "Phát",
-  "shelvesDimensionEncodingHierarchy": "Phân cấp"
+  "shelvesDimensionEncodingHierarchy": "Phân cấp",
+  "shelvesRenameModalSave": "Lưu",
+  "shelvesRenameModalCancel": "Hủy",
+  "shelvesRenameModalDimensionTitle": "Đổi tên chiều",
+  "shelvesRenameModalDimensionPlaceholder": "Nhập tên chiều"
 }

@@ -135,5 +135,9 @@
   "shelvesDimensionEncodingRow": "Baris",
   "shelvesDimensionEncodingColumn": "Bagan Kolom",
   "shelvesDimensionEncodingPlayer": "Pemutar",
-  "shelvesDimensionEncodingHierarchy": "Hierarki"
+  "shelvesDimensionEncodingHierarchy": "Hierarki",
+  "shelvesRenameModalSave": "Simpan",
+  "shelvesRenameModalCancel": "Batal",
+  "shelvesRenameModalDimensionTitle": "Ganti Nama Dimensi",
+  "shelvesRenameModalDimensionPlaceholder": "Masukkan nama dimensi"
 }
