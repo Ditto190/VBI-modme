@@ -1,37 +1,20 @@
 import { CloseOutlined, DownOutlined } from '@ant-design/icons-svg'
 import { Component, Element, Host, State, h } from '@stencil/core'
-import { type VBIDimension } from '@visactor/vbi'
-import Sortable from 'sortablejs'
+import type Sortable from 'sortablejs'
+import { type CascadingMenuItem } from 'src/components/ui/vbi-cascading-menu/vbi-cascading-menu'
 import { type ChartStore } from 'src/store/chart'
-import { type VBISchemaField } from 'src/store/chart/schema-fields'
 import { connectChartStore } from 'src/store/context'
-import { type CascadingMenuItem } from '../../../ui/vbi-cascading-menu/vbi-cascading-menu'
+import { renderShelfRenameModal } from '../common/shelf-rename-modal'
 import {
-  formatDimensionDateAggregate,
-  getDefaultDimensionDateAggregate,
-  getDimensionDateAggregateItems,
-  isDateDimensionField,
-  normalizeDimensionDateAggregate,
-} from '../utils/dimensionDateAggregateUtils'
-import { buildShelfMenuLabel } from '../utils/menuItemUtils'
-import { reorderYArrayByInsertIndex } from '../utils/reorderUtils'
-import { formatSortDisplaySuffix, formatSortMenuSummary } from '../utils/sortUtils'
-
-const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIDimension['encoding']>, string> = {
-  xAxis: 'shelvesDimensionEncodingXAxis',
-  yAxis: 'shelvesDimensionEncodingYAxis',
-  angle: 'shelvesDimensionEncodingAngle',
-  color: 'shelvesDimensionEncodingColor',
-  detail: 'shelvesDimensionEncodingDetail',
-  source: 'shelvesDimensionEncodingSource',
-  target: 'shelvesDimensionEncodingTarget',
-  tooltip: 'shelvesDimensionEncodingTooltip',
-  label: 'shelvesDimensionEncodingLabel',
-  row: 'shelvesDimensionEncodingRow',
-  column: 'shelvesDimensionEncodingColumn',
-  player: 'shelvesDimensionEncodingPlayer',
-  hierarchy: 'shelvesDimensionEncodingHierarchy',
-}
+  buildDimensionMenuItems,
+  changeAggregate,
+  changeEncoding,
+  changeSort,
+  getDimensionDisplayLabel,
+  handleDimensionMenuAction,
+  initDimensionSortable,
+  renameDimension,
+} from './helpers'
 
 @Component({
   tag: 'vbi-chart-dimension',
@@ -43,9 +26,7 @@ export class VbiChartDimension {
 
   @State() store?: ChartStore
 
-  @State() isRenameModalOpen = false
-  @State() renameDimensionId?: string
-  @State() renameValue = ''
+  @State() renameTarget?: { id: string; alias: string }
 
   componentWillLoad() {
     this.store = connectChartStore(this.el)
@@ -88,293 +69,36 @@ export class VbiChartDimension {
 
   private initSortable() {
     if (this.containerRef && !this.sortable) {
-      this.sortable = new Sortable(this.containerRef, {
-        group: { name: 'fields', put: true, pull: false },
-        animation: 150,
-        draggable: '.dimension__drag',
-        onAdd: (evt) => {
-          const itemEl = evt.item
-          const fieldData = itemEl.getAttribute('data-field')
-
-          if (fieldData) {
-            try {
-              const field = JSON.parse(fieldData) as VBISchemaField
-              itemEl.remove()
-
-              if (!this.store) return
-
-              const builder = this.chartBuilder?.builder
-              if (!builder) return
-
-              const dimensions = this.chartDimensions?.state.dimensions || []
-              const originalLength = dimensions.length
-              const newIndex = evt.newIndex ?? originalLength
-
-              this.store.chartDimensions.addDimension(field.name, (node) => {
-                if (field.isDate) {
-                  node.setAggregate(getDefaultDimensionDateAggregate())
-                }
-              })
-
-              if (newIndex < originalLength) {
-                const yDimensions = builder.dsl.get('dimensions') as any
-                if (!yDimensions) {
-                  return
-                }
-
-                builder.doc.transact(() => {
-                  reorderYArrayByInsertIndex({
-                    yArray: yDimensions,
-                    dragIndex: originalLength,
-                    insertIndex: newIndex,
-                  })
-                })
-              }
-            } catch (e) {
-              console.error('Error parsing field data:', e)
-            }
-          }
-        },
-        onEnd: (evt) => {
-          const { oldIndex, newIndex, item, to } = evt
-          if (oldIndex === undefined || newIndex === undefined || oldIndex === newIndex) return
-
-          // Revert SortableJS DOM mutation so Stencil's Virtual DOM can handle the re-render correctly
-          const children = Array.from(to.children)
-          const sibling = oldIndex < newIndex ? children[oldIndex] : children[oldIndex + 1]
-          to.insertBefore(item, sibling || null)
-
-          const builder = this.chartBuilder?.builder
-          if (!builder) return
-
-          const yDimensions = builder.dsl.get('dimensions') as any
-          if (!yDimensions) {
-            return
-          }
-
-          builder.doc.transact(() => {
-            reorderYArrayByInsertIndex({
-              yArray: yDimensions,
-              dragIndex: oldIndex,
-              insertIndex: newIndex,
-            })
-          })
-        },
+      this.sortable = initDimensionSortable(this.containerRef, {
+        chartBuilder: this.chartBuilder,
+        chartDimensions: this.chartDimensions,
       })
     }
-  }
-
-  private getDimensionDisplayLabel = (dimension: (typeof this.dimensions)[number]) => {
-    const baseLabel = dimension.alias || dimension.field
-    const aggregate = formatDimensionDateAggregate(
-      normalizeDimensionDateAggregate(dimension.aggregate, this.fieldTypeMap[dimension.field]),
-      this.t,
-    )
-
-    if (!aggregate) {
-      return `${baseLabel}${formatSortDisplaySuffix(dimension.sort)}`
-    }
-
-    return `${aggregate}(${baseLabel})${formatSortDisplaySuffix(dimension.sort)}`
-  }
-
-  private renameDimension(id: string, alias: string) {
-    this.chartDimensions?.updateDimension(id, (node) => {
-      node.setAlias(alias)
-    })
-  }
-
-  private changeAggregate(id: string, aggregate: NonNullable<VBIDimension['aggregate']> | undefined) {
-    if (!aggregate) {
-      const dimensionNode = this.chartDimensions?.findDimension(id) as { clearAggregate?: () => unknown } | undefined
-
-      if (typeof dimensionNode?.clearAggregate === 'function') {
-        this.store?.chartBuilder.builder?.doc.transact(() => {
-          dimensionNode.clearAggregate?.()
-        })
-        return
-      }
-
-      const targetIndex = this.dimensions.findIndex((dimension) => dimension.id === id)
-      const yDimensions = this.store?.chartBuilder.builder?.dsl.get('dimensions') as any
-      const yDimension = yDimensions?.get(targetIndex)
-      if (!yDimension) {
-        return
-      }
-
-      this.store?.chartBuilder.builder?.doc.transact(() => {
-        yDimension.delete('aggregate')
-      })
-      return
-    }
-
-    this.chartDimensions?.updateDimension(id, (node) => {
-      node.setAggregate(aggregate)
-    })
-  }
-
-  private changeEncoding(id: string, encoding: NonNullable<VBIDimension['encoding']>) {
-    this.chartDimensions?.updateDimension(id, (node) => {
-      node.setEncoding(encoding)
-    })
-  }
-
-  private changeSort(id: string, sort: VBIDimension['sort'] | undefined) {
-    this.chartDimensions?.updateDimension(id, (node) => {
-      if (sort) {
-        node.setSort(sort)
-        return
-      }
-      node.clearSort()
-    })
   }
 
   private handleMenuClick = (dimension: (typeof this.dimensions)[number], key: string) => {
-    if (key.startsWith('aggregate:')) {
-      const aggregateKey = key.replace('aggregate:', '')
-
-      if (aggregateKey === 'none') {
-        this.changeAggregate(dimension.id, undefined)
-        return
-      }
-
-      const nextAggregate = getDimensionDateAggregateItems(this.t).find((item) => item.key === aggregateKey)?.aggregate
-
-      if (nextAggregate) {
-        this.changeAggregate(dimension.id, nextAggregate)
-      }
-      return
-    }
-
-    if (key.startsWith('sort:')) {
-      const nextSort = key.replace('sort:', '') as 'asc' | 'desc' | 'clear'
-
-      if (nextSort === 'clear') {
-        this.changeSort(dimension.id, undefined)
-        return
-      }
-
-      if (nextSort === 'asc' || nextSort === 'desc') {
-        this.changeSort(dimension.id, { order: nextSort })
-      }
-      return
-    }
-
-    if (key.startsWith('encoding:')) {
-      const nextEncoding = key.replace('encoding:', '') as NonNullable<VBIDimension['encoding']>
-      this.changeEncoding(dimension.id, nextEncoding)
-      return
-    }
-
-    if (key === 'rename') {
-      this.renameDimensionId = dimension.id
-      this.renameValue = dimension.alias || dimension.field
-      this.isRenameModalOpen = true
-      return
-    }
-
-    if (key === 'delete') {
-      this.chartDimensions?.removeDimension(dimension.id)
-    }
-  }
-
-  private handleRenameSave = () => {
-    if (this.renameDimensionId) {
-      const trimmed = this.renameValue.trim()
-      this.renameDimension(this.renameDimensionId, trimmed)
-    }
-    this.isRenameModalOpen = false
-    this.renameDimensionId = undefined
-  }
-
-  private buildMenuItems = (dimension: (typeof this.dimensions)[number]): CascadingMenuItem[] => {
-    const items: CascadingMenuItem[] = []
-
-    if (!this.chartBuilder?.builder) return []
-    const builder = this.chartBuilder.builder
-
-    const supportedEncodings = builder.chartType.getSupportedDimensionEncodings()
-    const dimensionIndex = this.dimensions.findIndex((item) => item.id === dimension.id)
-    const recommendedEncoding =
-      dimensionIndex >= 0
-        ? builder.chartType.getRecommendedDimensionEncodings(this.dimensions.length)[dimensionIndex]
-        : undefined
-
-    if (isDateDimensionField(this.fieldTypeMap[dimension.field])) {
-      items.push({
-        id: 'aggregate',
-        label: this.t('shelvesMenuDateAggregate'),
-        children: [
-          ...getDimensionDateAggregateItems(this.t).map((item) => ({
-            id: `aggregate:${item.key}`,
-            label: item.shortLabel,
-            value: `aggregate:${item.key}`,
-          })),
-          {
-            id: 'aggregate:none',
-            label: this.t('shelvesMenuRawValue'),
-            value: 'aggregate:none',
-          },
-        ],
-      })
-    }
-
-    items.push({
-      id: 'encoding',
-      label: this.t('shelvesMenuEncoding'),
-      children: supportedEncodings.map((encoding) => {
-        const recommendedSuffix = recommendedEncoding === encoding ? this.t('commonStatusRecommended') : ''
-
-        return {
-          id: `encoding:${encoding}`,
-          label: buildShelfMenuLabel(this.t(DIMENSION_ENCODING_LABEL_KEY_MAP[encoding]), recommendedSuffix),
-          value: `encoding:${encoding}`,
-        }
-      }),
-    })
-
-    items.push({
-      id: 'sort',
-      label: buildShelfMenuLabel(this.t('shelvesMenuSort'), formatSortMenuSummary(dimension.sort, this.t)),
-      children: [
-        {
-          id: 'sort:asc',
-          label: this.t('shelvesSortAsc'),
-          value: 'sort:asc',
-        },
-        {
-          id: 'sort:desc',
-          label: this.t('shelvesSortDesc'),
-          value: 'sort:desc',
-        },
-        {
-          id: 'sort:clear',
-          label: this.t('shelvesSortClear'),
-          value: 'sort:clear',
-        },
-      ],
-    })
-
-    items.push(
+    handleDimensionMenuAction(
+      key,
+      dimension,
       {
-        id: 'rename',
-        label: this.t('shelvesMenuRename'),
-        value: 'rename',
+        changeAggregate: (id, aggregate) => {
+          changeAggregate(this.store, this.chartDimensions, this.dimensions, id, aggregate)
+        },
+        changeSort: (id, sort) => {
+          changeSort(this.chartDimensions, id, sort)
+        },
+        changeEncoding: (id, encoding) => {
+          changeEncoding(this.chartDimensions, id, encoding)
+        },
+        openRename: (id, currentAlias) => {
+          this.renameTarget = { id, alias: currentAlias }
+        },
+        removeDimension: (id) => {
+          this.chartDimensions?.removeDimension(id)
+        },
       },
-      {
-        id: 'delete_divider',
-        slot: 'delete_divider',
-        disabled: true,
-      },
-      {
-        id: 'delete',
-        label: this.t('shelvesMenuDelete'),
-        value: 'delete',
-        slot: 'delete_label',
-      },
+      this.t,
     )
-
-    return items
   }
 
   render() {
@@ -388,7 +112,7 @@ export class VbiChartDimension {
               <vbi-dropdown key={dim.id} trigger='click' placement='bottom' class='dimension__drag'>
                 <vbi-button slot='trigger' size='sm' class='dimension__item'>
                   <vbi-icon icon={DownOutlined} size='10' class='dimension__item-down' />
-                  {this.getDimensionDisplayLabel(dim)}
+                  {getDimensionDisplayLabel(dim, this.fieldTypeMap, this.t)}
                   <vbi-icon
                     icon={CloseOutlined}
                     size='10'
@@ -401,7 +125,13 @@ export class VbiChartDimension {
                 </vbi-button>
                 <vbi-cascading-menu
                   slot='content'
-                  items={this.buildMenuItems(dim)}
+                  items={buildDimensionMenuItems(
+                    dim,
+                    this.dimensions,
+                    this.fieldTypeMap,
+                    this.chartBuilder?.builder,
+                    this.t,
+                  )}
                   onVbiCascadingMenuSelect={(e: CustomEvent<CascadingMenuItem>) => {
                     this.handleMenuClick(dim, e.detail.value || String(e.detail.id))
                   }}
@@ -416,42 +146,25 @@ export class VbiChartDimension {
           )}
         </div>
 
-        <vbi-modal
-          open={this.isRenameModalOpen}
-          onVbiModalToggle={(e: CustomEvent<boolean>) => {
-            this.isRenameModalOpen = e.detail
-            if (!e.detail) {
-              this.renameDimensionId = undefined
-            }
-          }}
-        >
-          <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>{this.t('shelvesRenameModalDimensionTitle')}</div>
-          <vbi-input
-            value={this.renameValue}
-            onVbiInputValue={(e: CustomEvent<string>) => (this.renameValue = e.detail)}
-            onKeyDown={(e: KeyboardEvent) => {
-              if (e.key === 'Enter') {
-                this.handleRenameSave()
-              }
-            }}
-            placeholder={this.t('shelvesRenameModalDimensionPlaceholder')}
-            autofocus
-          />
-          <div slot='action' style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-            <vbi-button
-              onClick={() => {
-                this.isRenameModalOpen = false
-                this.renameDimensionId = undefined
-              }}
-              size='sm'
-            >
-              {this.t('shelvesRenameModalCancel')}
-            </vbi-button>
-            <vbi-button onClick={this.handleRenameSave} size='sm' color='primary'>
-              {this.t('shelvesRenameModalSave')}
-            </vbi-button>
-          </div>
-        </vbi-modal>
+        {this.renameTarget &&
+          renderShelfRenameModal({
+            target: this.renameTarget,
+            title: this.t('shelvesRenameModalDimensionTitle'),
+            placeholder: this.t('shelvesRenameModalDimensionPlaceholder'),
+            okText: this.t('shelvesRenameModalSave'),
+            cancelText: this.t('shelvesRenameModalCancel'),
+            emptyNameMessage: this.t('shelvesRenameModalEmptyName'),
+            onClose: () => {
+              this.renameTarget = undefined
+            },
+            onValueChange: (value) => {
+              this.renameTarget = { ...this.renameTarget!, alias: value }
+            },
+            onRename: (id, newAlias) => {
+              renameDimension(this.chartDimensions, id, newAlias)
+              this.renameTarget = undefined
+            },
+          })}
       </Host>
     )
   }
