@@ -14,6 +14,7 @@ import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 import { SelectOption } from "./components/ui/vbi-select/vbi-select";
+import { TabItem } from "./components/ui/vbi-tab/vbi-tab";
 export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
@@ -23,6 +24,7 @@ export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export { SelectOption } from "./components/ui/vbi-select/vbi-select";
+export { TabItem } from "./components/ui/vbi-tab/vbi-tab";
 export namespace Components {
     interface VbiButton {
         /**
@@ -389,6 +391,31 @@ export namespace Components {
          */
         "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     }
+    interface VbiTab {
+        /**
+          * Whether the tabs occupy the full width of their parent container
+          * @default false
+         */
+        "block": boolean;
+        /**
+          * Whether all tabs are disabled
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Array of tab items to be rendered
+          * @default []
+         */
+        "items": TabItem[];
+        /**
+          * Size of the tabs
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Currently active tab value or ID
+         */
+        "value"?: string | number;
+    }
     interface VbiTooltip {
         /**
           * The semantic color theme of the tooltip
@@ -446,6 +473,10 @@ export interface VbiSelectCustomEvent<T> extends CustomEvent<T> {
 export interface VbiSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiSwitchElement;
+}
+export interface VbiTabCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiTabElement;
 }
 declare global {
     interface HTMLVbiButtonElement extends Components.VbiButton, HTMLStencilElement {
@@ -690,6 +721,23 @@ declare global {
         prototype: HTMLVbiSwitchElement;
         new (): HTMLVbiSwitchElement;
     };
+    interface HTMLVbiTabElementEventMap {
+        "vbiTabChange": TabItem;
+    }
+    interface HTMLVbiTabElement extends Components.VbiTab, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiTabElementEventMap>(type: K, listener: (this: HTMLVbiTabElement, ev: VbiTabCustomEvent<HTMLVbiTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiTabElementEventMap>(type: K, listener: (this: HTMLVbiTabElement, ev: VbiTabCustomEvent<HTMLVbiTabElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiTabElement: {
+        prototype: HTMLVbiTabElement;
+        new (): HTMLVbiTabElement;
+    };
     interface HTMLVbiTooltipElement extends Components.VbiTooltip, HTMLStencilElement {
     }
     var HTMLVbiTooltipElement: {
@@ -720,6 +768,7 @@ declare global {
         "vbi-modal": HTMLVbiModalElement;
         "vbi-select": HTMLVbiSelectElement;
         "vbi-switch": HTMLVbiSwitchElement;
+        "vbi-tab": HTMLVbiTabElement;
         "vbi-tooltip": HTMLVbiTooltipElement;
     }
 }
@@ -1142,6 +1191,35 @@ declare namespace LocalJSX {
          */
         "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     }
+    interface VbiTab {
+        /**
+          * Whether the tabs occupy the full width of their parent container
+          * @default false
+         */
+        "block"?: boolean;
+        /**
+          * Whether all tabs are disabled
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Array of tab items to be rendered
+          * @default []
+         */
+        "items"?: TabItem[];
+        /**
+          * Emitted when a tab item is clicked
+         */
+        "onVbiTabChange"?: (event: VbiTabCustomEvent<TabItem>) => void;
+        /**
+          * Size of the tabs
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Currently active tab value or ID
+         */
+        "value"?: string | number;
+    }
     interface VbiTooltip {
         /**
           * The semantic color theme of the tooltip
@@ -1249,6 +1327,12 @@ declare namespace LocalJSX {
         "color": 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error' | 'neutral';
         "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     }
+    interface VbiTabAttributes {
+        "value": string;
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        "disabled": boolean;
+        "block": boolean;
+    }
     interface VbiTooltipAttributes {
         "text": string;
         "position": 'top' | 'bottom' | 'left' | 'right';
@@ -1280,6 +1364,7 @@ declare namespace LocalJSX {
         "vbi-modal": Omit<VbiModal, keyof VbiModalAttributes> & { [K in keyof VbiModal & keyof VbiModalAttributes]?: VbiModal[K] } & { [K in keyof VbiModal & keyof VbiModalAttributes as `attr:${K}`]?: VbiModalAttributes[K] } & { [K in keyof VbiModal & keyof VbiModalAttributes as `prop:${K}`]?: VbiModal[K] };
         "vbi-select": Omit<VbiSelect, keyof VbiSelectAttributes> & { [K in keyof VbiSelect & keyof VbiSelectAttributes]?: VbiSelect[K] } & { [K in keyof VbiSelect & keyof VbiSelectAttributes as `attr:${K}`]?: VbiSelectAttributes[K] } & { [K in keyof VbiSelect & keyof VbiSelectAttributes as `prop:${K}`]?: VbiSelect[K] };
         "vbi-switch": Omit<VbiSwitch, keyof VbiSwitchAttributes> & { [K in keyof VbiSwitch & keyof VbiSwitchAttributes]?: VbiSwitch[K] } & { [K in keyof VbiSwitch & keyof VbiSwitchAttributes as `attr:${K}`]?: VbiSwitchAttributes[K] } & { [K in keyof VbiSwitch & keyof VbiSwitchAttributes as `prop:${K}`]?: VbiSwitch[K] };
+        "vbi-tab": Omit<VbiTab, keyof VbiTabAttributes> & { [K in keyof VbiTab & keyof VbiTabAttributes]?: VbiTab[K] } & { [K in keyof VbiTab & keyof VbiTabAttributes as `attr:${K}`]?: VbiTabAttributes[K] } & { [K in keyof VbiTab & keyof VbiTabAttributes as `prop:${K}`]?: VbiTab[K] };
         "vbi-tooltip": Omit<VbiTooltip, keyof VbiTooltipAttributes> & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes]?: VbiTooltip[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `attr:${K}`]?: VbiTooltipAttributes[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `prop:${K}`]?: VbiTooltip[K] };
     }
 }
@@ -1310,6 +1395,7 @@ declare module "@stencil/core" {
             "vbi-modal": LocalJSX.IntrinsicElements["vbi-modal"] & JSXBase.HTMLAttributes<HTMLVbiModalElement>;
             "vbi-select": LocalJSX.IntrinsicElements["vbi-select"] & JSXBase.HTMLAttributes<HTMLVbiSelectElement>;
             "vbi-switch": LocalJSX.IntrinsicElements["vbi-switch"] & JSXBase.HTMLAttributes<HTMLVbiSwitchElement>;
+            "vbi-tab": LocalJSX.IntrinsicElements["vbi-tab"] & JSXBase.HTMLAttributes<HTMLVbiTabElement>;
             "vbi-tooltip": LocalJSX.IntrinsicElements["vbi-tooltip"] & JSXBase.HTMLAttributes<HTMLVbiTooltipElement>;
         }
     }
