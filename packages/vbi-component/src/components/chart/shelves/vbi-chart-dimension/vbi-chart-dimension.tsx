@@ -134,6 +134,10 @@ export class VbiChartDimension {
                   )}
                   onVbiCascadingMenuSelect={(e: CustomEvent<CascadingMenuItem>) => {
                     this.handleMenuClick(dim, e.detail.value || String(e.detail.id))
+                    const dropdown = (e.target as HTMLElement).closest('vbi-dropdown')
+                    if (dropdown) {
+                      ;(dropdown as any).open = false
+                    }
                   }}
                 >
                   <div slot='delete_divider' class='dimension__delete-divider'></div>
