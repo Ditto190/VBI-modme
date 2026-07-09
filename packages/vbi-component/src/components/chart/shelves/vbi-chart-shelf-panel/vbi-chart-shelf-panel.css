@@ -1,3 +1,24 @@
 :host {
   display: block;
+  font-size: 0.875rem;
+  color: var(--color-base-content);
+  padding: 2px 10px;
+
+  --chart-shelf-gap: 10px;
+  --chart-shelf-label-width: 100px;
+}
+
+.chart-shelf__item {
+  display: flex;
+  gap: var(--chart-shelf-gap);
+  align-items: center;
+  width: 100%;
+}
+
+.chart-shelf__label {
+  width: var(--chart-shelf-label-width);
+}
+
+.chart-shelf__input {
+  width: calc(100% - var(--chart-shelf-gap) - var(--chart-shelf-label-width));
 }

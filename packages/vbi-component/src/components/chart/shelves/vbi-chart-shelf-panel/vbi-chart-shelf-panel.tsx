@@ -9,8 +9,9 @@ export class VbiChartShelfPanel {
   render() {
     return (
       <Host>
-        <div>
-          Dimensions: <vbi-chart-dimension />
+        <div class='chart-shelf__item'>
+          <label class='chart-shelf__label'>Dimensions</label>
+          <vbi-chart-dimension class='chart-shelf__input' />
         </div>
       </Host>
     )

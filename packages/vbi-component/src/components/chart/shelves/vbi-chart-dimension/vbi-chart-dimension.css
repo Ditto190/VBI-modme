@@ -14,10 +14,13 @@
   transition:
     border-color 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
+  border-width: var(--border);
+  border-style: solid;
+  border-color: transparent;
 }
 
 .dimension:has(.sortable-ghost) {
-  border: var(--border) solid var(--color-info);
+  border-color: var(--color-info);
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-info) 30%, transparent);
 }
 
