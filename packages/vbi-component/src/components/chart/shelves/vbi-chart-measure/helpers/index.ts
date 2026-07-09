@@ -1,11 +1,12 @@
 export {
   changeAggregate,
   changeEncoding,
+  changeFormat,
   changeSort,
-  getDimensionDisplayLabel,
-  renameDimension,
-} from './dimension-action'
-export { buildDimensionMenuItems, handleDimensionMenuAction } from './dimension-menu'
-export type { DimensionMenuCallbacks } from './dimension-menu'
-export { initDimensionSortable } from './dimension-sortable'
-export type { DimensionSortableDeps } from './dimension-sortable'
+  getMeasureDisplayLabel,
+  renameMeasure,
+} from './measure-action'
+export { buildMeasureMenuItems, handleMeasureMenuAction } from './measure-menu'
+export type { MeasureMenuCallbacks } from './measure-menu'
+export { initMeasureSortable } from './measure-sortable'
+export type { MeasureSortableDeps } from './measure-sortable'

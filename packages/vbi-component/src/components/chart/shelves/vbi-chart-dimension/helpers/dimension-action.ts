@@ -1,15 +1,14 @@
 import { type VBIDimension } from '@visactor/vbi'
 import { type ChartStore } from 'src/store/chart'
-import { type ChartDimensionsStore } from 'src/store/chart/dimensions'
+import { type ChartDimensionsStore, type VBIDimension as VBIDimensionStore } from 'src/store/chart/dimensions'
 import { formatDimensionDateAggregate, normalizeDimensionDateAggregate } from '../../utils/dimensionDateAggregateUtils'
 import { formatSortDisplaySuffix } from '../../utils/sortUtils'
 
 type FieldTypeMap = Record<string, string>
 type TranslationFn = (key: string) => string
-type DimensionItem = VBIDimension & { id: string }
 
 export function getDimensionDisplayLabel(
-  dimension: DimensionItem,
+  dimension: VBIDimensionStore,
   fieldTypeMap: FieldTypeMap,
   t: TranslationFn,
 ): string {
@@ -35,7 +34,7 @@ export function renameDimension(chartDimensions: ChartDimensionsStore | undefine
 export function changeAggregate(
   store: ChartStore | undefined,
   chartDimensions: ChartDimensionsStore | undefined,
-  dimensions: DimensionItem[],
+  dimensions: VBIDimensionStore[],
   id: string,
   aggregate: NonNullable<VBIDimension['aggregate']> | undefined,
 ): void {

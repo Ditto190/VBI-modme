@@ -1,20 +1,20 @@
 import Sortable from 'sortablejs'
 import { type ChartBuilderStore } from 'src/store/chart/builder'
-import { type ChartDimensionsStore } from 'src/store/chart/dimensions'
+import { type ChartMeasuresStore } from 'src/store/chart/measures'
 import { type VBISchemaField } from 'src/store/chart/schema-fields'
-import { getDefaultDimensionDateAggregate } from '../../utils/dimensionDateAggregateUtils'
+import { getDefaultAggregateByFieldRole, getMeasureFieldRoleBySchemaType } from '../../utils/measureAggregateUtils'
 import { reorderYArrayByInsertIndex } from '../../utils/reorderUtils'
 
-export interface DimensionSortableDeps {
+export interface MeasureSortableDeps {
   chartBuilder: ChartBuilderStore | undefined
-  chartDimensions: ChartDimensionsStore | undefined
+  chartMeasures: ChartMeasuresStore | undefined
 }
 
-export function initDimensionSortable(container: HTMLElement, deps: DimensionSortableDeps): Sortable {
+export function initMeasureSortable(container: HTMLElement, deps: MeasureSortableDeps): Sortable {
   return new Sortable(container, {
     group: { name: 'fields', put: true, pull: false },
     animation: 150,
-    draggable: '.dimension__drag',
+    draggable: '.measure__drag',
     onAdd: (evt) => {
       const itemEl = evt.item
       const fieldData = itemEl.getAttribute('data-field')
@@ -27,25 +27,26 @@ export function initDimensionSortable(container: HTMLElement, deps: DimensionSor
           const builder = deps.chartBuilder?.builder
           if (!builder) return
 
-          const dimensions = deps.chartDimensions?.state.dimensions || []
-          const originalLength = dimensions.length
+          const measures = deps.chartMeasures?.state.measures || []
+          const originalLength = measures.length
           const newIndex = evt.newIndex ?? originalLength
 
-          deps.chartDimensions?.addDimension(field.name, (node) => {
-            if (field.isDate) {
-              node.setAggregate(getDefaultDimensionDateAggregate())
-            }
+          const fieldRole = getMeasureFieldRoleBySchemaType(field.type)
+          const aggregate = getDefaultAggregateByFieldRole(fieldRole)
+
+          deps.chartMeasures?.addMeasure(field.name, (node) => {
+            node.setAggregate(aggregate)
           })
 
           if (newIndex < originalLength) {
-            const yDimensions = builder.dsl.get('dimensions') as any
-            if (!yDimensions) {
+            const yMeasures = builder.dsl.get('measures') as any
+            if (!yMeasures) {
               return
             }
 
             builder.doc.transact(() => {
               reorderYArrayByInsertIndex({
-                yArray: yDimensions,
+                yArray: yMeasures,
                 dragIndex: originalLength,
                 insertIndex: newIndex,
               })
@@ -68,14 +69,14 @@ export function initDimensionSortable(container: HTMLElement, deps: DimensionSor
       const builder = deps.chartBuilder?.builder
       if (!builder) return
 
-      const yDimensions = builder.dsl.get('dimensions') as any
-      if (!yDimensions) {
+      const yMeasures = builder.dsl.get('measures') as any
+      if (!yMeasures) {
         return
       }
 
       builder.doc.transact(() => {
         reorderYArrayByInsertIndex({
-          yArray: yDimensions,
+          yArray: yMeasures,
           dragIndex: oldIndex,
           insertIndex: oldIndex < newIndex ? newIndex + 1 : newIndex,
         })

@@ -6,14 +6,15 @@ import { type ChartStore } from 'src/store/chart'
 import { connectChartStore } from 'src/store/context'
 import { renderShelfRenameModal } from '../common/shelf-rename-modal'
 import {
-  buildDimensionMenuItems,
+  buildMeasureMenuItems,
   changeAggregate,
   changeEncoding,
+  changeFormat,
   changeSort,
-  getDimensionDisplayLabel,
-  handleDimensionMenuAction,
-  initDimensionSortable,
-  renameDimension,
+  getMeasureDisplayLabel,
+  handleMeasureMenuAction,
+  initMeasureSortable,
+  renameMeasure,
 } from './helpers'
 
 @Component({
@@ -48,16 +49,16 @@ export class VbiChartMeasure {
     return this.store?.chartBuilder
   }
 
-  private get chartDimensions() {
-    return this.store?.chartDimensions
+  private get chartMeasures() {
+    return this.store?.chartMeasures
   }
 
   private get chartSchemaFields() {
     return this.store?.chartSchemaFields
   }
 
-  private get dimensions() {
-    return this.chartDimensions?.state.dimensions || []
+  private get measures() {
+    return this.chartMeasures?.state.measures || []
   }
 
   private get fieldTypeMap() {
@@ -69,32 +70,39 @@ export class VbiChartMeasure {
 
   private initSortable() {
     if (this.containerRef && !this.sortable) {
-      this.sortable = initDimensionSortable(this.containerRef, {
+      this.sortable = initMeasureSortable(this.containerRef, {
         chartBuilder: this.chartBuilder,
-        chartDimensions: this.chartDimensions,
+        chartMeasures: this.chartMeasures,
       })
     }
   }
 
-  private handleMenuClick = (dimension: (typeof this.dimensions)[number], key: string) => {
-    handleDimensionMenuAction(
+  private handleMenuClick = (measure: (typeof this.measures)[number], key: string) => {
+    handleMeasureMenuAction(
       key,
-      dimension,
+      measure,
+      this.fieldTypeMap,
       {
         changeAggregate: (id, aggregate) => {
-          changeAggregate(this.store, this.chartDimensions, this.dimensions, id, aggregate)
+          changeAggregate(this.chartMeasures, id, aggregate)
         },
         changeSort: (id, sort) => {
-          changeSort(this.chartDimensions, id, sort)
+          changeSort(this.chartMeasures, id, sort)
         },
         changeEncoding: (id, encoding) => {
-          changeEncoding(this.chartDimensions, id, encoding)
+          changeEncoding(this.chartMeasures, id, encoding)
+        },
+        changeFormat: (id, format) => {
+          changeFormat(this.chartMeasures, id, format)
         },
         openRename: (id, currentAlias) => {
           this.renameTarget = { id, alias: currentAlias }
         },
-        removeDimension: (id) => {
-          this.chartDimensions?.removeDimension(id)
+        removeMeasure: (id) => {
+          this.chartMeasures?.removeMeasure(id)
+        },
+        showWarning: (_message) => {
+          // TODO: implement warning toast
         },
       },
       this.t,
@@ -105,35 +113,29 @@ export class VbiChartMeasure {
     return (
       <Host>
         <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='measure'>
-          {this.dimensions.length === 0 ? (
-            <div class='measure__placeholder'>{this.t('shelvesPlaceholdersDimensions')}</div>
+          {this.measures.length === 0 ? (
+            <div class='measure__placeholder'>{this.t('shelvesPlaceholdersMeasures')}</div>
           ) : (
-            this.dimensions.map((dim) => (
-              <vbi-dropdown key={dim.id} trigger='click' placement='bottom' class='measure__drag'>
+            this.measures.map((m) => (
+              <vbi-dropdown key={m.id} trigger='click' placement='bottom' class='measure__drag'>
                 <vbi-button slot='trigger' size='sm' class='measure__item'>
                   <vbi-icon icon={DownOutlined} size='10' class='measure__item-down' />
-                  {getDimensionDisplayLabel(dim, this.fieldTypeMap, this.t)}
+                  {getMeasureDisplayLabel(m, this.t)}
                   <vbi-icon
                     icon={CloseOutlined}
                     size='10'
                     class='measure__item-close'
                     onClick={(e) => {
                       e.stopPropagation()
-                      this.chartDimensions?.removeDimension(dim.id)
+                      this.chartMeasures?.removeMeasure(m.id)
                     }}
                   />
                 </vbi-button>
                 <vbi-cascading-menu
                   slot='content'
-                  items={buildDimensionMenuItems(
-                    dim,
-                    this.dimensions,
-                    this.fieldTypeMap,
-                    this.chartBuilder?.builder,
-                    this.t,
-                  )}
+                  items={buildMeasureMenuItems(m, this.measures, this.fieldTypeMap, this.chartBuilder?.builder, this.t)}
                   onVbiCascadingMenuSelect={(e: CustomEvent<CascadingMenuItem>) => {
-                    this.handleMenuClick(dim, e.detail.value || String(e.detail.id))
+                    this.handleMenuClick(m, e.detail.value || String(e.detail.id))
                     const dropdown = (e.target as HTMLElement).closest('vbi-dropdown')
                     if (dropdown) {
                       ;(dropdown as any).open = false
@@ -153,8 +155,8 @@ export class VbiChartMeasure {
         {this.renameTarget &&
           renderShelfRenameModal({
             target: this.renameTarget,
-            title: this.t('shelvesRenameModalDimensionTitle'),
-            placeholder: this.t('shelvesRenameModalDimensionPlaceholder'),
+            title: this.t('shelvesRenameModalMeasureTitle'),
+            placeholder: this.t('shelvesRenameModalMeasurePlaceholder'),
             okText: this.t('shelvesRenameModalSave'),
             cancelText: this.t('shelvesRenameModalCancel'),
             emptyNameMessage: this.t('shelvesRenameModalEmptyName'),
@@ -165,7 +167,7 @@ export class VbiChartMeasure {
               this.renameTarget = { ...this.renameTarget!, alias: value }
             },
             onRename: (id, newAlias) => {
-              renameDimension(this.chartDimensions, id, newAlias)
+              renameMeasure(this.chartMeasures, id, newAlias)
               this.renameTarget = undefined
             },
           })}
