@@ -23,6 +23,7 @@
  - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-field-section](../../chart/fields/vbi-chart-field-section)
+ - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
  - [vbi-chart-type](../../chart/vbi-chart-type)
 
@@ -32,6 +33,7 @@ graph TD;
   vbi-chart-dimension --> vbi-button
   vbi-chart-field-filter --> vbi-button
   vbi-chart-field-section --> vbi-button
+  vbi-chart-measure --> vbi-button
   vbi-chart-toolbar --> vbi-button
   vbi-chart-type --> vbi-button
   style vbi-button fill:#f9f,stroke:#333,stroke-width:4px

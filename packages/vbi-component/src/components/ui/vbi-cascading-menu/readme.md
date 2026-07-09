@@ -26,11 +26,13 @@
 ### Used by
 
  - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
+ - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-dimension --> vbi-cascading-menu
+  vbi-chart-measure --> vbi-cascading-menu
   style vbi-cascading-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

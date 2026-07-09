@@ -41,12 +41,19 @@ graph TD;
   vbi-chart-field-section --> vbi-icon
   vbi-chart-field-section --> vbi-button
   vbi-chart-shelf-panel --> vbi-chart-dimension
+  vbi-chart-shelf-panel --> vbi-chart-measure
   vbi-chart-dimension --> vbi-dropdown
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
   vbi-chart-dimension --> vbi-cascading-menu
   vbi-chart-dimension --> vbi-modal
   vbi-chart-dimension --> vbi-input
+  vbi-chart-measure --> vbi-dropdown
+  vbi-chart-measure --> vbi-button
+  vbi-chart-measure --> vbi-icon
+  vbi-chart-measure --> vbi-cascading-menu
+  vbi-chart-measure --> vbi-modal
+  vbi-chart-measure --> vbi-input
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

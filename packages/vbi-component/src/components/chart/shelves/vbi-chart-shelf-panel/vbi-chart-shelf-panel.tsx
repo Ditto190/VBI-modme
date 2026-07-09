@@ -13,6 +13,10 @@ export class VbiChartShelfPanel {
           <label class='chart-shelf__label'>Dimensions</label>
           <vbi-chart-dimension class='chart-shelf__input' />
         </div>
+        <div class='chart-shelf__item'>
+          <label class='chart-shelf__label'>Measures</label>
+          <vbi-chart-measure class='chart-shelf__input' />
+        </div>
       </Host>
     )
   }

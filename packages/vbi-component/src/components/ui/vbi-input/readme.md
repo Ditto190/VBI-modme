@@ -44,6 +44,7 @@
 
  - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
+ - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
 
 ### Graph
@@ -51,6 +52,7 @@
 graph TD;
   vbi-chart-dimension --> vbi-input
   vbi-chart-field-filter --> vbi-input
+  vbi-chart-measure --> vbi-input
   vbi-chart-toolbar --> vbi-input
   style vbi-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
