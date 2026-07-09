@@ -50,11 +50,13 @@ export function buildDimensionMenuItems(
           id: `aggregate:${item.key}`,
           label: item.shortLabel,
           value: `aggregate:${item.key}`,
+          isActive: dimension.aggregate?.func === item.aggregate.func,
         })),
         {
           id: 'aggregate:none',
           label: t('shelvesMenuRawValue'),
           value: 'aggregate:none',
+          isActive: !dimension.aggregate,
         },
       ],
     })
@@ -70,6 +72,7 @@ export function buildDimensionMenuItems(
         id: `encoding:${encoding}`,
         label: buildShelfMenuLabel(t(DIMENSION_ENCODING_LABEL_KEY_MAP[encoding]), recommendedSuffix),
         value: `encoding:${encoding}`,
+        isActive: dimension.encoding === encoding,
       }
     }),
   })
@@ -82,11 +85,13 @@ export function buildDimensionMenuItems(
         id: 'sort:asc',
         label: t('shelvesSortAsc'),
         value: 'sort:asc',
+        isActive: dimension.sort?.order === 'asc',
       },
       {
         id: 'sort:desc',
         label: t('shelvesSortDesc'),
         value: 'sort:desc',
+        isActive: dimension.sort?.order === 'desc',
       },
       {
         id: 'sort:clear',

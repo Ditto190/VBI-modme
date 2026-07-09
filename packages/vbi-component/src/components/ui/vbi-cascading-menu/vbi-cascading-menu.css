@@ -65,8 +65,8 @@
   color: inherit;
 }
 
-.cascading-menu-content:hover,
-.has-children:hover > .cascading-menu-content {
+.cascading-menu-content:not(.cascading-menu-active):hover,
+.has-children:hover > .cascading-menu-content:not(.cascading-menu-active) {
   background-color: color-mix(in srgb, var(--color-base-content) 10%, transparent);
   outline: none;
 }
