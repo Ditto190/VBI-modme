@@ -13,6 +13,7 @@ import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
+import { SelectOption } from "./components/ui/vbi-select/vbi-select";
 export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
@@ -21,6 +22,7 @@ export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
+export { SelectOption } from "./components/ui/vbi-select/vbi-select";
 export namespace Components {
     interface VbiButton {
         /**
@@ -335,6 +337,33 @@ export namespace Components {
          */
         "position": 'top' | 'bottom' | 'middle' | 'start' | 'end';
     }
+    interface VbiSelect {
+        /**
+          * Color variant of the select
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error' | 'neutral' | 'ghost';
+        /**
+          * Whether the select is disabled
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * List of select options
+         */
+        "options"?: SelectOption[];
+        /**
+          * Placeholder text when no option is selected
+         */
+        "placeholder"?: string;
+        /**
+          * Size of the select
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Current value of the select
+         */
+        "value"?: string | number;
+    }
     interface VbiSwitch {
         /**
           * Whether the switch is checked.
@@ -409,6 +438,10 @@ export interface VbiMenuCustomEvent<T> extends CustomEvent<T> {
 export interface VbiModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiModalElement;
+}
+export interface VbiSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiSelectElement;
 }
 export interface VbiSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -623,6 +656,23 @@ declare global {
         prototype: HTMLVbiModalElement;
         new (): HTMLVbiModalElement;
     };
+    interface HTMLVbiSelectElementEventMap {
+        "vbiSelectChange": string;
+    }
+    interface HTMLVbiSelectElement extends Components.VbiSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiSelectElementEventMap>(type: K, listener: (this: HTMLVbiSelectElement, ev: VbiSelectCustomEvent<HTMLVbiSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiSelectElementEventMap>(type: K, listener: (this: HTMLVbiSelectElement, ev: VbiSelectCustomEvent<HTMLVbiSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiSelectElement: {
+        prototype: HTMLVbiSelectElement;
+        new (): HTMLVbiSelectElement;
+    };
     interface HTMLVbiSwitchElementEventMap {
         "vbiSwitchChange": boolean;
     }
@@ -668,6 +718,7 @@ declare global {
         "vbi-loading": HTMLVbiLoadingElement;
         "vbi-menu": HTMLVbiMenuElement;
         "vbi-modal": HTMLVbiModalElement;
+        "vbi-select": HTMLVbiSelectElement;
         "vbi-switch": HTMLVbiSwitchElement;
         "vbi-tooltip": HTMLVbiTooltipElement;
     }
@@ -1031,6 +1082,37 @@ declare namespace LocalJSX {
          */
         "position"?: 'top' | 'bottom' | 'middle' | 'start' | 'end';
     }
+    interface VbiSelect {
+        /**
+          * Color variant of the select
+         */
+        "color"?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error' | 'neutral' | 'ghost';
+        /**
+          * Whether the select is disabled
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Emitted when the user changes the selected option
+         */
+        "onVbiSelectChange"?: (event: VbiSelectCustomEvent<string>) => void;
+        /**
+          * List of select options
+         */
+        "options"?: SelectOption[];
+        /**
+          * Placeholder text when no option is selected
+         */
+        "placeholder"?: string;
+        /**
+          * Size of the select
+         */
+        "size"?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+        /**
+          * Current value of the select
+         */
+        "value"?: string | number;
+    }
     interface VbiSwitch {
         /**
           * Whether the switch is checked.
@@ -1153,6 +1235,13 @@ declare namespace LocalJSX {
         "open": boolean;
         "position": 'top' | 'bottom' | 'middle' | 'start' | 'end';
     }
+    interface VbiSelectAttributes {
+        "value": string;
+        "placeholder": string;
+        "disabled": boolean;
+        "color": 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error' | 'neutral' | 'ghost';
+        "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    }
     interface VbiSwitchAttributes {
         "checked": boolean;
         "disabled": boolean;
@@ -1189,6 +1278,7 @@ declare namespace LocalJSX {
         "vbi-loading": Omit<VbiLoading, keyof VbiLoadingAttributes> & { [K in keyof VbiLoading & keyof VbiLoadingAttributes]?: VbiLoading[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `attr:${K}`]?: VbiLoadingAttributes[K] } & { [K in keyof VbiLoading & keyof VbiLoadingAttributes as `prop:${K}`]?: VbiLoading[K] };
         "vbi-menu": Omit<VbiMenu, keyof VbiMenuAttributes> & { [K in keyof VbiMenu & keyof VbiMenuAttributes]?: VbiMenu[K] } & { [K in keyof VbiMenu & keyof VbiMenuAttributes as `attr:${K}`]?: VbiMenuAttributes[K] } & { [K in keyof VbiMenu & keyof VbiMenuAttributes as `prop:${K}`]?: VbiMenu[K] };
         "vbi-modal": Omit<VbiModal, keyof VbiModalAttributes> & { [K in keyof VbiModal & keyof VbiModalAttributes]?: VbiModal[K] } & { [K in keyof VbiModal & keyof VbiModalAttributes as `attr:${K}`]?: VbiModalAttributes[K] } & { [K in keyof VbiModal & keyof VbiModalAttributes as `prop:${K}`]?: VbiModal[K] };
+        "vbi-select": Omit<VbiSelect, keyof VbiSelectAttributes> & { [K in keyof VbiSelect & keyof VbiSelectAttributes]?: VbiSelect[K] } & { [K in keyof VbiSelect & keyof VbiSelectAttributes as `attr:${K}`]?: VbiSelectAttributes[K] } & { [K in keyof VbiSelect & keyof VbiSelectAttributes as `prop:${K}`]?: VbiSelect[K] };
         "vbi-switch": Omit<VbiSwitch, keyof VbiSwitchAttributes> & { [K in keyof VbiSwitch & keyof VbiSwitchAttributes]?: VbiSwitch[K] } & { [K in keyof VbiSwitch & keyof VbiSwitchAttributes as `attr:${K}`]?: VbiSwitchAttributes[K] } & { [K in keyof VbiSwitch & keyof VbiSwitchAttributes as `prop:${K}`]?: VbiSwitch[K] };
         "vbi-tooltip": Omit<VbiTooltip, keyof VbiTooltipAttributes> & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes]?: VbiTooltip[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `attr:${K}`]?: VbiTooltipAttributes[K] } & { [K in keyof VbiTooltip & keyof VbiTooltipAttributes as `prop:${K}`]?: VbiTooltip[K] };
     }
@@ -1218,6 +1308,7 @@ declare module "@stencil/core" {
             "vbi-loading": LocalJSX.IntrinsicElements["vbi-loading"] & JSXBase.HTMLAttributes<HTMLVbiLoadingElement>;
             "vbi-menu": LocalJSX.IntrinsicElements["vbi-menu"] & JSXBase.HTMLAttributes<HTMLVbiMenuElement>;
             "vbi-modal": LocalJSX.IntrinsicElements["vbi-modal"] & JSXBase.HTMLAttributes<HTMLVbiModalElement>;
+            "vbi-select": LocalJSX.IntrinsicElements["vbi-select"] & JSXBase.HTMLAttributes<HTMLVbiSelectElement>;
             "vbi-switch": LocalJSX.IntrinsicElements["vbi-switch"] & JSXBase.HTMLAttributes<HTMLVbiSwitchElement>;
             "vbi-tooltip": LocalJSX.IntrinsicElements["vbi-tooltip"] & JSXBase.HTMLAttributes<HTMLVbiTooltipElement>;
         }
