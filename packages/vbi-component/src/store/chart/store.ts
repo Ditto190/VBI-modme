@@ -8,6 +8,7 @@ import { createChartSchemaFieldsStore, type ChartSchemaFieldsStore } from './sch
 import { createChartTypeStore, type ChartTypeStore } from './type'
 import { createChartUndoStore, type ChartUndoStore } from './undo'
 import { createChartVSeedStore, type ChartVSeedStore } from './vseed'
+import { createChartWhereFilterStore, type ChartWhereFilterStore } from './where-filter'
 
 export interface ChartStore {
   chartBuilder: ChartBuilderStore
@@ -18,6 +19,7 @@ export interface ChartStore {
   chartMeasures: ChartMeasuresStore
   chartSchemaFields: ChartSchemaFieldsStore
   chartVSeed: ChartVSeedStore
+  chartWhereFilter: ChartWhereFilterStore
   translation: TranslationStore
   initialize: (nextBuilder?: VBIChartBuilder) => () => void
 }
@@ -31,6 +33,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
   const chartMeasures = createChartMeasuresStore(chartBuilder)
   const chartSchemaFields = createChartSchemaFieldsStore(chartBuilder)
   const chartVSeed = createChartVSeedStore(chartBuilder, chartConfig)
+  const chartWhereFilter = createChartWhereFilterStore(chartBuilder)
   const translation = createTranslationStore(chartBuilder)
 
   const initialize = (nextBuilder: VBIChartBuilder = builder) => {
@@ -44,6 +47,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
       chartMeasures.dispose()
       chartSchemaFields.dispose()
       chartVSeed.dispose()
+      chartWhereFilter.dispose()
       translation.dispose()
     }
   }
@@ -57,6 +61,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
     chartMeasures,
     chartSchemaFields,
     chartVSeed,
+    chartWhereFilter,
     translation,
     initialize,
   }
