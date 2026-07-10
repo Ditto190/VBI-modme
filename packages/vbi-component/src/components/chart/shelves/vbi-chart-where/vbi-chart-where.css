@@ -79,3 +79,15 @@
 .where__item-down:hover {
   background-color: color-mix(in oklab, var(--color-base-content) 15%, transparent);
 }
+
+.where__drag {
+  flex-shrink: 0;
+}
+
+.where__item {
+  white-space: nowrap;
+}
+
+.where__item-text {
+  white-space: nowrap;
+}

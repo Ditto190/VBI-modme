@@ -113,7 +113,7 @@ export class VbiChartDimension {
               <vbi-dropdown key={dim.id} trigger='click' placement='bottom' class='dimension__drag'>
                 <vbi-button slot='trigger' size='sm' class='dimension__item'>
                   <vbi-icon icon={DownOutlined} size='10' class='dimension__item-down' />
-                  {getDimensionDisplayLabel(dim, this.fieldTypeMap, this.t)}
+                  <span class='dimension__item-text'>{getDimensionDisplayLabel(dim, this.fieldTypeMap, this.t)}</span>
                   <vbi-icon
                     icon={CloseOutlined}
                     size='10'
@@ -138,6 +138,9 @@ export class VbiChartDimension {
                     const dropdown = (e.target as HTMLElement).closest('vbi-dropdown')
                     if (dropdown) {
                       ;(dropdown as any).open = false
+                      if (typeof (dropdown as any).close === 'function') {
+                        ;(dropdown as any).close()
+                      }
                     }
                   }}
                 >

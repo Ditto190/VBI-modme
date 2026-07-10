@@ -77,7 +77,7 @@ export class VbiChartWhere {
                 <vbi-dropdown key={item.id} trigger='click' placement='bottom' class='where__drag' data-id={item.id}>
                   <vbi-button slot='trigger' size='sm' class='where__item'>
                     <vbi-icon icon={DownOutlined} size='10' class='where__item-down' />
-                    {displayText}
+                    <span class='where__item-text'>{displayText}</span>
                     <vbi-icon
                       icon={CloseOutlined}
                       size='10'

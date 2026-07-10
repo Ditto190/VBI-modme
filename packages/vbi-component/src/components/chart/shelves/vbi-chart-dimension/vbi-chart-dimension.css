@@ -91,3 +91,15 @@
 .dimension__delete-label {
   color: var(--color-error);
 }
+
+.dimension__drag {
+  flex-shrink: 0;
+}
+
+.dimension__item {
+  white-space: nowrap;
+}
+
+.dimension__item-text {
+  white-space: nowrap;
+}

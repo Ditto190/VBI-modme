@@ -122,7 +122,7 @@ export class VbiChartMeasure {
               <vbi-dropdown key={m.id} trigger='click' placement='bottom' class='measure__drag'>
                 <vbi-button slot='trigger' size='sm' class='measure__item'>
                   <vbi-icon icon={DownOutlined} size='10' class='measure__item-down' />
-                  {getMeasureDisplayLabel(m, this.t)}
+                  <span class='measure__item-text'>{getMeasureDisplayLabel(m, this.t)}</span>
                   <vbi-icon
                     icon={CloseOutlined}
                     size='10'
@@ -141,6 +141,9 @@ export class VbiChartMeasure {
                     const dropdown = (e.target as HTMLElement).closest('vbi-dropdown')
                     if (dropdown) {
                       ;(dropdown as any).open = false
+                      if (typeof (dropdown as any).close === 'function') {
+                        ;(dropdown as any).close()
+                      }
                     }
                   }}
                 >

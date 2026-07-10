@@ -79,3 +79,15 @@
 .having__item-down:hover {
   background-color: color-mix(in oklab, var(--color-base-content) 15%, transparent);
 }
+
+.having__drag {
+  flex-shrink: 0;
+}
+
+.having__item {
+  white-space: nowrap;
+}
+
+.having__item-text {
+  white-space: nowrap;
+}

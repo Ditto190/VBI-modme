@@ -80,7 +80,7 @@ export class VbiChartHaving {
                 <vbi-dropdown key={item.id} trigger='click' placement='bottom' class='having__drag' data-id={item.id}>
                   <vbi-button slot='trigger' size='sm' class='having__item'>
                     <vbi-icon icon={DownOutlined} size='10' class='having__item-down' />
-                    {displayText}
+                    <span class='having__item-text'>{displayText}</span>
                     <vbi-icon
                       icon={CloseOutlined}
                       size='10'
