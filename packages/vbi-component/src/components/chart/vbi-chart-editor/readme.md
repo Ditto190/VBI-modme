@@ -52,8 +52,12 @@ graph TD;
   vbi-chart-measure --> vbi-button
   vbi-chart-measure --> vbi-icon
   vbi-chart-measure --> vbi-cascading-menu
-  vbi-chart-measure --> vbi-modal
+  vbi-chart-measure --> vbi-tab
+  vbi-chart-measure --> vbi-select
   vbi-chart-measure --> vbi-input
+  vbi-chart-measure --> vbi-switch
+  vbi-chart-measure --> vbi-modal
+  vbi-tab --> vbi-icon
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

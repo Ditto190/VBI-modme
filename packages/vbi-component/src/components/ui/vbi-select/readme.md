@@ -24,6 +24,19 @@
 | `vbiSelectChange` | Emitted when the user changes the selected option | `CustomEvent<string>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-measure --> vbi-select
+  style vbi-select fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

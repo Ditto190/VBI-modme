@@ -23,6 +23,19 @@
 | `vbiSwitchChange` | Emitted when the switch checked state changes. | `CustomEvent<boolean>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-measure --> vbi-switch
+  style vbi-switch fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -4,6 +4,7 @@ import type Sortable from 'sortablejs'
 import { type CascadingMenuItem } from 'src/components/ui/vbi-cascading-menu/vbi-cascading-menu'
 import { type ChartStore } from 'src/store/chart'
 import { connectChartStore } from 'src/store/context'
+import { renderMeasureFormatPanel } from '../common/measure-format-panel'
 import { renderShelfRenameModal } from '../common/shelf-rename-modal'
 import {
   buildMeasureMenuItems,
@@ -102,7 +103,7 @@ export class VbiChartMeasure {
           this.chartMeasures?.removeMeasure(id)
         },
         showWarning: (_message) => {
-          // TODO: implement warning toast
+          alert(_message)
         },
       },
       this.t,
@@ -146,6 +147,13 @@ export class VbiChartMeasure {
                   <span slot='delete_label' class='measure__delete-label'>
                     {this.t('shelvesMenuDelete')}
                   </span>
+                  <div slot='measure_format'>
+                    {renderMeasureFormatPanel({
+                      format: m.format,
+                      onFormatChange: (format) => changeFormat(this.chartMeasures, m.id, format),
+                      t: (k) => this.t(k),
+                    })}
+                  </div>
                 </vbi-cascading-menu>
               </vbi-dropdown>
             ))

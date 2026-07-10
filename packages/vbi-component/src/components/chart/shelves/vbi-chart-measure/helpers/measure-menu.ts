@@ -111,8 +111,7 @@ export function buildMeasureMenuItems(
     children: [
       {
         id: `format:panel:${measure.id}`,
-        disabled: true,
-        label: '',
+        slot: 'measure_format',
       },
     ],
   })
