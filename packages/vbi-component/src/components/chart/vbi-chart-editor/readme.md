@@ -45,6 +45,7 @@ graph TD;
   vbi-chart-shelf-panel --> vbi-chart-dimension
   vbi-chart-shelf-panel --> vbi-chart-measure
   vbi-chart-shelf-panel --> vbi-chart-where
+  vbi-chart-shelf-panel --> vbi-chart-having
   vbi-chart-dimension --> vbi-dropdown
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
@@ -68,6 +69,13 @@ graph TD;
   vbi-chart-where-filter --> vbi-select
   vbi-chart-where-filter --> vbi-input
   vbi-chart-where-filter --> vbi-button
+  vbi-chart-having --> vbi-dropdown
+  vbi-chart-having --> vbi-button
+  vbi-chart-having --> vbi-icon
+  vbi-chart-having --> vbi-chart-having-filter
+  vbi-chart-having-filter --> vbi-input
+  vbi-chart-having-filter --> vbi-select
+  vbi-chart-having-filter --> vbi-button
   style vbi-chart-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

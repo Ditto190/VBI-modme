@@ -21,6 +21,7 @@
  - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-field-section](../../chart/fields/vbi-chart-field-section)
+ - [vbi-chart-having](../../chart/shelves/vbi-chart-having)
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
  - [vbi-chart-where](../../chart/shelves/vbi-chart-where)
@@ -33,6 +34,7 @@ graph TD;
   vbi-chart-dimension --> vbi-icon
   vbi-chart-field-filter --> vbi-icon
   vbi-chart-field-section --> vbi-icon
+  vbi-chart-having --> vbi-icon
   vbi-chart-measure --> vbi-icon
   vbi-chart-toolbar --> vbi-icon
   vbi-chart-where --> vbi-icon

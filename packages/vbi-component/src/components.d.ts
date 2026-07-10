@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 import { FieldRole } from "./utils/data/fieldRole";
 import { VBISchemaField } from "./store/chart/schema-fields";
+import { HavingFilterLike } from "./components/chart/shelves/vbi-chart-having/helpers/having-utils";
 import { VSeed } from "@visactor/vseed";
 import { WhereFilterLike } from "./components/chart/shelves/vbi-chart-where/helpers/where-utils";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
@@ -19,6 +20,7 @@ import { TabItem } from "./components/ui/vbi-tab/vbi-tab";
 export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
+export { HavingFilterLike } from "./components/chart/shelves/vbi-chart-having/helpers/having-utils";
 export { VSeed } from "@visactor/vseed";
 export { WhereFilterLike } from "./components/chart/shelves/vbi-chart-where/helpers/where-utils";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
@@ -112,6 +114,19 @@ export namespace Components {
         "measures": VBISchemaField[];
     }
     interface VbiChartFields {
+    }
+    interface VbiChartHaving {
+    }
+    interface VbiChartHavingFilter {
+        /**
+          * @default {}
+         */
+        "fieldRoleMap"?: Record<string, string>;
+        /**
+          * @default {}
+         */
+        "fieldTypeMap": Record<string, string>;
+        "item": HavingFilterLike;
     }
     interface VbiChartMeasure {
     }
@@ -461,6 +476,10 @@ export interface VbiChartFieldFilterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiChartFieldFilterElement;
 }
+export interface VbiChartHavingFilterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiChartHavingFilterElement;
+}
 export interface VbiChartWhereFilterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiChartWhereFilterElement;
@@ -563,6 +582,30 @@ declare global {
     var HTMLVbiChartFieldsElement: {
         prototype: HTMLVbiChartFieldsElement;
         new (): HTMLVbiChartFieldsElement;
+    };
+    interface HTMLVbiChartHavingElement extends Components.VbiChartHaving, HTMLStencilElement {
+    }
+    var HTMLVbiChartHavingElement: {
+        prototype: HTMLVbiChartHavingElement;
+        new (): HTMLVbiChartHavingElement;
+    };
+    interface HTMLVbiChartHavingFilterElementEventMap {
+        "vbiChartHavingFilterSave": { item: HavingFilterLike; event?: MouseEvent };
+        "vbiChartHavingFilterCancel": MouseEvent | undefined;
+    }
+    interface HTMLVbiChartHavingFilterElement extends Components.VbiChartHavingFilter, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiChartHavingFilterElementEventMap>(type: K, listener: (this: HTMLVbiChartHavingFilterElement, ev: VbiChartHavingFilterCustomEvent<HTMLVbiChartHavingFilterElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiChartHavingFilterElementEventMap>(type: K, listener: (this: HTMLVbiChartHavingFilterElement, ev: VbiChartHavingFilterCustomEvent<HTMLVbiChartHavingFilterElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiChartHavingFilterElement: {
+        prototype: HTMLVbiChartHavingFilterElement;
+        new (): HTMLVbiChartHavingFilterElement;
     };
     interface HTMLVbiChartMeasureElement extends Components.VbiChartMeasure, HTMLStencilElement {
     }
@@ -795,6 +838,8 @@ declare global {
         "vbi-chart-field-filter": HTMLVbiChartFieldFilterElement;
         "vbi-chart-field-section": HTMLVbiChartFieldSectionElement;
         "vbi-chart-fields": HTMLVbiChartFieldsElement;
+        "vbi-chart-having": HTMLVbiChartHavingElement;
+        "vbi-chart-having-filter": HTMLVbiChartHavingFilterElement;
         "vbi-chart-measure": HTMLVbiChartMeasureElement;
         "vbi-chart-render": HTMLVbiChartRenderElement;
         "vbi-chart-shelf-panel": HTMLVbiChartShelfPanelElement;
@@ -918,6 +963,21 @@ declare namespace LocalJSX {
         "measures"?: VBISchemaField[];
     }
     interface VbiChartFields {
+    }
+    interface VbiChartHaving {
+    }
+    interface VbiChartHavingFilter {
+        /**
+          * @default {}
+         */
+        "fieldRoleMap"?: Record<string, string>;
+        /**
+          * @default {}
+         */
+        "fieldTypeMap"?: Record<string, string>;
+        "item": HavingFilterLike;
+        "onVbiChartHavingFilterCancel"?: (event: VbiChartHavingFilterCustomEvent<MouseEvent | undefined>) => void;
+        "onVbiChartHavingFilterSave"?: (event: VbiChartHavingFilterCustomEvent<{ item: HavingFilterLike; event?: MouseEvent }>) => void;
     }
     interface VbiChartMeasure {
     }
@@ -1408,6 +1468,8 @@ declare namespace LocalJSX {
         "vbi-chart-field-filter": Omit<VbiChartFieldFilter, keyof VbiChartFieldFilterAttributes> & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes]?: VbiChartFieldFilter[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `attr:${K}`]?: VbiChartFieldFilterAttributes[K] } & { [K in keyof VbiChartFieldFilter & keyof VbiChartFieldFilterAttributes as `prop:${K}`]?: VbiChartFieldFilter[K] };
         "vbi-chart-field-section": VbiChartFieldSection;
         "vbi-chart-fields": VbiChartFields;
+        "vbi-chart-having": VbiChartHaving;
+        "vbi-chart-having-filter": VbiChartHavingFilter;
         "vbi-chart-measure": VbiChartMeasure;
         "vbi-chart-render": VbiChartRender;
         "vbi-chart-shelf-panel": VbiChartShelfPanel;
@@ -1441,6 +1503,8 @@ declare module "@stencil/core" {
             "vbi-chart-field-filter": LocalJSX.IntrinsicElements["vbi-chart-field-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldFilterElement>;
             "vbi-chart-field-section": LocalJSX.IntrinsicElements["vbi-chart-field-section"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldSectionElement>;
             "vbi-chart-fields": LocalJSX.IntrinsicElements["vbi-chart-fields"] & JSXBase.HTMLAttributes<HTMLVbiChartFieldsElement>;
+            "vbi-chart-having": LocalJSX.IntrinsicElements["vbi-chart-having"] & JSXBase.HTMLAttributes<HTMLVbiChartHavingElement>;
+            "vbi-chart-having-filter": LocalJSX.IntrinsicElements["vbi-chart-having-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartHavingFilterElement>;
             "vbi-chart-measure": LocalJSX.IntrinsicElements["vbi-chart-measure"] & JSXBase.HTMLAttributes<HTMLVbiChartMeasureElement>;
             "vbi-chart-render": LocalJSX.IntrinsicElements["vbi-chart-render"] & JSXBase.HTMLAttributes<HTMLVbiChartRenderElement>;
             "vbi-chart-shelf-panel": LocalJSX.IntrinsicElements["vbi-chart-shelf-panel"] & JSXBase.HTMLAttributes<HTMLVbiChartShelfPanelElement>;

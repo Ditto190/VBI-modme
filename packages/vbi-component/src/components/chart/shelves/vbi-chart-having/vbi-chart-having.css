@@ -1,0 +1,81 @@
+:host {
+  display: block;
+  font-size: 0.875rem;
+}
+
+.having {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: var(--radius-box);
+  color: var(--color-base-content);
+  padding: 4px 6px;
+  transition:
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  border-width: var(--border);
+  border-style: solid;
+  border-color: transparent;
+}
+
+.having:has(.sortable-ghost) {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-error) 30%, transparent);
+}
+
+.having:has(.sortable-ghost) .having__placeholder {
+  display: none;
+}
+
+.having::-webkit-scrollbar {
+  height: 6px;
+}
+
+.having::-webkit-scrollbar-thumb {
+  background-color: color-mix(in oklab, var(--color-base-content) 25%, transparent);
+  border-radius: 12px;
+}
+
+.having::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 50%, transparent);
+}
+
+.having__placeholder {
+  color: color-mix(in oklab, var(--color-base-content) 50%, transparent);
+  line-height: 2rem;
+}
+
+.having__item-close,
+.having__item-down {
+  flex-shrink: 0;
+  border-radius: var(--radius-field);
+}
+
+.having__item-close {
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-left: -0.375rem;
+  box-sizing: content-box;
+
+  transition: 0.15s ease-in-out;
+  transition-property: width, padding, opacity, margin-left, background-color;
+}
+
+.having__item:hover .having__item-close {
+  width: 0.625rem;
+  padding: 4px;
+  opacity: 1;
+  margin-left: 0;
+}
+
+.having__item-down {
+  padding: 4px;
+}
+
+.having__item-close:hover,
+.having__item-down:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 15%, transparent);
+}

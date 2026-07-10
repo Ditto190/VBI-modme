@@ -78,6 +78,13 @@ export class VbiChartShelfPanel {
           </label>
           <vbi-chart-where class='chart-shelf__input' />
         </div>
+        <div class='chart-shelf__item'>
+          <label class='chart-shelf__label'>
+            <span>Having</span>
+            {this.renderRootOperatorButton('having')}
+          </label>
+          <vbi-chart-having class='chart-shelf__input' />
+        </div>
       </Host>
     )
   }

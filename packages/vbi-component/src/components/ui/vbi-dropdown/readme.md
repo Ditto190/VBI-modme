@@ -30,6 +30,7 @@
 
  - [vbi-chart-dimension](../../chart/shelves/vbi-chart-dimension)
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
+ - [vbi-chart-having](../../chart/shelves/vbi-chart-having)
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-type](../../chart/vbi-chart-type)
  - [vbi-chart-where](../../chart/shelves/vbi-chart-where)
@@ -39,6 +40,7 @@
 graph TD;
   vbi-chart-dimension --> vbi-dropdown
   vbi-chart-field-filter --> vbi-dropdown
+  vbi-chart-having --> vbi-dropdown
   vbi-chart-measure --> vbi-dropdown
   vbi-chart-type --> vbi-dropdown
   vbi-chart-where --> vbi-dropdown
