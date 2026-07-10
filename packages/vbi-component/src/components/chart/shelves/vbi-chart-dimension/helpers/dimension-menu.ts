@@ -1,13 +1,12 @@
-import { type VBIChartBuilder, type VBIDimension } from '@visactor/vbi'
+import { type VBIChartBuilder } from '@visactor/vbi'
 import { type CascadingMenuItem } from 'src/components/ui/vbi-cascading-menu/vbi-cascading-menu'
+import { type Translate } from 'src/i18n'
+import { type VBIDimension as VBIDimensionStore } from 'src/store/chart/dimensions'
 import { getDimensionDateAggregateItems, isDateDimensionField } from '../../utils/dimensionDateAggregateUtils'
 import { buildShelfMenuLabel } from '../../utils/menuItemUtils'
 import { formatSortMenuSummary } from '../../utils/sortUtils'
 
-type TranslationFn = (key: string) => string
-type DimensionItem = VBIDimension & { id: string }
-
-export const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIDimension['encoding']>, string> = {
+export const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIDimensionStore['encoding']>, string> = {
   xAxis: 'shelvesDimensionEncodingXAxis',
   yAxis: 'shelvesDimensionEncodingYAxis',
   angle: 'shelvesDimensionEncodingAngle',
@@ -24,11 +23,11 @@ export const DIMENSION_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIDimension['
 }
 
 export function buildDimensionMenuItems(
-  dimension: DimensionItem,
-  dimensions: DimensionItem[],
+  dimension: VBIDimensionStore,
+  dimensions: VBIDimensionStore[],
   fieldTypeMap: Record<string, string>,
   chartBuilder: VBIChartBuilder | undefined,
-  t: TranslationFn,
+  t: Translate,
 ): CascadingMenuItem[] {
   const items: CascadingMenuItem[] = []
 
@@ -124,18 +123,18 @@ export function buildDimensionMenuItems(
 }
 
 export interface DimensionMenuCallbacks {
-  changeAggregate: (id: string, aggregate: NonNullable<VBIDimension['aggregate']> | undefined) => void
-  changeSort: (id: string, sort: VBIDimension['sort'] | undefined) => void
-  changeEncoding: (id: string, encoding: NonNullable<VBIDimension['encoding']>) => void
+  changeAggregate: (id: string, aggregate: NonNullable<VBIDimensionStore['aggregate']> | undefined) => void
+  changeSort: (id: string, sort: VBIDimensionStore['sort'] | undefined) => void
+  changeEncoding: (id: string, encoding: NonNullable<VBIDimensionStore['encoding']>) => void
   openRename: (id: string, currentAlias: string, currentField: string) => void
   removeDimension: (id: string) => void
 }
 
 export function handleDimensionMenuAction(
   key: string,
-  dimension: DimensionItem,
+  dimension: VBIDimensionStore,
   callbacks: DimensionMenuCallbacks,
-  t: TranslationFn,
+  t: Translate,
 ): void {
   if (key.startsWith('aggregate:')) {
     const aggregateKey = key.replace('aggregate:', '')
@@ -168,7 +167,7 @@ export function handleDimensionMenuAction(
   }
 
   if (key.startsWith('encoding:')) {
-    const nextEncoding = key.replace('encoding:', '') as NonNullable<VBIDimension['encoding']>
+    const nextEncoding = key.replace('encoding:', '') as NonNullable<VBIDimensionStore['encoding']>
     callbacks.changeEncoding(dimension.id, nextEncoding)
     return
   }

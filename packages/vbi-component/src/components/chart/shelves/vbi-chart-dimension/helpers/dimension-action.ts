@@ -1,16 +1,15 @@
-import { type VBIDimension } from '@visactor/vbi'
+import { type Translate } from 'src/i18n'
 import { type ChartStore } from 'src/store/chart'
 import { type ChartDimensionsStore, type VBIDimension as VBIDimensionStore } from 'src/store/chart/dimensions'
 import { formatDimensionDateAggregate, normalizeDimensionDateAggregate } from '../../utils/dimensionDateAggregateUtils'
 import { formatSortDisplaySuffix } from '../../utils/sortUtils'
 
 type FieldTypeMap = Record<string, string>
-type TranslationFn = (key: string) => string
 
 export function getDimensionDisplayLabel(
   dimension: VBIDimensionStore,
   fieldTypeMap: FieldTypeMap,
-  t: TranslationFn,
+  t: Translate,
 ): string {
   const baseLabel = dimension.alias || dimension.field
   const aggregate = formatDimensionDateAggregate(
@@ -36,7 +35,7 @@ export function changeAggregate(
   chartDimensions: ChartDimensionsStore | undefined,
   dimensions: VBIDimensionStore[],
   id: string,
-  aggregate: NonNullable<VBIDimension['aggregate']> | undefined,
+  aggregate: NonNullable<VBIDimensionStore['aggregate']> | undefined,
 ): void {
   if (!aggregate) {
     const dimensionNode = chartDimensions?.findDimension(id) as { clearAggregate?: () => unknown } | undefined
@@ -69,7 +68,7 @@ export function changeAggregate(
 export function changeEncoding(
   chartDimensions: ChartDimensionsStore | undefined,
   id: string,
-  encoding: NonNullable<VBIDimension['encoding']>,
+  encoding: NonNullable<VBIDimensionStore['encoding']>,
 ): void {
   chartDimensions?.updateDimension(id, (node) => {
     node.setEncoding(encoding)
@@ -79,7 +78,7 @@ export function changeEncoding(
 export function changeSort(
   chartDimensions: ChartDimensionsStore | undefined,
   id: string,
-  sort: VBIDimension['sort'] | undefined,
+  sort: VBIDimensionStore['sort'] | undefined,
 ): void {
   chartDimensions?.updateDimension(id, (node) => {
     if (sort) {

@@ -3,6 +3,7 @@ import { Component, Element, Host, State, h } from '@stencil/core'
 import type Sortable from 'sortablejs'
 import { type CascadingMenuItem } from 'src/components/ui/vbi-cascading-menu/vbi-cascading-menu'
 import { type ChartStore } from 'src/store/chart'
+import { type VBIDimension as VBIDimensionStore } from 'src/store/chart/dimensions'
 import { connectChartStore } from 'src/store/context'
 import { renderShelfRenameModal } from '../common/shelf-rename-modal'
 import {
@@ -108,7 +109,7 @@ export class VbiChartDimension {
           {this.dimensions.length === 0 ? (
             <div class='dimension__placeholder'>{this.t('shelvesPlaceholdersDimensions')}</div>
           ) : (
-            this.dimensions.map((dim) => (
+            this.dimensions.map((dim: VBIDimensionStore) => (
               <vbi-dropdown key={dim.id} trigger='click' placement='bottom' class='dimension__drag'>
                 <vbi-button slot='trigger' size='sm' class='dimension__item'>
                   <vbi-icon icon={DownOutlined} size='10' class='dimension__item-down' />

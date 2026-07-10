@@ -1,5 +1,7 @@
-import { type VBIChartBuilder, type VBIMeasure, type VBIMeasureFormat } from '@visactor/vbi'
+import { type VBIChartBuilder, type VBIMeasureFormat } from '@visactor/vbi'
 import { type CascadingMenuItem } from 'src/components/ui/vbi-cascading-menu/vbi-cascading-menu'
+import { type Translate } from 'src/i18n'
+import { type VBIMeasure as VBIMeasureStore } from 'src/store/chart/measures'
 import {
   getAggregateItemsByFieldRole,
   getMeasureFieldRoleBySchemaType,
@@ -9,12 +11,9 @@ import {
 import { buildShelfMenuLabel } from '../../utils/menuItemUtils'
 import { formatSortMenuSummary } from '../../utils/sortUtils'
 
-type TranslationFn = (key: string) => string
-type MeasureItem = any
-
 const QUANTILE_PERCENT_OPTIONS = [1, 5, 25, 50, 75, 90, 95, 99] as const
 
-export const MEASURE_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIMeasure['encoding']>, string> = {
+export const MEASURE_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIMeasureStore['encoding']>, string> = {
   primaryYAxis: 'shelvesMeasureEncodingPrimaryYAxis',
   secondaryYAxis: 'shelvesMeasureEncodingSecondaryYAxis',
   xAxis: 'shelvesMeasureEncodingXAxis',
@@ -39,11 +38,11 @@ export const MEASURE_ENCODING_LABEL_KEY_MAP: Record<NonNullable<VBIMeasure['enco
 }
 
 export function buildMeasureMenuItems(
-  measure: MeasureItem,
-  measures: MeasureItem[],
+  measure: VBIMeasureStore,
+  measures: VBIMeasureStore[],
   fieldTypeMap: Record<string, string>,
   chartBuilder: VBIChartBuilder | undefined,
-  t: TranslationFn,
+  t: Translate,
 ): CascadingMenuItem[] {
   const items: CascadingMenuItem[] = []
 
@@ -164,8 +163,8 @@ export function buildMeasureMenuItems(
 
 export interface MeasureMenuCallbacks {
   changeAggregate: (id: string, aggregate: MeasureAggregate) => void
-  changeSort: (id: string, sort: VBIMeasure['sort'] | undefined) => void
-  changeEncoding: (id: string, encoding: NonNullable<VBIMeasure['encoding']>) => void
+  changeSort: (id: string, sort: VBIMeasureStore['sort'] | undefined) => void
+  changeEncoding: (id: string, encoding: NonNullable<VBIMeasureStore['encoding']>) => void
   changeFormat: (id: string, format: VBIMeasureFormat | undefined) => void
   openRename: (id: string, currentAlias: string, currentField: string) => void
   removeMeasure: (id: string) => void
@@ -174,10 +173,10 @@ export interface MeasureMenuCallbacks {
 
 export function handleMeasureMenuAction(
   key: string,
-  measure: MeasureItem,
+  measure: VBIMeasureStore,
   fieldTypeMap: Record<string, string>,
   callbacks: MeasureMenuCallbacks,
-  t: TranslationFn,
+  t: Translate,
 ): void {
   if (key === 'rename') {
     callbacks.openRename(measure.id, measure.alias || measure.field, measure.field)
@@ -190,7 +189,7 @@ export function handleMeasureMenuAction(
   }
 
   if (key.startsWith('encoding:')) {
-    const nextEncoding = key.replace('encoding:', '') as NonNullable<VBIMeasure['encoding']>
+    const nextEncoding = key.replace('encoding:', '') as NonNullable<VBIMeasureStore['encoding']>
     callbacks.changeEncoding(measure.id, nextEncoding)
     return
   }

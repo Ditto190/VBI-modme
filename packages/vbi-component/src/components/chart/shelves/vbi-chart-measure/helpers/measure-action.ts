@@ -1,11 +1,10 @@
-import { type VBIMeasure, type VBIMeasureFormat } from '@visactor/vbi'
+import { type VBIMeasureFormat } from '@visactor/vbi'
+import { type Translate } from 'src/i18n'
 import { type ChartMeasuresStore, type VBIMeasure as VBIMeasureStore } from 'src/store/chart/measures'
 import { formatMeasureAggregate, type MeasureAggregate } from '../../utils/measureAggregateUtils'
 import { formatSortDisplaySuffix } from '../../utils/sortUtils'
 
-type TranslationFn = (key: string) => string
-
-export function getMeasureDisplayLabel(measure: VBIMeasureStore, t: TranslationFn): string {
+export function getMeasureDisplayLabel(measure: VBIMeasureStore, t: Translate): string {
   const baseLabel = measure.alias || measure.field
   const aggregate = formatMeasureAggregate(measure.aggregate as MeasureAggregate | undefined, t)
 
@@ -49,7 +48,7 @@ export function changeFormat(
 export function changeEncoding(
   chartMeasures: ChartMeasuresStore | undefined,
   id: string,
-  encoding: NonNullable<VBIMeasure['encoding']>,
+  encoding: NonNullable<VBIMeasureStore['encoding']>,
 ): void {
   chartMeasures?.updateMeasure(id, (node) => {
     node.setEncoding(encoding)
@@ -59,7 +58,7 @@ export function changeEncoding(
 export function changeSort(
   chartMeasures: ChartMeasuresStore | undefined,
   id: string,
-  sort: VBIMeasure['sort'] | undefined,
+  sort: VBIMeasureStore['sort'] | undefined,
 ): void {
   chartMeasures?.updateMeasure(id, (node) => {
     if (sort) {
