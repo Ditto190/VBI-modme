@@ -3,6 +3,7 @@ import { createTranslationStore, type TranslationStore } from 'src/i18n'
 import { createChartBuilderStore, type ChartBuilderStore } from './builder'
 import { createChartConfigStore, type ChartConfigStore } from './config'
 import { createChartDimensionsStore, type ChartDimensionsStore } from './dimensions'
+import { createChartHavingFilterStore, type ChartHavingFilterStore } from './having-filter'
 import { createChartMeasuresStore, type ChartMeasuresStore } from './measures'
 import { createChartSchemaFieldsStore, type ChartSchemaFieldsStore } from './schema-fields'
 import { createChartTypeStore, type ChartTypeStore } from './type'
@@ -20,6 +21,7 @@ export interface ChartStore {
   chartSchemaFields: ChartSchemaFieldsStore
   chartVSeed: ChartVSeedStore
   chartWhereFilter: ChartWhereFilterStore
+  chartHavingFilter: ChartHavingFilterStore
   translation: TranslationStore
   initialize: (nextBuilder?: VBIChartBuilder) => () => void
 }
@@ -34,6 +36,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
   const chartSchemaFields = createChartSchemaFieldsStore(chartBuilder)
   const chartVSeed = createChartVSeedStore(chartBuilder, chartConfig)
   const chartWhereFilter = createChartWhereFilterStore(chartBuilder)
+  const chartHavingFilter = createChartHavingFilterStore(chartBuilder)
   const translation = createTranslationStore(chartBuilder)
 
   const initialize = (nextBuilder: VBIChartBuilder = builder) => {
@@ -48,6 +51,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
       chartSchemaFields.dispose()
       chartVSeed.dispose()
       chartWhereFilter.dispose()
+      chartHavingFilter.dispose()
       translation.dispose()
     }
   }
@@ -62,6 +66,7 @@ export function createChartStore(builder: VBIChartBuilder): ChartStore {
     chartSchemaFields,
     chartVSeed,
     chartWhereFilter,
+    chartHavingFilter,
     translation,
     initialize,
   }
