@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "Dimensi",
+  "panelsShelvesMeasures": "Metrik",
+  "panelsShelvesWhere": "Filter Detail",
+  "panelsShelvesHaving": "Filter Agregat",
   "toolbarChartTypeGroupsComparisonDescription": "Perbandingan kategori, tampilan berdampingan, dan sumbu ganda",
   "toolbarChartTypeGroupsComparisonLabel": "Perbandingan",
   "toolbarChartTypeGroupsDistributionDescription": "Korelasi, kepadatan, dan sebaran statistik",

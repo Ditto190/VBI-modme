@@ -64,23 +64,23 @@ export class VbiChartShelfPanel {
     return (
       <Host>
         <div class='chart-shelf__item'>
-          <label class='chart-shelf__label'>Dimensions</label>
+          <label class='chart-shelf__label'>{this.t('panelsShelvesDimensions')}</label>
           <vbi-chart-dimension class='chart-shelf__input' />
         </div>
         <div class='chart-shelf__item'>
-          <label class='chart-shelf__label'>Measures</label>
+          <label class='chart-shelf__label'>{this.t('panelsShelvesMeasures')}</label>
           <vbi-chart-measure class='chart-shelf__input' />
         </div>
         <div class='chart-shelf__item'>
           <label class='chart-shelf__label'>
-            <span>Where</span>
+            <span>{this.t('panelsShelvesWhere')}</span>
             {this.renderRootOperatorButton('where')}
           </label>
           <vbi-chart-where class='chart-shelf__input' />
         </div>
         <div class='chart-shelf__item'>
           <label class='chart-shelf__label'>
-            <span>Having</span>
+            <span>{this.t('panelsShelvesHaving')}</span>
             {this.renderRootOperatorButton('having')}
           </label>
           <vbi-chart-having class='chart-shelf__input' />

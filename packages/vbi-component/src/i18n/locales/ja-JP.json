@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "ディメンション",
+  "panelsShelvesMeasures": "メジャー",
+  "panelsShelvesWhere": "明細フィルター",
+  "panelsShelvesHaving": "集計フィルター",
   "toolbarChartTypeGroupsComparisonDescription": "カテゴリ比較、並列表示、二軸ビュー",
   "toolbarChartTypeGroupsComparisonLabel": "比較",
   "toolbarChartTypeGroupsDistributionDescription": "相関、密度、統計的な広がり",

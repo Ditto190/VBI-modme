@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "Dimensionen",
+  "panelsShelvesMeasures": "Kennzahlen",
+  "panelsShelvesWhere": "Detailfilter",
+  "panelsShelvesHaving": "Gruppenfilter",
   "toolbarChartTypeGroupsComparisonDescription": "Kategorievergleiche, gruppierte und zweiachsige Ansichten",
   "toolbarChartTypeGroupsComparisonLabel": "Vergleich",
   "toolbarChartTypeGroupsDistributionDescription": "Korrelation, Dichte und statistische Streuung",

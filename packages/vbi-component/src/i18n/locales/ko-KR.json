@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "차원",
+  "panelsShelvesMeasures": "지표",
+  "panelsShelvesWhere": "상세 필터",
+  "panelsShelvesHaving": "그룹 필터",
   "toolbarChartTypeGroupsComparisonDescription": "범주 비교, 병렬 및 이중 축 보기",
   "toolbarChartTypeGroupsComparisonLabel": "비교",
   "toolbarChartTypeGroupsDistributionDescription": "상관관계, 밀도 및 통계 분산",

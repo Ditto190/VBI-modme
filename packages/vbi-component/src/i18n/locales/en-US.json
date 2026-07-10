@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "Dimensions",
+  "panelsShelvesMeasures": "Measures",
+  "panelsShelvesWhere": "Where",
+  "panelsShelvesHaving": "Having",
   "toolbarChartTypeGroupsComparisonDescription": "Category comparisons and dual-axis views",
   "toolbarChartTypeGroupsComparisonLabel": "Comparison",
   "toolbarChartTypeGroupsDistributionDescription": "Correlation, density and statistical spread",

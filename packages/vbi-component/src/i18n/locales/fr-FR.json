@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "Dimensions de données",
+  "panelsShelvesMeasures": "Mesures",
+  "panelsShelvesWhere": "Filtre de détail",
+  "panelsShelvesHaving": "Filtre d'agrégat",
   "toolbarChartTypeGroupsComparisonDescription": "Comparaisons de catégories, vues groupées et à double axe",
   "toolbarChartTypeGroupsComparisonLabel": "Comparaison",
   "toolbarChartTypeGroupsDistributionDescription": "Corrélation, densité et dispersion statistique",

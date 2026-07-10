@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "维度",
+  "panelsShelvesMeasures": "指标",
+  "panelsShelvesWhere": "明细过滤",
+  "panelsShelvesHaving": "分组过滤",
   "toolbarChartTypeGroupsComparisonDescription": "类目大小、并列与双轴对比",
   "toolbarChartTypeGroupsComparisonLabel": "比较",
   "toolbarChartTypeGroupsDistributionDescription": "相关性、密度与统计分布",

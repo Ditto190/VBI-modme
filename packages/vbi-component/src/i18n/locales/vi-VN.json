@@ -1,4 +1,8 @@
 {
+  "panelsShelvesDimensions": "Chiều",
+  "panelsShelvesMeasures": "Chỉ số",
+  "panelsShelvesWhere": "Lọc chi tiết",
+  "panelsShelvesHaving": "Lọc nhóm",
   "toolbarChartTypeGroupsComparisonDescription": "So sánh danh mục, dạng song song và hai trục",
   "toolbarChartTypeGroupsComparisonLabel": "So sánh",
   "toolbarChartTypeGroupsDistributionDescription": "Tương quan, mật độ và độ phân tán thống kê",
