@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "Current {{unit}}",
   "filtersDateDisplayCurrentOffset": "Current {{unit}} offset {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "Drag fields here"
+  "shelvesPlaceholdersFilters": "Drag fields here",
+  "shelvesRootOperatorTooltip": "Current logic {{current}}. Click to switch to {{next}}"
 }

@@ -5,7 +5,7 @@
   padding: 2px 10px;
 
   --chart-shelf-gap: 10px;
-  --chart-shelf-label-width: 100px;
+  --chart-shelf-label-width: 7.5rem;
 }
 
 .chart-shelf__item {
@@ -17,6 +17,10 @@
 
 .chart-shelf__label {
   width: var(--chart-shelf-label-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
 }
 
 .chart-shelf__input {

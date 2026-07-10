@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "当前{{unit}}",
   "filtersDateDisplayCurrentOffset": "当前{{unit}}偏移{{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "拖拽字段到此处"
+  "shelvesPlaceholdersFilters": "拖拽字段到此处",
+  "shelvesRootOperatorTooltip": "当前逻辑 {{current}}，点击切换为 {{next}}"
 }

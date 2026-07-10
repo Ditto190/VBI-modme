@@ -24,8 +24,11 @@
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-field-section](../../chart/fields/vbi-chart-field-section)
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
+ - [vbi-chart-shelf-panel](../../chart/shelves/vbi-chart-shelf-panel)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
  - [vbi-chart-type](../../chart/vbi-chart-type)
+ - [vbi-chart-where](../../chart/shelves/vbi-chart-where)
+ - [vbi-chart-where-filter](../../chart/shelves/vbi-chart-where-filter)
 
 ### Graph
 ```mermaid
@@ -34,8 +37,11 @@ graph TD;
   vbi-chart-field-filter --> vbi-button
   vbi-chart-field-section --> vbi-button
   vbi-chart-measure --> vbi-button
+  vbi-chart-shelf-panel --> vbi-button
   vbi-chart-toolbar --> vbi-button
   vbi-chart-type --> vbi-button
+  vbi-chart-where --> vbi-button
+  vbi-chart-where-filter --> vbi-button
   style vbi-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

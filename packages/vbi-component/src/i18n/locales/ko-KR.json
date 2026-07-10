@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "현재 {{unit}}",
   "filtersDateDisplayCurrentOffset": "현재 {{unit}} 오프셋 {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "필드를 여기로 끌어오세요"
+  "shelvesPlaceholdersFilters": "필드를 여기로 끌어오세요",
+  "shelvesRootOperatorTooltip": "현재 논리 {{current}}. 클릭하면 {{next}}로 전환됩니다"
 }

@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "{{unit}} hiện tại",
   "filtersDateDisplayCurrentOffset": "{{unit}} hiện tại lệch {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "Kéo trường vào đây"
+  "shelvesPlaceholdersFilters": "Kéo trường vào đây",
+  "shelvesRootOperatorTooltip": "Logic hiện tại {{current}}. Nhấp để chuyển sang {{next}}"
 }

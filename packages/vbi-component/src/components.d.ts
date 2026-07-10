@@ -9,6 +9,7 @@ import { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascad
 import { FieldRole } from "./utils/data/fieldRole";
 import { VBISchemaField } from "./store/chart/schema-fields";
 import { VSeed } from "@visactor/vseed";
+import { WhereFilterLike } from "./components/chart/shelves/vbi-chart-where/helpers/where-utils";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
@@ -19,6 +20,7 @@ export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascad
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
 export { VSeed } from "@visactor/vseed";
+export { WhereFilterLike } from "./components/chart/shelves/vbi-chart-where/helpers/where-utils";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
@@ -126,6 +128,17 @@ export namespace Components {
     interface VbiChartType {
     }
     interface VbiChartWhere {
+    }
+    interface VbiChartWhereFilter {
+        /**
+          * @default {}
+         */
+        "fieldRoleMap"?: Record<string, string>;
+        /**
+          * @default {}
+         */
+        "fieldTypeMap": Record<string, string>;
+        "item": WhereFilterLike;
     }
     interface VbiCheckbox {
         /**
@@ -448,6 +461,10 @@ export interface VbiChartFieldFilterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiChartFieldFilterElement;
 }
+export interface VbiChartWhereFilterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiChartWhereFilterElement;
+}
 export interface VbiCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiCheckboxElement;
@@ -582,6 +599,24 @@ declare global {
     var HTMLVbiChartWhereElement: {
         prototype: HTMLVbiChartWhereElement;
         new (): HTMLVbiChartWhereElement;
+    };
+    interface HTMLVbiChartWhereFilterElementEventMap {
+        "vbiChartWhereFilterSave": { item: WhereFilterLike; event?: MouseEvent };
+        "vbiChartWhereFilterCancel": MouseEvent | undefined;
+    }
+    interface HTMLVbiChartWhereFilterElement extends Components.VbiChartWhereFilter, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiChartWhereFilterElementEventMap>(type: K, listener: (this: HTMLVbiChartWhereFilterElement, ev: VbiChartWhereFilterCustomEvent<HTMLVbiChartWhereFilterElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiChartWhereFilterElementEventMap>(type: K, listener: (this: HTMLVbiChartWhereFilterElement, ev: VbiChartWhereFilterCustomEvent<HTMLVbiChartWhereFilterElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiChartWhereFilterElement: {
+        prototype: HTMLVbiChartWhereFilterElement;
+        new (): HTMLVbiChartWhereFilterElement;
     };
     interface HTMLVbiCheckboxElementEventMap {
         "vbiCheckboxChange": boolean;
@@ -766,6 +801,7 @@ declare global {
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
         "vbi-chart-where": HTMLVbiChartWhereElement;
+        "vbi-chart-where-filter": HTMLVbiChartWhereFilterElement;
         "vbi-checkbox": HTMLVbiCheckboxElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
         "vbi-dropdown": HTMLVbiDropdownElement;
@@ -898,6 +934,19 @@ declare namespace LocalJSX {
     interface VbiChartType {
     }
     interface VbiChartWhere {
+    }
+    interface VbiChartWhereFilter {
+        /**
+          * @default {}
+         */
+        "fieldRoleMap"?: Record<string, string>;
+        /**
+          * @default {}
+         */
+        "fieldTypeMap"?: Record<string, string>;
+        "item": WhereFilterLike;
+        "onVbiChartWhereFilterCancel"?: (event: VbiChartWhereFilterCustomEvent<MouseEvent | undefined>) => void;
+        "onVbiChartWhereFilterSave"?: (event: VbiChartWhereFilterCustomEvent<{ item: WhereFilterLike; event?: MouseEvent }>) => void;
     }
     interface VbiCheckbox {
         /**
@@ -1365,6 +1414,7 @@ declare namespace LocalJSX {
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
         "vbi-chart-where": VbiChartWhere;
+        "vbi-chart-where-filter": VbiChartWhereFilter;
         "vbi-checkbox": Omit<VbiCheckbox, keyof VbiCheckboxAttributes> & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes]?: VbiCheckbox[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `attr:${K}`]?: VbiCheckboxAttributes[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `prop:${K}`]?: VbiCheckbox[K] };
         "vbi-config-provider": VbiConfigProvider;
         "vbi-dropdown": Omit<VbiDropdown, keyof VbiDropdownAttributes> & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes]?: VbiDropdown[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `attr:${K}`]?: VbiDropdownAttributes[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `prop:${K}`]?: VbiDropdown[K] };
@@ -1397,6 +1447,7 @@ declare module "@stencil/core" {
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;
             "vbi-chart-where": LocalJSX.IntrinsicElements["vbi-chart-where"] & JSXBase.HTMLAttributes<HTMLVbiChartWhereElement>;
+            "vbi-chart-where-filter": LocalJSX.IntrinsicElements["vbi-chart-where-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartWhereFilterElement>;
             "vbi-checkbox": LocalJSX.IntrinsicElements["vbi-checkbox"] & JSXBase.HTMLAttributes<HTMLVbiCheckboxElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
             "vbi-dropdown": LocalJSX.IntrinsicElements["vbi-dropdown"] & JSXBase.HTMLAttributes<HTMLVbiDropdownElement>;

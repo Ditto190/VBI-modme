@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "{{unit}} actuel",
   "filtersDateDisplayCurrentOffset": "{{unit}} actuel avec décalage {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "Faire glisser des champs ici"
+  "shelvesPlaceholdersFilters": "Faire glisser des champs ici",
+  "shelvesRootOperatorTooltip": "Logique actuelle {{current}}. Cliquer pour passer à {{next}}"
 }

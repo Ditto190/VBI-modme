@@ -29,11 +29,13 @@
 ### Used by
 
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
+ - [vbi-chart-where-filter](../../chart/shelves/vbi-chart-where-filter)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-measure --> vbi-select
+  vbi-chart-where-filter --> vbi-select
   style vbi-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

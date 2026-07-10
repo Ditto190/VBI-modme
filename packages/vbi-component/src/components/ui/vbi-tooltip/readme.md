@@ -19,11 +19,13 @@
 
 ### Used by
 
+ - [vbi-chart-shelf-panel](../../chart/shelves/vbi-chart-shelf-panel)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
 
 ### Graph
 ```mermaid
 graph TD;
+  vbi-chart-shelf-panel --> vbi-tooltip
   vbi-chart-toolbar --> vbi-tooltip
   style vbi-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```

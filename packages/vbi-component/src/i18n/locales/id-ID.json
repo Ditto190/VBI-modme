@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "{{unit}} saat ini",
   "filtersDateDisplayCurrentOffset": "{{unit}} saat ini offset {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "Seret bidang ke sini"
+  "shelvesPlaceholdersFilters": "Seret bidang ke sini",
+  "shelvesRootOperatorTooltip": "Logika saat ini {{current}}. Klik untuk beralih ke {{next}}"
 }

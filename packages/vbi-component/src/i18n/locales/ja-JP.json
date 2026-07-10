@@ -338,5 +338,6 @@
   "filtersDateDisplayCurrent": "現在の{{unit}}",
   "filtersDateDisplayCurrentOffset": "現在の{{unit}} オフセット {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
-  "shelvesPlaceholdersFilters": "フィールドをここにドラッグ"
+  "shelvesPlaceholdersFilters": "フィールドをここにドラッグ",
+  "shelvesRootOperatorTooltip": "現在の論理は {{current}}。クリックして {{next}} に切り替えます"
 }

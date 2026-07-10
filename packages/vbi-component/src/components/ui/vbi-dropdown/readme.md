@@ -32,6 +32,7 @@
  - [vbi-chart-field-filter](../../chart/fields/vbi-chart-field-filter)
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-type](../../chart/vbi-chart-type)
+ - [vbi-chart-where](../../chart/shelves/vbi-chart-where)
 
 ### Graph
 ```mermaid
@@ -40,6 +41,7 @@ graph TD;
   vbi-chart-field-filter --> vbi-dropdown
   vbi-chart-measure --> vbi-dropdown
   vbi-chart-type --> vbi-dropdown
+  vbi-chart-where --> vbi-dropdown
   style vbi-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
