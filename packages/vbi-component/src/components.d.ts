@@ -125,6 +125,8 @@ export namespace Components {
     }
     interface VbiChartType {
     }
+    interface VbiChartWhere {
+    }
     interface VbiCheckbox {
         /**
           * Whether the component is checked.
@@ -575,6 +577,12 @@ declare global {
         prototype: HTMLVbiChartTypeElement;
         new (): HTMLVbiChartTypeElement;
     };
+    interface HTMLVbiChartWhereElement extends Components.VbiChartWhere, HTMLStencilElement {
+    }
+    var HTMLVbiChartWhereElement: {
+        prototype: HTMLVbiChartWhereElement;
+        new (): HTMLVbiChartWhereElement;
+    };
     interface HTMLVbiCheckboxElementEventMap {
         "vbiCheckboxChange": boolean;
     }
@@ -757,6 +765,7 @@ declare global {
         "vbi-chart-shelf-panel": HTMLVbiChartShelfPanelElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
+        "vbi-chart-where": HTMLVbiChartWhereElement;
         "vbi-checkbox": HTMLVbiCheckboxElement;
         "vbi-config-provider": HTMLVbiConfigProviderElement;
         "vbi-dropdown": HTMLVbiDropdownElement;
@@ -887,6 +896,8 @@ declare namespace LocalJSX {
     interface VbiChartToolbar {
     }
     interface VbiChartType {
+    }
+    interface VbiChartWhere {
     }
     interface VbiCheckbox {
         /**
@@ -1353,6 +1364,7 @@ declare namespace LocalJSX {
         "vbi-chart-shelf-panel": VbiChartShelfPanel;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
+        "vbi-chart-where": VbiChartWhere;
         "vbi-checkbox": Omit<VbiCheckbox, keyof VbiCheckboxAttributes> & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes]?: VbiCheckbox[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `attr:${K}`]?: VbiCheckboxAttributes[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `prop:${K}`]?: VbiCheckbox[K] };
         "vbi-config-provider": VbiConfigProvider;
         "vbi-dropdown": Omit<VbiDropdown, keyof VbiDropdownAttributes> & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes]?: VbiDropdown[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `attr:${K}`]?: VbiDropdownAttributes[K] } & { [K in keyof VbiDropdown & keyof VbiDropdownAttributes as `prop:${K}`]?: VbiDropdown[K] };
@@ -1384,6 +1396,7 @@ declare module "@stencil/core" {
             "vbi-chart-shelf-panel": LocalJSX.IntrinsicElements["vbi-chart-shelf-panel"] & JSXBase.HTMLAttributes<HTMLVbiChartShelfPanelElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;
+            "vbi-chart-where": LocalJSX.IntrinsicElements["vbi-chart-where"] & JSXBase.HTMLAttributes<HTMLVbiChartWhereElement>;
             "vbi-checkbox": LocalJSX.IntrinsicElements["vbi-checkbox"] & JSXBase.HTMLAttributes<HTMLVbiCheckboxElement>;
             "vbi-config-provider": LocalJSX.IntrinsicElements["vbi-config-provider"] & JSXBase.HTMLAttributes<HTMLVbiConfigProviderElement>;
             "vbi-dropdown": LocalJSX.IntrinsicElements["vbi-dropdown"] & JSXBase.HTMLAttributes<HTMLVbiDropdownElement>;

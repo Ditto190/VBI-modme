@@ -15,12 +15,14 @@
 
 - [vbi-chart-dimension](../vbi-chart-dimension)
 - [vbi-chart-measure](../vbi-chart-measure)
+- [vbi-chart-where](../vbi-chart-where)
 
 ### Graph
 ```mermaid
 graph TD;
   vbi-chart-shelf-panel --> vbi-chart-dimension
   vbi-chart-shelf-panel --> vbi-chart-measure
+  vbi-chart-shelf-panel --> vbi-chart-where
   vbi-chart-dimension --> vbi-dropdown
   vbi-chart-dimension --> vbi-button
   vbi-chart-dimension --> vbi-icon
