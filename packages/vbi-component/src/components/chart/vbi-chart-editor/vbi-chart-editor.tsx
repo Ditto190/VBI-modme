@@ -26,12 +26,12 @@ export class VbiChartEditor {
       <Host>
         <div class='chart-editor'>
           <header class='chart-editor__toolbar'>
-            <vbi-chart-toolbar></vbi-chart-toolbar>
+            <vbi-chart-toolbar />
           </header>
 
           <main class='chart-editor__main'>
             <aside class='chart-editor__fields'>
-              <vbi-chart-fields></vbi-chart-fields>
+              <vbi-chart-fields />
             </aside>
 
             <section class='chart-editor__workspace'>
