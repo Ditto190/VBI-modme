@@ -13,6 +13,7 @@ export class VbiChartToolbar {
   @Element() el!: HTMLElement
 
   @State() store?: ChartStore
+  @State() openImportModal: boolean = false
 
   componentWillLoad() {
     this.store = connectChartStore(this.el)
@@ -39,10 +40,10 @@ export class VbiChartToolbar {
       <Host>
         <div class='toolbar'>
           <div class='toolbar-group'>
-            <vbi-chart-type></vbi-chart-type>
+            <vbi-chart-type />
 
             <vbi-tooltip text={this.t('toolbarImportCSV')}>
-              <vbi-button size='sm'>
+              <vbi-button size='sm' onClick={() => (this.openImportModal = true)}>
                 <vbi-icon icon={CloudUploadOutlined} size='16px' />
               </vbi-button>
             </vbi-tooltip>
@@ -82,6 +83,15 @@ export class VbiChartToolbar {
             </vbi-tooltip>
           </div>
         </div>
+
+        <vbi-modal
+          open={this.openImportModal}
+          onVbiModalToggle={(e: CustomEvent<boolean>) => {
+            this.openImportModal = e.detail
+          }}
+        >
+          <vbi-chart-upload onVbiChartUploadSuccess={() => (this.openImportModal = false)} />
+        </vbi-modal>
       </Host>
     )
   }

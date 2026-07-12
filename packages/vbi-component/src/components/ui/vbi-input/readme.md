@@ -47,6 +47,7 @@
  - [vbi-chart-having-filter](../../chart/shelves/vbi-chart-having-filter)
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
+ - [vbi-chart-upload](../../chart/vbi-chart-upload)
  - [vbi-chart-where-filter](../../chart/shelves/vbi-chart-where-filter)
 
 ### Graph
@@ -57,6 +58,7 @@ graph TD;
   vbi-chart-having-filter --> vbi-input
   vbi-chart-measure --> vbi-input
   vbi-chart-toolbar --> vbi-input
+  vbi-chart-upload --> vbi-input
   vbi-chart-where-filter --> vbi-input
   style vbi-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

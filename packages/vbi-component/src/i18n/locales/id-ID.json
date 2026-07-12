@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "{{unit}} saat ini offset {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "Seret bidang ke sini",
-  "shelvesRootOperatorTooltip": "Logika saat ini {{current}}. Klik untuk beralih ke {{next}}"
+  "shelvesRootOperatorTooltip": "Logika saat ini {{current}}. Klik untuk beralih ke {{next}}",
+  "csvModalTitleUpload": "Unggah CSV",
+  "csvModalTitleSchema": "Konfigurasi Skema",
+  "csvModalLoading": "Menganalisis file CSV...",
+  "csvModalBtnBack": "Kembali",
+  "csvModalBtnConfirm": "Konfirmasi",
+  "csvModalDraggerText": "Klik atau seret file CSV ke area ini untuk mengunggah",
+  "csvModalDraggerHint": "Mendukung pengunggahan satu file CSV.",
+  "csvModalColOriginal": "Header Asli",
+  "csvModalColCustom": "Nama Kustom",
+  "csvModalColType": "Tipe Data",
+  "csvModalErrorEmpty": "File CSV kosong",
+  "csvModalErrorParse": "Gagal menguraikan file CSV",
+  "csvModalTypeString": "Teks",
+  "csvModalTypeNumber": "Angka",
+  "csvModalTypeDate": "Tanggal",
+  "csvModalTypeDateTime": "Tanggal Waktu",
+  "csvModalTypeTimestamp": "Stempel Waktu"
 }

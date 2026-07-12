@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "当前{{unit}}偏移{{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "拖拽字段到此处",
-  "shelvesRootOperatorTooltip": "当前逻辑 {{current}}，点击切换为 {{next}}"
+  "shelvesRootOperatorTooltip": "当前逻辑 {{current}}，点击切换为 {{next}}",
+  "csvModalTitleUpload": "上传 CSV",
+  "csvModalTitleSchema": "配置 Schema",
+  "csvModalLoading": "正在解析 CSV 文件...",
+  "csvModalBtnBack": "返回",
+  "csvModalBtnConfirm": "确认",
+  "csvModalDraggerText": "点击或拖拽 CSV 文件到此区域上传",
+  "csvModalDraggerHint": "仅支持单个 CSV 文件上传。",
+  "csvModalColOriginal": "原始表头",
+  "csvModalColCustom": "自定义名称",
+  "csvModalColType": "数据类型",
+  "csvModalErrorEmpty": "CSV 文件为空",
+  "csvModalErrorParse": "解析 CSV 文件失败",
+  "csvModalTypeString": "字符串",
+  "csvModalTypeNumber": "数值",
+  "csvModalTypeDate": "日期",
+  "csvModalTypeDateTime": "日期时间",
+  "csvModalTypeTimestamp": "时间戳"
 }

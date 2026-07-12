@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "現在の{{unit}} オフセット {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "フィールドをここにドラッグ",
-  "shelvesRootOperatorTooltip": "現在の論理は {{current}}。クリックして {{next}} に切り替えます"
+  "shelvesRootOperatorTooltip": "現在の論理は {{current}}。クリックして {{next}} に切り替えます",
+  "csvModalTitleUpload": "CSV をアップロード",
+  "csvModalTitleSchema": "Schema を設定",
+  "csvModalLoading": "CSV ファイルを解析中...",
+  "csvModalBtnBack": "戻る",
+  "csvModalBtnConfirm": "確認",
+  "csvModalDraggerText": "クリックまたは CSV ファイルをこのエリアへドラッグしてアップロード",
+  "csvModalDraggerHint": "CSV ファイルは1つだけアップロードできます。",
+  "csvModalColOriginal": "元のヘッダー",
+  "csvModalColCustom": "カスタム名",
+  "csvModalColType": "データ型",
+  "csvModalErrorEmpty": "CSV ファイルが空です",
+  "csvModalErrorParse": "CSV ファイルの解析に失敗しました",
+  "csvModalTypeString": "文字列",
+  "csvModalTypeNumber": "数値",
+  "csvModalTypeDate": "日付",
+  "csvModalTypeDateTime": "日時",
+  "csvModalTypeTimestamp": "タイムスタンプ"
 }

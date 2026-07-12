@@ -24,6 +24,7 @@
  - [vbi-chart-having](../../chart/shelves/vbi-chart-having)
  - [vbi-chart-measure](../../chart/shelves/vbi-chart-measure)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
+ - [vbi-chart-upload](../../chart/vbi-chart-upload)
  - [vbi-chart-where](../../chart/shelves/vbi-chart-where)
  - [vbi-menu](../vbi-menu)
  - [vbi-tab](../vbi-tab)
@@ -37,6 +38,7 @@ graph TD;
   vbi-chart-having --> vbi-icon
   vbi-chart-measure --> vbi-icon
   vbi-chart-toolbar --> vbi-icon
+  vbi-chart-upload --> vbi-icon
   vbi-chart-where --> vbi-icon
   vbi-menu --> vbi-icon
   vbi-tab --> vbi-icon

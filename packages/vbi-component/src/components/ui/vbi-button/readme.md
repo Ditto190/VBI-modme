@@ -29,6 +29,7 @@
  - [vbi-chart-shelf-panel](../../chart/shelves/vbi-chart-shelf-panel)
  - [vbi-chart-toolbar](../../chart/vbi-chart-toolbar)
  - [vbi-chart-type](../../chart/vbi-chart-type)
+ - [vbi-chart-upload](../../chart/vbi-chart-upload)
  - [vbi-chart-where](../../chart/shelves/vbi-chart-where)
  - [vbi-chart-where-filter](../../chart/shelves/vbi-chart-where-filter)
 
@@ -44,6 +45,7 @@ graph TD;
   vbi-chart-shelf-panel --> vbi-button
   vbi-chart-toolbar --> vbi-button
   vbi-chart-type --> vbi-button
+  vbi-chart-upload --> vbi-button
   vbi-chart-where --> vbi-button
   vbi-chart-where-filter --> vbi-button
   style vbi-button fill:#f9f,stroke:#333,stroke-width:4px

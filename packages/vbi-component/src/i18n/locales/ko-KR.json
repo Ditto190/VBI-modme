@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "현재 {{unit}} 오프셋 {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "필드를 여기로 끌어오세요",
-  "shelvesRootOperatorTooltip": "현재 논리 {{current}}. 클릭하면 {{next}}로 전환됩니다"
+  "shelvesRootOperatorTooltip": "현재 논리 {{current}}. 클릭하면 {{next}}로 전환됩니다",
+  "csvModalTitleUpload": "CSV 업로드",
+  "csvModalTitleSchema": "Schema 구성",
+  "csvModalLoading": "CSV 파일 분석 중...",
+  "csvModalBtnBack": "뒤로",
+  "csvModalBtnConfirm": "확인",
+  "csvModalDraggerText": "CSV 파일을 클릭하거나 이 영역으로 끌어와 업로드",
+  "csvModalDraggerHint": "CSV 파일 하나만 업로드할 수 있습니다.",
+  "csvModalColOriginal": "원본 헤더",
+  "csvModalColCustom": "사용자 지정 이름",
+  "csvModalColType": "데이터 유형",
+  "csvModalErrorEmpty": "CSV 파일이 비어 있습니다",
+  "csvModalErrorParse": "CSV 파일 파싱에 실패했습니다",
+  "csvModalTypeString": "문자열",
+  "csvModalTypeNumber": "숫자",
+  "csvModalTypeDate": "날짜",
+  "csvModalTypeDateTime": "날짜 시간",
+  "csvModalTypeTimestamp": "타임스탬프"
 }

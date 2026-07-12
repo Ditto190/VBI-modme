@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "{{unit}} actuel avec décalage {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "Faire glisser des champs ici",
-  "shelvesRootOperatorTooltip": "Logique actuelle {{current}}. Cliquer pour passer à {{next}}"
+  "shelvesRootOperatorTooltip": "Logique actuelle {{current}}. Cliquer pour passer à {{next}}",
+  "csvModalTitleUpload": "Importer un fichier CSV",
+  "csvModalTitleSchema": "Configurer le schéma",
+  "csvModalLoading": "Analyse du fichier CSV en cours...",
+  "csvModalBtnBack": "Retour",
+  "csvModalBtnConfirm": "Confirmer",
+  "csvModalDraggerText": "Cliquez ou faites glisser un fichier CSV dans cette zone pour l'importer",
+  "csvModalDraggerHint": "Prise en charge d'un seul fichier CSV.",
+  "csvModalColOriginal": "En-tête d'origine",
+  "csvModalColCustom": "Nom personnalisé",
+  "csvModalColType": "Type de données",
+  "csvModalErrorEmpty": "Le fichier CSV est vide",
+  "csvModalErrorParse": "Échec de l'analyse du fichier CSV",
+  "csvModalTypeString": "Chaîne",
+  "csvModalTypeNumber": "Nombre",
+  "csvModalTypeDate": "Date",
+  "csvModalTypeDateTime": "Date et heure",
+  "csvModalTypeTimestamp": "Horodatage"
 }

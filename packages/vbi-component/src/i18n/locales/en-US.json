@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "Current {{unit}} offset {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "Drag fields here",
-  "shelvesRootOperatorTooltip": "Current logic {{current}}. Click to switch to {{next}}"
+  "shelvesRootOperatorTooltip": "Current logic {{current}}. Click to switch to {{next}}",
+  "csvModalTitleUpload": "Upload CSV",
+  "csvModalTitleSchema": "Configure Schema",
+  "csvModalLoading": "Parsing CSV file...",
+  "csvModalBtnBack": "Back",
+  "csvModalBtnConfirm": "Confirm",
+  "csvModalDraggerText": "Click or drag CSV file to this area to upload",
+  "csvModalDraggerHint": "Support for a single CSV file upload.",
+  "csvModalColOriginal": "Original Header",
+  "csvModalColCustom": "Custom Name",
+  "csvModalColType": "Data Type",
+  "csvModalErrorEmpty": "CSV file is empty",
+  "csvModalErrorParse": "Failed to parse CSV file",
+  "csvModalTypeString": "String",
+  "csvModalTypeNumber": "Number",
+  "csvModalTypeDate": "Date",
+  "csvModalTypeDateTime": "DateTime",
+  "csvModalTypeTimestamp": "Timestamp"
 }

@@ -142,6 +142,13 @@ export namespace Components {
     }
     interface VbiChartType {
     }
+    interface VbiChartUpload {
+        /**
+          * Prefix for generated local CSV connector IDs.
+          * @default 'local_csv'
+         */
+        "connectorIdPrefix": string;
+    }
     interface VbiChartWhere {
     }
     interface VbiChartWhereFilter {
@@ -480,6 +487,10 @@ export interface VbiChartHavingFilterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiChartHavingFilterElement;
 }
+export interface VbiChartUploadCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiChartUploadElement;
+}
 export interface VbiChartWhereFilterCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiChartWhereFilterElement;
@@ -636,6 +647,27 @@ declare global {
     var HTMLVbiChartTypeElement: {
         prototype: HTMLVbiChartTypeElement;
         new (): HTMLVbiChartTypeElement;
+    };
+    interface HTMLVbiChartUploadElementEventMap {
+        "vbiChartUploadSuccess": {
+    connectorId: string
+    fileName: string
+    rowCount: number
+  };
+    }
+    interface HTMLVbiChartUploadElement extends Components.VbiChartUpload, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiChartUploadElementEventMap>(type: K, listener: (this: HTMLVbiChartUploadElement, ev: VbiChartUploadCustomEvent<HTMLVbiChartUploadElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiChartUploadElementEventMap>(type: K, listener: (this: HTMLVbiChartUploadElement, ev: VbiChartUploadCustomEvent<HTMLVbiChartUploadElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVbiChartUploadElement: {
+        prototype: HTMLVbiChartUploadElement;
+        new (): HTMLVbiChartUploadElement;
     };
     interface HTMLVbiChartWhereElement extends Components.VbiChartWhere, HTMLStencilElement {
     }
@@ -845,6 +877,7 @@ declare global {
         "vbi-chart-shelf-panel": HTMLVbiChartShelfPanelElement;
         "vbi-chart-toolbar": HTMLVbiChartToolbarElement;
         "vbi-chart-type": HTMLVbiChartTypeElement;
+        "vbi-chart-upload": HTMLVbiChartUploadElement;
         "vbi-chart-where": HTMLVbiChartWhereElement;
         "vbi-chart-where-filter": HTMLVbiChartWhereFilterElement;
         "vbi-checkbox": HTMLVbiCheckboxElement;
@@ -992,6 +1025,21 @@ declare namespace LocalJSX {
     interface VbiChartToolbar {
     }
     interface VbiChartType {
+    }
+    interface VbiChartUpload {
+        /**
+          * Prefix for generated local CSV connector IDs.
+          * @default 'local_csv'
+         */
+        "connectorIdPrefix"?: string;
+        /**
+          * Emitted when a CSV file is successfully uploaded and imported into the chart store.
+         */
+        "onVbiChartUploadSuccess"?: (event: VbiChartUploadCustomEvent<{
+    connectorId: string
+    fileName: string
+    rowCount: number
+  }>) => void;
     }
     interface VbiChartWhere {
     }
@@ -1378,6 +1426,9 @@ declare namespace LocalJSX {
     interface VbiChartFieldFilterAttributes {
         "keyword": string;
     }
+    interface VbiChartUploadAttributes {
+        "connectorIdPrefix": string;
+    }
     interface VbiCheckboxAttributes {
         "checked": boolean;
         "indeterminate": boolean;
@@ -1475,6 +1526,7 @@ declare namespace LocalJSX {
         "vbi-chart-shelf-panel": VbiChartShelfPanel;
         "vbi-chart-toolbar": VbiChartToolbar;
         "vbi-chart-type": VbiChartType;
+        "vbi-chart-upload": Omit<VbiChartUpload, keyof VbiChartUploadAttributes> & { [K in keyof VbiChartUpload & keyof VbiChartUploadAttributes]?: VbiChartUpload[K] } & { [K in keyof VbiChartUpload & keyof VbiChartUploadAttributes as `attr:${K}`]?: VbiChartUploadAttributes[K] } & { [K in keyof VbiChartUpload & keyof VbiChartUploadAttributes as `prop:${K}`]?: VbiChartUpload[K] };
         "vbi-chart-where": VbiChartWhere;
         "vbi-chart-where-filter": VbiChartWhereFilter;
         "vbi-checkbox": Omit<VbiCheckbox, keyof VbiCheckboxAttributes> & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes]?: VbiCheckbox[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `attr:${K}`]?: VbiCheckboxAttributes[K] } & { [K in keyof VbiCheckbox & keyof VbiCheckboxAttributes as `prop:${K}`]?: VbiCheckbox[K] };
@@ -1510,6 +1562,7 @@ declare module "@stencil/core" {
             "vbi-chart-shelf-panel": LocalJSX.IntrinsicElements["vbi-chart-shelf-panel"] & JSXBase.HTMLAttributes<HTMLVbiChartShelfPanelElement>;
             "vbi-chart-toolbar": LocalJSX.IntrinsicElements["vbi-chart-toolbar"] & JSXBase.HTMLAttributes<HTMLVbiChartToolbarElement>;
             "vbi-chart-type": LocalJSX.IntrinsicElements["vbi-chart-type"] & JSXBase.HTMLAttributes<HTMLVbiChartTypeElement>;
+            "vbi-chart-upload": LocalJSX.IntrinsicElements["vbi-chart-upload"] & JSXBase.HTMLAttributes<HTMLVbiChartUploadElement>;
             "vbi-chart-where": LocalJSX.IntrinsicElements["vbi-chart-where"] & JSXBase.HTMLAttributes<HTMLVbiChartWhereElement>;
             "vbi-chart-where-filter": LocalJSX.IntrinsicElements["vbi-chart-where-filter"] & JSXBase.HTMLAttributes<HTMLVbiChartWhereFilterElement>;
             "vbi-checkbox": LocalJSX.IntrinsicElements["vbi-checkbox"] & JSXBase.HTMLAttributes<HTMLVbiCheckboxElement>;

@@ -27,10 +27,16 @@ graph TD;
   vbi-chart-toolbar --> vbi-icon
   vbi-chart-toolbar --> vbi-join
   vbi-chart-toolbar --> vbi-input
+  vbi-chart-toolbar --> vbi-modal
+  vbi-chart-toolbar --> vbi-chart-upload
   vbi-chart-type --> vbi-dropdown
   vbi-chart-type --> vbi-button
   vbi-chart-type --> vbi-menu
   vbi-menu --> vbi-icon
+  vbi-chart-upload --> vbi-icon
+  vbi-chart-upload --> vbi-input
+  vbi-chart-upload --> vbi-select
+  vbi-chart-upload --> vbi-button
   vbi-chart-fields --> vbi-chart-field-filter
   vbi-chart-fields --> vbi-chart-field-section
   vbi-chart-field-filter --> vbi-input

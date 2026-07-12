@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "{{unit}} hiện tại lệch {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "Kéo trường vào đây",
-  "shelvesRootOperatorTooltip": "Logic hiện tại {{current}}. Nhấp để chuyển sang {{next}}"
+  "shelvesRootOperatorTooltip": "Logic hiện tại {{current}}. Nhấp để chuyển sang {{next}}",
+  "csvModalTitleUpload": "Tải CSV lên",
+  "csvModalTitleSchema": "Cấu hình Schema",
+  "csvModalLoading": "Đang phân tích tệp CSV...",
+  "csvModalBtnBack": "Quay lại",
+  "csvModalBtnConfirm": "Xác nhận",
+  "csvModalDraggerText": "Nhấp hoặc kéo tệp CSV vào vùng này để tải lên",
+  "csvModalDraggerHint": "Chỉ hỗ trợ tải lên một tệp CSV.",
+  "csvModalColOriginal": "Tiêu đề gốc",
+  "csvModalColCustom": "Tên tùy chỉnh",
+  "csvModalColType": "Kiểu dữ liệu",
+  "csvModalErrorEmpty": "Tệp CSV trống",
+  "csvModalErrorParse": "Không thể phân tích tệp CSV",
+  "csvModalTypeString": "Chuỗi",
+  "csvModalTypeNumber": "Số",
+  "csvModalTypeDate": "Ngày",
+  "csvModalTypeDateTime": "Ngày giờ",
+  "csvModalTypeTimestamp": "Dấu thời gian"
 }

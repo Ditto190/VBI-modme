@@ -343,5 +343,22 @@
   "filtersDateDisplayCurrentOffset": "Aktuelle {{unit}} mit Versatz {{offset}}",
   "filtersDateDisplayPeriod": "{{period}}",
   "shelvesPlaceholdersFilters": "Felder hierher ziehen",
-  "shelvesRootOperatorTooltip": "Aktuelle Logik {{current}}. Klicken, um zu {{next}} zu wechseln"
+  "shelvesRootOperatorTooltip": "Aktuelle Logik {{current}}. Klicken, um zu {{next}} zu wechseln",
+  "csvModalTitleUpload": "CSV hochladen",
+  "csvModalTitleSchema": "Schema konfigurieren",
+  "csvModalLoading": "CSV-Datei wird analysiert...",
+  "csvModalBtnBack": "Zurück",
+  "csvModalBtnConfirm": "Bestätigen",
+  "csvModalDraggerText": "Klicken oder CSV-Datei hierher ziehen, um sie hochzuladen",
+  "csvModalDraggerHint": "Unterstützung für das Hochladen einer einzelnen CSV-Datei.",
+  "csvModalColOriginal": "Original-Kopfzeile",
+  "csvModalColCustom": "Benutzerdefinierter Name",
+  "csvModalColType": "Datentyp",
+  "csvModalErrorEmpty": "CSV-Datei ist leer",
+  "csvModalErrorParse": "CSV-Datei konnte nicht analysiert werden",
+  "csvModalTypeString": "Zeichenkette",
+  "csvModalTypeNumber": "Zahl",
+  "csvModalTypeDate": "Datum",
+  "csvModalTypeDateTime": "Datum/Uhrzeit",
+  "csvModalTypeTimestamp": "Zeitstempel"
 }

@@ -19,6 +19,8 @@
 - [vbi-icon](../../ui/vbi-icon)
 - [vbi-join](../../ui/vbi-join)
 - [vbi-input](../../ui/vbi-input)
+- [vbi-modal](../../ui/vbi-modal)
+- [vbi-chart-upload](../vbi-chart-upload)
 
 ### Graph
 ```mermaid
@@ -29,10 +31,16 @@ graph TD;
   vbi-chart-toolbar --> vbi-icon
   vbi-chart-toolbar --> vbi-join
   vbi-chart-toolbar --> vbi-input
+  vbi-chart-toolbar --> vbi-modal
+  vbi-chart-toolbar --> vbi-chart-upload
   vbi-chart-type --> vbi-dropdown
   vbi-chart-type --> vbi-button
   vbi-chart-type --> vbi-menu
   vbi-menu --> vbi-icon
+  vbi-chart-upload --> vbi-icon
+  vbi-chart-upload --> vbi-input
+  vbi-chart-upload --> vbi-select
+  vbi-chart-upload --> vbi-button
   vbi-chart-editor --> vbi-chart-toolbar
   style vbi-chart-toolbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
