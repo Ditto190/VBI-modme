@@ -17,6 +17,7 @@ import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 import { SelectOption } from "./components/ui/vbi-select/vbi-select";
 import { TabItem } from "./components/ui/vbi-tab/vbi-tab";
+import { TooltipPosition } from "./components/ui/vbi-tooltip/vbi-tooltip";
 export { CascadingMenuItem } from "./components/ui/vbi-cascading-menu/vbi-cascading-menu";
 export { FieldRole } from "./utils/data/fieldRole";
 export { VBISchemaField } from "./store/chart/schema-fields";
@@ -29,6 +30,7 @@ export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export { SelectOption } from "./components/ui/vbi-select/vbi-select";
 export { TabItem } from "./components/ui/vbi-tab/vbi-tab";
+export { TooltipPosition } from "./components/ui/vbi-tooltip/vbi-tooltip";
 export namespace Components {
     interface VbiButton {
         /**
@@ -459,6 +461,21 @@ export namespace Components {
          */
         "color"?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
         /**
+          * Delay in milliseconds before showing the tooltip on hover
+          * @default 0
+         */
+        "enterDelay": number;
+        /**
+          * Delay in milliseconds before hiding the tooltip on leave
+          * @default 0
+         */
+        "leaveDelay": number;
+        /**
+          * The distance between the tooltip and its trigger (in pixels)
+          * @default 8
+         */
+        "offset": number;
+        /**
           * Whether the tooltip is currently open/visible
           * @default false
          */
@@ -467,12 +484,17 @@ export namespace Components {
           * The position of the tooltip relative to its target
           * @default 'top'
          */
-        "position": 'top' | 'bottom' | 'left' | 'right';
+        "position": TooltipPosition;
         /**
           * The text to display inside the tooltip
           * @default ''
          */
         "text": string;
+        /**
+          * How the tooltip is triggered ('hover', 'click', or 'manual')
+          * @default 'hover'
+         */
+        "trigger": 'hover' | 'click' | 'manual';
     }
 }
 export interface VbiCascadingMenuCustomEvent<T> extends CustomEvent<T> {
@@ -1394,6 +1416,21 @@ declare namespace LocalJSX {
          */
         "color"?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
         /**
+          * Delay in milliseconds before showing the tooltip on hover
+          * @default 0
+         */
+        "enterDelay"?: number;
+        /**
+          * Delay in milliseconds before hiding the tooltip on leave
+          * @default 0
+         */
+        "leaveDelay"?: number;
+        /**
+          * The distance between the tooltip and its trigger (in pixels)
+          * @default 8
+         */
+        "offset"?: number;
+        /**
           * Whether the tooltip is currently open/visible
           * @default false
          */
@@ -1402,12 +1439,17 @@ declare namespace LocalJSX {
           * The position of the tooltip relative to its target
           * @default 'top'
          */
-        "position"?: 'top' | 'bottom' | 'left' | 'right';
+        "position"?: TooltipPosition;
         /**
           * The text to display inside the tooltip
           * @default ''
          */
         "text"?: string;
+        /**
+          * How the tooltip is triggered ('hover', 'click', or 'manual')
+          * @default 'hover'
+         */
+        "trigger"?: 'hover' | 'click' | 'manual';
     }
 
     interface VbiButtonAttributes {
@@ -1506,9 +1548,13 @@ declare namespace LocalJSX {
     }
     interface VbiTooltipAttributes {
         "text": string;
-        "position": 'top' | 'bottom' | 'left' | 'right';
+        "position": TooltipPosition;
         "color": 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error';
         "open": boolean;
+        "offset": number;
+        "trigger": 'hover' | 'click' | 'manual';
+        "enterDelay": number;
+        "leaveDelay": number;
     }
 
     interface IntrinsicElements {
