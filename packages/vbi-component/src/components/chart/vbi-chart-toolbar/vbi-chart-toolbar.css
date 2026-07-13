@@ -6,11 +6,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: calc(var(--size-base) * 0.625) var(--size-base);
 }
 
 .toolbar-group {
   display: flex;
-  gap: 8px;
+  gap: calc(var(--size-base) * 0.5);
   align-items: center;
 }

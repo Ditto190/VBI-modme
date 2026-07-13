@@ -20,17 +20,17 @@
 }
 
 .vbi-join:not(.vbi-join-vertical) > *:first-child:not(:last-child) {
-  --join-ss: var(--radius-field, 0.5rem);
+  --join-ss: var(--radius-field, calc(var(--size-base) * 0.5));
   --join-se: 0;
-  --join-es: var(--radius-field, 0.5rem);
+  --join-es: var(--radius-field, calc(var(--size-base) * 0.5));
   --join-ee: 0;
 }
 
 .vbi-join:not(.vbi-join-vertical) > *:last-child:not(:first-child) {
   --join-ss: 0;
-  --join-se: var(--radius-field, 0.5rem);
+  --join-se: var(--radius-field, calc(var(--size-base) * 0.5));
   --join-es: 0;
-  --join-ee: var(--radius-field, 0.5rem);
+  --join-ee: var(--radius-field, calc(var(--size-base) * 0.5));
 }
 
 .vbi-join.vbi-join-vertical {
@@ -47,8 +47,8 @@
 }
 
 .vbi-join.vbi-join-vertical > *:first-child:not(:last-child) {
-  --join-ss: var(--radius-field, 0.5rem);
-  --join-se: var(--radius-field, 0.5rem);
+  --join-ss: var(--radius-field, calc(var(--size-base) * 0.5));
+  --join-se: var(--radius-field, calc(var(--size-base) * 0.5));
   --join-es: 0;
   --join-ee: 0;
 }
@@ -56,15 +56,15 @@
 .vbi-join.vbi-join-vertical > *:last-child:not(:first-child) {
   --join-ss: 0;
   --join-se: 0;
-  --join-es: var(--radius-field, 0.5rem);
-  --join-ee: var(--radius-field, 0.5rem);
+  --join-es: var(--radius-field, calc(var(--size-base) * 0.5));
+  --join-ee: var(--radius-field, calc(var(--size-base) * 0.5));
 }
 
 .vbi-join > *:only-child {
-  --join-ss: var(--radius-field, 0.5rem);
-  --join-se: var(--radius-field, 0.5rem);
-  --join-es: var(--radius-field, 0.5rem);
-  --join-ee: var(--radius-field, 0.5rem);
+  --join-ss: var(--radius-field, calc(var(--size-base) * 0.5));
+  --join-se: var(--radius-field, calc(var(--size-base) * 0.5));
+  --join-es: var(--radius-field, calc(var(--size-base) * 0.5));
+  --join-ee: var(--radius-field, calc(var(--size-base) * 0.5));
 }
 
 .vbi-join > *:hover,

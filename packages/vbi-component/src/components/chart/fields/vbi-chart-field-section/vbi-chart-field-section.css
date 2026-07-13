@@ -1,12 +1,12 @@
 :host {
   display: block;
-  font-size: 0.875rem;
+  font-size: calc(var(--size-base) * 0.875);
 }
 
 .fieldsection {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: calc(var(--size-base) * 0.625);
 }
 
 .fieldsection-divider {
@@ -33,7 +33,7 @@
 }
 
 .fieldsection-group-title {
-  padding-bottom: 4px;
+  padding-bottom: calc(var(--size-base) * 0.25);
 }
 
 .fieldsection-item {

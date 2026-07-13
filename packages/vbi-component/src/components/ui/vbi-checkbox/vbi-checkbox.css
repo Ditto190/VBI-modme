@@ -13,7 +13,7 @@
   flex-shrink: 0;
   cursor: pointer;
   appearance: none;
-  padding: 0.25rem;
+  padding: calc(var(--size-base) * 0.25);
   box-shadow:
     0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset,
     0 0 transparent inset,
@@ -45,7 +45,7 @@
   transition-delay: 0.1s;
   clip-path: polygon(20% 100%, 20% 80%, 50% 80%, 50% 80%, 70% 80%, 70% 100%);
   box-shadow: 0px 3px 0 0px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset;
-  font-size: 1rem;
+  font-size: var(--size-base);
   line-height: 0.75;
 }
 
@@ -146,26 +146,26 @@
 }
 
 .checkbox-xs {
-  padding: 0.125rem;
-  --size: calc(var(--size-selector, 0.25rem) * 4);
+  padding: calc(var(--size-base) * 0.125);
+  --size: calc(var(--size-selector) * 4);
 }
 
 .checkbox-sm {
-  padding: 0.1875rem;
-  --size: calc(var(--size-selector, 0.25rem) * 5);
+  padding: calc(var(--size-base) * 0.1875);
+  --size: calc(var(--size-selector) * 5);
 }
 
 .checkbox-md {
-  padding: 0.25rem;
-  --size: calc(var(--size-selector, 0.25rem) * 6);
+  padding: calc(var(--size-base) * 0.25);
+  --size: calc(var(--size-selector) * 6);
 }
 
 .checkbox-lg {
-  padding: 0.3125rem;
-  --size: calc(var(--size-selector, 0.25rem) * 7);
+  padding: calc(var(--size-base) * 0.3125);
+  --size: calc(var(--size-selector) * 7);
 }
 
 .checkbox-xl {
-  padding: 0.375rem;
-  --size: calc(var(--size-selector, 0.25rem) * 8);
+  padding: calc(var(--size-base) * 0.375);
+  --size: calc(var(--size-selector) * 8);
 }

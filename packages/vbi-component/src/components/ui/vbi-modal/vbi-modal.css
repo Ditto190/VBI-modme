@@ -90,10 +90,10 @@
 }
 
 .modal-action {
-  margin-top: 1.5rem;
+  margin-top: calc(var(--size-base) * 1.5);
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: calc(var(--size-base) * 0.5);
 }
 
 .modal-toggle {
@@ -125,8 +125,8 @@
   grid-row-start: 1;
   max-height: 100vh;
   width: 91.666667%;
-  max-width: 32rem;
-  padding: 1.5rem;
+  max-width: calc(var(--size-base) * 32);
+  padding: calc(var(--size-base) * 1.5);
   transition:
     translate 0.3s ease-out,
     scale 0.3s ease-out,
@@ -165,7 +165,7 @@
 .modal-middle .modal-box {
   height: auto;
   width: 91.666667%;
-  max-width: 32rem;
+  max-width: calc(var(--size-base) * 32);
   max-height: calc(100vh - 5em);
   translate: 0 2%;
   scale: 0.98;

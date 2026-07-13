@@ -10,18 +10,18 @@
   flex-shrink: 1;
   appearance: none;
   align-items: center;
-  gap: 0.375rem;
+  gap: calc(var(--size-base) * 0.375);
   padding-inline-start: var(--select-px);
-  padding-inline-end: calc(var(--select-px) + 1.25rem);
+  padding-inline-end: calc(var(--select-px) + calc(var(--size-base) * 1.25));
   vertical-align: middle;
 
   --size: calc(var(--size-field) * 10);
-  --fontsize: 0.875rem;
-  --select-px: 0.75rem;
+  --fontsize: calc(var(--size-base) * 0.875);
+  --select-px: calc(var(--size-base) * 0.75);
   --option-px: 3;
   --input-color: color-mix(in oklab, var(--color-base-content) 20%, #0000);
 
-  width: clamp(3rem, 20rem, 100%);
+  width: clamp(calc(var(--size-base) * 3), calc(var(--size-base) * 20), 100%);
   height: var(--size);
   font-size: var(--fontsize);
   touch-action: manipulation;
@@ -58,9 +58,9 @@
 .select[multiple] {
   height: auto;
   overflow: auto;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-inline-end: 0.75rem;
+  padding-top: calc(var(--size-base) * 0.75);
+  padding-bottom: calc(var(--size-base) * 0.75);
+  padding-inline-end: calc(var(--size-base) * 0.75);
   background-image: none;
 }
 
@@ -100,14 +100,14 @@
 
 .select::picker(select) {
   color: inherit;
-  max-height: min(24rem, 70dvh);
-  margin-inline: 0.5rem;
-  translate: -0.5rem 0;
+  max-height: min(calc(var(--size-base) * 24), 70dvh);
+  margin-inline: calc(var(--size-base) * 0.5);
+  translate: calc(var(--size-base) * -0.5) 0;
   border: var(--border) solid var(--color-base-200);
   border-radius: var(--radius-box);
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
+  margin-top: calc(var(--size-base) * 0.5);
+  margin-bottom: calc(var(--size-base) * 0.5);
+  padding: calc(var(--size-base) * 0.5);
   background-color: inherit;
   box-shadow:
     0 20px 25px -5px rgb(0 0 0 / calc(var(--depth) * 0.1)),
@@ -135,8 +135,8 @@
 
 .select option {
   border-radius: var(--radius-field);
-  padding-top: 0.375rem;
-  padding-bottom: 0.375rem;
+  padding-top: calc(var(--size-base) * 0.375);
+  padding-bottom: calc(var(--size-base) * 0.375);
   padding-inline: calc(var(--size-field) * var(--option-px));
   transition-property: color, background-color;
   transition-duration: 0.2s;
@@ -159,7 +159,7 @@
 
 :host-context([dir='rtl']) .select::picker(select),
 [dir='rtl'] .select::picker(select) {
-  translate: 0.5rem 0;
+  translate: calc(var(--size-base) * 0.5) 0;
 }
 
 .select-ghost {
@@ -232,56 +232,56 @@
 
 .select-xs {
   --size: calc(var(--size-field) * 6);
-  --fontsize: 0.6875rem;
-  --select-px: 0.5rem;
+  --fontsize: calc(var(--size-base) * 0.6875);
+  --select-px: calc(var(--size-base) * 0.5);
   --option-px: 2;
 }
 
 .select-sm {
   --size: calc(var(--size-field) * 8);
-  --fontsize: 0.75rem;
-  --select-px: 0.625rem;
+  --fontsize: calc(var(--size-base) * 0.75);
+  --select-px: calc(var(--size-base) * 0.625);
   --option-px: 2.5;
 }
 
 .select-md {
   --size: calc(var(--size-field) * 10);
-  --fontsize: 0.875rem;
-  --select-px: 0.75rem;
+  --fontsize: calc(var(--size-base) * 0.875);
+  --select-px: calc(var(--size-base) * 0.75);
   --option-px: 3;
 }
 
 .select-lg {
   --size: calc(var(--size-field) * 12);
-  --fontsize: 1.125rem;
-  --select-px: 1rem;
+  --fontsize: calc(var(--size-base) * 1.125);
+  --select-px: var(--size-base);
   --option-px: 4;
 }
 
 .select-xl {
   --size: calc(var(--size-field) * 14);
-  --fontsize: 1.375rem;
-  --select-px: 1.25rem;
+  --fontsize: calc(var(--size-base) * 1.375);
+  --select-px: calc(var(--size-base) * 1.25);
   --option-px: 5;
 }
 
 .floating-label:has(.select-xs) {
   --top-mul: 3;
-  --font-size: 0.6875rem;
+  --font-size: calc(var(--size-base) * 0.6875);
 }
 .floating-label:has(.select-sm) {
   --top-mul: 4;
-  --font-size: 0.75rem;
+  --font-size: calc(var(--size-base) * 0.75);
 }
 .floating-label:has(.select-md) {
   --top-mul: 5;
-  --font-size: 0.875rem;
+  --font-size: calc(var(--size-base) * 0.875);
 }
 .floating-label:has(.select-lg) {
   --top-mul: 6;
-  --font-size: 1.125rem;
+  --font-size: calc(var(--size-base) * 1.125);
 }
 .floating-label:has(.select-xl) {
   --top-mul: 7;
-  --font-size: 1.375rem;
+  --font-size: calc(var(--size-base) * 1.375);
 }

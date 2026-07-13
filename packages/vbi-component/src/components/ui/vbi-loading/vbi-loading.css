@@ -5,7 +5,7 @@
   background-color: currentColor;
   vertical-align: middle;
 
-  width: calc(var(--size-selector, 0.25rem) * 6);
+  width: calc(var(--size-selector) * 6);
 
   mask-size: 100%;
   mask-repeat: no-repeat;
@@ -39,17 +39,17 @@
 }
 
 :host(.loading-xs) {
-  width: calc(var(--size-selector, 0.25rem) * 4);
+  width: calc(var(--size-selector) * 4);
 }
 :host(.loading-sm) {
-  width: calc(var(--size-selector, 0.25rem) * 5);
+  width: calc(var(--size-selector) * 5);
 }
 :host(.loading-md) {
-  width: calc(var(--size-selector, 0.25rem) * 6);
+  width: calc(var(--size-selector) * 6);
 }
 :host(.loading-lg) {
-  width: calc(var(--size-selector, 0.25rem) * 7);
+  width: calc(var(--size-selector) * 7);
 }
 :host(.loading-xl) {
-  width: calc(var(--size-selector, 0.25rem) * 8);
+  width: calc(var(--size-selector) * 8);
 }

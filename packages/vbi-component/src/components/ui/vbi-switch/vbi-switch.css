@@ -68,8 +68,8 @@
 
 @media print {
   .toggle:before {
-    outline: 0.25rem solid;
-    outline-offset: -1rem;
+    outline: calc(var(--size-base) * 0.25) solid;
+    outline-offset: calc(var(--size-base) * -1);
   }
 }
 

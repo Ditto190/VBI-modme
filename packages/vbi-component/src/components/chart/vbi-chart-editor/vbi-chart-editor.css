@@ -2,6 +2,7 @@
   --vbi-chart-editor-min-width: 750px;
   --vbi-chart-editor-min-height: 700px;
   --vbi-chart-editor-fields-width: 300px;
+
   display: block;
   font-family:
     system-ui,
@@ -18,14 +19,13 @@
   max-width: 100%;
   max-height: 100%;
   overflow: auto;
-  padding-top: 15px;
 }
 
 .chart-editor {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 15px;
+  gap: calc(var(--size-base) * 0.9375);
   min-width: var(--vbi-chart-editor-min-width);
   min-height: var(--vbi-chart-editor-min-height);
 }
@@ -40,7 +40,7 @@
     0 1px 2px -1px oklch(0% 0 0 / calc(var(--depth, 1) * 0.05));
   border-radius: var(--radius-box);
   border: var(--border) solid var(--color-base-300);
-  padding: 4px;
+  padding: calc(var(--size-base) * 0.25);
 }
 
 .chart-editor__fields {
@@ -49,14 +49,14 @@
 
 .chart-editor__main {
   display: flex;
-  gap: 10px;
+  gap: calc(var(--size-base) * 0.625);
 }
 
 .chart-editor__workspace {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: calc(100% - var(--vbi-chart-editor-fields-width) - 8px);
+  gap: calc(var(--size-base) * 0.625);
+  width: calc(100% - var(--vbi-chart-editor-fields-width) - calc(var(--size-base) * 0.5));
 }
 
 .chart-editor__chart {

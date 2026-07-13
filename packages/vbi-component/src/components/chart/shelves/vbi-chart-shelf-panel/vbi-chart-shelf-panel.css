@@ -1,11 +1,11 @@
 :host {
   display: block;
-  font-size: 0.875rem;
+  font-size: calc(var(--size-base) * 0.875);
   color: var(--color-base-content);
-  padding: 2px 10px;
+  padding: calc(var(--size-base) * 0.125) calc(var(--size-base) * 0.625);
 
-  --chart-shelf-gap: 10px;
-  --chart-shelf-label-width: 7.5rem;
+  --chart-shelf-gap: calc(var(--size-base) * 0.625);
+  --chart-shelf-label-width: calc(var(--size-base) * 7.5);
 }
 
 .chart-shelf__item {
@@ -20,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  gap: calc(var(--size-base) * 0.25);
   white-space: nowrap;
   flex-shrink: 0;
 }

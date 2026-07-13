@@ -3,16 +3,16 @@
 }
 
 .chartfields {
-  padding: 10px 16px;
+  padding: calc(var(--size-base) * 0.625) var(--size-base);
   color: var(--color-base-content);
 }
 
 .chartfields-title {
   margin: 0;
-  padding-bottom: 10px;
+  padding-bottom: calc(var(--size-base) * 0.625);
   border-bottom: var(--border) solid var(--color-base-300);
 }
 
 .chartfields-filter {
-  padding: 10px 0;
+  padding: calc(var(--size-base) * 0.625) 0;
 }

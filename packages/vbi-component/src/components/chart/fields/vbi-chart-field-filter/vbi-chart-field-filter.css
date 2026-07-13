@@ -1,29 +1,31 @@
 :host {
+  --vbi-chart-field-filter-min-width: calc(var(--size-base) * 13.5);
+
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.875rem;
+  gap: calc(var(--size-base) * 0.5);
+  font-size: calc(var(--size-base) * 0.875);
 }
 
 .dropdown-content {
-  border: 1px solid var(--color-base-300);
+  border: var(--border) solid var(--color-base-300);
   border-radius: var(--radius-box);
   background: var(--color-base-100);
   color: var(--color-base-content);
 }
 
 .filter {
-  padding: 10px;
-  min-width: 215px;
+  padding: calc(var(--size-base) * 0.625);
+  min-width: var(--vbi-chart-field-filter-min-width);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: calc(var(--size-base) * 0.625);
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: calc(var(--size-base) * 0.5);
 }
 
 .filter-header {
@@ -35,6 +37,6 @@
 .filter-group-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(var(--size-base) * 0.5);
   cursor: pointer;
 }
