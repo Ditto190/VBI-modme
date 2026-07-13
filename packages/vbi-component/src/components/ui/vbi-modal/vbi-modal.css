@@ -1,3 +1,5 @@
+@import '../../../common/styles/scroll-bar.css';
+
 .modal {
   pointer-events: none;
   visibility: hidden;

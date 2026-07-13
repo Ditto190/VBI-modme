@@ -66,7 +66,7 @@ export class VbiChartWhere {
   render() {
     return (
       <Host>
-        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='where'>
+        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='where vbi-scroll-bar'>
           {this.filters.length === 0 ? (
             <span class='where__placeholder'>{this.t('shelvesPlaceholdersFilters')}</span>
           ) : (

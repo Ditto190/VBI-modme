@@ -137,7 +137,10 @@ export class VbiChartFieldSection {
         {this.hasFields ? (
           <div class='fieldsection'>
             {this.dimensions.length > 0 && (
-              <div class='fieldsection-group' ref={(el) => (this.dimensionGroupRef = el as HTMLDivElement)}>
+              <div
+                class='fieldsection-group vbi-scroll-bar'
+                ref={(el) => (this.dimensionGroupRef = el as HTMLDivElement)}
+              >
                 <div class='fieldsection-group-title'>{this.t('panelsFieldsFilterDimension')}</div>
                 {this.dimensions.map(this.renderField)}
               </div>
@@ -146,7 +149,10 @@ export class VbiChartFieldSection {
             {this.dimensions.length > 0 && this.measures.length > 0 && <div class='fieldsection-divider'></div>}
 
             {this.measures.length > 0 && (
-              <div class='fieldsection-group' ref={(el) => (this.measureGroupRef = el as HTMLDivElement)}>
+              <div
+                class='fieldsection-group vbi-scroll-bar'
+                ref={(el) => (this.measureGroupRef = el as HTMLDivElement)}
+              >
                 <div class='fieldsection-group-title'>{this.t('panelsFieldsFilterMeasure')}</div>
                 {this.measures.map(this.renderField)}
               </div>

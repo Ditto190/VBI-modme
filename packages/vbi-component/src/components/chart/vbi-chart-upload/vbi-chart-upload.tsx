@@ -242,7 +242,7 @@ export class VbiChartUpload {
                   <div>{this.t('csvModalColType')}</div>
                 </div>
 
-                <div class='schema-table-body'>
+                <div class='schema-table-body vbi-scroll-bar--muted'>
                   {this.columns.map((col, index) => (
                     <div class='schema-table-row' key={col.originalName}>
                       <div class='original-header-cell'>

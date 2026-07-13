@@ -105,7 +105,7 @@ export class VbiChartDimension {
   render() {
     return (
       <Host>
-        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='dimension'>
+        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='dimension vbi-scroll-bar'>
           {this.dimensions.length === 0 ? (
             <div class='dimension__placeholder'>{this.t('shelvesPlaceholdersDimensions')}</div>
           ) : (

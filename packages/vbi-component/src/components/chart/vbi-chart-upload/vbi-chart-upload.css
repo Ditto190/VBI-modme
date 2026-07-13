@@ -1,3 +1,5 @@
+@import '../../../common/styles/scroll-bar.css';
+
 :host {
   --vbi-chart-upload-table-max-height: calc(var(--size-base) * 23.75);
 
@@ -121,17 +123,6 @@
 .schema-table-body {
   max-height: var(--vbi-chart-upload-table-max-height);
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-base-300) transparent;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-base-300);
-    border-radius: var(--radius-field);
-  }
 }
 
 .schema-table-row {

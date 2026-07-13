@@ -66,7 +66,7 @@ export class VbiChartHaving {
   render() {
     return (
       <Host>
-        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='having'>
+        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='having vbi-scroll-bar'>
           {this.filters.length === 0 ? (
             <span class='having__placeholder'>{this.t('shelvesPlaceholdersFilters')}</span>
           ) : (

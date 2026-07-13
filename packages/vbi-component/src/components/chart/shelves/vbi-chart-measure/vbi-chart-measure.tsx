@@ -114,7 +114,7 @@ export class VbiChartMeasure {
   render() {
     return (
       <Host>
-        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='measure'>
+        <div ref={(el) => (this.containerRef = el as HTMLDivElement)} class='measure vbi-scroll-bar'>
           {this.measures.length === 0 ? (
             <div class='measure__placeholder'>{this.t('shelvesPlaceholdersMeasures')}</div>
           ) : (

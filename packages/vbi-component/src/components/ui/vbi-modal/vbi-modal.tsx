@@ -37,7 +37,7 @@ export class VbiModal {
           [`modal-${this.position}`]: true,
         }}
       >
-        <div class='modal-box'>
+        <div class='modal-box vbi-scroll-bar'>
           <slot></slot>
 
           <div class='modal-action'>
