@@ -39,7 +39,7 @@ export class VbiChartEditor {
                 <vbi-chart-shelf-panel />
               </div>
               <div class='chart-editor__chart'>
-                <vbi-chart-render vseed={this.vseed} style={{ height: '100%' }}></vbi-chart-render>
+                <vbi-chart-render vseed={this.vseed}></vbi-chart-render>
               </div>
             </section>
           </main>

@@ -140,6 +140,7 @@ export class VbiChartFieldSection {
               <div
                 class='fieldsection-group vbi-scroll-bar'
                 ref={(el) => (this.dimensionGroupRef = el as HTMLDivElement)}
+                style={{ flex: '6' }}
               >
                 <div class='fieldsection-group-title'>{this.t('panelsFieldsFilterDimension')}</div>
                 {this.dimensions.map(this.renderField)}
@@ -152,6 +153,7 @@ export class VbiChartFieldSection {
               <div
                 class='fieldsection-group vbi-scroll-bar'
                 ref={(el) => (this.measureGroupRef = el as HTMLDivElement)}
+                style={{ flex: '4' }}
               >
                 <div class='fieldsection-group-title'>{this.t('panelsFieldsFilterMeasure')}</div>
                 {this.measures.map(this.renderField)}

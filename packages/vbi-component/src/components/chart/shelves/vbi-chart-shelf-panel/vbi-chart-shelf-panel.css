@@ -26,5 +26,6 @@
 }
 
 .chart-shelf__input {
-  width: calc(100% - var(--chart-shelf-gap) - var(--chart-shelf-label-width));
+  flex: 1;
+  min-width: 0;
 }
