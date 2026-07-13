@@ -249,10 +249,10 @@ export namespace Components {
          */
         "icon"?: IconDefinition;
         /**
-          * The size of the icon (e.g., '16px', '1em', '2rem').
-          * @default '1em'
+          * The size of the icon (unitless, scaled relative to --size-base).
+          * @default 16
          */
-        "size": string;
+        "size": number;
     }
     interface VbiInput {
         /**
@@ -1171,10 +1171,10 @@ declare namespace LocalJSX {
          */
         "icon"?: IconDefinition;
         /**
-          * The size of the icon (e.g., '16px', '1em', '2rem').
-          * @default '1em'
+          * The size of the icon (unitless, scaled relative to --size-base).
+          * @default 16
          */
-        "size"?: string;
+        "size"?: number;
     }
     interface VbiInput {
         /**
@@ -1490,7 +1490,7 @@ declare namespace LocalJSX {
         "open": boolean;
     }
     interface VbiIconAttributes {
-        "size": string;
+        "size": number;
         "color": string;
     }
     interface VbiInputAttributes {

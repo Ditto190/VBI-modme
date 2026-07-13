@@ -9,10 +9,14 @@ import type { AbstractNode, IconDefinition } from '@ant-design/icons-svg/lib/typ
 export class VbiIcon {
   /** The icon definition object from `@ant-design/icons-svg`. */
   @Prop() icon?: IconDefinition
-  /** The size of the icon (e.g., '16px', '1em', '2rem'). */
-  @Prop() size: string = '1em'
+  /** The size of the icon (unitless, scaled relative to --size-base). */
+  @Prop() size: number = 16
   /** The color of the icon. Defaults to 'currentColor'. */
   @Prop() color: string = 'currentColor'
+
+  private getSize(): string {
+    return `calc(var(--size-base, 1rem) * ${this.size / 16})`
+  }
 
   // Recursive function to translate AST into Stencil JSX
   renderNode(node: AbstractNode) {
@@ -34,9 +38,11 @@ export class VbiIcon {
       svgData = this.icon.icon(this.color, this.color)
     }
 
+    const iconSize = this.getSize()
+
     return (
       <Host>
-        <svg {...svgData.attrs} width={this.size} height={this.size} fill={this.color}>
+        <svg {...svgData.attrs} width={iconSize} height={iconSize} fill={this.color}>
           {/* Loop through SVG children (usually path tags) */}
           {svgData.children && svgData.children.map((child: AbstractNode) => this.renderNode(child))}
         </svg>

@@ -44,19 +44,19 @@ export class VbiChartToolbar {
 
             <vbi-tooltip text={this.t('toolbarImportCSV')}>
               <vbi-button size='sm' onClick={() => (this.openImportModal = true)}>
-                <vbi-icon icon={CloudUploadOutlined} size='16px' />
+                <vbi-icon icon={CloudUploadOutlined} size={16} />
               </vbi-button>
             </vbi-tooltip>
 
             <vbi-join>
               <vbi-tooltip text={this.t('toolbarHistoryUndo')}>
                 <vbi-button size='sm' disabled={!this.chartUndo?.state.canUndo} onClick={() => this.chartUndo?.undo()}>
-                  <vbi-icon icon={UndoOutlined} size='16px' />
+                  <vbi-icon icon={UndoOutlined} size={16} />
                 </vbi-button>
               </vbi-tooltip>
               <vbi-tooltip text={this.t('toolbarHistoryRedo')}>
                 <vbi-button size='sm' disabled={!this.chartUndo?.state.canRedo} onClick={() => this.chartUndo?.redo()}>
-                  <vbi-icon icon={RedoOutlined} size='16px' />
+                  <vbi-icon icon={RedoOutlined} size={16} />
                 </vbi-button>
               </vbi-tooltip>
             </vbi-join>
@@ -79,7 +79,7 @@ export class VbiChartToolbar {
               })}
               position='left'
             >
-              <vbi-icon icon={InfoCircleOutlined} size='16px' style={{ color: 'var(--color-base-content)' }} />
+              <vbi-icon icon={InfoCircleOutlined} size={16} style={{ color: 'var(--color-base-content)' }} />
             </vbi-tooltip>
           </div>
         </div>

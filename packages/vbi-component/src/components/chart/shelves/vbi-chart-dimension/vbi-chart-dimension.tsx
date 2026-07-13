@@ -112,11 +112,11 @@ export class VbiChartDimension {
             this.dimensions.map((dim: VBIDimensionStore) => (
               <vbi-dropdown key={dim.id} trigger='click' placement='bottom' class='dimension__drag'>
                 <vbi-button slot='trigger' size='sm' class='dimension__item'>
-                  <vbi-icon icon={DownOutlined} size='10' class='dimension__item-down' />
+                  <vbi-icon icon={DownOutlined} size={10} class='dimension__item-down' />
                   <span class='dimension__item-text'>{getDimensionDisplayLabel(dim, this.fieldTypeMap, this.t)}</span>
                   <vbi-icon
                     icon={CloseOutlined}
-                    size='10'
+                    size={10}
                     class='dimension__item-close'
                     onClick={(e) => {
                       e.stopPropagation()

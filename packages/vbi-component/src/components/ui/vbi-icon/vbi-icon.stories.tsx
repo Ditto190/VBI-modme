@@ -22,7 +22,7 @@ type Story = StoryObj<VbiIcon>
 export const Default: Story = {
   args: {
     icon: LikeFilled,
-    size: '24',
+    size: 24,
     color: 'var(--color-primary)',
   },
   render: (args) => {

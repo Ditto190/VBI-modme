@@ -120,7 +120,7 @@ export class VbiChartFieldFilter {
 
         <vbi-dropdown>
           <vbi-button slot='trigger' size='sm'>
-            <vbi-icon icon={FilterOutlined} size='16px' />
+            <vbi-icon icon={FilterOutlined} size={16} />
           </vbi-button>
 
           <div slot='content' class='dropdown-content filter'>

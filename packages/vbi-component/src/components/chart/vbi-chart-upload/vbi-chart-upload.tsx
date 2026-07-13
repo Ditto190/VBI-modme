@@ -216,7 +216,7 @@ export class VbiChartUpload {
                 onDrop={this.handleDrop}
               >
                 <div class='upload-icon'>
-                  <vbi-icon icon={InboxOutlined} size='44px' />
+                  <vbi-icon icon={InboxOutlined} size={44} />
                 </div>
                 <div class='upload-title'>{this.t('csvModalDraggerText')}</div>
                 <div class='upload-subtitle'>{this.t('csvModalDraggerHint')}</div>

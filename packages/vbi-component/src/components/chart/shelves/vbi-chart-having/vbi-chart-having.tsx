@@ -79,11 +79,11 @@ export class VbiChartHaving {
               return (
                 <vbi-dropdown key={item.id} trigger='click' placement='bottom' class='having__drag' data-id={item.id}>
                   <vbi-button slot='trigger' size='sm' class='having__item'>
-                    <vbi-icon icon={DownOutlined} size='10' class='having__item-down' />
+                    <vbi-icon icon={DownOutlined} size={10} class='having__item-down' />
                     <span class='having__item-text'>{displayText}</span>
                     <vbi-icon
                       icon={CloseOutlined}
-                      size='10'
+                      size={10}
                       class='having__item-close'
                       onClick={(e) => {
                         e.stopPropagation()

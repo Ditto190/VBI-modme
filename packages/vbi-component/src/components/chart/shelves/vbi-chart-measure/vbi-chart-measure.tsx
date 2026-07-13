@@ -121,11 +121,11 @@ export class VbiChartMeasure {
             this.measures.map((m: VBIMeasureStore) => (
               <vbi-dropdown key={m.id} trigger='click' placement='bottom' class='measure__drag'>
                 <vbi-button slot='trigger' size='sm' class='measure__item'>
-                  <vbi-icon icon={DownOutlined} size='10' class='measure__item-down' />
+                  <vbi-icon icon={DownOutlined} size={10} class='measure__item-down' />
                   <span class='measure__item-text'>{getMeasureDisplayLabel(m, this.t)}</span>
                   <vbi-icon
                     icon={CloseOutlined}
-                    size='10'
+                    size={10}
                     class='measure__item-close'
                     onClick={(e) => {
                       e.stopPropagation()
