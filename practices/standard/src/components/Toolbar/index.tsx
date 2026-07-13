@@ -144,7 +144,7 @@ export const Toolbar: React.FC<{
             step={50}
             value={limit}
             style={{ width: 96 }}
-            onChange={(value) => {
+            onChange={(value: number | string | null) => {
               if (typeof value === 'number') {
                 setLimit(normalizeLimitValue(value))
               }
@@ -153,8 +153,8 @@ export const Toolbar: React.FC<{
             placeholder={t('toolbarLimitPlaceholder', {
               defaultLimit: defaultLimitText,
             })}
-            formatter={(value) => formatNumber(value)}
-            parser={(value) => Number(value?.replace(/[^\d]/g, '') || 0)}
+            formatter={(value: string | number | undefined) => formatNumber(value)}
+            parser={(value: string | undefined) => Number(value?.replace(/[^\d]/g, '') || 0)}
           />
           <Tooltip
             title={t('toolbarLimitTooltip', {
@@ -191,7 +191,7 @@ export const Toolbar: React.FC<{
               <ToolbarDivider />
 
               <Tooltip title={`${t('toolbarThemeLabel')}: ${t('toolbarThemeDescription')}`}>
-                <Segmented
+                <Segmented<DemoTheme>
                   size='small'
                   value={themeMode}
                   options={[
@@ -204,7 +204,7 @@ export const Toolbar: React.FC<{
                       value: 'dark',
                     },
                   ]}
-                  onChange={(value) => setTheme(value as DemoTheme)}
+                  onChange={(value: DemoTheme) => setTheme(value)}
                 />
               </Tooltip>
 

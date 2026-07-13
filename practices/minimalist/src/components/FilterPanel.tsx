@@ -1,7 +1,7 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { Button, Input, Popover, Select } from 'antd'
-import { useState } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import type { MinimalLabels } from 'src/i18n'
 import type { EditorField } from 'src/types'
 import { addFilter, getFilters, getOperators, removeFilter } from 'src/utils/filter'
@@ -54,7 +54,7 @@ export const FilterPanel = ({ builder, dsl, fields, labels }: FilterPanelProps) 
         <Input
           placeholder={labels.value}
           value={value}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setValue(event.target.value)}
           onPressEnter={submit}
         />
         <Button autoInsertSpace={false} type='primary' onClick={submit}>

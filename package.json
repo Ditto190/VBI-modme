@@ -10,7 +10,7 @@
   "description": "VSeed, an elegant data composer, transforming complexity into simplicity.",
   "scripts": {
     "dev": "pnpm --filter=website run dev",
-    "tui": "turbo build --filter=@visactor/headless-bi-cli && pnpm --filter=@visactor/headless-bi-cli run tui",
+    "tui": "node apps/vbi_tui/scripts/build.mjs && node apps/vbi_tui/dist/cli.js",
     "build": "turbo build --filter=!website",
     "build:website": "pnpm --filter=website run build",
     "build:graph": "pnpm run build:app:graph && pnpm run build:packages:graph",

@@ -6,7 +6,7 @@ import type {
   InsightProvider,
   InsightResponse,
   InsightSummary,
-  InsightUpdateInput,
+  ResourceSnapshot,
   VBIProviderClientOptions,
 } from '../types'
 
@@ -34,6 +34,18 @@ export const createRemoteInsightProvider = (config: VBIProviderClientOptions, re
     }
   }
   const getDetail = async (): Promise<InsightDetail> => (core.state.builder ? core.getLocalDetail() : getRemoteDetail())
+  const getRemoteSnapshot = async (): Promise<ResourceSnapshot<VBIInsightDSL>> => {
+    const detail = await getRemoteDetail()
+    return {
+      dsl: detail.dsl,
+      resource: {
+        createdAt: detail.createdAt,
+        id: detail.id,
+        name: detail.name,
+        updatedAt: detail.updatedAt,
+      },
+    }
+  }
 
   return {
     getResourceId: core.getResourceId,
@@ -45,12 +57,8 @@ export const createRemoteInsightProvider = (config: VBIProviderClientOptions, re
     getBuilder: core.getBuilder,
     getCollaborationProvider: core.getCollaborationProvider,
     getSummary: core.api.getSummary,
-    update: async (input: InsightUpdateInput) => {
-      await core.api.update(input)
-      return getDetail()
-    },
     getDetail,
-    snapshot: core.getLocalSnapshot,
+    snapshot: () => (core.state.builder ? core.getLocalSnapshot() : getRemoteSnapshot()),
     getReferences: core.api.getReferences,
   }
 }

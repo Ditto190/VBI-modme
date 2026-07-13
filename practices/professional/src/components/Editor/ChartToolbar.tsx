@@ -53,7 +53,7 @@ export const ChartToolbar = (props: ChartToolbarProps) => (
       prefix={props.labels.limit}
       step={50}
       value={props.limit}
-      onChange={(value) => {
+      onChange={(value: number | string | null) => {
         if (typeof value === 'number') props.onLimitChange(value)
       }}
     />

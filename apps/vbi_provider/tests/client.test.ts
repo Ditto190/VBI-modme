@@ -47,6 +47,13 @@ describe('createVBIProviderClient', () => {
     })
 
     expect(kit.client.chart('chart-2').getResourceId()).toBe('chart-2')
+    expect(kit.tools.map((tool) => tool.name)).toEqual([
+      'read_skill',
+      'vbi_resource_lookup',
+      'vbi_chart',
+      'vbi_insight',
+      'vbi_report',
+    ])
     await expect(kit.workspace.chart.describe()).resolves.toMatchObject({ id: 'chart-1' })
     await expect(kit.workspace.report.describe()).resolves.toMatchObject({ id: 'report-1' })
   })

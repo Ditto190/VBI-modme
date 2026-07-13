@@ -6,6 +6,9 @@ import type { SchemaField } from 'src/types'
 
 const measureAggregates = ['sum', 'count', 'countDistinct', 'avg', 'min', 'max', 'median'] as const
 const dateAggregates = ['toYear', 'toQuarter', 'toMonth', 'toWeek', 'toDay'] as const
+type MeasureAggregate = (typeof measureAggregates)[number]
+type SupportedDateAggregate = (typeof dateAggregates)[number]
+type DateAggregate = SupportedDateAggregate | 'raw'
 
 type FieldTokenProps = {
   builder: VBIChartBuilder
@@ -17,15 +20,25 @@ type FieldTokenProps = {
 
 type AggregateSelectProps = Pick<FieldTokenProps, 'builder' | 'item' | 'role'>
 
+const normalizeMeasureAggregate = (func?: string): MeasureAggregate => {
+  return measureAggregates.includes(func as MeasureAggregate) ? (func as MeasureAggregate) : 'sum'
+}
+
+const normalizeDateAggregate = (func?: string): DateAggregate => {
+  return dateAggregates.includes(func as SupportedDateAggregate) ? (func as SupportedDateAggregate) : 'raw'
+}
+
 const AggregateSelect = ({ builder, item, role }: AggregateSelectProps) => {
   if (role !== 'measure') return null
   return (
     <Select
       className='stream-token__select'
-      onChange={(func) => builder.measures.update(item.id, (node) => node.setAggregate({ func: func as any }))}
+      onChange={(func: MeasureAggregate) =>
+        builder.measures.update(item.id, (node) => node.setAggregate({ func: func as any }))
+      }
       options={measureAggregates.map((func) => ({ label: func, value: func }))}
       size='small'
-      value={(item as VBIMeasure).aggregate?.func ?? 'sum'}
+      value={normalizeMeasureAggregate((item as VBIMeasure).aggregate?.func)}
       variant='borderless'
     />
   )
@@ -36,9 +49,9 @@ const DateSelect = ({ builder, fieldMeta, item, labels, role }: FieldTokenProps)
   return (
     <Select
       className='stream-token__select'
-      onChange={(func) => {
+      onChange={(func: DateAggregate) => {
         builder.dimensions.update(item.id, (node) =>
-          func === 'raw' ? node.clearAggregate() : node.setAggregate({ func: func as (typeof dateAggregates)[number] }),
+          func === 'raw' ? node.clearAggregate() : node.setAggregate({ func }),
         )
       }}
       options={[
@@ -46,7 +59,7 @@ const DateSelect = ({ builder, fieldMeta, item, labels, role }: FieldTokenProps)
         ...dateAggregates.map((func) => ({ label: func.replace('to', ''), value: func })),
       ]}
       size='small'
-      value={(item as VBIDimension).aggregate?.func ?? 'raw'}
+      value={normalizeDateAggregate((item as VBIDimension).aggregate?.func)}
       variant='borderless'
     />
   )

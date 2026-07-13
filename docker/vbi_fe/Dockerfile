@@ -32,15 +32,19 @@ WORKDIR /app
 ARG VBI_API_ORIGIN
 ARG VBI_COLLABORATION_ORIGIN
 ENV NODE_ENV=production
-ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 ENV VBI_API_ORIGIN=$VBI_API_ORIGIN
 ENV VBI_COLLABORATION_ORIGIN=$VBI_COLLABORATION_ORIGIN
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@10.26.1 --activate
 
-COPY --from=builder /app/apps/vbi_fe/.next/standalone ./
-COPY --from=builder /app/apps/vbi_fe/.next/static ./apps/vbi_fe/.next/static
-COPY --from=builder /app/apps/vbi_fe/public ./apps/vbi_fe/public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/vbi_fe ./apps/vbi_fe
 
 EXPOSE 3000
 
-CMD ["node", "apps/vbi_fe/server.js"]
+CMD ["pnpm", "--filter", "@visactor/headless-bi-fe", "preview"]

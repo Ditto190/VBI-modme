@@ -20,15 +20,16 @@ export const filterPanelStyle: CSSProperties = {
   color: 'var(--starter-text-primary)',
   height: '100%',
   minHeight: 0,
-  overflow: 'hidden',
+  overflow: 'auto',
 }
 
 export const sidebarStackStyle: CSSProperties = {
   display: 'grid',
   gap: 12,
-  gridTemplateRows: 'minmax(0, 1.1fr) minmax(0, 1fr)',
+  gridTemplateRows: 'minmax(0, 0.85fr) minmax(0, 1.15fr)',
   height: '100%',
   minHeight: 0,
+  overflowY: 'auto',
 }
 
 export const themeSelectorStyle: CSSProperties = {
@@ -48,10 +49,4 @@ export const chartCanvasStyle: CSSProperties = {
   borderRadius: 'var(--starter-radius-sm)',
   minHeight: 0,
   overflow: 'hidden',
-}
-
-export const layoutStyle: CSSProperties = {
-  gridTemplateRows: 'auto minmax(320px, 1fr) auto',
-  height: '100%',
-  minHeight: '100%',
 }

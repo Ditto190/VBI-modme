@@ -2,7 +2,7 @@ import type { VBIChartBuilder, VBIChartDSL } from '@visactor/vbi'
 import { InputNumber, Segmented, Select } from 'antd'
 import type { ReactNode } from 'react'
 import type { StreamLabels } from 'src/i18n'
-import { DEMO_LOCALE_LABELS, DEMO_SUPPORTED_LOCALES, type DemoLocale } from 'src/constants/builder'
+import { DEMO_LOCALE_LABELS, DEMO_SUPPORTED_LOCALES, type DemoLocale, type DemoTheme } from 'src/constants/builder'
 import { normalizeLimit, readLimit } from 'src/utils/chartControlUtils'
 
 type ChartSettingsProps = {
@@ -28,15 +28,15 @@ export const ChartSettings = ({ builder, dsl, hideLocale, hideTheme, labels }: C
         size='small'
         step={50}
         value={readLimit(dsl.limit)}
-        onChange={(value) => {
+        onChange={(value: number | string | null) => {
           if (typeof value === 'number') builder.limit.setLimit(normalizeLimit(value))
         }}
       />
     </SettingRow>
     {!hideTheme && (
       <SettingRow label={labels.theme}>
-        <Segmented
-          onChange={(value) => builder.theme.setTheme(value === 'dark' ? 'dark' : 'light')}
+        <Segmented<DemoTheme>
+          onChange={(value: DemoTheme) => builder.theme.setTheme(value === 'dark' ? 'dark' : 'light')}
           options={[
             { label: labels.themeLight, value: 'light' },
             { label: labels.themeDark, value: 'dark' },
@@ -49,7 +49,7 @@ export const ChartSettings = ({ builder, dsl, hideLocale, hideTheme, labels }: C
     {!hideLocale && (
       <SettingRow label={labels.language}>
         <Select<DemoLocale>
-          onChange={(value) => builder.locale.setLocale(value)}
+          onChange={(value: DemoLocale) => builder.locale.setLocale(value)}
           options={DEMO_SUPPORTED_LOCALES.map((value) => ({ label: DEMO_LOCALE_LABELS[value], value }))}
           size='small'
           value={(dsl.locale as DemoLocale | undefined) ?? 'zh-CN'}

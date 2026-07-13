@@ -10,6 +10,17 @@ const tooltipFontSize = 17
 const axisFontSize = 18
 const legendFontSize = 19
 const playerFontSize = 42
+const axisLabelFontSize = 21
+const axisLabelFontWeight = 500
+const axisTitleFontSize = 22
+const axisTitleFontWeight = 600
+const legendLabelFontSize = 23
+const legendLabelFontWeight = 700
+const tooltipValueFontWeight = 650
+const dataLabelFontSize = 24
+const dataLabelFontWeight = 750
+const annotationLabelFontSize = 25
+const annotationLabelFontWeight = 800
 const annotationLineColor = '#21252CB8'
 const annotationLineDash = [3, 1]
 const annotationTextColor = '#FFFFFF'
@@ -316,6 +327,61 @@ describe('tokenTheme', () => {
     expect(columnConfig?.annotation?.annotationArea?.areaColor).toBe(annotationAreaColor)
     expect(columnConfig?.annotation?.annotationArea?.areaColorOpacity).toBe(annotationAreaColorOpacity)
     expect(columnConfig?.regressionLine?.linearRegressionLine?.textFontSize).toBe(labelFontSize)
+  })
+
+  test('should let fine-grained typography tokens override legacy font size tokens', () => {
+    registerTokenTheme('unit-fine-type', {
+      baseTheme: 'light',
+      fontFamily,
+      labelFontSize,
+      tooltipFontSize,
+      axisFontSize,
+      legendFontSize,
+      axisLabelFontSize,
+      axisLabelFontWeight,
+      axisTitleFontSize,
+      axisTitleFontWeight,
+      legendLabelFontSize,
+      legendLabelFontWeight,
+      tooltipValueFontWeight,
+      dataLabelFontSize,
+      dataLabelFontWeight,
+      annotationLabelFontSize,
+      annotationLabelFontWeight,
+      colorScheme: ['#B83280', '#3182CE', '#38A169'],
+      linearColorScheme: ['#F8C7E7', '#B83280'],
+      textPrimary: '#1A202C',
+      textSecondary: '#4A5568',
+      borderColor: 'rgba(45, 55, 72, 0.16)',
+      tooltipBackgroundColor: 'rgba(255, 255, 255, 0.96)',
+    })
+
+    const builder = Builder.from({ ...columnVSeed, theme: 'unit-fine-type' })
+    const advanced = builder.buildAdvanced()
+    const columnConfig = advanced?.config?.column as any
+    const spec = builder.buildSpec(advanced!) as any
+
+    expect(columnConfig?.xAxis?.label?.labelFontSize).toBe(axisLabelFontSize)
+    expect(columnConfig?.xAxis?.label?.labelFontWeight).toBe(axisLabelFontWeight)
+    expect(columnConfig?.xAxis?.title?.titleFontSize).toBe(axisTitleFontSize)
+    expect(columnConfig?.xAxis?.title?.titleFontWeight).toBe(axisTitleFontWeight)
+    expect(columnConfig?.yAxis?.label?.labelFontSize).toBe(axisLabelFontSize)
+    expect(columnConfig?.yAxis?.title?.titleFontSize).toBe(axisTitleFontSize)
+    expect(columnConfig?.legend?.labelFontSize).toBe(legendLabelFontSize)
+    expect(columnConfig?.legend?.labelFontWeight).toBe(legendLabelFontWeight)
+    expect(columnConfig?.tooltip?.fontSize).toBe(tooltipFontSize)
+    expect(columnConfig?.tooltip?.valueFontWeight).toBe(tooltipValueFontWeight)
+    expect(columnConfig?.label?.labelFontSize).toBe(dataLabelFontSize)
+    expect(columnConfig?.label?.labelFontWeight).toBe(dataLabelFontWeight)
+    expect(columnConfig?.annotation?.annotationPoint?.textFontSize).toBe(annotationLabelFontSize)
+    expect(columnConfig?.annotation?.annotationPoint?.textFontWeight).toBe(annotationLabelFontWeight)
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textFontSize).toBe(annotationLabelFontSize)
+    expect(columnConfig?.annotation?.annotationHorizontalLine?.textFontWeight).toBe(annotationLabelFontWeight)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textFontSize).toBe(annotationLabelFontSize)
+    expect(columnConfig?.annotation?.annotationDifferenceLine?.textFontWeight).toBe(annotationLabelFontWeight)
+    expect(columnConfig?.annotation?.annotationArea?.textFontSize).toBe(annotationLabelFontSize)
+    expect(columnConfig?.annotation?.annotationArea?.textFontWeight).toBe(annotationLabelFontWeight)
+    expect(spec?.tooltip?.style?.valueLabel?.fontWeight).toBe(tooltipValueFontWeight)
   })
 
   test('should apply token theme to hierarchy sankey config and spec', () => {

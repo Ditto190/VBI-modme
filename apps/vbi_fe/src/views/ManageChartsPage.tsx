@@ -1,40 +1,42 @@
 'use client'
 
-import { useShallow } from 'zustand/shallow'
+import { useEffect } from 'react'
+import { applicationShallowEqual, useApplication } from '../application'
 import { useTranslation } from '../i18n'
-import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
-import { selectManageChartsPageState, useManageChartsStore } from '../stores/manage-charts.store'
-import { ChartResourceModals } from './manage-resource/ChartResourceModals'
+import { getSessionUserName } from '../utils/collaboration'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageChartsPage = () => {
   const { locale, t } = useTranslation()
-  const state = useManageChartsStore(useShallow(selectManageChartsPageState))
   const {
-    bootstrap: bootstrapStore,
-    closeCreate,
-    closeDetail,
+    activateStore,
     create,
-    createName,
-    createOpen,
     deleteOne,
     deleteSelected,
-    dispose,
-    editorName,
     filteredItems,
     loading,
-    openCreate,
-    openDetail,
-    renameSelected,
+    open,
     searchText,
-    selectedId,
     selectedRowKeys,
-    setCreateName,
-    setEditorName,
     setSearchText,
     setSelectedRowKeys,
-  } = state
-  useUserStoreLifecycle(bootstrapStore, dispose)
+  } = useApplication(
+    (applicationState) => ({
+      activateStore: applicationState.chart.activate,
+      create: applicationState.chart.create,
+      deleteOne: applicationState.chart.delete,
+      deleteSelected: applicationState.chart.records.deleteSelected,
+      filteredItems: applicationState.chart.records.visibleItems,
+      loading: applicationState.chart.records.loading,
+      open: applicationState.chart.open,
+      searchText: applicationState.chart.records.searchText,
+      selectedRowKeys: applicationState.chart.records.selectedIds,
+      setSearchText: applicationState.chart.records.search,
+      setSelectedRowKeys: applicationState.chart.records.select,
+    }),
+    { equality: applicationShallowEqual },
+  )
+  useEffect(() => activateStore({ userName: getSessionUserName() }), [activateStore])
   return (
     <ResourceManagementPage
       createLabel={t('charts.create')}
@@ -42,11 +44,11 @@ export const ManageChartsPage = () => {
       fallbackName={t('charts.untitled')}
       locale={locale}
       state={{
+        create,
         deleteSelected,
         filteredItems,
         loading,
-        openCreate,
-        openDetail,
+        openDetail: open,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -55,20 +57,6 @@ export const ManageChartsPage = () => {
       title={t('charts.title')}
       t={t}
       onRemove={deleteOne}
-    >
-      <ChartResourceModals
-        closeCreate={closeCreate}
-        closeDetail={closeDetail}
-        create={create}
-        createName={createName}
-        createOpen={createOpen}
-        editorName={editorName}
-        renameSelected={renameSelected}
-        selectedId={selectedId}
-        setCreateName={setCreateName}
-        setEditorName={setEditorName}
-        t={t}
-      />
-    </ResourceManagementPage>
+    />
   )
 }

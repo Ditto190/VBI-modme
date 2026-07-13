@@ -1,12 +1,5 @@
 export type { ChartDetail, ChartProvider, ChartSummary } from './chart'
-export type {
-  InsightCreateInput,
-  InsightDetail,
-  InsightProvider,
-  InsightResponse,
-  InsightSummary,
-  InsightUpdateInput,
-} from './insight'
+export type { InsightCreateInput, InsightDetail, InsightProvider, InsightResponse, InsightSummary } from './insight'
 export type {
   RemoteFetch,
   RemoteHeaders,

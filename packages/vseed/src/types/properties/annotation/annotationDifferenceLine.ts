@@ -44,6 +44,11 @@ export type AnnotationDifferenceLine = {
   textFontSize?: number
 
   /**
+   * @description 文本字体粗细。
+   */
+  textFontWeight?: number | string
+
+  /**
    * @description 文本颜色。
    */
   textColor?: string

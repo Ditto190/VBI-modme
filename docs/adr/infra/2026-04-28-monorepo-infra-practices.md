@@ -44,7 +44,7 @@ Current convention:
 
 ```json
 {
-  "tui": "turbo build --filter=@visactor/headless-bi-cli && pnpm --filter=@visactor/headless-bi-cli run tui"
+  "tui": "turbo build --filter=@visactor/headless-bi-tui && pnpm --filter=@visactor/headless-bi-tui run tui"
 }
 ```
 

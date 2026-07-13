@@ -1,4 +1,5 @@
 import { Button, Input, InputNumber, Select, Space } from 'antd'
+import type { ChangeEvent } from 'react'
 import type { StreamLabels } from 'src/i18n'
 import type { SchemaField } from 'src/types'
 import { aggregateFunctions, type StreamFilterKind } from 'src/utils/filterActions'
@@ -25,7 +26,7 @@ const NumberInput = (props: { labels: StreamLabels; onChange: (value: string) =>
     controls={false}
     placeholder={props.labels.filterValue}
     value={props.value === '' ? undefined : Number(props.value)}
-    onChange={(value) => props.onChange(value === null ? '' : String(value))}
+    onChange={(value: number | string | null) => props.onChange(value === null ? '' : String(value))}
   />
 )
 
@@ -55,13 +56,17 @@ const ValueInput = ({
           controls={false}
           placeholder={labels.min}
           value={value.min === undefined ? undefined : Number(value.min)}
-          onChange={(next) => onValueChange({ ...value, min: next === null ? '' : String(next) })}
+          onChange={(next: number | string | null) =>
+            onValueChange({ ...value, min: next === null ? '' : String(next) })
+          }
         />
         <InputNumber
           controls={false}
           placeholder={labels.max}
           value={value.max === undefined ? undefined : Number(value.max)}
-          onChange={(next) => onValueChange({ ...value, max: next === null ? '' : String(next) })}
+          onChange={(next: number | string | null) =>
+            onValueChange({ ...value, max: next === null ? '' : String(next) })
+          }
         />
       </div>
     )
@@ -70,7 +75,7 @@ const ValueInput = ({
     <Input
       value={typeof value === 'string' ? value : ''}
       placeholder={labels.filterValue}
-      onChange={(event) => onValueChange(event.target.value)}
+      onChange={(event: ChangeEvent<HTMLInputElement>) => onValueChange(event.target.value)}
     />
   )
 }

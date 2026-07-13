@@ -4,14 +4,25 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import type { ReactElement, ReactNode } from 'react'
 import { cn } from '../../lib/utils'
 
-export type DropdownItem = {
-  danger?: boolean
-  disabled?: boolean
-  icon?: ReactNode
-  key: string
-  label: ReactNode
-  onSelect: () => void
-}
+export type DropdownItem =
+  | {
+      danger?: boolean
+      disabled?: boolean
+      icon?: ReactNode
+      key: string
+      label: ReactNode
+      onSelect: () => void
+      type?: 'item'
+    }
+  | {
+      key: string
+      label: ReactNode
+      type: 'label'
+    }
+  | {
+      key: string
+      type: 'separator'
+    }
 
 const getDropdownPortalRoot = () => document.querySelector<HTMLElement>('[data-vbi-portal-root]') ?? document.body
 
@@ -43,7 +54,7 @@ export const DropdownMenu = ({
         <DropdownMenuPrimitive.Content
           align={align}
           className={cn(
-            'ui-dropdown-menu z-[95] min-w-40 origin-top-right overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] shadow-lg will-change-[transform,opacity] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
+            'ui-dropdown-menu z-[95] min-w-40 origin-top-right overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] p-1 shadow-lg will-change-[transform,opacity] animate-[vbi-menu-pop_var(--vbi-motion)_var(--vbi-ease-spring)]',
             menuClassName,
           )}
           side={side}
@@ -51,8 +62,28 @@ export const DropdownMenu = ({
         >
           {renderContent
             ? renderContent(items)
-            : items.map((item) =>
-                renderItem ? (
+            : items.map((item) => {
+                if (item.type === 'label') {
+                  return (
+                    <DropdownMenuPrimitive.Label
+                      className='px-2.5 py-1.5 text-xs font-semibold text-[var(--vbi-text-muted)]'
+                      key={item.key}
+                    >
+                      {item.label}
+                    </DropdownMenuPrimitive.Label>
+                  )
+                }
+
+                if (item.type === 'separator') {
+                  return (
+                    <DropdownMenuPrimitive.Separator
+                      className='my-1 h-px bg-[color-mix(in_srgb,var(--vbi-border)_70%,transparent)]'
+                      key={item.key}
+                    />
+                  )
+                }
+
+                return renderItem ? (
                   <DropdownMenuPrimitive.Item
                     asChild
                     key={item.key}
@@ -64,7 +95,7 @@ export const DropdownMenu = ({
                   <DropdownMenuPrimitive.Item
                     key={item.key}
                     className={cn(
-                      'ui-dropdown-item flex w-full cursor-pointer items-center gap-2 border-0 bg-transparent px-2.5 py-2 text-left text-xs text-[var(--vbi-text)] transition duration-150 ease-out hover:translate-x-0.5 hover:bg-[var(--vbi-hover-bg)] active:translate-x-px active:scale-[0.99] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45',
+                      'ui-dropdown-item flex w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-2.5 py-2 text-left text-xs text-[var(--vbi-text)] outline-none transition duration-150 ease-out hover:bg-[var(--vbi-hover-bg)] hover:text-[var(--vbi-text-strong)] focus:bg-[var(--vbi-hover-bg)] focus:text-[var(--vbi-text-strong)] data-[highlighted]:bg-[var(--vbi-hover-bg)] data-[highlighted]:text-[var(--vbi-text-strong)] data-[disabled]:cursor-not-allowed data-[disabled]:opacity-45',
                       item.danger && 'text-[var(--vbi-danger)]',
                     )}
                     disabled={item.disabled}
@@ -76,8 +107,8 @@ export const DropdownMenu = ({
                     {item.icon}
                     <span>{item.label}</span>
                   </DropdownMenuPrimitive.Item>
-                ),
-              )}
+                )
+              })}
         </DropdownMenuPrimitive.Content>
       </DropdownMenuPrimitive.Portal>
     </DropdownMenuPrimitive.Root>

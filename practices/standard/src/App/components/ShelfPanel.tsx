@@ -1,4 +1,5 @@
-import { Card, Flex, theme } from 'antd'
+import { Flex, theme } from 'antd'
+import { CompatCard as Card } from '../../components/antdCompat'
 import { DimensionShelf, HavingShelf, MeasureShelf, WhereShelf } from '../../components/Shelves'
 import { useTranslation } from '../../i18n'
 import { FilterRootOperatorToggle } from './FilterRootOperatorToggle'

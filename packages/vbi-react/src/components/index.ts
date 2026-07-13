@@ -1,3 +1,5 @@
+import './entry.css'
+
 export { BuilderLayout } from './BuilderLayout'
 export type { BuilderLayoutProps } from './BuilderLayout'
 export { ChartRenderer } from './ChartRenderer'

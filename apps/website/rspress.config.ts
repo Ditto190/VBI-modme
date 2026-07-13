@@ -63,6 +63,10 @@ const devLocaleSet = new Set(devLocales.map((locale) => locale.lang))
 const devLocaleExcludes = allLocales
   .filter((locale) => !devLocaleSet.has(locale.lang))
   .map((locale) => `${locale.lang}/**`)
+const vbiReactEntry = path.join(__dirname, '../../packages/vbi-react/src/index.ts')
+const vbiReactComponentsEntry = path.join(__dirname, '../../packages/vbi-react/src/components/index.ts')
+const vbiReactComponentsCssEntry = path.join(__dirname, '../../packages/vbi-react/src/components/entry.css')
+const vbiReactStarterEntry = path.join(__dirname, '../../practices/vbi-react-starter/src/index.tsx')
 
 export default defineConfig({
   root: './docs',
@@ -113,7 +117,10 @@ export default defineConfig({
       rspack: (config, { isServer }) => {
         config.resolve.alias = {
           ...config.resolve.alias,
-          '@visactor/vquery': path.join(__dirname, '../../packages/vquery/src/browser.ts'),
+          '@visactor/vbi-react$': vbiReactEntry,
+          '@visactor/vbi-react/components$': vbiReactComponentsEntry,
+          '@visactor/vbi-react/components.css$': vbiReactComponentsCssEntry,
+          'vbi-react-starter$': vbiReactStarterEntry,
         }
 
         if (isServer) {
@@ -124,6 +131,8 @@ export default defineConfig({
           config.externals = [...(Array.isArray(config.externals) ? config.externals : []), 'yjs']
         }
 
+        // The website relies on workspace packages exposing source entries.
+        // Keep the repo-wide source resolution behavior and layer our narrow starter aliases on top.
         config.resolve.conditionNames = ['source', '...']
       },
     },

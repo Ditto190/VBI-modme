@@ -4,3 +4,51 @@
 .rp-playground-horizontal {
   height: calc(100vh - 72px) !important;
 }
+
+.rp-doc-layout__container:has(.starter-page) .rp-doc-layout__doc {
+  flex: 1 1 auto;
+  width: auto;
+  max-width: min(100%, 1480px);
+}
+
+.rp-doc-layout__container:has(.starter-page) .rp-doc-layout__doc-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-right: 48px;
+  padding-left: 48px;
+}
+
+.rp-doc-layout__container:has(.starter-page) .rp-doc-layout__outline {
+  display: none !important;
+}
+
+.rp-doc-layout__container:has(.starter-page) .rspress-doc {
+  width: 100%;
+  max-width: none;
+}
+
+.vbi-react-starter-doc {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 1180px) {
+  .rp-doc-layout__container:has(.starter-page) .rp-doc-layout__doc {
+    max-width: 100%;
+  }
+
+  .rp-doc-layout__container:has(.starter-page) .rp-doc-layout__doc-container {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .rp-doc-layout__container:has(.starter-page) .rp-doc-layout__doc-container {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}

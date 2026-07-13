@@ -2,7 +2,7 @@ import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CloseOutlined, DownOutlined } from '@ant-design/icons'
 import { Dropdown, Typography, theme, type MenuProps } from 'antd'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type MouseEvent } from 'react'
 import {
   ShelfItemDropZones,
   createShelfItemDragId,
@@ -205,7 +205,7 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
             items: buildMenuItems(item),
             selectable: true,
             selectedKeys: getMenuSelectedKeys?.(item),
-            onClick: ({ key, domEvent }) => {
+            onClick: ({ key, domEvent }: Parameters<NonNullable<MenuProps['onClick']>>[0]) => {
               domEvent.stopPropagation()
               onMenuClick(item, String(key))
             },
@@ -227,7 +227,7 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
           }}
         >
           <span
-            onClick={(event) => {
+            onClick={(event: MouseEvent<HTMLElement>) => {
               event.stopPropagation()
             }}
             style={{
@@ -263,7 +263,7 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
         </Dropdown>
         <span style={getRemoveIconWrapperStyle(isHovered)}>
           <CloseOutlined
-            onClick={(event) => {
+            onClick={(event: MouseEvent<HTMLElement>) => {
               event.stopPropagation()
               onRemove(item.id)
             }}
@@ -272,10 +272,10 @@ const FieldShelfTag = <TItem extends FieldShelfItem>(props: {
               cursor: 'pointer',
               color: REMOVE_ICON_DEFAULT_COLOR,
             }}
-            onMouseEnter={(event) => {
+            onMouseEnter={(event: MouseEvent<HTMLElement>) => {
               event.currentTarget.style.color = REMOVE_ICON_HOVER_COLOR
             }}
-            onMouseLeave={(event) => {
+            onMouseLeave={(event: MouseEvent<HTMLElement>) => {
               event.currentTarget.style.color = REMOVE_ICON_DEFAULT_COLOR
             }}
           />

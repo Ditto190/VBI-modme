@@ -23,6 +23,7 @@ import {
   CheckOutlined,
 } from '@ant-design/icons'
 import type { VBIHavingAggregate } from '@visactor/vbi'
+import { CompatSelectOption as Option } from '../antdCompat'
 import { useTranslation } from '../../i18n'
 import {
   getDefaultHavingAggregateByFieldRole,
@@ -41,7 +42,6 @@ import {
   type HavingFilterRangeValue,
 } from './havingFilterUtils'
 
-const { Option = Select.Option } = Select
 const { Text } = Typography
 
 const POPOVER_TEXT_BUTTON_STYLE: React.CSSProperties = {
@@ -528,7 +528,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             placeholder={t('filtersFormSelectField')}
             showSearch
             variant='filled'
-            onChange={(fieldName) => {
+            onChange={(fieldName: string) => {
               const fieldRole = getFieldRole(fields, fieldName)
               const aggregate = getDefaultHavingAggregateByFieldRole(fieldRole)
               form.setFieldsValue({
@@ -586,7 +586,7 @@ export const HavingFilterPanel: React.FC<HavingFilterPanelProps> = ({
             options={aggregateSelectOptions}
             value={selectedAggregateFunc}
             placeholder={t('filtersFormSelectAggregate')}
-            onChange={(value) => {
+            onChange={(value: string) => {
               form.setFieldValue('aggregateFunc', value)
             }}
             style={{ width: '100%' }}

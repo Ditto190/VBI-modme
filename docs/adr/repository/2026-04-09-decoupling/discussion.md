@@ -77,7 +77,7 @@ In other words, Provider is the "resource runtime entry point."
 The same Provider should be consumable by these entry points:
 
 - `apps/vbi_fe`
-- `apps/vbi_cli`
+- `apps/vbi_tui`
 - Node.js scripts
 - regular browser JS
 - future host applications
@@ -384,7 +384,7 @@ Instead of:
 - Pages no longer assemble REST calls and collaboration hooks directly.
 - Pages obtain builder and execute operations through Provider.
 
-### Phase 3: Implement `vbi_cli`
+### Phase 3: Implement `vbi_tui`
 
 - CLI is only a thin wrapper around Provider.
 - Do not design a second set of business semantics.

@@ -32,7 +32,7 @@ const createOnlyProvider = client.chart()
 资源特定能力：
 
 - `ChartProvider.getReferences()`
-- `InsightProvider.update()` / `InsightProvider.getReferences()`
+- `InsightProvider.getReferences()`
 - `ReportProvider.exportSnapshot()`
 - `ReportProvider.createPage()` / `updatePage()` / `removePage()` / `reorderPages()`
 
@@ -84,4 +84,5 @@ await report.close()
 - `client.chart()` 允许无 id，用于 create-first 流程
 - `client.chart('chart-1')` 允许绑定现有资源
 - Builder 获取权属于 Provider，而不是页面或 CLI 自行创建
+- 资源生命周期和查询走 REST，资源内容修改走 Provider 打开的 Builder/Yjs 协同流
 - SDK 只保留远程平台客户端这一种用法，配置入口保持单一

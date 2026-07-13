@@ -9,7 +9,7 @@ export const Spinner = ({ className, label }: { className?: string; label?: stri
 )
 
 export const FullscreenSpinner = () => (
-  <div className='fixed inset-0 z-50 flex items-center justify-center bg-[var(--vbi-bg-solid)]'>
+  <div className='fixed inset-0 z-50 flex items-center justify-center bg-[var(--vbi-bg)] transition-colors duration-300'>
     <Spinner className='text-[var(--vbi-text)]' />
   </div>
 )

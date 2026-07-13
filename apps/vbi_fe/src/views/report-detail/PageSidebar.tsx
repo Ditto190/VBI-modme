@@ -1,9 +1,8 @@
 import { useMemo } from 'react'
-import { useShallow } from 'zustand/shallow'
+import { applicationShallowEqual, useApplication } from '../../application'
 import { Button } from '../../components/ui/button'
 import { Plus } from '../../components/ui/icons'
 import { useTranslation } from '../../i18n'
-import { useReportDetailStore } from '../../stores/report-detail.store'
 import type { ReportPage } from '../../types'
 import { PageSidebarItem } from './PageSidebarItem'
 import type { PageSidebarActions } from './PageSidebarItem'
@@ -15,18 +14,19 @@ type PageSidebarProps = {
 export const PageSidebar = ({ pages }: PageSidebarProps) => {
   const { t } = useTranslation()
   const { activePageId, addChart, addInsight, addPage, busy, removeChart, removeInsight, removePage, selectPage } =
-    useReportDetailStore(
-      useShallow((state) => ({
-        activePageId: state.activePageId,
-        addChart: state.addChart,
-        addInsight: state.addInsight,
-        addPage: state.addPage,
-        busy: state.pageActionBusy,
-        removeChart: state.removeChart,
-        removeInsight: state.removeInsight,
-        removePage: state.removePage,
-        selectPage: state.selectPage,
-      })),
+    useApplication(
+      (state) => ({
+        activePageId: state.reportDetail.activePageId,
+        addChart: state.reportDetail.addChart,
+        addInsight: state.reportDetail.addInsight,
+        addPage: state.reportDetail.addPage,
+        busy: state.reportDetail.pageActionBusy,
+        removeChart: state.reportDetail.removeChart,
+        removeInsight: state.reportDetail.removeInsight,
+        removePage: state.reportDetail.removePage,
+        selectPage: state.reportDetail.selectPage,
+      }),
+      { equality: applicationShallowEqual },
     )
   const pageActions = useMemo<PageSidebarActions>(
     () => ({
@@ -41,7 +41,7 @@ export const PageSidebar = ({ pages }: PageSidebarProps) => {
   )
 
   return (
-    <section className='vbi-motion-panel flex min-h-0 flex-col overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-surface-solid)] max-[900px]:flex-row max-[640px]:flex-col'>
+    <section className='vbi-motion-panel flex min-h-0 flex-col overflow-hidden rounded-md border border-[var(--vbi-border)] bg-[var(--vbi-secondary)] max-[900px]:flex-row max-[640px]:flex-col'>
       <div className='vbi-motion-stagger flex min-h-0 flex-1 flex-col gap-1 overflow-auto p-2 max-[900px]:flex-row max-[640px]:shrink-0 max-[640px]:pb-0'>
         {pages.map((page, index) => (
           <PageSidebarItem

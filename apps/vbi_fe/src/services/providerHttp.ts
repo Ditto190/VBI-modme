@@ -1,4 +1,4 @@
-import { tRuntime } from '../i18n'
+import { tRuntime } from '../i18n/runtime'
 
 type ProviderResponse<T> = {
   data: T

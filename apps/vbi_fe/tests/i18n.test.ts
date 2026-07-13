@@ -2,6 +2,7 @@ import { describe, expect, test } from '@rstest/core'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import * as ts from 'typescript'
 import { useAppPreferencesStore } from '../src/stores/app-preferences.store'
 
 const testDir = path.dirname(fileURLToPath(import.meta.url))
@@ -28,14 +29,43 @@ const walkSourceFiles = (dir: string): string[] =>
     return /\.(ts|tsx)$/.test(entry.name) ? [fullPath] : []
   })
 
+const translationFunctionKeyIndex = {
+  t: 0,
+  tRuntime: 0,
+  translate: 1,
+} as const
+
+const isTranslationFunctionName = (name: string): name is keyof typeof translationFunctionKeyIndex =>
+  name in translationFunctionKeyIndex
+
+const isStringLiteralLike = (node: ts.Node): node is ts.StringLiteral | ts.NoSubstitutionTemplateLiteral =>
+  ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)
+
+const collectTranslationKeysFromSource = (source: string, fileName: string) => {
+  const keys = new Set<string>()
+  const sourceFile = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+
+  const visit = (node: ts.Node) => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+      const functionName = node.expression.text
+      if (isTranslationFunctionName(functionName)) {
+        const keyArgument = node.arguments[translationFunctionKeyIndex[functionName]]
+        if (keyArgument && isStringLiteralLike(keyArgument)) keys.add(keyArgument.text)
+      }
+    }
+
+    ts.forEachChild(node, visit)
+  }
+
+  visit(sourceFile)
+  return keys
+}
+
 const collectLiteralTranslationKeys = () => {
   const keys = new Set<string>()
-
   for (const file of walkSourceFiles(sourceDir)) {
     const source = fs.readFileSync(file, 'utf8')
-    for (const match of source.matchAll(/\b(?:t|tRuntime|translate)\(\s*(?:[^,]+,\s*)?['"]([^'"]+)['"]/g)) {
-      keys.add(match[1] ?? '')
-    }
+    collectTranslationKeysFromSource(source, file).forEach((key) => keys.add(key))
   }
 
   return [...keys].filter(Boolean).sort()

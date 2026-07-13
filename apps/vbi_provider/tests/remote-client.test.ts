@@ -70,26 +70,37 @@ describe('remote VBI client', () => {
     })
   })
 
-  test('supports report page reorder through REST endpoint', async () => {
-    const fetch = rs.fn(async (url: string, init?: { method?: string; body?: string }) => {
-      if (url.endsWith('/reports/report-1/pages/reorder') && init?.method === 'PATCH') {
+  test('reads insight snapshots through REST without exposing provider-level content update', async () => {
+    const fetch = rs.fn(async (url: string) => {
+      if (url.endsWith('/insights/insight-1')) {
         return jsonResponse({
-          id: 'report-1',
-          name: 'Quarterly Review',
+          id: 'insight-1',
+          name: 'Insight',
           createdAt: '2026-04-09',
           updatedAt: '2026-04-09',
-          pages: [
-            { id: 'page-2', title: 'Second', chartId: 'chart-2', insightId: 'insight-2' },
-            { id: 'page-1', title: 'First', chartId: 'chart-1', insightId: 'insight-1' },
-          ],
+          content: 'Use the builder for content edits',
         })
+      }
+      if (url.endsWith('/insights/insight-1/collaboration')) {
+        throw new Error('snapshot should not open collaboration')
       }
       throw new Error(`Unexpected request: ${url}`)
     })
-    const client = createVBIProviderClient({ baseUrl: 'http://localhost:3030/api/v1', fetch })
+    const provider = createVBIProviderClient({ baseUrl: 'http://localhost:3030/api/v1', fetch }).insight('insight-1')
 
-    await expect(client.report('report-1').reorderPages(['page-2', 'page-1'])).resolves.toMatchObject({
-      dsl: { pages: [{ id: 'page-2' }, { id: 'page-1' }] },
+    expect('update' in provider).toBe(false)
+    await expect(provider.snapshot()).resolves.toEqual({
+      resource: {
+        id: 'insight-1',
+        name: 'Insight',
+        createdAt: '2026-04-09',
+        updatedAt: '2026-04-09',
+      },
+      dsl: {
+        uuid: 'insight-1',
+        version: 0,
+        content: 'Use the builder for content edits',
+      },
     })
   })
 })

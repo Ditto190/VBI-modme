@@ -24,6 +24,7 @@
     "catmull",
     "dsls",
     "duckdb",
+    "earendil",
     "indexeddb",
     "Introspector",
     "Kysely",

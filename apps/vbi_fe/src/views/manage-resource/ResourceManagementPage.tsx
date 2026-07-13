@@ -9,15 +9,15 @@ export type ResourceManagementPageState = {
   loading: boolean
   searchText: string
   selectedRowKeys: Key[]
+  create(): Promise<void>
   deleteSelected(): Promise<void>
-  openCreate(): void
-  openDetail(id: string): Promise<void>
+  openDetail(id: string): void | Promise<void>
   setSearchText(searchText: string): void
   setSelectedRowKeys(selectedRowKeys: string[]): void
 }
 
 type ResourceManagementPageProps = {
-  children: ReactNode
+  children?: ReactNode
   createLabel: string
   deleteTitle: string
   fallbackName: string
@@ -55,7 +55,7 @@ export const ResourceManagementPage = ({
       dataSource={state.filteredItems}
       deleteTitle={deleteTitle}
       loading={state.loading}
-      onCreate={state.openCreate}
+      onCreate={state.create}
       onDeleteSelected={state.deleteSelected}
       onSearchTextChange={state.setSearchText}
       searchText={state.searchText}

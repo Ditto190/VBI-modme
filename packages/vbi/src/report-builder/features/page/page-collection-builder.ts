@@ -1,6 +1,7 @@
 import type * as Y from 'yjs'
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIReportBuilder } from 'src/report-builder/builder'
+import type { VBIReportPageDSLInput } from 'src/types'
 import { createEmptyReportPage } from 'src/vbi/create-empty-report-page'
 import { createReportPageYMap, getOrCreateReportPages, locateReportPageIndexById } from 'src/vbi/from/report-page-y-map'
 import { ReportPageBuilder } from './page-builder'
@@ -44,6 +45,39 @@ export class ReportPageCollectionBuilder<TQueryDSL = DefaultVBIQueryDSL, TSeedDS
         pages.delete(index, 1)
       }
     })
+    return this.parent
+  }
+
+  reorder(pageIds: string[]): VBIReportBuilder<TQueryDSL, TSeedDSL> {
+    const pages = getOrCreateReportPages(this.dsl)
+    const currentPages = pages.toArray()
+    const pageById = new Map(currentPages.map((page) => [page.get('id'), page]))
+    const uniquePageIds = new Set(pageIds)
+
+    if (pageIds.length !== currentPages.length) {
+      throw new Error('Report page order does not match current page count')
+    }
+    if (uniquePageIds.size !== pageIds.length) {
+      throw new Error('Report page order contains duplicate page ids')
+    }
+    for (const pageId of pageIds) {
+      if (!pageById.has(pageId)) {
+        throw new Error(`Report page with id "${pageId}" not found`)
+      }
+    }
+
+    this.doc.transact(() => {
+      const reorderedPages = pageIds.map((pageId) =>
+        createReportPageYMap(pageById.get(pageId)!.toJSON() as VBIReportPageDSLInput),
+      )
+      if (pages.length > 0) {
+        pages.delete(0, pages.length)
+      }
+      if (reorderedPages.length > 0) {
+        pages.push(reorderedPages)
+      }
+    })
+
     return this.parent
   }
 

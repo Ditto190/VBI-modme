@@ -1,42 +1,42 @@
 'use client'
 
-import { useShallow } from 'zustand/shallow'
+import { useEffect } from 'react'
+import { applicationShallowEqual, useApplication } from '../application'
 import { useTranslation } from '../i18n'
-import { useUserStoreLifecycle } from '../hooks/useStoreLifecycle'
-import { selectManageInsightsPageState, useManageInsightsStore } from '../stores/manage-insights.store'
-import { InsightResourceModals } from './manage-resource/InsightResourceModals'
+import { getSessionUserName } from '../utils/collaboration'
 import { ResourceManagementPage } from './manage-resource/ResourceManagementPage'
 
 export const ManageInsightsPage = () => {
   const { locale, t } = useTranslation()
-  const state = useManageInsightsStore(useShallow(selectManageInsightsPageState))
   const {
-    bootstrap: bootstrapStore,
-    closeCreate,
-    closeDetail,
+    activateStore,
     create,
-    createContent,
-    createName,
-    createOpen,
     deleteOne,
     deleteSelected,
-    dispose,
-    editorName,
     filteredItems,
     loading,
-    openCreate,
-    openDetail,
-    renameSelected,
+    open,
     searchText,
-    selectedId,
     selectedRowKeys,
-    setCreateContent,
-    setCreateName,
-    setEditorName,
     setSearchText,
     setSelectedRowKeys,
-  } = state
-  useUserStoreLifecycle(bootstrapStore, dispose)
+  } = useApplication(
+    (applicationState) => ({
+      activateStore: applicationState.insight.activate,
+      create: applicationState.insight.create,
+      deleteOne: applicationState.insight.delete,
+      deleteSelected: applicationState.insight.records.deleteSelected,
+      filteredItems: applicationState.insight.records.visibleItems,
+      loading: applicationState.insight.records.loading,
+      open: applicationState.insight.open,
+      searchText: applicationState.insight.records.searchText,
+      selectedRowKeys: applicationState.insight.records.selectedIds,
+      setSearchText: applicationState.insight.records.search,
+      setSelectedRowKeys: applicationState.insight.records.select,
+    }),
+    { equality: applicationShallowEqual },
+  )
+  useEffect(() => activateStore({ userName: getSessionUserName() }), [activateStore])
   return (
     <ResourceManagementPage
       createLabel={t('insights.create')}
@@ -44,11 +44,11 @@ export const ManageInsightsPage = () => {
       fallbackName={t('insights.untitled')}
       locale={locale}
       state={{
+        create,
         deleteSelected,
         filteredItems,
         loading,
-        openCreate,
-        openDetail,
+        openDetail: open,
         searchText,
         selectedRowKeys,
         setSearchText,
@@ -57,22 +57,6 @@ export const ManageInsightsPage = () => {
       title={t('insights.title')}
       t={t}
       onRemove={deleteOne}
-    >
-      <InsightResourceModals
-        closeCreate={closeCreate}
-        closeDetail={closeDetail}
-        create={create}
-        createContent={createContent}
-        createName={createName}
-        createOpen={createOpen}
-        editorName={editorName}
-        renameSelected={renameSelected}
-        selectedId={selectedId}
-        setCreateContent={setCreateContent}
-        setCreateName={setCreateName}
-        setEditorName={setEditorName}
-        t={t}
-      />
-    </ResourceManagementPage>
+    />
   )
 }

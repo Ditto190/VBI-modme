@@ -1,6 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ChangeEvent } from 'react'
 import { FieldGroup } from 'src/components/FieldGroup'
 import type { MinimalLabels } from 'src/i18n'
 import type { EditorField } from 'src/types'
@@ -31,7 +31,7 @@ export const FieldPanel = ({ fields, labels, selectedFields, onToggleField }: Fi
         prefix={<SearchOutlined />}
         placeholder={labels.search}
         value={keyword}
-        onChange={(event) => setKeyword(event.target.value)}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setKeyword(event.target.value)}
       />
       {groups.map((group) => (
         <FieldGroup

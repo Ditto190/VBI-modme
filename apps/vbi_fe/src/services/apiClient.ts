@@ -1,5 +1,5 @@
 import { toast } from '../components/ui/toast'
-import { tRuntime } from '../i18n'
+import { tRuntime } from '../i18n/runtime'
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null
 

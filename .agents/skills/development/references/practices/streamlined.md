@@ -1,59 +1,38 @@
 # Streamlined Practice
 
-Reference material for `practices/streamlined`. It is the fast path for
-connector bootstrap, CSV URL data flow, and lightweight workbench behavior. Use
-it when a task needs the main VBI pipeline but not the full standard app
-framework.
+Use `practices/streamlined` for the fast path through the main VBI pipeline:
+demo connector bootstrap, CSV URL data flow, explicit initialization, and a
+lightweight three-column workbench.
 
 ## Positioning
 
-Streamlined is a lightweight workflow app:
-
-- It has a medium source surface: about 57 source files and one focused test
-  file.
-- Like `minimalist`, it uses a remote CSV demo connector.
-- It adds explicit initialization through `useInitializeVBI`.
-- It uses a three-column workbench: fields, config, and chart workspace.
-- It has modular styles under `src/styles/**`.
-- Hooks stay minimal: initialization and fullscreen.
-
-Compared with `minimalist`, it has clearer workflow panels and more reusable
-action utilities. Compared with `standard`, it intentionally omits i18n files,
-CSV upload, source switching, and the full hook suite. Compared with
-`professional`, it is a simple implementation of slot/config behavior rather than
-a business UI.
+Streamlined is more workflow-shaped than `minimalist`, lighter than `standard`,
+and simpler than `professional`. It has no CSV upload, source switching, cache
+layers, or full hook suite unless explicitly requested; i18n is present but
+lightweight.
 
 ## Structure
 
-- Entry: `src/index.tsx`, `src/App/App.tsx`.
-- Workbench: `src/components/Workbench/EditorWorkbench.tsx`.
-- Chart area: `src/components/Chart/**`.
-- Config and fields: `src/components/Config/**`, `src/components/Fields/**`.
-- Store: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`.
-- Connector: `src/utils/demoConnector.ts`.
-- Feature logic: `src/utils/*Actions.ts`, `dragDrop.ts`, `filterInput.ts`.
-- Styles: `src/styles/app.css` imports feature CSS files.
+- Entry/workbench: `src/App/App.tsx`,
+  `src/components/Workbench/EditorWorkbench.tsx`.
+- UI: `src/components/Fields/**`, `src/components/Config/**`,
+  `src/components/Chart/**`.
+- Store/connector: `src/model/VBIStore.ts`, `src/model/VBIStoreProvider.tsx`,
+  `src/utils/demoConnector.ts`.
+- Mutations/styles: `src/utils/*Actions.ts`, `dragDrop.ts`, `filterInput.ts`,
+  `src/styles/**`.
 
-## Differences
-
-- The connector registers `demo` and directly creates a VQuery CSV dataset from
-  the public supermarket URL.
-- The store has explicit `initialize`, `initialized`, `schema`, `loading`, and
-  `vseed`, but no cache and no source switching.
-- `useFullscreen` includes fallback fullscreen state when browser fullscreen
-  fails.
-- Config slots are driven by `slotConfig.ts`; Builder mutation lives in
-  `mappingActions.ts`, `fieldActions.ts`, and `filterActions.ts`.
-- `VSeedRender` includes a pivot chart legend filtering helper like standard, but
-  keeps rendering code compact.
-
-## Development Rules
+## Rules
 
 - Do not import from other practices.
 - Keep connector behavior centralized in `demoConnector.ts`.
-- Preserve the CSV URL path: `type: 'csv'`, `rawDataset: url`.
-- Keep `VBIStore` simple: subscribe to doc changes and rebuild VSeed.
-- Use focused utilities for mapping, filtering, and drag/drop mutation.
+- Preserve the remote CSV path: `type: 'csv'`, `rawDataset: url`.
+- Keep `VBIStore` simple: initialize, sync schema, subscribe to doc updates, and
+  rebuild VSeed.
+- Builder mutation belongs in `mappingActions.ts`, `fieldActions.ts`, and
+  `filterActions.ts`; slot behavior is driven by
+  `src/components/Config/slotConfig.ts`.
+- Components compose fields/config/chart UI instead of rebuilding DSL internals.
 
 ## Validation
 

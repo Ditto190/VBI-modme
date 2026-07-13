@@ -59,33 +59,13 @@ export class ReportService {
 
   async create(dto: CreateReportDto) {
     const reportId = randomUUID()
-    const chartId = randomUUID()
-    const insightId = randomUUID()
-    const pages = [{ id: randomUUID(), title: 'Page 1', chartId, insightId }]
-
-    await this.prisma.$transaction([
-      this.prisma.chart.create({
-        data: {
-          id: chartId,
-          name: 'Chart 1',
-          data: toPrismaBytes(encodeDoc(createChartDoc(chartId))),
-        },
-      }),
-      this.prisma.insight.create({
-        data: {
-          id: insightId,
-          name: 'Insight 1',
-          data: toPrismaBytes(encodeDoc(createInsightDoc(insightId))),
-        },
-      }),
-      this.prisma.report.create({
-        data: {
-          id: reportId,
-          name: dto.name?.trim() || 'Untitled Report',
-          data: toPrismaBytes(encodeDoc(createReportDoc(reportId, pages))),
-        },
-      }),
-    ])
+    await this.prisma.report.create({
+      data: {
+        id: reportId,
+        name: dto.name?.trim() || 'Untitled Report',
+        data: toPrismaBytes(encodeDoc(createReportDoc(reportId, []))),
+      },
+    })
 
     return this.findOne(reportId)
   }

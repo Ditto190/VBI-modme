@@ -1,14 +1,20 @@
-import type { CSSProperties } from 'react'
-import type { AppLocale } from '../../i18n'
+import { useState, type CSSProperties } from 'react'
+import type { AppLocale, Translate } from '../../i18n'
 import { appLocales, useTranslation } from '../../i18n'
-import { Button } from '../../components/ui/button'
 import { DropdownMenu } from '../../components/ui/dropdown-menu'
 import { ChevronDown, Globe2, Palette } from '../../components/ui/icons'
-import { type AppThemeMode, useAppPreferencesStore } from '../../stores/app-preferences.store'
+import { useApplication } from '../../application'
+import { cn } from '../../lib/utils'
+import type { VbiThemeMode as AppThemeMode } from '../../theme/palette'
 import { darkVbiThemeModes, lightVbiThemeModes, vbiThemePalettes } from '../../theme/palette'
 
 type ThemeSwatchStyle = CSSProperties & {
   '--theme-swatch': string
+}
+
+type ThemeColorInfoStyle = CSSProperties & {
+  '--theme-primary': string
+  '--theme-secondary': string
 }
 
 const localeLabels: Record<AppLocale, string> = {
@@ -35,19 +41,64 @@ const ThemeSwatch = ({ mode }: { mode: AppThemeMode }) => (
   />
 )
 
-export const ManagePreferences = () => {
-  const themeMode = useAppPreferencesStore((state) => state.themeMode)
-  const setThemeMode = useAppPreferencesStore((state) => state.setThemeMode)
-  const { locale, setLocale, t } = useTranslation()
+const getThemeColorSummary = (mode: AppThemeMode, t: Translate) => {
+  const palette = vbiThemePalettes[mode]
+
+  return `${t(`app.theme.${mode}`)} | ${t('app.theme.primaryColor')} ${palette.primary} | ${t('app.theme.secondaryColor')} ${palette.secondary}`
+}
+
+const ThemeColorRow = ({ label, tone, value }: { label: string; tone: 'primary' | 'secondary'; value: string }) => (
+  <span className='flex min-w-0 items-center gap-1.5 text-[10px] leading-4 text-vbi-text-muted'>
+    <span
+      className={cn(
+        'size-2.5 shrink-0 rounded-full border border-vbi-border',
+        tone === 'primary' ? 'bg-[var(--theme-primary)]' : 'bg-[var(--theme-secondary)]',
+      )}
+    />
+    <span className='shrink-0 font-medium text-vbi-text'>{label}</span>
+    <span className='min-w-0 truncate font-mono text-vbi-text-soft'>{value}</span>
+  </span>
+)
+
+const ThemeColorInfo = ({ mode, t }: { mode: AppThemeMode; t: Translate }) => {
+  const palette = vbiThemePalettes[mode]
 
   return (
     <div
-      className='vbi-motion-soft-reveal mx-4 mt-auto flex h-12 w-[calc(100%-32px)] items-center justify-between gap-3 border-t border-[var(--vbi-border)] py-2 max-[720px]:mx-3 max-[720px]:mb-3 max-[720px]:mt-0 max-[720px]:w-80 max-[720px]:max-w-[calc(100%-24px)]'
+      className='grid gap-1.5 rounded-md border border-vbi-border bg-vbi-control-muted p-2'
+      style={
+        {
+          '--theme-primary': palette.primary,
+          '--theme-secondary': palette.secondary,
+        } as ThemeColorInfoStyle
+      }
+    >
+      <span className='truncate text-[11px] font-semibold leading-none text-vbi-text-strong'>
+        {t(`app.theme.${mode}`)}
+      </span>
+      <div className='grid gap-0.5'>
+        <ThemeColorRow label={t('app.theme.primaryColor')} tone='primary' value={palette.primary} />
+        <ThemeColorRow label={t('app.theme.secondaryColor')} tone='secondary' value={palette.secondary} />
+      </div>
+    </div>
+  )
+}
+
+export const ManagePreferences = () => {
+  const themeMode = useApplication((state) => state.theme.mode)
+  const setThemeMode = useApplication((state) => state.theme.changeTheme)
+  const { locale, setLocale, t } = useTranslation()
+  const [previewThemeMode, setPreviewThemeMode] = useState<AppThemeMode | null>(null)
+  const colorInfoMode = previewThemeMode ?? themeMode
+
+  return (
+    <div
+      className='mx-3 mb-3 mt-auto flex h-11 w-[calc(100%-24px)] items-center justify-between gap-3 rounded-lg bg-[color-mix(in_srgb,var(--vbi-control-muted)_48%,transparent)] px-1.5 py-1 max-[720px]:mx-3 max-[720px]:mb-3 max-[720px]:mt-0 max-[720px]:w-80 max-[720px]:max-w-[calc(100%-24px)]'
       aria-label={t('app.theme.switch')}
     >
       <DropdownMenu
         closeOnSelect={false}
-        menuClassName='w-52 min-w-0 p-2'
+        menuClassName='w-64 max-w-[calc(100vw-24px)] min-w-0 p-2'
         placement='top-start'
         items={themeGroups
           .flatMap((group) => group.modes)
@@ -60,63 +111,81 @@ export const ManagePreferences = () => {
           <div className='grid gap-2'>
             {themeGroups.map((group) => (
               <div className='grid gap-1.5' key={group.labelKey}>
-                <span className='text-[10px] font-semibold leading-none text-[var(--vbi-text-muted)]'>
-                  {t(group.labelKey)}
-                </span>
-                <div className='grid grid-cols-6 gap-1.5' role='radiogroup' aria-label={t(group.labelKey)}>
-                  {group.modes.map((mode) => (
-                    <button
-                      aria-checked={themeMode === mode}
-                      aria-label={t(`app.theme.${mode}`)}
-                      className='grid size-6 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 outline-none transition duration-150 ease-out hover:scale-110 hover:border-[var(--vbi-border-strong)] hover:bg-[var(--vbi-surface-solid)] focus-visible:border-[var(--vbi-primary)] focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] data-[active=true]:scale-110 data-[active=true]:animate-[vbi-subtle-pop_var(--vbi-motion)_var(--vbi-ease-pop)] data-[active=true]:border-[var(--vbi-border-strong)] data-[active=true]:bg-[var(--vbi-surface-solid)] data-[active=true]:[&_span]:scale-110'
-                      data-active={themeMode === mode}
-                      key={mode}
-                      role='radio'
-                      title={t(`app.theme.${mode}`)}
-                      type='button'
-                      onClick={() => setThemeMode(mode)}
-                    >
-                      <ThemeSwatch mode={mode} />
-                    </button>
-                  ))}
+                <span className='text-[10px] font-semibold leading-none text-vbi-text-muted'>{t(group.labelKey)}</span>
+                <div
+                  className='grid grid-cols-6 gap-1.5'
+                  role='radiogroup'
+                  aria-label={t(group.labelKey)}
+                  onBlur={(event) => {
+                    const nextTarget = event.relatedTarget
+                    if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) {
+                      setPreviewThemeMode(null)
+                    }
+                  }}
+                  onMouseLeave={() => setPreviewThemeMode(null)}
+                >
+                  {group.modes.map((mode) => {
+                    const colorSummary = getThemeColorSummary(mode, t)
+
+                    return (
+                      <button
+                        aria-checked={themeMode === mode}
+                        aria-label={colorSummary}
+                        className='grid size-6 cursor-pointer place-items-center rounded-full border border-transparent bg-transparent p-0 outline-none transition-[background-color,border-color,box-shadow] duration-150 ease-out hover:border-vbi-border-strong hover:bg-vbi-secondary focus-visible:border-vbi-primary focus-visible:shadow-[0_0_0_3px_var(--vbi-focus)] data-[active=true]:border-vbi-border-strong data-[active=true]:bg-vbi-secondary'
+                        data-active={themeMode === mode}
+                        key={mode}
+                        role='radio'
+                        title={colorSummary}
+                        type='button'
+                        onClick={() => setThemeMode(mode)}
+                        onFocus={() => setPreviewThemeMode(mode)}
+                        onMouseEnter={() => setPreviewThemeMode(mode)}
+                      >
+                        <ThemeSwatch mode={mode} />
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             ))}
+            <ThemeColorInfo mode={colorInfoMode} t={t} />
           </div>
         )}
         trigger={
-          <Button
-            className='h-8 min-w-20 justify-center gap-2.5 px-1.5 text-[var(--vbi-text-muted)] [&_svg:last-child]:text-[var(--vbi-placeholder)]'
-            icon={<Palette className='h-4 w-4' />}
-            size='sm'
-            variant='ghost'
+          <button
+            className='inline-flex h-8 min-w-20 cursor-pointer items-center justify-center gap-2.5 rounded-md border border-transparent bg-transparent px-1.5 text-xs font-medium text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-focus [&_svg:last-child]:text-vbi-placeholder'
+            type='button'
             aria-label={t('app.theme.switch')}
             title={t('app.theme.switch')}
           >
+            <Palette className='h-4 w-4' />
             <ThemeSwatch mode={themeMode} />
             <ChevronDown className='h-4 w-4' />
-          </Button>
+          </button>
         }
       />
-      <DropdownMenu
-        placement='top-end'
-        items={appLocales.map((key) => ({
-          key,
-          label: t(localeLabels[key]),
-          onSelect: () => setLocale(key),
-        }))}
-        trigger={
-          <Button
-            className='h-8 w-24 min-w-0 justify-center gap-2.5 overflow-hidden px-1.5 text-xs text-[var(--vbi-text-muted)] hover:text-[var(--vbi-text-strong)] [&_span]:min-w-0 [&_span]:shrink [&_span]:truncate [&_span]:text-center [&_svg:last-child]:text-[var(--vbi-placeholder)]'
-            icon={<Globe2 className='h-4 w-4' />}
-            size='sm'
-            variant='ghost'
-          >
-            <span>{t(localeLabels[locale])}</span>
-            <ChevronDown className='h-4 w-4' />
-          </Button>
-        }
-      />
+      <div className='ml-auto flex min-w-0 justify-end'>
+        <DropdownMenu
+          placement='top-end'
+          items={appLocales.map((key) => ({
+            key,
+            label: t(localeLabels[key]),
+            onSelect: () => setLocale(key),
+          }))}
+          trigger={
+            <button
+              className='inline-flex h-8 w-auto max-w-full cursor-pointer items-center justify-center gap-2.5 rounded-md border border-transparent bg-transparent px-1.5 text-xs font-medium text-vbi-text-muted transition-[background-color,color,box-shadow] duration-150 ease-out hover:bg-vbi-hover-bg hover:text-vbi-text-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vbi-focus [&_span]:min-w-0 [&_span]:whitespace-nowrap [&_svg]:shrink-0 [&_svg:last-child]:text-vbi-placeholder'
+              type='button'
+              aria-label={t('app.language.switch')}
+              title={t('app.language.switch')}
+            >
+              <Globe2 className='h-4 w-4' />
+              <span>{t(localeLabels[locale])}</span>
+              <ChevronDown className='h-4 w-4' />
+            </button>
+          }
+        />
+      </div>
     </div>
   )
 }

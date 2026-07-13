@@ -1,5 +1,5 @@
 import { MoreOutlined } from '@ant-design/icons'
-import { Dropdown } from 'antd'
+import { Dropdown, type MenuProps } from 'antd'
 import type { ProfessionalLabels } from 'src/config/labels'
 import { getFieldLabel } from 'src/utils/mappedFields'
 import type { MappedField } from 'src/types'
@@ -17,6 +17,7 @@ type FieldTokenProps = {
   sourceSlotIndex?: number
   slotTokenIndex?: number
 }
+type MenuClickInfo = Parameters<NonNullable<MenuProps['onClick']>>[0]
 
 export const FieldToken = (props: FieldTokenProps) => {
   const { dragId, item, labels, onAction, sourceEncoding, sourceIndex, sourceSlotIndex, slotTokenIndex } = props
@@ -34,7 +35,10 @@ export const FieldToken = (props: FieldTokenProps) => {
       <span className='pro-slot-token__label'>{getFieldLabel(item)}</span>
       <Dropdown
         trigger={['click']}
-        menu={{ items: buildFieldTokenMenuItems(item, labels), onClick: ({ key }) => onAction(item, String(key)) }}
+        menu={{
+          items: buildFieldTokenMenuItems(item, labels),
+          onClick: ({ key }: MenuClickInfo) => onAction(item, String(key)),
+        }}
       >
         <button
           aria-label={labels.menuFormat}

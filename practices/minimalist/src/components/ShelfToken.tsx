@@ -1,6 +1,7 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import type { VBIChartBuilder, VBIDimension, VBIMeasure } from '@visactor/vbi'
 import { Button, Dropdown, type MenuProps } from 'antd'
+import type { MouseEvent } from 'react'
 import {
   dateOptions,
   measureOptions,
@@ -12,6 +13,7 @@ import type { MinimalLabels } from 'src/i18n'
 import type { EditorField, FieldRole } from 'src/types'
 import { removeField } from 'src/utils/fields'
 type ShelfItem = VBIDimension | VBIMeasure
+type MenuClickInfo = Parameters<NonNullable<MenuProps['onClick']>>[0]
 
 type ShelfTokenProps = {
   builder: VBIChartBuilder
@@ -75,7 +77,7 @@ export const ShelfToken = (props: ShelfTokenProps) => {
         menu={{
           items: getMenuItems(props.role, props.labels, field),
           selectedKeys: getSelectedKeys(props.item, props.role),
-          onClick: ({ key }) => applyMenu(props, String(key)),
+          onClick: ({ key }: MenuClickInfo) => applyMenu(props, String(key)),
         }}
         placement='bottomLeft'
         trigger={['click']}
@@ -90,7 +92,7 @@ export const ShelfToken = (props: ShelfTokenProps) => {
         icon={<DeleteOutlined />}
         size='small'
         type='text'
-        onClick={(event) => {
+        onClick={(event: MouseEvent<HTMLElement>) => {
           event.stopPropagation()
           removeField(props.builder, props.role, props.item.id)
         }}

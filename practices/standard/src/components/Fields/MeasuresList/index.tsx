@@ -1,6 +1,7 @@
 import { useDraggable } from '@dnd-kit/core'
-import { Card, Flex, theme } from 'antd'
+import { Flex, theme } from 'antd'
 import { NumberOutlined } from '@ant-design/icons'
+import { CompatCard as Card } from '../../antdCompat'
 import { createSchemaFieldDragId, type SchemaFieldDragData } from '../../Shelves/dnd'
 import { useVBIMeasures, useVBISchemaFields } from '../../../hooks'
 import { useTranslation } from '../../../i18n'

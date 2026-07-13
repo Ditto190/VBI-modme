@@ -1,6 +1,6 @@
 import { withApiErrorToast } from './apiClient'
 import { requestProvider } from './providerHttp'
-import { getResourceLabel, tRuntime } from '../i18n'
+import { getResourceLabel, tRuntime } from '../i18n/runtime'
 import type { ResourceItem, ResourceKind } from '../types'
 
 const resourcePaths = {

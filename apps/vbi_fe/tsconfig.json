@@ -1,12 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "preserve",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "jsx": "react-jsx",
     "noEmit": true,
     "emitDeclarationOnly": false,
     "composite": false,
@@ -23,19 +18,21 @@
     "paths": {
       "src/*": ["./src/*"],
       "@visactor/headless-bi-provider": ["../vbi_provider/src/index.ts"],
-      "@visactor/headless-bi-provider/*": ["../vbi_provider/src/*"]
+      "@visactor/headless-bi-provider/*": ["../vbi_provider/src/*"],
+      "@visactor/vbi-agent": ["../../packages/vbi-agent/src/index.ts"],
+      "@visactor/vbi-agent/*": ["../../packages/vbi-agent/src/*"]
     }
   },
   "references": [
     {
-      "path": "../../packages/vseed"
+      "path": "../../packages/vbi"
     },
     {
-      "path": "../../packages/vbi"
+      "path": "../../packages/vbi-agent"
     },
     {
       "path": "../../practices/standard"
     }
   ],
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "src"]
+  "include": ["rsbuild.config.ts", "src"]
 }

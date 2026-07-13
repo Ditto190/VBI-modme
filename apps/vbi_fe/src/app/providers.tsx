@@ -1,16 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { exposeApplicationToWindow, setApplicationPathname, useApplication } from '../application'
 import { NavigationBinder } from '../components/NavigationBinder'
 import { ToastViewport } from '../components/ui/toast'
 import {
   initializeAppPreferences,
   reconcilePersistedAppPreferences,
-  useAppPreferencesStore,
   type AppThemeMode,
 } from '../stores/app-preferences.store'
 import type { AppLocale } from '../i18n'
-import { getVbiThemeStyle, isDarkVbiTheme } from '../theme'
+import { applyVbiThemeToDocument } from '../theme'
 
 type VbiAppProvidersProps = {
   children: React.ReactNode
@@ -19,12 +19,17 @@ type VbiAppProvidersProps = {
 }
 
 export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: VbiAppProvidersProps) => {
-  initializeAppPreferences({ locale: initialLocale, themeMode: initialThemeMode })
+  useState(() => {
+    initializeAppPreferences({ locale: initialLocale, themeMode: initialThemeMode })
+    if (typeof window !== 'undefined') setApplicationPathname(window.location.pathname)
+    return null
+  })
 
-  const locale = useAppPreferencesStore((state) => state.locale)
-  const themeMode = useAppPreferencesStore((state) => state.themeMode)
+  const locale = useApplication((state) => state.i18n.locale)
+  const themeMode = useApplication((state) => state.theme.mode)
 
   useEffect(() => {
+    exposeApplicationToWindow()
     reconcilePersistedAppPreferences()
   }, [])
 
@@ -32,12 +37,24 @@ export const VbiAppProviders = ({ children, initialLocale, initialThemeMode }: V
     document.documentElement.lang = locale
   }, [locale])
 
+  useLayoutEffect(() => {
+    applyVbiThemeToDocument(themeMode)
+
+    let secondFrame = 0
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => {
+        document.documentElement.removeAttribute('data-vbi-first-paint')
+      })
+    })
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame)
+      window.cancelAnimationFrame(secondFrame)
+    }
+  }, [themeMode])
+
   return (
-    <div
-      data-theme={themeMode}
-      data-theme-tone={isDarkVbiTheme(themeMode) ? 'dark' : 'light'}
-      style={getVbiThemeStyle(themeMode)}
-    >
+    <div>
       <NavigationBinder />
       {children}
       <div data-vbi-portal-root='' />
