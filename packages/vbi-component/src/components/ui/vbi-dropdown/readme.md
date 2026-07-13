@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                              | Type                                     | Default    |
-| ------------- | -------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------- | ---------- |
-| `disabled`    | `disabled`     | When true, the dropdown cannot be opened.                                                | `boolean`                                | `false`    |
-| `offset`      | `offset`       | The distance between the dropdown and its trigger (in pixels).                           | `number`                                 | `8`        |
-| `open`        | `open`         | Controls the open state of the dropdown.                                                 | `boolean`                                | `false`    |
-| `placement`   | `placement`    | The position of the dropdown relative to its trigger.                                    | `"bottom" \| "left" \| "right" \| "top"` | `'bottom'` |
-| `popoverMode` | `popover-mode` | The interaction mode of the popover ('auto' closes on outside click, 'manual' does not). | `"auto" \| "manual"`                     | `'auto'`   |
-| `trigger`     | `trigger`      | How the dropdown is triggered.                                                           | `"click" \| "hover"`                     | `'click'`  |
+| Property      | Attribute      | Description                                                                              | Type                                                                                                                                                                 | Default    |
+| ------------- | -------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `disabled`    | `disabled`     | When true, the dropdown cannot be opened.                                                | `boolean`                                                                                                                                                            | `false`    |
+| `offset`      | `offset`       | The distance between the dropdown and its trigger (in pixels).                           | `number`                                                                                                                                                             | `8`        |
+| `open`        | `open`         | Controls the open state of the dropdown.                                                 | `boolean`                                                                                                                                                            | `false`    |
+| `placement`   | `placement`    | The position of the dropdown relative to its trigger.                                    | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom'` |
+| `popoverMode` | `popover-mode` | The interaction mode of the popover ('auto' closes on outside click, 'manual' does not). | `"auto" \| "manual"`                                                                                                                                                 | `'auto'`   |
+| `trigger`     | `trigger`      | How the dropdown is triggered.                                                           | `"click" \| "hover"`                                                                                                                                                 | `'click'`  |
 
 
 ## Events

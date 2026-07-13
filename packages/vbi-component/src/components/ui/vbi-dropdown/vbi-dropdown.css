@@ -9,22 +9,19 @@
 
 .dropdown-trigger {
   display: inline-block;
-
-  /* Register this element as the positioning anchor */
-  anchor-name: var(--dropdown-anchor-id);
 }
 
 .dropdown-content {
+  position: fixed;
+  inset: auto;
+  top: 0;
+  left: 0;
   border: none;
   padding: 0;
   margin: 0;
-  translate: var(--offset-x, 0px) var(--offset-y, 0px);
   background: transparent;
   color: inherit;
   overflow: visible;
-
-  position-anchor: var(--dropdown-anchor-id);
-  position-area: var(--anchor-v, bottom) var(--anchor-h, span-right);
   z-index: 999;
 
   transition-property: opacity, scale, display, overlay;
@@ -41,6 +38,22 @@
     opacity: 1;
     scale: 100%;
   }
+
+  &[data-placement^='bottom'] {
+    transform-origin: top center;
+  }
+
+  &[data-placement^='top'] {
+    transform-origin: bottom center;
+  }
+
+  &[data-placement^='left'] {
+    transform-origin: right center;
+  }
+
+  &[data-placement^='right'] {
+    transform-origin: left center;
+  }
 }
 
 @starting-style {
@@ -48,25 +61,4 @@
     scale: 95%;
     opacity: 0;
   }
-}
-
-:host(.placement-left) {
-  --anchor-h: left;
-  --anchor-v: span-bottom;
-  --offset-x: calc(var(--vbi-dropdown-offset, 8px) * -1);
-}
-
-:host(.placement-right) {
-  --anchor-h: right;
-  --anchor-v: span-bottom;
-  --offset-x: var(--vbi-dropdown-offset, 8px);
-}
-
-:host(.placement-bottom) {
-  --anchor-v: bottom;
-  --offset-y: var(--vbi-dropdown-offset, 8px);
-}
-:host(.placement-top) {
-  --anchor-v: top;
-  --offset-y: calc(var(--vbi-dropdown-offset, 8px) * -1);
 }

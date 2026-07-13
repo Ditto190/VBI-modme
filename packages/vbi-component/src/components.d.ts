@@ -13,6 +13,7 @@ import { VSeed } from "@visactor/vseed";
 import { WhereFilterLike } from "./components/chart/shelves/vbi-chart-where/helpers/where-utils";
 import { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 import { VBIChartBuilder } from "@visactor/vbi";
+import { DropdownPlacement } from "./components/ui/vbi-dropdown/vbi-dropdown";
 import { IconDefinition } from "@ant-design/icons-svg/lib/types";
 import { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 import { SelectOption } from "./components/ui/vbi-select/vbi-select";
@@ -26,6 +27,7 @@ export { VSeed } from "@visactor/vseed";
 export { WhereFilterLike } from "./components/chart/shelves/vbi-chart-where/helpers/where-utils";
 export { ThemeConfig } from "./components/ui/vbi-config-provider/theme";
 export { VBIChartBuilder } from "@visactor/vbi";
+export { DropdownPlacement } from "./components/ui/vbi-dropdown/vbi-dropdown";
 export { IconDefinition } from "@ant-design/icons-svg/lib/types";
 export { MenuItem } from "./components/ui/vbi-menu/vbi-menu";
 export { SelectOption } from "./components/ui/vbi-select/vbi-select";
@@ -224,7 +226,7 @@ export namespace Components {
           * The position of the dropdown relative to its trigger.
           * @default 'bottom'
          */
-        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        "placement"?: DropdownPlacement;
         /**
           * The interaction mode of the popover ('auto' closes on outside click, 'manual' does not).
           * @default 'auto'
@@ -1146,7 +1148,7 @@ declare namespace LocalJSX {
           * The position of the dropdown relative to its trigger.
           * @default 'bottom'
          */
-        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        "placement"?: DropdownPlacement;
         /**
           * The interaction mode of the popover ('auto' closes on outside click, 'manual' does not).
           * @default 'auto'
@@ -1480,7 +1482,7 @@ declare namespace LocalJSX {
         "size": 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     }
     interface VbiDropdownAttributes {
-        "placement": 'top' | 'bottom' | 'left' | 'right';
+        "placement": DropdownPlacement;
         "popoverMode": 'auto' | 'manual';
         "trigger": 'click' | 'hover';
         "offset": number;
