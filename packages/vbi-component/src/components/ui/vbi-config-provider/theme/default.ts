@@ -31,6 +31,7 @@ export const darkTheme: ThemeConfig = {
     radiusBox: '0.5rem',
     sizeSelector: '0.25rem',
     sizeField: '0.25rem',
+    sizeBase: '1rem', // Or 1rem
     border: '1px',
     depth: 1,
     noise: 0,
@@ -68,6 +69,7 @@ export const lightTheme: ThemeConfig = {
     radiusBox: '0.5rem',
     sizeSelector: '0.25rem',
     sizeField: '0.25rem',
+    sizeBase: '1rem', // Or 1rem
     border: '1px',
     depth: 1,
     noise: 0,

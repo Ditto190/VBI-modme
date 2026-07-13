@@ -42,6 +42,7 @@ export const getThemeCssVariables = (
     '--radius-box': tokens.radiusBox,
     '--size-selector': tokens.sizeSelector,
     '--size-field': tokens.sizeField,
+    '--size-base': tokens.sizeBase,
     '--border': tokens.border,
     '--depth': tokens.depth?.toString(),
     '--noise': tokens.noise?.toString(),

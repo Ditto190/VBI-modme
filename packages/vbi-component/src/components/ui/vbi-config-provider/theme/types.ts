@@ -33,6 +33,7 @@ export interface ThemeTokens {
   radiusBox?: string
   sizeSelector?: string
   sizeField?: string
+  sizeBase?: string
   border?: string
   depth?: number | string
   noise?: number | string
