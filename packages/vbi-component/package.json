@@ -45,7 +45,7 @@
     "build": "stencil build",
     "format": "oxfmt .",
     "lint": "oxlint --fix .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
     "test": "stencil-test --prod --project=unit --project=spec",
     "test:browser": "stencil-test --prod --project=browser",
     "test:full": "stencil-test --prod",

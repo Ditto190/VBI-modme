@@ -1,0 +1,12 @@
+{
+  "extends": ["./tsconfig.json", "../../tsconfig.test.json"],
+  "include": ["src", "tests/**/*", "tests/**/*.json"],
+  "compilerOptions": {
+    "composite": false,
+    "rootDir": ".",
+    "types": ["node", "@stencil/vitest/globals"],
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  }
+}
