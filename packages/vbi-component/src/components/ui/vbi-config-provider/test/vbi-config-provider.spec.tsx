@@ -1,5 +1,0 @@
-import { describe, it } from '@stencil/vitest'
-
-describe('vbi-config-provider', () => {
-  it.todo('should render successfully')
-})
