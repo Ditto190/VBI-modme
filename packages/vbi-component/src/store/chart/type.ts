@@ -49,33 +49,22 @@ export function createChartTypeStore(chartBuilder: ChartBuilderStore): ChartType
     return []
   }
 
+  // Sync state
   let currentBuilder = chartBuilder.builder
-
-  const onDslUpdate = () => {
-    updateState()
-  }
-
-  if (currentBuilder && currentBuilder.dsl) {
-    currentBuilder.dsl.observe(onDslUpdate)
-  }
+  let unobserveChartType = currentBuilder?.chartType ? currentBuilder.chartType.observe(updateState) : undefined
 
   chartBuilder.onChange('dsl', () => {
     if (currentBuilder !== chartBuilder.builder) {
-      if (currentBuilder && currentBuilder.dsl) {
-        currentBuilder.dsl.unobserve(onDslUpdate)
-      }
+      unobserveChartType?.()
       currentBuilder = chartBuilder.builder
-      if (currentBuilder && currentBuilder.dsl) {
-        currentBuilder.dsl.observe(onDslUpdate)
-      }
+      unobserveChartType = currentBuilder.chartType.observe(updateState)
+      updateState()
     }
-    updateState()
   })
 
   const dispose = () => {
-    if (currentBuilder && currentBuilder.dsl) {
-      currentBuilder.dsl.unobserve(onDslUpdate)
-    }
+    unobserveChartType?.()
+    unobserveChartType = undefined
     storeDispose()
   }
 

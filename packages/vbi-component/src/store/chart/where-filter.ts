@@ -213,33 +213,22 @@ export function createChartWhereFilterStore(chartBuilder: ChartBuilderStore): Ch
     return undefined
   }
 
+  // Sync state
   let currentBuilder = chartBuilder.builder
-
-  const onDocUpdate = () => {
-    updateState()
-  }
-
-  if (currentBuilder && currentBuilder.doc) {
-    currentBuilder.doc.on('update', onDocUpdate)
-  }
+  let unobserveWhereFilter = currentBuilder?.whereFilter ? currentBuilder.whereFilter.observe(updateState) : undefined
 
   chartBuilder.onChange('dsl', () => {
     if (currentBuilder !== chartBuilder.builder) {
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.off('update', onDocUpdate)
-      }
+      unobserveWhereFilter?.()
       currentBuilder = chartBuilder.builder
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.on('update', onDocUpdate)
-      }
+      unobserveWhereFilter = currentBuilder.whereFilter.observe(updateState)
+      updateState()
     }
-    updateState()
   })
 
   const dispose = () => {
-    if (currentBuilder && currentBuilder.doc) {
-      currentBuilder.doc.off('update', onDocUpdate)
-    }
+    unobserveWhereFilter?.()
+    unobserveWhereFilter = undefined
     storeDispose()
   }
 

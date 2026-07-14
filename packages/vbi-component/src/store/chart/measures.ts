@@ -96,33 +96,22 @@ export function createChartMeasuresStore(chartBuilder: ChartBuilderStore): Chart
     return undefined
   }
 
+  // Sync state
   let currentBuilder = chartBuilder.builder
-
-  const onDocUpdate = () => {
-    updateState()
-  }
-
-  if (currentBuilder && currentBuilder.doc) {
-    currentBuilder.doc.on('update', onDocUpdate)
-  }
+  let unobserveMeasures = currentBuilder?.measures ? currentBuilder.measures.observe(updateState) : undefined
 
   chartBuilder.onChange('dsl', () => {
     if (currentBuilder !== chartBuilder.builder) {
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.off('update', onDocUpdate)
-      }
+      unobserveMeasures?.()
+      updateState()
       currentBuilder = chartBuilder.builder
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.on('update', onDocUpdate)
-      }
+      unobserveMeasures = currentBuilder.measures.observe(updateState)
     }
-    updateState()
   })
 
   const dispose = () => {
-    if (currentBuilder && currentBuilder.doc) {
-      currentBuilder.doc.off('update', onDocUpdate)
-    }
+    unobserveMeasures?.()
+    unobserveMeasures = undefined
     storeDispose()
   }
 

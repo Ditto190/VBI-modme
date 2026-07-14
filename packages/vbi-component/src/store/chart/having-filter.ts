@@ -254,33 +254,24 @@ export function createChartHavingFilterStore(chartBuilder: ChartBuilderStore): C
     return undefined
   }
 
+  // Sync state
   let currentBuilder = chartBuilder.builder
-
-  const onDocUpdate = () => {
-    updateState()
-  }
-
-  if (currentBuilder && currentBuilder.doc) {
-    currentBuilder.doc.on('update', onDocUpdate)
-  }
+  let unobserveHavingFilter = currentBuilder?.havingFilter
+    ? currentBuilder.havingFilter.observe(updateState)
+    : undefined
 
   chartBuilder.onChange('dsl', () => {
     if (currentBuilder !== chartBuilder.builder) {
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.off('update', onDocUpdate)
-      }
+      unobserveHavingFilter?.()
       currentBuilder = chartBuilder.builder
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.on('update', onDocUpdate)
-      }
+      unobserveHavingFilter = currentBuilder.havingFilter.observe(updateState)
+      updateState()
     }
-    updateState()
   })
 
   const dispose = () => {
-    if (currentBuilder && currentBuilder.doc) {
-      currentBuilder.doc.off('update', onDocUpdate)
-    }
+    unobserveHavingFilter?.()
+    unobserveHavingFilter = undefined
     storeDispose()
   }
 

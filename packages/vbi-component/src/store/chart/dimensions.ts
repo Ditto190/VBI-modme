@@ -90,33 +90,22 @@ export function createChartDimensionsStore(chartBuilder: ChartBuilderStore): Cha
     return undefined
   }
 
+  // Sync state
   let currentBuilder = chartBuilder.builder
-
-  const onDocUpdate = () => {
-    updateState()
-  }
-
-  if (currentBuilder && currentBuilder.doc) {
-    currentBuilder.doc.on('update', onDocUpdate)
-  }
+  let unobserveDimensions = currentBuilder?.dimensions ? currentBuilder.dimensions.observe(updateState) : undefined
 
   chartBuilder.onChange('dsl', () => {
     if (currentBuilder !== chartBuilder.builder) {
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.off('update', onDocUpdate)
-      }
+      unobserveDimensions?.()
       currentBuilder = chartBuilder.builder
-      if (currentBuilder && currentBuilder.doc) {
-        currentBuilder.doc.on('update', onDocUpdate)
-      }
+      unobserveDimensions = currentBuilder.dimensions.observe(updateState)
+      updateState()
     }
-    updateState()
   })
 
   const dispose = () => {
-    if (currentBuilder && currentBuilder.doc) {
-      currentBuilder.doc.off('update', onDocUpdate)
-    }
+    unobserveDimensions?.()
+    unobserveDimensions = undefined
     storeDispose()
   }
 
