@@ -17,6 +17,10 @@ export class VbiChartEditor {
     return this.store?.chartVSeed.state.vseed ?? undefined
   }
 
+  private get loading(): boolean {
+    return this.store?.chartBuilder.state.loading ?? false
+  }
+
   componentWillLoad() {
     this.store = connectChartStore(this.el)
   }
@@ -40,6 +44,11 @@ export class VbiChartEditor {
               </div>
               <div class='chart-editor__chart'>
                 <vbi-chart-render vseed={this.vseed}></vbi-chart-render>
+                {this.loading && (
+                  <div class='chart-editor__chart-loading'>
+                    <vbi-loading size='lg' color='primary'></vbi-loading>
+                  </div>
+                )}
               </div>
             </section>
           </main>

@@ -14,6 +14,19 @@
 | `type`   | `type`    | Loading style (spinner, dots, ring, ball, bars, infinity)                                  | `"ball" \| "bars" \| "dots" \| "infinity" \| "ring" \| "spinner"`                                  | `'spinner'` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vbi-chart-editor](../../chart/vbi-chart-editor)
+
+### Graph
+```mermaid
+graph TD;
+  vbi-chart-editor --> vbi-loading
+  style vbi-loading fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
