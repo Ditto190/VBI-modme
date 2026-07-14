@@ -5,7 +5,6 @@ const isDev = process.argv.includes('--dev')
 
 export const config: Config = {
   namespace: 'vbi-component',
-  globalStyle: 'src/global/app.css',
   rollupConfig: {
     inputOptions: {
       external: isDev

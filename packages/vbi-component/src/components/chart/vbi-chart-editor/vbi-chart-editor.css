@@ -1,3 +1,5 @@
+@import '../../../common/styles/reset.css';
+
 :host {
   --vbi-chart-editor-min-width: calc(var(--size-base) * 46.875);
   --vbi-chart-editor-min-height: calc(var(--size-base) * 43.75);

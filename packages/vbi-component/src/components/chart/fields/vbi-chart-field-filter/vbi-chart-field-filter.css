@@ -1,3 +1,5 @@
+@import '../../../../common/styles/reset.css';
+
 :host {
   --vbi-chart-field-filter-min-width: calc(var(--size-base) * 13.5);
 

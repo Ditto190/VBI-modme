@@ -1,7 +1,6 @@
 export const VBI_DEFAULT_LOCALE = 'zh-CN' as const
 export const VBI_DEFAULT_THEME = 'light' as const
 export const VBI_DEFAULT_LIMIT = 1000
-export const VBI_MAX_LIMIT = 1000
 
 export const VBI_SUPPORTED_LOCALES = ['zh-CN', 'en-US', 'ja-JP', 'de-DE', 'id-ID', 'fr-FR', 'ko-KR', 'vi-VN'] as const
 export const VBI_SUPPORTED_THEMES = ['light', 'dark'] as const
