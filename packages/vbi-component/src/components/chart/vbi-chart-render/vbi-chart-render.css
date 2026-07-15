@@ -1,0 +1,10 @@
+@import '../../../common/styles/reset.css';
+
+:host {
+  display: block;
+}
+
+.vtable .input-container {
+  position: absolute;
+  top: 0px;
+}
