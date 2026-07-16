@@ -42,8 +42,25 @@ export class VbiChartFieldFilter {
   /** Emitted when the user changes the search keyword. */
   @Event() vbiChartFieldFilterKeyword!: EventEmitter<string>
 
+  private unsubscribe?: () => void
+
   componentWillLoad() {
     this.store = connectChartStore(this.el)
+    if (this.store) {
+      this.unsubscribe = this.store.chartBuilder.onChange('builderChangeTrigger', () => {
+        this.handleReset()
+        if (this.keyword !== '') {
+          this.keyword = ''
+          this.vbiChartFieldFilterKeyword.emit(this.keyword)
+        }
+      })
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.unsubscribe) {
+      this.unsubscribe()
+    }
   }
 
   private get t() {

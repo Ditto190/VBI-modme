@@ -523,6 +523,10 @@ export interface VbiCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiCheckboxElement;
 }
+export interface VbiConfigProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVbiConfigProviderElement;
+}
 export interface VbiDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVbiDropdownElement;
@@ -734,7 +738,18 @@ declare global {
         prototype: HTMLVbiCheckboxElement;
         new (): HTMLVbiCheckboxElement;
     };
+    interface HTMLVbiConfigProviderElementEventMap {
+        "vbiBuilderChange": VBIChartBuilder;
+    }
     interface HTMLVbiConfigProviderElement extends Components.VbiConfigProvider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVbiConfigProviderElementEventMap>(type: K, listener: (this: HTMLVbiConfigProviderElement, ev: VbiConfigProviderCustomEvent<HTMLVbiConfigProviderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVbiConfigProviderElementEventMap>(type: K, listener: (this: HTMLVbiConfigProviderElement, ev: VbiConfigProviderCustomEvent<HTMLVbiConfigProviderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLVbiConfigProviderElement: {
         prototype: HTMLVbiConfigProviderElement;
@@ -1119,6 +1134,10 @@ declare namespace LocalJSX {
           * VBI chart builder instance to initialize the store with
          */
         "builder"?: VBIChartBuilder;
+        /**
+          * Emitted when the builder is changed internally
+         */
+        "onVbiBuilderChange"?: (event: VbiConfigProviderCustomEvent<VBIChartBuilder>) => void;
         /**
           * Theme configuration containing mode ('light' | 'dark') and design tokens
          */

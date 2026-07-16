@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop, Watch } from '@stencil/core'
+import { Component, Element, Event, h, Host, Prop, Watch, type EventEmitter } from '@stencil/core'
 import { type VBIChartBuilder } from '@visactor/vbi'
 import { createChartStore, type ChartStore } from 'src/store/chart'
 import { provideChartStore } from 'src/store/context/chart-context'
@@ -19,28 +19,44 @@ export class VbiConfigProvider {
   /** VBI chart builder instance to initialize the store with */
   @Prop() builder?: VBIChartBuilder
 
+  /** Emitted when the builder is changed internally */
+  @Event() vbiBuilderChange!: EventEmitter<VBIChartBuilder>
+
   private destroyCallback?: () => void
   private chartStore?: ChartStore
   private disposeChartProvider?: () => void
+  private unsubscribeBuilderChange?: () => void
 
   async componentWillLoad() {
     await this.handleBuilderChange(this.builder)
   }
 
   disconnectedCallback() {
+    this.unsubscribeBuilderChange?.()
     this.disposeChartProvider?.()
     this.destroyCallback?.()
   }
 
   @Watch('builder')
   async handleBuilderChange(newBuilder?: VBIChartBuilder) {
+    if (this.chartStore && newBuilder === this.chartStore.chartBuilder.builder) {
+      return
+    }
+
     this.destroyCallback?.()
     this.disposeChartProvider?.()
+    this.unsubscribeBuilderChange?.()
 
     const builder = newBuilder ?? (await createDefaultBuilder())
     this.chartStore = createChartStore(builder)
     this.destroyCallback = this.chartStore.initialize(builder)
     this.disposeChartProvider = provideChartStore(this.el, this.chartStore)
+
+    this.unsubscribeBuilderChange = this.chartStore.chartBuilder.onChange('builderChangeTrigger', () => {
+      if (this.chartStore) {
+        this.vbiBuilderChange.emit(this.chartStore.chartBuilder.builder)
+      }
+    })
   }
 
   render() {

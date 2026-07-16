@@ -5,6 +5,7 @@ import { Builder as VSeedBuilder, type VSeed } from '@visactor/vseed'
 import { LocalConnector } from 'src/utils/data/localConnector'
 
 export interface ChartBuilderState {
+  builderChangeTrigger: boolean
   loading: boolean
   vseed: VSeed | null
   dsl: VBIChartDSL
@@ -13,7 +14,10 @@ export interface ChartBuilderState {
 export interface ChartBuilderStore {
   state: ChartBuilderState
   builder: VBIChartBuilder
-  onChange: <Key extends keyof ChartBuilderState>(propName: Key, cb: (newValue: ChartBuilderState[Key]) => void) => void
+  onChange: <Key extends keyof ChartBuilderState>(
+    propName: Key,
+    cb: (newValue: ChartBuilderState[Key]) => void,
+  ) => () => void
   logState: () => void
   initialize: (nextBuilder?: VBIChartBuilder) => void
   switchSource: (connectorId: string, data?: any[], schema?: DatasetColumn[]) => void
@@ -97,6 +101,7 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     onChange,
     dispose: storeDispose,
   } = createStore<ChartBuilderState>({
+    builderChangeTrigger: false,
     loading: false,
     vseed: null,
     dsl: _builder.dsl.toJSON() as VBIChartDSL,
@@ -176,11 +181,16 @@ export function createChartBuilderStore(builder: VBIChartBuilder): ChartBuilderS
     _disposeEvent?.()
 
     const builder = nextBuilder ?? _builder
+    const isBuilderChanged = _builder !== builder
 
     _builder = builder
     state.dsl = builder.dsl.toJSON() as VBIChartDSL
     state.loading = false
     state.vseed = null
+
+    if (isBuilderChanged) {
+      state.builderChangeTrigger = !state.builderChangeTrigger
+    }
 
     _disposeEvent = bindEvent()
   }
