@@ -42,7 +42,7 @@ export class VbiIcon {
 
     return (
       <Host>
-        <svg {...svgData.attrs} width={iconSize} height={iconSize} fill={this.color}>
+        <svg {...svgData.attrs} style={{ width: iconSize, height: iconSize }} fill={this.color}>
           {/* Loop through SVG children (usually path tags) */}
           {svgData.children && svgData.children.map((child: AbstractNode) => this.renderNode(child))}
         </svg>
