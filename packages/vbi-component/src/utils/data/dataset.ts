@@ -1,5 +1,9 @@
-import { type DatasetColumn } from '@visactor/vquery'
-import { type LocalRow } from './localConnector'
+import { type DatasetColumn, type VQueryDSL } from '@visactor/vquery'
+
+export type LocalValue = string | number | boolean | null | undefined
+export type LocalRow = Record<string, LocalValue>
+export type QueryValue = string | number
+export type FieldSelection = { alias: string; field: string }
 
 function isLikelyDate(value: string): boolean {
   if (!value || value.length < 6) return false
@@ -25,6 +29,18 @@ export function inferSchema(headers: string[], rows: string[][]): DatasetColumn[
   })
 }
 
+export function inferSchemaFromRows(data: LocalRow[]): DatasetColumn[] {
+  const firstRow = data[0]
+  if (!firstRow) {
+    return []
+  }
+
+  return Object.entries(firstRow).map(([name, value]) => ({
+    name,
+    type: typeof value === 'number' ? 'number' : 'string',
+  }))
+}
+
 export function rowsToDataset(headers: string[], rows: string[][], schema: DatasetColumn[]): LocalRow[] {
   const schemaByName = new Map(schema.map((field) => [field.name, field.type]))
 
@@ -48,4 +64,85 @@ export function rowsToDataset(headers: string[], rows: string[][], schema: Datas
       return row
     })
     .filter((row) => Object.values(row).some((value) => value !== '' && value !== null))
+}
+
+export function getFieldSelections(queryDSL: VQueryDSL<Record<string, QueryValue>>): {
+  dimensionFields: FieldSelection[]
+  measureFields: FieldSelection[]
+} {
+  const dimensionFields: FieldSelection[] = []
+  const measureFields: FieldSelection[] = []
+
+  for (const item of queryDSL.select ?? []) {
+    if (typeof item === 'string') {
+      dimensionFields.push({ alias: item, field: item })
+      continue
+    }
+
+    if (!item || typeof item !== 'object') {
+      continue
+    }
+
+    const field = item.field
+    const alias = item.alias ?? field
+
+    if (!field || !alias) {
+      continue
+    }
+
+    if (item.aggr?.func) {
+      measureFields.push({ alias, field })
+      continue
+    }
+
+    dimensionFields.push({ alias, field })
+  }
+
+  return { dimensionFields, measureFields }
+}
+
+export function normalizeMeasureValue(value: unknown): number | null {
+  if (typeof value === 'number') {
+    return value
+  }
+
+  if (typeof value === 'bigint') {
+    return Number(value)
+  }
+
+  if (typeof value === 'string') {
+    const nextValue = Number(value)
+    return Number.isNaN(nextValue) ? null : nextValue
+  }
+
+  return null
+}
+
+export function normalizeDataset(queryDSL: VQueryDSL<Record<string, QueryValue>>, dataset: LocalRow[]): LocalRow[] {
+  const { dimensionFields, measureFields } = getFieldSelections(queryDSL)
+
+  if (dimensionFields.length === 0 && measureFields.length === 0) {
+    return dataset
+  }
+
+  return dataset.map((row) => {
+    const normalizedRow: LocalRow = {}
+
+    for (const { alias, field } of measureFields) {
+      const sourceKey = alias || field
+      const nextValue = normalizeMeasureValue(row[sourceKey])
+      if (nextValue !== null) {
+        normalizedRow[sourceKey] = nextValue
+      }
+    }
+
+    for (const { alias, field } of dimensionFields) {
+      const sourceKey = alias || field
+      if (sourceKey in row) {
+        normalizedRow[sourceKey] = row[sourceKey]
+      }
+    }
+
+    return normalizedRow
+  })
 }
