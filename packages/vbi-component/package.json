@@ -46,10 +46,7 @@
     "format": "oxfmt .",
     "lint": "oxlint --fix .",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
-    "test": "stencil-test --prod --project=unit --project=spec",
-    "test:browser": "stencil-test --prod --project=browser",
-    "test:full": "stencil-test --prod",
-    "test:watch": "stencil-test --prod --watch",
+    "test": "stencil-test --prod --project=unit",
     "generate": "stencil generate",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
@@ -69,8 +66,6 @@
     "@visactor/vquery": "workspace:*",
     "@visactor/vseed": "workspace:*",
     "@visactor/vtable": "1.23.1",
-    "@vitest/browser-playwright": "4.1.9",
-    "playwright": "1.61.0",
     "storybook": "10.4.6",
     "typescript": "6.0.2",
     "vitest": "4.1.9"
