@@ -1,12 +1,12 @@
-import { setCustomElementsManifest, type Preview } from '@stencil/storybook-plugin'
-import { defineCustomElements } from '../loader/index.js'
+import { setCustomElementsManifest, type Preview } from '@storybook/web-components-vite'
 import customElements from './custom-elements.json'
 
 /**
- * Registers all custom elements in the Storybook preview.
+ * Eagerly imports and registers all custom elements in the Storybook preview.
+ * This bypasses Stencil's lazy loader and allows Vite to bundle the components directly.
  */
-defineCustomElements()
-
+// @ts-expect-error TypeScript doesn't know about Vite's import.meta.glob
+import.meta.glob('../dist/components/**/*.js', { eager: true })
 /**
  * Loads and registers component metadata for Storybook.
  * This enables automatic generation of props, methods, events, slots, shadow parts, and CSS variables tables.
@@ -14,9 +14,14 @@ defineCustomElements()
 setCustomElementsManifest(customElements)
 
 const preview: Preview = {
+  parameters: {
+    interactions: { disable: true },
+    actions: { disable: true },
+  },
+  tags: ['autodocs'],
   decorators: [
-    (story, context) => {
-      const currentTheme = context.globals.backgrounds.value || 'light'
+    (story, { globals }) => {
+      const currentTheme = globals.backgrounds.value || 'light'
 
       const body = document.body
       body.classList.remove('light', 'dark')
