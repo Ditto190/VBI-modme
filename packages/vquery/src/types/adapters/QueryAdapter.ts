@@ -1,3 +1,5 @@
+import type { DatasetColumn } from '../DataSet'
+import type { DatasetSource } from '../DataSource'
 import type { QueryResult } from '../QueryResult'
 
 export interface QueryAdapter {
@@ -5,7 +7,9 @@ export interface QueryAdapter {
 
   close: () => Promise<void>
 
-  writeFile: <T extends Blob>(fileName: string, source: T) => Promise<void>
+  loadDataset: (datasetId: string, columns: DatasetColumn[], source: DatasetSource) => Promise<void>
+
+  dropDataset: (datasetId: string) => Promise<void>
 
   getSchema: (fileName: string) => Promise<QueryResult>
 

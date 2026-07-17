@@ -4,7 +4,6 @@ import type { DatasetSourceType, DatasetSourceValue, RawDatasetSource } from '..
 const MIME_TYPES: Record<DatasetSourceType, string> = {
   csv: 'text/csv',
   json: 'application/json',
-  parquet: 'application/parquet',
 }
 
 export class DatasetSourceBuilder {
