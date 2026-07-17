@@ -27,7 +27,7 @@ let memory = createMemoryDatabase()
 const createDatabase = rs.fn(async () => memory.database)
 
 const { saveAgentConversation, setVbiAgentIndexedDBFactoryForTests, setupVbiAgentIndexedDBStorage } =
-  await import('../src/views/agent/agent-storage')
+  await import('../src/application/agent/agent-storage')
 
 describe('agent storage', () => {
   beforeEach(() => {

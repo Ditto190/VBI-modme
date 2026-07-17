@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
-import { streamProxy } from '../src/views/agent/agent-stream-proxy'
+import { streamProxy } from '../src/application/agent/agent-stream-proxy'
 
 const model = {
   api: 'openai-completions',

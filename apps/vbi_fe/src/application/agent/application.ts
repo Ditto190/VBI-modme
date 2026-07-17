@@ -1,4 +1,5 @@
 import {
+  agentThinkingLevels,
   createAgentModelOptions,
   defaultAgentModel,
   defaultAgentThinkingLevel,
@@ -10,17 +11,15 @@ import {
   type AgentModelId,
   type AgentModelOption,
   type AgentThinkingLevel,
-} from '../../views/agent/agent-model-config'
+} from './agent-model-config'
 import {
   createAgentConversationRuntime,
   type AgentConversationRuntime,
   type AgentConversationRuntimeSnapshot,
   type AgentConversationRuntimeUpdate,
-} from '../../views/agent/agent-runtime'
-import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from '../../views/agent/agent-storage'
-import { useAgentConversationsStore } from '../../stores/agent-conversations.store'
-import { useNavigationStore } from '../../stores/navigation.store'
-import { createAgentConversationRoute } from '../../views/manage-sidebar-routes'
+} from './agent-runtime'
+import { setupVbiAgentIndexedDBStorage, type VbiAgentStorage } from './agent-storage'
+import { getAgentConversationsState } from './conversations'
 import { createLatestApplicationLifecycle } from '../core/lifecycle'
 import type {
   AgentApplication,
@@ -28,6 +27,7 @@ import type {
   AgentConversationActivationOptions,
   AgentPromptOptions,
 } from './contract'
+import { getAgentPanelApplication } from './panel'
 
 const emptySnapshot: AgentConversationRuntimeSnapshot = {
   isRunning: false,
@@ -155,11 +155,28 @@ const getAgentModelOptions = () => {
   return cachedModelOptions
 }
 
+const assertListedAgentModel = (modelId: AgentModelId) => {
+  const models = getAgentModelOptions()
+  if (models.some((model) => model.id === modelId)) return
+
+  throw new Error(
+    `Unknown application agent model "${String(modelId)}". Use application.getState().agent.model.list() before application.getState().agent.model.change().`,
+  )
+}
+
+const assertListedAgentThinkingLevel = (thinkingLevel: AgentThinkingLevel) => {
+  if (agentThinkingLevels.includes(thinkingLevel)) return
+
+  throw new Error(
+    `Unknown application agent thinking level "${String(thinkingLevel)}". Use application.getState().agent.model.listThinking() before application.getState().agent.model.changeThinking().`,
+  )
+}
+
 const handleConversationChange = (update: AgentConversationRuntimeUpdate) => {
   if (update.metadata) {
-    useAgentConversationsStore.getState().upsertConversation(update.metadata, update.status)
+    getAgentConversationsState().upsertConversation(update.metadata, update.status)
   } else {
-    useAgentConversationsStore.getState().setConversationStatus(update.id, update.status)
+    getAgentConversationsState().setConversationStatus(update.id, update.status)
   }
 }
 
@@ -175,7 +192,7 @@ const bootstrapAgent = async () => {
       agentConfig,
     )
     preferredThinkingLevel = resolveAgentThinkingLevel(readStoredString(preferredAgentThinkingLevelStorageKey))
-    await useAgentConversationsStore.getState().initialize()
+    await getAgentConversationsState().initialize()
     isBootstrapped = true
   } catch (error) {
     setErrorMessage(error instanceof Error ? error.message : String(error))
@@ -201,9 +218,9 @@ const activateConversation = async (
   try {
     const currentRuntime = activeConversationId ? runtimeMap.get(activeConversationId) : null
     if (currentRuntime && !currentRuntime.getSnapshot().isRunning) {
-      const currentConversationStillExists = useAgentConversationsStore
-        .getState()
-        .conversations.some((conversation) => conversation.id === activeConversationId)
+      const currentConversationStillExists = getAgentConversationsState().conversations.some(
+        (conversation) => conversation.id === activeConversationId,
+      )
 
       if (!currentConversationStillExists) {
         currentRuntime.destroy()
@@ -211,7 +228,7 @@ const activateConversation = async (
       } else {
         const metadata = await currentRuntime.persist({ touch: false })
         if (!isCurrentActivation()) return null
-        useAgentConversationsStore.getState().upsertConversation(metadata, 'completed')
+        getAgentConversationsState().upsertConversation(metadata, 'completed')
       }
     }
 
@@ -236,7 +253,7 @@ const activateConversation = async (
     }
 
     runtimeMap.set(conversationId, runtime)
-    useAgentConversationsStore.getState().selectConversation(conversationId)
+    getAgentConversationsState().selectConversation(conversationId)
     setRuntime(runtime)
     return runtime
   } catch (error) {
@@ -258,7 +275,6 @@ export const bindAgentApplicationEmitter = (emit: () => void) => {
 const agentActions = {
   activate: (options: AgentChatActivateOptions = {}) => {
     const conversationId = options.conversationId ?? ''
-    useNavigationStore.getState().go(conversationId ? createAgentConversationRoute(conversationId) : '/agent')
     let disposed = false
     return agentLifecycle.start(
       async () => {
@@ -283,13 +299,13 @@ const agentActions = {
   },
   open: async (conversationId: string, options: AgentConversationActivationOptions = {}) => {
     if (!conversationId) return null
-    useNavigationStore.getState().go(createAgentConversationRoute(conversationId))
     return activateConversation(conversationId, options)
   },
   cancel: async () => {
     await activeRuntime?.cancel()
   },
   changeModel: async (modelId: AgentModelId) => {
+    assertListedAgentModel(modelId)
     preferredModelId = modelId
     writeStoredString(preferredAgentModelStorageKey, modelId)
     if (
@@ -314,7 +330,8 @@ const agentActions = {
       emitApplicationChange?.()
     }
   },
-  changeThinkingLevel: async (thinkingLevel: AgentThinkingLevel) => {
+  changeThinking: async (thinkingLevel: AgentThinkingLevel) => {
+    assertListedAgentThinkingLevel(thinkingLevel)
     preferredThinkingLevel = thinkingLevel
     writeStoredString(preferredAgentThinkingLevelStorageKey, thinkingLevel)
     if (
@@ -341,14 +358,14 @@ const agentActions = {
   },
   clear: () => {
     activationSeq += 1
-    useAgentConversationsStore.getState().clearActiveConversation()
+    getAgentConversationsState().clearActiveConversation()
     setRuntime(null)
   },
   deleteConversation: async (id: string) => {
     const runtime = runtimeMap.get(id)
     runtime?.destroy()
     runtimeMap.delete(id)
-    await useAgentConversationsStore.getState().deleteConversation(id)
+    await getAgentConversationsState().deleteConversation(id)
     if (activeConversationId === id) {
       setRuntime(null)
     }
@@ -369,6 +386,7 @@ const agentActions = {
     storage = null
   },
   openConversation: async (id: string) => {
+    getAgentConversationsState().selectConversation(id)
     await agentActions.open(id)
   },
   prompt: async (input: string, options?: AgentPromptOptions) => {
@@ -388,21 +406,20 @@ const agentActions = {
       })
       if (!runtime) return
       runtimeMap.set(conversationId, runtime)
-      useNavigationStore.getState().go(createAgentConversationRoute(conversationId))
       await runtime.send(prompt)
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error))
     }
   },
-  refreshConversations: () => useAgentConversationsStore.getState().refresh(),
+  refreshConversations: () => getAgentConversationsState().refresh(),
   renameConversation: async (id: string, title: string) => {
-    await useAgentConversationsStore.getState().renameConversation(id, title)
+    await getAgentConversationsState().renameConversation(id, title)
     runtimeMap.get(id)?.setTitle(title)
   },
 }
 
 export const getAgentApplication = (): AgentApplication => {
-  const conversationState = useAgentConversationsStore.getState()
+  const conversationState = getAgentConversationsState()
   const selectedModelId = activeRuntime ? selectedSnapshot.modelId : preferredModelId
   const selectedThinkingLevel = activeRuntime ? selectedSnapshot.thinkingLevel : preferredThinkingLevel
   const combinedLoading = isBootstrapping || isOpeningConversation || conversationState.isLoading
@@ -438,7 +455,10 @@ export const getAgentApplication = (): AgentApplication => {
       selectedId: selectedModelId,
       thinkingLevel: selectedThinkingLevel,
       change: agentActions.changeModel,
-      changeThinkingLevel: agentActions.changeThinkingLevel,
+      changeThinking: agentActions.changeThinking,
+      list: () => [...getAgentModelOptions()],
+      listThinking: () => [...agentThinkingLevels],
     },
+    panel: getAgentPanelApplication(),
   }
 }

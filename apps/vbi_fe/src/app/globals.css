@@ -130,12 +130,16 @@ body {
   display: flex;
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  max-width: 100%;
   flex-direction: column;
+  overflow-x: hidden;
   background: transparent;
 }
 
 .vbi-agent-thread-transcript {
   min-height: 0;
+  min-width: 0;
   flex: 1 1 auto;
   overflow: hidden;
 }
@@ -144,7 +148,10 @@ body {
   display: flex;
   height: 100%;
   min-height: 0;
+  min-width: 0;
+  max-width: 100%;
   flex-direction: column;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: contain;
   padding: 42px 0 16px;
@@ -153,7 +160,10 @@ body {
 }
 
 .vbi-agent-composer-dock {
+  min-width: 0;
+  max-width: 100%;
   flex: 0 0 auto;
+  overflow-x: hidden;
   overflow-anchor: none;
   padding: 8px 0 24px;
   background: var(--vbi-bg);
@@ -199,10 +209,52 @@ body {
   line-height: 1.2;
 }
 
+.vbi-workspace-side-panel .vbi-agent-thread-viewport {
+  padding: 18px 0 12px;
+  scroll-padding: 18px 0 20px;
+}
+
+.vbi-workspace-side-panel .vbi-agent-thread-empty,
+.vbi-workspace-side-panel .vbi-agent-message {
+  width: min(100%, calc(100% - 24px));
+}
+
+.vbi-workspace-side-panel .vbi-agent-thread-empty {
+  margin-bottom: 18px;
+}
+
+.vbi-workspace-side-panel .vbi-agent-thread-empty h1 {
+  font-size: 20px;
+}
+
+.vbi-workspace-side-panel .vbi-agent-composer-dock {
+  padding: 8px 0 12px;
+}
+
+.vbi-workspace-side-panel .vbi-agent-composer-dock > * {
+  width: min(100%, calc(100% - 24px));
+}
+
+.vbi-workspace-side-panel .vbi-agent-composer {
+  min-height: 104px;
+  border-radius: 16px;
+}
+
+.vbi-workspace-side-panel .vbi-agent-composer-toolbar {
+  gap: 8px;
+}
+
+.vbi-workspace-side-panel .vbi-agent-composer-controls,
+.vbi-workspace-side-panel .vbi-agent-composer-send-group {
+  gap: 6px;
+}
+
 .vbi-agent-message {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   width: min(820px, calc(100% - 64px));
+  max-width: 100%;
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 14px;
@@ -216,6 +268,7 @@ body {
 .vbi-agent-message-body {
   min-width: 0;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
 .vbi-agent-message[data-role='user'] .vbi-agent-message-body {
@@ -225,9 +278,19 @@ body {
 }
 
 .vbi-agent-message-content {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   color: var(--vbi-text-strong);
   font-size: 14px;
   line-height: 1.74;
+}
+
+.vbi-agent-markdown {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .vbi-agent-message[data-role='user'] .vbi-agent-message-content {
@@ -270,6 +333,7 @@ body {
 }
 
 .vbi-agent-message-content pre {
+  max-width: 100%;
   overflow-x: auto;
   border: 1px solid color-mix(in srgb, var(--vbi-border) 74%, transparent);
   border-radius: 8px;
@@ -280,12 +344,13 @@ body {
 }
 
 .vbi-agent-message-content table {
-  width: auto;
+  display: block;
+  width: max-content;
   max-width: 100%;
   margin: 10px 0 12px;
   border-collapse: separate;
   border-spacing: 0;
-  overflow: hidden;
+  overflow-x: auto;
   border: 1px solid color-mix(in srgb, var(--vbi-border) 72%, transparent);
   border-radius: 9px;
   background: var(--vbi-secondary);
@@ -1107,50 +1172,6 @@ body {
   }
 }
 
-@keyframes vbi-drawer-slide-right {
-  from {
-    opacity: 0.96;
-    transform: translate3d(28px, 0, 0) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes vbi-drawer-slide-left {
-  from {
-    opacity: 0.96;
-    transform: translate3d(-28px, 0, 0) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes vbi-drawer-slide-bottom {
-  from {
-    opacity: 0.96;
-    transform: translate3d(0, 22px, 0) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes vbi-drawer-slide-top {
-  from {
-    opacity: 0.96;
-    transform: translate3d(0, -22px, 0) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
 @keyframes vbi-menu-pop {
   from {
     opacity: 0;
@@ -1220,6 +1241,28 @@ body {
   to {
     opacity: 1;
     clip-path: inset(0 0 0 0 round 7px);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes vbi-resource-table-route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes vbi-resource-row-route-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 5px, 0);
+  }
+  to {
+    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -1315,6 +1358,39 @@ body {
 
 .vbi-motion-soft-reveal {
   animation: vbi-soft-reveal var(--vbi-motion-presence) var(--vbi-ease-out) both;
+}
+
+.vbi-motion-resource-table {
+  animation: vbi-resource-table-route-enter 260ms var(--vbi-ease-out) both;
+  transform-origin: top center;
+}
+
+.vbi-motion-resource-table tbody > tr {
+  animation: vbi-resource-row-route-enter 320ms var(--vbi-ease-out) both;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(1) {
+  animation-delay: 24ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(2) {
+  animation-delay: 48ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(3) {
+  animation-delay: 72ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(4) {
+  animation-delay: 96ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(5) {
+  animation-delay: 120ms;
+}
+
+.vbi-motion-resource-table tbody > tr:nth-child(n + 6) {
+  animation-delay: 144ms;
 }
 
 .vbi-motion-float {

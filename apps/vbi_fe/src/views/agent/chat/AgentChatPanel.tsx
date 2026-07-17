@@ -14,8 +14,11 @@ import {
 } from '@assistant-ui/react'
 import { useMemo } from 'react'
 import type { Translate } from '../../../i18n'
-import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from '../agent-runtime'
-import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../agent-model-config'
+import type {
+  AgentConversationRuntime,
+  AgentConversationRuntimeSnapshot,
+} from '../../../application/agent/agent-runtime'
+import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../../../application/agent/agent-model-config'
 import { AgentComposer } from './AgentComposer'
 import { AgentThreadMessage } from './AgentMessageParts'
 import { projectAgentMessagesForAssistantUi } from './agent-message-adapter'

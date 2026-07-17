@@ -17,16 +17,16 @@ rs.mock('../src/services/resourceApi', () => ({
   renameResource: rs.fn(),
 }))
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
 
 const insightApi = await import('../src/services/insightApi')
 const resourceApi = await import('../src/services/resourceApi')
-const { useManageChartsStore } = await import('../src/stores/manage-charts.store')
-const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
-const { useReportsStore } = await import('../src/stores/reports.store')
+const { useManageChartsStore } = await import('./application-test-stores')
+const { useManageInsightsStore } = await import('./application-test-stores')
+const { useReportsStore } = await import('./application-test-stores')
 
 const initialChartsState = useManageChartsStore.getState()
 const initialInsightsState = useManageInsightsStore.getState()

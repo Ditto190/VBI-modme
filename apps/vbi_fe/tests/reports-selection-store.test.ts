@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, rs, test } from '@rstest/core'
-import { useReportsStore } from '../src/stores/reports.store'
+import { useReportsStore } from './application-test-stores'
 
 rs.mock('../src/services/resourceApi', () => ({
   createResource: rs.fn(),

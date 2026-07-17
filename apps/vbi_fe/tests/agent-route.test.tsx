@@ -2,41 +2,47 @@ import { beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 
-rs.mock('../src/views/ManageLayoutPage', () => ({
-  ManageLayoutPage: ({ children }: { children: ReactNode }) => <div data-testid='workspace-layout'>{children}</div>,
+rs.mock('../src/views/workspace/ManageLayoutPage', () => ({
+  ManageLayoutPage: ({ children }: { children: ReactNode }) => (
+    <div data-testid='workspace-layout'>
+      <aside data-testid='manage-sidebar' />
+      <main data-testid='workspace-main'>{children}</main>
+      <aside data-testid='agent-sider' />
+    </div>
+  ),
 }))
 
-rs.mock('../src/views/AgentPage', () => ({
+rs.mock('../src/views/agent/AgentPage', () => ({
   AgentPage: () => <div data-testid='agent-page' />,
 }))
 
-rs.mock('../src/views/ReportsPage', () => ({
+rs.mock('../src/views/resources/report/ReportsPage', () => ({
   ReportsPage: () => <div data-testid='reports-page' />,
 }))
 
-rs.mock('../src/views/ManageChartsPage', () => ({
+rs.mock('../src/views/resources/chart/ManageChartsPage', () => ({
   ManageChartsPage: () => <div data-testid='charts-page' />,
 }))
 
-rs.mock('../src/views/ManageInsightsPage', () => ({
+rs.mock('../src/views/resources/insight/ManageInsightsPage', () => ({
   ManageInsightsPage: () => <div data-testid='insights-page' />,
 }))
 
-rs.mock('../src/views/manage-resource/ChartEditorPage', () => ({
+rs.mock('../src/views/resources/chart/ChartEditorPage', () => ({
   ChartEditorPage: ({ id }: { id: string }) => <div data-testid='chart-editor'>{id}</div>,
 }))
 
-rs.mock('../src/views/manage-resource/InsightEditorPage', () => ({
+rs.mock('../src/views/resources/insight/InsightEditorPage', () => ({
   InsightEditorPage: ({ id }: { id: string }) => <div data-testid='insight-editor'>{id}</div>,
 }))
 
-rs.mock('../src/views/ReportDetailPage', () => ({
+rs.mock('../src/views/report-detail/ReportDetailPage', () => ({
   ReportDetailPage: ({ id }: { id: string }) => <div data-testid='report-detail'>{id}</div>,
 }))
 
 const { App } = await import('../src/App')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
 
 describe('rsbuild app routes', () => {
   beforeEach(() => {
@@ -45,29 +51,57 @@ describe('rsbuild app routes', () => {
     useNavigationStore.setState({ navigate: null, pathname: '' })
   })
 
-  test('renders the persistent workspace shell and agent route', async () => {
+  test('keeps workspace chrome mounted and hides resource pages for agent routes', async () => {
     window.history.replaceState(null, '', '/agent/conversation-1')
 
     render(<App />)
 
-    expect(screen.getByTestId('workspace-layout')).toBeInTheDocument()
-    expect(await screen.findByTestId('agent-page')).toBeInTheDocument()
+    expect(await screen.findByTestId('workspace-layout')).toBeInTheDocument()
+    expect(screen.getByTestId('manage-sidebar')).toBeInTheDocument()
+    expect(screen.getByTestId('agent-sider')).toBeInTheDocument()
+    expect(screen.getByTestId('workspace-main')).toBeEmptyDOMElement()
+    expect(screen.queryByTestId('agent-page')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('reports-page')).not.toBeInTheDocument()
   })
 
   test('maps browser paths to resource pages', async () => {
-    window.history.replaceState(null, '', '/manage/charts/chart%201')
+    window.history.replaceState(null, '', '/manage/chart/chart%201')
     const { rerender } = render(<App />)
 
     expect(await screen.findByTestId('chart-editor')).toHaveTextContent('chart 1')
 
-    window.history.pushState(null, '', '/manage/insights')
+    window.history.pushState(null, '', '/manage/insight')
     window.dispatchEvent(new PopStateEvent('popstate'))
     rerender(<App />)
     expect(await screen.findByTestId('insights-page')).toBeInTheDocument()
 
-    window.history.pushState(null, '', '/manage/reports/report-1')
+    window.history.pushState(null, '', '/manage/report/report-1')
     window.dispatchEvent(new PopStateEvent('popstate'))
     rerender(<App />)
     await waitFor(() => expect(screen.getByTestId('report-detail')).toHaveTextContent('report-1'))
+  })
+
+  test('canonicalizes legacy plural manage resource routes to singular paths', async () => {
+    window.history.replaceState(null, '', '/manage/insights/insight-1')
+    render(<App />)
+
+    expect(await screen.findByTestId('insight-editor')).toHaveTextContent('insight-1')
+    await waitFor(() => expect(window.location.pathname).toBe('/manage/insight/insight-1'))
+  })
+
+  test('keeps workspace chrome mounted when opening a report detail route', async () => {
+    window.history.replaceState(null, '', '/manage/report')
+    render(<App />)
+
+    expect(await screen.findByTestId('reports-page')).toBeInTheDocument()
+    const workspaceLayout = screen.getByTestId('workspace-layout')
+    const agentSider = screen.getByTestId('agent-sider')
+
+    window.history.pushState(null, '', '/manage/report/report-1')
+    window.dispatchEvent(new PopStateEvent('popstate'))
+
+    await waitFor(() => expect(screen.getByTestId('report-detail')).toHaveTextContent('report-1'))
+    expect(screen.getByTestId('workspace-layout')).toBe(workspaceLayout)
+    expect(screen.getByTestId('agent-sider')).toBe(agentSider)
   })
 })

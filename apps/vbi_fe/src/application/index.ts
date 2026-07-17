@@ -1,22 +1,32 @@
 export { application } from './core/store'
 export { useApplication } from './core/use-application'
-export { bindApplicationNavigation, setApplicationPathname } from './routing/navigation-bridge'
+export {
+  bindApplicationNavigation,
+  getApplicationPathname,
+  goApplicationPath,
+  setApplicationPathname,
+  subscribeApplicationNavigation,
+  useApplicationPathname,
+} from './routing/navigation-bridge'
 export { applicationShallowEqual } from './core/equality'
 export { exposeApplicationToWindow } from './core/window'
-export { resolveApplicationRoute } from './routing/route'
+export {
+  createAgentConversationRoute,
+  isAgentConversationRoute,
+  isAgentRoute,
+  isNewConversationRoute,
+  matchApplicationRoute,
+  matchRouteBranch,
+  readAgentConversationRouteId,
+  resolveApplicationRoute,
+} from './routing/route'
 export type {
   Application,
   ApplicationCleanup,
   ApplicationEquality,
   ApplicationHookOptions,
-  ApplicationModuleContext,
-  ApplicationModuleFactory,
   ApplicationSelector,
   ApplicationState,
-  ApplicationStore,
-  ApplicationSubscribeOptions,
-  ApplicationUnsubscribe,
-  UseApplication,
 } from './core/store'
 export type {
   AgentApplication,
@@ -26,15 +36,23 @@ export type {
   AgentConversationsApplication,
   AgentChatApplication,
   AgentModelApplication,
+  AgentPanelApplication,
   AgentPromptOptions,
   ApplicationAgentMessage,
 } from './agent/contract'
-export type { ApplicationRouteName, ApplicationRouteTarget } from './routing/contract'
-export type { AppThemeMode, I18nApplication, ThemeApplication } from './preferences/contract'
 export type {
-  ChartApplication,
-  InsightApplication,
-  ReportApplication,
+  LayoutApplication,
+  ManageSidebarApplication,
+  WorkspacePlacementApplication,
+  WorkspaceSidePanelApplication,
+} from './layout/contract'
+export type { ApplicationRouteMatch, ApplicationRouteName, ApplicationRouteTarget } from './routing/contract'
+export type { AppLocaleList, I18nApplication } from './i18n/contract'
+export type { AppThemeList, AppThemeMode, ThemeApplication } from './theme/contract'
+export type { ChartApplication } from './chart/contract'
+export type { InsightApplication } from './insight/contract'
+export type { ReportApplication } from './report/contract'
+export type {
   ResourceApplication,
   ResourceBuilderProjection,
   ResourceActivateOptions,

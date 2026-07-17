@@ -157,19 +157,19 @@ const createAgentConversationRuntime = rs.fn(({ conversationId }: { conversation
   return deferred.promise
 })
 
-rs.mock('../src/views/agent/agent-storage', () => ({
+rs.mock('../src/application/agent/agent-storage', () => ({
   readAgentContentText,
   setupVbiAgentIndexedDBStorage,
 }))
 
-rs.mock('../src/views/agent/agent-runtime', () => ({
+rs.mock('../src/application/agent/agent-runtime', () => ({
   createAgentConversationRuntime,
 }))
 
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useAgentConversationsStore } = await import('../src/stores/agent-conversations.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { AgentPage } = await import('../src/views/AgentPage')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useAgentConversationsStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const { AgentPage } = await import('../src/views/agent/AgentPage')
 
 describe('AgentPage', () => {
   beforeEach(() => {
@@ -276,6 +276,24 @@ describe('AgentPage', () => {
     expect(screen.getByRole('button', { name: /attach image/i })).toBeInTheDocument()
   })
 
+  test('uses concise Chinese reasoning labels in the chat composer', async () => {
+    metadataList = []
+    useAppPreferencesStore.setState({ locale: 'zh-CN', themeMode: 'slate' })
+    useNavigationStore.setState({ pathname: '/agent' })
+
+    render(<AgentPage />)
+
+    expect(await screen.findByRole('heading', { name: '我们该做什么？' })).toBeInTheDocument()
+    const configButton = screen.getByRole('button', { name: 'Flash，高' })
+    expect(configButton).toHaveTextContent('Flash，高')
+    expect(screen.queryByText('智能 高')).not.toBeInTheDocument()
+
+    fireEvent.pointerDown(configButton)
+
+    expect(await screen.findByText('推理强度')).toBeInTheDocument()
+    expect(screen.queryByText('智能')).not.toBeInTheDocument()
+  })
+
   test('keeps the root composer mounted while agent bootstrap is pending', async () => {
     metadataList = []
     const gate = createDeferred<void>()
@@ -344,7 +362,7 @@ describe('AgentPage', () => {
     expect(screen.getByRole('textbox')).toBe(composerInput)
     expect(screen.getByRole('textbox').closest('.vbi-agent-composer-dock')).toBe(composerDock)
     expect(composerInput).toHaveFocus()
-    expect(navigatedTo).toEqual(['/agent/conversation-new'])
+    expect(navigatedTo).toEqual([])
     expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-new')
   })
 
@@ -386,7 +404,7 @@ describe('AgentPage', () => {
     })
 
     await waitFor(() => expect(runtime.send).toHaveBeenCalledWith('Build a sales report'))
-    expect(navigatedTo).toEqual(['/agent/conversation-new'])
+    expect(navigatedTo).toEqual([])
   })
 
   test('opens slash commands for model switching', async () => {
@@ -650,11 +668,11 @@ describe('AgentPage', () => {
 
     fireEvent.click(progressGroup!.querySelector('summary')!)
 
-    expect(await screen.findByText('Reasoning')).toBeInTheDocument()
+    expect(await screen.findByText('推理过程')).toBeInTheDocument()
     expect(screen.getByText('先查询图表资源。')).toBeInTheDocument()
     expect(screen.getByText('继续查询洞察资源。')).toBeInTheDocument()
     expect(screen.getByText('最后查询报告资源。')).toBeInTheDocument()
-    expect(screen.getByText('6 steps')).toBeInTheDocument()
+    expect(screen.getByText('6 步')).toBeInTheDocument()
 
     expect(screen.getByText('chart.list')).toBeInTheDocument()
     expect(screen.getByText('insight.list')).toBeInTheDocument()

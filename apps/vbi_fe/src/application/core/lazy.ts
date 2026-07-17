@@ -4,6 +4,10 @@ export type LazyStore = {
   subscribe?: (listener: () => void) => unknown
 }
 
+const reportLazyLifecycleError = (error: unknown) => {
+  console.error('VBI application lazy lifecycle failed', error)
+}
+
 export const subscribeLazyStore = (
   store: LazyStore | undefined,
   emit: () => void,
@@ -36,7 +40,9 @@ export const runLazyLifecycleCommand = <TModule, TApplication>(
       cleanup = command(getApplication(module))
       if (disposed) cleanup()
     })
-    .catch(() => undefined)
+    .catch((error) => {
+      reportLazyLifecycleError(error)
+    })
 
   return () => {
     if (disposed) return

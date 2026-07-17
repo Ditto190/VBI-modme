@@ -1,81 +1,163 @@
+import { agentApplicationStore } from '../agent/store'
 import type { AgentApplication } from '../agent/contract'
-import type { I18nApplication, ThemeApplication } from '../preferences/contract'
+import { chartApplicationStore } from '../chart/store'
+import type { ChartApplication } from '../chart/contract'
+import { i18nApplicationStore } from '../i18n/store'
+import type { I18nApplication } from '../i18n/contract'
+import { insightApplicationStore } from '../insight/store'
+import type { InsightApplication } from '../insight/contract'
+import type { LayoutApplication } from '../layout/contract'
+import { layoutApplicationStore } from '../layout/store'
+import { reportApplicationStore } from '../report/store'
+import type { ReportApplication } from '../report/contract'
 import type { ReportDetailApplication } from '../report-detail/contract'
-import type { ChartApplication, InsightApplication, ReportApplication } from '../resources/contract'
-import { getApplicationSnapshot, subscribeApplicationSelector, subscribeApplicationSnapshot } from './subscribe'
+import { reportDetailApplicationStore } from '../report-detail/store'
+import { themeApplicationStore } from '../theme/store'
+import type { ThemeApplication } from '../theme/contract'
+import { applicationObjectIs } from './equality'
 
 export type ApplicationSelector<TSelected> = (state: ApplicationState) => TSelected
 
 export type ApplicationEquality<TSelected> = (left: TSelected, right: TSelected) => boolean
 
-export type ApplicationSubscribeOptions<TSelected> = {
-  equality?: ApplicationEquality<TSelected>
-  fireImmediately?: boolean
-}
-
 export type ApplicationHookOptions<TSelected> = {
   equality?: ApplicationEquality<TSelected>
 }
 
-export type ApplicationUnsubscribe = () => void
-
 export type ApplicationCleanup = () => void
-
-export type ApplicationStore = {
-  getState(): ApplicationState
-  select<TSelected>(selector: ApplicationSelector<TSelected>): TSelected
-  subscribe(listener: () => void): ApplicationUnsubscribe
-  subscribe<TSelected>(
-    selector: ApplicationSelector<TSelected>,
-    listener: (selected: TSelected, previous: TSelected) => void,
-    options?: ApplicationSubscribeOptions<TSelected>,
-  ): ApplicationUnsubscribe
-}
-
-export type UseApplication = <TSelected>(
-  selector: ApplicationSelector<TSelected>,
-  options?: ApplicationHookOptions<TSelected>,
-) => TSelected
-
-export type ApplicationModuleContext = {
-  emit(): void
-  getState(): ApplicationState
-}
-
-export type ApplicationModuleFactory<TModule> = (context: ApplicationModuleContext) => TModule
 
 export type ApplicationState = {
   agent: AgentApplication
   chart: ChartApplication
   i18n: I18nApplication
   insight: InsightApplication
+  layout: LayoutApplication
   report: ReportApplication
   reportDetail: ReportDetailApplication
   theme: ThemeApplication
 }
 
-export type Application = ApplicationState & ApplicationStore
-
-const storeApi = {
-  getState: getApplicationSnapshot,
-  select: <TSelected>(selector: ApplicationSelector<TSelected>) => selector(getApplicationSnapshot()),
-  subscribe: <TSelected>(
-    selectorOrListener: ApplicationSelector<TSelected> | (() => void),
-    listener?: (selected: TSelected, previous: TSelected) => void,
-    options?: ApplicationSubscribeOptions<TSelected>,
-  ) => {
-    if (listener)
-      return subscribeApplicationSelector(selectorOrListener as ApplicationSelector<TSelected>, listener, options)
-    return subscribeApplicationSnapshot(selectorOrListener as () => void)
-  },
+type ApplicationListener = () => void
+type ApplicationSelectorListener<TSelected> = (selected: TSelected, previous: TSelected) => void
+type ApplicationSubscribeOptions<TSelected> = {
+  equalityFn?: ApplicationEquality<TSelected>
+  fireImmediately?: boolean
 }
 
-export const application = Object.defineProperties(storeApi, {
-  agent: { get: () => getApplicationSnapshot().agent },
-  chart: { get: () => getApplicationSnapshot().chart },
-  i18n: { get: () => getApplicationSnapshot().i18n },
-  insight: { get: () => getApplicationSnapshot().insight },
-  report: { get: () => getApplicationSnapshot().report },
-  reportDetail: { get: () => getApplicationSnapshot().reportDetail },
-  theme: { get: () => getApplicationSnapshot().theme },
-}) as Application
+const listeners = new Set<ApplicationListener>()
+
+const createApplicationState = (): ApplicationState => ({
+  agent: agentApplicationStore.getState(),
+  chart: {
+    activate: chartApplicationStore.getState().activate,
+    create: chartApplicationStore.getState().create,
+    delete: chartApplicationStore.getState().delete,
+    editor: chartApplicationStore.getState().editor,
+    list: chartApplicationStore.getState().list,
+    open: chartApplicationStore.getState().open,
+    records: chartApplicationStore.getState().records,
+    rename: chartApplicationStore.getState().rename,
+  },
+  i18n: i18nApplicationStore.getState(),
+  insight: {
+    activate: insightApplicationStore.getState().activate,
+    create: insightApplicationStore.getState().create,
+    delete: insightApplicationStore.getState().delete,
+    editor: insightApplicationStore.getState().editor,
+    list: insightApplicationStore.getState().list,
+    open: insightApplicationStore.getState().open,
+    records: insightApplicationStore.getState().records,
+    rename: insightApplicationStore.getState().rename,
+  },
+  layout: layoutApplicationStore.getState(),
+  report: {
+    activate: reportApplicationStore.getState().activate,
+    create: reportApplicationStore.getState().create,
+    delete: reportApplicationStore.getState().delete,
+    editor: reportApplicationStore.getState().editor,
+    list: reportApplicationStore.getState().list,
+    open: reportApplicationStore.getState().open,
+    records: reportApplicationStore.getState().records,
+    rename: reportApplicationStore.getState().rename,
+  },
+  reportDetail: {
+    activePageId: reportDetailApplicationStore.getState().activePageId,
+    activate: reportDetailApplicationStore.getState().activate,
+    addChart: reportDetailApplicationStore.getState().addChart,
+    addInsight: reportDetailApplicationStore.getState().addInsight,
+    addPage: reportDetailApplicationStore.getState().addPage,
+    connectedChartId: reportDetailApplicationStore.getState().connectedChartId,
+    connectedChartIds: reportDetailApplicationStore.getState().connectedChartIds,
+    connectedInsightId: reportDetailApplicationStore.getState().connectedInsightId,
+    connectedInsightIds: reportDetailApplicationStore.getState().connectedInsightIds,
+    connect: reportDetailApplicationStore.getState().connect,
+    pageActionBusy: reportDetailApplicationStore.getState().pageActionBusy,
+    pageSections: reportDetailApplicationStore.getState().pageSections,
+    pages: reportDetailApplicationStore.getState().pages,
+    provider: reportDetailApplicationStore.getState().provider,
+    removeChart: reportDetailApplicationStore.getState().removeChart,
+    removeInsight: reportDetailApplicationStore.getState().removeInsight,
+    removePage: reportDetailApplicationStore.getState().removePage,
+    reportBuilder: reportDetailApplicationStore.getState().reportBuilder,
+    reportId: reportDetailApplicationStore.getState().reportId,
+    selectPage: reportDetailApplicationStore.getState().selectPage,
+    setScrolledPage: reportDetailApplicationStore.getState().setScrolledPage,
+    syncActivePage: reportDetailApplicationStore.getState().syncActivePage,
+  },
+  theme: themeApplicationStore.getState(),
+})
+
+const emitApplicationChange = () => {
+  listeners.forEach((listener) => listener())
+}
+
+const bindApplicationSources = () => {
+  agentApplicationStore.subscribe(emitApplicationChange)
+  chartApplicationStore.subscribe(emitApplicationChange)
+  i18nApplicationStore.subscribe(emitApplicationChange)
+  insightApplicationStore.subscribe(emitApplicationChange)
+  layoutApplicationStore.subscribe(emitApplicationChange)
+  reportApplicationStore.subscribe(emitApplicationChange)
+  reportDetailApplicationStore.subscribe(emitApplicationChange)
+  themeApplicationStore.subscribe(emitApplicationChange)
+}
+
+bindApplicationSources()
+
+const subscribe = <TSelected>(
+  selectorOrListener: ApplicationSelector<TSelected> | ApplicationListener,
+  selectedListener?: ApplicationSelectorListener<TSelected>,
+  options: ApplicationSubscribeOptions<TSelected> = {},
+) => {
+  if (!selectedListener) {
+    const listener = selectorOrListener as ApplicationListener
+    listeners.add(listener)
+    return () => listeners.delete(listener)
+  }
+
+  const selector = selectorOrListener as ApplicationSelector<TSelected>
+  const equality = options.equalityFn ?? applicationObjectIs
+  let current = selector(createApplicationState())
+  const listener = () => {
+    const next = selector(createApplicationState())
+    if (equality(current, next)) return
+    const previous = current
+    current = next
+    selectedListener(next, previous)
+  }
+
+  listeners.add(listener)
+  if (options.fireImmediately) selectedListener(current, current)
+  return () => listeners.delete(listener)
+}
+
+export const application = {
+  getInitialState: createApplicationState,
+  getState: createApplicationState,
+  setState: () => {
+    throw new Error('application is a non-owning aggregate. Mutate a domain application store instead.')
+  },
+  subscribe,
+}
+
+export type Application = typeof application

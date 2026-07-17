@@ -93,7 +93,7 @@ export const useReportStageScroll = ({ activePageId, pageIds, resetKey, setScrol
     const updateScrolledPage = () => {
       scrollFrameRef.current = null
       const nextPageId = resolveVisiblePageId(container, pageNodes.current)
-      if (!nextPageId || nextPageId === application.select((state) => state.reportDetail.activePageId)) return
+      if (!nextPageId || nextPageId === application.getState().reportDetail.activePageId) return
       scrolledPageRef.current = nextPageId
       setScrolledPage(nextPageId)
     }

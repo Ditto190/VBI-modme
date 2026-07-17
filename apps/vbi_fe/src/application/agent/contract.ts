@@ -1,7 +1,8 @@
 import type { AgentMessage } from '@earendil-works/pi-agent-core'
-import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from '../../views/agent/agent-runtime'
-import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from '../../views/agent/agent-model-config'
-import type { AgentConversationMetadata, AgentConversationStatus } from '../../views/agent/agent-storage'
+import type { AgentModelId, AgentModelOption, AgentThinkingLevel } from './agent-model-config'
+import type { AgentConversationRuntime, AgentConversationRuntimeSnapshot } from './agent-runtime'
+import type { AgentConversationMetadata, AgentConversationStatus } from './agent-storage'
+import type { WorkspaceSidePanelApplication } from '../layout/contract'
 import type { ApplicationCleanup } from '../core/store'
 
 export type AgentConversationSummary = AgentConversationMetadata & {
@@ -52,13 +53,18 @@ export type AgentModelApplication = {
   selectedId: AgentModelId
   thinkingLevel: AgentThinkingLevel
   change(modelId: AgentModelId): Promise<void>
-  changeThinkingLevel(thinkingLevel: AgentThinkingLevel): Promise<void>
+  changeThinking(thinkingLevel: AgentThinkingLevel): Promise<void>
+  list(): AgentModelOption[]
+  listThinking(): AgentThinkingLevel[]
 }
+
+export type AgentPanelApplication = WorkspaceSidePanelApplication
 
 export type AgentApplication = {
   chat: AgentChatApplication
   conversations: AgentConversationsApplication
   model: AgentModelApplication
+  panel: AgentPanelApplication
 }
 
 export type ApplicationAgentMessage = AgentMessage

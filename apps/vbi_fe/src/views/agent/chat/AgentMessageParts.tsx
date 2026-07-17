@@ -14,8 +14,9 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { MessageActionBar } from '../../../components/assistant-ui/message-actions'
 import { CheckCircle2, ChevronDown, CircleAlert, FileSearch, LoaderCircle } from '../../../components/ui/icons'
-import { formatAbbreviatedTokenCount } from '../agent-usage-display'
-import { readAgentContentText } from '../agent-storage'
+import { formatAbbreviatedTokenCount } from '../../../application/agent/agent-usage-display'
+import { readAgentContentText } from '../../../application/agent/agent-storage'
+import { useTranslation, type Translate } from '../../../i18n'
 
 type RenderedMessagePart = ThreadAssistantMessagePart | ThreadUserMessagePart
 type AgentToolPart = Extract<EnrichedPartState, { type: 'tool-call' }>
@@ -79,7 +80,13 @@ const AgentMarkdown = () => (
   />
 )
 
-const UserTextPart = ({ text }: { text: string }) => {
+const resolveToolStatusLabel = (status: ToolDisplayStatus, t: Translate) => {
+  if (status === 'running') return t('agent.toolRunning')
+  if (status === 'error') return t('agent.toolError')
+  return t('agent.toolDone')
+}
+
+const UserTextPart = ({ locale, t, text }: { locale: string; t: Translate; text: string }) => {
   if (text.length <= largeUserMessageThreshold) {
     return <span className='whitespace-pre-wrap break-words'>{text}</span>
   }
@@ -90,7 +97,7 @@ const UserTextPart = ({ text }: { text: string }) => {
     <div className='space-y-2 whitespace-pre-wrap break-words'>
       <span>{preview}</span>
       <span className='block text-xs text-[var(--vbi-text-muted)]'>
-        {formatAbbreviatedTokenCount(text.length)} chars · preview
+        {t('agent.messagePreview', { count: formatAbbreviatedTokenCount(text.length, locale) })}
       </span>
     </div>
   )
@@ -140,7 +147,7 @@ const resolveActionsGroupStatus = (
   return resolveToolGroupStatus(groupStatus)
 }
 
-const ToolPart = ({ part }: { part: AgentToolPart }) => {
+const ToolPart = ({ part, t }: { part: AgentToolPart; t: Translate }) => {
   const status = resolveToolStatus(part)
   const [open, setOpen] = useState(status === 'running')
   const resultText = isRecord(part.result) ? readAgentContentText(part.result.content) : ''
@@ -177,7 +184,7 @@ const ToolPart = ({ part }: { part: AgentToolPart }) => {
           <strong>{actionLabel}</strong>
         </span>
         <span className='vbi-agent-tool-status' data-status={status}>
-          {status === 'running' ? 'Running' : status === 'error' ? 'Error' : 'Done'}
+          {resolveToolStatusLabel(status, t)}
         </span>
         <ChevronDown className='vbi-agent-tool-chevron h-3.5 w-3.5' aria-hidden='true' />
       </summary>
@@ -185,13 +192,13 @@ const ToolPart = ({ part }: { part: AgentToolPart }) => {
         <div className='vbi-agent-tool-detail'>
           {argsText ? (
             <div>
-              <span>Input</span>
+              <span>{t('agent.toolInput')}</span>
               <pre>{argsText}</pre>
             </div>
           ) : null}
           {displayText ? (
             <div>
-              <span>Result</span>
+              <span>{t('agent.toolResult')}</span>
               <pre>{displayText}</pre>
             </div>
           ) : null}
@@ -205,10 +212,12 @@ const ProgressGroup = ({
   children,
   count,
   status,
+  t,
 }: {
   children: ReactNode
   count: number
   status: ToolDisplayStatus
+  t: Translate
 }) => {
   const [open, setOpen] = useState(status === 'running')
   const renderContent = open || status === 'running'
@@ -235,15 +244,15 @@ const ProgressGroup = ({
           )}
         </span>
         <span className='vbi-agent-progress-copy'>
-          <span className='vbi-agent-progress-title'>Reasoning</span>
-          <span className='vbi-agent-progress-description'>Task progress and tool calls</span>
+          <span className='vbi-agent-progress-title'>{t('agent.reasoningTitle')}</span>
+          <span className='vbi-agent-progress-description'>{t('agent.progressDescription')}</span>
         </span>
         <span className='vbi-agent-progress-status'>
           {status === 'running'
-            ? 'Working'
+            ? t('agent.progressWorking')
             : status === 'error'
-              ? 'Needs attention'
-              : `${count} ${count === 1 ? 'step' : 'steps'}`}
+              ? t('agent.progressNeedsAttention')
+              : t(count === 1 ? 'agent.progressStep' : 'agent.progressSteps', { count })}
         </span>
         <ChevronDown className='vbi-agent-tool-chevron h-4 w-4' aria-hidden='true' />
       </summary>
@@ -261,11 +270,21 @@ const ReasoningAction = ({ text }: { text: string }) => (
   </div>
 )
 
-const MessagePart = ({ part, role }: { part: EnrichedPartState; role: MessageState['role'] }) => {
-  if (part.type === 'text' && role === 'user') return <UserTextPart text={part.text} />
+const MessagePart = ({
+  locale,
+  part,
+  role,
+  t,
+}: {
+  locale: string
+  part: EnrichedPartState
+  role: MessageState['role']
+  t: Translate
+}) => {
+  if (part.type === 'text' && role === 'user') return <UserTextPart locale={locale} t={t} text={part.text} />
   if (part.type === 'text') return <AgentMarkdown />
   if (part.type === 'reasoning') return <ReasoningAction text={part.text} />
-  if (part.type === 'tool-call') return part.toolUI ?? <ToolPart part={part} />
+  if (part.type === 'tool-call') return part.toolUI ?? <ToolPart part={part} t={t} />
   if (part.type === 'image') return <img className='vbi-agent-image-part' alt='' src={part.image} />
   if (part.type === 'file') return <pre>{part.filename || part.mimeType}</pre>
   if (part.type === 'data') return part.dataRendererUI ?? <pre>{stringifyJson(part.data)}</pre>
@@ -281,6 +300,7 @@ export const AgentThreadMessage = ({
   isLatestAssistantMessage: boolean
   message: MessageState
 }) => {
+  const { locale, t } = useTranslation()
   const parts = message.content as readonly RenderedMessagePart[]
   const isIncomplete = message.status?.type === 'incomplete'
 
@@ -301,6 +321,7 @@ export const AgentThreadMessage = ({
                       <ProgressGroup
                         count={part.indices.length}
                         status={resolveActionsGroupStatus(message.status, part.status)}
+                        t={t}
                       >
                         {children}
                       </ProgressGroup>
@@ -311,7 +332,7 @@ export const AgentThreadMessage = ({
                   case 'image':
                   case 'file':
                   case 'data':
-                    return <MessagePart part={part} role={message.role} />
+                    return <MessagePart locale={locale} part={part} role={message.role} t={t} />
                   default:
                     return null
                 }

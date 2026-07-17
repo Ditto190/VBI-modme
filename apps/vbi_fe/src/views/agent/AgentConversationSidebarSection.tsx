@@ -15,13 +15,23 @@ import {
 import { LoaderCircle, MessageSquare, Pencil, Trash2 } from '../../components/ui/icons'
 import { Input } from '../../components/ui/input'
 import { Tooltip } from '../../components/ui/tooltip'
-import { application, applicationShallowEqual, useApplication } from '../../application'
+import {
+  application,
+  applicationShallowEqual,
+  createAgentConversationRoute,
+  goApplicationPath,
+  isAgentConversationRoute,
+  useApplication,
+  useApplicationPathname,
+} from '../../application'
 import type { AgentConversationSummary } from '../../application'
 import { useTranslation, type Translate } from '../../i18n'
 import { cn } from '../../lib/utils'
-import { useNavigationStore } from '../../stores/navigation.store'
-import { createAgentConversationRoute, isAgentConversationRoute } from '../manage-sidebar-routes'
-import { ManageSidebarGroup, manageSidebarChildListClassName, manageSidebarItemClassName } from '../ManageSidebarNav'
+import {
+  ManageSidebarGroup,
+  manageSidebarChildListClassName,
+  manageSidebarItemClassName,
+} from '../workspace/ManageSidebarNav'
 
 const conversationRowClassName = cn(
   manageSidebarItemClassName,
@@ -57,9 +67,7 @@ type AgentConversationRowProps = {
   conversation: AgentConversationSummary
   deleteConversation(id: string): Promise<void>
   expanded: boolean
-  navigate(path: string): void
   locale: string
-  pathname: string
   renameConversation(id: string, title: string): Promise<void>
   selectConversation(id: string): void
   t: Translate
@@ -71,9 +79,7 @@ const AgentConversationRow = memo(
     conversation,
     deleteConversation,
     expanded,
-    navigate,
     locale,
-    pathname,
     renameConversation,
     selectConversation,
     t,
@@ -83,8 +89,7 @@ const AgentConversationRow = memo(
     const [isRenaming, setIsRenaming] = useState(false)
     const title = conversation.title || t('agent.newConversation')
     const displayTime = formatConversationTime(conversation.lastModified, locale)
-    const targetPath = createAgentConversationRoute(conversation.id)
-    const isActive = isAgentConversationRoute(pathname, conversation.id)
+    const isActive = activeConversationId === conversation.id
     const tabIndex = expanded ? undefined : -1
 
     useEffect(() => {
@@ -92,9 +97,7 @@ const AgentConversationRow = memo(
     }, [isRenameOpen, title])
 
     const openConversation = () => {
-      if (activeConversationId !== conversation.id || pathname !== targetPath) {
-        selectConversation(conversation.id)
-      }
+      selectConversation(conversation.id)
     }
 
     const beginRename = () => {
@@ -172,13 +175,11 @@ const AgentConversationRow = memo(
                 message={t('agent.deleteConversationTitle')}
                 onConfirm={async () => {
                   await deleteConversation(conversation.id)
-                  const nextConversationId = application.select((state) => state.agent.conversations.activeId)
+                  const nextConversationId = application.getState().agent.conversations.activeId
                   if (!isActive) return
 
                   if (nextConversationId) {
                     selectConversation(nextConversationId)
-                  } else {
-                    navigate('/agent')
                   }
                 }}
               >
@@ -260,8 +261,8 @@ export const AgentConversationSidebarSection = () => {
     }),
     { equality: applicationShallowEqual },
   )
-  const navigate = useNavigationStore((state) => state.go)
-  const pathname = useNavigationStore((state) => state.pathname)
+  const pathname = useApplicationPathname()
+  const navigate = goApplicationPath
   const { locale, t } = useTranslation()
   const isConversationPath = isAgentConversationRoute(pathname)
 
@@ -292,12 +293,11 @@ export const AgentConversationSidebarSection = () => {
                   conversation={conversation}
                   deleteConversation={deleteConversation}
                   expanded={expanded}
-                  navigate={navigate}
                   locale={locale}
-                  pathname={pathname}
                   renameConversation={renameConversation}
                   selectConversation={(id) => {
                     void selectConversation(id)
+                    navigate(createAgentConversationRoute(id))
                   }}
                   t={t}
                 />

@@ -8,7 +8,7 @@ export const resolveResourceDetailRoute = (kind: ResourceKind, id: string) => {
 }
 
 export const resolveResourceListRoute = (kind: ResourceKind) => {
-  if (kind === 'chart') return resolveApplicationRoute({ name: 'charts' })
-  if (kind === 'insight') return resolveApplicationRoute({ name: 'insights' })
-  return resolveApplicationRoute({ name: 'reports' })
+  if (kind === 'chart') return resolveApplicationRoute({ name: 'chart' })
+  if (kind === 'insight') return resolveApplicationRoute({ name: 'insight' })
+  return resolveApplicationRoute({ name: 'report' })
 }

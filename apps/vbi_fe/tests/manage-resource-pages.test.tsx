@@ -38,21 +38,21 @@ rs.mock('../src/services/insightApi', () => ({
   updateInsight: rs.fn(),
 }))
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
 
 const resourceApi = await import('../src/services/resourceApi')
 const insightApi = await import('../src/services/insightApi')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useManageChartsStore } = await import('../src/stores/manage-charts.store')
-const { useManageInsightsStore } = await import('../src/stores/manage-insights.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { useReportsStore } = await import('../src/stores/reports.store')
-const { ManageChartsPage } = await import('../src/views/ManageChartsPage')
-const { ManageInsightsPage } = await import('../src/views/ManageInsightsPage')
-const { ReportsPage } = await import('../src/views/ReportsPage')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useManageChartsStore } = await import('./application-test-stores')
+const { useManageInsightsStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const { useReportsStore } = await import('./application-test-stores')
+const { ManageChartsPage } = await import('../src/views/resources/chart/ManageChartsPage')
+const { ManageInsightsPage } = await import('../src/views/resources/insight/ManageInsightsPage')
+const { ReportsPage } = await import('../src/views/resources/report/ReportsPage')
 
 const initialChartsState = useManageChartsStore.getState()
 const initialInsightsState = useManageInsightsStore.getState()
@@ -135,7 +135,7 @@ const scenarios: ResourceScenario[] = [
     kind: 'chart',
     pageTitle: 'Charts',
     renderPage: ManageChartsPage,
-    route: '/manage/charts/chart-1',
+    route: '/manage/chart/chart-1',
   },
   {
     createButton: 'New Insight',
@@ -143,7 +143,7 @@ const scenarios: ResourceScenario[] = [
     kind: 'insight',
     pageTitle: 'Insights',
     renderPage: ManageInsightsPage,
-    route: '/manage/insights/insight-1',
+    route: '/manage/insight/insight-1',
   },
   {
     createButton: 'New Report',
@@ -151,7 +151,7 @@ const scenarios: ResourceScenario[] = [
     kind: 'report',
     pageTitle: 'Reports',
     renderPage: ReportsPage,
-    route: '/manage/reports/report-1',
+    route: '/manage/report/report-1',
   },
 ]
 
@@ -182,6 +182,7 @@ describe('resource management pages', () => {
       expect(screen.getByText('9 Visible')).toBeInTheDocument()
       expect(screen.getByText(`${scenario.kind} resource 1`)).toBeInTheDocument()
       expect(screen.queryByText(`${scenario.kind} resource 9`)).not.toBeInTheDocument()
+      expect(screen.getByRole('table').closest('.vbi-motion-resource-table')).toBeTruthy()
       expect(getRowForText(`${scenario.kind} resource 1`)).not.toHaveClass('vbi-motion-row')
 
       fireEvent.click(screen.getByRole('button', { name: 'Next' }))
@@ -201,6 +202,7 @@ describe('resource management pages', () => {
 
       fireEvent.click(within(getRowForText(`${scenario.kind} resource 1`)).getByRole('button', { name: 'Edit' }))
       expect(navigate).toHaveBeenCalledWith(scenario.route)
+      expect(navigate).toHaveBeenCalledTimes(1)
 
       fireEvent.click(screen.getByRole('button', { name: scenario.createButton }))
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
@@ -247,6 +249,24 @@ describe('resource management pages', () => {
         )
       }
     })
+  })
+
+  test('restarts the resource table route animation when switching resource categories', async () => {
+    seedResourceItems('chart')
+    seedResourceItems('insight')
+
+    const { rerender } = render(<ManageChartsPage />)
+
+    expect(await screen.findByText('chart resource 1')).toBeInTheDocument()
+    const chartTablePanel = screen.getByRole('table').closest('.vbi-motion-resource-table')
+    expect(chartTablePanel).toBeTruthy()
+
+    rerender(<ManageInsightsPage />)
+
+    expect(await screen.findByText('insight resource 1')).toBeInTheDocument()
+    const insightTablePanel = screen.getByRole('table').closest('.vbi-motion-resource-table')
+    expect(insightTablePanel).toBeTruthy()
+    expect(insightTablePanel).not.toBe(chartTablePanel)
   })
 
   test('keeps cached resource rows visible while a reload is pending', async () => {

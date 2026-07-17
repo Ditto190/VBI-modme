@@ -1,10 +1,31 @@
-import { afterEach, beforeEach, describe, expect, test } from '@rstest/core'
+import { afterEach, beforeEach, describe, expect, rs, test } from '@rstest/core'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { ManageLayoutPage } from '../src/views/ManageLayoutPage'
-import { useAgentConversationsStore } from '../src/stores/agent-conversations.store'
-import { useAppPreferencesStore } from '../src/stores/app-preferences.store'
-import { useNavigationStore } from '../src/stores/navigation.store'
-import { setVbiAgentIndexedDBFactoryForTests } from '../src/views/agent/agent-storage'
+
+rs.mock('../src/views/agent/AgentPage', () => ({
+  AgentChatSurface: ({ className }: { className?: string }) => (
+    <div className={className} data-testid='agent-chat-surface' />
+  ),
+}))
+
+const { ManageLayoutPage } = await import('../src/views/workspace/ManageLayoutPage')
+const { useAgentConversationsStore } = await import('./application-test-stores')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const {
+  defaultManageSidebarWidth,
+  defaultWorkspacePlacement,
+  manageSidebarWidthStorageKey,
+  useManageSidebarStore,
+  workspacePlacementStorageKey,
+} = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const {
+  defaultWorkspaceSidePanelWidth,
+  useWorkspaceSidePanelStore,
+  workspaceSidePanelFloatingPositionStorageKey,
+  workspaceSidePanelModeStorageKey,
+  workspaceSidePanelWidthStorageKey,
+} = await import('./application-test-stores')
+const { setVbiAgentIndexedDBFactoryForTests } = await import('../src/application/agent/agent-storage')
 
 const emptyUsage = {
   cacheRead: 0,
@@ -25,9 +46,6 @@ const conversationMetadata = {
   thinkingLevel: 'high' as const,
   usage: emptyUsage,
 }
-
-const hasVisibleConversationTitle = () =>
-  screen.getAllByText('Revenue follow-up').some((element) => !element.closest('[aria-hidden="true"]'))
 
 const seedConversationStorage = () => {
   const records = new Map([
@@ -63,6 +81,11 @@ const seedConversationStorage = () => {
 describe('manage layout navigation', () => {
   beforeEach(() => {
     seedConversationStorage()
+    window.localStorage.removeItem(manageSidebarWidthStorageKey)
+    window.localStorage.removeItem(workspacePlacementStorageKey)
+    window.localStorage.removeItem(workspaceSidePanelFloatingPositionStorageKey)
+    window.localStorage.removeItem(workspaceSidePanelModeStorageKey)
+    window.localStorage.removeItem(workspaceSidePanelWidthStorageKey)
     useAppPreferencesStore.setState({ locale: 'en-US', themeMode: 'slate' })
     useAgentConversationsStore.setState({
       activeConversationId: '',
@@ -71,6 +94,14 @@ describe('manage layout navigation', () => {
       isInitialized: true,
       isLoading: false,
       newConversationRequestSeq: 0,
+    })
+    useManageSidebarStore.setState({ collapsed: false, width: defaultManageSidebarWidth })
+    useManageSidebarStore.setState({ workspacePlacement: defaultWorkspacePlacement })
+    useWorkspaceSidePanelStore.setState({
+      collapsed: false,
+      floatingPosition: null,
+      mode: 'fixed',
+      width: defaultWorkspaceSidePanelWidth,
     })
     useNavigationStore.setState({
       navigate: null,
@@ -92,6 +123,7 @@ describe('manage layout navigation', () => {
       },
       'completed',
     )
+    useAgentConversationsStore.getState().selectConversation('conversation-1')
 
     render(
       <ManageLayoutPage>
@@ -127,6 +159,9 @@ describe('manage layout navigation', () => {
     expect(screen.queryByRole('button', { name: 'Insights' })).not.toBeInTheDocument()
     expect(conversation.querySelector('svg')).toBeNull()
     expect(screen.getByText('16m')).toBeInTheDocument()
+    expect(screen.getByTestId('agent-chat-surface')).toBeInTheDocument()
+    expect(document.querySelector('[data-workspace-slot="center"]')).toHaveAttribute('data-workspace-content', 'agent')
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toBeNull()
 
     fireEvent.click(resources)
     expect(resources).toHaveAttribute('aria-expanded', 'true')
@@ -181,7 +216,7 @@ describe('manage layout navigation', () => {
   })
 
   test('auto-expands resource navigation when landing on a resource list route', () => {
-    useNavigationStore.setState({ pathname: '/manage/charts' })
+    useNavigationStore.setState({ pathname: '/manage/chart' })
 
     render(
       <ManageLayoutPage>
@@ -202,8 +237,8 @@ describe('manage layout navigation', () => {
     expect(screen.queryByRole('button', { name: 'Charts' })).not.toBeInTheDocument()
   })
 
-  test('keeps active styling tied to the current route instead of conversation state', () => {
-    useNavigationStore.setState({ pathname: '/manage/reports' })
+  test('keeps the resource route active while the selected conversation remains active in the agent list', () => {
+    useNavigationStore.setState({ pathname: '/manage/report' })
     useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
     useAgentConversationsStore.getState().selectConversation('conversation-1')
 
@@ -219,12 +254,44 @@ describe('manage layout navigation', () => {
     expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
     expect(screen.getByRole('button', { name: /^Revenue follow-up$/i }).closest('[data-active]')).toHaveAttribute(
       'data-active',
-      'false',
+      'true',
     )
   })
 
+  test('toggles the resource and agent placement from the resource header and persists it', () => {
+    useNavigationStore.setState({ pathname: '/manage/report' })
+
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    const centerPane = document.querySelector('[data-workspace-slot="center"]')
+    const sidePanel = document.querySelector('[data-workspace-slot="sidePanel"]')
+    expect(centerPane).toHaveAttribute('data-workspace-content', 'resource')
+    expect(sidePanel).toHaveAttribute('data-workspace-content', 'agent')
+    expect(screen.getByText('Workspace')).toBeInTheDocument()
+    expect(screen.getByTestId('agent-chat-surface')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /swap workspace layout/i }))
+
+    expect(window.localStorage.getItem(workspacePlacementStorageKey)).toBe('agent-center')
+    expect(document.querySelector('[data-workspace-slot="center"]')).toHaveAttribute('data-workspace-content', 'agent')
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toHaveAttribute(
+      'data-workspace-content',
+      'resource',
+    )
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toHaveClass('border-l')
+    expect(screen.getByRole('heading', { name: 'Agent' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Reports' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Float Panel' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Collapse Panel' })).toBeInTheDocument()
+    expect(screen.getByRole('separator', { name: 'Resize Panel' })).toBeInTheDocument()
+  })
+
   test('marks report navigation active on report detail routes', () => {
-    useNavigationStore.setState({ pathname: '/manage/reports/report-1' })
+    useNavigationStore.setState({ pathname: '/manage/report/report-1' })
 
     render(
       <ManageLayoutPage>
@@ -240,7 +307,7 @@ describe('manage layout navigation', () => {
   })
 
   test('marks chart navigation active on chart detail routes', () => {
-    useNavigationStore.setState({ pathname: '/manage/charts/chart-1' })
+    useNavigationStore.setState({ pathname: '/manage/chart/chart-1' })
 
     render(
       <ManageLayoutPage>
@@ -256,7 +323,7 @@ describe('manage layout navigation', () => {
   })
 
   test('marks insight navigation active on insight detail routes', () => {
-    useNavigationStore.setState({ pathname: '/manage/insights/insight-1' })
+    useNavigationStore.setState({ pathname: '/manage/insight/insight-1' })
 
     render(
       <ManageLayoutPage>
@@ -283,9 +350,14 @@ describe('manage layout navigation', () => {
     expect(screen.getByRole('button', { name: /new conversation/i })).toHaveAttribute('data-active', 'true')
     expect(screen.getByRole('button', { name: /resources/i })).toHaveAttribute('data-active', 'false')
     expect(screen.getByRole('button', { name: /conversations/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getAllByTestId('agent-chat-surface')).toHaveLength(1)
+    expect(document.querySelector('[data-workspace-slot="center"]')).toHaveAttribute('data-workspace-content', 'agent')
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toBeNull()
+    expect(screen.queryByText('Workspace')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /swap workspace layout/i })).not.toBeInTheDocument()
   })
 
-  test('does not apply the default motion presence class to the persistent agent main', () => {
+  test('hides the resource workspace on agent routes', () => {
     useNavigationStore.setState({ pathname: '/agent' })
 
     render(
@@ -294,10 +366,14 @@ describe('manage layout navigation', () => {
       </ManageLayoutPage>,
     )
 
-    expect(screen.getByText('Workspace').closest('main')).not.toHaveClass('vbi-motion-presence')
+    expect(screen.queryByText('Workspace')).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Agent' })).toBeInTheDocument()
+    expect(screen.getAllByTestId('agent-chat-surface')).toHaveLength(1)
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toBeNull()
   })
 
-  test('toggles sidebar visibility and keeps the active conversation title visible', () => {
+  test('toggles sidebar visibility and keeps workspace slots visible', () => {
+    useNavigationStore.setState({ pathname: '/manage/report' })
     useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
     useAgentConversationsStore.getState().selectConversation('conversation-1')
 
@@ -311,21 +387,64 @@ describe('manage layout navigation', () => {
     expect(hideSidebarButton).toBeInTheDocument()
     expect(hideSidebarButton.closest('aside')).not.toBeNull()
     expect(hideSidebarButton.closest('header')).toBeNull()
-    expect(screen.getAllByText('Revenue follow-up')).toHaveLength(2)
+    expect(document.querySelector('[data-workspace-slot="center"]')).toHaveAttribute(
+      'data-workspace-content',
+      'resource',
+    )
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toHaveAttribute(
+      'data-workspace-content',
+      'agent',
+    )
 
     fireEvent.click(hideSidebarButton)
 
-    expect(screen.queryByRole('button', { name: /new conversation/i })).not.toBeInTheDocument()
     const showSidebarButton = screen.getByRole('button', { name: /show sidebar/i })
     expect(showSidebarButton).toBeInTheDocument()
-    expect(showSidebarButton.closest('header')).not.toBeNull()
-    expect(showSidebarButton.closest('[data-manage-header-sidebar-handle]')).not.toBeNull()
-    expect(hasVisibleConversationTitle()).toBe(true)
+    expect(showSidebarButton.closest('aside')).toHaveAttribute('data-sidebar-collapsed', 'true')
+    expect(showSidebarButton.closest('header')).toBeNull()
+    expect(showSidebarButton.closest('[data-manage-sidebar-rail]')).not.toBeNull()
+    expect(screen.getByRole('button', { name: /new conversation/i })).toHaveAttribute('data-active', 'false')
+    expect(screen.getByRole('button', { name: 'Reports' })).toHaveAttribute('data-active', 'true')
+    expect(document.querySelector('[data-workspace-slot="center"]')).toHaveAttribute(
+      'data-workspace-content',
+      'resource',
+    )
+    expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toHaveAttribute(
+      'data-workspace-content',
+      'agent',
+    )
 
     fireEvent.click(showSidebarButton)
 
-    expect(screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')).not.toBeNull()
+    expect(screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')).toHaveAttribute(
+      'data-sidebar-collapsed',
+      'false',
+    )
     expect(screen.getByRole('button', { name: /new conversation/i })).toBeInTheDocument()
+  })
+
+  test('resizes the sidebar, persists width, and resets width on separator double click', () => {
+    render(
+      <ManageLayoutPage>
+        <div>Workspace</div>
+      </ManageLayoutPage>,
+    )
+
+    const separator = screen.getByRole('separator', { name: /resize sidebar/i })
+    const sidebar = screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')
+    expect(sidebar).toHaveStyle('--manage-sidebar-width: 300px')
+
+    fireEvent.pointerDown(separator, { clientX: 300 })
+    fireEvent.pointerMove(document, { clientX: 360 })
+    fireEvent.pointerUp(document)
+
+    expect(sidebar).toHaveStyle('--manage-sidebar-width: 360px')
+    expect(window.localStorage.getItem(manageSidebarWidthStorageKey)).toBe('360')
+
+    fireEvent.doubleClick(separator)
+
+    expect(sidebar).toHaveStyle('--manage-sidebar-width: 300px')
+    expect(window.localStorage.getItem(manageSidebarWidthStorageKey)).toBe('300')
   })
 
   test('keeps the running conversation indicator on the row action side', () => {
@@ -345,9 +464,9 @@ describe('manage layout navigation', () => {
     expect(screen.queryByText(/\d+m|\d+h|\d+d/)).not.toBeInTheDocument()
   })
 
-  test('navigates to the agent page when a conversation is opened from another route', () => {
+  test('opens a conversation from another route and switches to the agent conversation route', () => {
     const navigatedTo: string[] = []
-    useNavigationStore.setState({ pathname: '/manage/reports' })
+    useNavigationStore.setState({ pathname: '/manage/report' })
     useNavigationStore.getState().setNavigate((path) => navigatedTo.push(path))
     useAgentConversationsStore.getState().upsertConversation(conversationMetadata, 'completed')
 
@@ -359,6 +478,7 @@ describe('manage layout navigation', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /^Revenue follow-up$/i }))
     expect(navigatedTo).toEqual(['/agent/conversation-1'])
+    expect(useAgentConversationsStore.getState().activeConversationId).toBe('conversation-1')
   })
 
   test('renames conversations in a modal and deletes them from a confirmation popover', async () => {

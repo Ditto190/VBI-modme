@@ -14,7 +14,7 @@ rs.mock('../src/services/insightApi', () => ({
   updateInsight: rs.fn(),
 }))
 
-rs.mock('../src/stores/resource-session.store', () => ({
+rs.mock('../src/application/resources/session', () => ({
   connectResourceSession,
   releaseResourceSession,
 }))
@@ -23,32 +23,31 @@ rs.mock('../src/views/agent/AgentConversationSidebarSection', () => ({
   AgentConversationSidebarSection: () => <div data-testid='agent-conversation-sidebar' />,
 }))
 
-rs.mock('../src/views/manage-resource/ManagePreferences', () => ({
+rs.mock('../src/views/agent/AgentPage', () => ({
+  AgentChatSurface: ({ className }: { className?: string }) => (
+    <div className={className} data-testid='agent-chat-surface' />
+  ),
+}))
+
+rs.mock('../src/views/workspace/ManagePreferences', () => ({
   ManagePreferences: () => <div data-testid='manage-preferences' />,
 }))
 
-rs.mock('../src/models', () => ({
-  useChartBuilderModel: (selector: (state: { sessions: Record<string, { builder: unknown }> }) => unknown) =>
-    selector({ sessions: {} }),
-  useInsightBuilderModel: (selector: (state: { sessions: Record<string, { builder: unknown }> }) => unknown) =>
-    selector({ sessions: {} }),
-}))
-
-rs.mock('../src/views/manage-resource/ChartResourceEditor', () => ({
+rs.mock('../src/views/resources/chart/ChartResourceEditor', () => ({
   ChartResourceEditor: () => <div data-testid='chart-resource-editor' />,
 }))
 
-rs.mock('../src/views/manage-resource/InsightResourceEditor', () => ({
+rs.mock('../src/views/resources/insight/InsightResourceEditor', () => ({
   InsightResourceEditor: () => <div data-testid='insight-resource-editor' />,
 }))
 
 const resourceApi = await import('../src/services/resourceApi')
 const insightApi = await import('../src/services/insightApi')
-const { useAppPreferencesStore } = await import('../src/stores/app-preferences.store')
-const { useNavigationStore } = await import('../src/stores/navigation.store')
-const { ManageLayoutPage } = await import('../src/views/ManageLayoutPage')
-const { ChartEditorPage } = await import('../src/views/manage-resource/ChartEditorPage')
-const { InsightEditorPage } = await import('../src/views/manage-resource/InsightEditorPage')
+const { useAppPreferencesStore } = await import('./application-test-stores')
+const { useNavigationStore } = await import('./application-test-stores')
+const { ManageLayoutPage } = await import('../src/views/workspace/ManageLayoutPage')
+const { ChartEditorPage } = await import('../src/views/resources/chart/ChartEditorPage')
+const { InsightEditorPage } = await import('../src/views/resources/insight/InsightEditorPage')
 
 describe('resource editor routes', () => {
   beforeEach(() => {
@@ -80,7 +79,7 @@ describe('resource editor routes', () => {
   })
 
   test('chart editor route owns chart session lifecycle and rename', async () => {
-    useNavigationStore.setState({ pathname: '/manage/charts/chart-1' })
+    useNavigationStore.setState({ pathname: '/manage/chart/chart-1' })
 
     const view = render(
       <ManageLayoutPage>
@@ -91,13 +90,14 @@ describe('resource editor routes', () => {
     await waitFor(() => expect(connectResourceSession).toHaveBeenCalledWith('chart', 'chart-1', expect.any(String)))
     expect(await screen.findByText('Revenue Chart')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Charts' })).toHaveAttribute('data-active', 'true')
-    expect(screen.getByRole('button', { name: 'Hide Sidebar' }).closest('aside')).not.toBeNull()
+    expect(screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')).not.toBeNull()
     expect(screen.getByRole('button', { name: 'Back' }).closest('header')).not.toBeNull()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Hide Sidebar' }))
-    const showSidebarButton = screen.getByRole('button', { name: 'Show Sidebar' })
-    const routeTitleGroup = screen.getByRole('button', { name: 'Back' }).closest('[data-manage-route-title-group]')
-    expect(showSidebarButton.closest('[data-manage-header-sidebar-handle]')).not.toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: /hide sidebar/i }))
+    const showSidebarButton = screen.getByRole('button', { name: /show sidebar/i })
+    const routeTitleGroup = screen.getByRole('button', { name: 'Back' }).closest('[data-workspace-slot-title-group]')
+    expect(showSidebarButton.closest('[data-manage-sidebar-rail]')).not.toBeNull()
+    expect(showSidebarButton.closest('header')).toBeNull()
     expect(routeTitleGroup).not.toBeNull()
     expect(routeTitleGroup).not.toHaveClass('pl-12')
     expect(screen.getByRole('button', { name: 'Back' })).toHaveTextContent('Back')
@@ -113,14 +113,14 @@ describe('resource editor routes', () => {
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Back' }))
-    expect(navigate).toHaveBeenCalledWith('/manage/charts')
+    expect(navigate).toHaveBeenCalledWith('/manage/chart')
 
     view.unmount()
     await waitFor(() => expect(releaseResourceSession).toHaveBeenCalledWith('chart', 'chart-1'))
   })
 
   test('insight editor route owns insight session lifecycle and rename', async () => {
-    useNavigationStore.setState({ pathname: '/manage/insights/insight-1' })
+    useNavigationStore.setState({ pathname: '/manage/insight/insight-1' })
 
     const view = render(
       <ManageLayoutPage>
@@ -141,7 +141,7 @@ describe('resource editor routes', () => {
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Back' }))
-    expect(navigate).toHaveBeenCalledWith('/manage/insights')
+    expect(navigate).toHaveBeenCalledWith('/manage/insight')
 
     view.unmount()
     await waitFor(() => expect(releaseResourceSession).toHaveBeenCalledWith('insight', 'insight-1'))

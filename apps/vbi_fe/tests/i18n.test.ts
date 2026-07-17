@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as ts from 'typescript'
-import { useAppPreferencesStore } from '../src/stores/app-preferences.store'
+import { useAppPreferencesStore } from './application-test-stores'
 
 const testDir = path.dirname(fileURLToPath(import.meta.url))
 const packageRoot = path.resolve(testDir, '..')
@@ -71,6 +71,82 @@ const collectLiteralTranslationKeys = () => {
   return [...keys].filter(Boolean).sort()
 }
 
+const userFacingSourceDirectories = new Set(['app', 'components', 'views'])
+const isUserFacingSourceFile = (file: string) =>
+  userFacingSourceDirectories.has(path.relative(sourceDir, file).split(path.sep)[0] ?? '')
+const userFacingAttributeNames = new Set([
+  'alt',
+  'aria-label',
+  'cancelLabel',
+  'confirmLabel',
+  'description',
+  'emptyLabel',
+  'label',
+  'message',
+  'placeholder',
+  'title',
+])
+const userFacingPropertyNames = new Set([
+  'description',
+  'display',
+  'fallbackTitle',
+  'label',
+  'message',
+  'placeholder',
+  'summary',
+  'title',
+])
+
+const isHumanReadableLiteral = (value: string) =>
+  /[A-Za-z\u4e00-\u9fff]/.test(value) &&
+  !/^(GET|POST|PATCH|DELETE|Content-Type|application\/json|localhost|https?|[a-z0-9._/-]+)$/.test(value) &&
+  !/^[@./#?&:=\w-]+$/.test(value)
+
+const getNodeLocation = (sourceFile: ts.SourceFile, node: ts.Node) => {
+  const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile))
+  return `${path.relative(packageRoot, sourceFile.fileName)}:${line + 1}`
+}
+
+const collectHardcodedUserFacingMessagesFromSource = (source: string, fileName: string) => {
+  const messages: { location: string; text: string }[] = []
+  const sourceFile = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
+  const addMessage = (node: ts.Node, text: string) => {
+    const normalizedText = text.replace(/\s+/g, ' ').trim()
+    if (normalizedText && isHumanReadableLiteral(normalizedText)) {
+      messages.push({ location: getNodeLocation(sourceFile, node), text: normalizedText })
+    }
+  }
+
+  const visit = (node: ts.Node) => {
+    if (ts.isJsxText(node)) addMessage(node, node.getText(sourceFile))
+
+    if (ts.isJsxAttribute(node) && node.initializer && ts.isStringLiteral(node.initializer)) {
+      const attributeName = node.name.getText(sourceFile)
+      if (userFacingAttributeNames.has(attributeName)) addMessage(node, node.initializer.text)
+    }
+
+    if (ts.isPropertyAssignment(node) && (ts.isIdentifier(node.name) || ts.isStringLiteral(node.name))) {
+      const propertyName = ts.isIdentifier(node.name) ? node.name.text : node.name.text
+      if (
+        userFacingPropertyNames.has(propertyName) &&
+        (ts.isStringLiteral(node.initializer) || ts.isNoSubstitutionTemplateLiteral(node.initializer))
+      ) {
+        addMessage(node, node.initializer.text)
+      }
+    }
+
+    ts.forEachChild(node, visit)
+  }
+
+  visit(sourceFile)
+  return messages
+}
+
+const collectHardcodedUserFacingMessages = () =>
+  walkSourceFiles(sourceDir)
+    .filter(isUserFacingSourceFile)
+    .flatMap((file) => collectHardcodedUserFacingMessagesFromSource(fs.readFileSync(file, 'utf8'), file))
+
 const dynamicTranslationKeys = [
   'app.language.de',
   'app.language.en',
@@ -117,6 +193,10 @@ describe('i18n messages', () => {
       const missingKeys = allUsedKeys.filter((key) => !(key in messages))
       expect({ file, missingKeys }).toEqual({ file, missingKeys: [] })
     }
+  })
+
+  test('route visible UI copy through i18n messages', () => {
+    expect(collectHardcodedUserFacingMessages()).toEqual([])
   })
 
   test('persist user locale and theme selections in browser storage', () => {
