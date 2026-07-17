@@ -53,12 +53,17 @@ type TestPreferencesState = {
   setThemeMode(themeMode: TestPreferencesState['themeMode']): void
 }
 
-const createPreferencesState = (): TestPreferencesState => ({
-  locale: i18nApplicationStore.getState().locale,
-  themeMode: themeApplicationStore.getState().mode,
-  setLocale: setI18nApplicationLocale,
-  setThemeMode: setThemeApplicationMode,
-})
+const createPreferencesState = (): TestPreferencesState => {
+  const i18n = i18nApplicationStore.getState()
+  const theme = themeApplicationStore.getState()
+
+  return {
+    locale: i18n.locale,
+    themeMode: theme.mode,
+    setLocale: i18n.change,
+    setThemeMode: theme.change,
+  }
+}
 
 export const useAppPreferencesStore: any = {
   getState: createPreferencesState,

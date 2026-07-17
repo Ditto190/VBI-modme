@@ -71,7 +71,9 @@ const collectLiteralTranslationKeys = () => {
   return [...keys].filter(Boolean).sort()
 }
 
-const userFacingSourcePattern = new RegExp(`${path.sep}(app|components|views)${path.sep}`)
+const userFacingSourceDirectories = new Set(['app', 'components', 'views'])
+const isUserFacingSourceFile = (file: string) =>
+  userFacingSourceDirectories.has(path.relative(sourceDir, file).split(path.sep)[0] ?? '')
 const userFacingAttributeNames = new Set([
   'alt',
   'aria-label',
@@ -142,7 +144,7 @@ const collectHardcodedUserFacingMessagesFromSource = (source: string, fileName: 
 
 const collectHardcodedUserFacingMessages = () =>
   walkSourceFiles(sourceDir)
-    .filter((file) => userFacingSourcePattern.test(file))
+    .filter(isUserFacingSourceFile)
     .flatMap((file) => collectHardcodedUserFacingMessagesFromSource(fs.readFileSync(file, 'utf8'), file))
 
 const dynamicTranslationKeys = [

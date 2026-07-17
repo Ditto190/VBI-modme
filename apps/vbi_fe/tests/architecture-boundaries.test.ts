@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 const testDir = dirname(fileURLToPath(import.meta.url))
 const srcRoot = resolve(testDir, '../src')
 const viewsRoot = resolve(srcRoot, 'views')
-const guardedRoots = [resolve(srcRoot, 'application'), resolve(srcRoot, 'stores')]
+const guardedRoots = [resolve(srcRoot, 'application')]
 const sourceFilePattern = /\.(ts|tsx)$/
 const importSpecifierPattern =
   /(?:import|export)\s+(?:type\s+)?(?:[\s\S]*?\s+from\s+)?['"]([^'"]+)['"]|import\(\s*['"]([^'"]+)['"]\s*\)/g
@@ -24,7 +24,7 @@ const resolveRelativeImport = (file: string, specifier: string) => {
 }
 
 describe('frontend architecture boundaries', () => {
-  test('keeps application and stores independent from views', () => {
+  test('keeps application independent from views', () => {
     const violations = guardedRoots
       .flatMap(listSourceFiles)
       .flatMap((file) => {

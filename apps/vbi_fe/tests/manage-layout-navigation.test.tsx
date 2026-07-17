@@ -283,7 +283,7 @@ describe('manage layout navigation', () => {
       'resource',
     )
     expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toHaveClass('border-l')
-    expect(screen.getByRole('heading', { name: 'VBI Agent' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Agent' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Reports' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Float Panel' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Collapse Panel' })).toBeInTheDocument()
@@ -367,7 +367,7 @@ describe('manage layout navigation', () => {
     )
 
     expect(screen.queryByText('Workspace')).not.toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'VBI Agent' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Agent' })).toBeInTheDocument()
     expect(screen.getAllByTestId('agent-chat-surface')).toHaveLength(1)
     expect(document.querySelector('[data-workspace-slot="sidePanel"]')).toBeNull()
   })
@@ -430,7 +430,7 @@ describe('manage layout navigation', () => {
       </ManageLayoutPage>,
     )
 
-    const separator = screen.getByRole('separator', { name: 'Resize Sidebar' })
+    const separator = screen.getByRole('separator', { name: /resize sidebar/i })
     const sidebar = screen.getByRole('button', { name: /hide sidebar/i }).closest('aside')
     expect(sidebar).toHaveStyle('--manage-sidebar-width: 300px')
 

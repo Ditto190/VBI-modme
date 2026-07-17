@@ -668,11 +668,11 @@ describe('AgentPage', () => {
 
     fireEvent.click(progressGroup!.querySelector('summary')!)
 
-    expect(await screen.findByText('Reasoning')).toBeInTheDocument()
+    expect(await screen.findByText('推理过程')).toBeInTheDocument()
     expect(screen.getByText('先查询图表资源。')).toBeInTheDocument()
     expect(screen.getByText('继续查询洞察资源。')).toBeInTheDocument()
     expect(screen.getByText('最后查询报告资源。')).toBeInTheDocument()
-    expect(screen.getByText('6 steps')).toBeInTheDocument()
+    expect(screen.getByText('6 步')).toBeInTheDocument()
 
     expect(screen.getByText('chart.list')).toBeInTheDocument()
     expect(screen.getByText('insight.list')).toBeInTheDocument()
