@@ -11,6 +11,13 @@
 | `theme`   | --        | Theme configuration containing mode ('light' \| 'dark') and design tokens | `ThemeConfig`                                | `undefined` |
 
 
+## Events
+
+| Event              | Description                                    | Type                                                      |
+| ------------------ | ---------------------------------------------- | --------------------------------------------------------- |
+| `vbiBuilderChange` | Emitted when the builder is changed internally | `CustomEvent<VBIChartBuilder<DefaultVBIQueryDSL, VSeed>>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
