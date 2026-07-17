@@ -1,10 +1,8 @@
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
-import { h } from '@stencil/core'
-import { VbiChartRender } from './vbi-chart-render'
+import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
-const meta: Meta<VbiChartRender> = {
+const meta: Meta = {
   title: 'chart/VbiChartRender',
-  component: VbiChartRender,
+  component: 'vbi-chart-render',
   tags: ['autodocs'],
   parameters: {
     layout: 'padded',
@@ -19,7 +17,7 @@ const meta: Meta<VbiChartRender> = {
 
 export default meta
 
-type Story = StoryObj<VbiChartRender>
+type Story = StoryObj
 
 const mockVSeed = {
   chartType: 'column',
@@ -42,7 +40,12 @@ export const Default: Story = {
   args: {
     vseed: mockVSeed,
   },
-  render: (props) => {
-    return <vbi-chart-render {...props} style={{ height: '300px', width: '100%', display: 'block' }}></vbi-chart-render>
+  render: (args) => {
+    const el = document.createElement('vbi-chart-render')
+    Object.assign(el, args)
+    el.style.height = '300px'
+    el.style.width = '100%'
+    el.style.display = 'block'
+    return el
   },
 }
