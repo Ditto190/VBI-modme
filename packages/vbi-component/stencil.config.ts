@@ -1,15 +1,10 @@
-/// <reference types="node" />
 import { type Config } from '@stencil/core'
-
-const isDev = process.argv.includes('--dev')
 
 export const config: Config = {
   namespace: 'vbi-component',
   rollupConfig: {
     inputOptions: {
-      external: isDev
-        ? []
-        : ['@visactor/vbi', '@visactor/vchart', '@visactor/vquery', '@visactor/vseed', '@visactor/vtable'],
+      external: ['@visactor/vbi', '@visactor/vchart', '@visactor/vquery', '@visactor/vseed', '@visactor/vtable'],
     },
   },
   outputTargets: [
@@ -20,8 +15,6 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       customElementsExportBehavior: 'auto-define-custom-elements',
-      externalRuntime: false,
-      minify: true,
     },
     {
       type: 'docs-readme',
@@ -29,10 +22,6 @@ export const config: Config = {
     {
       type: 'docs-json',
       file: './.storybook/custom-elements.json',
-    },
-    {
-      type: 'www',
-      serviceWorker: null, // disable service workers
     },
   ],
 }
