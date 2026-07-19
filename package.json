@@ -12,7 +12,7 @@
     "dev": "pnpm --filter=website run dev",
     "tui": "node apps/vbi_tui/scripts/build.mjs && node apps/vbi_tui/dist/cli.js",
     "build": "turbo build --filter=!website",
-    "build:website": "pnpm --filter=website run build",
+    "build:website": "pnpm --filter=vbi-component run build-storybook && pnpm --filter=website run build",
     "build:graph": "pnpm run build:app:graph && pnpm run build:packages:graph",
     "build:app:graph": "turbo build --filter=./apps/* --filter=!./apps/website --graph=.turbo/apps.mermaid",
     "build:packages:graph": "turbo build --filter=./packages/* --graph=.turbo/packages.mermaid",

@@ -1,0 +1,2803 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-button/vbi-button.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-button",
+          "name": "VbiButton",
+          "attributes": [
+            {
+              "name": "active",
+              "description": "Status aktif (pressed/selected)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "active"
+            },
+            {
+              "name": "color",
+              "description": "Warna utama (primary, secondary, accent, etc.)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "Status dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "shape",
+              "description": "Bentuk (square, circle, wide, block)",
+              "type": {
+                "text": "\"block\" | \"circle\" | \"square\" | \"wide\""
+              },
+              "fieldName": "shape"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "type",
+              "description": "Jenis tombol",
+              "type": {
+                "text": "\"button\" | \"reset\" | \"submit\""
+              },
+              "default": "'button'",
+              "fieldName": "type"
+            },
+            {
+              "name": "variant",
+              "description": "Varian tombol (ghost, outline, dash, soft, link)",
+              "type": {
+                "text": "\"dash\" | \"ghost\" | \"link\" | \"outline\" | \"soft\""
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "active",
+              "description": "Status aktif (pressed/selected)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "active"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Warna utama (primary, secondary, accent, etc.)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Status dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "shape",
+              "description": "Bentuk (square, circle, wide, block)",
+              "type": {
+                "text": "\"block\" | \"circle\" | \"square\" | \"wide\""
+              },
+              "readonly": true,
+              "attribute": "shape"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "Jenis tombol",
+              "type": {
+                "text": "\"button\" | \"reset\" | \"submit\""
+              },
+              "default": "'button'",
+              "readonly": true,
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Varian tombol (ghost, outline, dash, soft, link)",
+              "type": {
+                "text": "\"dash\" | \"ghost\" | \"link\" | \"outline\" | \"soft\""
+              },
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiButton",
+          "declaration": {
+            "name": "VbiButton"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-button",
+          "declaration": {
+            "name": "VbiButton"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-cascading-menu/vbi-cascading-menu.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-cascading-menu",
+          "name": "VbiCascadingMenu",
+          "attributes": [
+            {
+              "name": "size",
+              "description": "Ukuran menu. Standarnya 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "variant",
+              "description": "Varian orientasi menu. Standarnya 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "Array item menu yang akan di-render",
+              "type": {
+                "text": "CascadingMenuItem[]",
+                "references": [
+                  {
+                    "name": "CascadingMenuItem"
+                  }
+                ]
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran menu. Standarnya 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Varian orientasi menu. Standarnya 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiCascadingMenuSelect",
+              "description": "Dijalankan saat item menu diklik",
+              "type": {
+                "text": "CustomEvent<CascadingMenuItem>",
+                "references": [
+                  {
+                    "name": "CascadingMenuItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiCascadingMenu",
+          "declaration": {
+            "name": "VbiCascadingMenu"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-cascading-menu",
+          "declaration": {
+            "name": "VbiCascadingMenu"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-dimension/vbi-chart-dimension.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-dimension",
+          "name": "VbiChartDimension"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartDimension",
+          "declaration": {
+            "name": "VbiChartDimension"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-dimension",
+          "declaration": {
+            "name": "VbiChartDimension"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-editor/vbi-chart-editor.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-editor",
+          "name": "VbiChartEditor"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartEditor",
+          "declaration": {
+            "name": "VbiChartEditor"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-editor",
+          "declaration": {
+            "name": "VbiChartEditor"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/fields/vbi-chart-field-filter/vbi-chart-field-filter.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-field-filter",
+          "name": "VbiChartFieldFilter",
+          "attributes": [
+            {
+              "name": "keyword",
+              "description": "Kata kunci pencarian saat ini.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "keyword"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "keyword",
+              "description": "Kata kunci pencarian saat ini.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "keyword"
+            },
+            {
+              "kind": "field",
+              "name": "selectedRoles",
+              "description": "Peran bidang yang saat ini dipilih.",
+              "type": {
+                "text": "FieldRole[]",
+                "references": [
+                  {
+                    "name": "FieldRole",
+                    "module": "src/utils/data/fieldRole"
+                  }
+                ]
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "selectedTypes",
+              "description": "Tipe bidang yang saat ini dipilih.",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartFieldFilterKeyword",
+              "description": "Dipancarkan saat pengguna mengubah kata kunci pencarian.",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            },
+            {
+              "name": "vbiChartFieldFilterRole",
+              "description": "Dipancarkan saat pengguna mengubah peran yang dipilih dalam tarik-turun filter.",
+              "type": {
+                "text": "CustomEvent<FieldRole[]>",
+                "references": [
+                  {
+                    "name": "FieldRole",
+                    "module": "src/utils/data/fieldRole"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "vbiChartFieldFilterType",
+              "description": "Dipancarkan saat pengguna mengubah tipe yang dipilih dalam tarik-turun filter.",
+              "type": {
+                "text": "CustomEvent<string[]>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartFieldFilter",
+          "declaration": {
+            "name": "VbiChartFieldFilter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-field-filter",
+          "declaration": {
+            "name": "VbiChartFieldFilter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/fields/vbi-chart-field-section/vbi-chart-field-section.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-field-section",
+          "name": "VbiChartFieldSection",
+          "members": [
+            {
+              "kind": "field",
+              "name": "dimensions",
+              "description": "Daftar dimensi untuk ditampilkan.",
+              "type": {
+                "text": "VBISchemaField[]",
+                "references": [
+                  {
+                    "name": "VBISchemaField",
+                    "module": "src/store/chart/schema-fields"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "measures",
+              "description": "Daftar ukuran untuk ditampilkan.",
+              "type": {
+                "text": "VBISchemaField[]",
+                "references": [
+                  {
+                    "name": "VBISchemaField",
+                    "module": "src/store/chart/schema-fields"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartFieldSection",
+          "declaration": {
+            "name": "VbiChartFieldSection"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-field-section",
+          "declaration": {
+            "name": "VbiChartFieldSection"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/fields/vbi-chart-fields/vbi-chart-fields.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-fields",
+          "name": "VbiChartFields"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartFields",
+          "declaration": {
+            "name": "VbiChartFields"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-fields",
+          "declaration": {
+            "name": "VbiChartFields"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-having/vbi-chart-having.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-having",
+          "name": "VbiChartHaving"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartHaving",
+          "declaration": {
+            "name": "VbiChartHaving"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-having",
+          "declaration": {
+            "name": "VbiChartHaving"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-having-filter/vbi-chart-having-filter.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-having-filter",
+          "name": "VbiChartHavingFilter",
+          "members": [
+            {
+              "kind": "field",
+              "name": "fieldRoleMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "fieldTypeMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "item",
+              "type": {
+                "text": "{ id?: string; field: string; aggregate?: { func: \"count\" | \"sum\" | \"avg\" | \"min\" | \"max\" | \"variance\" | \"stddev\" | \"median\" | \"countDistinct\" | \"variancePop\"; } | { func: \"quantile\"; quantile?: number; }; operator?: string; op?: string; value?: unknown; }",
+                "references": [
+                  {
+                    "name": "HavingFilterLike",
+                    "module": "../vbi-chart-having/helpers/having-utils"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartHavingFilterCancel",
+              "type": {
+                "text": "CustomEvent<MouseEvent>",
+                "references": [
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "vbiChartHavingFilterSave",
+              "type": {
+                "text": "CustomEvent<{ item: HavingFilterLike; event?: MouseEvent; }>",
+                "references": [
+                  {
+                    "name": "HavingFilterLike",
+                    "module": "../vbi-chart-having/helpers/having-utils"
+                  },
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartHavingFilter",
+          "declaration": {
+            "name": "VbiChartHavingFilter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-having-filter",
+          "declaration": {
+            "name": "VbiChartHavingFilter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-measure/vbi-chart-measure.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-measure",
+          "name": "VbiChartMeasure"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartMeasure",
+          "declaration": {
+            "name": "VbiChartMeasure"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-measure",
+          "declaration": {
+            "name": "VbiChartMeasure"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-render/vbi-chart-render.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-render",
+          "name": "VbiChartRender",
+          "members": [
+            {
+              "kind": "field",
+              "name": "vseed",
+              "description": "Objek konfigurasi VSeed yang digunakan untuk me-render bagan atau tabel.",
+              "type": {
+                "text": "Area | AreaPercent | Bar | BarParallel | BarPercent | BoxPlot | CirclePacking | Column | ColumnParallel | ColumnPercent | Donut | DualAxis | Funnel | Heatmap | HierarchySankey | Histogram | Line | Pie | PivotTable | RaceBar | RaceColumn | RaceDonut | RaceLine | RacePie | RaceScatter | Radar | Rose | RoseParallel | Sankey | Scatter | Sunburst | Table | TreeMap",
+                "references": [
+                  {
+                    "name": "VSeed",
+                    "module": "@visactor/vseed"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartRender",
+          "declaration": {
+            "name": "VbiChartRender"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-render",
+          "declaration": {
+            "name": "VbiChartRender"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-shelf-panel/vbi-chart-shelf-panel.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-shelf-panel",
+          "name": "VbiChartShelfPanel"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartShelfPanel",
+          "declaration": {
+            "name": "VbiChartShelfPanel"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-shelf-panel",
+          "declaration": {
+            "name": "VbiChartShelfPanel"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-toolbar/vbi-chart-toolbar.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-toolbar",
+          "name": "VbiChartToolbar"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartToolbar",
+          "declaration": {
+            "name": "VbiChartToolbar"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-toolbar",
+          "declaration": {
+            "name": "VbiChartToolbar"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-type/vbi-chart-type.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-type",
+          "name": "VbiChartType"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartType",
+          "declaration": {
+            "name": "VbiChartType"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-type",
+          "declaration": {
+            "name": "VbiChartType"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-upload/vbi-chart-upload.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-upload",
+          "name": "VbiChartUpload",
+          "attributes": [
+            {
+              "name": "connector-id-prefix",
+              "description": "Awalan untuk ID konektor CSV lokal yang dihasilkan.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'local_csv'",
+              "fieldName": "connectorIdPrefix"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "connectorIdPrefix",
+              "description": "Awalan untuk ID konektor CSV lokal yang dihasilkan.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'local_csv'",
+              "readonly": true,
+              "attribute": "connector-id-prefix"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartUploadSuccess",
+              "description": "Dipancarkan saat file CSV berhasil diunggah dan diimpor ke penyimpanan bagan.",
+              "type": {
+                "text": "CustomEvent<{ connectorId: string; fileName: string; rowCount: number; }>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartUpload",
+          "declaration": {
+            "name": "VbiChartUpload"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-upload",
+          "declaration": {
+            "name": "VbiChartUpload"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-where/vbi-chart-where.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-where",
+          "name": "VbiChartWhere"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartWhere",
+          "declaration": {
+            "name": "VbiChartWhere"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-where",
+          "declaration": {
+            "name": "VbiChartWhere"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-where-filter/vbi-chart-where-filter.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-where-filter",
+          "name": "VbiChartWhereFilter",
+          "members": [
+            {
+              "kind": "field",
+              "name": "fieldRoleMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "fieldTypeMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "item",
+              "type": {
+                "text": "{ id?: string; field: string; operator?: string; op?: string; value?: unknown; }",
+                "references": [
+                  {
+                    "name": "WhereFilterLike",
+                    "module": "../vbi-chart-where/helpers/where-utils"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartWhereFilterCancel",
+              "type": {
+                "text": "CustomEvent<MouseEvent>",
+                "references": [
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "vbiChartWhereFilterSave",
+              "type": {
+                "text": "CustomEvent<{ item: WhereFilterLike; event?: MouseEvent; }>",
+                "references": [
+                  {
+                    "name": "WhereFilterLike",
+                    "module": "../vbi-chart-where/helpers/where-utils"
+                  },
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartWhereFilter",
+          "declaration": {
+            "name": "VbiChartWhereFilter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-where-filter",
+          "declaration": {
+            "name": "VbiChartWhereFilter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-checkbox/vbi-checkbox.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-checkbox",
+          "name": "VbiCheckbox",
+          "attributes": [
+            {
+              "name": "checked",
+              "description": "Apakah komponen dicentang.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "color",
+              "description": "Warna tema komponen.",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "Apakah komponen dinonaktifkan.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "indeterminate",
+              "description": "Apakah kotak centang dalam keadaan tak tentu.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "indeterminate"
+            },
+            {
+              "name": "name",
+              "description": "Nama komponen, digunakan untuk pengiriman formulir.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran komponen.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "description": "Apakah komponen dicentang.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Warna tema komponen.",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Apakah komponen dinonaktifkan.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "description": "Apakah kotak centang dalam keadaan tak tentu.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "indeterminate"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "Nama komponen, digunakan untuk pengiriman formulir.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran komponen.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiCheckboxChange",
+              "description": "Dipancarkan saat nilai kotak centang berubah.",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiCheckbox",
+          "declaration": {
+            "name": "VbiCheckbox"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-checkbox",
+          "declaration": {
+            "name": "VbiCheckbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-config-provider/vbi-config-provider.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-config-provider",
+          "name": "VbiConfigProvider",
+          "members": [
+            {
+              "kind": "field",
+              "name": "builder",
+              "description": "Instance VBI chart builder untuk menginisialisasi penyimpanan",
+              "type": {
+                "text": "VBIChartBuilder<DefaultVBIQueryDSL, VSeed>",
+                "references": [
+                  {
+                    "name": "VBIChartBuilder",
+                    "module": "@visactor/vbi"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "theme",
+              "description": "Konfigurasi tema berisi mode ('light' | 'dark') dan token desain",
+              "type": {
+                "text": "ThemeConfig",
+                "references": [
+                  {
+                    "name": "ThemeConfig",
+                    "module": "./theme"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiBuilderChange",
+              "description": "Dipancarkan saat builder diubah secara internal",
+              "type": {
+                "text": "CustomEvent<VBIChartBuilder<DefaultVBIQueryDSL, VSeed>>",
+                "references": [
+                  {
+                    "name": "VBIChartBuilder",
+                    "module": "@visactor/vbi"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiConfigProvider",
+          "declaration": {
+            "name": "VbiConfigProvider"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-config-provider",
+          "declaration": {
+            "name": "VbiConfigProvider"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-dropdown/vbi-dropdown.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-dropdown",
+          "name": "VbiDropdown",
+          "attributes": [
+            {
+              "name": "disabled",
+              "description": "Jika 'true', menu tarik-turun tidak dapat dibuka.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "offset",
+              "description": "Jarak antara menu tarik-turun dan pemicunya (dalam piksel).",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "fieldName": "offset"
+            },
+            {
+              "name": "open",
+              "description": "Mengontrol status buka menu tarik-turun.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "placement",
+              "description": "Posisi menu tarik-turun relatif terhadap pemicunya.",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "DropdownPlacement"
+                  }
+                ]
+              },
+              "default": "'bottom'",
+              "fieldName": "placement"
+            },
+            {
+              "name": "popover-mode",
+              "description": "Mode interaksi popover ('auto' menutup saat klik di luar, 'manual' tidak).",
+              "type": {
+                "text": "\"auto\" | \"manual\""
+              },
+              "default": "'auto'",
+              "fieldName": "popoverMode"
+            },
+            {
+              "name": "trigger",
+              "description": "Bagaimana menu tarik-turun dipicu.",
+              "type": {
+                "text": "\"click\" | \"hover\""
+              },
+              "default": "'click'",
+              "fieldName": "trigger"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Jika 'true', menu tarik-turun tidak dapat dibuka.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "description": "Jarak antara menu tarik-turun dan pemicunya (dalam piksel).",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "readonly": true,
+              "attribute": "offset"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "Mengontrol status buka menu tarik-turun.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "description": "Posisi menu tarik-turun relatif terhadap pemicunya.",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "DropdownPlacement"
+                  }
+                ]
+              },
+              "default": "'bottom'",
+              "readonly": true,
+              "attribute": "placement"
+            },
+            {
+              "kind": "field",
+              "name": "popoverMode",
+              "description": "Mode interaksi popover ('auto' menutup saat klik di luar, 'manual' tidak).",
+              "type": {
+                "text": "\"auto\" | \"manual\""
+              },
+              "default": "'auto'",
+              "readonly": true,
+              "attribute": "popover-mode"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "description": "Bagaimana menu tarik-turun dipicu.",
+              "type": {
+                "text": "\"click\" | \"hover\""
+              },
+              "default": "'click'",
+              "readonly": true,
+              "attribute": "trigger"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiDropdownToggle",
+              "description": "Dipancarkan saat menu tarik-turun terbuka atau tertutup.",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiDropdown",
+          "declaration": {
+            "name": "VbiDropdown"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-dropdown",
+          "declaration": {
+            "name": "VbiDropdown"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-icon/vbi-icon.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-icon",
+          "name": "VbiIcon",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "Warna ikon. Standarnya 'currentColor'.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'currentColor'",
+              "fieldName": "color"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran ikon (tanpa unit, diskalakan relatif terhadap --size-base).",
+              "type": {
+                "text": "number"
+              },
+              "default": "16",
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Warna ikon. Standarnya 'currentColor'.",
+              "type": {
+                "text": "string"
+              },
+              "default": "'currentColor'",
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "description": "Objek definisi ikon dari `@ant-design/icons-svg`.",
+              "type": {
+                "text": "IconDefinition",
+                "references": [
+                  {
+                    "name": "IconDefinition",
+                    "module": "@ant-design/icons-svg/lib/types"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran ikon (tanpa unit, diskalakan relatif terhadap --size-base).",
+              "type": {
+                "text": "number"
+              },
+              "default": "16",
+              "readonly": true,
+              "attribute": "size"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiIcon",
+          "declaration": {
+            "name": "VbiIcon"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-icon",
+          "declaration": {
+            "name": "VbiIcon"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-input/vbi-input.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-input",
+          "name": "VbiInput",
+          "attributes": [
+            {
+              "name": "autocomplete",
+              "description": "Petunjuk pelengkapan otomatis untuk browser",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "autofocus",
+              "description": "Fokus otomatis input saat di-mount",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autofocus"
+            },
+            {
+              "name": "color",
+              "description": "Warna utama (primary, secondary, info, error...)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "Status dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "max",
+              "description": "Nilai maksimum untuk input angka atau tanggal",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "max"
+            },
+            {
+              "name": "maxlength",
+              "description": "Panjang karakter maksimum",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "maxlength"
+            },
+            {
+              "name": "min",
+              "description": "Nilai minimum untuk input angka atau tanggal",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "min"
+            },
+            {
+              "name": "minlength",
+              "description": "Panjang karakter minimum",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "minlength"
+            },
+            {
+              "name": "name",
+              "description": "Atribut nama untuk pengiriman formulir",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "name"
+            },
+            {
+              "name": "placeholder",
+              "description": "Teks placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "readonly",
+              "description": "Status hanya baca (focusable but not editable)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readOnly"
+            },
+            {
+              "name": "required",
+              "description": "Bidang wajib untuk validasi formulir",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran input",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "step",
+              "description": "Langkah untuk input angka",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "step"
+            },
+            {
+              "name": "type",
+              "description": "Tipe elemen input (text, password, email, number, date...)",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "type"
+            },
+            {
+              "name": "value",
+              "description": "Nilai elemen input",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "variant",
+              "description": "Varian tampilan (e.g., ghost - transparent)",
+              "type": {
+                "text": "\"ghost\""
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "description": "Petunjuk pelengkapan otomatis untuk browser",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "description": "Fokus otomatis input saat di-mount",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "autofocus"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Warna utama (primary, secondary, info, error...)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Status dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "description": "Nilai maksimum untuk input angka atau tanggal",
+              "type": {
+                "text": "number | string"
+              },
+              "readonly": true,
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "description": "Panjang karakter maksimum",
+              "type": {
+                "text": "number"
+              },
+              "readonly": true,
+              "attribute": "maxlength"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "description": "Nilai minimum untuk input angka atau tanggal",
+              "type": {
+                "text": "number | string"
+              },
+              "readonly": true,
+              "attribute": "min"
+            },
+            {
+              "kind": "field",
+              "name": "minlength",
+              "description": "Panjang karakter minimum",
+              "type": {
+                "text": "number"
+              },
+              "readonly": true,
+              "attribute": "minlength"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "Atribut nama untuk pengiriman formulir",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "description": "Teks placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "readOnly",
+              "description": "Status hanya baca (focusable but not editable)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "description": "Bidang wajib untuk validasi formulir",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran input",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "description": "Langkah untuk input angka",
+              "type": {
+                "text": "number | string"
+              },
+              "readonly": true,
+              "attribute": "step"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "Tipe elemen input (text, password, email, number, date...)",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "readonly": true,
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Nilai elemen input",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Varian tampilan (e.g., ghost - transparent)",
+              "type": {
+                "text": "\"ghost\""
+              },
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiInputBlur",
+              "description": "Peristiwa yang dipancarkan saat input kehilangan fokus (blur)",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "vbiInputChange",
+              "description": "Peristiwa yang dipancarkan saat pengguna selesai mengetik dan kehilangan fokus (or presses Enter)",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            },
+            {
+              "name": "vbiInputFocus",
+              "description": "Peristiwa yang dipancarkan saat input mendapatkan fokus",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "vbiInputValue",
+              "description": "Peristiwa yang dipancarkan saat pengguna mengetik",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiInput",
+          "declaration": {
+            "name": "VbiInput"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-input",
+          "declaration": {
+            "name": "VbiInput"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-join/vbi-join.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-join",
+          "name": "VbiJoin",
+          "attributes": [
+            {
+              "name": "vertical",
+              "description": "Orientasi vertikal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "description": "Orientasi vertikal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "vertical"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiJoin",
+          "declaration": {
+            "name": "VbiJoin"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-join",
+          "declaration": {
+            "name": "VbiJoin"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-loading/vbi-loading.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-loading",
+          "name": "VbiLoading",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "Warna utama. Jika tidak tersedia, akan mewarisi warna teks elemen induk (currentColor)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "type",
+              "description": "Gaya memuat (spinner, dots, ring, ball, bars, infinity)",
+              "type": {
+                "text": "\"ball\" | \"bars\" | \"dots\" | \"infinity\" | \"ring\" | \"spinner\""
+              },
+              "default": "'spinner'",
+              "fieldName": "type"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Warna utama. Jika tidak tersedia, akan mewarisi warna teks elemen induk (currentColor)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "Gaya memuat (spinner, dots, ring, ball, bars, infinity)",
+              "type": {
+                "text": "\"ball\" | \"bars\" | \"dots\" | \"infinity\" | \"ring\" | \"spinner\""
+              },
+              "default": "'spinner'",
+              "readonly": true,
+              "attribute": "type"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiLoading",
+          "declaration": {
+            "name": "VbiLoading"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-loading",
+          "declaration": {
+            "name": "VbiLoading"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-menu/vbi-menu.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-menu",
+          "name": "VbiMenu",
+          "attributes": [
+            {
+              "name": "size",
+              "description": "Ukuran menu. Standarnya 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "variant",
+              "description": "Varian orientasi menu. Standarnya 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "Array item menu yang akan di-render",
+              "type": {
+                "text": "MenuItem[]",
+                "references": [
+                  {
+                    "name": "MenuItem"
+                  }
+                ]
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran menu. Standarnya 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "Varian orientasi menu. Standarnya 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiMenuSelect",
+              "description": "Dijalankan saat item menu diklik",
+              "type": {
+                "text": "CustomEvent<MenuItem>",
+                "references": [
+                  {
+                    "name": "MenuItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiMenu",
+          "declaration": {
+            "name": "VbiMenu"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-menu",
+          "declaration": {
+            "name": "VbiMenu"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-modal/vbi-modal.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-modal",
+          "name": "VbiModal",
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "position",
+              "type": {
+                "text": "\"bottom\" | \"end\" | \"middle\" | \"start\" | \"top\""
+              },
+              "default": "'middle'",
+              "fieldName": "position"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "type": {
+                "text": "\"bottom\" | \"end\" | \"middle\" | \"start\" | \"top\""
+              },
+              "default": "'middle'",
+              "readonly": true,
+              "attribute": "position"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiModalToggle",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiModal",
+          "declaration": {
+            "name": "VbiModal"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-modal",
+          "declaration": {
+            "name": "VbiModal"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-select/vbi-select.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-select",
+          "name": "VbiSelect",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "Varian warna pilihan",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"ghost\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "Apakah pilihan dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "placeholder",
+              "description": "Teks placeholder saat tidak ada opsi yang dipilih",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran pilihan",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "value",
+              "description": "Nilai pilihan saat ini",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Varian warna pilihan",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"ghost\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Apakah pilihan dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "description": "Daftar opsi pilihan",
+              "type": {
+                "text": "SelectOption[]",
+                "references": [
+                  {
+                    "name": "SelectOption"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "description": "Teks placeholder saat tidak ada opsi yang dipilih",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran pilihan",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Nilai pilihan saat ini",
+              "type": {
+                "text": "number | string"
+              },
+              "attribute": "value"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiSelectChange",
+              "description": "Dipancarkan saat pengguna mengubah opsi yang dipilih",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiSelect",
+          "declaration": {
+            "name": "VbiSelect"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-select",
+          "declaration": {
+            "name": "VbiSelect"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-switch/vbi-switch.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-switch",
+          "name": "VbiSwitch",
+          "attributes": [
+            {
+              "name": "checked",
+              "description": "Apakah sakelar dicentang.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "color",
+              "description": "Tema warna sakelar.",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "Apakah sakelar dinonaktifkan.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "name",
+              "description": "Nama komponen, digunakan untuk pengiriman formulir.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran sakelar.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "description": "Apakah sakelar dicentang.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Tema warna sakelar.",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Apakah sakelar dinonaktifkan.",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "Nama komponen, digunakan untuk pengiriman formulir.",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran sakelar.",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiSwitchChange",
+              "description": "Dipancarkan saat status centang sakelar berubah.",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiSwitch",
+          "declaration": {
+            "name": "VbiSwitch"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-switch",
+          "declaration": {
+            "name": "VbiSwitch"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-tab/vbi-tab.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-tab",
+          "name": "VbiTab",
+          "attributes": [
+            {
+              "name": "block",
+              "description": "Apakah tab menempati lebar penuh dari wadah induknya",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "block"
+            },
+            {
+              "name": "disabled",
+              "description": "Apakah semua tab dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "size",
+              "description": "Ukuran tab",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "value",
+              "description": "Nilai atau ID tab yang saat ini aktif",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "block",
+              "description": "Apakah tab menempati lebar penuh dari wadah induknya",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "block"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Apakah semua tab dinonaktifkan",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "Array item tab yang akan di-render",
+              "type": {
+                "text": "TabItem[]",
+                "references": [
+                  {
+                    "name": "TabItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "Ukuran tab",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Nilai atau ID tab yang saat ini aktif",
+              "type": {
+                "text": "number | string"
+              },
+              "attribute": "value"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiTabChange",
+              "description": "Dipancarkan saat item tab diklik",
+              "type": {
+                "text": "CustomEvent<TabItem>",
+                "references": [
+                  {
+                    "name": "TabItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiTab",
+          "declaration": {
+            "name": "VbiTab"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-tab",
+          "declaration": {
+            "name": "VbiTab"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-tooltip/vbi-tooltip.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-tooltip",
+          "name": "VbiTooltip",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "Tema warna semantik dari tooltip",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "enter-delay",
+              "description": "Penundaan dalam milidetik sebelum menampilkan tooltip saat diarahkan",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "enterDelay"
+            },
+            {
+              "name": "leave-delay",
+              "description": "Penundaan dalam milidetik sebelum menyembunyikan tooltip saat ditinggalkan",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "leaveDelay"
+            },
+            {
+              "name": "offset",
+              "description": "Jarak antara tooltip dan pemicunya (in pixels)",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "fieldName": "offset"
+            },
+            {
+              "name": "open",
+              "description": "Apakah tooltip saat ini terbuka/terlihat",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "position",
+              "description": "Posisi tooltip relatif terhadap targetnya",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "TooltipPosition"
+                  }
+                ]
+              },
+              "default": "'top'",
+              "fieldName": "position"
+            },
+            {
+              "name": "text",
+              "description": "Teks untuk ditampilkan di dalam tooltip",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "text"
+            },
+            {
+              "name": "trigger",
+              "description": "Bagaimana tooltip dipicu ('hover', 'click', or 'manual')",
+              "type": {
+                "text": "\"click\" | \"hover\" | \"manual\""
+              },
+              "default": "'hover'",
+              "fieldName": "trigger"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "Tema warna semantik dari tooltip",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "enterDelay",
+              "description": "Penundaan dalam milidetik sebelum menampilkan tooltip saat diarahkan",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "readonly": true,
+              "attribute": "enter-delay"
+            },
+            {
+              "kind": "field",
+              "name": "leaveDelay",
+              "description": "Penundaan dalam milidetik sebelum menyembunyikan tooltip saat ditinggalkan",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "readonly": true,
+              "attribute": "leave-delay"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "description": "Jarak antara tooltip dan pemicunya (in pixels)",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "readonly": true,
+              "attribute": "offset"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "Apakah tooltip saat ini terbuka/terlihat",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "description": "Posisi tooltip relatif terhadap targetnya",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "TooltipPosition"
+                  }
+                ]
+              },
+              "default": "'top'",
+              "readonly": true,
+              "attribute": "position"
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "description": "Teks untuk ditampilkan di dalam tooltip",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "description": "Bagaimana tooltip dipicu ('hover', 'click', or 'manual')",
+              "type": {
+                "text": "\"click\" | \"hover\" | \"manual\""
+              },
+              "default": "'hover'",
+              "readonly": true,
+              "attribute": "trigger"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiTooltip",
+          "declaration": {
+            "name": "VbiTooltip"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-tooltip",
+          "declaration": {
+            "name": "VbiTooltip"
+          }
+        }
+      ]
+    }
+  ]
+}
