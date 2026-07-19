@@ -48,7 +48,7 @@
     "test": "stencil-test --prod --project=unit",
     "generate": "stencil generate",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "node scripts/build-storybook.mjs"
   },
   "devDependencies": {
     "@ant-design/icons-svg": "4.4.2",
@@ -66,6 +66,7 @@
     "@visactor/vtable": "1.23.1",
     "storybook": "10.5.2",
     "typescript": "6.0.2",
+    "vite": "8.1.5",
     "vitest": "4.1.9"
   },
   "peerDependencies": {

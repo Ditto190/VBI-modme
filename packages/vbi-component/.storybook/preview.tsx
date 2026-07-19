@@ -1,11 +1,17 @@
+/// <reference types="vite/client" />
 import { setCustomElementsManifest, type Preview } from '@storybook/web-components-vite'
-import customElements from './custom-elements.json'
+import customElementsDefault from './custom-elements.json'
+
+const customElementsLocales = import.meta.glob('./custom-elements/*.json', { eager: true, import: 'default' })
+const locale = import.meta.env.STORYBOOK_LOCALE
+
+const localeKey = `./custom-elements/custom-elements.${locale}.json`
+const customElements = (locale && customElementsLocales[localeKey]) || customElementsDefault
 
 /**
  * Eagerly imports and registers all custom elements in the Storybook preview.
  * This bypasses Stencil's lazy loader and allows Vite to bundle the components directly.
  */
-// @ts-expect-error TypeScript doesn't know about Vite's import.meta.glob
 import.meta.glob('../dist/components/**/*.js', { eager: true })
 /**
  * Loads and registers component metadata for Storybook.
