@@ -18,9 +18,10 @@ export default defineConfig({
     include: ['src/**'],
     reporters: ['html', ['text', { skipFull: true }], 'json', 'json-summary'],
     thresholds: {
-      statements: 95,
-      lines: 95,
-      functions: 95,
+      statements: 100,
+      lines: 100,
+      branches: 100,
+      functions: 100,
     },
   },
   resolve: {

@@ -41,7 +41,7 @@ export class DatasetSourceBuilder {
       return await response.blob()
     }
 
-    const mimeType = MIME_TYPES[type] || 'text/plain'
+    const mimeType = MIME_TYPES[type]
 
     if (value instanceof ArrayBuffer) {
       return new Blob([value], { type: mimeType })

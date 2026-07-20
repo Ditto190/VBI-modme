@@ -43,9 +43,9 @@ export class Dataset {
   }
 
   public async queryBySQL(sql: string) {
-    const start = performance?.now?.() ?? Date.now()
+    const start = performance.now()
     const result = await this.queryAdapter.query(sql)
-    const end = performance?.now?.() ?? Date.now()
+    const end = performance.now()
 
     return {
       ...result,

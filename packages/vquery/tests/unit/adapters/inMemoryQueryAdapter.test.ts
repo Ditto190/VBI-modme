@@ -59,6 +59,7 @@ describe('InMemoryQueryAdapter', () => {
     ).toEqual([{ number: 1, text: "it's", yes: true, no: false, empty: null, negative: -1 }])
     expect((await adapter.query('select * from "test" where true')).dataset).toHaveLength(3)
     expect((await adapter.query('select * from "test" where null')).dataset).toEqual([])
+    expect((await adapter.query('select 1 as "x" where 1 in ()')).dataset).toEqual([])
     expect((await adapter.query(`select "category" from "test" where "category" ilike 'A%'`)).dataset).toEqual([
       { category: 'a' },
       { category: 'a' },
@@ -73,6 +74,15 @@ describe('InMemoryQueryAdapter', () => {
     expect(
       (await adapter.query('select var_samp("value") as "variance" from "test" where "value" = 1')).dataset,
     ).toEqual([{ variance: null }])
+    expect(
+      (await adapter.query(`select strftime('Thu, 02 Jan 2020 00:00:00 GMT', '%Y-%m-%d') as "date"`)).dataset,
+    ).toEqual([{ date: '2020-01-02' }])
+    expect(
+      (await adapter.query('select count(*) as "count" from "test" group by round("value") order by "count"')).dataset,
+    ).toEqual([{ count: 1 }, { count: 1 }, { count: 1 }])
+    expect(
+      (await adapter.query('select count(*) as "count" from "test" group by "value" order by "count"')).dataset,
+    ).toEqual([{ count: 1 }, { count: 1 }, { count: 1 }])
 
     await adapter.loadDataset('quoted', [], {
       type: 'csv',
@@ -103,7 +113,9 @@ describe('InMemoryQueryAdapter', () => {
       'JSON dataset must contain an object or an array of objects',
     )
     await expect(adapter.query('select @')).rejects.toThrow('Unsupported SQL character')
+    await expect(adapter.query('select -')).rejects.toThrow('Unsupported SQL character: -')
     await expect(adapter.query('select')).rejects.toThrow('Unexpected end of SQL expression')
+    await expect(adapter.query('select (1')).rejects.toThrow('Expected ), received end of SQL')
     await expect(adapter.query('select 1::decimal(')).rejects.toThrow('Unterminated SQL cast type')
     await expect(adapter.query('select 1 as 2')).rejects.toThrow('Expected SQL identifier')
     await expect(adapter.query('select 1 as "x" limit nope')).rejects.toThrow('LIMIT requires a number')
