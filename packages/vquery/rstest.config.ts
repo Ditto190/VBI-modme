@@ -11,17 +11,17 @@ export default defineConfig({
     exclude: [
       '**/node_modules/**',
       '**/dist/**',
-      // rstest can't run browser tests, so exclude browser files and duckdbWebAdapter.ts
+      // rstest can't run browser entrypoints.
       'src/browser.ts',
       'src/vquery-browser.ts',
-      'src/adapters/query-adapter/duckdbWebAdapter.ts',
     ],
     include: ['src/**'],
     reporters: ['html', ['text', { skipFull: true }], 'json', 'json-summary'],
     thresholds: {
-      statements: 95,
-      lines: 95,
-      functions: 95,
+      statements: 100,
+      lines: 100,
+      branches: 100,
+      functions: 100,
     },
   },
   resolve: {

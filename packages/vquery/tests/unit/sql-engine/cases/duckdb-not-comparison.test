@@ -1,0 +1,18 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/optimizer/test_not_comparison_simplification.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+statement ok
+CREATE TABLE t AS SELECT * FROM (VALUES (1),(2),(3),(NULL)) v(a);
+
+query I rowsort
+SELECT * FROM t WHERE NOT (a > 2)
+----
+1
+2
+
+query I rowsort
+SELECT * FROM t WHERE NOT (a = 1) ORDER BY a
+----
+2
+3

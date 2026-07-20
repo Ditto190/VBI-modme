@@ -6,7 +6,8 @@ import type { DatasetSchema } from '../../../src/types/DataSet'
 class MockQueryAdapter implements QueryAdapter {
   open = async () => {}
   close = async () => {}
-  writeFile = async () => {}
+  loadDataset = async () => {}
+  dropDataset = async () => {}
   query = async (): Promise<QueryResult & { table: unknown }> => ({ dataset: [], table: {} })
   getSchema = async () => []
 }

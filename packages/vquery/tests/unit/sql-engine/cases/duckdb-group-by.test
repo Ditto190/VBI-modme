@@ -1,0 +1,38 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/aggregate/group/test_group_by.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+statement ok
+CREATE TABLE test (a INTEGER, b INTEGER);
+
+statement ok
+INSERT INTO test VALUES (11, 22), (13, 22), (12, 21)
+
+# simple aggregates without group by
+query RIR
+SELECT SUM(a), COUNT(*), AVG(a) FROM test;
+----
+36.000000	3	12.000000
+
+query I
+SELECT COUNT(*) FROM test;
+----
+3
+
+query RI
+SELECT SUM(a), COUNT(*) FROM test WHERE a = 11;
+----
+11.000000	1
+
+# ORDER BY aggregation that does not occur in SELECT clause
+query IR
+SELECT b, SUM(a) FROM test GROUP BY b ORDER BY COUNT(a);
+----
+21	12.000000
+22	24.000000
+
+query IR
+SELECT b, SUM(a) FROM test GROUP BY b ORDER BY COUNT(a) DESC;
+----
+22	24.000000
+21	12.000000

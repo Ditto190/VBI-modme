@@ -55,6 +55,25 @@ describe('VQuery Coverage', () => {
     expect(result.dataset).toEqual([{ id: '2' }])
   })
 
+  it('should create and update a dataset without columns or a source', async () => {
+    await vquery.dropDataset(datasetId)
+    await vquery.createDataset(datasetId)
+    await vquery.updateDatasetSource(datasetId)
+
+    const dataset = (await vquery.listDatasets()).find((item) => item.datasetId === datasetId)
+    expect(dataset?.datasetSchema.columns).toEqual([])
+    expect(dataset?.datasetSource).toBeUndefined()
+  })
+
+  it('should connect with a temporary dataset source', async () => {
+    const dataset = await vquery.connectDataset(datasetId, schema, {
+      type: 'json',
+      rawDataset: [{ id: 'temporary' }],
+    })
+
+    expect((await dataset.query({ select: ['id'] })).dataset).toEqual([{ id: 'temporary' }])
+  })
+
   it('should throw error when updating non-existent dataset', async () => {
     await expect(vquery.updateDatasetSource('non_existent', schema, rawDataset)).rejects.toThrow(
       'dataset non_existent not exists, please create it first',

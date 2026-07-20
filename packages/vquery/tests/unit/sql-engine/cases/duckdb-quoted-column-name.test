@@ -1,0 +1,15 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/catalog/test_quoted_column_name.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+# verify escaped quotes and dots
+statement ok
+CREATE TABLE "table ""." ( "col ""." TEXT)
+
+statement ok
+INSERT INTO "table ""." ("col "".") VALUES ('quote_escaped_quote_''')
+
+query TT
+SELECT "table ""."."col "".", "col ""." FROM "table "".";
+----
+quote_escaped_quote_'	quote_escaped_quote_'

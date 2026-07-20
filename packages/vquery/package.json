@@ -53,9 +53,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@duckdb/duckdb-wasm": "1.30.0",
-    "kysely": "0.27.6",
-    "web-worker": "1.5.0"
+    "kysely": "0.27.6"
   },
   "devDependencies": {
     "@rslib/core": "0.20.3",

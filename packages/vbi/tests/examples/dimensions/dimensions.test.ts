@@ -319,7 +319,9 @@ describe('chart / Dimensions', () => {
     })
 
     const applyBuilder = (builder: VBIChartBuilder) => {
-      builder.dimensions.add('product_type', (n) => n.setAlias('产品类型')).add('province', (n) => n.setAlias('省份'))
+      builder.dimensions
+        .add('product_type', (n) => n.setAlias('产品类型').setSort({ order: 'asc' }))
+        .add('province', (n) => n.setAlias('省份').setSort({ order: 'asc' }))
     }
     await applyBuilder(builder)
 
@@ -334,12 +336,18 @@ describe('chart / Dimensions', () => {
             "encoding": "column",
             "field": "product_type",
             "id": "id-1",
+            "sort": {
+              "order": "asc",
+            },
           },
           {
             "alias": "省份",
             "encoding": "column",
             "field": "province",
             "id": "id-2",
+            "sort": {
+              "order": "asc",
+            },
           },
         ],
         "havingFilter": {
@@ -374,6 +382,10 @@ describe('chart / Dimensions', () => {
             "field": "id-1",
             "order": "asc",
           },
+          {
+            "field": "id-2",
+            "order": "asc",
+          },
         ],
         "select": [
           {
@@ -395,47 +407,15 @@ describe('chart / Dimensions', () => {
         "dataset": [
           {
             "id-1": "办公用品",
-            "id-2": "河北",
+            "id-2": "上海",
           },
           {
             "id-1": "办公用品",
-            "id-2": "安徽",
+            "id-2": "云南",
           },
           {
             "id-1": "办公用品",
-            "id-2": "江西",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "辽宁",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "山东",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "吉林",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "江苏",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "湖北",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "浙江",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "陕西",
-          },
-          {
-            "id-1": "办公用品",
-            "id-2": "四川",
+            "id-2": "内蒙古",
           },
           {
             "id-1": "办公用品",
@@ -443,19 +423,31 @@ describe('chart / Dimensions', () => {
           },
           {
             "id-1": "办公用品",
-            "id-2": "上海",
+            "id-2": "吉林",
           },
           {
             "id-1": "办公用品",
-            "id-2": "湖南",
+            "id-2": "四川",
           },
           {
             "id-1": "办公用品",
-            "id-2": "黑龙江",
+            "id-2": "天津",
           },
           {
             "id-1": "办公用品",
-            "id-2": "重庆",
+            "id-2": "宁夏",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "安徽",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "山东",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "山西",
           },
           {
             "id-1": "办公用品",
@@ -463,15 +455,35 @@ describe('chart / Dimensions', () => {
           },
           {
             "id-1": "办公用品",
-            "id-2": "甘肃",
+            "id-2": "广西",
           },
           {
             "id-1": "办公用品",
-            "id-2": "福建",
+            "id-2": "新疆",
           },
           {
             "id-1": "办公用品",
-            "id-2": "青海",
+            "id-2": "江苏",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "江西",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "河北",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "河南",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "浙江",
+          },
+          {
+            "id-1": "办公用品",
+            "id-2": "海南",
           },
         ],
         "dimensions": [
@@ -527,10 +539,10 @@ describe('chart / Dimensions', () => {
     const applyBuilder = (builder: VBIChartBuilder) => {
       builder.dimensions
         .add('area', (node) => {
-          node.setAlias('区域')
+          node.setAlias('区域').setSort({ order: 'asc' })
         })
         .add('order_date', (node) => {
-          node.setAlias('季度').setAggregate({ func: 'toQuarter' })
+          node.setAlias('季度').setAggregate({ func: 'toQuarter' }).setSort({ order: 'asc' })
         })
     }
     await applyBuilder(builder)
@@ -546,6 +558,9 @@ describe('chart / Dimensions', () => {
             "encoding": "column",
             "field": "area",
             "id": "id-2",
+            "sort": {
+              "order": "asc",
+            },
           },
           {
             "aggregate": {
@@ -555,6 +570,9 @@ describe('chart / Dimensions', () => {
             "encoding": "column",
             "field": "order_date",
             "id": "id-3",
+            "sort": {
+              "order": "asc",
+            },
           },
         ],
         "havingFilter": {
@@ -599,6 +617,10 @@ describe('chart / Dimensions', () => {
             "field": "id-2",
             "order": "asc",
           },
+          {
+            "field": "id-3",
+            "order": "asc",
+          },
         ],
         "select": [
           {
@@ -629,14 +651,14 @@ describe('chart / Dimensions', () => {
         "chartType": "table",
         "dataset": [
           {
-            "id-1": 186838.274,
+            "id-1": 73930.72400000002,
             "id-2": "东北",
-            "id-3": "2019-Q1",
+            "id-3": "2016-Q1",
           },
           {
-            "id-1": 146340.09599999993,
+            "id-1": 65768.612,
             "id-2": "东北",
-            "id-3": "2018-Q2",
+            "id-3": "2016-Q2",
           },
           {
             "id-1": 155194.30500000002,
@@ -649,36 +671,6 @@ describe('chart / Dimensions', () => {
             "id-3": "2016-Q4",
           },
           {
-            "id-1": 122472.36400000005,
-            "id-2": "东北",
-            "id-3": "2017-Q3",
-          },
-          {
-            "id-1": 272311.2490000001,
-            "id-2": "东北",
-            "id-3": "2019-Q3",
-          },
-          {
-            "id-1": 231538.68499999982,
-            "id-2": "东北",
-            "id-3": "2018-Q4",
-          },
-          {
-            "id-1": 65768.612,
-            "id-2": "东北",
-            "id-3": "2016-Q2",
-          },
-          {
-            "id-1": 176753.35299999997,
-            "id-2": "东北",
-            "id-3": "2018-Q1",
-          },
-          {
-            "id-1": 73930.72400000002,
-            "id-2": "东北",
-            "id-3": "2016-Q1",
-          },
-          {
             "id-1": 71784.10400000002,
             "id-2": "东北",
             "id-3": "2017-Q1",
@@ -689,14 +681,9 @@ describe('chart / Dimensions', () => {
             "id-3": "2017-Q2",
           },
           {
-            "id-1": 255989.503,
+            "id-1": 122472.36400000005,
             "id-2": "东北",
-            "id-3": "2019-Q4",
-          },
-          {
-            "id-1": 200039.616,
-            "id-2": "东北",
-            "id-3": "2018-Q3",
+            "id-3": "2017-Q3",
           },
           {
             "id-1": 181868.45600000003,
@@ -704,29 +691,64 @@ describe('chart / Dimensions', () => {
             "id-3": "2017-Q4",
           },
           {
+            "id-1": 176753.35299999997,
+            "id-2": "东北",
+            "id-3": "2018-Q1",
+          },
+          {
+            "id-1": 146340.09599999993,
+            "id-2": "东北",
+            "id-3": "2018-Q2",
+          },
+          {
+            "id-1": 200039.616,
+            "id-2": "东北",
+            "id-3": "2018-Q3",
+          },
+          {
+            "id-1": 231538.68499999982,
+            "id-2": "东北",
+            "id-3": "2018-Q4",
+          },
+          {
+            "id-1": 186838.274,
+            "id-2": "东北",
+            "id-3": "2019-Q1",
+          },
+          {
             "id-1": 235864.55199999994,
             "id-2": "东北",
             "id-3": "2019-Q2",
           },
           {
+            "id-1": 272311.2490000001,
+            "id-2": "东北",
+            "id-3": "2019-Q3",
+          },
+          {
+            "id-1": 255989.503,
+            "id-2": "东北",
+            "id-3": "2019-Q4",
+          },
+          {
+            "id-1": 100961.07699999999,
+            "id-2": "中南",
+            "id-3": "2016-Q1",
+          },
+          {
+            "id-1": 163742.19400000005,
+            "id-2": "中南",
+            "id-3": "2016-Q2",
+          },
+          {
+            "id-1": 209217.869,
+            "id-2": "中南",
+            "id-3": "2016-Q3",
+          },
+          {
             "id-1": 226991.00199999992,
             "id-2": "中南",
             "id-3": "2016-Q4",
-          },
-          {
-            "id-1": 423233.699,
-            "id-2": "中南",
-            "id-3": "2019-Q2",
-          },
-          {
-            "id-1": 277594.34499999974,
-            "id-2": "中南",
-            "id-3": "2018-Q3",
-          },
-          {
-            "id-1": 391938.02200000023,
-            "id-2": "中南",
-            "id-3": "2019-Q3",
           },
         ],
         "dimensions": [

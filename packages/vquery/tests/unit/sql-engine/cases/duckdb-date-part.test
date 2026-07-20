@@ -1,0 +1,52 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/function/date/test_date_part.test
+# License: MIT. Selected record block below is copied without changing query SQL or expected results.
+
+statement ok
+CREATE TABLE dates(d DATE, s VARCHAR);
+
+statement ok
+INSERT INTO dates VALUES
+	('1992-01-01', 'year'),
+	('1992-03-03', 'month'),
+	('1992-05-05', 'day'),
+	('2022-01-01', 'isoyear'),
+	('044-03-15 (BC)', 'millennium'),
+	('infinity', 'century'),
+	('-infinity', 'decade'),
+	(NULL, 'weekday'),
+;
+
+# test date_part with different combinations of constant/non-constant columns
+query I
+SELECT date_part(NULL::VARCHAR, NULL::TIMESTAMP) FROM dates;
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+
+statement error
+SELECT date_part('timezone', d) FROM dates;
+----
+
+query IIIIIIIIIIII
+select
+date_part('quarter', DATE '1992-01-20'),
+date_part('quarter', DATE '1992-02-20'),
+date_part('quarter', DATE '1992-03-20'),
+date_part('quarter', DATE '1992-04-20'),
+date_part('quarter', DATE '1992-05-20'),
+date_part('quarter', DATE '1992-06-20'),
+date_part('quarter', DATE '1992-07-20'),
+date_part('quarter', DATE '1992-08-20'),
+date_part('quarter', DATE '1992-09-20'),
+date_part('quarter', DATE '1992-10-20'),
+date_part('quarter', DATE '1992-11-20'),
+date_part('quarter', DATE '1992-12-20')
+----
+1	1	1	2	2	2	3	3	3	4	4	4

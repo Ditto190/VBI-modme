@@ -1,0 +1,32 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/aggregate/aggregates/test_median.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+# scalar quantiles
+query II
+SELECT median(NULL), median(1)
+----
+NULL	1
+
+statement ok
+create table quantile as select range r, random() from range(10000) union all values (NULL, 0.1), (NULL, 0.5), (NULL, 0.9) order by 2;
+
+query I
+SELECT median(r)::VARCHAR FROM quantile
+----
+4999.5
+
+query I
+SELECT median(r::tinyint)::VARCHAR FROM quantile where r < 100
+----
+49.5
+
+query I
+SELECT median(NULL) FROM quantile
+----
+NULL
+
+query I
+SELECT median(42) FROM quantile
+----
+42

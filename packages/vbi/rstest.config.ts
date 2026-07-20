@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@visactor/vbi': ['./src'],
+      '@visactor/vquery': ['../vquery/src/node'],
     },
   },
 })

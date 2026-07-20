@@ -4,7 +4,6 @@ import type { DatasetSourceType, DatasetSourceValue, RawDatasetSource } from '..
 const MIME_TYPES: Record<DatasetSourceType, string> = {
   csv: 'text/csv',
   json: 'application/json',
-  parquet: 'application/parquet',
 }
 
 export class DatasetSourceBuilder {
@@ -42,7 +41,7 @@ export class DatasetSourceBuilder {
       return await response.blob()
     }
 
-    const mimeType = MIME_TYPES[type] || 'text/plain'
+    const mimeType = MIME_TYPES[type]
 
     if (value instanceof ArrayBuffer) {
       return new Blob([value], { type: mimeType })

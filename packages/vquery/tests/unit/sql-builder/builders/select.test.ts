@@ -219,4 +219,13 @@ describe('select', () => {
     const sql = convertDSLToSQL<USER, 'orders'>({ select: [{ field: 'age', aggr: { func: 'avg' } }] }, 'orders')
     expect(sql).toMatchInlineSnapshot(`"select avg("age") as "age" from "orders""`)
   })
+
+  it('uses the median quantile by default', () => {
+    interface ORDER {
+      value: number
+    }
+
+    const sql = convertDSLToSQL<ORDER, 'orders'>({ select: [{ field: 'value', aggr: { func: 'quantile' } }] }, 'orders')
+    expect(sql).toMatchInlineSnapshot(`"select quantile("value", 0.5) as "value" from "orders""`)
+  })
 })

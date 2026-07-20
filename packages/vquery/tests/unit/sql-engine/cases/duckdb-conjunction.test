@@ -1,0 +1,15 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/function/operator/test_conjunction.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+# create table
+statement ok
+CREATE TABLE a (i integer, j integer);
+
+statement ok
+INSERT INTO a VALUES (3, 4), (4, 5), (5, 6);
+
+query II
+SELECT * FROM a WHERE (i > 3 AND j < 5) OR (i > 3 AND j > 5);
+----
+5	6

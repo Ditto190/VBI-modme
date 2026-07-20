@@ -1,0 +1,122 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/function/string/test_ilike_constant_pattern.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+# Unicode-possible data so the constant-pattern ILIKE takes the case-folding path
+# (the ASCII-only fast path is taken when stats prove the column cannot contain unicode).
+statement ok
+CREATE TABLE t(id INTEGER, s VARCHAR);
+
+statement ok
+INSERT INTO t VALUES
+    (1, 'café Hello World'),
+    (2, 'DuckDB is FAST'),
+    (3, 'the quick brown fox'),
+    (4, 'STRAßE'),
+    (5, 'Æther WAVE'),
+    (6, 'café déjà vu'),
+    (7, NULL),
+    (8, ''),
+    (9, 'ALPHA bravo CHARLIE');
+
+# --- single-segment contains (%term%), constant pattern, case-insensitive ---
+query I
+SELECT id FROM t WHERE s ILIKE '%hello%' ORDER BY id
+----
+1
+
+query I
+SELECT id FROM t WHERE s ILIKE '%WORLD%' ORDER BY id
+----
+1
+
+query I
+SELECT id FROM t WHERE s ILIKE '%brown fox%' ORDER BY id
+----
+3
+
+# no-match (dominant case): first byte rejection
+query I
+SELECT id FROM t WHERE s ILIKE '%zznotfound%' ORDER BY id
+----
+
+# --- prefix (term%) and suffix (%term), constant pattern ---
+query I
+SELECT id FROM t WHERE s ILIKE 'duckdb%' ORDER BY id
+----
+2
+
+query I
+SELECT id FROM t WHERE s ILIKE '%fast' ORDER BY id
+----
+2
+
+# --- exact match (no wildcards), constant pattern ---
+query I
+SELECT id FROM t WHERE s ILIKE 'the quick brown fox' ORDER BY id
+----
+3
+
+# --- unicode case folding on the constant-pattern path ---
+query I
+SELECT id FROM t WHERE s ILIKE '%æther%' ORDER BY id
+----
+5
+
+query I
+SELECT id FROM t WHERE s ILIKE '%DÉJÀ%' ORDER BY id
+----
+6
+
+# ß must NOT fold to ss (simple case folding)
+query I
+SELECT id FROM t WHERE s ILIKE '%strasse%' ORDER BY id
+----
+
+query I
+SELECT id FROM t WHERE s ILIKE '%straße%' ORDER BY id
+----
+4
+
+# --- underscore pattern: falls back to the generic matcher (not eligible for fast matcher) ---
+query I
+SELECT id FROM t WHERE s ILIKE '%c_fé%' ORDER BY id
+----
+1
+6
+
+# --- multi-segment pattern via constant pattern ---
+query I
+SELECT id FROM t WHERE s ILIKE '%alpha%charlie%' ORDER BY id
+----
+9
+
+# --- NOT ILIKE with constant pattern (rows with no 'a'/'A'; empty string matches NOT, NULL excluded) ---
+query I
+SELECT id FROM t WHERE s NOT ILIKE '%a%' ORDER BY id
+----
+3
+8
+
+# --- only-percent and empty patterns ---
+query I
+SELECT id FROM t WHERE s ILIKE '%' ORDER BY id
+----
+1
+2
+3
+4
+5
+6
+8
+9
+
+query I
+SELECT id FROM t WHERE s ILIKE '' ORDER BY id
+----
+8
+
+# --- NULL pattern yields no matches (x ILIKE NULL = NULL) ---
+query I
+SELECT id FROM t WHERE s ILIKE NULL ORDER BY id
+----

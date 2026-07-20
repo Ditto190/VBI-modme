@@ -43,18 +43,15 @@ export const applySelect = <DB, TB extends keyof DB & string, O, T>(
               return sql`quantile(${expression}, ${q})`.as(alias)
             } else if (func === 'count_distinct') {
               return sql`CAST(count(distinct ${expression}) AS INTEGER)`.as(alias)
-            } else if (func.startsWith('to_')) {
-              const dateTrunc = func.replace('to_', '')
-              const format = DATE_FORMAT_MAP[dateTrunc]
-              if (format) {
-                return sql`strftime(CAST(${expression} AS TIMESTAMP), ${format})`.as(alias)
-              }
-              if (dateTrunc === 'quarter') {
-                return sql`strftime(CAST(${expression} AS TIMESTAMP), '%Y') || '-Q' || date_part('quarter', CAST(${expression} AS TIMESTAMP))`.as(
-                  alias,
-                )
-              }
             }
+            const dateTrunc = func.replace('to_', '')
+            const format = DATE_FORMAT_MAP[dateTrunc]
+            if (format) {
+              return sql`strftime(CAST(${expression} AS TIMESTAMP), ${format})`.as(alias)
+            }
+            return sql`strftime(CAST(${expression} AS TIMESTAMP), '%Y') || '-Q' || date_part('quarter', CAST(${expression} AS TIMESTAMP))`.as(
+              alias,
+            )
           }
           // 优先使用用户提供的 alias，其次使用 field
           return expression.as(alias)

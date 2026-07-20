@@ -1,6 +1,5 @@
 import type { DatasetColumn, DatasetSource, QueryDSL, QueryAdapter, StorageAdapter, VQueryDSL } from '../types'
 import { convertDSLToSQL } from '../sql-builder'
-import { READ_FUNCTION_MAP, buildColumnsStruct } from './constants'
 
 export class Dataset {
   private queryAdapter: QueryAdapter
@@ -32,23 +31,10 @@ export class Dataset {
       return
     }
 
-    const readFunction = READ_FUNCTION_MAP[datasetSource.type]
-    if (!readFunction) {
+    if (!['csv', 'json'].includes(datasetSource.type)) {
       throw new Error(`Unsupported dataSource type: ${datasetSource.type}`)
     }
-
-    await this.queryAdapter.writeFile(this._datasetId, datasetSource.blob)
-
-    const columnsStruct = buildColumnsStruct(columns)
-    const columnNames = columns.map((c) => `"${c.name}"`).join(', ')
-
-    let readSql = `${readFunction}('${this._datasetId}')`
-    if (datasetSource.type === 'csv' || datasetSource.type === 'json') {
-      readSql = `${readFunction}('${this._datasetId}', columns=${columnsStruct})`
-    }
-
-    const createViewSql = `CREATE OR REPLACE VIEW "${this._datasetId}" AS SELECT ${columnNames} FROM ${readSql}`
-    await this.queryAdapter.query(createViewSql)
+    await this.queryAdapter.loadDataset(this._datasetId, columns, datasetSource)
   }
 
   public async query<T extends Record<string, number | string>>(queryDSL: QueryDSL<T> | VQueryDSL<T>) {
@@ -57,9 +43,9 @@ export class Dataset {
   }
 
   public async queryBySQL(sql: string) {
-    const start = performance?.now?.() ?? Date.now()
+    const start = performance.now()
     const result = await this.queryAdapter.query(sql)
-    const end = performance?.now?.() ?? Date.now()
+    const end = performance.now()
 
     return {
       ...result,
@@ -72,7 +58,7 @@ export class Dataset {
   }
 
   public async disconnect() {
-    await this.queryAdapter.query(`DROP VIEW IF EXISTS "${this._datasetId}"`)
+    await this.queryAdapter.dropDataset(this._datasetId)
   }
 
   get datasetId() {
