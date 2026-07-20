@@ -1,0 +1,2803 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-button/vbi-button.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-button",
+          "name": "VbiButton",
+          "attributes": [
+            {
+              "name": "active",
+              "description": "アクティブ状態 (pressed/selected)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "active"
+            },
+            {
+              "name": "color",
+              "description": "メインカラー (primary, secondary, accent, etc.)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "無効状態",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "shape",
+              "description": "形状 (square, circle, wide, block)",
+              "type": {
+                "text": "\"block\" | \"circle\" | \"square\" | \"wide\""
+              },
+              "fieldName": "shape"
+            },
+            {
+              "name": "size",
+              "description": "サイズ (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "type",
+              "description": "ボタンのタイプ",
+              "type": {
+                "text": "\"button\" | \"reset\" | \"submit\""
+              },
+              "default": "'button'",
+              "fieldName": "type"
+            },
+            {
+              "name": "variant",
+              "description": "ボタンのバリアント (ghost, outline, dash, soft, link)",
+              "type": {
+                "text": "\"dash\" | \"ghost\" | \"link\" | \"outline\" | \"soft\""
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "active",
+              "description": "アクティブ状態 (pressed/selected)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "active"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "メインカラー (primary, secondary, accent, etc.)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "無効状態",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "shape",
+              "description": "形状 (square, circle, wide, block)",
+              "type": {
+                "text": "\"block\" | \"circle\" | \"square\" | \"wide\""
+              },
+              "readonly": true,
+              "attribute": "shape"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "サイズ (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "ボタンのタイプ",
+              "type": {
+                "text": "\"button\" | \"reset\" | \"submit\""
+              },
+              "default": "'button'",
+              "readonly": true,
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "ボタンのバリアント (ghost, outline, dash, soft, link)",
+              "type": {
+                "text": "\"dash\" | \"ghost\" | \"link\" | \"outline\" | \"soft\""
+              },
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiButton",
+          "declaration": {
+            "name": "VbiButton"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-button",
+          "declaration": {
+            "name": "VbiButton"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-cascading-menu/vbi-cascading-menu.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-cascading-menu",
+          "name": "VbiCascadingMenu",
+          "attributes": [
+            {
+              "name": "size",
+              "description": "メニューのサイズ。デフォルトは 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "variant",
+              "description": "メニューの向きバリアント。デフォルトは 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "レンダリングされるメニュー項目の配列",
+              "type": {
+                "text": "CascadingMenuItem[]",
+                "references": [
+                  {
+                    "name": "CascadingMenuItem"
+                  }
+                ]
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "メニューのサイズ。デフォルトは 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "メニューの向きバリアント。デフォルトは 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiCascadingMenuSelect",
+              "description": "メニュー項目がクリックされたときに発火します",
+              "type": {
+                "text": "CustomEvent<CascadingMenuItem>",
+                "references": [
+                  {
+                    "name": "CascadingMenuItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiCascadingMenu",
+          "declaration": {
+            "name": "VbiCascadingMenu"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-cascading-menu",
+          "declaration": {
+            "name": "VbiCascadingMenu"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-dimension/vbi-chart-dimension.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-dimension",
+          "name": "VbiChartDimension"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartDimension",
+          "declaration": {
+            "name": "VbiChartDimension"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-dimension",
+          "declaration": {
+            "name": "VbiChartDimension"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-editor/vbi-chart-editor.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-editor",
+          "name": "VbiChartEditor"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartEditor",
+          "declaration": {
+            "name": "VbiChartEditor"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-editor",
+          "declaration": {
+            "name": "VbiChartEditor"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/fields/vbi-chart-field-filter/vbi-chart-field-filter.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-field-filter",
+          "name": "VbiChartFieldFilter",
+          "attributes": [
+            {
+              "name": "keyword",
+              "description": "現在の検索キーワード。",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "keyword"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "keyword",
+              "description": "現在の検索キーワード。",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "keyword"
+            },
+            {
+              "kind": "field",
+              "name": "selectedRoles",
+              "description": "現在選択されているフィールドロール。",
+              "type": {
+                "text": "FieldRole[]",
+                "references": [
+                  {
+                    "name": "FieldRole",
+                    "module": "src/utils/data/fieldRole"
+                  }
+                ]
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "selectedTypes",
+              "description": "現在選択されているフィールドタイプ。",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartFieldFilterKeyword",
+              "description": "ユーザーが検索キーワードを変更したときに発行されます。",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            },
+            {
+              "name": "vbiChartFieldFilterRole",
+              "description": "ユーザーがフィルタードロップダウンで選択されたロールを変更したときに発行されます。",
+              "type": {
+                "text": "CustomEvent<FieldRole[]>",
+                "references": [
+                  {
+                    "name": "FieldRole",
+                    "module": "src/utils/data/fieldRole"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "vbiChartFieldFilterType",
+              "description": "ユーザーがフィルタードロップダウンで選択されたタイプを変更したときに発行されます。",
+              "type": {
+                "text": "CustomEvent<string[]>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartFieldFilter",
+          "declaration": {
+            "name": "VbiChartFieldFilter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-field-filter",
+          "declaration": {
+            "name": "VbiChartFieldFilter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/fields/vbi-chart-field-section/vbi-chart-field-section.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-field-section",
+          "name": "VbiChartFieldSection",
+          "members": [
+            {
+              "kind": "field",
+              "name": "dimensions",
+              "description": "表示するディメンションのリスト。",
+              "type": {
+                "text": "VBISchemaField[]",
+                "references": [
+                  {
+                    "name": "VBISchemaField",
+                    "module": "src/store/chart/schema-fields"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "measures",
+              "description": "表示するメジャーのリスト。",
+              "type": {
+                "text": "VBISchemaField[]",
+                "references": [
+                  {
+                    "name": "VBISchemaField",
+                    "module": "src/store/chart/schema-fields"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartFieldSection",
+          "declaration": {
+            "name": "VbiChartFieldSection"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-field-section",
+          "declaration": {
+            "name": "VbiChartFieldSection"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/fields/vbi-chart-fields/vbi-chart-fields.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-fields",
+          "name": "VbiChartFields"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartFields",
+          "declaration": {
+            "name": "VbiChartFields"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-fields",
+          "declaration": {
+            "name": "VbiChartFields"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-having/vbi-chart-having.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-having",
+          "name": "VbiChartHaving"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartHaving",
+          "declaration": {
+            "name": "VbiChartHaving"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-having",
+          "declaration": {
+            "name": "VbiChartHaving"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-having-filter/vbi-chart-having-filter.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-having-filter",
+          "name": "VbiChartHavingFilter",
+          "members": [
+            {
+              "kind": "field",
+              "name": "fieldRoleMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "fieldTypeMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "item",
+              "type": {
+                "text": "{ id?: string; field: string; aggregate?: { func: \"count\" | \"sum\" | \"avg\" | \"min\" | \"max\" | \"variance\" | \"stddev\" | \"median\" | \"countDistinct\" | \"variancePop\"; } | { func: \"quantile\"; quantile?: number; }; operator?: string; op?: string; value?: unknown; }",
+                "references": [
+                  {
+                    "name": "HavingFilterLike",
+                    "module": "../vbi-chart-having/helpers/having-utils"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartHavingFilterCancel",
+              "type": {
+                "text": "CustomEvent<MouseEvent>",
+                "references": [
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "vbiChartHavingFilterSave",
+              "type": {
+                "text": "CustomEvent<{ item: HavingFilterLike; event?: MouseEvent; }>",
+                "references": [
+                  {
+                    "name": "HavingFilterLike",
+                    "module": "../vbi-chart-having/helpers/having-utils"
+                  },
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartHavingFilter",
+          "declaration": {
+            "name": "VbiChartHavingFilter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-having-filter",
+          "declaration": {
+            "name": "VbiChartHavingFilter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-measure/vbi-chart-measure.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-measure",
+          "name": "VbiChartMeasure"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartMeasure",
+          "declaration": {
+            "name": "VbiChartMeasure"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-measure",
+          "declaration": {
+            "name": "VbiChartMeasure"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-render/vbi-chart-render.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-render",
+          "name": "VbiChartRender",
+          "members": [
+            {
+              "kind": "field",
+              "name": "vseed",
+              "description": "チャートまたはテーブルをレンダリングするために使用されるVSeed設定オブジェクト。",
+              "type": {
+                "text": "Area | AreaPercent | Bar | BarParallel | BarPercent | BoxPlot | CirclePacking | Column | ColumnParallel | ColumnPercent | Donut | DualAxis | Funnel | Heatmap | HierarchySankey | Histogram | Line | Pie | PivotTable | RaceBar | RaceColumn | RaceDonut | RaceLine | RacePie | RaceScatter | Radar | Rose | RoseParallel | Sankey | Scatter | Sunburst | Table | TreeMap",
+                "references": [
+                  {
+                    "name": "VSeed",
+                    "module": "@visactor/vseed"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartRender",
+          "declaration": {
+            "name": "VbiChartRender"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-render",
+          "declaration": {
+            "name": "VbiChartRender"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-shelf-panel/vbi-chart-shelf-panel.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-shelf-panel",
+          "name": "VbiChartShelfPanel"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartShelfPanel",
+          "declaration": {
+            "name": "VbiChartShelfPanel"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-shelf-panel",
+          "declaration": {
+            "name": "VbiChartShelfPanel"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-toolbar/vbi-chart-toolbar.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-toolbar",
+          "name": "VbiChartToolbar"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartToolbar",
+          "declaration": {
+            "name": "VbiChartToolbar"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-toolbar",
+          "declaration": {
+            "name": "VbiChartToolbar"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-type/vbi-chart-type.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-type",
+          "name": "VbiChartType"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartType",
+          "declaration": {
+            "name": "VbiChartType"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-type",
+          "declaration": {
+            "name": "VbiChartType"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/vbi-chart-upload/vbi-chart-upload.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-upload",
+          "name": "VbiChartUpload",
+          "attributes": [
+            {
+              "name": "connector-id-prefix",
+              "description": "生成されるローカルCSVコネクターIDのプレフィックス。",
+              "type": {
+                "text": "string"
+              },
+              "default": "'local_csv'",
+              "fieldName": "connectorIdPrefix"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "connectorIdPrefix",
+              "description": "生成されるローカルCSVコネクターIDのプレフィックス。",
+              "type": {
+                "text": "string"
+              },
+              "default": "'local_csv'",
+              "readonly": true,
+              "attribute": "connector-id-prefix"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartUploadSuccess",
+              "description": "CSVファイルが正常にアップロードされ、チャートストアにインポートされたときに発行されます。",
+              "type": {
+                "text": "CustomEvent<{ connectorId: string; fileName: string; rowCount: number; }>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartUpload",
+          "declaration": {
+            "name": "VbiChartUpload"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-upload",
+          "declaration": {
+            "name": "VbiChartUpload"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-where/vbi-chart-where.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-where",
+          "name": "VbiChartWhere"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartWhere",
+          "declaration": {
+            "name": "VbiChartWhere"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-where",
+          "declaration": {
+            "name": "VbiChartWhere"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/chart/shelves/vbi-chart-where-filter/vbi-chart-where-filter.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-chart-where-filter",
+          "name": "VbiChartWhereFilter",
+          "members": [
+            {
+              "kind": "field",
+              "name": "fieldRoleMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "fieldTypeMap",
+              "type": {
+                "text": "string",
+                "references": [
+                  {
+                    "name": "Record",
+                    "package": "global:"
+                  }
+                ]
+              },
+              "default": "{}",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "item",
+              "type": {
+                "text": "{ id?: string; field: string; operator?: string; op?: string; value?: unknown; }",
+                "references": [
+                  {
+                    "name": "WhereFilterLike",
+                    "module": "../vbi-chart-where/helpers/where-utils"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiChartWhereFilterCancel",
+              "type": {
+                "text": "CustomEvent<MouseEvent>",
+                "references": [
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "vbiChartWhereFilterSave",
+              "type": {
+                "text": "CustomEvent<{ item: WhereFilterLike; event?: MouseEvent; }>",
+                "references": [
+                  {
+                    "name": "WhereFilterLike",
+                    "module": "../vbi-chart-where/helpers/where-utils"
+                  },
+                  {
+                    "name": "MouseEvent",
+                    "package": "global:"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiChartWhereFilter",
+          "declaration": {
+            "name": "VbiChartWhereFilter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-chart-where-filter",
+          "declaration": {
+            "name": "VbiChartWhereFilter"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-checkbox/vbi-checkbox.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-checkbox",
+          "name": "VbiCheckbox",
+          "attributes": [
+            {
+              "name": "checked",
+              "description": "コンポーネントがチェックされているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "color",
+              "description": "コンポーネントのテーマカラー。",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "コンポーネントが無効になっているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "indeterminate",
+              "description": "チェックボックスが不確定状態であるかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "indeterminate"
+            },
+            {
+              "name": "name",
+              "description": "フォーム送信に使用されるコンポーネントの名前。",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "size",
+              "description": "コンポーネントのサイズ。",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "description": "コンポーネントがチェックされているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "コンポーネントのテーマカラー。",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "コンポーネントが無効になっているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "description": "チェックボックスが不確定状態であるかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "indeterminate"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "フォーム送信に使用されるコンポーネントの名前。",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "コンポーネントのサイズ。",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiCheckboxChange",
+              "description": "チェックボックスの値が変更されたときに発行されます。",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiCheckbox",
+          "declaration": {
+            "name": "VbiCheckbox"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-checkbox",
+          "declaration": {
+            "name": "VbiCheckbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-config-provider/vbi-config-provider.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-config-provider",
+          "name": "VbiConfigProvider",
+          "members": [
+            {
+              "kind": "field",
+              "name": "builder",
+              "description": "ストアを初期化するためのVBIチャートビルダーインスタンス",
+              "type": {
+                "text": "VBIChartBuilder<DefaultVBIQueryDSL, VSeed>",
+                "references": [
+                  {
+                    "name": "VBIChartBuilder",
+                    "module": "@visactor/vbi"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "theme",
+              "description": "モード ('light' | 'dark') とデザイントークンを含むテーマ設定",
+              "type": {
+                "text": "ThemeConfig",
+                "references": [
+                  {
+                    "name": "ThemeConfig",
+                    "module": "./theme"
+                  }
+                ]
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiBuilderChange",
+              "description": "ビルダーが内部で変更されたときに発行されます",
+              "type": {
+                "text": "CustomEvent<VBIChartBuilder<DefaultVBIQueryDSL, VSeed>>",
+                "references": [
+                  {
+                    "name": "VBIChartBuilder",
+                    "module": "@visactor/vbi"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiConfigProvider",
+          "declaration": {
+            "name": "VbiConfigProvider"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-config-provider",
+          "declaration": {
+            "name": "VbiConfigProvider"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-dropdown/vbi-dropdown.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-dropdown",
+          "name": "VbiDropdown",
+          "attributes": [
+            {
+              "name": "disabled",
+              "description": "'true'の場合、ドロップダウンは開くことができません。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "offset",
+              "description": "ドロップダウンとそのトリガー間の距離 (ピクセル単位)。",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "fieldName": "offset"
+            },
+            {
+              "name": "open",
+              "description": "ドロップダウンの開閉状態を制御します。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "placement",
+              "description": "トリガーに対するドロップダウンの位置。",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "DropdownPlacement"
+                  }
+                ]
+              },
+              "default": "'bottom'",
+              "fieldName": "placement"
+            },
+            {
+              "name": "popover-mode",
+              "description": "ポップオーバーの対話モード ('auto' は外側をクリックすると閉じ、'manual' は閉じません)。",
+              "type": {
+                "text": "\"auto\" | \"manual\""
+              },
+              "default": "'auto'",
+              "fieldName": "popoverMode"
+            },
+            {
+              "name": "trigger",
+              "description": "ドロップダウンのトリガー方法。",
+              "type": {
+                "text": "\"click\" | \"hover\""
+              },
+              "default": "'click'",
+              "fieldName": "trigger"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "'true'の場合、ドロップダウンは開くことができません。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "description": "ドロップダウンとそのトリガー間の距離 (ピクセル単位)。",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "readonly": true,
+              "attribute": "offset"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "ドロップダウンの開閉状態を制御します。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "description": "トリガーに対するドロップダウンの位置。",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "DropdownPlacement"
+                  }
+                ]
+              },
+              "default": "'bottom'",
+              "readonly": true,
+              "attribute": "placement"
+            },
+            {
+              "kind": "field",
+              "name": "popoverMode",
+              "description": "ポップオーバーの対話モード ('auto' は外側をクリックすると閉じ、'manual' は閉じません)。",
+              "type": {
+                "text": "\"auto\" | \"manual\""
+              },
+              "default": "'auto'",
+              "readonly": true,
+              "attribute": "popover-mode"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "description": "ドロップダウンのトリガー方法。",
+              "type": {
+                "text": "\"click\" | \"hover\""
+              },
+              "default": "'click'",
+              "readonly": true,
+              "attribute": "trigger"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiDropdownToggle",
+              "description": "ドロップダウンが開閉したときに発行されます。",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiDropdown",
+          "declaration": {
+            "name": "VbiDropdown"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-dropdown",
+          "declaration": {
+            "name": "VbiDropdown"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-icon/vbi-icon.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-icon",
+          "name": "VbiIcon",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "アイコンの色。デフォルトは 'currentColor' です。",
+              "type": {
+                "text": "string"
+              },
+              "default": "'currentColor'",
+              "fieldName": "color"
+            },
+            {
+              "name": "size",
+              "description": "アイコンのサイズ (単位なし、--size-base に相対してスケール)。",
+              "type": {
+                "text": "number"
+              },
+              "default": "16",
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "アイコンの色。デフォルトは 'currentColor' です。",
+              "type": {
+                "text": "string"
+              },
+              "default": "'currentColor'",
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "description": "`@ant-design/icons-svg` からのアイコン定義オブジェクト。",
+              "type": {
+                "text": "IconDefinition",
+                "references": [
+                  {
+                    "name": "IconDefinition",
+                    "module": "@ant-design/icons-svg/lib/types"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "アイコンのサイズ (単位なし、--size-base に相対してスケール)。",
+              "type": {
+                "text": "number"
+              },
+              "default": "16",
+              "readonly": true,
+              "attribute": "size"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiIcon",
+          "declaration": {
+            "name": "VbiIcon"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-icon",
+          "declaration": {
+            "name": "VbiIcon"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-input/vbi-input.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-input",
+          "name": "VbiInput",
+          "attributes": [
+            {
+              "name": "autocomplete",
+              "description": "ブラウザ用のオートコンプリートのヒント",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "autofocus",
+              "description": "マウント時に入力フィールドに自動フォーカス",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autofocus"
+            },
+            {
+              "name": "color",
+              "description": "プライマリカラー (primary, secondary, info, error...)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "無効状態",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "max",
+              "description": "数値または日付入力の最大値",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "max"
+            },
+            {
+              "name": "maxlength",
+              "description": "最大文字数",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "maxlength"
+            },
+            {
+              "name": "min",
+              "description": "数値または日付入力の最小値",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "min"
+            },
+            {
+              "name": "minlength",
+              "description": "最小文字数",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "minlength"
+            },
+            {
+              "name": "name",
+              "description": "フォーム送信用のname属性",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "name"
+            },
+            {
+              "name": "placeholder",
+              "description": "プレースホルダーテキスト",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "readonly",
+              "description": "読み取り専用状態 (focusable but not editable)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readOnly"
+            },
+            {
+              "name": "required",
+              "description": "フォーム検証用の必須フィールド",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "size",
+              "description": "入力のサイズ",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "step",
+              "description": "数値入力のステップ",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "step"
+            },
+            {
+              "name": "type",
+              "description": "入力要素のタイプ (text, password, email, number, date...)",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "type"
+            },
+            {
+              "name": "value",
+              "description": "入力要素の値",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "variant",
+              "description": "表示バリアント (e.g., ghost - transparent)",
+              "type": {
+                "text": "\"ghost\""
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "description": "ブラウザ用のオートコンプリートのヒント",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "description": "マウント時に入力フィールドに自動フォーカス",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "autofocus"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "プライマリカラー (primary, secondary, info, error...)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "無効状態",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "description": "数値または日付入力の最大値",
+              "type": {
+                "text": "number | string"
+              },
+              "readonly": true,
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "description": "最大文字数",
+              "type": {
+                "text": "number"
+              },
+              "readonly": true,
+              "attribute": "maxlength"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "description": "数値または日付入力の最小値",
+              "type": {
+                "text": "number | string"
+              },
+              "readonly": true,
+              "attribute": "min"
+            },
+            {
+              "kind": "field",
+              "name": "minlength",
+              "description": "最小文字数",
+              "type": {
+                "text": "number"
+              },
+              "readonly": true,
+              "attribute": "minlength"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "フォーム送信用のname属性",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "description": "プレースホルダーテキスト",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "readOnly",
+              "description": "読み取り専用状態 (focusable but not editable)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "description": "フォーム検証用の必須フィールド",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "入力のサイズ",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "description": "数値入力のステップ",
+              "type": {
+                "text": "number | string"
+              },
+              "readonly": true,
+              "attribute": "step"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "入力要素のタイプ (text, password, email, number, date...)",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "readonly": true,
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "入力要素の値",
+              "type": {
+                "text": "number | string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "表示バリアント (e.g., ghost - transparent)",
+              "type": {
+                "text": "\"ghost\""
+              },
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiInputBlur",
+              "description": "入力がフォーカスを失ったときに発行されるイベント (blur)",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "vbiInputChange",
+              "description": "ユーザーが入力とフォーカス移動を完了したときに発行されるイベント (or presses Enter)",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            },
+            {
+              "name": "vbiInputFocus",
+              "description": "入力がフォーカスを取得したときに発行されるイベント",
+              "type": {
+                "text": "CustomEvent<void>"
+              }
+            },
+            {
+              "name": "vbiInputValue",
+              "description": "ユーザーが入力したときに発行されるイベント",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiInput",
+          "declaration": {
+            "name": "VbiInput"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-input",
+          "declaration": {
+            "name": "VbiInput"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-join/vbi-join.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-join",
+          "name": "VbiJoin",
+          "attributes": [
+            {
+              "name": "vertical",
+              "description": "縦方向",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "description": "縦方向",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "vertical"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiJoin",
+          "declaration": {
+            "name": "VbiJoin"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-join",
+          "declaration": {
+            "name": "VbiJoin"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-loading/vbi-loading.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-loading",
+          "name": "VbiLoading",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "プライマリカラー。指定されていない場合、親要素のテキスト色を継承します (currentColor)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "size",
+              "description": "サイズ (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "type",
+              "description": "読み込みスタイル (spinner, dots, ring, ball, bars, infinity)",
+              "type": {
+                "text": "\"ball\" | \"bars\" | \"dots\" | \"infinity\" | \"ring\" | \"spinner\""
+              },
+              "default": "'spinner'",
+              "fieldName": "type"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "プライマリカラー。指定されていない場合、親要素のテキスト色を継承します (currentColor)",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "サイズ (xs, sm, md, lg, xl)",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "description": "読み込みスタイル (spinner, dots, ring, ball, bars, infinity)",
+              "type": {
+                "text": "\"ball\" | \"bars\" | \"dots\" | \"infinity\" | \"ring\" | \"spinner\""
+              },
+              "default": "'spinner'",
+              "readonly": true,
+              "attribute": "type"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiLoading",
+          "declaration": {
+            "name": "VbiLoading"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-loading",
+          "declaration": {
+            "name": "VbiLoading"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-menu/vbi-menu.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-menu",
+          "name": "VbiMenu",
+          "attributes": [
+            {
+              "name": "size",
+              "description": "メニューのサイズ。デフォルトは 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "variant",
+              "description": "メニューの向きバリアント。デフォルトは 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "fieldName": "variant"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "レンダリングされるメニュー項目の配列",
+              "type": {
+                "text": "MenuItem[]",
+                "references": [
+                  {
+                    "name": "MenuItem"
+                  }
+                ]
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "メニューのサイズ。デフォルトは 'md'",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "default": "'md'",
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "description": "メニューの向きバリアント。デフォルトは 'vertical'",
+              "type": {
+                "text": "\"horizontal\" | \"vertical\""
+              },
+              "default": "'vertical'",
+              "readonly": true,
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiMenuSelect",
+              "description": "メニュー項目がクリックされたときに発火します",
+              "type": {
+                "text": "CustomEvent<MenuItem>",
+                "references": [
+                  {
+                    "name": "MenuItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiMenu",
+          "declaration": {
+            "name": "VbiMenu"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-menu",
+          "declaration": {
+            "name": "VbiMenu"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-modal/vbi-modal.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-modal",
+          "name": "VbiModal",
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "position",
+              "type": {
+                "text": "\"bottom\" | \"end\" | \"middle\" | \"start\" | \"top\""
+              },
+              "default": "'middle'",
+              "fieldName": "position"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "type": {
+                "text": "\"bottom\" | \"end\" | \"middle\" | \"start\" | \"top\""
+              },
+              "default": "'middle'",
+              "readonly": true,
+              "attribute": "position"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiModalToggle",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiModal",
+          "declaration": {
+            "name": "VbiModal"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-modal",
+          "declaration": {
+            "name": "VbiModal"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-select/vbi-select.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-select",
+          "name": "VbiSelect",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "セレクトのカラーバリアント",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"ghost\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "セレクトが無効かどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "placeholder",
+              "description": "オプションが選択されていない場合のプレースホルダーテキスト",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "size",
+              "description": "セレクトのサイズ",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "value",
+              "description": "セレクトの現在の値",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "セレクトのカラーバリアント",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"ghost\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "セレクトが無効かどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "description": "セレクトオプションのリスト",
+              "type": {
+                "text": "SelectOption[]",
+                "references": [
+                  {
+                    "name": "SelectOption"
+                  }
+                ]
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "description": "オプションが選択されていない場合のプレースホルダーテキスト",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "セレクトのサイズ",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "セレクトの現在の値",
+              "type": {
+                "text": "number | string"
+              },
+              "attribute": "value"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiSelectChange",
+              "description": "ユーザーが選択したオプションを変更したときに発行されます",
+              "type": {
+                "text": "CustomEvent<string>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiSelect",
+          "declaration": {
+            "name": "VbiSelect"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-select",
+          "declaration": {
+            "name": "VbiSelect"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-switch/vbi-switch.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-switch",
+          "name": "VbiSwitch",
+          "attributes": [
+            {
+              "name": "checked",
+              "description": "スイッチがチェックされているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "color",
+              "description": "スイッチのカラーテーマ。",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "disabled",
+              "description": "スイッチが無効になっているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "name",
+              "description": "フォーム送信に使用されるコンポーネントの名前。",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "size",
+              "description": "スイッチのサイズ。",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "checked",
+              "description": "スイッチがチェックされているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "スイッチのカラーテーマ。",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"neutral\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "スイッチが無効になっているかどうか。",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "フォーム送信に使用されるコンポーネントの名前。",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "スイッチのサイズ。",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiSwitchChange",
+              "description": "スイッチのチェック状態が変更されたときに発行されます。",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiSwitch",
+          "declaration": {
+            "name": "VbiSwitch"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-switch",
+          "declaration": {
+            "name": "VbiSwitch"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-tab/vbi-tab.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-tab",
+          "name": "VbiTab",
+          "attributes": [
+            {
+              "name": "block",
+              "description": "タブが親コンテナーの全幅を占めるかどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "block"
+            },
+            {
+              "name": "disabled",
+              "description": "すべてのタブが無効になっているかどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "size",
+              "description": "タブのサイズ",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "fieldName": "size"
+            },
+            {
+              "name": "value",
+              "description": "現在アクティブなタブの値またはID",
+              "type": {
+                "text": "number | string"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "block",
+              "description": "タブが親コンテナーの全幅を占めるかどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "block"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "すべてのタブが無効になっているかどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "readonly": true,
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "description": "レンダリングされるタブ項目の配列",
+              "type": {
+                "text": "TabItem[]",
+                "references": [
+                  {
+                    "name": "TabItem"
+                  }
+                ]
+              },
+              "default": "[]",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "description": "タブのサイズ",
+              "type": {
+                "text": "\"lg\" | \"md\" | \"sm\" | \"xl\" | \"xs\""
+              },
+              "readonly": true,
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "現在アクティブなタブの値またはID",
+              "type": {
+                "text": "number | string"
+              },
+              "attribute": "value"
+            }
+          ],
+          "events": [
+            {
+              "name": "vbiTabChange",
+              "description": "タブ項目がクリックされたときに発行されます",
+              "type": {
+                "text": "CustomEvent<TabItem>",
+                "references": [
+                  {
+                    "name": "TabItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiTab",
+          "declaration": {
+            "name": "VbiTab"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-tab",
+          "declaration": {
+            "name": "VbiTab"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/vbi-tooltip/vbi-tooltip.tsx",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "tagName": "vbi-tooltip",
+          "name": "VbiTooltip",
+          "attributes": [
+            {
+              "name": "color",
+              "description": "ツールチップのセマンティックカラーテーマ",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "enter-delay",
+              "description": "ホバー時にツールチップを表示するまでの遅延（ミリ秒）",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "enterDelay"
+            },
+            {
+              "name": "leave-delay",
+              "description": "離れたときにツールチップを非表示にするまでの遅延（ミリ秒）",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "leaveDelay"
+            },
+            {
+              "name": "offset",
+              "description": "ツールチップとそのトリガー間の距離 (in pixels)",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "fieldName": "offset"
+            },
+            {
+              "name": "open",
+              "description": "ツールチップが現在開いている/表示されているかどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "position",
+              "description": "ターゲットに対するツールチップの位置",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "TooltipPosition"
+                  }
+                ]
+              },
+              "default": "'top'",
+              "fieldName": "position"
+            },
+            {
+              "name": "text",
+              "description": "ツールチップ内に表示するテキスト",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "text"
+            },
+            {
+              "name": "trigger",
+              "description": "ツールチップのトリガー方法 ('hover', 'click', or 'manual')",
+              "type": {
+                "text": "\"click\" | \"hover\" | \"manual\""
+              },
+              "default": "'hover'",
+              "fieldName": "trigger"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "color",
+              "description": "ツールチップのセマンティックカラーテーマ",
+              "type": {
+                "text": "\"accent\" | \"error\" | \"info\" | \"primary\" | \"secondary\" | \"success\" | \"warning\""
+              },
+              "readonly": true,
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "enterDelay",
+              "description": "ホバー時にツールチップを表示するまでの遅延（ミリ秒）",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "readonly": true,
+              "attribute": "enter-delay"
+            },
+            {
+              "kind": "field",
+              "name": "leaveDelay",
+              "description": "離れたときにツールチップを非表示にするまでの遅延（ミリ秒）",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "readonly": true,
+              "attribute": "leave-delay"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "description": "ツールチップとそのトリガー間の距離 (in pixels)",
+              "type": {
+                "text": "number"
+              },
+              "default": "8",
+              "readonly": true,
+              "attribute": "offset"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "description": "ツールチップが現在開いている/表示されているかどうか",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "description": "ターゲットに対するツールチップの位置",
+              "type": {
+                "text": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+                "references": [
+                  {
+                    "name": "TooltipPosition"
+                  }
+                ]
+              },
+              "default": "'top'",
+              "readonly": true,
+              "attribute": "position"
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "description": "ツールチップ内に表示するテキスト",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "readonly": true,
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "description": "ツールチップのトリガー方法 ('hover', 'click', or 'manual')",
+              "type": {
+                "text": "\"click\" | \"hover\" | \"manual\""
+              },
+              "default": "'hover'",
+              "readonly": true,
+              "attribute": "trigger"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VbiTooltip",
+          "declaration": {
+            "name": "VbiTooltip"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "vbi-tooltip",
+          "declaration": {
+            "name": "VbiTooltip"
+          }
+        }
+      ]
+    }
+  ]
+}

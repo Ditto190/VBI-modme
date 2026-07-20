@@ -1,11 +1,9 @@
 import { LikeFilled } from '@ant-design/icons-svg'
-import { h } from '@stencil/core'
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
-import { VbiIcon } from './vbi-icon'
+import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
-const meta: Meta<VbiIcon> = {
+const meta: Meta = {
   title: 'ui/VbiIcon',
-  component: VbiIcon,
+  component: 'vbi-icon',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
@@ -17,7 +15,7 @@ const meta: Meta<VbiIcon> = {
 
 export default meta
 
-type Story = StoryObj<VbiIcon>
+type Story = StoryObj
 
 export const Default: Story = {
   args: {
@@ -26,6 +24,8 @@ export const Default: Story = {
     color: 'var(--color-primary)',
   },
   render: (args) => {
-    return <vbi-icon {...args}></vbi-icon>
+    const el = document.createElement('vbi-icon')
+    Object.assign(el, args)
+    return el
   },
 }

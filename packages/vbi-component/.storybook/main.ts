@@ -1,15 +1,11 @@
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-const config = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [getAbsolutePath('@storybook/addon-links'), getAbsolutePath('@storybook/addon-docs')],
-  framework: {
-    name: getAbsolutePath('@stencil/storybook-plugin'),
+import type { StorybookConfig } from '@storybook/web-components-vite'
+
+const config: StorybookConfig = {
+  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  addons: ['@storybook/addon-docs'],
+  core: {
+    disableTelemetry: true,
   },
+  framework: '@storybook/web-components-vite',
 }
-
 export default config
-
-function getAbsolutePath(value: string): any {
-  return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)))
-}

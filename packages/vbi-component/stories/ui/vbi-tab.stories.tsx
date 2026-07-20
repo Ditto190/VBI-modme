@@ -1,19 +1,20 @@
-import { h } from '@stencil/core'
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
-import { VbiTab } from './vbi-tab'
+import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
-const meta: Meta<VbiTab> = {
+const meta: Meta = {
   title: 'ui/VbiTab',
-  component: VbiTab,
+  component: 'vbi-tab',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
   },
 }
 
 export default meta
 
-type Story = StoryObj<VbiTab>
+type Story = StoryObj
 
 export const Default: Story = {
   args: {
@@ -37,8 +38,5 @@ export const Default: Story = {
         disabled: true,
       },
     ],
-  },
-  render: (props) => {
-    return <vbi-tab {...props} />
   },
 }

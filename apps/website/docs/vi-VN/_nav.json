@@ -23,5 +23,10 @@
     "text": "Playground",
     "link": "/playground/vseed",
     "activeMatch": "/playground/"
+  },
+  {
+    "text": "VBI Component",
+    "link": "/vbi-component/",
+    "activeMatch": "/vbi-component/"
   }
 ]

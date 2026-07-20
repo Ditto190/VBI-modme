@@ -1,19 +1,27 @@
-import { h } from '@stencil/core'
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
-import { VbiCascadingMenu } from './vbi-cascading-menu'
+import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
-const meta: Meta<VbiCascadingMenu> = {
+const meta: Meta = {
   title: 'ui/VbiCascadingMenu',
-  component: VbiCascadingMenu,
+  component: 'vbi-cascading-menu',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+    },
+    variant: {
+      control: 'select',
+      options: ['horizontal', 'vertical'],
+    },
   },
 }
 
 export default meta
 
-type Story = StoryObj<VbiCascadingMenu>
+type Story = StoryObj
 
 export const Default: Story = {
   args: {
@@ -61,12 +69,10 @@ export const Default: Story = {
     ],
   },
   render: (args) => {
-    return (
-      <vbi-cascading-menu
-        {...args}
-        onVbiCascadingMenuSelect={(e: CustomEvent) => console.log('Clicked item:', e.detail)}
-      ></vbi-cascading-menu>
-    )
+    const el = document.createElement('vbi-cascading-menu')
+    Object.assign(el, args)
+    el.addEventListener('vbiCascadingMenuSelect', (e: any) => console.log('Clicked item:', e.detail))
+    return el
   },
 }
 
@@ -95,25 +101,21 @@ export const WithSlots: Story = {
     ],
   },
   render: (args) => {
-    return (
-      <vbi-cascading-menu
-        {...args}
-        onVbiCascadingMenuSelect={(e: CustomEvent) => console.log('Clicked item:', e.detail)}
-      >
-        <div slot='custom-profile' style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0' }}>
-          <div style={{ lineHeight: '1.2' }}>
-            <strong>John Doe</strong>
-            <div style={{ fontSize: '10px' }}>admin@example.com</div>
-          </div>
+    const el = document.createElement('vbi-cascading-menu')
+    Object.assign(el, args)
+    el.addEventListener('vbiCascadingMenuSelect', (e: any) => console.log('Clicked item:', e.detail))
+    el.innerHTML = `
+      <div slot="custom-profile" style="display: flex; align-items: center; gap: 8px; padding: 4px 0;">
+        <div style="line-height: 1.2;">
+          <strong>John Doe</strong>
+          <div style="font-size: 10px;">admin@example.com</div>
         </div>
-        <div
-          slot='custom-account'
-          style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-primary)' }}
-        >
-          <span>🛡️</span>
-          <span>Security & Account</span>
-        </div>
-      </vbi-cascading-menu>
-    )
+      </div>
+      <div slot="custom-account" style="display: flex; align-items: center; gap: 8px; color: var(--color-primary);">
+        <span>🛡️</span>
+        <span>Security & Account</span>
+      </div>
+    `
+    return el
   },
 }

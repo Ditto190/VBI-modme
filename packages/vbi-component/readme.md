@@ -76,14 +76,6 @@ Below is the list of available web components in this library and their detailed
 
 Run the following commands from the `packages/vbi-component` folder:
 
-### Local Dev Server
-
-Build and run the components locally with hot reloading:
-
-```bash
-pnpm run start
-```
-
 ### Storybook
 
 Build and preview components inside Storybook:
@@ -98,16 +90,10 @@ pnpm run storybook
 
 ### Testing
 
-Run unit/spec tests:
+Run tests:
 
 ```bash
 pnpm run test
-```
-
-Run browser/E2E tests:
-
-```bash
-pnpm run test:browser
 ```
 
 ### Build

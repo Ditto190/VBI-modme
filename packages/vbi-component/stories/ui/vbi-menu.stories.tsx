@@ -1,20 +1,22 @@
 import { SettingOutlined, UserOutlined, MailOutlined } from '@ant-design/icons-svg'
-import { h } from '@stencil/core'
-import type { Meta, StoryObj } from '@stencil/storybook-plugin'
-import { VbiMenu } from './vbi-menu'
+import type { Meta, StoryObj } from '@storybook/web-components-vite'
 
-const meta: Meta<VbiMenu> = {
+const meta: Meta = {
   title: 'ui/VbiMenu',
-  component: VbiMenu,
+  component: 'vbi-menu',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+    variant: { control: 'select', options: ['horizontal', 'vertical'] },
   },
 }
 
 export default meta
 
-type Story = StoryObj<VbiMenu>
+type Story = StoryObj
 
 export const Default: Story = {
   args: {
@@ -62,6 +64,9 @@ export const Default: Story = {
     ],
   },
   render: (args) => {
-    return <vbi-menu {...args} onVbiMenuSelect={(e: CustomEvent) => console.log('Clicked item:', e.detail)}></vbi-menu>
+    const el = document.createElement('vbi-menu')
+    Object.assign(el, args)
+    el.addEventListener('vbiMenuSelect', (e: any) => console.log('Clicked item:', e.detail))
+    return el
   },
 }
