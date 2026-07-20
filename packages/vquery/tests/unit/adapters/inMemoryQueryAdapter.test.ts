@@ -147,6 +147,21 @@ describe('InMemoryQueryAdapter', () => {
     ])
   })
 
+  it('orders strings by Unicode code point instead of the host locale', async () => {
+    await adapter.open()
+    await adapter.loadDataset('cities', [{ name: 'city', type: 'string' }], {
+      type: 'json',
+      blob: new Blob([JSON.stringify([{ city: '丽水' }, { city: '临海' }, { city: '丰县' }, { city: '临' }])]),
+    })
+
+    expect((await adapter.query('select "city" from "cities" order by "city"')).dataset).toEqual([
+      { city: '丰县' },
+      { city: '临' },
+      { city: '临海' },
+      { city: '丽水' },
+    ])
+  })
+
   it('can be opened and closed repeatedly', async () => {
     await expect(adapter.close()).resolves.not.toThrow()
     await adapter.open()

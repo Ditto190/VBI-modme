@@ -24,11 +24,17 @@
     "dimensions": [
       {
         "field": "product_type",
-        "alias": "品类"
+        "alias": "品类",
+        "sort": {
+          "order": "asc"
+        }
       },
       {
         "field": "area",
-        "alias": "区域"
+        "alias": "区域",
+        "sort": {
+          "order": "asc"
+        }
       }
     ],
     "measures": [

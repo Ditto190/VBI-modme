@@ -345,12 +345,25 @@ const numericValues = (expression: Expression, rows: DataRow[]): number[] =>
     .filter((value): value is number => value !== null && value !== undefined && !Number.isNaN(Number(value)))
     .map(Number)
 
+const compareText = (left: string, right: string): number => {
+  const leftCodePoints = Array.from(left, (character) => character.codePointAt(0)!)
+  const rightCodePoints = Array.from(right, (character) => character.codePointAt(0)!)
+  const length = Math.min(leftCodePoints.length, rightCodePoints.length)
+
+  for (let index = 0; index < length; index += 1) {
+    const difference = leftCodePoints[index] - rightCodePoints[index]
+    if (difference !== 0) return difference
+  }
+
+  return leftCodePoints.length - rightCodePoints.length
+}
+
 const compare = (left: unknown, right: unknown): number => {
   if (left === right) return 0
   if (left === null || left === undefined) return 1
   if (right === null || right === undefined) return -1
   if (typeof left === 'number' && typeof right === 'number') return left - right
-  return String(left).localeCompare(String(right))
+  return compareText(String(left), String(right))
 }
 
 const parseTimestamp = (value: unknown): Date => {

@@ -526,7 +526,9 @@ describe('chart / ChartBuilderWorkflow', () => {
       builder.dimensions.add('order_date', (node) =>
         node.setAlias('Order Month').setEncoding('column').setAggregate({ func: 'toWeek' }).setSort({ order: 'asc' }),
       )
-      builder.dimensions.add('delivery_method', (node) => node.setAlias('Delivery Method').setEncoding('row'))
+      builder.dimensions.add('delivery_method', (node) =>
+        node.setAlias('Delivery Method').setEncoding('row').setSort({ order: 'asc' }),
+      )
 
       const orderDateId = builder.dimensions.find((node) => node.getField() === 'order_date')?.getId()
       if (orderDateId) {
@@ -584,6 +586,9 @@ describe('chart / ChartBuilderWorkflow', () => {
             "encoding": "row",
             "field": "delivery_method",
             "id": "id-2",
+            "sort": {
+              "order": "asc",
+            },
           },
         ],
         "havingFilter": {
@@ -637,6 +642,10 @@ describe('chart / ChartBuilderWorkflow', () => {
             "field": "id-1",
             "order": "asc",
           },
+          {
+            "field": "id-2",
+            "order": "asc",
+          },
         ],
         "select": [
           {
@@ -675,15 +684,9 @@ describe('chart / ChartBuilderWorkflow', () => {
         "dataset": [
           {
             "id-1": "2016-01",
-            "id-2": "标准级",
-            "id-3": 201,
-            "id-4": 92754.45200000002,
-          },
-          {
-            "id-1": "2016-01",
-            "id-2": "当日",
-            "id-3": 18,
-            "id-4": 5445.16,
+            "id-2": "一级",
+            "id-3": 104,
+            "id-4": 30434.012,
           },
           {
             "id-1": "2016-01",
@@ -693,21 +696,15 @@ describe('chart / ChartBuilderWorkflow', () => {
           },
           {
             "id-1": "2016-01",
-            "id-2": "一级",
-            "id-3": 104,
-            "id-4": 30434.012,
+            "id-2": "当日",
+            "id-3": 18,
+            "id-4": 5445.16,
           },
           {
-            "id-1": "2016-02",
-            "id-2": "二级",
-            "id-3": 87,
-            "id-4": 27447.86799999999,
-          },
-          {
-            "id-1": "2016-02",
+            "id-1": "2016-01",
             "id-2": "标准级",
-            "id-3": 167,
-            "id-4": 66251.06599999999,
+            "id-3": 201,
+            "id-4": 92754.45200000002,
           },
           {
             "id-1": "2016-02",
@@ -717,21 +714,21 @@ describe('chart / ChartBuilderWorkflow', () => {
           },
           {
             "id-1": "2016-02",
+            "id-2": "二级",
+            "id-3": 87,
+            "id-4": 27447.86799999999,
+          },
+          {
+            "id-1": "2016-02",
             "id-2": "当日",
             "id-3": 3,
             "id-4": 736.26,
           },
           {
-            "id-1": "2016-03",
-            "id-2": "当日",
-            "id-3": 27,
-            "id-4": 10017.812000000002,
-          },
-          {
-            "id-1": "2016-03",
+            "id-1": "2016-02",
             "id-2": "标准级",
-            "id-3": 197,
-            "id-4": 121734.03900000003,
+            "id-3": 167,
+            "id-4": 66251.06599999999,
           },
           {
             "id-1": "2016-03",
@@ -746,10 +743,16 @@ describe('chart / ChartBuilderWorkflow', () => {
             "id-4": 29167.628000000004,
           },
           {
-            "id-1": "2016-04",
-            "id-2": "二级",
-            "id-3": 70,
-            "id-4": 18848.284,
+            "id-1": "2016-03",
+            "id-2": "当日",
+            "id-3": 27,
+            "id-4": 10017.812000000002,
+          },
+          {
+            "id-1": "2016-03",
+            "id-2": "标准级",
+            "id-3": 197,
+            "id-4": 121734.03900000003,
           },
           {
             "id-1": "2016-04",
@@ -759,9 +762,9 @@ describe('chart / ChartBuilderWorkflow', () => {
           },
           {
             "id-1": "2016-04",
-            "id-2": "标准级",
-            "id-3": 198,
-            "id-4": 69762.58799999999,
+            "id-2": "二级",
+            "id-3": 70,
+            "id-4": 18848.284,
           },
           {
             "id-1": "2016-04",
@@ -770,10 +773,10 @@ describe('chart / ChartBuilderWorkflow', () => {
             "id-4": 852.18,
           },
           {
-            "id-1": "2016-05",
+            "id-1": "2016-04",
             "id-2": "标准级",
-            "id-3": 315,
-            "id-4": 117742.34500000007,
+            "id-3": 198,
+            "id-4": 69762.58799999999,
           },
           {
             "id-1": "2016-05",
@@ -783,15 +786,21 @@ describe('chart / ChartBuilderWorkflow', () => {
           },
           {
             "id-1": "2016-05",
+            "id-2": "二级",
+            "id-3": 139,
+            "id-4": 76696.886,
+          },
+          {
+            "id-1": "2016-05",
             "id-2": "当日",
             "id-3": 39,
             "id-4": 12595.268,
           },
           {
             "id-1": "2016-05",
-            "id-2": "二级",
-            "id-3": 139,
-            "id-4": 76696.886,
+            "id-2": "标准级",
+            "id-3": 315,
+            "id-4": 117742.34500000007,
           },
         ],
         "dimensions": [
