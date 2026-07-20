@@ -1,0 +1,30 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/types/null/test_null_aggr.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+statement ok
+CREATE TABLE test (a INTEGER, b INTEGER);
+
+statement ok
+INSERT INTO test VALUES (11, 22), (NULL, 21), (13, 22)
+
+# aggregations should ignore NULLs
+query RII
+SELECT SUM(a), MIN(a), MAX(a) FROM test
+----
+24.000000	11	13
+
+# count should ignore NULL
+# * returns full table count
+# counting "a" ignores null values
+query III
+SELECT COUNT(*), COUNT(a), COUNT(b) FROM test
+----
+3	2	3
+
+# with GROUP BY as well
+query IIRII
+SELECT b, COUNT(a), SUM(a), MIN(a), MAX(a) FROM test GROUP BY b ORDER BY b
+----
+21	0	NULL	NULL	NULL
+22	2	24.000000	11	13

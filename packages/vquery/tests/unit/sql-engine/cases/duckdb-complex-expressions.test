@@ -1,0 +1,93 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/projection/test_complex_expressions.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+statement ok
+CREATE TABLE exprtest (a INTEGER, b INTEGER)
+
+statement ok
+INSERT INTO exprtest VALUES (42, 10), (43, 100), (NULL, 1), (45, -1)
+
+query II
+SELECT * FROM exprtest
+----
+42	10
+43	100
+NULL	1
+45	-1
+
+# BETWEEN
+query I
+SELECT a FROM exprtest WHERE a BETWEEN 43 AND 44
+----
+43
+
+query I
+SELECT a FROM exprtest WHERE a NOT BETWEEN 43 AND 44
+----
+42
+45
+
+query I
+SELECT a FROM exprtest WHERE a BETWEEN b AND 44
+----
+42
+
+statement ok
+CREATE TABLE intest (a INTEGER, b INTEGER, c INTEGER)
+
+statement ok
+INSERT INTO intest VALUES (42, 42, 42), (43, 42, 42), (44, 41, 44);
+
+query III
+SELECT * FROM intest WHERE a IN (42, 43)
+----
+42	42	42
+43	42	42
+
+query III
+SELECT * FROM intest WHERE a IN (86, 103, 162)
+----
+
+query III
+SELECT * FROM intest WHERE a IN (NULL, NULL, NULL, NULL)
+----
+
+query III
+SELECT * FROM intest WHERE a IN (b)
+----
+42	42	42
+
+query III
+SELECT * FROM intest WHERE a IN (b, c)
+----
+42	42	42
+44	41	44
+
+query III
+SELECT * FROM intest WHERE a IN (43, b) ORDER BY 1
+----
+42	42	42
+43	42	42
+
+query III
+SELECT * FROM intest WHERE a NOT IN (42, 43)
+----
+44	41	44
+
+query III
+SELECT * FROM intest WHERE a NOT IN (86, 103, 162) ORDER BY 1
+----
+42	42	42
+43	42	42
+44	41	44
+
+query III
+SELECT * FROM intest WHERE a NOT IN (NULL, NULL)
+----
+
+query III
+SELECT * FROM intest WHERE a NOT IN (b) ORDER BY 1
+----
+43	42	42
+44	41	44

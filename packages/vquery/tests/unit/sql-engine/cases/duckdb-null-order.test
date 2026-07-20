@@ -1,0 +1,18 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/order/test_nulls_first.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+statement ok
+CREATE TABLE integers(i INTEGER)
+
+statement ok
+INSERT INTO integers VALUES (1), (NULL)
+
+statement ok
+PRAGMA default_null_order='NULLS LAST'
+
+query I
+SELECT * FROM integers ORDER BY i
+----
+1
+NULL

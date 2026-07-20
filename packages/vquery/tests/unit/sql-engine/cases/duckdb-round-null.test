@@ -1,0 +1,9 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/types/decimal/test_decimal_ops.test
+# License: MIT. Selected record block below is copied without changing query SQL or expected results.
+
+# test unary ROUND function
+query III
+SELECT ROUND('0.1'::DECIMAL), ROUND('-0.1'::DECIMAL), ROUND(NULL::DECIMAL)
+----
+0	0	NULL

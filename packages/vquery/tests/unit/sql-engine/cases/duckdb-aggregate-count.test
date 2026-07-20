@@ -1,0 +1,24 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/aggregate/aggregates/test_count.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+# test counts on scalar values
+query IIIII
+SELECT COUNT(*), COUNT(1), COUNT(100), COUNT(NULL), COUNT(DISTINCT 1)
+----
+1
+1
+1
+0
+1
+
+# Source: test/sql/aggregate/aggregates/test_aggregate_types_scalar.test
+query IIIIII
+SELECT COUNT(), COUNT(1), COUNT(*), COUNT(NULL), COUNT('hello'), COUNT(DATE '1992-02-02')
+----
+1
+1
+1
+0
+1
+1

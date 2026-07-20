@@ -1,0 +1,28 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/function/string/test_like.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+# like with table
+statement ok
+CREATE TABLE strings(s STRING, pat STRING);
+
+statement ok
+INSERT INTO strings VALUES ('abab', 'ab%'), ('aaa', 'a_a'), ('aaa', '%b%')
+
+query T
+SELECT s FROM strings WHERE s LIKE 'ab%'
+----
+abab
+
+query T
+SELECT s FROM strings WHERE 'aba' LIKE pat
+----
+abab
+aaa
+aaa
+
+query T
+SELECT s FROM strings WHERE s LIKE pat
+----
+abab
+aaa

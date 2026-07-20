@@ -2,6 +2,10 @@ import type { DataRow } from '../data-loader'
 
 type Scalar = unknown
 
+type BinaryOperator = '=' | '!=' | '<>' | '>' | '>=' | '<' | '<='
+type LikeOperator = 'like' | 'ilike' | 'not like' | 'not ilike'
+type TokenOperator = BinaryOperator | '||' | '::'
+
 type Expression =
   | { type: 'field'; name: string }
   | { type: 'literal'; value: Scalar }
@@ -12,7 +16,16 @@ type Expression =
 type Predicate =
   | { type: 'logic'; operator: 'and' | 'or'; left: Predicate; right: Predicate }
   | { type: 'not'; value: Predicate }
-  | { type: 'comparison'; operator: string; left: Expression; right?: Expression; values?: Expression[] }
+  | { type: 'comparison'; operator: 'is null' | 'is not null'; left: Expression; right?: never }
+  | {
+      type: 'comparison'
+      operator: 'between' | 'not between'
+      left: Expression
+      right?: never
+      values: [Expression, Expression]
+    }
+  | { type: 'comparison'; operator: 'in' | 'not in'; left: Expression; right?: never; values: Expression[] }
+  | { type: 'comparison'; operator: BinaryOperator | LikeOperator; left: Expression; right: Expression }
   | { type: 'truthy'; value: Expression }
 
 type SelectItem = { expression: Expression; alias?: string }
@@ -28,7 +41,9 @@ export type SelectQuery = {
   limit?: number
 }
 
-type Token = { kind: 'word' | 'identifier' | 'string' | 'number' | 'symbol' | 'operator'; value: string }
+type Token =
+  | { kind: 'operator'; value: TokenOperator }
+  | { kind: 'word' | 'identifier' | 'string' | 'number' | 'symbol'; value: string }
 
 const tokenize = (sql: string): Token[] => {
   const tokens: Token[] = []
@@ -82,13 +97,13 @@ const tokenize = (sql: string): Token[] => {
       continue
     }
     const pair = sql.slice(index, index + 2)
-    if (['>=', '<=', '!=', '<>', '||'].includes(pair)) {
-      tokens.push({ kind: 'operator', value: pair })
+    if (['>=', '<=', '!=', '<>', '||', '::'].includes(pair)) {
+      tokens.push({ kind: 'operator', value: pair as TokenOperator })
       index += 2
       continue
     }
-    if ('=<>'.includes(character)) tokens.push({ kind: 'operator', value: character })
-    else if ('(),*;'.includes(character)) tokens.push({ kind: 'symbol', value: character })
+    if ('=<>'.includes(character)) tokens.push({ kind: 'operator', value: character as BinaryOperator })
+    else if ('(),*;.'.includes(character)) tokens.push({ kind: 'symbol', value: character })
     else throw new Error(`Unsupported SQL character: ${character}`)
     index += 1
   }
@@ -128,9 +143,23 @@ class Parser {
   }
 
   private scalar(): Expression {
-    const parts = [this.primary()]
-    while (this.match('||')) parts.push(this.primary())
+    const parts = [this.castExpression()]
+    while (this.match('||')) parts.push(this.castExpression())
     return parts.length === 1 ? parts[0] : { type: 'concat', parts }
+  }
+
+  private castExpression(): Expression {
+    const expression = this.primary()
+    while (this.match('::')) {
+      this.identifier()
+      if (this.match('(')) {
+        while (!this.match(')')) {
+          if (!this.current()) throw new Error('Unterminated SQL cast type')
+          this.index += 1
+        }
+      }
+    }
+    return expression
   }
 
   private primary(): Expression {
@@ -150,8 +179,14 @@ class Parser {
       this.index += 1
       return { type: 'literal', value: token.value }
     }
-    const name = this.identifier()
+    let name = this.identifier()
+    while (this.match('.')) name = this.identifier()
     const lowerName = name.toLowerCase()
+    if ((lowerName === 'date' || lowerName === 'timestamp') && this.current()?.kind === 'string') {
+      const value = this.current()!.value
+      this.index += 1
+      return { type: 'literal', value }
+    }
     if (!this.match('(')) {
       if (lowerName === 'null') return { type: 'literal', value: null }
       if (lowerName === 'true') return { type: 'literal', value: true }
@@ -226,11 +261,17 @@ class Parser {
       return { type: 'comparison', operator: negated ? 'not in' : 'in', left, values }
     }
     if (this.match('like') || this.match('ilike')) {
-      const operator = this.tokens[this.index - 1].value.toLowerCase()
-      return { type: 'comparison', operator: negated ? `not ${operator}` : operator, left, right: this.scalar() }
+      const matchedOperator = this.tokens[this.index - 1].value.toLowerCase() as 'like' | 'ilike'
+      const operator: LikeOperator = negated ? `not ${matchedOperator}` : matchedOperator
+      return { type: 'comparison', operator, left, right: this.scalar() }
     }
     if (negated) throw new Error('Expected IN, BETWEEN, LIKE, or ILIKE after NOT')
-    const operator = this.current()?.kind === 'operator' ? this.tokens[this.index++].value : undefined
+    const token = this.current()
+    let operator: BinaryOperator | undefined
+    if (token?.kind === 'operator' && token.value !== '||' && token.value !== '::') {
+      operator = token.value
+      this.index += 1
+    }
     if (operator) return { type: 'comparison', operator, left, right: this.scalar() }
     return { type: 'truthy', value: left }
   }
@@ -273,12 +314,28 @@ class Parser {
 
 export const parseSQL = (sql: string): SelectQuery => new Parser(tokenize(sql)).parse()
 
+const aggregateNames = new Set([
+  'sum',
+  'avg',
+  'count',
+  'min',
+  'max',
+  'median',
+  'quantile',
+  'quantile_disc',
+  'var_samp',
+  'var_pop',
+  'stddev',
+  'stddev_samp',
+  'stddev_pop',
+  'variance',
+])
+
+const isAggregateCall = (expression: Expression): boolean =>
+  expression.type === 'call' && aggregateNames.has(expression.name)
+
 const isAggregate = (expression: Expression): boolean => {
-  if (expression.type === 'call') {
-    return ['sum', 'avg', 'count', 'min', 'max', 'median', 'quantile', 'var_samp', 'var_pop', 'stddev'].includes(
-      expression.name,
-    )
-  }
+  if (expression.type === 'call') return isAggregateCall(expression) || expression.arguments.some(isAggregate)
   return expression.type === 'concat' && expression.parts.some(isAggregate)
 }
 
@@ -299,10 +356,9 @@ const compare = (left: unknown, right: unknown): number => {
 const parseTimestamp = (value: unknown): Date => {
   const text = String(value)
   const match = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2})(?::(\d{2}))?(?::(\d{2}))?)?/.exec(text)
-  if (match) {
-    return new Date(Date.UTC(+match[1], +match[2] - 1, +match[3], +(match[4] ?? 0), +(match[5] ?? 0), +(match[6] ?? 0)))
-  }
-  return new Date(text)
+  return match
+    ? new Date(Date.UTC(+match[1], +match[2] - 1, +match[3], +(match[4] ?? 0), +(match[5] ?? 0), +(match[6] ?? 0)))
+    : new Date(text)
 }
 
 const weekNumber = (date: Date): string => {
@@ -350,36 +406,59 @@ const aggregate = (expression: Extract<Expression, { type: 'call' }>, rows: Data
     const middle = Math.floor(numbers.length / 2)
     return numbers.length % 2 ? numbers[middle] : (numbers[middle - 1] + numbers[middle]) / 2
   }
-  if (expression.name === 'quantile') {
-    const quantile = Number(evaluate(expression.arguments[1] ?? { type: 'literal', value: 0.5 }, rows[0], rows))
-    return numbers[Math.round(Math.max(0, Math.min(1, quantile)) * (numbers.length - 1))]
+  if (expression.name === 'quantile' || expression.name === 'quantile_disc') {
+    if (expression.arguments.length !== 2) throw new Error('QUANTILE requires a value and a quantile parameter')
+    const value = evaluate(expression.arguments[1], rows[0], rows)
+    const quantile = Number(value)
+    if (value === null || value === undefined || !Number.isFinite(quantile) || quantile < -1 || quantile > 1) {
+      throw new Error('QUANTILE parameter must be a number in the range [-1, 1]')
+    }
+    const index =
+      quantile < 0
+        ? Math.min(numbers.length + Math.floor(quantile * numbers.length), numbers.length - 1)
+        : Math.max(Math.ceil(quantile * numbers.length) - 1, 0)
+    return numbers[index]
   }
   const average = numbers.reduce((sum, value) => sum + value, 0) / numbers.length
   const squared = numbers.reduce((sum, value) => sum + (value - average) ** 2, 0)
-  if (expression.name === 'var_pop') return squared / numbers.length
+  if (expression.name === 'var_pop' || expression.name === 'stddev_pop') {
+    const variance = squared / numbers.length
+    return expression.name === 'stddev_pop' ? Math.sqrt(variance) : variance
+  }
   if (numbers.length < 2) return null
   const variance = squared / (numbers.length - 1)
-  return expression.name === 'stddev' ? Math.sqrt(variance) : variance
+  return expression.name === 'stddev' || expression.name === 'stddev_samp' ? Math.sqrt(variance) : variance
 }
 
 const evaluate = (expression: Expression, row: DataRow = {}, rows: DataRow[] = [row]): unknown => {
   if (expression.type === 'literal') return expression.value
   if (expression.type === 'field') return row[expression.name]
   if (expression.type === 'star') return row
-  if (expression.type === 'concat')
-    return expression.parts.map((part) => String(evaluate(part, row, rows) ?? '')).join('')
-  if (isAggregate(expression)) return aggregate(expression, rows)
-  if (expression.name === 'strftime') {
-    return formatTimestamp(
-      evaluate(expression.arguments[0], row, rows),
-      String(evaluate(expression.arguments[1], row, rows)),
-    )
+  if (expression.type === 'concat') {
+    const values = expression.parts.map((part) => evaluate(part, row, rows))
+    return values.some((value) => value === null || value === undefined) ? null : values.map(String).join('')
   }
-  if (
-    expression.name === 'date_part' &&
-    String(evaluate(expression.arguments[0], row, rows)).toLowerCase() === 'quarter'
-  ) {
-    return Math.floor(parseTimestamp(evaluate(expression.arguments[1], row, rows)).getUTCMonth() / 3) + 1
+  if (isAggregateCall(expression)) return aggregate(expression as Extract<Expression, { type: 'call' }>, rows)
+  if (expression.name === 'round') {
+    const value = evaluate(expression.arguments[0], row, rows)
+    if (value === null || value === undefined) return null
+    const precision = Number(evaluate(expression.arguments[1] ?? { type: 'literal', value: 0 }, row, rows))
+    const factor = 10 ** precision
+    return Math.round(Number(value) * factor) / factor
+  }
+  if (expression.name === 'strftime') {
+    const value = evaluate(expression.arguments[0], row, rows)
+    const format = evaluate(expression.arguments[1], row, rows)
+    if (value === null || value === undefined || format === null || format === undefined) return null
+    return formatTimestamp(value, String(format))
+  }
+  if (expression.name === 'date_part') {
+    const part = evaluate(expression.arguments[0], row, rows)
+    const value = evaluate(expression.arguments[1], row, rows)
+    if (part === null || part === undefined || value === null || value === undefined) return null
+    if (String(part).toLowerCase() === 'quarter') {
+      return Math.floor(parseTimestamp(value).getUTCMonth() / 3) + 1
+    }
   }
   throw new Error(`Unsupported SQL function: ${expression.name}`)
 }
@@ -414,24 +493,29 @@ const evaluatePredicate = (predicate: Predicate, row: DataRow, rows: DataRow[]):
     return value === null || value === undefined ? null : Boolean(value)
   }
   const left = evaluate(predicate.left, row, rows)
-  const operator = predicate.operator.toLowerCase()
-  if (operator === 'is null') return left === null || left === undefined
-  if (operator === 'is not null') return left !== null && left !== undefined
-  const values = predicate.values?.map((value) => evaluate(value, row, rows)) ?? []
-  if (operator === 'in' || operator === 'not in') {
-    if (left === null || left === undefined || values.some((value) => value === null || value === undefined))
-      return null
-    const found = values.some((value) => compare(left, value) === 0)
-    return operator === 'in' ? found : !found
+  if (predicate.operator === 'is null' || predicate.operator === 'is not null') {
+    const isNull = left === null || left === undefined
+    return predicate.operator === 'is null' ? isNull : !isNull
   }
-  if (operator === 'between' || operator === 'not between') {
+  if (predicate.operator === 'in' || predicate.operator === 'not in') {
+    const values = predicate.values.map((value) => evaluate(value, row, rows))
+    if (left === null || left === undefined) return null
+    const found = values.some((value) => value !== null && value !== undefined && compare(left, value) === 0)
+    if (found) return predicate.operator === 'in'
+    if (values.some((value) => value === null || value === undefined)) return null
+    return predicate.operator === 'not in'
+  }
+  if (predicate.operator === 'between' || predicate.operator === 'not between') {
+    const values = predicate.values.map((value) => evaluate(value, row, rows))
     if (left === null || left === undefined || values.some((value) => value === null || value === undefined))
       return null
     const found = compare(left, values[0]) >= 0 && compare(left, values[1]) <= 0
-    return operator === 'between' ? found : !found
+    return predicate.operator === 'between' ? found : !found
   }
-  const right = predicate.right ? evaluate(predicate.right, row, rows) : undefined
+  const operator = predicate.operator
+  const right = evaluate(predicate.right!, row, rows)
   if (operator.endsWith('like')) {
+    if (left === null || left === undefined || right === null || right === undefined) return null
     const result = like(left, right, operator.includes('ilike'))
     return operator.startsWith('not ') ? !result : result
   }
@@ -442,8 +526,7 @@ const evaluatePredicate = (predicate: Predicate, row: DataRow, rows: DataRow[]):
   if (operator === '>') return comparison > 0
   if (operator === '>=') return comparison >= 0
   if (operator === '<') return comparison < 0
-  if (operator === '<=') return comparison <= 0
-  throw new Error(`Unsupported SQL operator: ${operator}`)
+  return comparison <= 0
 }
 
 const expressionName = (item: SelectItem): string | undefined =>
@@ -517,10 +600,8 @@ export const executeSQL = (query: SelectQuery, tableRows: DataRow[]): DataRow[] 
     if (!query.groupBy.length || !query.orderBy.length) return 0
     const groupKey = (context: ResultContext) =>
       query.groupBy.map((expression) => {
-        if (expression.type === 'field' && Object.hasOwn(context.output, expression.name)) {
-          return context.output[expression.name]
-        }
-        return evaluate(expression, context.row, context.rows)
+        const resolved = expression.type === 'field' ? (aliases.get(expression.name) ?? expression) : expression
+        return evaluate(resolved, context.row, context.rows)
       })
     return stableHash(groupKey(left)) - stableHash(groupKey(right))
   })

@@ -1,0 +1,96 @@
+# Upstream: duckdb/duckdb@7560f8256d70d36d8f0185222567939c48d78257
+# Source: test/sql/aggregate/aggregates/test_quantile_disc.test
+# License: MIT. Selected record blocks below are copied without changing setup SQL, query SQL, or expected results.
+
+statement ok
+CREATE TABLE quantile as
+SELECT range r, random() AS q
+FROM range(10000)
+UNION ALL VALUES (NULL, 0.1), (NULL, 0.5), (NULL, 0.9)
+ORDER BY 2;
+
+query I
+SELECT quantile_disc(r, 0.5) FROM quantile
+----
+4999
+
+query I
+SELECT quantile_disc(r::decimal(10,2), 0.5) FROM quantile
+----
+4999
+
+query I
+SELECT quantile_disc(r, 1.0) FROM quantile
+----
+9999
+
+query I
+SELECT quantile_disc(r, 0.0) FROM quantile
+----
+0
+
+query I
+SELECT quantile_disc(NULL, 0.5) FROM quantile
+----
+NULL
+
+query I
+SELECT quantile_disc(42, 0.5) FROM quantile
+----
+42
+
+query I
+SELECT quantile_disc(NULL, 0.5)
+----
+NULL
+
+query I
+SELECT quantile_disc(42, 0.5)
+----
+42
+
+# single GROUP
+query III
+SELECT quantile_disc(r, 0.1), quantile_disc(r, 0.5), quantile_disc(r, 0.9) from quantile
+----
+999
+4999
+8999
+
+# Negative quantiles (use descending intervals)
+query I
+SELECT quantile_disc(col, -0.5)
+FROM VALUES (11000), (3100), (2900), (2800), (2600), (2500) AS tab(col);
+----
+2900
+
+# empty input
+query I
+SELECT quantile_disc(r, 0.1) FROM quantile WHERE 1=0
+----
+NULL
+
+# Invalid usage
+statement error
+SELECT quantile_disc(r, -1.1) FROM quantile
+----
+
+statement error
+SELECT quantile_disc(r, 1.1) FROM quantile
+----
+
+statement error
+SELECT quantile_disc(r, "string") FROM quantile
+----
+
+statement error
+SELECT quantile_disc(r, NULL) FROM quantile
+----
+
+statement error
+SELECT quantile_disc(r) FROM quantile
+----
+
+statement error
+SELECT quantile_disc(r, 0.1, 50) FROM quantile
+----

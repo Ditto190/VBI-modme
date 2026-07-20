@@ -104,6 +104,7 @@ describe('InMemoryQueryAdapter', () => {
     )
     await expect(adapter.query('select @')).rejects.toThrow('Unsupported SQL character')
     await expect(adapter.query('select')).rejects.toThrow('Unexpected end of SQL expression')
+    await expect(adapter.query('select 1::decimal(')).rejects.toThrow('Unterminated SQL cast type')
     await expect(adapter.query('select 1 as 2')).rejects.toThrow('Expected SQL identifier')
     await expect(adapter.query('select 1 as "x" limit nope')).rejects.toThrow('LIMIT requires a number')
     await expect(adapter.query('select 1 as "x" offset 1')).rejects.toThrow('Unsupported SQL clause')
@@ -117,6 +118,21 @@ describe('InMemoryQueryAdapter', () => {
 
     await adapter.dropDataset('test')
     await expect(adapter.query('select * from "test"')).rejects.toThrow('Dataset test is not loaded')
+    await expect(adapter.getSchema('test')).rejects.toThrow('Dataset test is not loaded')
+  })
+
+  it('orders nulls last regardless of their input position', async () => {
+    await adapter.open()
+    await adapter.loadDataset('nullable', [{ name: 'value', type: 'number' }], {
+      type: 'json',
+      blob: new Blob([JSON.stringify([{ value: null }, { value: 2 }, { value: 1 }])]),
+    })
+
+    expect((await adapter.query('select "value" from "nullable" order by "value"')).dataset).toEqual([
+      { value: 1 },
+      { value: 2 },
+      { value: null },
+    ])
   })
 
   it('can be opened and closed repeatedly', async () => {
