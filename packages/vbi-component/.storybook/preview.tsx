@@ -2,11 +2,24 @@
 import { setCustomElementsManifest, type Preview } from '@storybook/web-components-vite'
 import customElementsDefault from './custom-elements.json'
 
-const customElementsLocales = import.meta.glob('./custom-elements/*.json', { eager: true, import: 'default' })
+import customElements_de_DE from './custom-elements/custom-elements.de-DE.json'
+import customElements_fr_FR from './custom-elements/custom-elements.fr-FR.json'
+import customElements_id_ID from './custom-elements/custom-elements.id-ID.json'
+import customElements_ja_JP from './custom-elements/custom-elements.ja-JP.json'
+import customElements_ko_KR from './custom-elements/custom-elements.ko-KR.json'
+import customElements_vi_VN from './custom-elements/custom-elements.vi-VN.json'
+import customElements_zh_CN from './custom-elements/custom-elements.zh-CN.json'
+
 const locale = import.meta.env.STORYBOOK_LOCALE
 
-const localeKey = `./custom-elements/custom-elements.${locale}.json`
-const customElements = (locale && customElementsLocales[localeKey]) || customElementsDefault
+let customElements = customElementsDefault
+if (locale === 'de-DE') customElements = customElements_de_DE
+else if (locale === 'fr-FR') customElements = customElements_fr_FR
+else if (locale === 'id-ID') customElements = customElements_id_ID
+else if (locale === 'ja-JP') customElements = customElements_ja_JP
+else if (locale === 'ko-KR') customElements = customElements_ko_KR
+else if (locale === 'vi-VN') customElements = customElements_vi_VN
+else if (locale === 'zh-CN') customElements = customElements_zh_CN
 
 /**
  * Eagerly imports and registers all custom elements in the Storybook preview.
