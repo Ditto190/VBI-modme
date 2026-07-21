@@ -15,6 +15,7 @@
     "**/.turbo/**",
     "**/*.tsbuildinfo",
     "apps/website/doc_build/**",
+    "apps/website/docs/public/storybook/**",
     "apps/website/scripts/**",
     "packages/vseed/scripts/**",
     "**/rslib.config.ts",
