@@ -14,6 +14,9 @@ function runCommand(command, env = {}) {
 }
 
 function buildStorybooks() {
+  console.log('🚀 Building web-component')
+  runCommand('pnpm build')
+
   console.log('🚀 Building English Storybook (en-US)...')
   runCommand(`pnpm exec storybook build -o "${OUTPUT_DIR}/en-US"`, { STORYBOOK_LOCALE: 'en-US' })
 

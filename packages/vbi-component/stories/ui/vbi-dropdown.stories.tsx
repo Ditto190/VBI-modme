@@ -10,6 +10,23 @@ const meta: Meta = {
   argTypes: {
     'popover-mode': { control: 'select', options: ['auto', 'manual'] },
     trigger: { control: 'select', options: ['click', 'hover'] },
+    placement: {
+      control: 'select',
+      options: [
+        'top',
+        'top-start',
+        'top-end',
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'left',
+        'left-start',
+        'left-end',
+        'right',
+        'right-start',
+        'right-end',
+      ],
+    },
   },
 }
 
@@ -30,7 +47,7 @@ export const Default: Story = {
     })
     el.innerHTML = `
       <vbi-button slot="trigger">Open Dropdown</vbi-button>
-      <div slot="content" style="padding: 8px; border: 1px solid var(--color-base-300, #ccc); border-radius: var(--radius-box, 4px); background: var(--color-base-100, #fff); color: var(--color-base-content, #000);">
+      <div slot="content" style="width: 200px; padding: 8px; border: 1px solid var(--color-base-300, #ccc); border-radius: var(--radius-box, 4px); background: var(--color-base-100, #fff); color: var(--color-base-content, #000);">
         Dropdown Content
       </div>
     `

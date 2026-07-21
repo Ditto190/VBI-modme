@@ -39,7 +39,7 @@ type Story = StoryObj
 
 export const Default: Story = {
   args: {
-    text: 'Simple tooltip',
+    text: 'This is a very long tooltip text to demonstrate the placement behavior for start and end positions.',
     position: 'top',
     open: false,
   },
