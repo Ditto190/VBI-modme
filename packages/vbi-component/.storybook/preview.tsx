@@ -36,6 +36,11 @@ const preview: Preview = {
   parameters: {
     interactions: { disable: true },
     actions: { disable: true },
+    darkMode: {
+      darkClass: 'dark',
+      lightClass: 'light',
+      classTarget: 'html',
+    },
   },
   tags: ['autodocs'],
   decorators: [
