@@ -3,7 +3,7 @@ import { mergeConfig } from 'vite'
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-docs'],
+  addons: ['@storybook/addon-docs', 'storybook-dark-mode'],
   core: {
     disableTelemetry: true,
   },
