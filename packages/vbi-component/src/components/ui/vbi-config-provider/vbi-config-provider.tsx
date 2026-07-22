@@ -47,6 +47,7 @@ export class VbiConfigProvider {
     this.disposeChartProvider?.()
     this.unsubscribeBuilderChange?.()
 
+    const isDefault = !newBuilder
     const builder = newBuilder ?? (await createDefaultBuilder())
     this.chartStore = createChartStore(builder)
     this.destroyCallback = this.chartStore.initialize(builder)
@@ -57,6 +58,10 @@ export class VbiConfigProvider {
         this.vbiBuilderChange.emit(this.chartStore.chartBuilder.builder)
       }
     })
+
+    if (isDefault) {
+      this.vbiBuilderChange.emit(builder)
+    }
   }
 
   render() {
