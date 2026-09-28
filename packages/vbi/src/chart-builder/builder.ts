@@ -8,6 +8,7 @@ import {
   HavingFilterBuilder,
   WhereFilterBuilder,
   ChartTypeBuilder,
+  ChartInstanceBuilder,
   ThemeBuilder,
   LocaleBuilder,
   LimitBuilder,
@@ -39,6 +40,8 @@ export class VBIChartBuilder<
   public adapters: VBIChartBuilderAdapters<TQueryDSL, TSeedDSL>
 
   public chartType: ChartTypeBuilder
+  /** @description 图表运行时实例的绑定、获取与原生事件代理。 */
+  public instance: ChartInstanceBuilder
   public measures: MeasuresBuilder
   public dimensions: DimensionsBuilder
   public havingFilter: HavingFilterBuilder
@@ -60,6 +63,7 @@ export class VBIChartBuilder<
 
     this.undoManager = new UndoManager(this.dsl, { captureTimeout: 0 })
     this.chartType = new ChartTypeBuilder(doc, this.dsl)
+    this.instance = new ChartInstanceBuilder(doc, this.chartType)
     this.measures = new MeasuresBuilder(doc, this.dsl)
     this.dimensions = new DimensionsBuilder(doc, this.dsl)
     this.havingFilter = new HavingFilterBuilder(doc, this.dsl)

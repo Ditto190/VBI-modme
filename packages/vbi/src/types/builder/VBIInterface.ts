@@ -5,6 +5,7 @@ import type {
   MeasuresBuilder,
   DimensionsBuilder,
   ChartTypeBuilder,
+  ChartInstanceBuilder,
   HavingFilterBuilder,
   WhereFilterBuilder,
   ThemeBuilder,
@@ -20,6 +21,7 @@ export interface VBIChartBuilderInterface<TQueryDSL = DefaultVBIQueryDSL, TSeedD
   undoManager: UndoManager
 
   chartType: ChartTypeBuilder
+  instance: ChartInstanceBuilder
   measures: MeasuresBuilder
   dimensions: DimensionsBuilder
   havingFilter: HavingFilterBuilder

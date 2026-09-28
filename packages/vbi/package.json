@@ -54,6 +54,8 @@
     "@visactor/vseed": "workspace:*"
   },
   "devDependencies": {
+    "@visactor/vchart": "2.0.23-alpha.6",
+    "@visactor/vtable": "1.23.1",
     "@rslib/core": "1.0.1",
     "@rstest/core": "0.12.0",
     "@types/node": "24.10.1",
@@ -62,5 +64,17 @@
     "ts-morph": "26.0.0",
     "typescript": "7.0.2",
     "@rstest/coverage-istanbul": "0.12.0"
+  },
+  "peerDependencies": {
+    "@visactor/vchart": "2.0.23-alpha.6",
+    "@visactor/vtable": "1.23.1"
+  },
+  "peerDependenciesMeta": {
+    "@visactor/vchart": {
+      "optional": true
+    },
+    "@visactor/vtable": {
+      "optional": true
+    }
   }
 }
