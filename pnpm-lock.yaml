@@ -32,6 +32,9 @@ importers:
       oxlint:
         specifier: 1.66.0
         version: 1.66.0
+      ts-morph:
+        specifier: 26.0.0
+        version: 26.0.0
       turbo:
         specifier: 2.9.6
         version: 2.9.6

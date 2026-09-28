@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>九月营收札记 · 精致图表 · VBI</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      button,
+      select {
+        font: inherit;
+        cursor: pointer;
+      }
+      button:focus-visible,
+      select:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #399f86;
+        outline-offset: 4px;
+      }
+      button:disabled,
+      fieldset:disabled {
+        cursor: wait;
+        opacity: 0.65;
+      }
+      fieldset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+      button,
+      select {
+        min-height: 38px;
+        padding: 8px 14px;
+        border-radius: 6px;
+      }
+      a {
+        color: inherit;
+      }
+      #status {
+        font-size: 12px;
+      }
+      body[data-state='error'] #status {
+        color: #de574d;
+      }
+      .panel {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .panel header {
+        padding: 20px 22px 0;
+      }
+      .panel h2 {
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .panel header p {
+        font-size: 12px;
+        margin-top: 7px;
+      }
+      .plot {
+        flex: 1;
+        min-height: 0;
+        margin: 10px 12px 12px;
+      }
+      .dashboard {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .metric-value {
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.045em;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      body {
+        background: #f4f1eb;
+        color: #302f2b;
+      }
+      .page {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 38px 36px 32px;
+      }
+      .masthead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #d9d6cd;
+      }
+      .wordmark {
+        font-family: Georgia, 'Songti SC', serif;
+        font-size: 22px;
+        letter-spacing: -0.04em;
+      }
+      .wordmark em {
+        color: #b34e39;
+        font-style: normal;
+      }
+      .issue {
+        font-size: 10px;
+        color: #8d897f;
+        letter-spacing: 0.13em;
+      }
+      .intro {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: flex-end;
+        padding: 38px 0 28px;
+      }
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: #ae5b45;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: 'Songti SC', 'Noto Serif SC', Georgia, serif;
+        font-size: 36px;
+        font-weight: 500;
+        letter-spacing: 0.035em;
+      }
+      .intro p:last-child {
+        margin-top: 14px;
+        color: #8c877e;
+        font-size: 12px;
+        line-height: 1.8;
+      }
+      .issue-no {
+        font-family: Georgia, serif;
+        color: #c4bdb1;
+        font-size: 68px;
+        line-height: 1;
+      }
+      .card {
+        background: #fffefa;
+        border: 1px solid #e2ddd3;
+        border-radius: 4px;
+        box-shadow: 0 14px 40px #6d503508;
+        padding: 30px 32px 22px;
+      }
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .kicker {
+        font-size: 12px;
+        color: #8f887d;
+      }
+      .metric-value {
+        font-family: Georgia, serif;
+        display: block;
+        font-size: 48px;
+        margin: 9px 0 12px;
+        line-height: 1.1;
+        font-weight: 400;
+      }
+      .legend {
+        font-size: 11px;
+        color: #9a9184;
+      }
+      .legend::before {
+        content: '';
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #b85841;
+        margin-right: 8px;
+      }
+      fieldset {
+        justify-content: flex-end;
+      }
+      button {
+        background: transparent;
+        border: 1px solid #e5dfd5;
+        color: #8c8377;
+        font-size: 11px;
+        min-height: 33px;
+        padding: 7px 11px;
+        border-radius: 3px;
+      }
+      button[aria-pressed='true'] {
+        color: #9d422d;
+        background: #f5eae2;
+        border-color: #ead3c2;
+      }
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end;
+      }
+      .group {
+        display: flex;
+        gap: 5px;
+      }
+      #chart {
+        height: 340px;
+        margin: 22px -8px 8px;
+      }
+      .caption {
+        border-top: 1px solid #e9e3da;
+        padding-top: 18px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 24px;
+      }
+      .caption p {
+        font-size: 10px;
+        color: #aaa092;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+      }
+      .caption strong {
+        font-size: 17px;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+      .note {
+        display: flex;
+        gap: 14px;
+        margin-top: 22px;
+        padding: 0 2px;
+        color: #8d8276;
+        font-size: 12px;
+        line-height: 1.9;
+      }
+      .note span:first-child {
+        color: #b85841;
+        font-family: Georgia, serif;
+        font-size: 23px;
+        line-height: 1.3;
+      }
+      footer {
+        margin-top: 26px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        font-size: 10px;
+        color: #9c9387;
+      }
+      @media (max-width: 650px) {
+        .page {
+          padding: 24px 16px;
+        }
+        h1 {
+          font-size: 29px;
+        }
+        .issue-no {
+          display: none;
+        }
+        .card {
+          padding: 24px 16px;
+        }
+        .card-top {
+          flex-direction: column;
+        }
+        .controls {
+          align-items: flex-start;
+        }
+        .metric-value {
+          font-size: 40px;
+        }
+        #chart {
+          height: 290px;
+        }
+        .caption {
+          gap: 12px;
+        }
+        .caption strong {
+          font-size: 14px;
+        }
+        footer {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body data-state="loading">
+    <main class="page">
+      <header class="masthead">
+        <div class="wordmark">
+          Northstar<em>.</em>
+          <span style="font-size: 12px; letter-spacing: 0.04em; margin-left: 10px">北辰数据札记</span>
+        </div>
+        <span class="issue">THE SEPTEMBER ISSUE</span>
+      </header>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">REVENUE / 2026.09</p>
+          <h1>把增长，看得更清楚。</h1>
+          <p>一份关于日常经营的记录。少一点噪音，多一点洞察。</p>
+        </div>
+        <span class="issue-no" aria-hidden="true">09</span>
+      </section>
+      <section class="card" aria-label="每日营收图表">
+        <div class="card-top">
+          <div>
+            <p class="kicker" id="period-label">9 月销售总额</p>
+            <strong id="sales" class="metric-value">—</strong>
+            <p class="legend">每日销售额 · 人民币</p>
+          </div>
+          <fieldset disabled aria-label="图表控制" class="controls">
+            <div class="group">
+              <button data-days="30" aria-pressed="true">近 30 天</button
+              ><button data-days="7" aria-pressed="false">近 7 天</button>
+            </div>
+            <div class="group">
+              <button data-type="area" aria-pressed="true">趋势</button
+              ><button data-type="column" aria-pressed="false">柱状</button
+              ><button id="export" aria-label="下载图表配置">导出 ↓</button>
+            </div>
+          </fieldset>
+        </div>
+        <div id="chart" role="img" aria-label="每日销售额，可悬停查看明细"></div>
+        <div class="caption">
+          <div>
+            <p>日均销售额</p>
+            <strong id="average">—</strong>
+          </div>
+          <div>
+            <p>最高单日销售额</p>
+            <strong id="peak">—</strong>
+          </div>
+          <div>
+            <p>统计区间</p>
+            <strong id="range">09.01 — 09.30</strong>
+          </div>
+        </div>
+      </section>
+      <aside class="note">
+        <span>↗</span>
+        <p id="insight">正在整理本期经营数据…</p>
+      </aside>
+      <footer>
+        <p id="status" role="status">正在加载 npm 模块…</p>
+        <span>NORTHSTAR / NOTES ON GROWTH</span>
+      </footer>
+    </main>
+
+    <script type="module">
+      import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@0.6.0/+esm'
+      import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@0.6.0/dist/browser/esm/browser.js/+esm'
+      import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@0.6.0/+esm'
+      import VChart from 'https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'
+
+      registerAll()
+      const $ = (selector) => document.querySelector(selector)
+      const number = (value) => new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 0 }).format(value)
+      const money = (value) => `¥${number(value)}`
+      const instances = new Map()
+      const status = $('#status')
+
+      // 确定性的演示数据；业务聚合与筛选由 VBI → VQuery 执行。
+      async function connectDemo(connectorId) {
+        const rawDataset = []
+        const regions = ['华东', '华南', '华北', '西南']
+        const channels = ['线上商城', '线下门店', '合作伙伴']
+        const products = ['数码配件', '家居生活', '运动户外', '个护美妆']
+        for (let day = 1; day <= 30; day++) {
+          regions.forEach((region, r) =>
+            channels.forEach((channel, c) => {
+              const orders = Math.round(16 + day * 0.7 + (3 - r) * 9 + (2 - c) * 5 + Math.sin(day * 0.6 + r) * 8)
+              const sales = orders * (145 + r * 19 + c * 26)
+              rawDataset.push({
+                day,
+                date: `09/${String(day).padStart(2, '0')}`,
+                region,
+                channel,
+                product: products[(day + r + c) % 4],
+                sales,
+                orders,
+                profit: Math.round(sales * (0.22 + c * 0.04)),
+              })
+            }),
+          )
+        }
+        const schema = Object.keys(rawDataset[0]).map((name) => ({
+          name,
+          type: typeof rawDataset[0][name] === 'number' ? 'number' : 'string',
+        }))
+        const query = new VQuery()
+        const source = { type: 'json', rawDataset }
+        if (await query.hasDataset(connectorId)) await query.updateDatasetSource(connectorId, schema, source)
+        else await query.createDataset(connectorId, schema, source)
+        VBI.connectors.register(connectorId, {
+          discoverSchema: async () => schema,
+          query: async ({ queryDSL }) => {
+            const dataset = await query.connectDataset(connectorId)
+            try {
+              return await dataset.query(queryDSL)
+            } finally {
+              await dataset.disconnect()
+            }
+          },
+        })
+      }
+
+      function createChart(connectorId, type, dimension, measures = ['sales'], theme = 'light') {
+        const chart = VBI.chart.create(VBI.chart.createEmpty(connectorId))
+        chart.chartType.changeChartType(type)
+        chart.theme.setTheme(theme)
+        if (dimension)
+          chart.dimensions.add(dimension, (node) =>
+            node.setAlias({ date: '日期', region: '地区', channel: '渠道', product: '品类' }[dimension]),
+          )
+        measures.forEach((field) =>
+          chart.measures.add(field, (node) =>
+            node
+              .setAlias({ sales: '销售额', orders: '订单数', profit: '毛利润' }[field])
+              .setAggregate({ func: 'sum' })
+              .setFormat({ type: 'number', fractionDigits: 0 }),
+          ),
+        )
+        return chart
+      }
+
+      // 仅将查询结果列 ID 映射回业务字段，保留 VQuery 的聚合结果。
+      async function rowsOf(chart) {
+        const seed = await chart.buildVSeed()
+        const dsl = chart.build()
+        return seed.dataset.map((row) =>
+          Object.fromEntries([...dsl.dimensions, ...dsl.measures].map((field) => [field.field, row[field.id]])),
+        )
+      }
+
+      async function draw(chart, element, colors, dark = false) {
+        const seed = await chart.buildVSeed()
+        const ink = dark ? '#93a9c4' : '#7c8580'
+        const grid = dark ? '#243751' : '#e8ede8'
+        const axis = {
+          label: { labelColor: ink, labelFontSize: 11 },
+          title: { visible: false },
+          tick: { visible: false },
+          line: { visible: false },
+        }
+        // VSeed 的视觉配置直接位于 DSL 顶层。
+        Object.assign(seed, {
+          backgroundColor: 'transparent',
+          color: { colorScheme: colors },
+          label: { enable: false },
+          legend: { enable: seed.chartType === 'donut', position: 'bottom', labelColor: ink, shapeType: 'circle' },
+          xAxis: { ...axis, grid: { visible: seed.chartType === 'bar', gridColor: grid } },
+          yAxis: { ...axis, grid: { visible: seed.chartType !== 'bar', gridColor: grid, gridLineDash: [3, 4] } },
+        })
+        if (['line', 'area'].includes(seed.chartType)) seed.pointStyle = { pointVisible: false }
+        if (['line', 'area'].includes(seed.chartType)) seed.lineStyle = { lineWidth: 3 }
+        if (seed.chartType === 'area') seed.areaStyle = { areaColorOpacity: 0.12 }
+        const spec = Builder.from(seed).build()
+        spec.animation = false
+        instances.get(element)?.release()
+        const instance = new VChart(spec, { dom: element })
+        instance.renderSync()
+        instances.set(element, instance)
+      }
+
+      function download(filename, value) {
+        const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }))
+        const link = Object.assign(document.createElement('a'), { href: url, download: filename })
+        link.click()
+        setTimeout(() => URL.revokeObjectURL(url), 1000)
+      }
+
+      async function run(task) {
+        $('fieldset').disabled = true
+        document.body.dataset.state = 'loading'
+        status.textContent = '正在加载数据…'
+        try {
+          await task()
+          document.body.dataset.state = 'ready'
+          status.textContent = '演示数据 · 2026 年 9 月'
+        } catch (error) {
+          document.body.dataset.state = 'error'
+          status.textContent = `加载失败：${error.message}`
+          console.error(error)
+        } finally {
+          $('fieldset').disabled = false
+        }
+      }
+
+      const connectorId = 'vbi-example-polished-chart'
+      let days = 30
+      await run(async () => {
+        await connectDemo(connectorId)
+        const chart = createChart(connectorId, 'area', 'date')
+        const totalChart = createChart(connectorId, 'table', null)
+        async function render() {
+          for (const builder of [chart, totalChart]) {
+            builder.whereFilter.clear()
+            builder.whereFilter.add('day', (node) => node.setOperator('>=').setValue(31 - days))
+          }
+          const [total] = await rowsOf(totalChart)
+          const rows = await rowsOf(chart)
+          const peak = rows.reduce((best, row) => (row.sales > best.sales ? row : best), rows[0])
+          $('#sales').textContent = money(total.sales)
+          $('#average').textContent = money(total.sales / rows.length)
+          $('#peak').textContent = money(peak.sales)
+          $('#range').textContent = `09.${String(31 - days).padStart(2, '0')} — 09.30`
+          $('#period-label').textContent = days === 30 ? '9 月销售总额' : '9 月 24 — 30 日销售总额'
+          $('#insight').textContent =
+            `${peak.date.replace('/', ' 月 ')} 日录得区间最高销售额 ${money(peak.sales)}。本期覆盖 ${rows.length} 天，日均销售额 ${money(total.sales / rows.length)}。`
+          await draw(chart, $('#chart'), ['#b85841'])
+        }
+        document.querySelectorAll('[data-days]').forEach((button) =>
+          button.addEventListener('click', () =>
+            run(async () => {
+              days = Number(button.dataset.days)
+              document
+                .querySelectorAll('[data-days]')
+                .forEach((item) => item.setAttribute('aria-pressed', String(item === button)))
+              await render()
+            }),
+          ),
+        )
+        document.querySelectorAll('[data-type]').forEach((button) =>
+          button.addEventListener('click', () =>
+            run(async () => {
+              chart.chartType.changeChartType(button.dataset.type)
+              document
+                .querySelectorAll('[data-type]')
+                .forEach((item) => item.setAttribute('aria-pressed', String(item === button)))
+              await render()
+            }),
+          ),
+        )
+        $('#export').addEventListener('click', () => download('polished-chart.json', { chart: chart.build() }))
+        window.addEventListener('resize', () =>
+          instances.forEach((instance, element) => instance.resize(element.clientWidth, element.clientHeight)),
+        )
+        await render()
+      })
+    </script>
+  </body>
+</html>
