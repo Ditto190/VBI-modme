@@ -1,5 +1,13 @@
 # @visactor/vbi
 
+## 0.6.1
+
+### Patch Changes
+
+- db5c30a: Add chart builder runtime instance binding and native event forwarding for VChart and VTable, with automatic unbinding when the chart type changes or the document is destroyed.
+- Updated dependencies [db5c30a]
+  - @visactor/vseed@0.6.1
+
 ## 0.6.0
 
 ### Minor Changes
