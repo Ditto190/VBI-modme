@@ -15,6 +15,9 @@
 - [VBIChartBuildVSeedContext](types.md#vbichartbuildvseedcontext)
 - [VBIChartDSL](types.md#vbichartdsl)
 - [VBIChartDSLInput](types.md#vbichartdslinput)
+- [VBIChartInstance](types.md#vbichartinstance)
+- [VBIChartInstanceOff](types.md#vbichartinstanceoff)
+- [VBIChartInstanceOn](types.md#vbichartinstanceon)
 - [VBIChartQueryBuilder](types.md#vbichartquerybuilder)
 - [VBIChartSeedBuilder](types.md#vbichartseedbuilder)
 - [VBIConnector](types.md#vbiconnector)
@@ -71,7 +74,9 @@
 外部依赖类型使用源码中的导入名称：
 
 ```typescript
+import type { BaseTableAPI } from '@visactor/vtable'
 import type { Doc, Map } from 'yjs'
+import type { IVChart } from '@visactor/vchart'
 import type { Map } from 'yjs'
 import type { Map, Doc } from 'yjs'
 import type { NumFormat } from '@visactor/vseed'
@@ -149,6 +154,7 @@ export interface VBIChartBuilderInterface<TQueryDSL = DefaultVBIQueryDSL, TSeedD
   dsl: Map<any>
   undoManager: UndoManager
   chartType: ChartTypeBuilder
+  instance: ChartInstanceBuilder
   measures: MeasuresBuilder
   dimensions: DimensionsBuilder
   havingFilter: HavingFilterBuilder
@@ -166,7 +172,7 @@ export interface VBIChartBuilderInterface<TQueryDSL = DefaultVBIQueryDSL, TSeedD
 }
 ```
 
-关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
+关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
 
 ## VBIChartBuilderOptions
 
@@ -365,6 +371,39 @@ export type VBIChartDSLInput = {
   whereFilter?: unknown
   limit?: number | undefined
 }
+```
+
+## VBIChartInstance
+
+源码：[packages/vbi/src/types/builder/instance.ts](../../../../packages/vbi/src/types/builder/instance.ts)
+
+包导出：`VBIChartInstance`
+
+```typescript
+/** @description 图表的运行时实例；仅保存在本地，不写入 DSL、协同更新或撤销历史。 */
+export type VBIChartInstance = IVChart | BaseTableAPI
+```
+
+## VBIChartInstanceOff
+
+源码：[packages/vbi/src/types/builder/instance.ts](../../../../packages/vbi/src/types/builder/instance.ts)
+
+包导出：`VBIChartInstanceOff`
+
+```typescript
+/** @description VChart 与 VTable 的原生事件取消签名；按当前绑定的渲染器使用。 */
+export type VBIChartInstanceOff = BaseTableAPI['off'] & IVChart['off']
+```
+
+## VBIChartInstanceOn
+
+源码：[packages/vbi/src/types/builder/instance.ts](../../../../packages/vbi/src/types/builder/instance.ts)
+
+包导出：`VBIChartInstanceOn`
+
+```typescript
+/** @description VChart 与 VTable 的原生事件注册签名；按当前绑定的渲染器使用。 */
+export type VBIChartInstanceOn = BaseTableAPI['on'] & IVChart['on']
 ```
 
 ## VBIChartQueryBuilder

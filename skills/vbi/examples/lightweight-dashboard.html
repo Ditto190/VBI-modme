@@ -756,7 +756,7 @@
                 <span id="sales-change" class="change">—</span><span class="compare-label">较前 30 天</span>
               </p>
               <figure class="hero-figure">
-                <div id="trend" role="img" aria-label="每日销售额趋势，悬停可查看明细"></div>
+                <div id="trend" role="img" aria-label="每日销售额趋势，悬停联动指标卡，移开恢复区间汇总"></div>
                 <figcaption class="plot-labels">
                   <span id="date-first">—</span><span id="date-middle">—</span><span id="date-last">—</span>
                 </figcaption>
@@ -894,16 +894,16 @@
     <noscript>此示例需要启用 JavaScript 来加载图表。</noscript>
 
     <script type="module">
-      import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@0.6.0/+esm'
-      import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@0.6.0/dist/browser/esm/browser.js/+esm'
-      import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@0.6.0/+esm'
+      import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'
+      import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'
+      import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'
       import VChart from 'https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'
 
       registerAll()
       const $ = (selector) => document.querySelector(selector)
       const number = (value) => new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 0 }).format(value)
       const money = (value) => `¥${number(value)}`
-      const instances = new Map()
+      const renderedCharts = new Map()
       const status = $('#status')
       const sourceUrl = $('.workspace').href
       const dayMilliseconds = 86400000
@@ -1141,8 +1141,8 @@
             { pointVisible: false },
             {
               selector: { [dateId]: lastDate },
-              pointVisible: true,
-              pointSize: mini ? 6 : 8,
+              pointVisible: mini,
+              pointSize: 6,
               pointColor: '#19cba1',
               pointBorderWidth: 0,
             },
@@ -1183,10 +1183,12 @@
             },
           }
         }
-        instances.get(element)?.release()
+        chart.instance.get()?.release()
+        chart.instance.bind(undefined)
         const instance = new VChart(spec, { dom: element })
         instance.renderSync()
-        instances.set(element, instance)
+        chart.instance.bind(instance)
+        renderedCharts.set(element, chart)
       }
 
       async function run(task) {
@@ -1220,7 +1222,9 @@
           slot.style.gridRow = `${item.y + 1} / span ${item.h}`
         }
         requestAnimationFrame(() =>
-          instances.forEach((chart, element) => chart.resize(element.clientWidth, element.clientHeight)),
+          renderedCharts.forEach((chart, element) =>
+            chart.instance.get()?.resize(element.clientWidth, element.clientHeight),
+          ),
         )
       }
       function setPeriod(chart, first, last) {
@@ -1240,6 +1244,34 @@
         $(selector).textContent = change.text
         $(selector).dataset.direction = change.direction
       }
+      function showMetrics(total, prior, consumerTotal, comparison) {
+        const salesChange = changeText(total.sales, prior.sales)
+        $('#sales').textContent = money(total.sales)
+        $('#orders').textContent = number(total.order_id)
+        $('#profit').textContent = money(total.profit)
+        $('#average').textContent = total.order_id ? money(total.sales / total.order_id) : '—'
+        $('#margin').textContent = total.sales ? `${((total.profit / total.sales) * 100).toFixed(1)}%` : '—'
+        $('#growth').textContent = salesChange.percent
+        $('#growth').dataset.direction = salesChange.direction
+        setChange('#sales-change', salesChange)
+        setChange('#orders-change', changeText(total.order_id, prior.order_id))
+        setChange('#profit-change', changeText(total.profit, prior.profit))
+        document.querySelectorAll('.compare-label').forEach((label) => (label.textContent = comparison))
+        const share = total.order_id ? (consumerTotal.order_id / total.order_id) * 100 : 0
+        $('#consumer-ring').style.setProperty('--share', `${share}%`)
+        $('#consumer-ring').setAttribute('aria-valuenow', share.toFixed(1))
+        $('#consumer-share').textContent = total.order_id ? `${Math.round(share)}%` : '—'
+      }
+
+      // 原生维度 hover 能命中隐藏了数据点的面积图；离开绘图区时恢复汇总。
+      function bindMetricHover(chart, showDate, restore) {
+        chart.instance.on('dimensionHover', ({ action, dimensionInfo }) => {
+          if (document.body.dataset.state !== 'ready') return
+          if (action === 'leave') return restore()
+          const date = dimensionInfo[0]?.value
+          if (typeof date === 'string') showDate(date)
+        })
+      }
       const connectorId = 'vbi-example-supermarket'
       let days = 30
       await run(async () => {
@@ -1255,6 +1287,8 @@
         const previous = createChart(connectorId, 'table', null, ['sales', 'order_id', 'profit'])
         const consumers = createChart(connectorId, 'table', null, ['order_id'])
         const regions = createChart(connectorId, 'table', 'area', ['sales', 'order_id', 'profit'])
+        const dailyTotals = createChart(connectorId, 'table', 'order_date', ['sales', 'order_id', 'profit'])
+        const dailyConsumers = createChart(connectorId, 'table', 'order_date', ['order_id'])
         bindWidget(
           dashboard,
           trend,
@@ -1293,26 +1327,43 @@
           for (const chart of [trend, growth, totals, profit, consumers, regions]) setPeriod(chart, firstDay, lastDay)
           setPeriod(previous, firstDay - days, firstDay - 1)
           consumers.whereFilter.add('customer_type', (node) => node.setOperator('eq').setValue('消费者'))
+          setPeriod(dailyTotals, firstDay - 1, lastDay)
+          setPeriod(dailyConsumers, firstDay, lastDay)
+          dailyConsumers.whereFilter.add('customer_type', (node) => node.setOperator('eq').setValue('消费者'))
           const emptyTotals = { sales: 0, order_id: 0, profit: 0 }
-          const [[total = emptyTotals], [prior = emptyTotals], [consumerTotal = emptyTotals], regionRows] =
-            await Promise.all([rowsOf(totals), rowsOf(previous), rowsOf(consumers), rowsOf(regions)])
-          const salesChange = changeText(total.sales, prior.sales)
-          $('#sales').textContent = money(total.sales)
-          $('#orders').textContent = number(total.order_id)
-          $('#profit').textContent = money(total.profit)
-          $('#average').textContent = total.order_id ? money(total.sales / total.order_id) : '—'
-          $('#margin').textContent = total.sales ? `${((total.profit / total.sales) * 100).toFixed(1)}%` : '—'
-          $('#growth').textContent = salesChange.percent
-          $('#growth').dataset.direction = salesChange.direction
-          setChange('#sales-change', salesChange)
-          setChange('#orders-change', changeText(total.order_id, prior.order_id))
-          setChange('#profit-change', changeText(total.profit, prior.profit))
-          document.querySelectorAll('.compare-label').forEach((label) => (label.textContent = `较前 ${days} 天`))
-          const share = total.order_id ? (consumerTotal.order_id / total.order_id) * 100 : 0
-          $('#consumer-ring').style.setProperty('--share', `${share}%`)
-          $('#consumer-ring').setAttribute('aria-valuenow', share.toFixed(1))
-          $('#consumer-share').textContent = total.order_id ? `${Math.round(share)}%` : '—'
-          $('#period-label').textContent = `${fullDate(firstDay)} — ${fullDate(lastDay)}`
+          const [
+            [total = emptyTotals],
+            [prior = emptyTotals],
+            [consumerTotal = emptyTotals],
+            regionRows,
+            dailyRows,
+            consumerRows,
+          ] = await Promise.all([
+            rowsOf(totals),
+            rowsOf(previous),
+            rowsOf(consumers),
+            rowsOf(regions),
+            rowsOf(dailyTotals),
+            rowsOf(dailyConsumers),
+          ])
+          const byDate = new Map(dailyRows.map((row) => [row.order_date, row]))
+          const consumersByDate = new Map(consumerRows.map((row) => [row.order_date, row]))
+          function restore() {
+            showMetrics(total, prior, consumerTotal, `较前 ${days} 天`)
+            $('#period-label').textContent = `${fullDate(firstDay)} — ${fullDate(lastDay)} · 悬停图表查看当日指标`
+          }
+          function showDate(date) {
+            const day = Date.parse(date) / dayMilliseconds
+            if (!Number.isInteger(day) || day < firstDay || day > lastDay) return restore()
+            showMetrics(
+              byDate.get(date) ?? emptyTotals,
+              byDate.get(dateKey(day - 1)) ?? emptyTotals,
+              consumersByDate.get(date) ?? emptyTotals,
+              '较前一天',
+            )
+            $('#period-label').textContent = `${fullDate(day)} · 当日指标 · 移开图表恢复区间汇总`
+          }
+          restore()
           $('#date-first').textContent = shortDate(firstDay)
           $('#date-middle').textContent = shortDate(firstDay + Math.floor((days - 1) / 2))
           $('#date-last').textContent = shortDate(lastDay)
@@ -1336,6 +1387,7 @@
           await draw(trend, $('#trend'), firstDay, lastDay)
           await draw(growth, $('#growth-trend'), firstDay, lastDay, true)
           await draw(profit, $('#profit-trend'), firstDay, lastDay, true)
+          for (const chart of [trend, growth, profit]) bindMetricHover(chart, showDate, restore)
         }
         document.querySelectorAll('[data-days]').forEach((button) =>
           button.addEventListener('click', () =>

@@ -62,7 +62,7 @@ export type PointStyle = {
   dynamicFilter?: ChartDynamicFilter
 
   /**
-   * @description 点是否可见
+   * @description 点是否默认可见。折线图、面积图（含百分比面积图）、雷达图及双轴图中的折线/面积系列设为 false 时，悬停对应维度仍会显示交互点。
    */
   pointVisible?: boolean
   /**

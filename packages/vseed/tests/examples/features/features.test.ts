@@ -83,24 +83,25 @@ import config_79 from './numFormat/significantdigits.json'
 import config_80 from './numFormat/suffix-&-prefix.json'
 import config_81 from './numFormat/thousandseparator.json'
 import config_82 from './numFormat/type.json'
-import config_83 from './pointStyle/dimension-condition.json'
-import config_84 from './pointStyle/measure-condition.json'
-import config_85 from './pointStyle/partial-datum.json'
-import config_86 from './pointStyle/point-array.json'
-import config_87 from './pointStyle/value.json'
-import config_88 from './polynomial/column-示例.json'
-import config_89 from './polynomial/scatter-示例.json'
-import config_90 from './sort/图例自身排序.json'
-import config_91 from './sort/指标排序-1.json'
-import config_92 from './sort/指标排序.json'
-import config_93 from './sort/维度排序-1.json'
-import config_94 from './sort/维度排序.json'
-import config_95 from './sort/自定义排序(图例id).json'
-import config_96 from './sort/自定义排序(图例名称).json'
-import config_97 from './sort/自定义排序.json'
-import config_98 from './totals/columnTotal.json'
-import config_99 from './totals/rowTotal.json'
-import config_100 from './totals/singleIndicator.json'
+import config_83 from './pointStyle/active-point.json'
+import config_84 from './pointStyle/dimension-condition.json'
+import config_85 from './pointStyle/measure-condition.json'
+import config_86 from './pointStyle/partial-datum.json'
+import config_87 from './pointStyle/point-array.json'
+import config_88 from './pointStyle/value.json'
+import config_89 from './polynomial/column-示例.json'
+import config_90 from './polynomial/scatter-示例.json'
+import config_91 from './sort/图例自身排序.json'
+import config_92 from './sort/指标排序-1.json'
+import config_93 from './sort/指标排序.json'
+import config_94 from './sort/维度排序-1.json'
+import config_95 from './sort/维度排序.json'
+import config_96 from './sort/自定义排序(图例id).json'
+import config_97 from './sort/自定义排序(图例名称).json'
+import config_98 from './sort/自定义排序.json'
+import config_99 from './totals/columnTotal.json'
+import config_100 from './totals/rowTotal.json'
+import config_101 from './totals/singleIndicator.json'
 
 const cases = [
   { name: 'animation/bar-like', vseed: config_0 },
@@ -186,24 +187,25 @@ const cases = [
   { name: 'numFormat/suffix-&-prefix', vseed: config_80 },
   { name: 'numFormat/thousandseparator', vseed: config_81 },
   { name: 'numFormat/type', vseed: config_82 },
-  { name: 'pointStyle/dimension-condition', vseed: config_83 },
-  { name: 'pointStyle/measure-condition', vseed: config_84 },
-  { name: 'pointStyle/partial-datum', vseed: config_85 },
-  { name: 'pointStyle/point-array', vseed: config_86 },
-  { name: 'pointStyle/value', vseed: config_87 },
-  { name: 'polynomial/column-示例', vseed: config_88 },
-  { name: 'polynomial/scatter-示例', vseed: config_89 },
-  { name: 'sort/图例自身排序', vseed: config_90 },
-  { name: 'sort/指标排序-1', vseed: config_91 },
-  { name: 'sort/指标排序', vseed: config_92 },
-  { name: 'sort/维度排序-1', vseed: config_93 },
-  { name: 'sort/维度排序', vseed: config_94 },
-  { name: 'sort/自定义排序(图例id)', vseed: config_95 },
-  { name: 'sort/自定义排序(图例名称)', vseed: config_96 },
-  { name: 'sort/自定义排序', vseed: config_97 },
-  { name: 'totals/columnTotal', vseed: config_98 },
-  { name: 'totals/rowTotal', vseed: config_99 },
-  { name: 'totals/singleIndicator', vseed: config_100 }
+  { name: 'pointStyle/active-point', vseed: config_83 },
+  { name: 'pointStyle/dimension-condition', vseed: config_84 },
+  { name: 'pointStyle/measure-condition', vseed: config_85 },
+  { name: 'pointStyle/partial-datum', vseed: config_86 },
+  { name: 'pointStyle/point-array', vseed: config_87 },
+  { name: 'pointStyle/value', vseed: config_88 },
+  { name: 'polynomial/column-示例', vseed: config_89 },
+  { name: 'polynomial/scatter-示例', vseed: config_90 },
+  { name: 'sort/图例自身排序', vseed: config_91 },
+  { name: 'sort/指标排序-1', vseed: config_92 },
+  { name: 'sort/指标排序', vseed: config_93 },
+  { name: 'sort/维度排序-1', vseed: config_94 },
+  { name: 'sort/维度排序', vseed: config_95 },
+  { name: 'sort/自定义排序(图例id)', vseed: config_96 },
+  { name: 'sort/自定义排序(图例名称)', vseed: config_97 },
+  { name: 'sort/自定义排序', vseed: config_98 },
+  { name: 'totals/columnTotal', vseed: config_99 },
+  { name: 'totals/rowTotal', vseed: config_100 },
+  { name: 'totals/singleIndicator', vseed: config_101 }
 ]
 
 describe('features', () => {

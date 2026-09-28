@@ -8,6 +8,7 @@
 | **dsl** | `Y.Map<any>` | - |
 | **adapters** | `VBIChartBuilderAdapters<TQueryDSL, TSeedDSL>` | - |
 | **chartType** | `ChartTypeBuilder` | - |
+| **instance** | `ChartInstanceBuilder` | 图表运行时实例的绑定、获取与原生事件代理。 |
 | **measures** | `MeasuresBuilder` | - |
 | **dimensions** | `DimensionsBuilder` | - |
 | **havingFilter** | `HavingFilterBuilder` | - |

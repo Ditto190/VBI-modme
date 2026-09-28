@@ -14,10 +14,11 @@
 - [insightBuilder](./insight-builder.md)
 - [DSL 与公共类型](./types.md)
 
-## 公开导出（104）
+## 公开导出（108）
 
 - [buildVQuery](chart-builder.md#buildvquery)
 - [BuildVSeedOptions](types.md#buildvseedoptions)
+- [ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)
 - [ChartTypeBuilder](chart-builder.md#charttypebuilder)
 - [createEmptyChart](vbi.md#createemptychart)
 - [createEmptyDashboard](vbi.md#createemptydashboard)
@@ -56,6 +57,9 @@
 - [VBIChartBuildVSeedContext](types.md#vbichartbuildvseedcontext)
 - [VBIChartDSL](types.md#vbichartdsl)
 - [VBIChartDSLInput](types.md#vbichartdslinput)
+- [VBIChartInstance](types.md#vbichartinstance)
+- [VBIChartInstanceOff](types.md#vbichartinstanceoff)
+- [VBIChartInstanceOn](types.md#vbichartinstanceon)
 - [VBIChartNamespace](vbi.md#vbichartnamespace)
 - [VBIChartQueryBuilder](types.md#vbichartquerybuilder)
 - [VBIChartResourceNamespace](vbi.md#vbichartresourcenamespace)

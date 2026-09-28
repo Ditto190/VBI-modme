@@ -42,7 +42,7 @@
 
 将下面代码保存为 `index.html`，直接用浏览器打开。它使用同一份销售明细，支持切换三种视图、按地区筛选，并显示当前 DSL 和查询结果。为便于核对，数据只有五行。
 
-版本沿用实践示例：VBI / VQuery / VSeed `0.6.0`、VChart `2.0.23-alpha.6`，另加入 VTable `1.23.1`。使用固定版本便于复现，更换版本后重新验证整条依赖链路。
+版本沿用实践示例：VBI / VQuery / VSeed 统一使用 `latest`，VChart 使用 `2.0.23-alpha.6`，另加入 VTable `1.23.1`。
 
 VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，提供 `window.VTable`；其余四个包使用 `+esm` 模块导出。在本次浏览器验证中，VTable `1.23.1/+esm` 的传递依赖出现 `VCircle` 命名导出缺失，因此本文使用该版本的浏览器 bundle，不将两种入口混用。
 
@@ -114,9 +114,9 @@ VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，提供 `window.
         if (!window.VTable) throw new Error('VTable 模块加载失败，请检查网络后刷新')
         const { ListTable, PivotTable } = window.VTable
         const [{ VBI }, { VQuery }, { Builder, registerAll }, { default: VChart }] = await Promise.all([
-          import('https://cdn.jsdelivr.net/npm/@visactor/vbi@0.6.0/+esm'),
-          import('https://cdn.jsdelivr.net/npm/@visactor/vquery@0.6.0/dist/browser/esm/browser.js/+esm'),
-          import('https://cdn.jsdelivr.net/npm/@visactor/vseed@0.6.0/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'),
           import('https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'),
         ])
         registerAll()

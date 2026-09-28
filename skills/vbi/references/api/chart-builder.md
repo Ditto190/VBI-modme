@@ -6,6 +6,7 @@
 
 - [VBIChartBuilder](chart-builder.md#vbichartbuilder)
 - [buildVQuery](chart-builder.md#buildvquery)
+- [ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)
 - [ChartTypeBuilder](chart-builder.md#charttypebuilder)
 - [defaultVBIChartBuilderAdapters](chart-builder.md#defaultvbichartbuilderadapters)
 - [DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)
@@ -53,6 +54,8 @@ export declare class VBIChartBuilder<
   dsl: Y.Map<any>
   adapters: VBIChartBuilderAdapters<TQueryDSL, TSeedDSL>
   chartType: ChartTypeBuilder
+  /** @description 图表运行时实例的绑定、获取与原生事件代理。 */
+  instance: ChartInstanceBuilder
   measures: MeasuresBuilder
   dimensions: DimensionsBuilder
   havingFilter: HavingFilterBuilder
@@ -86,7 +89,7 @@ export declare class VBIChartBuilder<
 options = {}
 ```
 
-关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartBuilderAdapters](types.md#vbichartbuilderadapters)、[VBIChartBuilderInterface](types.md#vbichartbuilderinterface)、[VBIChartBuilderOptions](types.md#vbichartbuilderoptions)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
+关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartBuilderAdapters](types.md#vbichartbuilderadapters)、[VBIChartBuilderInterface](types.md#vbichartbuilderinterface)、[VBIChartBuilderOptions](types.md#vbichartbuilderoptions)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
 
 ## buildVQuery
 
@@ -99,6 +102,32 @@ const buildVQuery: (vbiDSL: VBIChartDSL, builder: VBIChartBuilderInterface<any, 
 ```
 
 关联 API：[VBIChartBuilderInterface](types.md#vbichartbuilderinterface)、[VBIChartDSL](types.md#vbichartdsl)
+
+## ChartInstanceBuilder
+
+源码：[packages/vbi/src/chart-builder/features/instance/instance-builder.ts](../../../../packages/vbi/src/chart-builder/features/instance/instance-builder.ts)
+
+包导出：`ChartInstanceBuilder`
+
+```typescript
+/** @description 管理图表的本地渲染实例及原生事件代理，不参与 DSL、协同同步或撤销历史。 */
+export declare class ChartInstanceBuilder {
+  constructor(doc: Y.Doc, chartType: ChartTypeBuilder)
+  /**
+   * @description 绑定运行时实例并返回当前实例构建器。table / pivotTable 使用 VTable，其余类型使用 VChart。重复绑定替换引用，undefined 解绑；同一实例不能绑定到两个构建器。切换图表类型或销毁文档时自动解绑，事件清理和 release 由调用方负责。
+   * @param instance - 已创建的 VChart / VTable 实例，或 undefined
+   */
+  bind(instance: VBIChartInstance | undefined): this
+  /** @description 获取绑定实例，未绑定时返回 undefined。类型参数可指定调用方已知的 IVChart 或 BaseTableAPI 等原生类型。 */
+  get<T extends VBIChartInstance = VBIChartInstance>(): T | undefined
+  /** @description 代理当前实例的原生 on，保留参数、返回值和 this；VTable 返回监听器 ID。必须先 bind，重新绑定后需重新注册监听器。 */
+  on: VBIChartInstanceOn
+  /** @description 代理当前实例的原生 off；VChart 接收事件名及回调，VTable 接收监听器 ID。未绑定时抛出错误。 */
+  off: VBIChartInstanceOff
+}
+```
+
+关联 API：[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[VBIChartInstance](types.md#vbichartinstance)、[VBIChartInstanceOff](types.md#vbichartinstanceoff)、[VBIChartInstanceOn](types.md#vbichartinstanceon)
 
 ## ChartTypeBuilder
 
