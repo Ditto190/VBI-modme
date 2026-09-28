@@ -5,372 +5,327 @@
     <link rel="icon" href="data:," />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <title>九月营收札记 · 精致图表 · VBI</title>
+    <title>Pareto frontier · 精致图表 · VBI</title>
     <style>
       * {
         box-sizing: border-box;
       }
       body {
         margin: 0;
-        font-family: Inter, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        color: #202020;
+        background: #fefefe;
+        font-family: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
       }
       button,
-      select {
+      input {
         font: inherit;
+      }
+      button {
         cursor: pointer;
       }
       button:focus-visible,
-      select:focus-visible,
-      a:focus-visible {
-        outline: 3px solid #399f86;
+      input:focus-visible,
+      summary:focus-visible,
+      .chart-scroll:focus-visible {
+        outline: 2px solid #bb4b36;
         outline-offset: 4px;
       }
       button:disabled,
-      fieldset:disabled {
+      input:disabled {
         cursor: wait;
-        opacity: 0.65;
-      }
-      fieldset {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
       }
       h1,
-      h2,
-      p {
+      p,
+      figure {
         margin: 0;
       }
-      button,
-      select {
-        min-height: 38px;
-        padding: 8px 14px;
-        border-radius: 6px;
-      }
-      a {
-        color: inherit;
-      }
-      #status {
-        font-size: 12px;
-      }
-      body[data-state='error'] #status {
-        color: #de574d;
-      }
-      .panel {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        overflow: hidden;
-      }
-      .panel header {
-        padding: 20px 22px 0;
-      }
-      .panel h2 {
-        font-size: 15px;
-        font-weight: 600;
-      }
-      .panel header p {
-        font-size: 12px;
-        margin-top: 7px;
-      }
-      .plot {
-        flex: 1;
-        min-height: 0;
-        margin: 10px 12px 12px;
-      }
-      .dashboard {
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        gap: 16px;
-      }
-      .metric-value {
-        font-variant-numeric: tabular-nums;
-        letter-spacing: -0.045em;
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-      }
-
-      body {
-        background: #f4f1eb;
-        color: #302f2b;
-      }
-      .page {
-        max-width: 1060px;
+      main {
+        max-width: 1920px;
         margin: 0 auto;
-        padding: 38px 36px 32px;
+        padding: 24px 28px 18px 12px;
       }
-      .masthead {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #d9d6cd;
+      .heading,
+      .legend {
+        margin-left: 74px;
       }
-      .wordmark {
-        font-family: Georgia, 'Songti SC', serif;
-        font-size: 22px;
-        letter-spacing: -0.04em;
-      }
-      .wordmark em {
-        color: #b34e39;
-        font-style: normal;
-      }
-      .issue {
-        font-size: 10px;
-        color: #8d897f;
-        letter-spacing: 0.13em;
-      }
-      .intro {
-        display: flex;
-        justify-content: space-between;
-        gap: 24px;
-        align-items: flex-end;
-        padding: 38px 0 28px;
-      }
-      .eyebrow {
-        font-size: 10px;
-        letter-spacing: 0.2em;
-        color: #ae5b45;
-        margin-bottom: 16px;
-      }
-      h1 {
-        font-family: 'Songti SC', 'Noto Serif SC', Georgia, serif;
-        font-size: 36px;
-        font-weight: 500;
-        letter-spacing: 0.035em;
-      }
-      .intro p:last-child {
-        margin-top: 14px;
-        color: #8c877e;
-        font-size: 12px;
-        line-height: 1.8;
-      }
-      .issue-no {
-        font-family: Georgia, serif;
-        color: #c4bdb1;
-        font-size: 68px;
-        line-height: 1;
-      }
-      .card {
-        background: #fffefa;
-        border: 1px solid #e2ddd3;
-        border-radius: 4px;
-        box-shadow: 0 14px 40px #6d503508;
-        padding: 30px 32px 22px;
-      }
-      .card-top {
+      .heading {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 20px;
+        gap: 24px;
       }
-      .kicker {
-        font-size: 12px;
-        color: #8f887d;
+      h1 {
+        font-size: clamp(23px, 1.88vw, 34px);
+        line-height: 1.16;
+        letter-spacing: -0.6px;
+        font-weight: 700;
       }
-      .metric-value {
-        font-family: Georgia, serif;
+      .subtitle {
+        color: #606060;
+        font-size: 17px;
+        margin-top: 7px;
+        line-height: 1.4;
+      }
+      .source {
+        flex-shrink: 0;
+        color: #919191;
+        font-size: 13px;
+        line-height: 1.6;
+        text-align: right;
+        padding-top: 2px;
+      }
+      .source span {
         display: block;
-        font-size: 48px;
-        margin: 9px 0 12px;
-        line-height: 1.1;
-        font-weight: 400;
+        font-size: 11px;
       }
       .legend {
-        font-size: 11px;
-        color: #9a9184;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: 24px;
+        row-gap: 6px;
+        margin-top: 14px;
+        margin-bottom: 3px;
       }
-      .legend::before {
+      .legend button {
+        border: 0;
+        padding: 0;
+        background: none;
+        color: #292929;
+        font-size: 15px;
+        display: flex;
+        gap: 7px;
+        align-items: center;
+        line-height: 19px;
+        white-space: nowrap;
+        transition: opacity 120ms;
+      }
+      .legend button::before {
         content: '';
-        display: inline-block;
-        width: 7px;
-        height: 7px;
+        background: var(--provider-color);
+        width: 11px;
+        height: 11px;
         border-radius: 50%;
-        background: #b85841;
-        margin-right: 8px;
+        flex-shrink: 0;
       }
-      fieldset {
-        justify-content: flex-end;
+      .legend button[aria-pressed='false'] {
+        opacity: 0.28;
       }
-      button {
-        background: transparent;
-        border: 1px solid #e5dfd5;
-        color: #8c8377;
-        font-size: 11px;
-        min-height: 33px;
-        padding: 7px 11px;
-        border-radius: 3px;
+      .chart-scroll {
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
       }
-      button[aria-pressed='true'] {
-        color: #9d422d;
-        background: #f5eae2;
-        border-color: #ead3c2;
+      #chart {
+        min-width: 1120px;
+        width: 100%;
+        height: max(640px, calc(100vh - 157px));
+      }
+      .caption {
+        margin: 0 4px 0 74px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        color: #919191;
+        font-size: 12px;
+        line-height: 1.5;
       }
       .controls {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-end;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
       }
-      .group {
+      .controls label {
         display: flex;
         gap: 5px;
+        align-items: center;
+        cursor: pointer;
+        color: #737373;
       }
-      #chart {
-        height: 340px;
-        margin: 22px -8px 8px;
+      input {
+        accent-color: #cd644e;
       }
-      .caption {
-        border-top: 1px solid #e9e3da;
-        padding-top: 18px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 24px;
+      .controls button {
+        padding: 0;
+        color: #737373;
+        background: none;
+        border: 0;
+        font-size: 12px;
+        border-bottom: 1px solid #d8d8d8;
       }
-      .caption p {
-        font-size: 10px;
-        color: #aaa092;
-        letter-spacing: 0.05em;
-        margin-bottom: 8px;
+      .notes {
+        margin: 12px 4px 0 74px;
+        color: #a0a0a0;
+        font-size: 11px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px;
+        line-height: 1.5;
       }
-      .caption strong {
-        font-size: 17px;
-        font-weight: 500;
+      #status {
         font-variant-numeric: tabular-nums;
       }
-      .note {
-        display: flex;
-        gap: 14px;
-        margin-top: 22px;
-        padding: 0 2px;
-        color: #8d8276;
+      body[data-state='error'] #status {
+        color: #bb4b36;
+      }
+      details {
+        margin: 14px 4px 0 74px;
         font-size: 12px;
-        line-height: 1.9;
+        color: #707070;
       }
-      .note span:first-child {
-        color: #b85841;
-        font-family: Georgia, serif;
-        font-size: 23px;
-        line-height: 1.3;
+      summary {
+        cursor: pointer;
+        width: fit-content;
       }
-      footer {
-        margin-top: 26px;
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-        font-size: 10px;
-        color: #9c9387;
+      .table-scroll {
+        max-height: 320px;
+        overflow: auto;
+        margin-top: 12px;
       }
-      @media (max-width: 650px) {
-        .page {
-          padding: 24px 16px;
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: left;
+        font-variant-numeric: tabular-nums;
+      }
+      th,
+      td {
+        padding: 7px 12px;
+        border-bottom: 1px solid #ededed;
+      }
+      th {
+        position: sticky;
+        top: 0;
+        background: #fefefe;
+      }
+      th:nth-child(n + 3),
+      td:nth-child(n + 3) {
+        text-align: right;
+      }
+      @media (max-width: 1250px) {
+        .heading {
+          display: block;
         }
-        h1 {
-          font-size: 29px;
+        .source {
+          text-align: left;
+          margin-top: 8px;
         }
-        .issue-no {
-          display: none;
-        }
-        .card {
-          padding: 24px 16px;
-        }
-        .card-top {
-          flex-direction: column;
-        }
-        .controls {
-          align-items: flex-start;
-        }
-        .metric-value {
-          font-size: 40px;
+        .source span {
+          display: inline;
+          margin-left: 8px;
         }
         #chart {
-          height: 290px;
+          height: max(640px, calc(100vh - 268px));
         }
-        .caption {
-          gap: 12px;
+      }
+      @media (max-width: 700px) {
+        main {
+          padding: 22px 14px 18px;
         }
-        .caption strong {
+        .heading,
+        .legend,
+        .caption,
+        .notes,
+        details {
+          margin-left: 0;
+        }
+        h1 {
+          font-size: 24px;
+          line-height: 1.2;
+          letter-spacing: -0.4px;
+        }
+        .subtitle {
           font-size: 14px;
         }
-        footer {
-          flex-direction: column;
+        .source {
+          font-size: 11px;
+        }
+        .source span {
+          display: block;
+          margin-left: 0;
+        }
+        .legend {
+          gap: 9px 16px;
+          margin-top: 17px;
+        }
+        .legend button {
+          font-size: 12px;
+        }
+        .legend button::before {
+          width: 9px;
+          height: 9px;
+        }
+        #chart {
+          height: 690px;
+        }
+        .caption {
+          margin-top: 6px;
+        }
+        .controls {
+          gap: 12px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .legend button {
+          transition: none;
         }
       }
     </style>
   </head>
   <body data-state="loading">
-    <main class="page">
-      <header class="masthead">
-        <div class="wordmark">
-          Northstar<em>.</em>
-          <span style="font-size: 12px; letter-spacing: 0.04em; margin-left: 10px">北辰数据札记</span>
-        </div>
-        <span class="issue">THE SEPTEMBER ISSUE</span>
-      </header>
-      <section class="intro">
+    <main>
+      <header class="heading">
         <div>
-          <p class="eyebrow">REVENUE / 2026.09</p>
-          <h1>把增长，看得更清楚。</h1>
-          <p>一份关于日常经营的记录。少一点噪音，多一点洞察。</p>
+          <h1>Pareto frontier of the Artificial Analysis Intelligence Index v4.1.1</h1>
+          <p class="subtitle">All 59 models from the reference · cost per Intelligence Index task</p>
         </div>
-        <span class="issue-no" aria-hidden="true">09</span>
-      </section>
-      <section class="card" aria-label="每日营收图表">
-        <div class="card-top">
-          <div>
-            <p class="kicker" id="period-label">9 月销售总额</p>
-            <strong id="sales" class="metric-value">—</strong>
-            <p class="legend">每日销售额 · 人民币</p>
-          </div>
-          <fieldset disabled aria-label="图表控制" class="controls">
-            <div class="group">
-              <button data-days="30" aria-pressed="true">近 30 天</button
-              ><button data-days="7" aria-pressed="false">近 7 天</button>
-            </div>
-            <div class="group">
-              <button data-type="area" aria-pressed="true">趋势</button
-              ><button data-type="column" aria-pressed="false">柱状</button
-              ><button id="export" aria-label="下载图表配置">导出 ↓</button>
-            </div>
-          </fieldset>
+        <p class="source">
+          Reference: Artificial Analysis · 2026-08-26<span>Screenshot reconstruction · approximate data</span>
+        </p>
+      </header>
+      <nav class="legend" id="legend" aria-label="筛选模型提供商"></nav>
+      <figure aria-label="模型智能指数与单次任务成本的帕累托前沿图" aria-describedby="chart-note">
+        <div class="chart-scroll" tabindex="0" role="region" aria-label="图表，窄屏可横向滚动；具体数值见下方数据表">
+          <div id="chart"></div>
         </div>
-        <div id="chart" role="img" aria-label="每日销售额，可悬停查看明细"></div>
-        <div class="caption">
-          <div>
-            <p>日均销售额</p>
-            <strong id="average">—</strong>
+        <figcaption class="caption">
+          <span>Line traces the global Pareto frontier across all models.</span>
+          <div class="controls">
+            <label><input id="highlight" type="checkbox" checked disabled />突出性价比区域</label>
+            <button id="reset" type="button" disabled>显示全部</button>
+            <button id="export" type="button" disabled>下载配置</button>
           </div>
-          <div>
-            <p>最高单日销售额</p>
-            <strong id="peak">—</strong>
-          </div>
-          <div>
-            <p>统计区间</p>
-            <strong id="range">09.01 — 09.30</strong>
-          </div>
+        </figcaption>
+      </figure>
+      <div class="notes">
+        <p id="chart-note">
+          根据参考截图近似整理，非官方测评数据。点击图例筛选，悬浮查看数值；前沿线与参考模型保持全局口径。
+        </p>
+        <p id="status" role="status" aria-live="polite">正在加载 ESM 模块与演示数据…</p>
+      </div>
+      <details>
+        <summary>查看当前模型数据</summary>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Provider</th>
+                <th scope="col">Cost / task (USD)</th>
+                <th scope="col">Index score</th>
+              </tr>
+            </thead>
+            <tbody id="model-table"></tbody>
+          </table>
         </div>
-      </section>
-      <aside class="note">
-        <span>↗</span>
-        <p id="insight">正在整理本期经营数据…</p>
-      </aside>
-      <footer>
-        <p id="status" role="status">正在加载 npm 模块…</p>
-        <span>NORTHSTAR / NOTES ON GROWTH</span>
-      </footer>
+      </details>
+      <noscript>请启用 JavaScript，以加载模型数据和图表。</noscript>
     </main>
-
     <script type="module">
+      // 标准浏览器 ESM；无需构建工具。先通过本地 HTTP 服务验证以下 npm 入口。
       import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@0.6.0/+esm'
       import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@0.6.0/dist/browser/esm/browser.js/+esm'
       import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@0.6.0/+esm'
@@ -378,41 +333,385 @@
 
       registerAll()
       const $ = (selector) => document.querySelector(selector)
-      const number = (value) => new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 0 }).format(value)
-      const money = (value) => `¥${number(value)}`
-      const instances = new Map()
-      const status = $('#status')
+      const providers = {
+        Alibaba: '#e34637',
+        Mistral: '#f39900',
+        OpenAI: '#202020',
+        Anthropic: '#d57a5b',
+        Google: '#309849',
+        DeepSeek: '#506bef',
+        NVIDIA: '#80b500',
+        InclusionAI: '#d141a6',
+        Kimi: '#009e92',
+        Meta: '#37b7de',
+        SpaceXAI: '#9046dd',
+        'Thinking Machines': '#306c85',
+        Upstage: '#c2a30c',
+        Xiaomi: '#9b6331',
+        'Z AI': '#7860c6',
+        Other: '#9ba0a6',
+      }
+      // 从用户提供的截图手工近似转录，不代表真实模型发布信息或官方评测。
+      // [名称, 提供商, 成本, 得分, 标签水平偏移?, 垂直偏移?, 对齐?]
+      const models = [
+        ['MiMo-V2.5', 'Xiaomi', 0.01, 38],
+        ['MiMo-V2.5-Pro', 'Xiaomi', 0.03, 43],
+        ['GLM-5.3-Flash (discounted)', 'Z AI', 0.045, 57],
+        ['Hy3', 'Other', 0.04, 42, 0, 15, 'center'],
+        ['Ling 3.0 Flash', 'InclusionAI', 0.04, 38],
+        ['Gemma 4 31B', 'Google', 0.04, 22],
+        ['GPT-5.6 Luna (max)', 'OpenAI', 0.05, 52, -10, 0, 'right'],
+        ['DeepSeek V4 Flash 0731 (max)', 'DeepSeek', 0.11, 52, -10, 0, 'right'],
+        ['DeepSeek V4 Flash Vision (max)', 'DeepSeek', 0.12, 51, 0, 15, 'center'],
+        ['DeepSeek V4 Pro 0813 (max)', 'DeepSeek', 0.25, 53, -10, 0, 'right'],
+        ['Qwen3.8 27B (xhigh)', 'Alibaba', 0.25, 52],
+        ['GLM-5.2 (max)', 'Z AI', 0.44, 53],
+        ['Gemini 3.1 Pro Preview', 'Google', 0.33, 48],
+        ['MiniMax-M3', 'Other', 0.14, 45],
+        ['Kimi K2.7 Code', 'Kimi', 0.22, 43],
+        ['Solar Pro 4', 'Upstage', 0.22, 42, -10, 0, 'right'],
+        ['Inkling Small', 'Other', 0.07, 41],
+        ['Inkling', 'Other', 0.34, 42],
+        ['Qwen3.7 Plus', 'Alibaba', 0.24, 39],
+        ['Qwen3.6 27B', 'Alibaba', 0.28, 38, 0, 15, 'center'],
+        ['Nemotron 3 Ultra', 'NVIDIA', 0.38, 38],
+        ['Gemini 3.5 Flash-Lite', 'Google', 0.1, 37],
+        ['Muse Glimmer (high)', 'Meta', 0.07, 35],
+        ['LongCat 2.0', 'Other', 0.12, 34],
+        ['Qwen3.5 122B A10B', 'Alibaba', 0.25, 33, 0, -15, 'center'],
+        ['Qwen3.5 397B A17B', 'Alibaba', 0.36, 34],
+        ['Qwen3.6 35B A3B', 'Alibaba', 0.29, 32, -10, 0, 'right'],
+        ['Ring-2.6-1T', 'InclusionAI', 0.36, 32],
+        ['Step 3.7 Flash', 'Other', 0.09, 31],
+        ['Claude 4.5 Haiku', 'Anthropic', 0.22, 30],
+        ['Mistral Medium 3.5', 'Mistral', 0.46, 30],
+        ['GPT-5.5 Instant (June 2026)', 'OpenAI', 0.54, 29, 0, 15, 'center'],
+        ['gpt-oss-120b (high)', 'OpenAI', 0.07, 24, -10, 0, 'right'],
+        ['Nemotron 3.5 Lightning', 'NVIDIA', 0.08, 24],
+        ['Qwen3.5 35B A3B', 'Alibaba', 0.24, 24],
+        ['Mercury 2', 'Other', 0.08, 22],
+        ['Qwen3.5 9B', 'Alibaba', 0.24, 22],
+        ['Qwen3 Coder Next', 'Alibaba', 0.34, 21],
+        ['Mistral Small 4', 'Mistral', 0.1, 20],
+        ['Trinity Large Thinking', 'Other', 0.16, 19],
+        ['Mistral Large 3', 'Mistral', 0.08, 16],
+        ['Solar Pro 3', 'Upstage', 0.15, 14],
+        ['Celeris-1', 'Other', 0.26, 12],
+        ['Ministral 3 14B', 'Mistral', 0.16, 11],
+        ['Magistral Small 1.2', 'Mistral', 0.3, 11, 0, 15, 'center'],
+        ['Ministral 3 8B', 'Mistral', 0.18, 9],
+        ['Ministral 3 3B', 'Mistral', 0.13, 7],
+        ['Claude Sonnet 5 (max)', 'Anthropic', 1.72, 55],
+        ['Muse Spark 1.2 (high)', 'Meta', 0.36, 56, -10, -15, 'right'],
+        ['Gemini 3.7 Flash (high)', 'Google', 0.4, 56, 0, 16, 'center'],
+        ['Grok 4.5 (high)', 'SpaceXAI', 0.4, 57, -10, -24, 'right'],
+        ['GPT-5.6 Terra (max)', 'OpenAI', 0.51, 57],
+        ['GLM-5.3 (max)', 'Z AI', 0.68, 60, 0, 15, 'center'],
+        ['Grok 4.6 (high)', 'SpaceXAI', 0.84, 61, -10, 0, 'right'],
+        ['Kimi K3 (max)', 'Kimi', 0.84, 60, 0, -37, 'center'],
+        ['GPT-5.6 Sol (max)', 'OpenAI', 0.96, 61],
+        ['Qwen3.8 Max', 'Alibaba', 1.13, 58],
+        ['Claude Opus 5 (max)', 'Anthropic', 2.33, 63],
+        ['Claude Fable 5 (with fallback)', 'Anthropic', 3.13, 62, 55, 16, 'right'],
+      ].map(([model, provider, cost, score, dx = 7, dy = 0, align = 'left']) => ({
+        model,
+        provider,
+        cost,
+        score,
+        dx,
+        dy,
+        align,
+      }))
+      const reference = models.find((row) => row.model === 'GLM-5.3-Flash (discounted)')
+      const metadata = new Map(models.map((row) => [row.model, row]))
+      const selected = new Set(Object.keys(providers))
+      const schema = [
+        { name: 'model', type: 'string' },
+        { name: 'provider', type: 'string' },
+        { name: 'cost', type: 'number' },
+        { name: 'score', type: 'number' },
+      ]
+      const connectorId = 'vbi-example-pareto-frontier'
+      const chartBuilder = VBI.chart.create(VBI.chart.createEmpty(connectorId))
+      chartBuilder.chartType.changeChartType('scatter')
+      chartBuilder.dimensions
+        .add('model', (node) => node.setEncoding('detail').setAlias('Model'))
+        .add('provider', (node) => node.setEncoding('color').setAlias('Provider'))
+      chartBuilder.measures
+        .add('cost', (node) => node.setEncoding('xAxis').setAggregate({ func: 'avg' }).setAlias('Cost / task (USD)'))
+        .add('score', (node) => node.setEncoding('yAxis').setAggregate({ func: 'avg' }).setAlias('Intelligence Index'))
+      const modelField = chartBuilder.build().dimensions.find((dimension) => dimension.field === 'model').id
+      let chart
+      let highlight = true
 
-      // 确定性的演示数据；业务聚合与筛选由 VBI → VQuery 执行。
-      async function connectDemo(connectorId) {
-        const rawDataset = []
-        const regions = ['华东', '华南', '华北', '西南']
-        const channels = ['线上商城', '线下门店', '合作伙伴']
-        const products = ['数码配件', '家居生活', '运动户外', '个护美妆']
-        for (let day = 1; day <= 30; day++) {
-          regions.forEach((region, r) =>
-            channels.forEach((channel, c) => {
-              const orders = Math.round(16 + day * 0.7 + (3 - r) * 9 + (2 - c) * 5 + Math.sin(day * 0.6 + r) * 8)
-              const sales = orders * (145 + r * 19 + c * 26)
-              rawDataset.push({
-                day,
-                date: `09/${String(day).padStart(2, '0')}`,
-                region,
-                channel,
-                product: products[(day + r + c) % 4],
-                sales,
-                orders,
-                profit: Math.round(sales * (0.22 + c * 0.04)),
-              })
-            }),
-          )
+      // 全局 Pareto 前沿：按成本升序、得分降序遍历，只保留严格提高得分的模型。
+      // 相同成本先保留最高分，相同得分只保留最便宜的模型。
+      const frontier = []
+      for (const row of [...models].sort((a, b) => a.cost - b.cost || b.score - a.score)) {
+        if (!frontier.length || row.score > frontier.at(-1).score) frontier.push(row)
+      }
+      const isDominated = (row) => row.cost >= reference.cost && row.score <= reference.score && row !== reference
+      const pointColor = (row) => (highlight && isDominated(row) ? '#c7cccb' : providers[row.provider])
+      const labelColor = (row) => (highlight && isDominated(row) ? '#a8aeac' : providers[row.provider])
+      const formatCost = (value) => `$${Number(value).toLocaleString('en-US', { maximumFractionDigits: 3 })}`
+      const costTicks = [0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3, 0.5, 1, 2, 3]
+
+      function labelAt(row, text, dx, dy, align, fontSize = 12, fill = labelColor(row), fontWeight = 'normal') {
+        return {
+          x: row.cost,
+          y: row.score,
+          interactive: false,
+          clip: false,
+          itemLine: { visible: false },
+          targetSymbol: { visible: false },
+          itemContent: {
+            type: 'text',
+            refX: 0,
+            autoRotate: false,
+            offsetX: dx,
+            offsetY: dy,
+            text: {
+              text,
+              padding: 0,
+              labelBackground: { visible: false },
+              style: {
+                fill,
+                fontSize,
+                fontWeight,
+                textAlign: align,
+                textBaseline: 'middle',
+                fontFamily: 'Arial, sans-serif',
+              },
+            },
+          },
         }
-        const schema = Object.keys(rawDataset[0]).map((name) => ({
-          name,
-          type: typeof rawDataset[0][name] === 'number' ? 'number' : 'string',
-        }))
+      }
+
+      function decorate(seed, visibleModels) {
+        // 查询和编码由 VBI / VQuery 负责，视觉配置交给 VSeed，精细标记由 VChart 渲染层完成。
+        Object.assign(seed, {
+          backgroundColor: 'transparent',
+          color: { colorScheme: Object.values(providers) },
+          xAxis: { log: true, logBase: 10, min: 0.0077, max: 4, nice: false },
+          yAxis: { min: 5, max: 65, nice: false },
+          label: { enable: false },
+          legend: { enable: false },
+          size: 8,
+        })
+        const spec = Builder.from(seed).build()
+        spec.animation = false
+        spec.padding = { top: 12, right: 8, bottom: 12, left: 10 }
+        spec.axes = spec.axes.map((axis) => {
+          const bottom = axis.orient === 'bottom'
+          return {
+            ...axis,
+            zero: false,
+            nice: false,
+            sampling: false,
+            innerOffset: { top: 0, right: 0, bottom: 0, left: 0 },
+            tick: {
+              visible: false,
+              // 此版本的 log scale 不读取 customTicks，使用原生 d3 刻度后筛选标签与网格。
+              tickMode: bottom ? 'd3' : () => Array.from({ length: 13 }, (_, i) => 5 + i * 5),
+              tickCount: 10,
+            },
+            subTick: { visible: false },
+            domainLine: { visible: true, style: { stroke: '#393939', lineWidth: 1.2 } },
+            grid: {
+              visible: true,
+              style: (value) => ({
+                stroke: !bottom || costTicks.includes(Number(value)) ? '#eaeaea' : 'transparent',
+                lineWidth: 1,
+                lineDash: [],
+              }),
+            },
+            label: {
+              visible: true,
+              space: 10,
+              autoHide: false,
+              autoRotate: false,
+              dataFilter: (items) =>
+                bottom ? items.filter((item) => costTicks.includes(Number(item.rawValue))) : items,
+              formatMethod: (value) => (bottom ? formatCost(value) : String(value)),
+              style: { fill: '#515151', fontSize: 13, fontFamily: 'Arial, sans-serif' },
+            },
+            title: {
+              visible: true,
+              autoRotate: true,
+              space: 20,
+              text: bottom ? 'Cost per task (USD, log scale)' : 'Artificial Analysis Intelligence Index Score',
+              style: { fill: '#262626', fontSize: 15, fontWeight: 'normal', fontFamily: 'Arial, sans-serif' },
+            },
+          }
+        })
+        spec.point = {
+          style: {
+            fill: (datum) => pointColor(metadata.get(datum[modelField])),
+            stroke: '#ffffff',
+            lineWidth: 0.8,
+            fillOpacity: 1,
+            size: 8,
+          },
+          state: { hover: { size: 13, lineWidth: 2, stroke: '#444444' } },
+        }
+        spec.markArea = highlight
+          ? {
+              x: reference.cost,
+              x1: 4,
+              y: 5,
+              y1: reference.score,
+              interactive: false,
+              area: { style: { fill: '#d6776b', fillOpacity: 0.14 } },
+              label: { visible: false },
+            }
+          : []
+        const line = (points, dashed = false) => ({
+          coordinates: points.map((row) => ({ [spec.xField]: row.cost, [spec.yField]: row.score })),
+          interactive: false,
+          line: {
+            style: {
+              stroke: dashed ? '#cc6654' : '#f16f54',
+              lineWidth: dashed ? 1.7 : 3.3,
+              lineDash: dashed ? [7, 5] : [],
+            },
+          },
+          startSymbol: { visible: false },
+          endSymbol: { visible: false },
+          label: { visible: false },
+        })
+        spec.markLine = [line(frontier)]
+        if (highlight)
+          spec.markLine.push(
+            line([{ cost: reference.cost, score: 5 }, reference], true),
+            line([reference, { cost: 4, score: reference.score }], true),
+          )
+        spec.markPoint = visibleModels
+          .filter((row) => row !== reference)
+          .map((row) => labelAt(row, row.model, row.dx, row.dy, row.align))
+        // 固定参考模型独立于图例筛选，作为所有筛选视图的共同基准。
+        spec.markPoint.push(
+          {
+            ...labelAt(reference, reference.model, 0, -63, 'center', 34, '#b74b36', 'bold'),
+            targetSymbol: { visible: true, size: 18, style: { fill: '#db6246', stroke: '#a54b38', lineWidth: 2 } },
+          },
+          labelAt(reference, '$0.045 · 57 pts', 0, -34, 'center', 24, '#b74b36'),
+        )
+        spec.tooltip = {
+          visible: true,
+          trigger: 'hover',
+          dimension: { visible: false },
+          mark: {
+            title: { value: (datum) => datum[modelField] },
+            content: [
+              { key: 'Provider', value: (datum) => metadata.get(datum[modelField]).provider },
+              { key: 'Cost / task', value: (datum) => formatCost(datum[spec.xField]) },
+              { key: 'Intelligence Index', value: (datum) => `${datum[spec.yField]} pts` },
+            ],
+          },
+        }
+        return spec
+      }
+
+      async function render() {
+        chartBuilder.whereFilter.clear()
+        if (selected.size !== Object.keys(providers).length) {
+          chartBuilder.whereFilter.add('provider', (node) => node.setOperator('in').setValue([...selected]))
+        }
+        const seed = await chartBuilder.buildVSeed()
+        const visibleModels = seed.dataset.map((datum) => metadata.get(datum[modelField]))
+        const spec = decorate(seed, visibleModels)
+        chart?.release()
+        chart = new VChart(spec, { dom: $('#chart') })
+        chart.renderSync()
+        $('#model-table').replaceChildren(
+          ...visibleModels.map((row) => {
+            const tr = document.createElement('tr')
+            for (const value of [row.model, row.provider, formatCost(row.cost), row.score]) {
+              const td = document.createElement('td')
+              td.textContent = value
+              tr.append(td)
+            }
+            return tr
+          }),
+        )
+        $('#status').textContent = `${visibleModels.length} / ${models.length} models · 近似演示数据`
+        $('#chart').setAttribute(
+          'aria-label',
+          `当前显示 ${visibleModels.length} 个模型；参考模型成本 0.045 美元，得分 57`,
+        )
+      }
+
+      async function run(task) {
+        document.body.dataset.state = 'loading'
+        document.querySelectorAll('button, input').forEach((control) => {
+          control.disabled = true
+        })
+        try {
+          await task()
+          document.body.dataset.state = 'ready'
+        } catch (error) {
+          document.body.dataset.state = 'error'
+          $('#status').textContent = `加载失败：${error.message}。请检查网络后刷新页面。`
+          console.error(error)
+        } finally {
+          document.querySelectorAll('button, input').forEach((control) => {
+            control.disabled = false
+          })
+        }
+      }
+      for (const [provider, color] of Object.entries(providers)) {
+        const button = document.createElement('button')
+        button.type = 'button'
+        button.textContent = provider
+        button.style.setProperty('--provider-color', color)
+        button.setAttribute('aria-pressed', 'true')
+        button.title = `显示或隐藏 ${provider} 模型`
+        button.disabled = true
+        button.addEventListener('click', () =>
+          run(async () => {
+            // 保留至少一个有数据的提供商，避免空查询成为无意义视图。
+            if (
+              selected.has(provider) &&
+              !models.some((row) => row.provider !== provider && selected.has(row.provider))
+            )
+              return
+            if (selected.has(provider)) selected.delete(provider)
+            else selected.add(provider)
+            button.setAttribute('aria-pressed', String(selected.has(provider)))
+            await render()
+          }),
+        )
+        $('#legend').append(button)
+      }
+      $('#highlight').addEventListener('change', () =>
+        run(async () => {
+          highlight = $('#highlight').checked
+          await render()
+        }),
+      )
+      $('#reset').addEventListener('click', () =>
+        run(async () => {
+          Object.keys(providers).forEach((provider) => selected.add(provider))
+          $('#legend')
+            .querySelectorAll('button')
+            .forEach((button) => button.setAttribute('aria-pressed', 'true'))
+          await render()
+        }),
+      )
+      $('#export').addEventListener('click', () => {
+        const saved = { chart: chartBuilder.build() }
+        const url = URL.createObjectURL(new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' }))
+        Object.assign(document.createElement('a'), { href: url, download: 'pareto-frontier.json' }).click()
+        setTimeout(() => URL.revokeObjectURL(url), 1000)
+      })
+      new ResizeObserver(() => chart?.resize($('#chart').clientWidth, $('#chart').clientHeight)).observe($('#chart'))
+      await run(async () => {
         const query = new VQuery()
-        const source = { type: 'json', rawDataset }
+        const source = {
+          type: 'json',
+          rawDataset: models.map(({ model, provider, cost, score }) => ({ model, provider, cost, score })),
+        }
+        // 更新时也必须传入 schema 和 source，否则已有记录将缺少可查询的数据。
         if (await query.hasDataset(connectorId)) await query.updateDatasetSource(connectorId, schema, source)
         else await query.createDataset(connectorId, schema, source)
         VBI.connectors.register(connectorId, {
@@ -426,139 +725,6 @@
             }
           },
         })
-      }
-
-      function createChart(connectorId, type, dimension, measures = ['sales'], theme = 'light') {
-        const chart = VBI.chart.create(VBI.chart.createEmpty(connectorId))
-        chart.chartType.changeChartType(type)
-        chart.theme.setTheme(theme)
-        if (dimension)
-          chart.dimensions.add(dimension, (node) =>
-            node.setAlias({ date: '日期', region: '地区', channel: '渠道', product: '品类' }[dimension]),
-          )
-        measures.forEach((field) =>
-          chart.measures.add(field, (node) =>
-            node
-              .setAlias({ sales: '销售额', orders: '订单数', profit: '毛利润' }[field])
-              .setAggregate({ func: 'sum' })
-              .setFormat({ type: 'number', fractionDigits: 0 }),
-          ),
-        )
-        return chart
-      }
-
-      // 仅将查询结果列 ID 映射回业务字段，保留 VQuery 的聚合结果。
-      async function rowsOf(chart) {
-        const seed = await chart.buildVSeed()
-        const dsl = chart.build()
-        return seed.dataset.map((row) =>
-          Object.fromEntries([...dsl.dimensions, ...dsl.measures].map((field) => [field.field, row[field.id]])),
-        )
-      }
-
-      async function draw(chart, element, colors, dark = false) {
-        const seed = await chart.buildVSeed()
-        const ink = dark ? '#93a9c4' : '#7c8580'
-        const grid = dark ? '#243751' : '#e8ede8'
-        const axis = {
-          label: { labelColor: ink, labelFontSize: 11 },
-          title: { visible: false },
-          tick: { visible: false },
-          line: { visible: false },
-        }
-        // VSeed 的视觉配置直接位于 DSL 顶层。
-        Object.assign(seed, {
-          backgroundColor: 'transparent',
-          color: { colorScheme: colors },
-          label: { enable: false },
-          legend: { enable: seed.chartType === 'donut', position: 'bottom', labelColor: ink, shapeType: 'circle' },
-          xAxis: { ...axis, grid: { visible: seed.chartType === 'bar', gridColor: grid } },
-          yAxis: { ...axis, grid: { visible: seed.chartType !== 'bar', gridColor: grid, gridLineDash: [3, 4] } },
-        })
-        if (['line', 'area'].includes(seed.chartType)) seed.pointStyle = { pointVisible: false }
-        if (['line', 'area'].includes(seed.chartType)) seed.lineStyle = { lineWidth: 3 }
-        if (seed.chartType === 'area') seed.areaStyle = { areaColorOpacity: 0.12 }
-        const spec = Builder.from(seed).build()
-        spec.animation = false
-        instances.get(element)?.release()
-        const instance = new VChart(spec, { dom: element })
-        instance.renderSync()
-        instances.set(element, instance)
-      }
-
-      function download(filename, value) {
-        const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }))
-        const link = Object.assign(document.createElement('a'), { href: url, download: filename })
-        link.click()
-        setTimeout(() => URL.revokeObjectURL(url), 1000)
-      }
-
-      async function run(task) {
-        $('fieldset').disabled = true
-        document.body.dataset.state = 'loading'
-        status.textContent = '正在加载数据…'
-        try {
-          await task()
-          document.body.dataset.state = 'ready'
-          status.textContent = '演示数据 · 2026 年 9 月'
-        } catch (error) {
-          document.body.dataset.state = 'error'
-          status.textContent = `加载失败：${error.message}`
-          console.error(error)
-        } finally {
-          $('fieldset').disabled = false
-        }
-      }
-
-      const connectorId = 'vbi-example-polished-chart'
-      let days = 30
-      await run(async () => {
-        await connectDemo(connectorId)
-        const chart = createChart(connectorId, 'area', 'date')
-        const totalChart = createChart(connectorId, 'table', null)
-        async function render() {
-          for (const builder of [chart, totalChart]) {
-            builder.whereFilter.clear()
-            builder.whereFilter.add('day', (node) => node.setOperator('>=').setValue(31 - days))
-          }
-          const [total] = await rowsOf(totalChart)
-          const rows = await rowsOf(chart)
-          const peak = rows.reduce((best, row) => (row.sales > best.sales ? row : best), rows[0])
-          $('#sales').textContent = money(total.sales)
-          $('#average').textContent = money(total.sales / rows.length)
-          $('#peak').textContent = money(peak.sales)
-          $('#range').textContent = `09.${String(31 - days).padStart(2, '0')} — 09.30`
-          $('#period-label').textContent = days === 30 ? '9 月销售总额' : '9 月 24 — 30 日销售总额'
-          $('#insight').textContent =
-            `${peak.date.replace('/', ' 月 ')} 日录得区间最高销售额 ${money(peak.sales)}。本期覆盖 ${rows.length} 天，日均销售额 ${money(total.sales / rows.length)}。`
-          await draw(chart, $('#chart'), ['#b85841'])
-        }
-        document.querySelectorAll('[data-days]').forEach((button) =>
-          button.addEventListener('click', () =>
-            run(async () => {
-              days = Number(button.dataset.days)
-              document
-                .querySelectorAll('[data-days]')
-                .forEach((item) => item.setAttribute('aria-pressed', String(item === button)))
-              await render()
-            }),
-          ),
-        )
-        document.querySelectorAll('[data-type]').forEach((button) =>
-          button.addEventListener('click', () =>
-            run(async () => {
-              chart.chartType.changeChartType(button.dataset.type)
-              document
-                .querySelectorAll('[data-type]')
-                .forEach((item) => item.setAttribute('aria-pressed', String(item === button)))
-              await render()
-            }),
-          ),
-        )
-        $('#export').addEventListener('click', () => download('polished-chart.json', { chart: chart.build() }))
-        window.addEventListener('resize', () =>
-          instances.forEach((instance, element) => instance.resize(element.clientWidth, element.clientHeight)),
-        )
         await render()
       })
     </script>
