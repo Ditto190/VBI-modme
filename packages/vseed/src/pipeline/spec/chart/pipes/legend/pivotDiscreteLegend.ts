@@ -1,3 +1,4 @@
+import { createAliasFormatter } from 'src/pipeline/utils'
 import type { PivotChartConstructorOptions } from '@visactor/vtable'
 import { unique } from 'remeda'
 import type { Color, Legend, PivotChartSpecPipe } from 'src/types'
@@ -11,6 +12,10 @@ export const pivotDiscreteLegend: PivotChartSpecPipe = (spec, context): Partial<
 
   if (!baseConfig || !baseConfig.legend || !baseConfig.color) {
     return result
+  }
+
+  if (baseConfig.legend.enable === false) {
+    return { ...result, legends: [] }
   }
 
   const { datasetReshapeInfo } = advancedVSeed
@@ -97,9 +102,7 @@ export const pivotDiscreteLegend: PivotChartSpecPipe = (spec, context): Partial<
         },
       },
       label: {
-        formatMethod: (value: string) => {
-          return colorIdMap[value]?.alias ?? value
-        },
+        formatMethod: createAliasFormatter(colorIdMap),
         style: {
           fontSize: labelFontSize,
           fill: labelColor || labelFontColor,

@@ -21,8 +21,8 @@ const chartSpec = (vseed: VSeed, pivot: boolean) => {
 
 const expectHoverPoints = (spec: ILineChartSpec) => {
   expect(spec.activePoint).toBe(true)
+  expect(spec.point?.style).toMatchObject({ size: 8, fill: '#f54e4e' })
   expect(spec.point?.state).toMatchObject({
-    custom1: { style: { visible: false, size: 8, fill: '#f54e4e' } },
     dimension_hover: { scaleX: 1.4, scaleY: 1.4 },
   })
 }
@@ -46,6 +46,8 @@ describe('dimension-hover points', () => {
         )
 
         expectHoverPoints(spec)
+        expect(spec.point?.visible).toBe(false)
+        expect(spec.point?.style).not.toHaveProperty('visible')
       },
     )
 
@@ -84,6 +86,8 @@ describe('dimension-hover points', () => {
     )
 
     expectHoverPoints(spec)
+    expect(spec.point?.visible).not.toBe(false)
+    expect(spec.point?.style?.visible).toBe(false)
     expect(spec.point?.state?.custom2).toMatchObject({ style: { visible: true, size: 12 } })
   })
 

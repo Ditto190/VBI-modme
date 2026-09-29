@@ -891,7 +891,6 @@
       const dayMilliseconds = 86400000
       const dateKey = (day) => new Date(day * dayMilliseconds).toISOString().slice(0, 10)
       const shortDate = (day) => dateKey(day).slice(5).replace('-', '/')
-      const formatChartDate = (value) => (Array.isArray(value) ? value[0] : value)
       const fullDate = (day) =>
         new Intl.DateTimeFormat('zh-CN', { dateStyle: 'long', timeZone: 'UTC' }).format(day * dayMilliseconds)
       let sourceInfo
@@ -1117,18 +1116,14 @@
             max: Math.max(0, ...values) * 1.06 || 1,
           },
         })
+        if (seed.chartType === 'area') {
+          seed.pointStyle = { pointVisible: false }
+          seed.lineStyle = { lineWidth: mini ? 1.5 : 2.5, lineSmooth: true }
+        }
         const spec = Builder.from(seed).build()
         setUpdateAnimation(spec)
-        // 日期维度无需每次生成格式化闭包；保持函数引用，避免 VChart 重建 crosshair 及图表。
-        spec.crosshair.xField.label.formatMethod = formatChartDate
-        // 隐藏的组件无需生成数据回调，避免无关函数变化触发系列重建。
-        spec.label = { visible: false }
-        spec.legends = { visible: false }
         spec.padding = { top: 8, bottom: 4, left: 3, right: 9 }
         if (seed.chartType === 'area') {
-          // 不创建普通点图元，避免隐藏状态在退出动画中失效；activePoint 仍提供悬停点。
-          spec.point = { ...spec.point, visible: false }
-          spec.line = { style: { lineWidth: mini ? 1.5 : 2.5, curveType: 'monotone' } }
           spec.area = {
             ...spec.area,
             style: {
@@ -1208,12 +1203,10 @@
         spec.innerRadius = 0.74
         spec.startAngle = -115
         spec.endAngle = 245
-        spec.label = { visible: false }
         // 图例只说明分类；不筛掉扇区，保证中心占比与完整订单口径一致。
         Object.assign(spec.legends, { filter: false, select: false, space: 4 })
         Object.assign(spec.legends.item, { focus: false, maxWidth: '100%', spaceCol: 10 })
         spec.legends.item.shape = { space: 4, style: { symbolType: 'circle', size: 6 } }
-        delete spec.legends.item.label.formatMethod
         spec.indicator = {
           visible: true,
           fixed: true,
