@@ -1,6 +1,7 @@
 import type { DefaultVBIQueryDSL, DefaultVBISeedDSL } from 'src/chart-builder/adapters/vquery-vseed/types'
 import type { VBIChartDSL } from '../chartDSL'
 import type { BuildVSeedOptions } from './build-vseed'
+import type { ObserveCallback, ObserveDeepCallback } from './observe'
 import type {
   MeasuresBuilder,
   DimensionsBuilder,
@@ -38,4 +39,8 @@ export interface VBIChartBuilderInterface<TQueryDSL = DefaultVBIQueryDSL, TSeedD
   buildVQuery: () => TQueryDSL
   build: () => VBIChartDSL
   isEmpty: () => boolean
+  observe: (callback: ObserveCallback) => void
+  unobserve: (callback: ObserveCallback) => void
+  observeDeep: (callback: ObserveDeepCallback) => void
+  unobserveDeep: (callback: ObserveDeepCallback) => void
 }

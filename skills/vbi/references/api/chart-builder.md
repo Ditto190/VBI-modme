@@ -72,6 +72,14 @@ export declare class VBIChartBuilder<
   buildVSeed: (options?: BuildVSeedOptions) => Promise<TSeedDSL>
   buildVQuery: () => TQueryDSL
   build: () => VBIChartDSL
+  /** @description 订阅图表 DSL 顶层字段变化，与 dsl.observe 语义一致；不包含嵌套字段修改，也不触发首次渲染。 */
+  observe(callback: ObserveCallback): void
+  /** @description 取消指定的图表 DSL 顶层订阅，传入 observe 时使用的同一回调。 */
+  unobserve(callback: ObserveCallback): void
+  /** @description 订阅整个图表 DSL 的深层变化，包括嵌套筛选、字段、本地编辑、撤销重做及协同更新；同一事务通知一次，不包含运行时实例变化，也不触发首次渲染。 */
+  observeDeep(callback: ObserveDeepCallback): void
+  /** @description 取消指定的图表 DSL 深层订阅，传入 observeDeep 时使用的同一回调。 */
+  unobserveDeep(callback: ObserveDeepCallback): void
   isEmpty: () => boolean
   getSchema: () => Promise<
     {
@@ -89,7 +97,7 @@ export declare class VBIChartBuilder<
 options = {}
 ```
 
-关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartBuilderAdapters](types.md#vbichartbuilderadapters)、[VBIChartBuilderInterface](types.md#vbichartbuilderinterface)、[VBIChartBuilderOptions](types.md#vbichartbuilderoptions)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
+关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ObserveCallback](types.md#observecallback)、[ObserveDeepCallback](types.md#observedeepcallback)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartBuilderAdapters](types.md#vbichartbuilderadapters)、[VBIChartBuilderInterface](types.md#vbichartbuilderinterface)、[VBIChartBuilderOptions](types.md#vbichartbuilderoptions)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
 
 ## buildVQuery
 
