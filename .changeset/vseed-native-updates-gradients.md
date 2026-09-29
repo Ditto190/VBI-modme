@@ -1,7 +1,6 @@
 ---
-'@visactor/vseed': minor
+'@visactor/vseed': patch
 '@visactor/vbi': patch
-'@visactor/vbi-component': patch
 ---
 
 Use VChart 2.1.7 for native bar geometry across data updates and correct enter/exit animations. Align VBI and component renderer dependencies with this version.
