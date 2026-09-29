@@ -4,23 +4,26 @@ import type { AreaStyle, Datum, LineStyle, VChartSpecPipe } from 'src/types'
 import { groupBy, pick } from 'remeda'
 import { cartesianCurve, closedCurve } from './curve'
 import { compileMarkStyles } from './compileMarkStyles'
+import { createGradientFill } from './gradientFill'
+import { getColorField } from '../color/colorAdapter'
 
 const createAreaStyle =
   (curve: typeof cartesianCurve): VChartSpecPipe =>
-  (spec, { advancedVSeed }) => {
+  (spec, { advancedVSeed, vseed }) => {
     const { markStyle, datasetReshapeInfo, dataset } = advancedVSeed
     const { areaStyle, lineStyle } = markStyle
     const lineStyles = (Array.isArray(lineStyle) ? lineStyle : [lineStyle]) as (LineStyle | undefined)[]
     const baseCurve = { ...curve(), ...pick((spec as IAreaChartSpec).line?.style ?? {}, ['curveType', 'curveTension']) }
     const group = datasetReshapeInfo[0].unfoldInfo.encodingColorId ?? ''
+    const colorField = getColorField(advancedVSeed, vseed)
     let groups: Record<string, Datum[]> | undefined
     const area = compileMarkStyles(
       (areaStyle ?? {}) as AreaStyle | AreaStyle[],
-      ({ areaColor, areaColorOpacity, areaVisible = true }, index) => ({
-        ...(areaStyle ? curve(lineStyles[index]?.lineSmooth) : baseCurve),
-        visible: areaVisible,
-        fill: areaColor,
-        fillOpacity: areaColorOpacity,
+      (style, index) => ({
+        ...(areaStyle && lineStyles[index] ? curve(lineStyles[index].lineSmooth) : baseCurve),
+        visible: style.areaVisible ?? true,
+        fill: createGradientFill(style.areaColor, style.areaGradient, colorField),
+        fillOpacity: style.areaColorOpacity,
       }),
       (rule) => {
         groups ??= groupBy(dataset, (datum) => datum[group] as string)

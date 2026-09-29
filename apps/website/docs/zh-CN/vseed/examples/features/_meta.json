@@ -26,6 +26,11 @@
   },
   {
     "type": "file",
+    "name": "areaStyle",
+    "label": "AreaStyle"
+  },
+  {
+    "type": "file",
     "name": "barStyle",
     "label": "BarStyle"
   },

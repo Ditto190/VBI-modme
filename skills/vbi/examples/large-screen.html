@@ -1117,11 +1117,12 @@
         ><span>VBI × VQUERY × VSEED · 2026.09 演示数据</span>
       </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/build/index.min.js"></script>
     <script type="module">
       import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'
       import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'
       import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'
-      import VChart from 'https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'
+      const VChart = window.VChart.default
 
       registerAll()
       const $ = (selector) => document.querySelector(selector)

@@ -1683,7 +1683,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -1701,7 +1701,7 @@ brush的类型
 **Type:** `LineAreaUpdateAnimation | undefined`
 
 :::note{title=描述}
-折线/面积图更新动画配置
+折线/面积图数据进入、更新、退出的共同动画配置
 
 :::
 
@@ -1738,7 +1738,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -1821,7 +1821,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -4134,6 +4134,24 @@ prepare() 阶段写入，运行时只读
 面积图元的颜色
 
 :::
+
+### areaGradient
+
+**Type:** `boolean | undefined`
+
+:::note{title=描述}
+面积线性渐变
+
+
+
+开启后从下方透明渐变到顶部的当前颜色；默认关闭。顶部透明度由 areaColorOpacity 控制。
+
+:::
+
+**示例**
+true
+
+
 
 ### areaColorOpacity
 

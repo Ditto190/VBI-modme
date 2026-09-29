@@ -75,6 +75,10 @@ VSeed 将构建过程拆成两段，保证“可序列化中间态”和“不�
 - `VSeed` 是 union 类型，覆盖所有图表/表格 chartType。
 - 入口类型：`packages/vseed/src/types/vseed.ts`
 
+`types/properties/markStyle/` 中的类型与运行时校验按文件分离：
+`barStyle.ts` 等文件只定义 TypeScript 类型，`zBarStyle.ts` 等文件定义 Zod schema；
+`index.ts` 分别通过 `export type *` 与 `export *` 统一导出。
+
 ### 4.2 AdvancedVSeed
 
 `AdvancedVSeed` 是中间态 DSL，字段更丰富，含 encoding、reshape 信息、主题/样式/分析信息：

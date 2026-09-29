@@ -1663,7 +1663,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -1681,7 +1681,7 @@ brush的类型
 **Type:** `PieLikeUpdateAnimation | undefined`
 
 :::note{title=描述}
-饼图/环图/玫瑰图更新动画配置
+饼图/环图/玫瑰图数据进入、更新、退出的共同动画配置
 
 :::
 
@@ -1718,7 +1718,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -1801,7 +1801,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
