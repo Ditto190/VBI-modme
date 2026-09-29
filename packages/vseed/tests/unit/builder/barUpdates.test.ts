@@ -33,9 +33,11 @@ describe('bar geometry across spec updates', () => {
           const current = chart.getChart()!.getAllSeries()[0]
           expect(current === series).toBe(true)
           const mark = current.getMarkInName('bar')!
-          expect(
-            current.getViewData()!.latestData.map((datum: any) => mark.getAttribute('cornerRadius', datum)),
-          ).toEqual(values.map((value) => (value > 0 ? [4, 4, 0, 0] : [0, 0, 4, 4])))
+          const config = mark.getMarkConfig() as any
+          expect(config.clip).toBe(true)
+          expect(config.clipPath().map((rectangle: any) => rectangle.attribute.cornerRadius)).toEqual(
+            values.map((value) => (value > 0 ? [4, 4, 0, 0] : [0, 0, 4, 4])),
+          )
         }
       } finally {
         chart.release()
