@@ -1,6 +1,4 @@
-import { z } from 'zod'
-import type { ChartDynamicFilter } from '../../dataSelector/selector'
-import { zChartDynamicFilter, zSelector, zSelectors, type Selector, type Selectors } from '../../dataSelector/selector'
+import type { ChartDynamicFilter, Selector, Selectors } from '../../dataSelector/selector'
 
 export type PointStyle = {
   /**
@@ -99,15 +97,3 @@ export type PointStyle = {
    */
   pointBorderStyle?: 'solid' | 'dashed' | 'dotted'
 }
-
-export const zPointStyle = z.object({
-  selector: z.union([zSelector, zSelectors]).nullish(),
-  dynamicFilter: zChartDynamicFilter.optional(),
-  pointVisible: z.boolean().nullish(),
-  pointSize: z.number().nullish(),
-  pointColor: z.string().nullish(),
-  pointColorOpacity: z.number().nullish(),
-  pointBorderColor: z.string().nullish(),
-  pointBorderWidth: z.number().nullish(),
-  pointBorderStyle: z.union([z.enum(['solid', 'dashed', 'dotted'])]).nullish(),
-})

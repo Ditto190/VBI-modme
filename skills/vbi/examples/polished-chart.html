@@ -324,12 +324,13 @@
       </details>
       <noscript>请启用 JavaScript，以加载模型数据和图表。</noscript>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/build/index.min.js"></script>
     <script type="module">
-      // 标准浏览器 ESM；无需构建工具。先通过本地 HTTP 服务验证以下 npm 入口。
+      // 通过 CDN 加载浏览器 ESM，无需本地构建。
       import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'
       import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'
       import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'
-      import VChart from 'https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'
+      const VChart = window.VChart.default
 
       registerAll()
       const $ = (selector) => document.querySelector(selector)

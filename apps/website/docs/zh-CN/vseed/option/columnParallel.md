@@ -1645,7 +1645,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -1663,7 +1663,7 @@ brush的类型
 **Type:** `BarLikeUpdateAnimation | undefined`
 
 :::note{title=描述}
-条形/柱形图更新动画配置
+条形/柱形图数据进入、更新、退出的共同动画配置
 
 :::
 
@@ -1700,7 +1700,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -1783,7 +1783,7 @@ brush的类型
 **Type:** `number | undefined`
 
 :::note{title=描述}
-动画时长，单位为毫秒
+动画时长，单位为毫秒；数据更新阶段默认 1000 毫秒，0 表示立即完成
 
 :::
 
@@ -3290,6 +3290,24 @@ prepare() 阶段写入，运行时只读
 
 :::
 
+### barGradient
+
+**Type:** `boolean | undefined`
+
+:::note{title=描述}
+柱体线性渐变
+
+
+
+开启后从零值基线透明渐变到数值末端的当前颜色，自动适配正负值和横纵方向；默认关闭。
+
+:::
+
+**示例**
+true
+
+
+
 ### barColorOpacity
 
 **Type:** `number | undefined`
@@ -3358,6 +3376,11 @@ dotted
 ### barRadius
 
 **Type:** `number | number[] | undefined`
+
+:::note{title=描述}
+单根柱体圆角；配置后优先于堆叠外轮廓圆角，支持条件样式。
+
+:::
 
 
 ## annotationPoint

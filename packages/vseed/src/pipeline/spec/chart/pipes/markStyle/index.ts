@@ -1,5 +1,5 @@
 export * from './pointState'
-export { barStyle } from './barStyle'
+export { barStyle, columnStyle } from './barStyle'
 export { pointStyle } from './pointStyle'
 export { lineStyle, radarLineStyle } from './lineStyle'
 export { areaStyle, radarAreaStyle } from './areaStyle'

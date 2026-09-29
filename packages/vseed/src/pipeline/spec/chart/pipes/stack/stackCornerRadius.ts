@@ -1,6 +1,6 @@
 import type { IBarChartSpec } from '@visactor/vchart'
-import type { VChartSpecPipe, StackCornerRadius } from 'src/types'
-import { createStackCornerRadius, hasMoveInAnimation } from './stackCornerRadiusUtils'
+import type { VChartSpecPipe, StackCornerRadius, BarStyle } from 'src/types'
+import { createBarCornerRadius, createStackCornerRadius, hasMoveInAnimation } from './stackCornerRadiusUtils'
 
 const hasBarMoveInAnimation = (spec: IBarChartSpec): boolean => {
   return [spec.animationAppear, spec.animationNormal, spec.animationEnter, spec.animationUpdate].some(
@@ -13,24 +13,27 @@ export const stackCornerRadius: VChartSpecPipe = (spec, context) => {
   const { chartType } = vseed
   const stackCornerRadius = advancedVSeed.config?.[chartType as 'column']?.stackCornerRadius as StackCornerRadius
 
-  if (chartType === 'dualAxis' && (spec as any).type !== 'bar') {
+  const styles = advancedVSeed.markStyle?.barStyle
+  const rules = (Array.isArray(styles) ? styles : styles ? [styles] : []) as BarStyle[]
+  // A stack clip would trim explicit per-bar corners, including conditional rules.
+  if (stackCornerRadius == null || rules.some((rule) => rule.barRadius != null)) {
     return spec
   }
 
-  const stackCornerRadiusCallback = createStackCornerRadius(stackCornerRadius)
+  const singleSeries = advancedVSeed.datasetReshapeInfo?.[0]?.unfoldInfo.colorItems.length === 1
 
-  if (!hasBarMoveInAnimation(spec as IBarChartSpec)) {
-    return { ...spec, stackCornerRadius: stackCornerRadiusCallback } as IBarChartSpec
+  if (!singleSeries && !hasBarMoveInAnimation(spec as IBarChartSpec)) {
+    return { ...spec, stackCornerRadius: createStackCornerRadius(stackCornerRadius) } as IBarChartSpec
   }
 
-  // VChart implements stackCornerRadius with a final-position clipPath, which clips moveIn.
+  // A single series needs no stack clip; a final-position clip also cuts off moveIn.
   return {
     ...spec,
     bar: {
       ...(spec as IBarChartSpec).bar,
       style: {
         ...(spec as IBarChartSpec).bar?.style,
-        cornerRadius: stackCornerRadiusCallback,
+        cornerRadius: createBarCornerRadius(stackCornerRadius),
       },
     },
   } as IBarChartSpec

@@ -1,6 +1,6 @@
 # 在 HTML 中使用 VBI
 
-用一个 HTML 文件接入 VBI：无需框架或打包工具，使用 Builder 配置分析，再交给 VChart 或 VTable 渲染。VBI、VQuery、VSeed 和 VChart 通过浏览器 ESM 加载，VTable 使用发布包中的浏览器 bundle。本文先给出实践入口，再提供可直接运行的图表与表格教程；状态归属、查询复用和复杂页面组织见[最佳实践](./best-practices.md)。
+用一个 HTML 文件接入 VBI：无需框架或打包工具，使用 Builder 配置分析，再交给 VChart 或 VTable 渲染。VBI、VQuery、VSeed 通过浏览器 ESM 加载，VChart 和 VTable 使用发布包中的浏览器 bundle。本文先给出实践入口，再提供可直接运行的图表与表格教程；状态归属、查询复用和复杂页面组织见[最佳实践](./best-practices.md)。
 
 ## 从三个实践示例选择起点
 
@@ -10,7 +10,7 @@
 | [轻量看板](../../examples/lightweight-dashboard.html) | 汇总指标、周期比较、自定义 HTML 卡片         | `createChart()`、`rowsOf()`、`layoutDashboard()`            |
 | [业务大屏](../../examples/large-screen.html)          | 多图组合、Dashboard / Insight 资源、局部筛选 | `drawSocial()`、`drawIncome()`、`filterChart()`、`layout()` |
 
-用浏览器直接打开示例 HTML。浏览器需要联网加载 npm 模块；复制大屏时同时保留 `assets/large-screen-live-preview.png`，另外两个示例可以单独复制 HTML。
+用浏览器直接打开示例 HTML。浏览器需要联网加载 CDN 模块；复制大屏时同时保留 `assets/large-screen-live-preview.png`，另外两个示例可以单独复制 HTML。
 
 轻量看板直接加载 [Supermarket CSV](https://visactor.github.io/VBI/dataset/supermarket.csv)，以数据中的最新订单日期为截止日，切换最近 7、12、30 个日历日，并与前一个等长周期比较。VQuery 负责解析 CSV；接入层将订单日期规范为 ISO 日期和 UTC 日序号，VBI Builder 配置日期筛选、销售额与利润求和、订单 ID 去重计数。消费者订单占比使用 `customer_type = 消费者` 的去重订单数除以总订单数；区域订单数也各自去重，同一订单可能涉及多个地区，因此不能直接相加。图表将没有订单的日期显示为零，亏损日期用负向利润柱显示。
 
@@ -42,9 +42,9 @@
 
 将下面代码保存为 `index.html`，直接用浏览器打开。它使用同一份销售明细，支持切换三种视图、按地区筛选，并显示当前 DSL 和查询结果。为便于核对，数据只有五行。
 
-版本沿用实践示例：VBI / VQuery / VSeed 统一使用 `latest`，VChart 使用 `2.0.23-alpha.6`，另加入 VTable `1.23.1`。
+下面的独立教程使用已发布的 VBI / VQuery / VSeed `latest`，VChart 使用 `2.1.7`，另加入 VTable `1.23.1`，无需本地构建。
 
-VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，提供 `window.VTable`；其余四个包使用 `+esm` 模块导出。在本次浏览器验证中，VTable `1.23.1/+esm` 的传递依赖出现 `VCircle` 命名导出缺失，因此本文使用该版本的浏览器 bundle，不将两种入口混用。
+VChart 的 `build/index.min.js` 和 VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，分别提供 `window.VChart.default` 和 `window.VTable`；VBI、VQuery、VSeed 使用 `+esm` 模块导出。渲染器使用官方浏览器 bundle，避免 CDN 拆分渲染依赖导致运行时不一致。
 
 ```html
 <!doctype html>
@@ -103,6 +103,7 @@ VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，提供 `window.
       <summary>查看 DSL 和查询结果</summary>
       <pre id="output"></pre>
     </details>
+    <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/build/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@visactor/vtable@1.23.1/dist/vtable.min.js"></script>
     <script type="module">
       const $ = (selector) => document.querySelector(selector)
@@ -113,11 +114,11 @@ VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，提供 `window.
         // 动态导入放在 try 内，模块加载失败也能显示错误。
         if (!window.VTable) throw new Error('VTable 模块加载失败，请检查网络后刷新')
         const { ListTable, PivotTable } = window.VTable
-        const [{ VBI }, { VQuery }, { Builder, registerAll }, { default: VChart }] = await Promise.all([
+        const VChart = window.VChart.default
+        const [{ VBI }, { VQuery }, { Builder, registerAll }] = await Promise.all([
           import('https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'),
           import('https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'),
           import('https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'),
-          import('https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'),
         ])
         registerAll()
 

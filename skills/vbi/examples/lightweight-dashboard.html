@@ -875,11 +875,12 @@
     </div>
     <noscript>此示例需要启用 JavaScript 来加载图表。</noscript>
 
+    <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/build/index.min.js"></script>
     <script type="module">
       import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'
       import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'
       import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'
-      import VChart from 'https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.23-alpha.6/+esm'
+      const VChart = window.VChart.default
 
       registerAll()
       const $ = (selector) => document.querySelector(selector)
@@ -1105,6 +1106,7 @@
         const values = seed.dataset.map((row) => Number(row[valueId]))
         Object.assign(seed, {
           backgroundColor: 'transparent',
+          animation: updateAnimation(),
           color: { colorScheme: ['#19cba1'] },
           label: { enable: false },
           legend: { enable: false },
@@ -1119,66 +1121,41 @@
         if (seed.chartType === 'area') {
           seed.pointStyle = { pointVisible: false }
           seed.lineStyle = { lineWidth: mini ? 1.5 : 2.5, lineSmooth: true }
-        }
-        const spec = Builder.from(seed).build()
-        setUpdateAnimation(spec)
-        spec.padding = { top: 8, bottom: 4, left: 3, right: 9 }
-        if (seed.chartType === 'area') {
-          spec.area = {
-            ...spec.area,
-            style: {
-              ...spec.area?.style,
-              fillOpacity: 1,
-              fill: {
-                gradient: 'linear',
-                x0: 0,
-                y0: 0,
-                x1: 0,
-                y1: 1,
-                stops: [
-                  { offset: 0, color: 'rgba(25,203,161,.27)' },
-                  { offset: 1, color: 'rgba(25,203,161,0)' },
-                ],
-              },
-            },
+          seed.areaStyle = {
+            areaColor: '#19cba1',
+            areaColorOpacity: 0.27,
+            areaGradient: true,
           }
         }
         if (seed.chartType === 'column') {
-          // 单系列柱体的圆角由 bar.style 提供，不需要堆叠圆角回调。
-          delete spec.stackCornerRadius
-          spec.bar = {
-            ...spec.bar,
-            style: {
-              ...spec.bar?.style,
-              // 当前 VChart 的 updateSpec 会清除柱体默认位置编码；用公开样式回调保留几何计算。
-              x: (datum, context) => context.valueToX(datum[dateId]),
-              width: (_datum, context) => context.xBandwidth(),
-              y: (datum, context) => context.valueToY(datum[valueId]),
-              y1: (_datum, context) => context.valueToY(0),
-              cornerRadius: [4, 4, 4, 4],
-              fillOpacity: 0.68,
-              fill: (datum) => (datum[valueId] < 0 ? '#d47c6a' : '#19cba1'),
-              stroke: (datum) => (datum[valueId] < 0 ? '#d47c6a' : '#19cba1'),
+          seed.barStyle = [
+            { barRadius: 4, barColorOpacity: 0.68, barColor: '#19cba1', barGradient: true, barBorderWidth: 0 },
+            {
+              selector: { field: valueId, operator: '<', value: 0 },
+              barColor: '#d47c6a',
+              barGradient: true,
+              barBorderWidth: 0,
             },
-          }
+          ]
         }
+        const spec = Builder.from(seed).build()
+        spec.padding = { top: 8, bottom: 4, left: 3, right: 9 }
         return spec
       }
 
-      function setUpdateAnimation(spec) {
-        const duration = reducedMotion.matches ? 0 : 600
-        // 页面入场由卡片负责；保留图表的数据更新动画。
-        spec.animation = true
-        spec.animationAppear = false
-        spec.animationUpdate = { duration, easing: 'cubicInOut' }
-        spec.animationEnter = { duration, easing: 'cubicInOut' }
-        spec.animationExit = { duration, easing: 'cubicInOut' }
+      function updateAnimation() {
+        // 页面入场由卡片负责；图表的数据进入、更新和退出共用同一节奏（毫秒）。
+        return {
+          enable: !reducedMotion.matches,
+          params: { appear: { enable: false }, update: { enable: true, duration: 600, ease: 'cubicInOut' } },
+        }
       }
 
       function buildConsumerRingSpec(share, hasOrders) {
         // 占比来自 VBI 的去重订单查询；固定分类和字段，供 VChart 匹配更新前后的扇区。
         const spec = Builder.from({
           chartType: 'donut',
+          animation: updateAnimation(),
           dataset: [
             { category: '消费者', share },
             { category: '其他客户', share: 100 - share },
@@ -1198,7 +1175,6 @@
           legend: { enable: true, position: 'bottom', border: false, labelFontSize: 10, labelColor: '#909aa4' },
           tooltip: { enable: hasOrders },
         }).build()
-        setUpdateAnimation(spec)
         spec.outerRadius = 0.98
         spec.innerRadius = 0.74
         spec.startAngle = -115
@@ -1347,7 +1323,7 @@
             if (document.body.dataset.state !== 'ready') return
             shownDate = date
             showDate(date)?.catch((error) => console.error(error))
-          }, 150)
+          }, 75)
         }
         chart.instance.on('dimensionHover', onHover)
         return {
