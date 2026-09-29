@@ -1,5 +1,13 @@
 # @visactor/vbi
 
+## 0.6.2
+
+### Patch Changes
+
+- 82129ac: Expose observe, unobserve, observeDeep, and unobserveDeep on chart builders with the existing Yjs DSL subscription semantics.
+- Updated dependencies [c682743]
+  - @visactor/vseed@0.6.2
+
 ## 0.6.1
 
 ### Patch Changes
