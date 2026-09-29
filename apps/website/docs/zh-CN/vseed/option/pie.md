@@ -70,6 +70,93 @@
 
 
 
+## outerRadius
+
+**Type:** `number | undefined`
+
+:::note{title=描述}
+外半径占可用半径的比例，范围 (0, 1]，默认 0.8。
+
+:::
+
+
+## innerRadius
+
+**Type:** `number | undefined`
+
+:::note{title=描述}
+内半径占可用半径的比例，范围 [0, outerRadius)。默认 0。
+
+:::
+
+
+## startAngle
+
+**Type:** `number | undefined`
+
+:::note{title=描述}
+起始角度，单位为度，默认 \-90。
+
+:::
+
+
+## endAngle
+
+**Type:** `number | undefined`
+
+:::note{title=描述}
+结束角度，默认 startAngle + 360；跨度必须在 (0, 360]。
+
+:::
+
+
+## pieStyle
+
+**Type:** `PieStyle | undefined`
+
+:::note{title=描述}
+扇区边框、圆角和悬停效果。
+
+:::
+
+
+### pieBorderColor
+
+**Type:** `string | undefined`
+
+:::note{title=描述}
+扇区边框颜色，默认跟随图表背景。
+
+:::
+
+### pieBorderWidth
+
+**Type:** `number | undefined`
+
+:::note{title=描述}
+扇区边框宽度，单位 px，默认按数据量自适应：不超过 30 条时为 1，否则为 0。0 表示无边框。
+
+:::
+
+### pieCornerRadius
+
+**Type:** `number | undefined`
+
+:::note{title=描述}
+扇区圆角，单位 px。
+
+:::
+
+### pieHoverEffect
+
+**Type:** `"none" | "opacity" | "enlarge" | undefined`
+
+:::note{title=描述}
+悬停效果：enlarge 放大（默认）、opacity 降低透明度（固定为 0.75）、none 关闭。
+
+:::
+
+
 ## dataset
 
 **Type:** `Record[]`
@@ -1254,6 +1341,15 @@ prepare() 阶段写入，运行时只读
 enable: true
 
 
+
+### interactive
+
+**Type:** `boolean | undefined`
+
+:::note{title=描述}
+离散图例是否允许悬停、选择、聚焦和数据筛选。false 时仅说明分类。
+
+:::
 
 ### border
 

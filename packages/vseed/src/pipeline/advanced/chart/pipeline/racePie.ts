@@ -2,6 +2,7 @@ import type { AdvancedPipeline } from 'src/types'
 import {
   initAdvancedVSeed,
   theme,
+  pieGeometryConfig,
   buildMeasures,
   pivotAdapter,
   pieConfig,
@@ -32,6 +33,7 @@ export const racePieAdvancedPipeline: AdvancedPipeline = [
   pivotAdapter([reshapeWithEncoding], [pivotReshapeWithEncoding]),
 
   pieConfig,
+  pieGeometryConfig,
   theme,
   annotation,
 ]

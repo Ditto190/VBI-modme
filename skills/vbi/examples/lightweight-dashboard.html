@@ -1153,12 +1153,12 @@
 
       function buildConsumerRingSpec(share, hasOrders) {
         // 占比来自 VBI 的去重订单查询；固定分类和字段，供 VChart 匹配更新前后的扇区。
-        const spec = Builder.from({
+        return Builder.from({
           chartType: 'donut',
           animation: updateAnimation(),
           dataset: [
-            { category: '消费者', share },
-            { category: '其他客户', share: 100 - share },
+            { category: '消费者', share: hasOrders ? share : 0 },
+            { category: '其他客户', share: hasOrders ? 100 - share : 0 },
           ],
           dimensions: [{ id: 'category', alias: '客户类型', encoding: 'color' }],
           measures: [
@@ -1172,28 +1172,23 @@
           backgroundColor: 'transparent',
           color: { colorScheme: ['#56dabb', '#c1f3e6'] },
           label: { enable: false },
-          legend: { enable: true, position: 'bottom', border: false, labelFontSize: 10, labelColor: '#909aa4' },
+          // 图例只说明分类，保持中心占比与完整订单口径一致。
+          legend: {
+            interactive: false,
+            position: 'bottom',
+            border: false,
+            labelFontSize: 10,
+            shapeType: 'circle',
+          },
+          outerRadius: 0.98,
+          innerRadius: 0.74,
+          pieStyle: { pieBorderWidth: 0, pieHoverEffect: 'opacity' },
+          centerText: {
+            titleText: hasOrders ? `${Math.round(share)}%` : '—',
+            subTitleText: '消费者',
+          },
           tooltip: { enable: hasOrders },
         }).build()
-        spec.outerRadius = 0.98
-        spec.innerRadius = 0.74
-        spec.startAngle = -115
-        spec.endAngle = 245
-        // 图例只说明分类；不筛掉扇区，保证中心占比与完整订单口径一致。
-        Object.assign(spec.legends, { filter: false, select: false, space: 4 })
-        Object.assign(spec.legends.item, { focus: false, maxWidth: '100%', spaceCol: 10 })
-        spec.legends.item.shape = { space: 4, style: { symbolType: 'circle', size: 6 } }
-        spec.indicator = {
-          visible: true,
-          fixed: true,
-          trigger: 'none',
-          title: {
-            style: { text: hasOrders ? `${Math.round(share)}%` : '—', fontSize: 14, fontWeight: 550, fill: '#28333e' },
-          },
-          content: { space: 2, style: { text: '消费者', fontSize: 8, fill: '#909aa4' } },
-        }
-        spec.pie = { style: { lineWidth: 0 }, state: { hover: { fillOpacity: 0.75 } } }
-        return spec
       }
 
       async function draw(element, spec, chart) {

@@ -2,6 +2,9 @@ import type { AdvancedPipeline } from 'src/types'
 import {
   initAdvancedVSeed,
   theme,
+  donutGeometryConfig,
+  pieStyleConfig,
+  centerTextConfig,
   pivotAdapter,
   annotation,
   donutConfig,
@@ -32,6 +35,9 @@ export const donutAdvancedPipeline: AdvancedPipeline = [
   pivotAdapter([reshapeWithEncoding], [pivotReshapeWithEncoding]),
 
   donutConfig,
+  donutGeometryConfig,
+  pieStyleConfig,
+  centerTextConfig,
   theme,
   annotation,
 ]

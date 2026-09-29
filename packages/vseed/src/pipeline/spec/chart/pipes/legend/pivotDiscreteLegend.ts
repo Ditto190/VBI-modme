@@ -37,6 +37,7 @@ export const pivotDiscreteLegend: PivotChartSpecPipe = (spec, context): Partial<
 
   const {
     enable,
+    interactive = true,
     position = 'bottom',
     labelFontColor,
     labelColor,
@@ -65,6 +66,7 @@ export const pivotDiscreteLegend: PivotChartSpecPipe = (spec, context): Partial<
     padding: 0,
     visible: enable,
     type: 'discrete',
+    ...(interactive === false ? { interactive: false, select: false, hover: false } : {}),
     orient,
     position: legendPosition,
     maxCol: Math.max(1, maxSize),
@@ -87,7 +89,7 @@ export const pivotDiscreteLegend: PivotChartSpecPipe = (spec, context): Partial<
     }),
 
     item: {
-      focus: true,
+      focus: interactive,
       maxWidth: '30%',
       focusIconStyle: {
         size: labelFontSize + 2,
