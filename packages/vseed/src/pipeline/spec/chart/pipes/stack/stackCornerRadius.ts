@@ -1,5 +1,7 @@
 import type { IBarChartSpec } from '@visactor/vchart'
+import { normalizePadding } from '@visactor/vutils'
 import type { VChartSpecPipe, StackCornerRadius, BarStyle } from 'src/types'
+import { selector, selectorWithDynamicFilter } from 'src/dataSelector'
 import { createBarCornerRadius, createStackCornerRadius, hasMoveInAnimation } from './stackCornerRadiusUtils'
 
 const hasBarMoveInAnimation = (spec: IBarChartSpec): boolean => {
@@ -11,22 +13,32 @@ const hasBarMoveInAnimation = (spec: IBarChartSpec): boolean => {
 export const stackCornerRadius: VChartSpecPipe = (spec, context) => {
   const { advancedVSeed, vseed } = context
   const { chartType } = vseed
-  const stackCornerRadius = advancedVSeed.config?.[chartType as 'column']?.stackCornerRadius as StackCornerRadius
+  const stackCornerRadius = (advancedVSeed.config?.[chartType as 'column']?.stackCornerRadius ?? 0) as StackCornerRadius
 
-  const styles = advancedVSeed.markStyle?.barStyle
-  const rules = (Array.isArray(styles) ? styles : styles ? [styles] : []) as BarStyle[]
-  // A stack clip would trim explicit per-bar corners, including conditional rules.
-  if (stackCornerRadius == null || rules.some((rule) => rule.barRadius != null)) {
-    return spec
+  if (!hasBarMoveInAnimation(spec as IBarChartSpec)) {
+    const styles = advancedVSeed.markStyle?.barStyle
+    const rules = ((Array.isArray(styles) ? styles : styles ? [styles] : []) as BarStyle[])
+      .filter((rule) => rule.barRadius != null)
+      .reverse()
+    const defaultRadius = createStackCornerRadius(stackCornerRadius)
+    // Preserve the stroke bounds without rounding more than an explicit per-bar corner.
+    const clipRadius: typeof defaultRadius = rules.length
+      ? (attributes, datum) => {
+          const radius = defaultRadius(attributes, datum)
+          const rule = rules.find((rule) =>
+            rule.dynamicFilter
+              ? selectorWithDynamicFilter(datum, rule.dynamicFilter, rule.selector)
+              : selector(datum, rule.selector),
+          )
+          if (!rule) return radius
+          const barRadius = normalizePadding(rule.barRadius!)
+          return normalizePadding(radius).map((corner, index) => Math.min(corner, barRadius[index]))
+        }
+      : defaultRadius
+    return { ...spec, stackCornerRadius: clipRadius } as IBarChartSpec
   }
 
-  const singleSeries = advancedVSeed.datasetReshapeInfo?.[0]?.unfoldInfo.colorItems.length === 1
-
-  if (!singleSeries && !hasBarMoveInAnimation(spec as IBarChartSpec)) {
-    return { ...spec, stackCornerRadius: createStackCornerRadius(stackCornerRadius) } as IBarChartSpec
-  }
-
-  // A single series needs no stack clip; a final-position clip also cuts off moveIn.
+  // A final-position clip would cut off moveIn before it reaches the bar bounds.
   return {
     ...spec,
     bar: {

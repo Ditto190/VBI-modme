@@ -31,7 +31,7 @@ describe('stackCornerRadius pipe', () => {
     expect(createStackCornerRadius([7, 7, 0, 0])).not.toBe(callback)
   })
 
-  it.each([0, 4, [4, 4, 4, 4]])('explicit per-bar corners %j take priority over a stack clip', (barRadius) => {
+  it.each([0, 4, [4, 4, 4, 4]])('explicit per-bar corners %j retain the stroke clip', (barRadius) => {
     const spec = Builder.from({
       chartType: 'column',
       dataset: [{ category: 'A', value: 10 }],
@@ -39,11 +39,13 @@ describe('stackCornerRadius pipe', () => {
       measures: [{ id: 'value' }],
       barStyle: { barRadius },
     }).build<any>()
-    expect(spec.stackCornerRadius).toBeUndefined()
+    expect(spec.stackCornerRadius(null, { __VCHART_STACK_START: 0, __VCHART_STACK_END: 10 })).toEqual(
+      barRadius === 0 ? [0, 0, 0, 0] : [4, 4, 0, 0],
+    )
     expect(spec.bar.style.cornerRadius).toEqual(barRadius)
   })
 
-  it('retains the stack clip for colors but removes it for conditional per-bar corners', () => {
+  it('conditional per-bar corners preserve the default outline on unmatched bars', () => {
     const dsl = {
       chartType: 'column' as const,
       dataset: [
@@ -57,8 +59,53 @@ describe('stackCornerRadius pipe', () => {
       'function',
     )
     const spec = Builder.from({ ...dsl, barStyle: { selector: { value: -10 }, barRadius: 5 } }).build<any>()
-    expect(spec.stackCornerRadius).toBeUndefined()
+    expect(spec.stackCornerRadius(null, { value: -10, __VCHART_STACK_START: -10, __VCHART_STACK_END: 0 })).toEqual([
+      0, 0, 4, 4,
+    ])
+    expect(spec.stackCornerRadius(null, { value: 20, __VCHART_STACK_START: 0, __VCHART_STACK_END: 20 })).toEqual([
+      4, 4, 0, 0,
+    ])
     expect(spec.bar.state.custom1.style.cornerRadius).toBe(5)
+  })
+
+  it('dynamic corner rules preserve the default outline when they do not match', () => {
+    const context = createContext()
+    context.advancedVSeed.markStyle = {
+      barStyle: {
+        barRadius: 0,
+        dynamicFilter: {
+          type: 'row-with-field',
+          code: '',
+          result: { success: true, data: [{ __row_index: 0, field: 'value' }] },
+        },
+      },
+    }
+    const spec = stackCornerRadius({}, context) as any
+    expect(spec.stackCornerRadius(null, { __row_index: 0, __MeaId__: 'value', value: 10 })).toEqual([0, 0, 0, 0])
+    expect(spec.stackCornerRadius(null, { __row_index: 1, __VCHART_STACK_START: 0, __VCHART_STACK_END: 10 })).toEqual([
+      4, 4, 0, 0,
+    ])
+  })
+
+  it('still clips strokes when no radius is configured', () => {
+    const context = createContext()
+    context.advancedVSeed.config = {}
+    const spec = stackCornerRadius({}, context) as any
+    expect(spec.stackCornerRadius(null, { __VCHART_STACK_START: 0, __VCHART_STACK_END: 10 })).toBe(0)
+  })
+
+  it('honors asymmetric corners and the last matching radius rule', () => {
+    const context = createContext()
+    context.advancedVSeed.markStyle = {
+      barStyle: [{ barRadius: [0, 8, 8, 0] }, { selector: { value: 10 }, barRadius: 2 }],
+    }
+    const spec = stackCornerRadius({}, context) as any
+    expect(spec.stackCornerRadius(null, { value: 10, __VCHART_STACK_START: 0, __VCHART_STACK_END: 10 })).toEqual([
+      2, 2, 0, 0,
+    ])
+    expect(spec.stackCornerRadius(null, { value: -10, __VCHART_STACK_START: -10, __VCHART_STACK_END: 0 })).toEqual([
+      0, 0, 4, 0,
+    ])
   })
   it('should use root stackCornerRadius when no moveIn animation exists', () => {
     const result = stackCornerRadius({}, createContext()) as any
