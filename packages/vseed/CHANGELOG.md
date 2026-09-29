@@ -1,5 +1,12 @@
 # @visactor/vseed
 
+## 0.6.4
+
+### Patch Changes
+
+- 405483c: Add static legends and fixed donut center text through composable pipelines. Legend interaction can be disabled without changing existing sizing, spacing or layout. Center titleText/subTitleText fit the inner radius and inherit theme colors. Center text typography, pie geometry and hover, and legend interaction defaults are owned by themes; chart DSLs only need content and explicit overrides. PieStyle follows the existing mark-style naming with pieBorderColor, pieBorderWidth, pieCornerRadius and pieHoverEffect; existing hover enlargement, adaptive borders and chart defaults remain unchanged. Migrate the lightweight dashboard consumer ring to the simplified DSL.
+- cdbd9e0: Restore bar stroke clipping for single-series charts, conditional corner styles, and dual-axis bars without configured stack corners. Preserve default rounding on unmatched bars and explicit per-bar corners on matched bars without expanding the rendered bar bounds. Keep moving bars unclipped during moveIn animations.
+
 ## 0.6.3
 
 ### Patch Changes
