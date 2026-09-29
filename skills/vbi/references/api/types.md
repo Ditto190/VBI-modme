@@ -169,10 +169,14 @@ export interface VBIChartBuilderInterface<TQueryDSL = DefaultVBIQueryDSL, TSeedD
   buildVQuery: () => TQueryDSL
   build: () => VBIChartDSL
   isEmpty: () => boolean
+  observe: (callback: ObserveCallback) => void
+  unobserve: (callback: ObserveCallback) => void
+  observeDeep: (callback: ObserveDeepCallback) => void
+  unobserveDeep: (callback: ObserveDeepCallback) => void
 }
 ```
 
-关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
+关联 API：[BuildVSeedOptions](types.md#buildvseedoptions)、[ChartInstanceBuilder](chart-builder.md#chartinstancebuilder)、[ChartTypeBuilder](chart-builder.md#charttypebuilder)、[DefaultVBIQueryDSL](chart-builder.md#defaultvbiquerydsl)、[DefaultVBISeedDSL](chart-builder.md#defaultvbiseeddsl)、[DimensionsBuilder](chart-builder.md#dimensionsbuilder)、[HavingFilterBuilder](chart-builder.md#havingfilterbuilder)、[LimitBuilder](chart-builder.md#limitbuilder)、[LocaleBuilder](chart-builder.md#localebuilder)、[MeasuresBuilder](chart-builder.md#measuresbuilder)、[ObserveCallback](types.md#observecallback)、[ObserveDeepCallback](types.md#observedeepcallback)、[ThemeBuilder](chart-builder.md#themebuilder)、[UndoManager](chart-builder.md#undomanager)、[VBIChartDSL](types.md#vbichartdsl)、[WhereFilterBuilder](chart-builder.md#wherefilterbuilder)
 
 ## VBIChartBuilderOptions
 

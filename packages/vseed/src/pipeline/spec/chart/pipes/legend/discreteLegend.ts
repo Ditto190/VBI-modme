@@ -1,3 +1,4 @@
+import { createAliasFormatter } from 'src/pipeline/utils'
 import type { Legend, VChartSpecPipe } from 'src/types'
 
 export const discreteLegend: VChartSpecPipe = (spec, context) => {
@@ -8,6 +9,10 @@ export const discreteLegend: VChartSpecPipe = (spec, context) => {
   const baseConfig = advancedVSeed.config[chartType] as { legend: Legend }
   if (!baseConfig || !baseConfig.legend) {
     return result
+  }
+
+  if (baseConfig.legend.enable === false) {
+    return { ...result, legends: { visible: false } }
   }
 
   const { legend } = baseConfig
@@ -82,9 +87,7 @@ export const discreteLegend: VChartSpecPipe = (spec, context) => {
         },
       },
       label: {
-        formatMethod: (value) => {
-          return unfoldInfo.colorIdMap[String(value)]?.alias ?? value
-        },
+        formatMethod: createAliasFormatter(unfoldInfo.colorIdMap),
         style: {
           fontSize: labelFontSize,
           fill: labelColor || labelFontColor,

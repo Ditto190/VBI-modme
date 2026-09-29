@@ -402,36 +402,18 @@
       }
 
       .ring {
-        --share: 0%;
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background: conic-gradient(from -25deg, #56dabb var(--share), #c1f3e6 0);
-        display: grid;
-        place-items: center;
+        position: relative;
+        width: 116px;
+        height: 88px;
       }
 
-      .ring::before {
-        content: '';
-        width: 53px;
-        height: 53px;
-        background: #fbfdff;
-        border-radius: 50%;
-        grid-area: 1/1;
+      .ring-plot {
+        position: absolute;
+        inset: 0;
       }
 
-      .ring-value {
-        grid-area: 1/1;
-        z-index: 1;
-        font-size: 14px;
-        font-weight: 550;
-        font-variant-numeric: tabular-nums;
-      }
-
-      .ring-label {
-        font-size: 8px;
-        color: #99a6ae;
-        margin-top: 5px;
+      #orders-card .small-body {
+        margin-top: 8px;
       }
 
       .details {
@@ -829,9 +811,9 @@
                     aria-valuemax="100"
                     aria-valuenow="0"
                   >
-                    <span class="ring-value" id="consumer-share">—</span>
+                    <div class="ring-plot" id="consumer-ring-plot" aria-hidden="true"></div>
+                    <span class="sr-only" id="consumer-share">—</span>
                   </div>
-                  <p class="ring-label">消费者订单占比</p>
                 </div>
               </div>
             </article>
@@ -852,7 +834,7 @@
                     <span id="profit-change" class="change">—</span><span class="compare-label">较前 30 天</span>
                   </p>
                 </div>
-                <div id="profit-trend" class="mini-plot" role="img" aria-label="最近七天每日利润，负值为亏损"></div>
+                <div id="profit-trend" class="mini-plot" role="img" aria-label="所选时段每日利润，负值为亏损"></div>
               </div>
             </article>
           </div>
@@ -1111,19 +1093,16 @@
       }
       document.querySelectorAll('.metric-card').forEach(bindMetricCardMotion)
 
-      async function draw(chart, element, firstDay, lastDay, mini = false) {
-        const seed = await chart.buildVSeed()
+      function buildChartSpec(seed, firstDay, lastDay, mini = false) {
         const dateId = seed.dimensions[0].id
         const valueId = seed.measures[0].id
-        // 按日历补齐无订单日期为零，保证横轴间距与最近七天的含义一致。
+        // 按所选区间补齐无订单日期为零，保证销售额和利润的日期范围、横轴间距一致。
         const daily = new Map(seed.dataset.map((row) => [row[dateId], row]))
         seed.dataset = Array.from({ length: lastDay - firstDay + 1 }, (_, index) => {
           const date = dateKey(firstDay + index)
           return daily.get(date) ?? { [dateId]: date, [valueId]: 0 }
         })
-        if (seed.chartType === 'column') seed.dataset = seed.dataset.slice(-7)
         const values = seed.dataset.map((row) => Number(row[valueId]))
-        const lastDate = seed.dataset.at(-1)[dateId]
         Object.assign(seed, {
           backgroundColor: 'transparent',
           color: { colorScheme: ['#19cba1'] },
@@ -1136,20 +1115,13 @@
             min: Math.min(0, ...values) * 1.12,
             max: Math.max(0, ...values) * 1.06 || 1,
           },
-          lineStyle: { lineWidth: mini ? 1.5 : 2.5, lineSmooth: true },
-          pointStyle: [
-            { pointVisible: false },
-            {
-              selector: { [dateId]: lastDate },
-              pointVisible: mini,
-              pointSize: 6,
-              pointColor: '#19cba1',
-              pointBorderWidth: 0,
-            },
-          ],
         })
+        if (seed.chartType === 'area') {
+          seed.pointStyle = { pointVisible: false }
+          seed.lineStyle = { lineWidth: mini ? 1.5 : 2.5, lineSmooth: true }
+        }
         const spec = Builder.from(seed).build()
-        spec.animation = false
+        setUpdateAnimation(spec)
         spec.padding = { top: 8, bottom: 4, left: 3, right: 9 }
         if (seed.chartType === 'area') {
           spec.area = {
@@ -1172,10 +1144,17 @@
           }
         }
         if (seed.chartType === 'column') {
+          // 单系列柱体的圆角由 bar.style 提供，不需要堆叠圆角回调。
+          delete spec.stackCornerRadius
           spec.bar = {
             ...spec.bar,
             style: {
               ...spec.bar?.style,
+              // 当前 VChart 的 updateSpec 会清除柱体默认位置编码；用公开样式回调保留几何计算。
+              x: (datum, context) => context.valueToX(datum[dateId]),
+              width: (_datum, context) => context.xBandwidth(),
+              y: (datum, context) => context.valueToY(datum[valueId]),
+              y1: (_datum, context) => context.valueToY(0),
               cornerRadius: [4, 4, 4, 4],
               fillOpacity: 0.68,
               fill: (datum) => (datum[valueId] < 0 ? '#d47c6a' : '#19cba1'),
@@ -1183,12 +1162,75 @@
             },
           }
         }
-        chart.instance.get()?.release()
-        chart.instance.bind(undefined)
-        const instance = new VChart(spec, { dom: element })
-        instance.renderSync()
-        chart.instance.bind(instance)
-        renderedCharts.set(element, chart)
+        return spec
+      }
+
+      function setUpdateAnimation(spec) {
+        const duration = reducedMotion.matches ? 0 : 600
+        // 页面入场由卡片负责；保留图表的数据更新动画。
+        spec.animation = true
+        spec.animationAppear = false
+        spec.animationUpdate = { duration, easing: 'cubicInOut' }
+        spec.animationEnter = { duration, easing: 'cubicInOut' }
+        spec.animationExit = { duration, easing: 'cubicInOut' }
+      }
+
+      function buildConsumerRingSpec(share, hasOrders) {
+        // 占比来自 VBI 的去重订单查询；固定分类和字段，供 VChart 匹配更新前后的扇区。
+        const spec = Builder.from({
+          chartType: 'donut',
+          dataset: [
+            { category: '消费者', share },
+            { category: '其他客户', share: 100 - share },
+          ],
+          dimensions: [{ id: 'category', alias: '客户类型', encoding: 'color' }],
+          measures: [
+            {
+              id: 'share',
+              alias: '订单占比',
+              encoding: 'angle',
+              format: { type: 'number', suffix: '%', fractionDigits: 1 },
+            },
+          ],
+          backgroundColor: 'transparent',
+          color: { colorScheme: ['#56dabb', '#c1f3e6'] },
+          label: { enable: false },
+          legend: { enable: true, position: 'bottom', border: false, labelFontSize: 10, labelColor: '#909aa4' },
+          tooltip: { enable: hasOrders },
+        }).build()
+        setUpdateAnimation(spec)
+        spec.outerRadius = 0.98
+        spec.innerRadius = 0.74
+        spec.startAngle = -115
+        spec.endAngle = 245
+        // 图例只说明分类；不筛掉扇区，保证中心占比与完整订单口径一致。
+        Object.assign(spec.legends, { filter: false, select: false, space: 4 })
+        Object.assign(spec.legends.item, { focus: false, maxWidth: '100%', spaceCol: 10 })
+        spec.legends.item.shape = { space: 4, style: { symbolType: 'circle', size: 6 } }
+        spec.indicator = {
+          visible: true,
+          fixed: true,
+          trigger: 'none',
+          title: {
+            style: { text: hasOrders ? `${Math.round(share)}%` : '—', fontSize: 14, fontWeight: 550, fill: '#28333e' },
+          },
+          content: { space: 2, style: { text: '消费者', fontSize: 8, fill: '#909aa4' } },
+        }
+        spec.pie = { style: { lineWidth: 0 }, state: { hover: { fillOpacity: 0.75 } } }
+        return spec
+      }
+
+      async function draw(element, spec, chart) {
+        const instance = renderedCharts.get(element)
+        if (instance) {
+          if (reducedMotion.matches) instance.stopAnimation()
+          await instance.updateSpec(spec)
+        } else {
+          const instance = new VChart(spec, { dom: element })
+          instance.renderSync()
+          chart?.instance.bind(instance)
+          renderedCharts.set(element, instance)
+        }
       }
 
       async function run(task) {
@@ -1222,14 +1264,16 @@
           slot.style.gridRow = `${item.y + 1} / span ${item.h}`
         }
         requestAnimationFrame(() =>
-          renderedCharts.forEach((chart, element) =>
-            chart.instance.get()?.resize(element.clientWidth, element.clientHeight),
-          ),
+          renderedCharts.forEach((instance, element) => instance.resize(element.clientWidth, element.clientHeight)),
         )
       }
       function setPeriod(chart, first, last) {
-        chart.whereFilter.clear()
-        chart.whereFilter.add('order_day', (node) => node.setOperator('between').setValue({ min: first, max: last }))
+        chart.doc.transact(() => {
+          const period = chart.whereFilter.find((node) => 'getField' in node && node.getField() === 'order_day')
+          const configure = (node) => node.setOperator('between').setValue({ min: first, max: last })
+          if (period) chart.whereFilter.update(period.getId(), configure)
+          else chart.whereFilter.add('order_day', configure)
+        })
       }
       function changeText(current, previous) {
         if (!previous) return { text: '暂无可比数据', direction: 'flat', percent: '—' }
@@ -1244,36 +1288,77 @@
         $(selector).textContent = change.text
         $(selector).dataset.direction = change.direction
       }
-      function showMetrics(total, prior, consumerTotal, comparison) {
+      function showMetrics(total, prior, consumerTotal, comparison, scope = 'all') {
         const salesChange = changeText(total.sales, prior.sales)
-        $('#sales').textContent = money(total.sales)
-        $('#orders').textContent = number(total.order_id)
-        $('#profit').textContent = money(total.profit)
-        $('#average').textContent = total.order_id ? money(total.sales / total.order_id) : '—'
-        $('#margin').textContent = total.sales ? `${((total.profit / total.sales) * 100).toFixed(1)}%` : '—'
-        $('#growth').textContent = salesChange.percent
-        $('#growth').dataset.direction = salesChange.direction
-        setChange('#sales-change', salesChange)
-        setChange('#orders-change', changeText(total.order_id, prior.order_id))
-        setChange('#profit-change', changeText(total.profit, prior.profit))
-        document.querySelectorAll('.compare-label').forEach((label) => (label.textContent = comparison))
-        const share = total.order_id ? (consumerTotal.order_id / total.order_id) * 100 : 0
-        $('#consumer-ring').style.setProperty('--share', `${share}%`)
-        $('#consumer-ring').setAttribute('aria-valuenow', share.toFixed(1))
-        $('#consumer-share').textContent = total.order_id ? `${Math.round(share)}%` : '—'
+        if (scope === 'all') {
+          $('#sales').textContent = money(total.sales)
+          $('#average').textContent = total.order_id ? money(total.sales / total.order_id) : '—'
+          $('#margin').textContent = total.sales ? `${((total.profit / total.sales) * 100).toFixed(1)}%` : '—'
+          setChange('#sales-change', salesChange)
+        }
+        if (scope === 'all' || scope === 'growth') {
+          $('#growth').textContent = salesChange.percent
+          $('#growth').dataset.direction = salesChange.direction
+        }
+        if (scope === 'all' || scope === 'profit') {
+          $('#profit').textContent = money(total.profit)
+          setChange('#profit-change', changeText(total.profit, prior.profit))
+        }
+        const labels = scope === 'all' ? '.compare-label' : `#${scope}-card .compare-label`
+        document.querySelectorAll(labels).forEach((label) => (label.textContent = comparison))
+        if (scope === 'all' || scope === 'orders') {
+          $('#orders').textContent = number(total.order_id)
+          setChange('#orders-change', changeText(total.order_id, prior.order_id))
+          const share = total.order_id ? (consumerTotal.order_id / total.order_id) * 100 : 0
+          $('#consumer-ring').setAttribute('aria-valuenow', share.toFixed(1))
+          $('#consumer-share').textContent = total.order_id ? `${Math.round(share)}%` : '—'
+          return draw($('#consumer-ring-plot'), buildConsumerRingSpec(share, total.order_id > 0))
+        }
       }
 
-      // 原生维度 hover 能命中隐藏了数据点的面积图；离开绘图区时恢复汇总。
+      // 日期稳定 150ms 后再联动指标；原生 Tooltip 和悬停点仍即时响应。
       function bindMetricHover(chart, showDate, restore) {
-        chart.instance.on('dimensionHover', ({ action, dimensionInfo }) => {
-          if (document.body.dataset.state !== 'ready') return
-          if (action === 'leave') return restore()
-          const date = dimensionInfo[0]?.value
-          if (typeof date === 'string') showDate(date)
-        })
+        let timer
+        let pendingDate
+        let shownDate
+        function cancelPending() {
+          clearTimeout(timer)
+          pendingDate = undefined
+        }
+        function reset() {
+          cancelPending()
+          shownDate = undefined
+        }
+        const onHover = ({ action, dimensionInfo }) => {
+          if (document.body.dataset.state !== 'ready') return reset()
+          if (action === 'leave') {
+            const needsRestore = shownDate !== undefined
+            reset()
+            if (needsRestore) restore()?.catch((error) => console.error(error))
+            return
+          }
+          const date = dimensionInfo?.[0]?.value
+          if (typeof date !== 'string' || date === pendingDate) return
+          cancelPending()
+          if (date === shownDate) return
+          pendingDate = date
+          timer = setTimeout(() => {
+            pendingDate = undefined
+            if (document.body.dataset.state !== 'ready') return
+            shownDate = date
+            showDate(date)?.catch((error) => console.error(error))
+          }, 150)
+        }
+        chart.instance.on('dimensionHover', onHover)
+        return {
+          reset,
+          dispose() {
+            reset()
+            chart.instance.off('dimensionHover', onHover)
+          },
+        }
       }
       const connectorId = 'vbi-example-supermarket'
-      let days = 30
       await run(async () => {
         sourceInfo = await connectSupermarket(connectorId)
         const dashboard = VBI.dashboard.create({
@@ -1321,15 +1406,26 @@
           { x: 8, y: 6, w: 4, h: 3 },
           { x: 0, y: 15, w: 12, h: 3 },
         )
-        async function render() {
+        const charts = [trend, growth, totals, profit, previous, consumers, regions, dailyTotals, dailyConsumers]
+        consumers.whereFilter.add('customer_type', (node) => node.setOperator('eq').setValue('消费者'))
+        dailyConsumers.whereFilter.add('customer_type', (node) => node.setOperator('eq').setValue('消费者'))
+        function applyPeriod(days) {
           const lastDay = sourceInfo.lastDay
           const firstDay = lastDay - days + 1
           for (const chart of [trend, growth, totals, profit, consumers, regions]) setPeriod(chart, firstDay, lastDay)
           setPeriod(previous, firstDay - days, firstDay - 1)
-          consumers.whereFilter.add('customer_type', (node) => node.setOperator('eq').setValue('消费者'))
           setPeriod(dailyTotals, firstDay - 1, lastDay)
           setPeriod(dailyConsumers, firstDay, lastDay)
-          dailyConsumers.whereFilter.add('customer_type', (node) => node.setOperator('eq').setValue('消费者'))
+        }
+        let revision = 0
+        let disposed = false
+        let hoverMetrics
+        const hoverSubscriptions = new Map()
+        async function render(currentRevision) {
+          const { min: firstDay, max: lastDay } = trend.whereFilter
+            .find((node) => 'getField' in node && node.getField() === 'order_day')
+            .toJSON().value
+          const days = lastDay - firstDay + 1
           const emptyTotals = { sales: 0, order_id: 0, profit: 0 }
           const [
             [total = emptyTotals],
@@ -1338,6 +1434,9 @@
             regionRows,
             dailyRows,
             consumerRows,
+            trendSeed,
+            growthSeed,
+            profitSeed,
           ] = await Promise.all([
             rowsOf(totals),
             rowsOf(previous),
@@ -1345,25 +1444,59 @@
             rowsOf(regions),
             rowsOf(dailyTotals),
             rowsOf(dailyConsumers),
+            trend.buildVSeed(),
+            growth.buildVSeed(),
+            profit.buildVSeed(),
           ])
+          // Builder 在查询期间再次变化时，丢弃旧结果，由订阅队列查询最新状态。
+          if (disposed || currentRevision !== revision) return
+          await Promise.all([
+            draw($('#trend'), buildChartSpec(trendSeed, firstDay, lastDay), trend),
+            draw($('#growth-trend'), buildChartSpec(growthSeed, firstDay, lastDay, true), growth),
+            draw($('#profit-trend'), buildChartSpec(profitSeed, firstDay, lastDay, true), profit),
+          ])
+          if (disposed || currentRevision !== revision) return
           const byDate = new Map(dailyRows.map((row) => [row.order_date, row]))
           const consumersByDate = new Map(consumerRows.map((row) => [row.order_date, row]))
-          function restore() {
-            showMetrics(total, prior, consumerTotal, `较前 ${days} 天`)
-            $('#period-label').textContent = `${fullDate(firstDay)} — ${fullDate(lastDay)} · 悬停图表查看当日指标`
+          function restore(scope = 'all') {
+            if (scope === 'all')
+              $('#period-label').textContent = `${fullDate(firstDay)} — ${fullDate(lastDay)} · 悬停图表查看当日指标`
+            return showMetrics(total, prior, consumerTotal, `较前 ${days} 天`, scope)
           }
-          function showDate(date) {
+          function showDate(date, scope) {
             const day = Date.parse(date) / dayMilliseconds
-            if (!Number.isInteger(day) || day < firstDay || day > lastDay) return restore()
-            showMetrics(
+            if (!Number.isInteger(day) || day < firstDay || day > lastDay) return restore(scope)
+            if (scope === 'all') $('#period-label').textContent = `${fullDate(day)} · 当日指标 · 移开图表恢复区间汇总`
+            return showMetrics(
               byDate.get(date) ?? emptyTotals,
               byDate.get(dateKey(day - 1)) ?? emptyTotals,
               consumersByDate.get(date) ?? emptyTotals,
               '较前一天',
+              scope,
             )
-            $('#period-label').textContent = `${fullDate(day)} · 当日指标 · 移开图表恢复区间汇总`
           }
-          restore()
+          hoverMetrics = { showDate, restore }
+          // 主图联动全部指标，小图仅更新所属卡片。
+          for (const [chart, scope] of [
+            [trend, 'all'],
+            [growth, 'growth'],
+            [profit, 'profit'],
+          ]) {
+            if (!hoverSubscriptions.has(chart)) {
+              hoverSubscriptions.set(
+                chart,
+                bindMetricHover(
+                  chart,
+                  (date) => hoverMetrics.showDate(date, scope),
+                  () => hoverMetrics.restore(scope),
+                ),
+              )
+            }
+          }
+          await restore()
+          document
+            .querySelectorAll('[data-days]')
+            .forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.days) === days)))
           $('#date-first').textContent = shortDate(firstDay)
           $('#date-middle').textContent = shortDate(firstDay + Math.floor((days - 1) / 2))
           $('#date-last').textContent = shortDate(lastDay)
@@ -1383,22 +1516,40 @@
             }
             $('tbody').append(tr)
           }
-          layoutDashboard(dashboard)
-          await draw(trend, $('#trend'), firstDay, lastDay)
-          await draw(growth, $('#growth-trend'), firstDay, lastDay, true)
-          await draw(profit, $('#profit-trend'), firstDay, lastDay, true)
-          for (const chart of [trend, growth, profit]) bindMetricHover(chart, showDate, restore)
         }
+        // 同一轮多个 Builder 变更合并为一次刷新；查询串行执行，避免结果乱序。
+        let requested = false
+        let refreshTask
+        function requestRender() {
+          // 筛选或配置变化后，旧悬停任务不能覆盖新的区间汇总。
+          hoverSubscriptions.forEach((subscription) => subscription.reset())
+          revision += 1
+          requested = true
+          refreshTask ??= Promise.resolve()
+            .then(() =>
+              run(async () => {
+                while (requested && !disposed) {
+                  requested = false
+                  await render(revision)
+                }
+              }),
+            )
+            .finally(() => {
+              refreshTask = undefined
+              if (requested && !disposed) requestRender()
+            })
+          return refreshTask
+        }
+        applyPeriod(30)
+        layoutDashboard(dashboard)
+        await render(revision)
+        // 直接使用现有 DSL 订阅，无需等待 Builder 的同名便捷接口发布。
+        charts.forEach((chart) => chart.dsl.observeDeep(requestRender))
         document.querySelectorAll('[data-days]').forEach((button) =>
-          button.addEventListener('click', () =>
-            run(async () => {
-              days = Number(button.dataset.days)
-              document
-                .querySelectorAll('[data-days]')
-                .forEach((item) => item.setAttribute('aria-pressed', String(item === button)))
-              await render()
-            }),
-          ),
+          button.addEventListener('click', () => {
+            // 控件只修改 DSL；嵌套筛选变更由 observeDeep 统一驱动刷新。
+            applyPeriod(Number(button.dataset.days))
+          }),
         )
         $('#region-details').addEventListener('toggle', (event) => {
           if (!event.target.open || reducedMotion.matches) return
@@ -1412,9 +1563,21 @@
             ),
           )
         })
-        window.addEventListener('resize', () => layoutDashboard(dashboard))
+        const onResize = () => layoutDashboard(dashboard)
+        window.addEventListener('resize', onResize)
+        reducedMotion.addEventListener('change', requestRender)
+        window.addEventListener('pagehide', (event) => {
+          if (event.persisted) return
+          disposed = true
+          charts.forEach((chart) => chart.dsl.unobserveDeep(requestRender))
+          hoverSubscriptions.forEach((subscription) => subscription.dispose())
+          window.removeEventListener('resize', onResize)
+          reducedMotion.removeEventListener('change', requestRender)
+          renderedCharts.forEach((instance) => instance.release())
+          charts.forEach((chart) => chart.instance.bind(undefined))
+          renderedCharts.clear()
+        })
         controlsReady = true
-        await render()
       })
     </script>
   </body>

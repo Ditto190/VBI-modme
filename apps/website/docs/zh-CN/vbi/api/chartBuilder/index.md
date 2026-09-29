@@ -37,6 +37,78 @@ constructor(doc: Y.Doc, options?: VBIChartBuilderOptions<TQueryDSL, TSeedDSL>, d
 | `options?` | VBIChartBuilderOptions<TQueryDSL, TSeedDSL> | - |
 | `dsl?` | Y.Map<any> | - |
 
+### observe
+
+订阅图表 DSL 顶层字段变化，与 dsl.observe 语义一致；不包含嵌套字段修改，也不触发首次渲染。
+
+**定义**:
+
+```typescript
+observe(callback: ObserveCallback): void
+```
+
+**返回**: `void`
+
+**参数**:
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `callback` | ObserveCallback | - |
+
+### unobserve
+
+取消指定的图表 DSL 顶层订阅，传入 observe 时使用的同一回调。
+
+**定义**:
+
+```typescript
+unobserve(callback: ObserveCallback): void
+```
+
+**返回**: `void`
+
+**参数**:
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `callback` | ObserveCallback | - |
+
+### observeDeep
+
+订阅整个图表 DSL 的深层变化，包括嵌套筛选、字段、本地编辑、撤销重做及协同更新；同一事务通知一次，不包含运行时实例变化，也不触发首次渲染。
+
+**定义**:
+
+```typescript
+observeDeep(callback: ObserveDeepCallback): void
+```
+
+**返回**: `void`
+
+**参数**:
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `callback` | ObserveDeepCallback | - |
+
+### unobserveDeep
+
+取消指定的图表 DSL 深层订阅，传入 observeDeep 时使用的同一回调。
+
+**定义**:
+
+```typescript
+unobserveDeep(callback: ObserveDeepCallback): void
+```
+
+**返回**: `void`
+
+**参数**:
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `callback` | ObserveDeepCallback | - |
+
 ### applyUpdate
 
 **定义**:
