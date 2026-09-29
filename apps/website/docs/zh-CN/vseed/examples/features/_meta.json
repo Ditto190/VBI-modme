@@ -46,6 +46,11 @@
   },
   {
     "type": "file",
+    "name": "centerText",
+    "label": "CenterText"
+  },
+  {
+    "type": "file",
     "name": "color",
     "label": "Color"
   },
@@ -83,6 +88,11 @@
     "type": "file",
     "name": "numFormat",
     "label": "NumFormat"
+  },
+  {
+    "type": "file",
+    "name": "pieStyle",
+    "label": "PieStyle"
   },
   {
     "type": "file",
