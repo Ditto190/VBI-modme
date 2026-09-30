@@ -42,9 +42,9 @@
 
 将下面代码保存为 `index.html`，直接用浏览器打开。它使用同一份销售明细，支持切换三种视图、按地区筛选，并显示当前 DSL 和查询结果。为便于核对，数据只有五行。
 
-下面的独立教程使用已发布的 VBI / VQuery / VSeed `latest`，VChart 使用 `2.1.7`，另加入 VTable `1.23.1`，无需本地构建。
+下面的独立教程与轻量看板固定使用 VBI / VQuery / VSeed `0.6.4`，VChart `2.1.7`；教程另加入 VTable `1.23.1`，无需本地构建。固定版本可避免 `latest` 缓存使依赖版本不一致。
 
-VChart 的 `build/index.min.js` 和 VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，分别提供 `window.VChart.default` 和 `window.VTable`；VBI、VQuery、VSeed 使用 `+esm` 模块导出。渲染器使用官方浏览器 bundle，避免 CDN 拆分渲染依赖导致运行时不一致。
+VChart 的 `build/index.min.js` 和 VTable 的 `dist/vtable.min.js` 通过普通 `<script>` 加载，分别提供 `window.VChart.default` 和 `window.VTable`；VBI、VQuery、VSeed 使用 `+esm` 模块导出。VSeed 的动画模块会导入 VChart 的 `StreamLight`，因此还需在 ESM 模块加载前声明 import map，将该导入映射到已加载的 VChart bundle。这样页面与动画使用同一套渲染注册表，避免 jsDelivr `+esm` 拆分底层模块后出现 `applyAnimationState is not a function` 或文本图元未注册。升级版本时应同步检查映射中的 VChart URL。
 
 ```html
 <!doctype html>
@@ -105,6 +105,13 @@ VChart 的 `build/index.min.js` 和 VTable 的 `dist/vtable.min.js` 通过普通
     </details>
     <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/build/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@visactor/vtable@1.23.1/dist/vtable.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/+esm": "data:text/javascript,export default globalThis.VChart.default;export const StreamLight=globalThis.VChart.StreamLight;"
+        }
+      }
+    </script>
     <script type="module">
       const $ = (selector) => document.querySelector(selector)
       const container = $('#view')
@@ -116,9 +123,9 @@ VChart 的 `build/index.min.js` 和 VTable 的 `dist/vtable.min.js` 通过普通
         const { ListTable, PivotTable } = window.VTable
         const VChart = window.VChart.default
         const [{ VBI }, { VQuery }, { Builder, registerAll }] = await Promise.all([
-          import('https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'),
-          import('https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'),
-          import('https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@visactor/vbi@0.6.4/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@visactor/vquery@0.6.4/dist/browser/esm/browser.js/+esm'),
+          import('https://cdn.jsdelivr.net/npm/@visactor/vseed@0.6.4/+esm'),
         ])
         registerAll()
 
@@ -294,15 +301,15 @@ DSL 不包含连接器实现、原始数据、外部图片，以及页面后加�
 
 ## 常见问题
 
-| 现象                       | 检查与处理                                                                                                                                                                                                                             |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 模块加载失败或缺少命名导出 | 按本文区分 ESM 与浏览器 bundle：前四个包使用固定版本的 `+esm` 入口，VTable 使用 `dist/vtable.min.js` 和 `window.VTable`。普通 `<script src>` 不会提供 ESM 导出；原始 npm ESM 文件还可能包含裸模块名。更换 CDN 或版本后重新验证依赖链。 |
-| `VQuery` 引入 Node 依赖    | 使用本文显式指定的 `dist/browser/esm/browser.js/+esm` 浏览器入口。                                                                                                                                                                     |
-| 刷新后提示数据集未加载     | 更新已有数据集时传入完整的 `connectorId, schema, source`，并等待更新结束后再查询。                                                                                                                                                     |
-| VSeed 无法构建图表类型     | 在 `Builder.from(seed).build()` 前调用 `registerAll()`；确认使用的是已注册且支持的 `chartType`。                                                                                                                                       |
-| 图表或表格为空白           | 先检查容器尺寸、查询错误和 `seed.dataset`，再确认 `chartType` 与渲染器对应；数据列 ID 应与维度、度量 ID 一致。                                                                                                                         |
-| 普通表行数少于原始数据     | 检查 `buildVQuery()` 的分组、聚合、筛选与 limit；表格使用查询结果，不直接展示原始数组。                                                                                                                                                |
-| 图表显示但透视表方向不对   | 显式设置维度的 `row` / `column` 编码；修改后重新构建 VSeed 和表格 options。                                                                                                                                                            |
-| 页面一直显示加载中         | 静态导入失败不能由模块主体内的 `try/catch` 捕获；本例用动态 `import()` 捕获加载错误，再区分初始化和查询渲染错误。                                                                                                                      |
+| 现象                       | 检查与处理                                                                                                                                                                                                              |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 模块加载失败或缺少命名导出 | VBI、VQuery、VSeed 使用固定版本的 `+esm` 入口；VChart、VTable 使用浏览器 bundle，并保留本文的 import map。普通 `<script src>` 不会提供 ESM 导出；原始 npm ESM 文件还可能包含裸模块名。更换 CDN 或版本后重新验证依赖链。 |
+| `VQuery` 引入 Node 依赖    | 使用本文显式指定的 `dist/browser/esm/browser.js/+esm` 浏览器入口。                                                                                                                                                      |
+| 刷新后提示数据集未加载     | 更新已有数据集时传入完整的 `connectorId, schema, source`，并等待更新结束后再查询。                                                                                                                                      |
+| VSeed 无法构建图表类型     | 在 `Builder.from(seed).build()` 前调用 `registerAll()`；确认使用的是已注册且支持的 `chartType`。                                                                                                                        |
+| 图表或表格为空白           | 先检查容器尺寸、查询错误和 `seed.dataset`，再确认 `chartType` 与渲染器对应；数据列 ID 应与维度、度量 ID 一致。                                                                                                          |
+| 普通表行数少于原始数据     | 检查 `buildVQuery()` 的分组、聚合、筛选与 limit；表格使用查询结果，不直接展示原始数组。                                                                                                                                 |
+| 图表显示但透视表方向不对   | 显式设置维度的 `row` / `column` 编码；修改后重新构建 VSeed 和表格 options。                                                                                                                                             |
+| 页面一直显示加载中         | 静态导入失败不能由模块主体内的 `try/catch` 捕获；本例用动态 `import()` 捕获加载错误，再区分初始化和查询渲染错误。                                                                                                       |
 
 更多接口见 [VBI 实例](../api/vbi.md)、[Chart Builder](../api/chart-builder.md)、[Dashboard Builder](../api/dashboard-builder.md) 和 [DSL 类型](../api/types.md)。

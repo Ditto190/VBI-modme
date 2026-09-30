@@ -876,11 +876,19 @@
     <noscript>此示例需要启用 JavaScript 来加载图表。</noscript>
 
     <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/build/index.min.js"></script>
+    <!-- VSeed 的动画依赖复用同一份 VChart，避免 CDN +esm 拆分出另一套渲染注册表。 -->
+    <script type="importmap">
+      {
+        "imports": {
+          "https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/+esm": "data:text/javascript,export default globalThis.VChart.default;export const StreamLight=globalThis.VChart.StreamLight;"
+        }
+      }
+    </script>
     <script type="module">
-      import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@latest/+esm'
-      import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@latest/dist/browser/esm/browser.js/+esm'
-      import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@latest/+esm'
-      const VChart = window.VChart.default
+      import { VBI } from 'https://cdn.jsdelivr.net/npm/@visactor/vbi@0.6.4/+esm'
+      import { VQuery } from 'https://cdn.jsdelivr.net/npm/@visactor/vquery@0.6.4/dist/browser/esm/browser.js/+esm'
+      import { Builder, registerAll } from 'https://cdn.jsdelivr.net/npm/@visactor/vseed@0.6.4/+esm'
+      import VChart from 'https://cdn.jsdelivr.net/npm/@visactor/vchart@2.1.7/+esm'
 
       registerAll()
       const $ = (selector) => document.querySelector(selector)
@@ -1153,7 +1161,7 @@
 
       function buildConsumerRingSpec(share, hasOrders) {
         // 占比来自 VBI 的去重订单查询；固定分类和字段，供 VChart 匹配更新前后的扇区。
-        return Builder.from({
+        const spec = Builder.from({
           chartType: 'donut',
           animation: updateAnimation(),
           dataset: [
@@ -1189,6 +1197,9 @@
           },
           tooltip: { enable: hasOrders },
         }).build()
+        // 小卡片只有两个分类，允许完整显示文字，避免通用的 30% 单项限宽截断图例。
+        spec.legends.item.maxWidth = '100%'
+        return spec
       }
 
       async function draw(element, spec, chart) {
